@@ -1,0 +1,95 @@
+<?php
+declare(strict_types=1);
+
+namespace WebProject\DockerApi\Library\Generated\Model;
+
+use ArrayObject;
+use function array_key_exists;
+
+class EngineDescription extends ArrayObject
+{
+    /**
+     * @var array
+     */
+    protected $initialized = [];
+
+    public function isInitialized($property): bool
+    {
+        return array_key_exists($property, $this->initialized);
+    }
+    /**
+     * @var string
+     */
+    protected $engineVersion;
+    /**
+     * @var array<string, string>
+     */
+    protected $labels;
+    /**
+     * @var list<EngineDescriptionPluginsItem>
+     */
+    protected $plugins;
+
+    /**
+     * @return string
+     */
+    public function getEngineVersion(): string
+    {
+        return $this->engineVersion;
+    }
+
+    /**
+     * @param string $engineVersion
+     *
+     * @return self
+     */
+    public function setEngineVersion(string $engineVersion): self
+    {
+        $this->initialized['engineVersion'] = true;
+        $this->engineVersion                = $engineVersion;
+
+        return $this;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getLabels(): iterable
+    {
+        return $this->labels;
+    }
+
+    /**
+     * @param array<string, string> $labels
+     *
+     * @return self
+     */
+    public function setLabels(iterable $labels): self
+    {
+        $this->initialized['labels'] = true;
+        $this->labels                = $labels;
+
+        return $this;
+    }
+
+    /**
+     * @return list<EngineDescriptionPluginsItem>
+     */
+    public function getPlugins(): array
+    {
+        return $this->plugins;
+    }
+
+    /**
+     * @param list<EngineDescriptionPluginsItem> $plugins
+     *
+     * @return self
+     */
+    public function setPlugins(array $plugins): self
+    {
+        $this->initialized['plugins'] = true;
+        $this->plugins                = $plugins;
+
+        return $this;
+    }
+}

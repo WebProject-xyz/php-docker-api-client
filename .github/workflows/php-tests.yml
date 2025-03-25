@@ -1,0 +1,57 @@
+on: [ push, pull_request ]
+name: "Tests"
+
+jobs:
+    php-tests:
+        name: "Run codeception tests"
+        runs-on: "ubuntu-latest"
+        continue-on-error: ${{ matrix.allow-fail }}
+        env:
+            PHP_CS_FIXER_IGNORE_ENV: true
+        strategy:
+            matrix:
+                include:
+                    - { php-version: 8.3, dependencies: locked, coverage: pcov, with_coverage: true, allow-fail: false }
+                    - { php-version: 8.3, dependencies: highest, coverage: pcov, with_coverage: false, allow-fail: false }
+
+                    - { php-version: 8.4, dependencies: locked, coverage: pcov, with_coverage: false, allow-fail: true }
+                    - { php-version: 8.4, dependencies: highest, coverage: pcov, with_coverage: false, allow-fail: true }
+        steps:
+            -   name: "Checkout"
+                uses: "actions/checkout@v4.2.2"
+
+            -   name: "Install PHP"
+                uses: "shivammathur/setup-php@2.32.0"
+                with:
+                    coverage: "${{ matrix.coverage }}"
+                    ini-values: display_errors=On, display_startup_errors=On, error_reporting=32767
+                    php-version: "${{ matrix.php-version }}"
+
+            -   name: "Set up problem matchers for PHP"
+                run: "echo \"::add-matcher::${{ runner.tool_cache }}/php.json\""
+
+            -   name: "Set up problem matchers for phpunit/phpunit"
+                run: "echo \"::add-matcher::${{ runner.tool_cache }}/phpunit.json\""
+
+            -   name: "Validate composer.json and composer.lock"
+                run: "composer validate --ansi --strict"
+
+            -   name: "Determine composer cache directory"
+                uses: "ergebnis/.github/actions/composer/determine-cache-directory@1.9.3"
+
+            -   name: "Cache dependencies installed with composer"
+                uses: "actions/cache@v4.2.3"
+                with:
+                    path: "${{ env.COMPOSER_CACHE_DIR }}"
+                    key: "php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}"
+                    restore-keys: "php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-"
+
+            -   name: "Install ${{ matrix.dependencies }} dependencies with composer"
+                uses: "ergebnis/.github/actions/composer/install@1.9.3"
+                with:
+                    dependencies: "${{ matrix.dependencies }}"
+
+            -   name: "Run Tests"
+                run: |
+                    vendor/bin/codecept build -c .
+                    vendor/bin/codecept run -c . -vvv --coverage --coverage-xml=coverage.xml --xml

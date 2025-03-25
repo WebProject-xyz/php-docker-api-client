@@ -1,0 +1,15 @@
+<?php
+declare(strict_types=1);
+
+return [
+    'openapi-file'                  => __DIR__ . '/spec/docker-v1.48-patched.yaml',
+    'namespace'                     => 'WebProject\DockerApi\Library\Generated',
+    'directory'                     => __DIR__ . '/generated',
+    'strict'                        => true,
+    'use-fixer'                     => true,
+    'fixer-config-file'             => __DIR__ . '/.php-cs-fixer.php',
+    'clean-generated'               => true,
+    'reference'                     => true,
+    'use-cacheable-supports-method' => true,
+    'validation'                    => false,
+];
