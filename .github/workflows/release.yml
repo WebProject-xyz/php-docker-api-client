@@ -23,9 +23,7 @@ jobs:
         with:
           cache: npm
           node-version: lts/*
-      - run: npm clean-install
-      - run: npm install --global corepack@latest
-      - run: corepack npm audit signatures
+      - run: npm install -g semantic-release @semantic-release/github @semantic-release/changelog conventional-changelog-conventionalcommits @semantic-release/commit-analyzer @semantic-release/git
       - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
