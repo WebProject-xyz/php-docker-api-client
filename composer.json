@@ -20,7 +20,7 @@
     "codeception/codeception": "^5.2.1",
     "codeception/module-asserts": "^3.0.0",
     "codeception/module-phpbrowser": "^3.0.1",
-    "friendsofphp/php-cs-fixer": "3.74.0",
+    "friendsofphp/php-cs-fixer": "3.75.0",
     "jane-php/open-api-3": "^7.8.1",
     "roave/security-advisories": "dev-latest",
     "symfony/var-dumper": "7.2.3"
