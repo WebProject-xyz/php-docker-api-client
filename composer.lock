@@ -122,16 +122,16 @@
         },
         {
             "name": "jane-php/json-schema-runtime",
-            "version": "v7.8.1",
+            "version": "v7.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/janephp/json-schema-runtime.git",
-                "reference": "8a9e3e6ec94959ab4160a5e36323cda76d8e7d03"
+                "reference": "ddb82546a1fa29456fb9acaa3c1a299beb0b40b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janephp/json-schema-runtime/zipball/8a9e3e6ec94959ab4160a5e36323cda76d8e7d03",
-                "reference": "8a9e3e6ec94959ab4160a5e36323cda76d8e7d03",
+                "url": "https://api.github.com/repos/janephp/json-schema-runtime/zipball/ddb82546a1fa29456fb9acaa3c1a299beb0b40b1",
+                "reference": "ddb82546a1fa29456fb9acaa3c1a299beb0b40b1",
                 "shasum": ""
             },
             "require": {
@@ -178,9 +178,9 @@
             ],
             "description": "Jane runtime Library",
             "support": {
-                "source": "https://github.com/janephp/json-schema-runtime/tree/v7.8.1"
+                "source": "https://github.com/janephp/json-schema-runtime/tree/v7.9.0"
             },
-            "time": "2024-07-29T13:51:58+00:00"
+            "time": "2025-04-04T09:35:19+00:00"
         },
         {
             "name": "jane-php/open-api-runtime",
@@ -4372,16 +4372,16 @@
         },
         {
             "name": "jane-php/json-schema",
-            "version": "v7.8.1",
+            "version": "v7.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/janephp/json-schema.git",
-                "reference": "f33f91fe40832c9ae312bf6f2baa5929bafaa341"
+                "reference": "3b0e617dde1a88b9d0fa76689c800c5b81465509"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janephp/json-schema/zipball/f33f91fe40832c9ae312bf6f2baa5929bafaa341",
-                "reference": "f33f91fe40832c9ae312bf6f2baa5929bafaa341",
+                "url": "https://api.github.com/repos/janephp/json-schema/zipball/3b0e617dde1a88b9d0fa76689c800c5b81465509",
+                "reference": "3b0e617dde1a88b9d0fa76689c800c5b81465509",
                 "shasum": ""
             },
             "require": {
@@ -4441,9 +4441,9 @@
             ],
             "description": "Generate a serializable / deserializable object model given a json schema",
             "support": {
-                "source": "https://github.com/janephp/json-schema/tree/v7.8.1"
+                "source": "https://github.com/janephp/json-schema/tree/v7.9.0"
             },
-            "time": "2024-07-29T13:51:58+00:00"
+            "time": "2025-04-17T13:13:17+00:00"
         },
         {
             "name": "jane-php/open-api-3",
@@ -4521,16 +4521,16 @@
         },
         {
             "name": "jane-php/open-api-common",
-            "version": "v7.8.1",
+            "version": "v7.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/janephp/open-api-common.git",
-                "reference": "9b6d48539cc6746e583f5e04869172bbf1014732"
+                "reference": "494b1fc97ff10ced2897d86084aa67c8aae986f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janephp/open-api-common/zipball/9b6d48539cc6746e583f5e04869172bbf1014732",
-                "reference": "9b6d48539cc6746e583f5e04869172bbf1014732",
+                "url": "https://api.github.com/repos/janephp/open-api-common/zipball/494b1fc97ff10ced2897d86084aa67c8aae986f1",
+                "reference": "494b1fc97ff10ced2897d86084aa67c8aae986f1",
                 "shasum": ""
             },
             "require": {
@@ -4584,9 +4584,9 @@
                 "utility"
             ],
             "support": {
-                "source": "https://github.com/janephp/open-api-common/tree/v7.8.1"
+                "source": "https://github.com/janephp/open-api-common/tree/v7.9.0"
             },
-            "time": "2024-07-29T13:51:58+00:00"
+            "time": "2025-04-04T09:35:19+00:00"
         },
         {
             "name": "masterminds/html5",
@@ -6015,12 +6015,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "508576e5d70b881870043c666e3e4081b474d23f"
+                "reference": "6c54d20ae795b83ecf3f826311d7f488cd1ef005"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/508576e5d70b881870043c666e3e4081b474d23f",
-                "reference": "508576e5d70b881870043c666e3e4081b474d23f",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/6c54d20ae795b83ecf3f826311d7f488cd1ef005",
+                "reference": "6c54d20ae795b83ecf3f826311d7f488cd1ef005",
                 "shasum": ""
             },
             "conflict": {
@@ -6527,6 +6527,7 @@
                 "pear/archive_tar": "<1.4.14",
                 "pear/auth": "<1.2.4",
                 "pear/crypt_gpg": "<1.6.7",
+                "pear/http_request2": "<2.7",
                 "pear/pear": "<=1.10.1",
                 "pegasus/google-for-jobs": "<1.5.1|>=2,<2.1.1",
                 "personnummer/personnummer": "<3.0.2",
@@ -6933,7 +6934,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-04-14T20:05:54+00:00"
+            "time": "2025-04-17T15:05:22+00:00"
         },
         {
             "name": "sebastian/cli-parser",
