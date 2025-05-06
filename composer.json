@@ -17,7 +17,7 @@
     "symfony/serializer": "^7.2.5"
   },
   "require-dev": {
-    "codeception/codeception": "^5.2.1",
+    "codeception/codeception": "^5.3.0",
     "codeception/module-asserts": "^3.1.0",
     "codeception/module-phpbrowser": "^3.0.1",
     "friendsofphp/php-cs-fixer": "3.75.0",
