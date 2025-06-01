@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.0](https://github.com/WebProject-xyz/php-docker-api-client/compare/1.1.0...1.2.0) (2025-06-01)
+
+### Features
+
+* **deps:** update symfony packages to ^7.3.0 ([#52](https://github.com/WebProject-xyz/php-docker-api-client/issues/52)) ([d6a4f30](https://github.com/WebProject-xyz/php-docker-api-client/commit/d6a4f3050b3af8c734bec489ef2c136b831661ec))
+
 ## [1.1.0](https://github.com/WebProject-xyz/php-docker-api-client/compare/1.0.0...1.1.0) (2025-03-26)
 
 ### Features
