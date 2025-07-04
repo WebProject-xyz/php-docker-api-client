@@ -6,7 +6,6 @@ namespace WebProject\DockerApiClient\Dto;
 
 use WebProject\DockerApi\Library\Generated\Model\PortBinding;
 use function array_unique;
-use function dump;
 use function explode;
 use function in_array;
 use function substr;

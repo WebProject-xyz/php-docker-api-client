@@ -571,14 +571,14 @@ class HostConfig extends ArrayObject
      * The list of paths to be masked inside the container (this overrides
      * the default set of paths).
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $maskedPaths;
     /**
      * The list of paths to be set as read-only inside the container
      * (this overrides the default set of paths).
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $readonlyPaths;
 
@@ -2570,9 +2570,9 @@ class HostConfig extends ArrayObject
      * The list of paths to be masked inside the container (this overrides
      * the default set of paths).
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getMaskedPaths(): array
+    public function getMaskedPaths(): ?array
     {
         return $this->maskedPaths;
     }
@@ -2581,11 +2581,11 @@ class HostConfig extends ArrayObject
      * The list of paths to be masked inside the container (this overrides
      * the default set of paths).
      *
-     * @param list<string> $maskedPaths
+     * @param list<string>|null $maskedPaths
      *
      * @return self
      */
-    public function setMaskedPaths(array $maskedPaths): self
+    public function setMaskedPaths(?array $maskedPaths): self
     {
         $this->initialized['maskedPaths'] = true;
         $this->maskedPaths                = $maskedPaths;
@@ -2597,9 +2597,9 @@ class HostConfig extends ArrayObject
      * The list of paths to be set as read-only inside the container
      * (this overrides the default set of paths).
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getReadonlyPaths(): array
+    public function getReadonlyPaths(): ?array
     {
         return $this->readonlyPaths;
     }
@@ -2608,11 +2608,11 @@ class HostConfig extends ArrayObject
      * The list of paths to be set as read-only inside the container
      * (this overrides the default set of paths).
      *
-     * @param list<string> $readonlyPaths
+     * @param list<string>|null $readonlyPaths
      *
      * @return self
      */
-    public function setReadonlyPaths(array $readonlyPaths): self
+    public function setReadonlyPaths(?array $readonlyPaths): self
     {
         $this->initialized['readonlyPaths'] = true;
         $this->readonlyPaths                = $readonlyPaths;

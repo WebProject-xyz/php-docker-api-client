@@ -5,8 +5,6 @@ namespace WebProject\DockerApi\Library\Generated\Normalizer;
 
 use ArrayObject;
 use Jane\Component\JsonSchemaRuntime\Reference;
-use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -20,163 +18,81 @@ use function get_class;
 use function is_array;
 use function is_object;
 
-if (!class_exists(Kernel::class) || (Kernel::MAJOR_VERSION >= 7 || Kernel::MAJOR_VERSION === 6 && Kernel::MINOR_VERSION === 4)) {
-    class ContainerPidsStatsNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
+class ContainerPidsStatsNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
+{
+    use CheckArray;
+    use DenormalizerAwareTrait;
+    use NormalizerAwareTrait;
+    use ValidatorTrait;
+
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
-        use CheckArray;
-        use DenormalizerAwareTrait;
-        use NormalizerAwareTrait;
-        use ValidatorTrait;
-
-        public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
-        {
-            return \WebProject\DockerApi\Library\Generated\Model\ContainerPidsStats::class === $type;
-        }
-
-        public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
-        {
-            return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\ContainerPidsStats::class === get_class($data);
-        }
-
-        public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
-        {
-            if (isset($data['$ref'])) {
-                return new Reference($data['$ref'], $context['document-origin']);
-            }
-            if (isset($data['$recursiveRef'])) {
-                return new Reference($data['$recursiveRef'], $context['document-origin']);
-            }
-            $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerPidsStats();
-            if (null === $data || false === is_array($data)) {
-                return $object;
-            }
-            if (array_key_exists('current', $data) && null !== $data['current']) {
-                $object->setCurrent($data['current']);
-                unset($data['current']);
-            } elseif (array_key_exists('current', $data) && null === $data['current']) {
-                $object->setCurrent(null);
-            }
-            if (array_key_exists('limit', $data) && null !== $data['limit']) {
-                $object->setLimit($data['limit']);
-                unset($data['limit']);
-            } elseif (array_key_exists('limit', $data) && null === $data['limit']) {
-                $object->setLimit(null);
-            }
-            foreach ($data as $key => $value) {
-                if (preg_match('/.*/', (string) $key)) {
-                    $object[$key] = $value;
-                }
-            }
-
-            return $object;
-        }
-
-        public function normalize(mixed $object, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
-        {
-            $data = [];
-            if ($object->isInitialized('current') && null !== $object->getCurrent()) {
-                $data['current'] = $object->getCurrent();
-            }
-            if ($object->isInitialized('limit') && null !== $object->getLimit()) {
-                $data['limit'] = $object->getLimit();
-            }
-            foreach ($object as $key => $value) {
-                if (preg_match('/.*/', (string) $key)) {
-                    $data[$key] = $value;
-                }
-            }
-
-            return $data;
-        }
-
-        public function getSupportedTypes(?string $format = null): array
-        {
-            return [\WebProject\DockerApi\Library\Generated\Model\ContainerPidsStats::class => true];
-        }
+        return \WebProject\DockerApi\Library\Generated\Model\ContainerPidsStats::class === $type;
     }
-} else {
-    class ContainerPidsStatsNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface, CacheableSupportsMethodInterface
+
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
-        use CheckArray;
-        use DenormalizerAwareTrait;
-        use NormalizerAwareTrait;
-        use ValidatorTrait;
+        return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\ContainerPidsStats::class === get_class($data);
+    }
 
-        public function supportsDenormalization($data, $type, ?string $format = null, array $context = []): bool
-        {
-            return \WebProject\DockerApi\Library\Generated\Model\ContainerPidsStats::class === $type;
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
+    {
+        if (isset($data['$ref'])) {
+            return new Reference($data['$ref'], $context['document-origin']);
         }
-
-        public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
-        {
-            return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\ContainerPidsStats::class === get_class($data);
+        if (isset($data['$recursiveRef'])) {
+            return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-
-        /**
-         * @return mixed
-         */
-        public function denormalize($data, $type, $format = null, array $context = [])
-        {
-            if (isset($data['$ref'])) {
-                return new Reference($data['$ref'], $context['document-origin']);
-            }
-            if (isset($data['$recursiveRef'])) {
-                return new Reference($data['$recursiveRef'], $context['document-origin']);
-            }
-            $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerPidsStats();
-            if (null === $data || false === is_array($data)) {
-                return $object;
-            }
-            if (array_key_exists('current', $data) && null !== $data['current']) {
-                $object->setCurrent($data['current']);
-                unset($data['current']);
-            } elseif (array_key_exists('current', $data) && null === $data['current']) {
-                $object->setCurrent(null);
-            }
-            if (array_key_exists('limit', $data) && null !== $data['limit']) {
-                $object->setLimit($data['limit']);
-                unset($data['limit']);
-            } elseif (array_key_exists('limit', $data) && null === $data['limit']) {
-                $object->setLimit(null);
-            }
-            foreach ($data as $key => $value) {
-                if (preg_match('/.*/', (string) $key)) {
-                    $object[$key] = $value;
-                }
-            }
-
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerPidsStats();
+        if (null === $data || false === is_array($data)) {
             return $object;
         }
-
-        /**
-         * @return array|string|int|float|bool|ArrayObject|null
-         */
-        public function normalize($object, $format = null, array $context = [])
-        {
-            $data = [];
-            if ($object->isInitialized('current') && null !== $object->getCurrent()) {
-                $data['current'] = $object->getCurrent();
+        if (array_key_exists('current', $data) && null !== $data['current']) {
+            $object->setCurrent($data['current']);
+            unset($data['current']);
+        } elseif (array_key_exists('current', $data) && null === $data['current']) {
+            $object->setCurrent(null);
+        }
+        if (array_key_exists('limit', $data) && null !== $data['limit']) {
+            $object->setLimit($data['limit']);
+            unset($data['limit']);
+        } elseif (array_key_exists('limit', $data) && null === $data['limit']) {
+            $object->setLimit(null);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
             }
-            if ($object->isInitialized('limit') && null !== $object->getLimit()) {
-                $data['limit'] = $object->getLimit();
-            }
-            foreach ($object as $key => $value) {
-                if (preg_match('/.*/', (string) $key)) {
-                    $data[$key] = $value;
-                }
-            }
-
-            return $data;
         }
 
-        public function getSupportedTypes(?string $format = null): array
-        {
-            return [\WebProject\DockerApi\Library\Generated\Model\ContainerPidsStats::class => true];
+        return $object;
+    }
+
+    public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
+    {
+        $dataArray = [];
+        if ($data->isInitialized('current') && null !== $data->getCurrent()) {
+            $dataArray['current'] = $data->getCurrent();
+        }
+        if ($data->isInitialized('limit') && null !== $data->getLimit()) {
+            $dataArray['limit'] = $data->getLimit();
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
         }
 
-        public function hasCacheableSupportsMethod(): bool
-        {
-            return true;
-        }
+        return $dataArray;
+    }
+
+    public function getSupportedTypes(?string $format = null): array
+    {
+        return [\WebProject\DockerApi\Library\Generated\Model\ContainerPidsStats::class => true];
+    }
+
+    public function hasCacheableSupportsMethod(): bool
+    {
+        return true;
     }
 }

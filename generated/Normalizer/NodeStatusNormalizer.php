@@ -5,8 +5,6 @@ namespace WebProject\DockerApi\Library\Generated\Normalizer;
 
 use ArrayObject;
 use Jane\Component\JsonSchemaRuntime\Reference;
-use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -20,169 +18,84 @@ use function get_class;
 use function is_array;
 use function is_object;
 
-if (!class_exists(Kernel::class) || (Kernel::MAJOR_VERSION >= 7 || Kernel::MAJOR_VERSION === 6 && Kernel::MINOR_VERSION === 4)) {
-    class NodeStatusNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
+class NodeStatusNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
+{
+    use CheckArray;
+    use DenormalizerAwareTrait;
+    use NormalizerAwareTrait;
+    use ValidatorTrait;
+
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
-        use CheckArray;
-        use DenormalizerAwareTrait;
-        use NormalizerAwareTrait;
-        use ValidatorTrait;
-
-        public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
-        {
-            return \WebProject\DockerApi\Library\Generated\Model\NodeStatus::class === $type;
-        }
-
-        public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
-        {
-            return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\NodeStatus::class === get_class($data);
-        }
-
-        public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
-        {
-            if (isset($data['$ref'])) {
-                return new Reference($data['$ref'], $context['document-origin']);
-            }
-            if (isset($data['$recursiveRef'])) {
-                return new Reference($data['$recursiveRef'], $context['document-origin']);
-            }
-            $object = new \WebProject\DockerApi\Library\Generated\Model\NodeStatus();
-            if (null === $data || false === is_array($data)) {
-                return $object;
-            }
-            if (array_key_exists('State', $data)) {
-                $object->setState($data['State']);
-                unset($data['State']);
-            }
-            if (array_key_exists('Message', $data)) {
-                $object->setMessage($data['Message']);
-                unset($data['Message']);
-            }
-            if (array_key_exists('Addr', $data)) {
-                $object->setAddr($data['Addr']);
-                unset($data['Addr']);
-            }
-            foreach ($data as $key => $value) {
-                if (preg_match('/.*/', (string) $key)) {
-                    $object[$key] = $value;
-                }
-            }
-
-            return $object;
-        }
-
-        public function normalize(mixed $object, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
-        {
-            $data = [];
-            if ($object->isInitialized('state') && null !== $object->getState()) {
-                $data['State'] = $object->getState();
-            }
-            if ($object->isInitialized('message') && null !== $object->getMessage()) {
-                $data['Message'] = $object->getMessage();
-            }
-            if ($object->isInitialized('addr') && null !== $object->getAddr()) {
-                $data['Addr'] = $object->getAddr();
-            }
-            foreach ($object as $key => $value) {
-                if (preg_match('/.*/', (string) $key)) {
-                    $data[$key] = $value;
-                }
-            }
-
-            return $data;
-        }
-
-        public function getSupportedTypes(?string $format = null): array
-        {
-            return [\WebProject\DockerApi\Library\Generated\Model\NodeStatus::class => true];
-        }
+        return \WebProject\DockerApi\Library\Generated\Model\NodeStatus::class === $type;
     }
-} else {
-    class NodeStatusNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface, CacheableSupportsMethodInterface
+
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
-        use CheckArray;
-        use DenormalizerAwareTrait;
-        use NormalizerAwareTrait;
-        use ValidatorTrait;
+        return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\NodeStatus::class === get_class($data);
+    }
 
-        public function supportsDenormalization($data, $type, ?string $format = null, array $context = []): bool
-        {
-            return \WebProject\DockerApi\Library\Generated\Model\NodeStatus::class === $type;
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
+    {
+        if (isset($data['$ref'])) {
+            return new Reference($data['$ref'], $context['document-origin']);
         }
-
-        public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
-        {
-            return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\NodeStatus::class === get_class($data);
+        if (isset($data['$recursiveRef'])) {
+            return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-
-        /**
-         * @return mixed
-         */
-        public function denormalize($data, $type, $format = null, array $context = [])
-        {
-            if (isset($data['$ref'])) {
-                return new Reference($data['$ref'], $context['document-origin']);
-            }
-            if (isset($data['$recursiveRef'])) {
-                return new Reference($data['$recursiveRef'], $context['document-origin']);
-            }
-            $object = new \WebProject\DockerApi\Library\Generated\Model\NodeStatus();
-            if (null === $data || false === is_array($data)) {
-                return $object;
-            }
-            if (array_key_exists('State', $data)) {
-                $object->setState($data['State']);
-                unset($data['State']);
-            }
-            if (array_key_exists('Message', $data)) {
-                $object->setMessage($data['Message']);
-                unset($data['Message']);
-            }
-            if (array_key_exists('Addr', $data)) {
-                $object->setAddr($data['Addr']);
-                unset($data['Addr']);
-            }
-            foreach ($data as $key => $value) {
-                if (preg_match('/.*/', (string) $key)) {
-                    $object[$key] = $value;
-                }
-            }
-
+        $object = new \WebProject\DockerApi\Library\Generated\Model\NodeStatus();
+        if (null === $data || false === is_array($data)) {
             return $object;
         }
-
-        /**
-         * @return array|string|int|float|bool|ArrayObject|null
-         */
-        public function normalize($object, $format = null, array $context = [])
-        {
-            $data = [];
-            if ($object->isInitialized('state') && null !== $object->getState()) {
-                $data['State'] = $object->getState();
+        if (array_key_exists('State', $data)) {
+            $object->setState($data['State']);
+            unset($data['State']);
+        }
+        if (array_key_exists('Message', $data)) {
+            $object->setMessage($data['Message']);
+            unset($data['Message']);
+        }
+        if (array_key_exists('Addr', $data)) {
+            $object->setAddr($data['Addr']);
+            unset($data['Addr']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
             }
-            if ($object->isInitialized('message') && null !== $object->getMessage()) {
-                $data['Message'] = $object->getMessage();
-            }
-            if ($object->isInitialized('addr') && null !== $object->getAddr()) {
-                $data['Addr'] = $object->getAddr();
-            }
-            foreach ($object as $key => $value) {
-                if (preg_match('/.*/', (string) $key)) {
-                    $data[$key] = $value;
-                }
-            }
-
-            return $data;
         }
 
-        public function getSupportedTypes(?string $format = null): array
-        {
-            return [\WebProject\DockerApi\Library\Generated\Model\NodeStatus::class => true];
+        return $object;
+    }
+
+    public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
+    {
+        $dataArray = [];
+        if ($data->isInitialized('state') && null !== $data->getState()) {
+            $dataArray['State'] = $data->getState();
+        }
+        if ($data->isInitialized('message') && null !== $data->getMessage()) {
+            $dataArray['Message'] = $data->getMessage();
+        }
+        if ($data->isInitialized('addr') && null !== $data->getAddr()) {
+            $dataArray['Addr'] = $data->getAddr();
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
         }
 
-        public function hasCacheableSupportsMethod(): bool
-        {
-            return true;
-        }
+        return $dataArray;
+    }
+
+    public function getSupportedTypes(?string $format = null): array
+    {
+        return [\WebProject\DockerApi\Library\Generated\Model\NodeStatus::class => true];
+    }
+
+    public function hasCacheableSupportsMethod(): bool
+    {
+        return true;
     }
 }

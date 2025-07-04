@@ -38,7 +38,7 @@ class PluginConfig extends ArrayObject
      */
     protected $interface;
     /**
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $entrypoint;
     /**
@@ -179,19 +179,19 @@ class PluginConfig extends ArrayObject
     }
 
     /**
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getEntrypoint(): array
+    public function getEntrypoint(): ?array
     {
         return $this->entrypoint;
     }
 
     /**
-     * @param list<string> $entrypoint
+     * @param list<string>|null $entrypoint
      *
      * @return self
      */
-    public function setEntrypoint(array $entrypoint): self
+    public function setEntrypoint(?array $entrypoint): self
     {
         $this->initialized['entrypoint'] = true;
         $this->entrypoint                = $entrypoint;

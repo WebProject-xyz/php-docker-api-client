@@ -6,7 +6,6 @@ namespace WebProject\DockerApiClient\Util;
 
 use WebProject\DockerApi\Library\Generated\Model\ContainerInspectResponse;
 use WebProject\DockerApiClient\Dto\DockerContainerDto;
-use function array_map;
 use function array_unique;
 use function explode;
 use function is_string;

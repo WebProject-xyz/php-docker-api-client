@@ -5,8 +5,6 @@ namespace WebProject\DockerApi\Library\Generated\Normalizer;
 
 use ArrayObject;
 use Jane\Component\JsonSchemaRuntime\Reference;
-use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -18,199 +16,113 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
 
-if (!class_exists(Kernel::class) || (Kernel::MAJOR_VERSION >= 7 || Kernel::MAJOR_VERSION === 6 && Kernel::MINOR_VERSION === 4)) {
-    class MountBindOptionsNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
+class MountBindOptionsNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
+{
+    use CheckArray;
+    use DenormalizerAwareTrait;
+    use NormalizerAwareTrait;
+    use ValidatorTrait;
+
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
-        use CheckArray;
-        use DenormalizerAwareTrait;
-        use NormalizerAwareTrait;
-        use ValidatorTrait;
-
-        public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
-        {
-            return \WebProject\DockerApi\Library\Generated\Model\MountBindOptions::class === $type;
-        }
-
-        public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
-        {
-            return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\MountBindOptions::class === get_class($data);
-        }
-
-        public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
-        {
-            if (isset($data['$ref'])) {
-                return new Reference($data['$ref'], $context['document-origin']);
-            }
-            if (isset($data['$recursiveRef'])) {
-                return new Reference($data['$recursiveRef'], $context['document-origin']);
-            }
-            $object = new \WebProject\DockerApi\Library\Generated\Model\MountBindOptions();
-            if (null === $data || false === is_array($data)) {
-                return $object;
-            }
-            if (array_key_exists('Propagation', $data)) {
-                $object->setPropagation($data['Propagation']);
-                unset($data['Propagation']);
-            }
-            if (array_key_exists('NonRecursive', $data)) {
-                $object->setNonRecursive($data['NonRecursive']);
-                unset($data['NonRecursive']);
-            }
-            if (array_key_exists('CreateMountpoint', $data)) {
-                $object->setCreateMountpoint($data['CreateMountpoint']);
-                unset($data['CreateMountpoint']);
-            }
-            if (array_key_exists('ReadOnlyNonRecursive', $data)) {
-                $object->setReadOnlyNonRecursive($data['ReadOnlyNonRecursive']);
-                unset($data['ReadOnlyNonRecursive']);
-            }
-            if (array_key_exists('ReadOnlyForceRecursive', $data)) {
-                $object->setReadOnlyForceRecursive($data['ReadOnlyForceRecursive']);
-                unset($data['ReadOnlyForceRecursive']);
-            }
-            foreach ($data as $key => $value) {
-                if (preg_match('/.*/', (string) $key)) {
-                    $object[$key] = $value;
-                }
-            }
-
-            return $object;
-        }
-
-        public function normalize(mixed $object, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
-        {
-            $data = [];
-            if ($object->isInitialized('propagation') && null !== $object->getPropagation()) {
-                $data['Propagation'] = $object->getPropagation();
-            }
-            if ($object->isInitialized('nonRecursive') && null !== $object->getNonRecursive()) {
-                $data['NonRecursive'] = $object->getNonRecursive();
-            }
-            if ($object->isInitialized('createMountpoint') && null !== $object->getCreateMountpoint()) {
-                $data['CreateMountpoint'] = $object->getCreateMountpoint();
-            }
-            if ($object->isInitialized('readOnlyNonRecursive') && null !== $object->getReadOnlyNonRecursive()) {
-                $data['ReadOnlyNonRecursive'] = $object->getReadOnlyNonRecursive();
-            }
-            if ($object->isInitialized('readOnlyForceRecursive') && null !== $object->getReadOnlyForceRecursive()) {
-                $data['ReadOnlyForceRecursive'] = $object->getReadOnlyForceRecursive();
-            }
-            foreach ($object as $key => $value) {
-                if (preg_match('/.*/', (string) $key)) {
-                    $data[$key] = $value;
-                }
-            }
-
-            return $data;
-        }
-
-        public function getSupportedTypes(?string $format = null): array
-        {
-            return [\WebProject\DockerApi\Library\Generated\Model\MountBindOptions::class => true];
-        }
+        return \WebProject\DockerApi\Library\Generated\Model\MountBindOptions::class === $type;
     }
-} else {
-    class MountBindOptionsNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface, CacheableSupportsMethodInterface
+
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
-        use CheckArray;
-        use DenormalizerAwareTrait;
-        use NormalizerAwareTrait;
-        use ValidatorTrait;
+        return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\MountBindOptions::class === get_class($data);
+    }
 
-        public function supportsDenormalization($data, $type, ?string $format = null, array $context = []): bool
-        {
-            return \WebProject\DockerApi\Library\Generated\Model\MountBindOptions::class === $type;
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
+    {
+        if (isset($data['$ref'])) {
+            return new Reference($data['$ref'], $context['document-origin']);
         }
-
-        public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
-        {
-            return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\MountBindOptions::class === get_class($data);
+        if (isset($data['$recursiveRef'])) {
+            return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-
-        /**
-         * @return mixed
-         */
-        public function denormalize($data, $type, $format = null, array $context = [])
-        {
-            if (isset($data['$ref'])) {
-                return new Reference($data['$ref'], $context['document-origin']);
-            }
-            if (isset($data['$recursiveRef'])) {
-                return new Reference($data['$recursiveRef'], $context['document-origin']);
-            }
-            $object = new \WebProject\DockerApi\Library\Generated\Model\MountBindOptions();
-            if (null === $data || false === is_array($data)) {
-                return $object;
-            }
-            if (array_key_exists('Propagation', $data)) {
-                $object->setPropagation($data['Propagation']);
-                unset($data['Propagation']);
-            }
-            if (array_key_exists('NonRecursive', $data)) {
-                $object->setNonRecursive($data['NonRecursive']);
-                unset($data['NonRecursive']);
-            }
-            if (array_key_exists('CreateMountpoint', $data)) {
-                $object->setCreateMountpoint($data['CreateMountpoint']);
-                unset($data['CreateMountpoint']);
-            }
-            if (array_key_exists('ReadOnlyNonRecursive', $data)) {
-                $object->setReadOnlyNonRecursive($data['ReadOnlyNonRecursive']);
-                unset($data['ReadOnlyNonRecursive']);
-            }
-            if (array_key_exists('ReadOnlyForceRecursive', $data)) {
-                $object->setReadOnlyForceRecursive($data['ReadOnlyForceRecursive']);
-                unset($data['ReadOnlyForceRecursive']);
-            }
-            foreach ($data as $key => $value) {
-                if (preg_match('/.*/', (string) $key)) {
-                    $object[$key] = $value;
-                }
-            }
-
+        $object = new \WebProject\DockerApi\Library\Generated\Model\MountBindOptions();
+        if (array_key_exists('NonRecursive', $data) && is_int($data['NonRecursive'])) {
+            $data['NonRecursive'] = (bool) $data['NonRecursive'];
+        }
+        if (array_key_exists('CreateMountpoint', $data) && is_int($data['CreateMountpoint'])) {
+            $data['CreateMountpoint'] = (bool) $data['CreateMountpoint'];
+        }
+        if (array_key_exists('ReadOnlyNonRecursive', $data) && is_int($data['ReadOnlyNonRecursive'])) {
+            $data['ReadOnlyNonRecursive'] = (bool) $data['ReadOnlyNonRecursive'];
+        }
+        if (array_key_exists('ReadOnlyForceRecursive', $data) && is_int($data['ReadOnlyForceRecursive'])) {
+            $data['ReadOnlyForceRecursive'] = (bool) $data['ReadOnlyForceRecursive'];
+        }
+        if (null === $data || false === is_array($data)) {
             return $object;
         }
-
-        /**
-         * @return array|string|int|float|bool|ArrayObject|null
-         */
-        public function normalize($object, $format = null, array $context = [])
-        {
-            $data = [];
-            if ($object->isInitialized('propagation') && null !== $object->getPropagation()) {
-                $data['Propagation'] = $object->getPropagation();
+        if (array_key_exists('Propagation', $data)) {
+            $object->setPropagation($data['Propagation']);
+            unset($data['Propagation']);
+        }
+        if (array_key_exists('NonRecursive', $data)) {
+            $object->setNonRecursive($data['NonRecursive']);
+            unset($data['NonRecursive']);
+        }
+        if (array_key_exists('CreateMountpoint', $data)) {
+            $object->setCreateMountpoint($data['CreateMountpoint']);
+            unset($data['CreateMountpoint']);
+        }
+        if (array_key_exists('ReadOnlyNonRecursive', $data)) {
+            $object->setReadOnlyNonRecursive($data['ReadOnlyNonRecursive']);
+            unset($data['ReadOnlyNonRecursive']);
+        }
+        if (array_key_exists('ReadOnlyForceRecursive', $data)) {
+            $object->setReadOnlyForceRecursive($data['ReadOnlyForceRecursive']);
+            unset($data['ReadOnlyForceRecursive']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
             }
-            if ($object->isInitialized('nonRecursive') && null !== $object->getNonRecursive()) {
-                $data['NonRecursive'] = $object->getNonRecursive();
-            }
-            if ($object->isInitialized('createMountpoint') && null !== $object->getCreateMountpoint()) {
-                $data['CreateMountpoint'] = $object->getCreateMountpoint();
-            }
-            if ($object->isInitialized('readOnlyNonRecursive') && null !== $object->getReadOnlyNonRecursive()) {
-                $data['ReadOnlyNonRecursive'] = $object->getReadOnlyNonRecursive();
-            }
-            if ($object->isInitialized('readOnlyForceRecursive') && null !== $object->getReadOnlyForceRecursive()) {
-                $data['ReadOnlyForceRecursive'] = $object->getReadOnlyForceRecursive();
-            }
-            foreach ($object as $key => $value) {
-                if (preg_match('/.*/', (string) $key)) {
-                    $data[$key] = $value;
-                }
-            }
-
-            return $data;
         }
 
-        public function getSupportedTypes(?string $format = null): array
-        {
-            return [\WebProject\DockerApi\Library\Generated\Model\MountBindOptions::class => true];
+        return $object;
+    }
+
+    public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
+    {
+        $dataArray = [];
+        if ($data->isInitialized('propagation') && null !== $data->getPropagation()) {
+            $dataArray['Propagation'] = $data->getPropagation();
+        }
+        if ($data->isInitialized('nonRecursive') && null !== $data->getNonRecursive()) {
+            $dataArray['NonRecursive'] = $data->getNonRecursive();
+        }
+        if ($data->isInitialized('createMountpoint') && null !== $data->getCreateMountpoint()) {
+            $dataArray['CreateMountpoint'] = $data->getCreateMountpoint();
+        }
+        if ($data->isInitialized('readOnlyNonRecursive') && null !== $data->getReadOnlyNonRecursive()) {
+            $dataArray['ReadOnlyNonRecursive'] = $data->getReadOnlyNonRecursive();
+        }
+        if ($data->isInitialized('readOnlyForceRecursive') && null !== $data->getReadOnlyForceRecursive()) {
+            $dataArray['ReadOnlyForceRecursive'] = $data->getReadOnlyForceRecursive();
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
         }
 
-        public function hasCacheableSupportsMethod(): bool
-        {
-            return true;
-        }
+        return $dataArray;
+    }
+
+    public function getSupportedTypes(?string $format = null): array
+    {
+        return [\WebProject\DockerApi\Library\Generated\Model\MountBindOptions::class => true];
+    }
+
+    public function hasCacheableSupportsMethod(): bool
+    {
+        return true;
     }
 }

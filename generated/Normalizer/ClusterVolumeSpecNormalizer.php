@@ -5,8 +5,6 @@ namespace WebProject\DockerApi\Library\Generated\Normalizer;
 
 use ArrayObject;
 use Jane\Component\JsonSchemaRuntime\Reference;
-use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -20,155 +18,77 @@ use function get_class;
 use function is_array;
 use function is_object;
 
-if (!class_exists(Kernel::class) || (Kernel::MAJOR_VERSION >= 7 || Kernel::MAJOR_VERSION === 6 && Kernel::MINOR_VERSION === 4)) {
-    class ClusterVolumeSpecNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
+class ClusterVolumeSpecNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
+{
+    use CheckArray;
+    use DenormalizerAwareTrait;
+    use NormalizerAwareTrait;
+    use ValidatorTrait;
+
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
-        use CheckArray;
-        use DenormalizerAwareTrait;
-        use NormalizerAwareTrait;
-        use ValidatorTrait;
-
-        public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
-        {
-            return \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec::class === $type;
-        }
-
-        public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
-        {
-            return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec::class === get_class($data);
-        }
-
-        public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
-        {
-            if (isset($data['$ref'])) {
-                return new Reference($data['$ref'], $context['document-origin']);
-            }
-            if (isset($data['$recursiveRef'])) {
-                return new Reference($data['$recursiveRef'], $context['document-origin']);
-            }
-            $object = new \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec();
-            if (null === $data || false === is_array($data)) {
-                return $object;
-            }
-            if (array_key_exists('Group', $data)) {
-                $object->setGroup($data['Group']);
-                unset($data['Group']);
-            }
-            if (array_key_exists('AccessMode', $data)) {
-                $object->setAccessMode($this->denormalizer->denormalize($data['AccessMode'], \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessMode::class, 'json', $context));
-                unset($data['AccessMode']);
-            }
-            foreach ($data as $key => $value) {
-                if (preg_match('/.*/', (string) $key)) {
-                    $object[$key] = $value;
-                }
-            }
-
-            return $object;
-        }
-
-        public function normalize(mixed $object, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
-        {
-            $data = [];
-            if ($object->isInitialized('group') && null !== $object->getGroup()) {
-                $data['Group'] = $object->getGroup();
-            }
-            if ($object->isInitialized('accessMode') && null !== $object->getAccessMode()) {
-                $data['AccessMode'] = $this->normalizer->normalize($object->getAccessMode(), 'json', $context);
-            }
-            foreach ($object as $key => $value) {
-                if (preg_match('/.*/', (string) $key)) {
-                    $data[$key] = $value;
-                }
-            }
-
-            return $data;
-        }
-
-        public function getSupportedTypes(?string $format = null): array
-        {
-            return [\WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec::class => true];
-        }
+        return \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec::class === $type;
     }
-} else {
-    class ClusterVolumeSpecNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface, CacheableSupportsMethodInterface
+
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
-        use CheckArray;
-        use DenormalizerAwareTrait;
-        use NormalizerAwareTrait;
-        use ValidatorTrait;
+        return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec::class === get_class($data);
+    }
 
-        public function supportsDenormalization($data, $type, ?string $format = null, array $context = []): bool
-        {
-            return \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec::class === $type;
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
+    {
+        if (isset($data['$ref'])) {
+            return new Reference($data['$ref'], $context['document-origin']);
         }
-
-        public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
-        {
-            return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec::class === get_class($data);
+        if (isset($data['$recursiveRef'])) {
+            return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-
-        /**
-         * @return mixed
-         */
-        public function denormalize($data, $type, $format = null, array $context = [])
-        {
-            if (isset($data['$ref'])) {
-                return new Reference($data['$ref'], $context['document-origin']);
-            }
-            if (isset($data['$recursiveRef'])) {
-                return new Reference($data['$recursiveRef'], $context['document-origin']);
-            }
-            $object = new \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec();
-            if (null === $data || false === is_array($data)) {
-                return $object;
-            }
-            if (array_key_exists('Group', $data)) {
-                $object->setGroup($data['Group']);
-                unset($data['Group']);
-            }
-            if (array_key_exists('AccessMode', $data)) {
-                $object->setAccessMode($this->denormalizer->denormalize($data['AccessMode'], \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessMode::class, 'json', $context));
-                unset($data['AccessMode']);
-            }
-            foreach ($data as $key => $value) {
-                if (preg_match('/.*/', (string) $key)) {
-                    $object[$key] = $value;
-                }
-            }
-
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec();
+        if (null === $data || false === is_array($data)) {
             return $object;
         }
-
-        /**
-         * @return array|string|int|float|bool|ArrayObject|null
-         */
-        public function normalize($object, $format = null, array $context = [])
-        {
-            $data = [];
-            if ($object->isInitialized('group') && null !== $object->getGroup()) {
-                $data['Group'] = $object->getGroup();
+        if (array_key_exists('Group', $data)) {
+            $object->setGroup($data['Group']);
+            unset($data['Group']);
+        }
+        if (array_key_exists('AccessMode', $data)) {
+            $object->setAccessMode($this->denormalizer->denormalize($data['AccessMode'], \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessMode::class, 'json', $context));
+            unset($data['AccessMode']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
             }
-            if ($object->isInitialized('accessMode') && null !== $object->getAccessMode()) {
-                $data['AccessMode'] = $this->normalizer->normalize($object->getAccessMode(), 'json', $context);
-            }
-            foreach ($object as $key => $value) {
-                if (preg_match('/.*/', (string) $key)) {
-                    $data[$key] = $value;
-                }
-            }
-
-            return $data;
         }
 
-        public function getSupportedTypes(?string $format = null): array
-        {
-            return [\WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec::class => true];
+        return $object;
+    }
+
+    public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
+    {
+        $dataArray = [];
+        if ($data->isInitialized('group') && null !== $data->getGroup()) {
+            $dataArray['Group'] = $data->getGroup();
+        }
+        if ($data->isInitialized('accessMode') && null !== $data->getAccessMode()) {
+            $dataArray['AccessMode'] = $this->normalizer->normalize($data->getAccessMode(), 'json', $context);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
         }
 
-        public function hasCacheableSupportsMethod(): bool
-        {
-            return true;
-        }
+        return $dataArray;
+    }
+
+    public function getSupportedTypes(?string $format = null): array
+    {
+        return [\WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec::class => true];
+    }
+
+    public function hasCacheableSupportsMethod(): bool
+    {
+        return true;
     }
 }

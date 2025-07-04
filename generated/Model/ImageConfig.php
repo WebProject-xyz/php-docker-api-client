@@ -177,7 +177,7 @@ class ImageConfig extends ArrayObject
      * entry point is reset to system default (i.e., the entry point used by
      * docker when there is no `ENTRYPOINT` instruction in the `Dockerfile`).
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $entrypoint;
     /**
@@ -772,9 +772,9 @@ class ImageConfig extends ArrayObject
      * entry point is reset to system default (i.e., the entry point used by
      * docker when there is no `ENTRYPOINT` instruction in the `Dockerfile`).
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getEntrypoint(): array
+    public function getEntrypoint(): ?array
     {
         return $this->entrypoint;
     }
@@ -786,11 +786,11 @@ class ImageConfig extends ArrayObject
      * entry point is reset to system default (i.e., the entry point used by
      * docker when there is no `ENTRYPOINT` instruction in the `Dockerfile`).
      *
-     * @param list<string> $entrypoint
+     * @param list<string>|null $entrypoint
      *
      * @return self
      */
-    public function setEntrypoint(array $entrypoint): self
+    public function setEntrypoint(?array $entrypoint): self
     {
         $this->initialized['entrypoint'] = true;
         $this->entrypoint                = $entrypoint;
