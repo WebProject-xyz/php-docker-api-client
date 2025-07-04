@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/WebProject-xyz/php-docker-api-client/compare/1.2.0...1.2.1) (2025-07-04)
+
+### Bug Fixes
+
+* **client:** update/generate jane client ([7e91d03](https://github.com/WebProject-xyz/php-docker-api-client/commit/7e91d03f6d23a00d4476f385b8cfc932f128df6e))
+
 ## [1.2.0](https://github.com/WebProject-xyz/php-docker-api-client/compare/1.1.0...1.2.0) (2025-06-01)
 
 ### Features
