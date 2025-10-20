@@ -57,6 +57,9 @@ class MountBindOptionsNormalizer implements DenormalizerInterface, NormalizerInt
         if (array_key_exists('ReadOnlyForceRecursive', $data) && is_int($data['ReadOnlyForceRecursive'])) {
             $data['ReadOnlyForceRecursive'] = (bool) $data['ReadOnlyForceRecursive'];
         }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\MountBindOptionsConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -111,6 +114,9 @@ class MountBindOptionsNormalizer implements DenormalizerInterface, NormalizerInt
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\MountBindOptionsConstraint());
         }
 
         return $dataArray;

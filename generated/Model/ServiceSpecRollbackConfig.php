@@ -51,7 +51,7 @@ class ServiceSpecRollbackConfig extends ArrayObject
      *
      * @var float
      */
-    protected $maxFailureRatio;
+    protected $maxFailureRatio = 0;
     /**
      * The order of operations when rolling back a task. Either the old
      * task is shut down before the new task is started, or the new task

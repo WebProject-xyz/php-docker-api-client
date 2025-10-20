@@ -78,7 +78,7 @@ class ContainerSummary extends ArrayObject
     /**
      * Port-mappings for the container.
      *
-     * @var list<Port>|null
+     * @var list<Port>
      */
     protected $ports;
     /**
@@ -349,9 +349,9 @@ class ContainerSummary extends ArrayObject
     /**
      * Port-mappings for the container.
      *
-     * @return list<Port>|null
+     * @return list<Port>
      */
-    public function getPorts(): ?array
+    public function getPorts(): array
     {
         return $this->ports;
     }
@@ -359,11 +359,11 @@ class ContainerSummary extends ArrayObject
     /**
      * Port-mappings for the container.
      *
-     * @param list<Port>|null $ports
+     * @param list<Port> $ports
      *
      * @return self
      */
-    public function setPorts(?array $ports): self
+    public function setPorts(array $ports): self
     {
         $this->initialized['ports'] = true;
         $this->ports                = $ports;

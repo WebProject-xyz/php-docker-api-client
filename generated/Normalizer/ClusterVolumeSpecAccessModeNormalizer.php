@@ -44,6 +44,9 @@ class ClusterVolumeSpecAccessModeNormalizer implements DenormalizerInterface, No
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessMode();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ClusterVolumeSpecAccessModeConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -56,15 +59,19 @@ class ClusterVolumeSpecAccessModeNormalizer implements DenormalizerInterface, No
             unset($data['Sharing']);
         }
         if (array_key_exists('MountVolume', $data)) {
-            $object->setMountVolume($this->denormalizer->denormalize($data['MountVolume'], \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeMountVolume::class, 'json', $context));
+            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data['MountVolume'] as $key => $value) {
+                $values[$key] = $value;
+            }
+            $object->setMountVolume($values);
             unset($data['MountVolume']);
         }
         if (array_key_exists('Secrets', $data)) {
-            $values = [];
-            foreach ($data['Secrets'] as $value) {
-                $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeSecretsItem::class, 'json', $context);
+            $values_1 = [];
+            foreach ($data['Secrets'] as $value_1) {
+                $values_1[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeSecretsItem::class, 'json', $context);
             }
-            $object->setSecrets($values);
+            $object->setSecrets($values_1);
             unset($data['Secrets']);
         }
         if (array_key_exists('AccessibilityRequirements', $data)) {
@@ -79,9 +86,9 @@ class ClusterVolumeSpecAccessModeNormalizer implements DenormalizerInterface, No
             $object->setAvailability($data['Availability']);
             unset($data['Availability']);
         }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
+        foreach ($data as $key_1 => $value_2) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_2;
             }
         }
 
@@ -98,14 +105,18 @@ class ClusterVolumeSpecAccessModeNormalizer implements DenormalizerInterface, No
             $dataArray['Sharing'] = $data->getSharing();
         }
         if ($data->isInitialized('mountVolume') && null !== $data->getMountVolume()) {
-            $dataArray['MountVolume'] = $this->normalizer->normalize($data->getMountVolume(), 'json', $context);
+            $values = [];
+            foreach ($data->getMountVolume() as $key => $value) {
+                $values[$key] = $value;
+            }
+            $dataArray['MountVolume'] = $values;
         }
         if ($data->isInitialized('secrets') && null !== $data->getSecrets()) {
-            $values = [];
-            foreach ($data->getSecrets() as $value) {
-                $values[] = $this->normalizer->normalize($value, 'json', $context);
+            $values_1 = [];
+            foreach ($data->getSecrets() as $value_1) {
+                $values_1[] = $this->normalizer->normalize($value_1, 'json', $context);
             }
-            $dataArray['Secrets'] = $values;
+            $dataArray['Secrets'] = $values_1;
         }
         if ($data->isInitialized('accessibilityRequirements') && null !== $data->getAccessibilityRequirements()) {
             $dataArray['AccessibilityRequirements'] = $this->normalizer->normalize($data->getAccessibilityRequirements(), 'json', $context);
@@ -116,10 +127,13 @@ class ClusterVolumeSpecAccessModeNormalizer implements DenormalizerInterface, No
         if ($data->isInitialized('availability') && null !== $data->getAvailability()) {
             $dataArray['Availability'] = $data->getAvailability();
         }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
+        foreach ($data as $key_1 => $value_2) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_2;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ClusterVolumeSpecAccessModeConstraint());
         }
 
         return $dataArray;

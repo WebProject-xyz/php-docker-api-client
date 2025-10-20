@@ -46,6 +46,7 @@
     }
   },
   "scripts": {
-    "generate": "XDEBUG_MODE=off jane-openapi generate"
+    "generate": "XDEBUG_MODE=off jane-openapi generate",
+    "tests": "vendor/bin/codecept run"
   }
 }

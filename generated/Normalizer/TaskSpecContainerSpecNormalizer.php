@@ -57,6 +57,9 @@ class TaskSpecContainerSpecNormalizer implements DenormalizerInterface, Normaliz
         if (array_key_exists('Init', $data) && is_int($data['Init'])) {
             $data['Init'] = (bool) $data['Init'];
         }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\TaskSpecContainerSpecConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -218,15 +221,13 @@ class TaskSpecContainerSpecNormalizer implements DenormalizerInterface, Normaliz
             $object->setCapabilityDrop($values_11);
             unset($data['CapabilityDrop']);
         }
-        if (array_key_exists('Ulimits', $data) && null !== $data['Ulimits']) {
+        if (array_key_exists('Ulimits', $data)) {
             $values_12 = [];
             foreach ($data['Ulimits'] as $value_12) {
                 $values_12[] = $this->denormalizer->denormalize($value_12, \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecUlimitsItem::class, 'json', $context);
             }
             $object->setUlimits($values_12);
             unset($data['Ulimits']);
-        } elseif (array_key_exists('Ulimits', $data) && null === $data['Ulimits']) {
-            $object->setUlimits(null);
         }
         foreach ($data as $key_2 => $value_13) {
             if (preg_match('/.*/', (string) $key_2)) {
@@ -380,6 +381,9 @@ class TaskSpecContainerSpecNormalizer implements DenormalizerInterface, Normaliz
             if (preg_match('/.*/', (string) $key_2)) {
                 $dataArray[$key_2] = $value_13;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\TaskSpecContainerSpecConstraint());
         }
 
         return $dataArray;

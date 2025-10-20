@@ -20,22 +20,22 @@ class PortBinding extends ArrayObject
     /**
      * Host IP address that the container's port is mapped to.
      *
-     * @var string|null
+     * @var string
      */
     protected $hostIp;
     /**
      * Host port number that the container's port is mapped to.
      *
-     * @var string|null
+     * @var string
      */
     protected $hostPort;
 
     /**
      * Host IP address that the container's port is mapped to.
      *
-     * @return string|null
+     * @return string
      */
-    public function getHostIp(): ?string
+    public function getHostIp(): string
     {
         return $this->hostIp;
     }
@@ -43,11 +43,11 @@ class PortBinding extends ArrayObject
     /**
      * Host IP address that the container's port is mapped to.
      *
-     * @param string|null $hostIp
+     * @param string $hostIp
      *
      * @return self
      */
-    public function setHostIp(?string $hostIp): self
+    public function setHostIp(string $hostIp): self
     {
         $this->initialized['hostIp'] = true;
         $this->hostIp                = $hostIp;
@@ -58,9 +58,9 @@ class PortBinding extends ArrayObject
     /**
      * Host port number that the container's port is mapped to.
      *
-     * @return string|null
+     * @return string
      */
-    public function getHostPort(): ?string
+    public function getHostPort(): string
     {
         return $this->hostPort;
     }
@@ -68,11 +68,11 @@ class PortBinding extends ArrayObject
     /**
      * Host port number that the container's port is mapped to.
      *
-     * @param string|null $hostPort
+     * @param string $hostPort
      *
      * @return self
      */
-    public function setHostPort(?string $hostPort): self
+    public function setHostPort(string $hostPort): self
     {
         $this->initialized['hostPort'] = true;
         $this->hostPort                = $hostPort;

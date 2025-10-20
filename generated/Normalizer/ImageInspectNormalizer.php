@@ -44,6 +44,9 @@ class ImageInspectNormalizer implements DenormalizerInterface, NormalizerInterfa
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\ImageInspect();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ImageInspectConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -131,10 +134,6 @@ class ImageInspectNormalizer implements DenormalizerInterface, NormalizerInterfa
             $object->setSize($data['Size']);
             unset($data['Size']);
         }
-        if (array_key_exists('VirtualSize', $data)) {
-            $object->setVirtualSize($data['VirtualSize']);
-            unset($data['VirtualSize']);
-        }
         if (array_key_exists('GraphDriver', $data)) {
             $object->setGraphDriver($this->denormalizer->denormalize($data['GraphDriver'], \WebProject\DockerApi\Library\Generated\Model\DriverData::class, 'json', $context));
             unset($data['GraphDriver']);
@@ -219,9 +218,6 @@ class ImageInspectNormalizer implements DenormalizerInterface, NormalizerInterfa
         if ($data->isInitialized('size') && null !== $data->getSize()) {
             $dataArray['Size'] = $data->getSize();
         }
-        if ($data->isInitialized('virtualSize') && null !== $data->getVirtualSize()) {
-            $dataArray['VirtualSize'] = $data->getVirtualSize();
-        }
         if ($data->isInitialized('graphDriver') && null !== $data->getGraphDriver()) {
             $dataArray['GraphDriver'] = $this->normalizer->normalize($data->getGraphDriver(), 'json', $context);
         }
@@ -235,6 +231,9 @@ class ImageInspectNormalizer implements DenormalizerInterface, NormalizerInterfa
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_3;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ImageInspectConstraint());
         }
 
         return $dataArray;

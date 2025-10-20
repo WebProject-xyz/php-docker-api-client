@@ -44,6 +44,9 @@ class ServicesIdUpdatePostBodyNormalizer implements DenormalizerInterface, Norma
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\ServicesIdUpdatePostBody();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ServicesIdUpdatePostBodyConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -135,6 +138,9 @@ class ServicesIdUpdatePostBodyNormalizer implements DenormalizerInterface, Norma
             if (preg_match('/.*/', (string) $key_1)) {
                 $dataArray[$key_1] = $value_2;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ServicesIdUpdatePostBodyConstraint());
         }
 
         return $dataArray;

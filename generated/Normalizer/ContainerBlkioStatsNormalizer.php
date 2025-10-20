@@ -44,6 +44,9 @@ class ContainerBlkioStatsNormalizer implements DenormalizerInterface, Normalizer
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStats();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ContainerBlkioStatsConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -197,6 +200,9 @@ class ContainerBlkioStatsNormalizer implements DenormalizerInterface, Normalizer
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_8;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ContainerBlkioStatsConstraint());
         }
 
         return $dataArray;

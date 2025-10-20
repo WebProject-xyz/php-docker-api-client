@@ -34,7 +34,7 @@ class EndpointSettings extends ArrayObject
      */
     protected $macAddress;
     /**
-     * @var list<string>|null
+     * @var list<string>
      */
     protected $aliases;
     /**
@@ -51,7 +51,7 @@ class EndpointSettings extends ArrayObject
      * lexicographically sorted based on their network name, and the one
      * that sorts first is picked.
      *
-     * @var float
+     * @var int
      */
     protected $gwPriority;
     /**
@@ -113,7 +113,7 @@ class EndpointSettings extends ArrayObject
      * `testnet`, `DNSNames` will contain `my.ctr` and the FQDN will be
      * `my.ctr.testnet`.
      *
-     * @var list<string>|null
+     * @var list<string>
      */
     protected $dNSNames;
 
@@ -189,19 +189,19 @@ class EndpointSettings extends ArrayObject
     }
 
     /**
-     * @return list<string>|null
+     * @return list<string>
      */
-    public function getAliases(): ?array
+    public function getAliases(): array
     {
         return $this->aliases;
     }
 
     /**
-     * @param list<string>|null $aliases
+     * @param list<string> $aliases
      *
      * @return self
      */
-    public function setAliases(?array $aliases): self
+    public function setAliases(array $aliases): self
     {
         $this->initialized['aliases'] = true;
         $this->aliases                = $aliases;
@@ -243,9 +243,9 @@ class EndpointSettings extends ArrayObject
      * lexicographically sorted based on their network name, and the one
      * that sorts first is picked.
      *
-     * @return float
+     * @return int
      */
-    public function getGwPriority(): float
+    public function getGwPriority(): int
     {
         return $this->gwPriority;
     }
@@ -257,11 +257,11 @@ class EndpointSettings extends ArrayObject
      * lexicographically sorted based on their network name, and the one
      * that sorts first is picked.
      *
-     * @param float $gwPriority
+     * @param int $gwPriority
      *
      * @return self
      */
-    public function setGwPriority(float $gwPriority): self
+    public function setGwPriority(int $gwPriority): self
     {
         $this->initialized['gwPriority'] = true;
         $this->gwPriority                = $gwPriority;
@@ -480,9 +480,9 @@ class EndpointSettings extends ArrayObject
      * `testnet`, `DNSNames` will contain `my.ctr` and the FQDN will be
      * `my.ctr.testnet`.
      *
-     * @return list<string>|null
+     * @return list<string>
      */
-    public function getDNSNames(): ?array
+    public function getDNSNames(): array
     {
         return $this->dNSNames;
     }
@@ -498,11 +498,11 @@ class EndpointSettings extends ArrayObject
      * `testnet`, `DNSNames` will contain `my.ctr` and the FQDN will be
      * `my.ctr.testnet`.
      *
-     * @param list<string>|null $dNSNames
+     * @param list<string> $dNSNames
      *
      * @return self
      */
-    public function setDNSNames(?array $dNSNames): self
+    public function setDNSNames(array $dNSNames): self
     {
         $this->initialized['dNSNames'] = true;
         $this->dNSNames                = $dNSNames;

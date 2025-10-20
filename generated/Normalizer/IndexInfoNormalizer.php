@@ -51,6 +51,9 @@ class IndexInfoNormalizer implements DenormalizerInterface, NormalizerInterface,
         if (array_key_exists('Official', $data) && is_int($data['Official'])) {
             $data['Official'] = (bool) $data['Official'];
         }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\IndexInfoConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -106,6 +109,9 @@ class IndexInfoNormalizer implements DenormalizerInterface, NormalizerInterface,
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_1;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\IndexInfoConstraint());
         }
 
         return $dataArray;

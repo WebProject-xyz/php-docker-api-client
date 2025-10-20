@@ -44,6 +44,9 @@ class ContainerTopResponseNormalizer implements DenormalizerInterface, Normalize
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerTopResponse();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ContainerTopResponseConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -101,6 +104,9 @@ class ContainerTopResponseNormalizer implements DenormalizerInterface, Normalize
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_3;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ContainerTopResponseConstraint());
         }
 
         return $dataArray;

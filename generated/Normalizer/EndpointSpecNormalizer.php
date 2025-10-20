@@ -44,6 +44,9 @@ class EndpointSpecNormalizer implements DenormalizerInterface, NormalizerInterfa
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\EndpointSpec();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\EndpointSpecConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -51,15 +54,13 @@ class EndpointSpecNormalizer implements DenormalizerInterface, NormalizerInterfa
             $object->setMode($data['Mode']);
             unset($data['Mode']);
         }
-        if (array_key_exists('Ports', $data) && null !== $data['Ports']) {
+        if (array_key_exists('Ports', $data)) {
             $values = [];
             foreach ($data['Ports'] as $value) {
                 $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\EndpointPortConfig::class, 'json', $context);
             }
             $object->setPorts($values);
             unset($data['Ports']);
-        } elseif (array_key_exists('Ports', $data) && null === $data['Ports']) {
-            $object->setPorts(null);
         }
         foreach ($data as $key => $value_1) {
             if (preg_match('/.*/', (string) $key)) {
@@ -87,6 +88,9 @@ class EndpointSpecNormalizer implements DenormalizerInterface, NormalizerInterfa
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_1;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\EndpointSpecConstraint());
         }
 
         return $dataArray;

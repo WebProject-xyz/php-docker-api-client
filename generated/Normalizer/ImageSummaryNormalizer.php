@@ -44,6 +44,9 @@ class ImageSummaryNormalizer implements DenormalizerInterface, NormalizerInterfa
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\ImageSummary();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ImageSummaryConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -82,10 +85,6 @@ class ImageSummaryNormalizer implements DenormalizerInterface, NormalizerInterfa
         if (array_key_exists('SharedSize', $data)) {
             $object->setSharedSize($data['SharedSize']);
             unset($data['SharedSize']);
-        }
-        if (array_key_exists('VirtualSize', $data)) {
-            $object->setVirtualSize($data['VirtualSize']);
-            unset($data['VirtualSize']);
         }
         if (array_key_exists('Labels', $data)) {
             $values_2 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
@@ -138,10 +137,7 @@ class ImageSummaryNormalizer implements DenormalizerInterface, NormalizerInterfa
         $dataArray['Created']     = $data->getCreated();
         $dataArray['Size']        = $data->getSize();
         $dataArray['SharedSize']  = $data->getSharedSize();
-        if ($data->isInitialized('virtualSize') && null !== $data->getVirtualSize()) {
-            $dataArray['VirtualSize'] = $data->getVirtualSize();
-        }
-        $values_2 = [];
+        $values_2                 = [];
         foreach ($data->getLabels() as $key => $value_2) {
             $values_2[$key] = $value_2;
         }
@@ -161,6 +157,9 @@ class ImageSummaryNormalizer implements DenormalizerInterface, NormalizerInterfa
             if (preg_match('/.*/', (string) $key_1)) {
                 $dataArray[$key_1] = $value_4;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ImageSummaryConstraint());
         }
 
         return $dataArray;

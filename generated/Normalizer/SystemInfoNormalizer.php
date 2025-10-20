@@ -75,12 +75,6 @@ class SystemInfoNormalizer implements DenormalizerInterface, NormalizerInterface
         if (array_key_exists('IPv4Forwarding', $data) && is_int($data['IPv4Forwarding'])) {
             $data['IPv4Forwarding'] = (bool) $data['IPv4Forwarding'];
         }
-        if (array_key_exists('BridgeNfIptables', $data) && is_int($data['BridgeNfIptables'])) {
-            $data['BridgeNfIptables'] = (bool) $data['BridgeNfIptables'];
-        }
-        if (array_key_exists('BridgeNfIp6tables', $data) && is_int($data['BridgeNfIp6tables'])) {
-            $data['BridgeNfIp6tables'] = (bool) $data['BridgeNfIp6tables'];
-        }
         if (array_key_exists('Debug', $data) && is_int($data['Debug'])) {
             $data['Debug'] = (bool) $data['Debug'];
         }
@@ -89,6 +83,9 @@ class SystemInfoNormalizer implements DenormalizerInterface, NormalizerInterface
         }
         if (array_key_exists('LiveRestoreEnabled', $data) && is_int($data['LiveRestoreEnabled'])) {
             $data['LiveRestoreEnabled'] = (bool) $data['LiveRestoreEnabled'];
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\SystemInfoConstraint());
         }
         if (null === $data || false === is_array($data)) {
             return $object;
@@ -180,14 +177,6 @@ class SystemInfoNormalizer implements DenormalizerInterface, NormalizerInterface
         if (array_key_exists('IPv4Forwarding', $data)) {
             $object->setIPv4Forwarding($data['IPv4Forwarding']);
             unset($data['IPv4Forwarding']);
-        }
-        if (array_key_exists('BridgeNfIptables', $data)) {
-            $object->setBridgeNfIptables($data['BridgeNfIptables']);
-            unset($data['BridgeNfIptables']);
-        }
-        if (array_key_exists('BridgeNfIp6tables', $data)) {
-            $object->setBridgeNfIp6tables($data['BridgeNfIp6tables']);
-            unset($data['BridgeNfIp6tables']);
         }
         if (array_key_exists('Debug', $data)) {
             $object->setDebug($data['Debug']);
@@ -359,20 +348,34 @@ class SystemInfoNormalizer implements DenormalizerInterface, NormalizerInterface
             $object->setDefaultAddressPools($values_6);
             unset($data['DefaultAddressPools']);
         }
-        if (array_key_exists('Warnings', $data)) {
+        if (array_key_exists('FirewallBackend', $data) && null !== $data['FirewallBackend']) {
+            $object->setFirewallBackend($this->denormalizer->denormalize($data['FirewallBackend'], \WebProject\DockerApi\Library\Generated\Model\FirewallInfo::class, 'json', $context));
+            unset($data['FirewallBackend']);
+        } elseif (array_key_exists('FirewallBackend', $data) && null === $data['FirewallBackend']) {
+            $object->setFirewallBackend(null);
+        }
+        if (array_key_exists('DiscoveredDevices', $data)) {
             $values_7 = [];
-            foreach ($data['Warnings'] as $value_7) {
-                $values_7[] = $value_7;
+            foreach ($data['DiscoveredDevices'] as $value_7) {
+                $values_7[] = $this->denormalizer->denormalize($value_7, \WebProject\DockerApi\Library\Generated\Model\DeviceInfo::class, 'json', $context);
             }
-            $object->setWarnings($values_7);
+            $object->setDiscoveredDevices($values_7);
+            unset($data['DiscoveredDevices']);
+        }
+        if (array_key_exists('Warnings', $data)) {
+            $values_8 = [];
+            foreach ($data['Warnings'] as $value_8) {
+                $values_8[] = $value_8;
+            }
+            $object->setWarnings($values_8);
             unset($data['Warnings']);
         }
         if (array_key_exists('CDISpecDirs', $data)) {
-            $values_8 = [];
-            foreach ($data['CDISpecDirs'] as $value_8) {
-                $values_8[] = $value_8;
+            $values_9 = [];
+            foreach ($data['CDISpecDirs'] as $value_9) {
+                $values_9[] = $value_9;
             }
-            $object->setCDISpecDirs($values_8);
+            $object->setCDISpecDirs($values_9);
             unset($data['CDISpecDirs']);
         }
         if (array_key_exists('Containerd', $data) && null !== $data['Containerd']) {
@@ -381,9 +384,9 @@ class SystemInfoNormalizer implements DenormalizerInterface, NormalizerInterface
         } elseif (array_key_exists('Containerd', $data) && null === $data['Containerd']) {
             $object->setContainerd(null);
         }
-        foreach ($data as $key_1 => $value_9) {
+        foreach ($data as $key_1 => $value_10) {
             if (preg_match('/.*/', (string) $key_1)) {
-                $object[$key_1] = $value_9;
+                $object[$key_1] = $value_10;
             }
         }
 
@@ -460,12 +463,6 @@ class SystemInfoNormalizer implements DenormalizerInterface, NormalizerInterface
         }
         if ($data->isInitialized('iPv4Forwarding') && null !== $data->getIPv4Forwarding()) {
             $dataArray['IPv4Forwarding'] = $data->getIPv4Forwarding();
-        }
-        if ($data->isInitialized('bridgeNfIptables') && null !== $data->getBridgeNfIptables()) {
-            $dataArray['BridgeNfIptables'] = $data->getBridgeNfIptables();
-        }
-        if ($data->isInitialized('bridgeNfIp6tables') && null !== $data->getBridgeNfIp6tables()) {
-            $dataArray['BridgeNfIp6tables'] = $data->getBridgeNfIp6tables();
         }
         if ($data->isInitialized('debug') && null !== $data->getDebug()) {
             $dataArray['Debug'] = $data->getDebug();
@@ -598,27 +595,40 @@ class SystemInfoNormalizer implements DenormalizerInterface, NormalizerInterface
             }
             $dataArray['DefaultAddressPools'] = $values_6;
         }
-        if ($data->isInitialized('warnings') && null !== $data->getWarnings()) {
-            $values_7 = [];
-            foreach ($data->getWarnings() as $value_7) {
-                $values_7[] = $value_7;
-            }
-            $dataArray['Warnings'] = $values_7;
+        if ($data->isInitialized('firewallBackend') && null !== $data->getFirewallBackend()) {
+            $dataArray['FirewallBackend'] = $this->normalizer->normalize($data->getFirewallBackend(), 'json', $context);
         }
-        if ($data->isInitialized('cDISpecDirs') && null !== $data->getCDISpecDirs()) {
+        if ($data->isInitialized('discoveredDevices') && null !== $data->getDiscoveredDevices()) {
+            $values_7 = [];
+            foreach ($data->getDiscoveredDevices() as $value_7) {
+                $values_7[] = $this->normalizer->normalize($value_7, 'json', $context);
+            }
+            $dataArray['DiscoveredDevices'] = $values_7;
+        }
+        if ($data->isInitialized('warnings') && null !== $data->getWarnings()) {
             $values_8 = [];
-            foreach ($data->getCDISpecDirs() as $value_8) {
+            foreach ($data->getWarnings() as $value_8) {
                 $values_8[] = $value_8;
             }
-            $dataArray['CDISpecDirs'] = $values_8;
+            $dataArray['Warnings'] = $values_8;
+        }
+        if ($data->isInitialized('cDISpecDirs') && null !== $data->getCDISpecDirs()) {
+            $values_9 = [];
+            foreach ($data->getCDISpecDirs() as $value_9) {
+                $values_9[] = $value_9;
+            }
+            $dataArray['CDISpecDirs'] = $values_9;
         }
         if ($data->isInitialized('containerd') && null !== $data->getContainerd()) {
             $dataArray['Containerd'] = $this->normalizer->normalize($data->getContainerd(), 'json', $context);
         }
-        foreach ($data as $key_1 => $value_9) {
+        foreach ($data as $key_1 => $value_10) {
             if (preg_match('/.*/', (string) $key_1)) {
-                $dataArray[$key_1] = $value_9;
+                $dataArray[$key_1] = $value_10;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\SystemInfoConstraint());
         }
 
         return $dataArray;

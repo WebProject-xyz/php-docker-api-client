@@ -48,6 +48,9 @@ class TaskSpecContainerSpecPrivilegesSELinuxContextNormalizer implements Denorma
         if (array_key_exists('Disable', $data) && is_int($data['Disable'])) {
             $data['Disable'] = (bool) $data['Disable'];
         }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\TaskSpecContainerSpecPrivilegesSELinuxContextConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -102,6 +105,9 @@ class TaskSpecContainerSpecPrivilegesSELinuxContextNormalizer implements Denorma
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\TaskSpecContainerSpecPrivilegesSELinuxContextConstraint());
         }
 
         return $dataArray;

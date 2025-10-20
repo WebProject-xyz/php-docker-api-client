@@ -37,7 +37,7 @@ class SystemVersionComponentsItem extends ArrayObject
      *
      * These messages can be printed by the client as information to the user.
      *
-     * @var SystemVersionComponentsItemDetails|null
+     * @var array<string, mixed>|null
      */
     protected $details;
 
@@ -99,9 +99,9 @@ class SystemVersionComponentsItem extends ArrayObject
      *
      * These messages can be printed by the client as information to the user.
      *
-     * @return SystemVersionComponentsItemDetails|null
+     * @return array<string, mixed>|null
      */
-    public function getDetails(): ?SystemVersionComponentsItemDetails
+    public function getDetails(): ?iterable
     {
         return $this->details;
     }
@@ -114,11 +114,11 @@ class SystemVersionComponentsItem extends ArrayObject
      *
      * These messages can be printed by the client as information to the user.
      *
-     * @param SystemVersionComponentsItemDetails|null $details
+     * @param array<string, mixed>|null $details
      *
      * @return self
      */
-    public function setDetails(?SystemVersionComponentsItemDetails $details): self
+    public function setDetails(?iterable $details): self
     {
         $this->initialized['details'] = true;
         $this->details                = $details;

@@ -60,6 +60,9 @@ class ExecIdJsonGetResponse200Normalizer implements DenormalizerInterface, Norma
         if (array_key_exists('OpenStdout', $data) && is_int($data['OpenStdout'])) {
             $data['OpenStdout'] = (bool) $data['OpenStdout'];
         }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ExecIdJsonGetResponse200Constraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -156,6 +159,9 @@ class ExecIdJsonGetResponse200Normalizer implements DenormalizerInterface, Norma
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ExecIdJsonGetResponse200Constraint());
         }
 
         return $dataArray;

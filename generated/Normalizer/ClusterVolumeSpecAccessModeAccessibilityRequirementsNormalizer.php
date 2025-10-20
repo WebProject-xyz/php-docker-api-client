@@ -44,6 +44,9 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirementsNormalizer implements 
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeAccessibilityRequirements();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ClusterVolumeSpecAccessModeAccessibilityRequirementsConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -109,6 +112,9 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirementsNormalizer implements 
             if (preg_match('/.*/', (string) $key_2)) {
                 $dataArray[$key_2] = $value_4;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ClusterVolumeSpecAccessModeAccessibilityRequirementsConstraint());
         }
 
         return $dataArray;

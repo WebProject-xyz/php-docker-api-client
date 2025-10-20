@@ -49,7 +49,7 @@ class Volume extends ArrayObject
      * The `Status` field is optional, and is omitted if the volume driver
      * does not support this feature.
      *
-     * @var array<string, VolumeStatusItem>
+     * @var array<string, array<string, mixed>>
      */
     protected $status;
     /**
@@ -194,7 +194,7 @@ class Volume extends ArrayObject
      * The `Status` field is optional, and is omitted if the volume driver
      * does not support this feature.
      *
-     * @return array<string, VolumeStatusItem>
+     * @return array<string, array<string, mixed>>
      */
     public function getStatus(): iterable
     {
@@ -209,7 +209,7 @@ class Volume extends ArrayObject
      * The `Status` field is optional, and is omitted if the volume driver
      * does not support this feature.
      *
-     * @param array<string, VolumeStatusItem> $status
+     * @param array<string, array<string, mixed>> $status
      *
      * @return self
      */

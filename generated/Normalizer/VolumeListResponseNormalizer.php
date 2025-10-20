@@ -44,18 +44,19 @@ class VolumeListResponseNormalizer implements DenormalizerInterface, NormalizerI
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\VolumeListResponse();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\VolumeListResponseConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
-        if (array_key_exists('Volumes', $data) && null !== $data['Volumes']) {
+        if (array_key_exists('Volumes', $data)) {
             $values = [];
             foreach ($data['Volumes'] as $value) {
                 $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\Volume::class, 'json', $context);
             }
             $object->setVolumes($values);
             unset($data['Volumes']);
-        } elseif (array_key_exists('Volumes', $data) && null === $data['Volumes']) {
-            $object->setVolumes(null);
         }
         if (array_key_exists('Warnings', $data)) {
             $values_1 = [];
@@ -95,6 +96,9 @@ class VolumeListResponseNormalizer implements DenormalizerInterface, NormalizerI
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_2;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\VolumeListResponseConstraint());
         }
 
         return $dataArray;

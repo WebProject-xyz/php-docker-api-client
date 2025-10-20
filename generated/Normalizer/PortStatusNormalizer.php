@@ -44,18 +44,19 @@ class PortStatusNormalizer implements DenormalizerInterface, NormalizerInterface
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\PortStatus();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\PortStatusConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
-        if (array_key_exists('Ports', $data) && null !== $data['Ports']) {
+        if (array_key_exists('Ports', $data)) {
             $values = [];
             foreach ($data['Ports'] as $value) {
                 $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\EndpointPortConfig::class, 'json', $context);
             }
             $object->setPorts($values);
             unset($data['Ports']);
-        } elseif (array_key_exists('Ports', $data) && null === $data['Ports']) {
-            $object->setPorts(null);
         }
         foreach ($data as $key => $value_1) {
             if (preg_match('/.*/', (string) $key)) {
@@ -80,6 +81,9 @@ class PortStatusNormalizer implements DenormalizerInterface, NormalizerInterface
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_1;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\PortStatusConstraint());
         }
 
         return $dataArray;

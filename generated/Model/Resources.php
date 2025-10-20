@@ -52,7 +52,7 @@ class Resources extends ArrayObject
      * [{"Path": "device_path", "Weight": weight}]
      * ```
      *
-     * @var list<ResourcesBlkioWeightDeviceItem>|null
+     * @var list<ResourcesBlkioWeightDeviceItem>
      */
     protected $blkioWeightDevice;
     /**
@@ -62,7 +62,7 @@ class Resources extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @var list<ThrottleDevice>|null
+     * @var list<ThrottleDevice>
      */
     protected $blkioDeviceReadBps;
     /**
@@ -72,7 +72,7 @@ class Resources extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @var list<ThrottleDevice>|null
+     * @var list<ThrottleDevice>
      */
     protected $blkioDeviceWriteBps;
     /**
@@ -82,7 +82,7 @@ class Resources extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @var list<ThrottleDevice>|null
+     * @var list<ThrottleDevice>
      */
     protected $blkioDeviceReadIOps;
     /**
@@ -92,7 +92,7 @@ class Resources extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @var list<ThrottleDevice>|null
+     * @var list<ThrottleDevice>
      */
     protected $blkioDeviceWriteIOps;
     /**
@@ -104,27 +104,27 @@ class Resources extends ArrayObject
     /**
      * Microseconds of CPU time that the container can get in a CPU period.
      *
-     * @var int|null
+     * @var int
      */
     protected $cpuQuota;
     /**
      * The length of a CPU real-time period in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @var int|null
+     * @var int
      */
     protected $cpuRealtimePeriod;
     /**
      * The length of a CPU real-time runtime in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @var int|null
+     * @var int
      */
     protected $cpuRealtimeRuntime;
     /**
      * CPUs in which to allow execution (e.g., `0-3`, `0,1`).
      *
-     * @var string|null
+     * @var string
      */
     protected $cpusetCpus;
     /**
@@ -137,19 +137,19 @@ class Resources extends ArrayObject
     /**
      * A list of devices to add to the container.
      *
-     * @var list<DeviceMapping>|null
+     * @var list<DeviceMapping>
      */
     protected $devices;
     /**
      * a list of cgroup rules to apply to the container.
      *
-     * @var list<string>|null
+     * @var list<string>
      */
     protected $deviceCgroupRules;
     /**
      * A list of requests for devices to be sent to device drivers.
      *
-     * @var list<DeviceRequest>|null
+     * @var list<DeviceRequest>
      */
     protected $deviceRequests;
     /**
@@ -158,6 +158,9 @@ class Resources extends ArrayObject
      * by the default (runc) runtime.
      *
      * This field is omitted when empty.
+     *
+     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated `memory.kmem.tcp.limit_in_bytes` field
+     * for cgroups v1. This field will be removed in a future release.
      *
      * @var int
      */
@@ -179,7 +182,7 @@ class Resources extends ArrayObject
      * Tune a container's memory swappiness behavior. Accepts an integer
      * between 0 and 100.
      *
-     * @var int|null
+     * @var int
      */
     protected $memorySwappiness;
     /**
@@ -191,7 +194,7 @@ class Resources extends ArrayObject
     /**
      * Disable OOM Killer for the container.
      *
-     * @var bool|null
+     * @var bool
      */
     protected $oomKillDisable;
     /**
@@ -216,7 +219,7 @@ class Resources extends ArrayObject
      * {"Name": "nofile", "Soft": 1024, "Hard": 2048}
      * ```
      *
-     * @var list<ResourcesUlimitsItem>|null
+     * @var list<ResourcesUlimitsItem>
      */
     protected $ulimits;
     /**
@@ -368,9 +371,9 @@ class Resources extends ArrayObject
      * [{"Path": "device_path", "Weight": weight}]
      * ```
      *
-     * @return list<ResourcesBlkioWeightDeviceItem>|null
+     * @return list<ResourcesBlkioWeightDeviceItem>
      */
-    public function getBlkioWeightDevice(): ?array
+    public function getBlkioWeightDevice(): array
     {
         return $this->blkioWeightDevice;
     }
@@ -382,11 +385,11 @@ class Resources extends ArrayObject
      * [{"Path": "device_path", "Weight": weight}]
      * ```
      *
-     * @param list<ResourcesBlkioWeightDeviceItem>|null $blkioWeightDevice
+     * @param list<ResourcesBlkioWeightDeviceItem> $blkioWeightDevice
      *
      * @return self
      */
-    public function setBlkioWeightDevice(?array $blkioWeightDevice): self
+    public function setBlkioWeightDevice(array $blkioWeightDevice): self
     {
         $this->initialized['blkioWeightDevice'] = true;
         $this->blkioWeightDevice                = $blkioWeightDevice;
@@ -401,9 +404,9 @@ class Resources extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @return list<ThrottleDevice>|null
+     * @return list<ThrottleDevice>
      */
-    public function getBlkioDeviceReadBps(): ?array
+    public function getBlkioDeviceReadBps(): array
     {
         return $this->blkioDeviceReadBps;
     }
@@ -415,11 +418,11 @@ class Resources extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @param list<ThrottleDevice>|null $blkioDeviceReadBps
+     * @param list<ThrottleDevice> $blkioDeviceReadBps
      *
      * @return self
      */
-    public function setBlkioDeviceReadBps(?array $blkioDeviceReadBps): self
+    public function setBlkioDeviceReadBps(array $blkioDeviceReadBps): self
     {
         $this->initialized['blkioDeviceReadBps'] = true;
         $this->blkioDeviceReadBps                = $blkioDeviceReadBps;
@@ -434,9 +437,9 @@ class Resources extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @return list<ThrottleDevice>|null
+     * @return list<ThrottleDevice>
      */
-    public function getBlkioDeviceWriteBps(): ?array
+    public function getBlkioDeviceWriteBps(): array
     {
         return $this->blkioDeviceWriteBps;
     }
@@ -448,11 +451,11 @@ class Resources extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @param list<ThrottleDevice>|null $blkioDeviceWriteBps
+     * @param list<ThrottleDevice> $blkioDeviceWriteBps
      *
      * @return self
      */
-    public function setBlkioDeviceWriteBps(?array $blkioDeviceWriteBps): self
+    public function setBlkioDeviceWriteBps(array $blkioDeviceWriteBps): self
     {
         $this->initialized['blkioDeviceWriteBps'] = true;
         $this->blkioDeviceWriteBps                = $blkioDeviceWriteBps;
@@ -467,9 +470,9 @@ class Resources extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @return list<ThrottleDevice>|null
+     * @return list<ThrottleDevice>
      */
-    public function getBlkioDeviceReadIOps(): ?array
+    public function getBlkioDeviceReadIOps(): array
     {
         return $this->blkioDeviceReadIOps;
     }
@@ -481,11 +484,11 @@ class Resources extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @param list<ThrottleDevice>|null $blkioDeviceReadIOps
+     * @param list<ThrottleDevice> $blkioDeviceReadIOps
      *
      * @return self
      */
-    public function setBlkioDeviceReadIOps(?array $blkioDeviceReadIOps): self
+    public function setBlkioDeviceReadIOps(array $blkioDeviceReadIOps): self
     {
         $this->initialized['blkioDeviceReadIOps'] = true;
         $this->blkioDeviceReadIOps                = $blkioDeviceReadIOps;
@@ -500,9 +503,9 @@ class Resources extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @return list<ThrottleDevice>|null
+     * @return list<ThrottleDevice>
      */
-    public function getBlkioDeviceWriteIOps(): ?array
+    public function getBlkioDeviceWriteIOps(): array
     {
         return $this->blkioDeviceWriteIOps;
     }
@@ -514,11 +517,11 @@ class Resources extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @param list<ThrottleDevice>|null $blkioDeviceWriteIOps
+     * @param list<ThrottleDevice> $blkioDeviceWriteIOps
      *
      * @return self
      */
-    public function setBlkioDeviceWriteIOps(?array $blkioDeviceWriteIOps): self
+    public function setBlkioDeviceWriteIOps(array $blkioDeviceWriteIOps): self
     {
         $this->initialized['blkioDeviceWriteIOps'] = true;
         $this->blkioDeviceWriteIOps                = $blkioDeviceWriteIOps;
@@ -554,9 +557,9 @@ class Resources extends ArrayObject
     /**
      * Microseconds of CPU time that the container can get in a CPU period.
      *
-     * @return int|null
+     * @return int
      */
-    public function getCpuQuota(): ?int
+    public function getCpuQuota(): int
     {
         return $this->cpuQuota;
     }
@@ -564,11 +567,11 @@ class Resources extends ArrayObject
     /**
      * Microseconds of CPU time that the container can get in a CPU period.
      *
-     * @param int|null $cpuQuota
+     * @param int $cpuQuota
      *
      * @return self
      */
-    public function setCpuQuota(?int $cpuQuota): self
+    public function setCpuQuota(int $cpuQuota): self
     {
         $this->initialized['cpuQuota'] = true;
         $this->cpuQuota                = $cpuQuota;
@@ -580,9 +583,9 @@ class Resources extends ArrayObject
      * The length of a CPU real-time period in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @return int|null
+     * @return int
      */
-    public function getCpuRealtimePeriod(): ?int
+    public function getCpuRealtimePeriod(): int
     {
         return $this->cpuRealtimePeriod;
     }
@@ -591,11 +594,11 @@ class Resources extends ArrayObject
      * The length of a CPU real-time period in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @param int|null $cpuRealtimePeriod
+     * @param int $cpuRealtimePeriod
      *
      * @return self
      */
-    public function setCpuRealtimePeriod(?int $cpuRealtimePeriod): self
+    public function setCpuRealtimePeriod(int $cpuRealtimePeriod): self
     {
         $this->initialized['cpuRealtimePeriod'] = true;
         $this->cpuRealtimePeriod                = $cpuRealtimePeriod;
@@ -607,9 +610,9 @@ class Resources extends ArrayObject
      * The length of a CPU real-time runtime in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @return int|null
+     * @return int
      */
-    public function getCpuRealtimeRuntime(): ?int
+    public function getCpuRealtimeRuntime(): int
     {
         return $this->cpuRealtimeRuntime;
     }
@@ -618,11 +621,11 @@ class Resources extends ArrayObject
      * The length of a CPU real-time runtime in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @param int|null $cpuRealtimeRuntime
+     * @param int $cpuRealtimeRuntime
      *
      * @return self
      */
-    public function setCpuRealtimeRuntime(?int $cpuRealtimeRuntime): self
+    public function setCpuRealtimeRuntime(int $cpuRealtimeRuntime): self
     {
         $this->initialized['cpuRealtimeRuntime'] = true;
         $this->cpuRealtimeRuntime                = $cpuRealtimeRuntime;
@@ -633,9 +636,9 @@ class Resources extends ArrayObject
     /**
      * CPUs in which to allow execution (e.g., `0-3`, `0,1`).
      *
-     * @return string|null
+     * @return string
      */
-    public function getCpusetCpus(): ?string
+    public function getCpusetCpus(): string
     {
         return $this->cpusetCpus;
     }
@@ -643,11 +646,11 @@ class Resources extends ArrayObject
     /**
      * CPUs in which to allow execution (e.g., `0-3`, `0,1`).
      *
-     * @param string|null $cpusetCpus
+     * @param string $cpusetCpus
      *
      * @return self
      */
-    public function setCpusetCpus(?string $cpusetCpus): self
+    public function setCpusetCpus(string $cpusetCpus): self
     {
         $this->initialized['cpusetCpus'] = true;
         $this->cpusetCpus                = $cpusetCpus;
@@ -685,9 +688,9 @@ class Resources extends ArrayObject
     /**
      * A list of devices to add to the container.
      *
-     * @return list<DeviceMapping>|null
+     * @return list<DeviceMapping>
      */
-    public function getDevices(): ?array
+    public function getDevices(): array
     {
         return $this->devices;
     }
@@ -695,11 +698,11 @@ class Resources extends ArrayObject
     /**
      * A list of devices to add to the container.
      *
-     * @param list<DeviceMapping>|null $devices
+     * @param list<DeviceMapping> $devices
      *
      * @return self
      */
-    public function setDevices(?array $devices): self
+    public function setDevices(array $devices): self
     {
         $this->initialized['devices'] = true;
         $this->devices                = $devices;
@@ -710,9 +713,9 @@ class Resources extends ArrayObject
     /**
      * a list of cgroup rules to apply to the container.
      *
-     * @return list<string>|null
+     * @return list<string>
      */
-    public function getDeviceCgroupRules(): ?array
+    public function getDeviceCgroupRules(): array
     {
         return $this->deviceCgroupRules;
     }
@@ -720,11 +723,11 @@ class Resources extends ArrayObject
     /**
      * a list of cgroup rules to apply to the container.
      *
-     * @param list<string>|null $deviceCgroupRules
+     * @param list<string> $deviceCgroupRules
      *
      * @return self
      */
-    public function setDeviceCgroupRules(?array $deviceCgroupRules): self
+    public function setDeviceCgroupRules(array $deviceCgroupRules): self
     {
         $this->initialized['deviceCgroupRules'] = true;
         $this->deviceCgroupRules                = $deviceCgroupRules;
@@ -735,9 +738,9 @@ class Resources extends ArrayObject
     /**
      * A list of requests for devices to be sent to device drivers.
      *
-     * @return list<DeviceRequest>|null
+     * @return list<DeviceRequest>
      */
-    public function getDeviceRequests(): ?array
+    public function getDeviceRequests(): array
     {
         return $this->deviceRequests;
     }
@@ -745,11 +748,11 @@ class Resources extends ArrayObject
     /**
      * A list of requests for devices to be sent to device drivers.
      *
-     * @param list<DeviceRequest>|null $deviceRequests
+     * @param list<DeviceRequest> $deviceRequests
      *
      * @return self
      */
-    public function setDeviceRequests(?array $deviceRequests): self
+    public function setDeviceRequests(array $deviceRequests): self
     {
         $this->initialized['deviceRequests'] = true;
         $this->deviceRequests                = $deviceRequests;
@@ -764,6 +767,9 @@ class Resources extends ArrayObject
      *
      * This field is omitted when empty.
      *
+     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated `memory.kmem.tcp.limit_in_bytes` field
+     * for cgroups v1. This field will be removed in a future release.
+     *
      * @return int
      */
     public function getKernelMemoryTCP(): int
@@ -777,6 +783,9 @@ class Resources extends ArrayObject
      * by the default (runc) runtime.
      *
      * This field is omitted when empty.
+     *
+     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated `memory.kmem.tcp.limit_in_bytes` field
+     * for cgroups v1. This field will be removed in a future release.
      *
      * @param int $kernelMemoryTCP
      *
@@ -846,9 +855,9 @@ class Resources extends ArrayObject
      * Tune a container's memory swappiness behavior. Accepts an integer
      * between 0 and 100.
      *
-     * @return int|null
+     * @return int
      */
-    public function getMemorySwappiness(): ?int
+    public function getMemorySwappiness(): int
     {
         return $this->memorySwappiness;
     }
@@ -857,11 +866,11 @@ class Resources extends ArrayObject
      * Tune a container's memory swappiness behavior. Accepts an integer
      * between 0 and 100.
      *
-     * @param int|null $memorySwappiness
+     * @param int $memorySwappiness
      *
      * @return self
      */
-    public function setMemorySwappiness(?int $memorySwappiness): self
+    public function setMemorySwappiness(int $memorySwappiness): self
     {
         $this->initialized['memorySwappiness'] = true;
         $this->memorySwappiness                = $memorySwappiness;
@@ -897,9 +906,9 @@ class Resources extends ArrayObject
     /**
      * Disable OOM Killer for the container.
      *
-     * @return bool|null
+     * @return bool
      */
-    public function getOomKillDisable(): ?bool
+    public function getOomKillDisable(): bool
     {
         return $this->oomKillDisable;
     }
@@ -907,11 +916,11 @@ class Resources extends ArrayObject
     /**
      * Disable OOM Killer for the container.
      *
-     * @param bool|null $oomKillDisable
+     * @param bool $oomKillDisable
      *
      * @return self
      */
-    public function setOomKillDisable(?bool $oomKillDisable): self
+    public function setOomKillDisable(bool $oomKillDisable): self
     {
         $this->initialized['oomKillDisable'] = true;
         $this->oomKillDisable                = $oomKillDisable;
@@ -982,9 +991,9 @@ class Resources extends ArrayObject
      * {"Name": "nofile", "Soft": 1024, "Hard": 2048}
      * ```
      *
-     * @return list<ResourcesUlimitsItem>|null
+     * @return list<ResourcesUlimitsItem>
      */
-    public function getUlimits(): ?array
+    public function getUlimits(): array
     {
         return $this->ulimits;
     }
@@ -996,11 +1005,11 @@ class Resources extends ArrayObject
      * {"Name": "nofile", "Soft": 1024, "Hard": 2048}
      * ```
      *
-     * @param list<ResourcesUlimitsItem>|null $ulimits
+     * @param list<ResourcesUlimitsItem> $ulimits
      *
      * @return self
      */
-    public function setUlimits(?array $ulimits): self
+    public function setUlimits(array $ulimits): self
     {
         $this->initialized['ulimits'] = true;
         $this->ulimits                = $ulimits;

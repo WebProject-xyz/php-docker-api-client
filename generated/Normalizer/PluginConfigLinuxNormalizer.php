@@ -48,6 +48,9 @@ class PluginConfigLinuxNormalizer implements DenormalizerInterface, NormalizerIn
         if (array_key_exists('AllowAllDevices', $data) && is_int($data['AllowAllDevices'])) {
             $data['AllowAllDevices'] = (bool) $data['AllowAllDevices'];
         }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\PluginConfigLinuxConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -98,6 +101,9 @@ class PluginConfigLinuxNormalizer implements DenormalizerInterface, NormalizerIn
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_2;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\PluginConfigLinuxConstraint());
         }
 
         return $dataArray;

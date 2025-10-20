@@ -51,6 +51,9 @@ class BuildCacheNormalizer implements DenormalizerInterface, NormalizerInterface
         if (array_key_exists('Shared', $data) && is_int($data['Shared'])) {
             $data['Shared'] = (bool) $data['Shared'];
         }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\BuildCacheConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -161,6 +164,9 @@ class BuildCacheNormalizer implements DenormalizerInterface, NormalizerInterface
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_1;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\BuildCacheConstraint());
         }
 
         return $dataArray;

@@ -20,7 +20,9 @@ class NetworkSettings extends ArrayObject
     /**
      * Name of the default bridge interface when dockerd's --bridge flag is set.
      *
-     * @var string|null
+     * Deprecated: This field is only set when the daemon is started with the --bridge flag specified.
+     *
+     * @var string
      */
     protected $bridge;
     /**
@@ -50,7 +52,7 @@ class NetworkSettings extends ArrayObject
      *
      * Deprecated: This field is never set and will be removed in a future release.
      *
-     * @var int|null
+     * @var int
      */
     protected $linkLocalIPv6PrefixLen;
     /**
@@ -61,7 +63,7 @@ class NetworkSettings extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @var array<string, mixed>|null
+     * @var array<string, list<PortBinding>>
      */
     protected $ports;
     /**
@@ -204,9 +206,11 @@ class NetworkSettings extends ArrayObject
     /**
      * Name of the default bridge interface when dockerd's --bridge flag is set.
      *
-     * @return string|null
+     * Deprecated: This field is only set when the daemon is started with the --bridge flag specified.
+     *
+     * @return string
      */
-    public function getBridge(): ?string
+    public function getBridge(): string
     {
         return $this->bridge;
     }
@@ -214,11 +218,13 @@ class NetworkSettings extends ArrayObject
     /**
      * Name of the default bridge interface when dockerd's --bridge flag is set.
      *
-     * @param string|null $bridge
+     * Deprecated: This field is only set when the daemon is started with the --bridge flag specified.
+     *
+     * @param string $bridge
      *
      * @return self
      */
-    public function setBridge(?string $bridge): self
+    public function setBridge(string $bridge): self
     {
         $this->initialized['bridge'] = true;
         $this->bridge                = $bridge;
@@ -314,9 +320,9 @@ class NetworkSettings extends ArrayObject
      *
      * Deprecated: This field is never set and will be removed in a future release.
      *
-     * @return int|null
+     * @return int
      */
-    public function getLinkLocalIPv6PrefixLen(): ?int
+    public function getLinkLocalIPv6PrefixLen(): int
     {
         return $this->linkLocalIPv6PrefixLen;
     }
@@ -326,11 +332,11 @@ class NetworkSettings extends ArrayObject
      *
      * Deprecated: This field is never set and will be removed in a future release.
      *
-     * @param int|null $linkLocalIPv6PrefixLen
+     * @param int $linkLocalIPv6PrefixLen
      *
      * @return self
      */
-    public function setLinkLocalIPv6PrefixLen(?int $linkLocalIPv6PrefixLen): self
+    public function setLinkLocalIPv6PrefixLen(int $linkLocalIPv6PrefixLen): self
     {
         $this->initialized['linkLocalIPv6PrefixLen'] = true;
         $this->linkLocalIPv6PrefixLen                = $linkLocalIPv6PrefixLen;
@@ -346,9 +352,9 @@ class NetworkSettings extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @return array<string, mixed>|null
+     * @return array<string, list<PortBinding>>
      */
-    public function getPorts(): ?iterable
+    public function getPorts(): iterable
     {
         return $this->ports;
     }
@@ -361,11 +367,11 @@ class NetworkSettings extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @param array<string, mixed>|null $ports
+     * @param array<string, list<PortBinding>> $ports
      *
      * @return self
      */
-    public function setPorts(?iterable $ports): self
+    public function setPorts(iterable $ports): self
     {
         $this->initialized['ports'] = true;
         $this->ports                = $ports;

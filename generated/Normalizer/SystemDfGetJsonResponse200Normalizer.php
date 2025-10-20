@@ -44,6 +44,9 @@ class SystemDfGetJsonResponse200Normalizer implements DenormalizerInterface, Nor
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\SystemDfGetJsonResponse200();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\SystemDfGetJsonResponse200Constraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -67,15 +70,13 @@ class SystemDfGetJsonResponse200Normalizer implements DenormalizerInterface, Nor
             $object->setContainers($values_1);
             unset($data['Containers']);
         }
-        if (array_key_exists('Volumes', $data) && null !== $data['Volumes']) {
+        if (array_key_exists('Volumes', $data)) {
             $values_2 = [];
             foreach ($data['Volumes'] as $value_2) {
                 $values_2[] = $this->denormalizer->denormalize($value_2, \WebProject\DockerApi\Library\Generated\Model\Volume::class, 'json', $context);
             }
             $object->setVolumes($values_2);
             unset($data['Volumes']);
-        } elseif (array_key_exists('Volumes', $data) && null === $data['Volumes']) {
-            $object->setVolumes(null);
         }
         if (array_key_exists('BuildCache', $data)) {
             $values_3 = [];
@@ -132,6 +133,9 @@ class SystemDfGetJsonResponse200Normalizer implements DenormalizerInterface, Nor
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_4;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\SystemDfGetJsonResponse200Constraint());
         }
 
         return $dataArray;

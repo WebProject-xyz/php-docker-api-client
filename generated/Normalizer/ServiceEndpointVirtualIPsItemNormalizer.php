@@ -44,6 +44,9 @@ class ServiceEndpointVirtualIPsItemNormalizer implements DenormalizerInterface, 
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\ServiceEndpointVirtualIPsItem();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ServiceEndpointVirtualIPsItemConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -77,6 +80,9 @@ class ServiceEndpointVirtualIPsItemNormalizer implements DenormalizerInterface, 
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ServiceEndpointVirtualIPsItemConstraint());
         }
 
         return $dataArray;

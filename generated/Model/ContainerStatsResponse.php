@@ -110,7 +110,7 @@ class ContainerStatsResponse extends ArrayObject
      *
      * This field is omitted if the container has no networking enabled.
      *
-     * @var array<string, mixed>|null
+     * @var mixed|null
      */
     protected $networks;
 
@@ -436,9 +436,9 @@ class ContainerStatsResponse extends ArrayObject
      *
      * This field is omitted if the container has no networking enabled.
      *
-     * @return array<string, mixed>|null
+     * @return mixed
      */
-    public function getNetworks(): ?iterable
+    public function getNetworks()
     {
         return $this->networks;
     }
@@ -448,11 +448,11 @@ class ContainerStatsResponse extends ArrayObject
      *
      * This field is omitted if the container has no networking enabled.
      *
-     * @param array<string, mixed>|null $networks
+     * @param mixed $networks
      *
      * @return self
      */
-    public function setNetworks(?iterable $networks): self
+    public function setNetworks($networks): self
     {
         $this->initialized['networks'] = true;
         $this->networks                = $networks;

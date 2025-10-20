@@ -18,107 +18,19 @@ class ImageConfig extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * The hostname to use for the container, as a valid RFC 1123 hostname.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always empty. It must not be used, and will be removed in API v1.48.
-     *
-     * @var string
-     */
-    protected $hostname;
-    /**
-     * The domain name to use for the container.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always empty. It must not be used, and will be removed in API v1.48.
-     *
-     * @var string
-     */
-    protected $domainname;
-    /**
      * The user that commands are run as inside the container.
      *
      * @var string
      */
     protected $user;
     /**
-     * Whether to attach to `stdin`.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @var bool
-     */
-    protected $attachStdin = false;
-    /**
-     * Whether to attach to `stdout`.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @var bool
-     */
-    protected $attachStdout = false;
-    /**
-     * Whether to attach to `stderr`.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @var bool
-     */
-    protected $attachStderr = false;
-    /**
      * An object mapping ports to an empty object in the form:
      *
      * `{"<port>/<tcp|udp|sctp>": {}}`
      *
-     * @var array<string, ImageConfigExposedPortsItem>|null
+     * @var array<string, array<string, mixed>>|null
      */
     protected $exposedPorts;
-    /**
-     * Attach standard streams to a TTY, including `stdin` if it is not closed.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @var bool
-     */
-    protected $tty = false;
-    /**
-     * Open `stdin`.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @var bool
-     */
-    protected $openStdin = false;
-    /**
-     * Close `stdin` after one attached client disconnects.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @var bool
-     */
-    protected $stdinOnce = false;
     /**
      * A list of environment variables to set inside the container in the
      * form `["VAR=value", ...]`. A variable without `=` is removed from the
@@ -146,22 +58,10 @@ class ImageConfig extends ArrayObject
      */
     protected $argsEscaped = false;
     /**
-     * The name (or reference) of the image to use when creating the container,
-     * or which was used when the container was created.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always empty. It must not be used, and will be removed in API v1.48.
-     *
-     * @var string
-     */
-    protected $image = '';
-    /**
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @var array<string, ImageConfigVolumesItem>
+     * @var array<string, array<string, mixed>>
      */
     protected $volumes;
     /**
@@ -177,31 +77,9 @@ class ImageConfig extends ArrayObject
      * entry point is reset to system default (i.e., the entry point used by
      * docker when there is no `ENTRYPOINT` instruction in the `Dockerfile`).
      *
-     * @var list<string>|null
+     * @var list<string>
      */
     protected $entrypoint;
-    /**
-     * Disable networking for the container.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always omitted. It must not be used, and will be removed in API v1.48.
-     *
-     * @var bool|null
-     */
-    protected $networkDisabled = false;
-    /**
-     * MAC address of the container.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always omitted. It must not be used, and will be removed in API v1.48.
-     *
-     * @var string|null
-     */
-    protected $macAddress = '';
     /**
      * `ONBUILD` metadata that were defined in the image's `Dockerfile`.
      *
@@ -221,92 +99,11 @@ class ImageConfig extends ArrayObject
      */
     protected $stopSignal;
     /**
-     * Timeout to stop a container in seconds.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always omitted. It must not be used, and will be removed in API v1.48.
-     *
-     * @var int|null
-     */
-    protected $stopTimeout;
-    /**
      * Shell for when `RUN`, `CMD`, and `ENTRYPOINT` uses a shell.
      *
      * @var list<string>|null
      */
     protected $shell;
-
-    /**
-     * The hostname to use for the container, as a valid RFC 1123 hostname.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always empty. It must not be used, and will be removed in API v1.48.
-     *
-     * @return string
-     */
-    public function getHostname(): string
-    {
-        return $this->hostname;
-    }
-
-    /**
-     * The hostname to use for the container, as a valid RFC 1123 hostname.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always empty. It must not be used, and will be removed in API v1.48.
-     *
-     * @param string $hostname
-     *
-     * @return self
-     */
-    public function setHostname(string $hostname): self
-    {
-        $this->initialized['hostname'] = true;
-        $this->hostname                = $hostname;
-
-        return $this;
-    }
-
-    /**
-     * The domain name to use for the container.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always empty. It must not be used, and will be removed in API v1.48.
-     *
-     * @return string
-     */
-    public function getDomainname(): string
-    {
-        return $this->domainname;
-    }
-
-    /**
-     * The domain name to use for the container.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always empty. It must not be used, and will be removed in API v1.48.
-     *
-     * @param string $domainname
-     *
-     * @return self
-     */
-    public function setDomainname(string $domainname): self
-    {
-        $this->initialized['domainname'] = true;
-        $this->domainname                = $domainname;
-
-        return $this;
-    }
 
     /**
      * The user that commands are run as inside the container.
@@ -334,116 +131,11 @@ class ImageConfig extends ArrayObject
     }
 
     /**
-     * Whether to attach to `stdin`.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @return bool
-     */
-    public function getAttachStdin(): bool
-    {
-        return $this->attachStdin;
-    }
-
-    /**
-     * Whether to attach to `stdin`.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @param bool $attachStdin
-     *
-     * @return self
-     */
-    public function setAttachStdin(bool $attachStdin): self
-    {
-        $this->initialized['attachStdin'] = true;
-        $this->attachStdin                = $attachStdin;
-
-        return $this;
-    }
-
-    /**
-     * Whether to attach to `stdout`.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @return bool
-     */
-    public function getAttachStdout(): bool
-    {
-        return $this->attachStdout;
-    }
-
-    /**
-     * Whether to attach to `stdout`.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @param bool $attachStdout
-     *
-     * @return self
-     */
-    public function setAttachStdout(bool $attachStdout): self
-    {
-        $this->initialized['attachStdout'] = true;
-        $this->attachStdout                = $attachStdout;
-
-        return $this;
-    }
-
-    /**
-     * Whether to attach to `stderr`.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @return bool
-     */
-    public function getAttachStderr(): bool
-    {
-        return $this->attachStderr;
-    }
-
-    /**
-     * Whether to attach to `stderr`.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @param bool $attachStderr
-     *
-     * @return self
-     */
-    public function setAttachStderr(bool $attachStderr): self
-    {
-        $this->initialized['attachStderr'] = true;
-        $this->attachStderr                = $attachStderr;
-
-        return $this;
-    }
-
-    /**
      * An object mapping ports to an empty object in the form:
      *
      * `{"<port>/<tcp|udp|sctp>": {}}`
      *
-     * @return array<string, ImageConfigExposedPortsItem>|null
+     * @return array<string, array<string, mixed>>|null
      */
     public function getExposedPorts(): ?iterable
     {
@@ -455,7 +147,7 @@ class ImageConfig extends ArrayObject
      *
      * `{"<port>/<tcp|udp|sctp>": {}}`
      *
-     * @param array<string, ImageConfigExposedPortsItem>|null $exposedPorts
+     * @param array<string, array<string, mixed>>|null $exposedPorts
      *
      * @return self
      */
@@ -463,111 +155,6 @@ class ImageConfig extends ArrayObject
     {
         $this->initialized['exposedPorts'] = true;
         $this->exposedPorts                = $exposedPorts;
-
-        return $this;
-    }
-
-    /**
-     * Attach standard streams to a TTY, including `stdin` if it is not closed.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @return bool
-     */
-    public function getTty(): bool
-    {
-        return $this->tty;
-    }
-
-    /**
-     * Attach standard streams to a TTY, including `stdin` if it is not closed.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @param bool $tty
-     *
-     * @return self
-     */
-    public function setTty(bool $tty): self
-    {
-        $this->initialized['tty'] = true;
-        $this->tty                = $tty;
-
-        return $this;
-    }
-
-    /**
-     * Open `stdin`.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @return bool
-     */
-    public function getOpenStdin(): bool
-    {
-        return $this->openStdin;
-    }
-
-    /**
-     * Open `stdin`.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @param bool $openStdin
-     *
-     * @return self
-     */
-    public function setOpenStdin(bool $openStdin): self
-    {
-        $this->initialized['openStdin'] = true;
-        $this->openStdin                = $openStdin;
-
-        return $this;
-    }
-
-    /**
-     * Close `stdin` after one attached client disconnects.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @return bool
-     */
-    public function getStdinOnce(): bool
-    {
-        return $this->stdinOnce;
-    }
-
-    /**
-     * Close `stdin` after one attached client disconnects.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always false. It must not be used, and will be removed in API v1.48.
-     *
-     * @param bool $stdinOnce
-     *
-     * @return self
-     */
-    public function setStdinOnce(bool $stdinOnce): self
-    {
-        $this->initialized['stdinOnce'] = true;
-        $this->stdinOnce                = $stdinOnce;
 
         return $this;
     }
@@ -677,47 +264,10 @@ class ImageConfig extends ArrayObject
     }
 
     /**
-     * The name (or reference) of the image to use when creating the container,
-     * or which was used when the container was created.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always empty. It must not be used, and will be removed in API v1.48.
-     *
-     * @return string
-     */
-    public function getImage(): string
-    {
-        return $this->image;
-    }
-
-    /**
-     * The name (or reference) of the image to use when creating the container,
-     * or which was used when the container was created.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always empty. It must not be used, and will be removed in API v1.48.
-     *
-     * @param string $image
-     *
-     * @return self
-     */
-    public function setImage(string $image): self
-    {
-        $this->initialized['image'] = true;
-        $this->image                = $image;
-
-        return $this;
-    }
-
-    /**
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @return array<string, ImageConfigVolumesItem>
+     * @return array<string, array<string, mixed>>
      */
     public function getVolumes(): iterable
     {
@@ -728,7 +278,7 @@ class ImageConfig extends ArrayObject
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @param array<string, ImageConfigVolumesItem> $volumes
+     * @param array<string, array<string, mixed>> $volumes
      *
      * @return self
      */
@@ -772,9 +322,9 @@ class ImageConfig extends ArrayObject
      * entry point is reset to system default (i.e., the entry point used by
      * docker when there is no `ENTRYPOINT` instruction in the `Dockerfile`).
      *
-     * @return list<string>|null
+     * @return list<string>
      */
-    public function getEntrypoint(): ?array
+    public function getEntrypoint(): array
     {
         return $this->entrypoint;
     }
@@ -786,84 +336,14 @@ class ImageConfig extends ArrayObject
      * entry point is reset to system default (i.e., the entry point used by
      * docker when there is no `ENTRYPOINT` instruction in the `Dockerfile`).
      *
-     * @param list<string>|null $entrypoint
+     * @param list<string> $entrypoint
      *
      * @return self
      */
-    public function setEntrypoint(?array $entrypoint): self
+    public function setEntrypoint(array $entrypoint): self
     {
         $this->initialized['entrypoint'] = true;
         $this->entrypoint                = $entrypoint;
-
-        return $this;
-    }
-
-    /**
-     * Disable networking for the container.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always omitted. It must not be used, and will be removed in API v1.48.
-     *
-     * @return bool|null
-     */
-    public function getNetworkDisabled(): ?bool
-    {
-        return $this->networkDisabled;
-    }
-
-    /**
-     * Disable networking for the container.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always omitted. It must not be used, and will be removed in API v1.48.
-     *
-     * @param bool|null $networkDisabled
-     *
-     * @return self
-     */
-    public function setNetworkDisabled(?bool $networkDisabled): self
-    {
-        $this->initialized['networkDisabled'] = true;
-        $this->networkDisabled                = $networkDisabled;
-
-        return $this;
-    }
-
-    /**
-     * MAC address of the container.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always omitted. It must not be used, and will be removed in API v1.48.
-     *
-     * @return string|null
-     */
-    public function getMacAddress(): ?string
-    {
-        return $this->macAddress;
-    }
-
-    /**
-     * MAC address of the container.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always omitted. It must not be used, and will be removed in API v1.48.
-     *
-     * @param string|null $macAddress
-     *
-     * @return self
-     */
-    public function setMacAddress(?string $macAddress): self
-    {
-        $this->initialized['macAddress'] = true;
-        $this->macAddress                = $macAddress;
 
         return $this;
     }
@@ -939,41 +419,6 @@ class ImageConfig extends ArrayObject
     {
         $this->initialized['stopSignal'] = true;
         $this->stopSignal                = $stopSignal;
-
-        return $this;
-    }
-
-    /**
-     * Timeout to stop a container in seconds.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always omitted. It must not be used, and will be removed in API v1.48.
-     *
-     * @return int|null
-     */
-    public function getStopTimeout(): ?int
-    {
-        return $this->stopTimeout;
-    }
-
-    /**
-     * Timeout to stop a container in seconds.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: this field is not part of the image specification and is
-     * > always omitted. It must not be used, and will be removed in API v1.48.
-     *
-     * @param int|null $stopTimeout
-     *
-     * @return self
-     */
-    public function setStopTimeout(?int $stopTimeout): self
-    {
-        $this->initialized['stopTimeout'] = true;
-        $this->stopTimeout                = $stopTimeout;
 
         return $this;
     }

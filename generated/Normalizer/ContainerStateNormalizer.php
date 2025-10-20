@@ -60,6 +60,9 @@ class ContainerStateNormalizer implements DenormalizerInterface, NormalizerInter
         if (array_key_exists('Dead', $data) && is_int($data['Dead'])) {
             $data['Dead'] = (bool) $data['Dead'];
         }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ContainerStateConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -165,6 +168,9 @@ class ContainerStateNormalizer implements DenormalizerInterface, NormalizerInter
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ContainerStateConstraint());
         }
 
         return $dataArray;

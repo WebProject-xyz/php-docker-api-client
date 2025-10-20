@@ -48,6 +48,9 @@ class PluginNormalizer implements DenormalizerInterface, NormalizerInterface, De
         if (array_key_exists('Enabled', $data) && is_int($data['Enabled'])) {
             $data['Enabled'] = (bool) $data['Enabled'];
         }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\PluginConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -101,6 +104,9 @@ class PluginNormalizer implements DenormalizerInterface, NormalizerInterface, De
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\PluginConstraint());
         }
 
         return $dataArray;

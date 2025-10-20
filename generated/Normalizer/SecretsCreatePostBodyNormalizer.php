@@ -44,6 +44,9 @@ class SecretsCreatePostBodyNormalizer implements DenormalizerInterface, Normaliz
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\SecretsCreatePostBody();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\SecretsCreatePostBodyConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -106,6 +109,9 @@ class SecretsCreatePostBodyNormalizer implements DenormalizerInterface, Normaliz
             if (preg_match('/.*/', (string) $key_1)) {
                 $dataArray[$key_1] = $value_1;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\SecretsCreatePostBodyConstraint());
         }
 
         return $dataArray;

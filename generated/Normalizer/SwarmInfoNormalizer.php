@@ -48,6 +48,9 @@ class SwarmInfoNormalizer implements DenormalizerInterface, NormalizerInterface,
         if (array_key_exists('ControlAvailable', $data) && is_int($data['ControlAvailable'])) {
             $data['ControlAvailable'] = (bool) $data['ControlAvailable'];
         }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\SwarmInfoConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -146,6 +149,9 @@ class SwarmInfoNormalizer implements DenormalizerInterface, NormalizerInterface,
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_1;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\SwarmInfoConstraint());
         }
 
         return $dataArray;

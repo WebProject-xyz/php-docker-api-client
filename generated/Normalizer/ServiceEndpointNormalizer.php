@@ -44,6 +44,9 @@ class ServiceEndpointNormalizer implements DenormalizerInterface, NormalizerInte
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\ServiceEndpoint();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ServiceEndpointConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -51,15 +54,13 @@ class ServiceEndpointNormalizer implements DenormalizerInterface, NormalizerInte
             $object->setSpec($this->denormalizer->denormalize($data['Spec'], \WebProject\DockerApi\Library\Generated\Model\EndpointSpec::class, 'json', $context));
             unset($data['Spec']);
         }
-        if (array_key_exists('Ports', $data) && null !== $data['Ports']) {
+        if (array_key_exists('Ports', $data)) {
             $values = [];
             foreach ($data['Ports'] as $value) {
                 $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\EndpointPortConfig::class, 'json', $context);
             }
             $object->setPorts($values);
             unset($data['Ports']);
-        } elseif (array_key_exists('Ports', $data) && null === $data['Ports']) {
-            $object->setPorts(null);
         }
         if (array_key_exists('VirtualIPs', $data)) {
             $values_1 = [];
@@ -102,6 +103,9 @@ class ServiceEndpointNormalizer implements DenormalizerInterface, NormalizerInte
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_2;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ServiceEndpointConstraint());
         }
 
         return $dataArray;

@@ -79,6 +79,7 @@ class ImageTag extends \WebProject\DockerApi\Library\Generated\Runtime\Client\Ba
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
         if (201 === $status) {
+            return null;
         }
         if ((null === $contentType) === false && (400 === $status && false !== mb_strpos($contentType, 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageTagBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);

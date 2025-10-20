@@ -44,6 +44,9 @@ class PluginSettingsNormalizer implements DenormalizerInterface, NormalizerInter
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\PluginSettings();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\PluginSettingsConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -115,6 +118,9 @@ class PluginSettingsNormalizer implements DenormalizerInterface, NormalizerInter
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_4;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\PluginSettingsConstraint());
         }
 
         return $dataArray;

@@ -48,6 +48,9 @@ class SwarmInitPostBodyNormalizer implements DenormalizerInterface, NormalizerIn
         if (array_key_exists('ForceNewCluster', $data) && is_int($data['ForceNewCluster'])) {
             $data['ForceNewCluster'] = (bool) $data['ForceNewCluster'];
         }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\SwarmInitPostBodyConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -131,6 +134,9 @@ class SwarmInitPostBodyNormalizer implements DenormalizerInterface, NormalizerIn
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_1;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\SwarmInitPostBodyConstraint());
         }
 
         return $dataArray;

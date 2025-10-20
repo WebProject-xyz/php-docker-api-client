@@ -44,16 +44,15 @@ class CommitNormalizer implements DenormalizerInterface, NormalizerInterface, De
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\Commit();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\CommitConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
         if (array_key_exists('ID', $data)) {
             $object->setID($data['ID']);
             unset($data['ID']);
-        }
-        if (array_key_exists('Expected', $data)) {
-            $object->setExpected($data['Expected']);
-            unset($data['Expected']);
         }
         foreach ($data as $key => $value) {
             if (preg_match('/.*/', (string) $key)) {
@@ -70,13 +69,13 @@ class CommitNormalizer implements DenormalizerInterface, NormalizerInterface, De
         if ($data->isInitialized('iD') && null !== $data->getID()) {
             $dataArray['ID'] = $data->getID();
         }
-        if ($data->isInitialized('expected') && null !== $data->getExpected()) {
-            $dataArray['Expected'] = $data->getExpected();
-        }
         foreach ($data as $key => $value) {
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\CommitConstraint());
         }
 
         return $dataArray;

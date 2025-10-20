@@ -48,6 +48,9 @@ class ManagerStatusNormalizer implements DenormalizerInterface, NormalizerInterf
         if (array_key_exists('Leader', $data) && is_int($data['Leader'])) {
             $data['Leader'] = (bool) $data['Leader'];
         }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ManagerStatusConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -88,6 +91,9 @@ class ManagerStatusNormalizer implements DenormalizerInterface, NormalizerInterf
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ManagerStatusConstraint());
         }
 
         return $dataArray;

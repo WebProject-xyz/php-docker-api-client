@@ -51,6 +51,9 @@ class PluginConfigNormalizer implements DenormalizerInterface, NormalizerInterfa
         if (array_key_exists('PidHost', $data) && is_int($data['PidHost'])) {
             $data['PidHost'] = (bool) $data['PidHost'];
         }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\PluginConfigConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -70,15 +73,13 @@ class PluginConfigNormalizer implements DenormalizerInterface, NormalizerInterfa
             $object->setInterface($this->denormalizer->denormalize($data['Interface'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigInterface::class, 'json', $context));
             unset($data['Interface']);
         }
-        if (array_key_exists('Entrypoint', $data) && null !== $data['Entrypoint']) {
+        if (array_key_exists('Entrypoint', $data)) {
             $values = [];
             foreach ($data['Entrypoint'] as $value) {
                 $values[] = $value;
             }
             $object->setEntrypoint($values);
             unset($data['Entrypoint']);
-        } elseif (array_key_exists('Entrypoint', $data) && null === $data['Entrypoint']) {
-            $object->setEntrypoint(null);
         }
         if (array_key_exists('WorkDir', $data)) {
             $object->setWorkDir($data['WorkDir']);
@@ -182,6 +183,9 @@ class PluginConfigNormalizer implements DenormalizerInterface, NormalizerInterfa
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_3;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\PluginConfigConstraint());
         }
 
         return $dataArray;

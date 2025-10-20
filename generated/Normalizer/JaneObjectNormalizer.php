@@ -75,15 +75,7 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
 
         \WebProject\DockerApi\Library\Generated\Model\ContainerConfig::class => ContainerConfigNormalizer::class,
 
-        \WebProject\DockerApi\Library\Generated\Model\ContainerConfigExposedPortsItem::class => ContainerConfigExposedPortsItemNormalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\ContainerConfigVolumesItem::class => ContainerConfigVolumesItemNormalizer::class,
-
         \WebProject\DockerApi\Library\Generated\Model\ImageConfig::class => ImageConfigNormalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\ImageConfigExposedPortsItem::class => ImageConfigExposedPortsItemNormalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\ImageConfigVolumesItem::class => ImageConfigVolumesItemNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\NetworkingConfig::class => NetworkingConfigNormalizer::class,
 
@@ -110,8 +102,6 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
         \WebProject\DockerApi\Library\Generated\Model\ProcessConfig::class => ProcessConfigNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\Volume::class => VolumeNormalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\VolumeStatusItem::class => VolumeStatusItemNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\VolumeUsageData::class => VolumeUsageDataNormalizer::class,
 
@@ -142,6 +132,8 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
         \WebProject\DockerApi\Library\Generated\Model\CreateImageInfo::class => CreateImageInfoNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\PushImageInfo::class => PushImageInfoNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\DeviceInfo::class => DeviceInfoNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\ErrorDetail::class => ErrorDetailNormalizer::class,
 
@@ -253,8 +245,6 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
 
         \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecConfigsItemFile::class => TaskSpecContainerSpecConfigsItemFileNormalizer::class,
 
-        \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecConfigsItemRuntime::class => TaskSpecContainerSpecConfigsItemRuntimeNormalizer::class,
-
         \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecUlimitsItem::class => TaskSpecContainerSpecUlimitsItemNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\TaskSpecNetworkAttachmentSpec::class => TaskSpecNetworkAttachmentSpecNormalizer::class,
@@ -285,11 +275,7 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
 
         \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeReplicated::class => ServiceSpecModeReplicatedNormalizer::class,
 
-        \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeGlobal::class => ServiceSpecModeGlobalNormalizer::class,
-
         \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeReplicatedJob::class => ServiceSpecModeReplicatedJobNormalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeGlobalJob::class => ServiceSpecModeGlobalJobNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\ServiceSpecUpdateConfig::class => ServiceSpecUpdateConfigNormalizer::class,
 
@@ -373,8 +359,6 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
 
         \WebProject\DockerApi\Library\Generated\Model\SystemVersionComponentsItem::class => SystemVersionComponentsItemNormalizer::class,
 
-        \WebProject\DockerApi\Library\Generated\Model\SystemVersionComponentsItemDetails::class => SystemVersionComponentsItemDetailsNormalizer::class,
-
         \WebProject\DockerApi\Library\Generated\Model\SystemInfo::class => SystemInfoNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\SystemInfoDefaultAddressPoolsItem::class => SystemInfoDefaultAddressPoolsItemNormalizer::class,
@@ -382,6 +366,8 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
         \WebProject\DockerApi\Library\Generated\Model\ContainerdInfo::class => ContainerdInfoNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\ContainerdInfoNamespaces::class => ContainerdInfoNamespacesNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\FirewallInfo::class => FirewallInfoNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\PluginsInfo::class => PluginsInfoNormalizer::class,
 
@@ -418,8 +404,6 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
         \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec::class => ClusterVolumeSpecNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessMode::class => ClusterVolumeSpecAccessModeNormalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeMountVolume::class => ClusterVolumeSpecAccessModeMountVolumeNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeSecretsItem::class => ClusterVolumeSpecAccessModeSecretsItemNormalizer::class,
 
@@ -567,11 +551,7 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
             \WebProject\DockerApi\Library\Generated\Model\HostConfig::class                                           => false,
             \WebProject\DockerApi\Library\Generated\Model\HostConfigLogConfig::class                                  => false,
             \WebProject\DockerApi\Library\Generated\Model\ContainerConfig::class                                      => false,
-            \WebProject\DockerApi\Library\Generated\Model\ContainerConfigExposedPortsItem::class                      => false,
-            \WebProject\DockerApi\Library\Generated\Model\ContainerConfigVolumesItem::class                           => false,
             \WebProject\DockerApi\Library\Generated\Model\ImageConfig::class                                          => false,
-            \WebProject\DockerApi\Library\Generated\Model\ImageConfigExposedPortsItem::class                          => false,
-            \WebProject\DockerApi\Library\Generated\Model\ImageConfigVolumesItem::class                               => false,
             \WebProject\DockerApi\Library\Generated\Model\NetworkingConfig::class                                     => false,
             \WebProject\DockerApi\Library\Generated\Model\NetworkSettings::class                                      => false,
             \WebProject\DockerApi\Library\Generated\Model\Address::class                                              => false,
@@ -585,7 +565,6 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
             \WebProject\DockerApi\Library\Generated\Model\AuthConfig::class                                           => false,
             \WebProject\DockerApi\Library\Generated\Model\ProcessConfig::class                                        => false,
             \WebProject\DockerApi\Library\Generated\Model\Volume::class                                               => false,
-            \WebProject\DockerApi\Library\Generated\Model\VolumeStatusItem::class                                     => false,
             \WebProject\DockerApi\Library\Generated\Model\VolumeUsageData::class                                      => false,
             \WebProject\DockerApi\Library\Generated\Model\VolumeCreateOptions::class                                  => false,
             \WebProject\DockerApi\Library\Generated\Model\VolumeListResponse::class                                   => false,
@@ -601,6 +580,7 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
             \WebProject\DockerApi\Library\Generated\Model\ImageID::class                                              => false,
             \WebProject\DockerApi\Library\Generated\Model\CreateImageInfo::class                                      => false,
             \WebProject\DockerApi\Library\Generated\Model\PushImageInfo::class                                        => false,
+            \WebProject\DockerApi\Library\Generated\Model\DeviceInfo::class                                           => false,
             \WebProject\DockerApi\Library\Generated\Model\ErrorDetail::class                                          => false,
             \WebProject\DockerApi\Library\Generated\Model\ProgressDetail::class                                       => false,
             \WebProject\DockerApi\Library\Generated\Model\ErrorResponse::class                                        => false,
@@ -656,7 +636,6 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
             \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecSecretsItemFile::class                 => false,
             \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecConfigsItem::class                     => false,
             \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecConfigsItemFile::class                 => false,
-            \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecConfigsItemRuntime::class              => false,
             \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecUlimitsItem::class                     => false,
             \WebProject\DockerApi\Library\Generated\Model\TaskSpecNetworkAttachmentSpec::class                        => false,
             \WebProject\DockerApi\Library\Generated\Model\TaskSpecResources::class                                    => false,
@@ -672,9 +651,7 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
             \WebProject\DockerApi\Library\Generated\Model\ServiceSpec::class                                          => false,
             \WebProject\DockerApi\Library\Generated\Model\ServiceSpecMode::class                                      => false,
             \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeReplicated::class                            => false,
-            \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeGlobal::class                                => false,
             \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeReplicatedJob::class                         => false,
-            \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeGlobalJob::class                             => false,
             \WebProject\DockerApi\Library\Generated\Model\ServiceSpecUpdateConfig::class                              => false,
             \WebProject\DockerApi\Library\Generated\Model\ServiceSpecRollbackConfig::class                            => false,
             \WebProject\DockerApi\Library\Generated\Model\EndpointPortConfig::class                                   => false,
@@ -716,11 +693,11 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
             \WebProject\DockerApi\Library\Generated\Model\SystemVersion::class                                        => false,
             \WebProject\DockerApi\Library\Generated\Model\SystemVersionPlatform::class                                => false,
             \WebProject\DockerApi\Library\Generated\Model\SystemVersionComponentsItem::class                          => false,
-            \WebProject\DockerApi\Library\Generated\Model\SystemVersionComponentsItemDetails::class                   => false,
             \WebProject\DockerApi\Library\Generated\Model\SystemInfo::class                                           => false,
             \WebProject\DockerApi\Library\Generated\Model\SystemInfoDefaultAddressPoolsItem::class                    => false,
             \WebProject\DockerApi\Library\Generated\Model\ContainerdInfo::class                                       => false,
             \WebProject\DockerApi\Library\Generated\Model\ContainerdInfoNamespaces::class                             => false,
+            \WebProject\DockerApi\Library\Generated\Model\FirewallInfo::class                                         => false,
             \WebProject\DockerApi\Library\Generated\Model\PluginsInfo::class                                          => false,
             \WebProject\DockerApi\Library\Generated\Model\RegistryServiceConfig::class                                => false,
             \WebProject\DockerApi\Library\Generated\Model\IndexInfo::class                                            => false,
@@ -739,7 +716,6 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
             \WebProject\DockerApi\Library\Generated\Model\ClusterVolumePublishStatusItem::class                       => false,
             \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec::class                                    => false,
             \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessMode::class                          => false,
-            \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeMountVolume::class               => false,
             \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeSecretsItem::class               => false,
             \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeAccessibilityRequirements::class => false,
             \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeCapacityRange::class             => false,

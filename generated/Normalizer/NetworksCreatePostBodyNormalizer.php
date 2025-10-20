@@ -63,6 +63,9 @@ class NetworksCreatePostBodyNormalizer implements DenormalizerInterface, Normali
         if (array_key_exists('EnableIPv6', $data) && is_int($data['EnableIPv6'])) {
             $data['EnableIPv6'] = (bool) $data['EnableIPv6'];
         }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\NetworksCreatePostBodyConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -187,6 +190,9 @@ class NetworksCreatePostBodyNormalizer implements DenormalizerInterface, Normali
             if (preg_match('/.*/', (string) $key_2)) {
                 $dataArray[$key_2] = $value_2;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\NetworksCreatePostBodyConstraint());
         }
 
         return $dataArray;

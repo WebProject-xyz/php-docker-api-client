@@ -86,6 +86,7 @@ class NodeUpdate extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
         if (200 === $status) {
+            return null;
         }
         if ((null === $contentType) === false && (400 === $status && false !== mb_strpos($contentType, 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NodeUpdateBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);

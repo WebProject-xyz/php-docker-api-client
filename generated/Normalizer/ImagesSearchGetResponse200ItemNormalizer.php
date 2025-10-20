@@ -51,6 +51,9 @@ class ImagesSearchGetResponse200ItemNormalizer implements DenormalizerInterface,
         if (array_key_exists('is_automated', $data) && is_int($data['is_automated'])) {
             $data['is_automated'] = (bool) $data['is_automated'];
         }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ImagesSearchGetResponse200ItemConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -105,6 +108,9 @@ class ImagesSearchGetResponse200ItemNormalizer implements DenormalizerInterface,
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ImagesSearchGetResponse200ItemConstraint());
         }
 
         return $dataArray;

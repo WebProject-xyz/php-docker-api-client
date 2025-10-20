@@ -44,6 +44,9 @@ class ClusterVolumeInfoNormalizer implements DenormalizerInterface, NormalizerIn
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeInfo();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ClusterVolumeInfoConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -115,6 +118,9 @@ class ClusterVolumeInfoNormalizer implements DenormalizerInterface, NormalizerIn
             if (preg_match('/.*/', (string) $key_2)) {
                 $dataArray[$key_2] = $value_3;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ClusterVolumeInfoConstraint());
         }
 
         return $dataArray;

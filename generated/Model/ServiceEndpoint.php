@@ -24,7 +24,7 @@ class ServiceEndpoint extends ArrayObject
      */
     protected $spec;
     /**
-     * @var list<EndpointPortConfig>|null
+     * @var list<EndpointPortConfig>
      */
     protected $ports;
     /**
@@ -58,19 +58,19 @@ class ServiceEndpoint extends ArrayObject
     }
 
     /**
-     * @return list<EndpointPortConfig>|null
+     * @return list<EndpointPortConfig>
      */
-    public function getPorts(): ?array
+    public function getPorts(): array
     {
         return $this->ports;
     }
 
     /**
-     * @param list<EndpointPortConfig>|null $ports
+     * @param list<EndpointPortConfig> $ports
      *
      * @return self
      */
-    public function setPorts(?array $ports): self
+    public function setPorts(array $ports): self
     {
         $this->initialized['ports'] = true;
         $this->ports                = $ports;

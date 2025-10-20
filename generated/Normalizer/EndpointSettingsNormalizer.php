@@ -16,7 +16,6 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
-use function is_int;
 use function is_object;
 
 class EndpointSettingsNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
@@ -45,8 +44,8 @@ class EndpointSettingsNormalizer implements DenormalizerInterface, NormalizerInt
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\EndpointSettings();
-        if (array_key_exists('GwPriority', $data) && is_int($data['GwPriority'])) {
-            $data['GwPriority'] = (float) $data['GwPriority'];
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\EndpointSettingsConstraint());
         }
         if (null === $data || false === is_array($data)) {
             return $object;
@@ -71,15 +70,13 @@ class EndpointSettingsNormalizer implements DenormalizerInterface, NormalizerInt
             $object->setMacAddress($data['MacAddress']);
             unset($data['MacAddress']);
         }
-        if (array_key_exists('Aliases', $data) && null !== $data['Aliases']) {
+        if (array_key_exists('Aliases', $data)) {
             $values_1 = [];
             foreach ($data['Aliases'] as $value_1) {
                 $values_1[] = $value_1;
             }
             $object->setAliases($values_1);
             unset($data['Aliases']);
-        } elseif (array_key_exists('Aliases', $data) && null === $data['Aliases']) {
-            $object->setAliases(null);
         }
         if (array_key_exists('DriverOpts', $data) && null !== $data['DriverOpts']) {
             $values_2 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
@@ -127,15 +124,13 @@ class EndpointSettingsNormalizer implements DenormalizerInterface, NormalizerInt
             $object->setGlobalIPv6PrefixLen($data['GlobalIPv6PrefixLen']);
             unset($data['GlobalIPv6PrefixLen']);
         }
-        if (array_key_exists('DNSNames', $data) && null !== $data['DNSNames']) {
+        if (array_key_exists('DNSNames', $data)) {
             $values_3 = [];
             foreach ($data['DNSNames'] as $value_3) {
                 $values_3[] = $value_3;
             }
             $object->setDNSNames($values_3);
             unset($data['DNSNames']);
-        } elseif (array_key_exists('DNSNames', $data) && null === $data['DNSNames']) {
-            $object->setDNSNames(null);
         }
         foreach ($data as $key_1 => $value_4) {
             if (preg_match('/.*/', (string) $key_1)) {
@@ -214,6 +209,9 @@ class EndpointSettingsNormalizer implements DenormalizerInterface, NormalizerInt
             if (preg_match('/.*/', (string) $key_1)) {
                 $dataArray[$key_1] = $value_4;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\EndpointSettingsConstraint());
         }
 
         return $dataArray;

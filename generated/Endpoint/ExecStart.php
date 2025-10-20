@@ -63,6 +63,7 @@ class ExecStart extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
         if (200 === $status) {
+            return null;
         }
         if (404 === $status) {
         }

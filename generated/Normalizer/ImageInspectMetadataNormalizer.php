@@ -44,6 +44,9 @@ class ImageInspectMetadataNormalizer implements DenormalizerInterface, Normalize
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\ImageInspectMetadata();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ImageInspectMetadataConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -72,6 +75,9 @@ class ImageInspectMetadataNormalizer implements DenormalizerInterface, Normalize
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ImageInspectMetadataConstraint());
         }
 
         return $dataArray;

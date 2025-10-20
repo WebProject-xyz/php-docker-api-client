@@ -20,7 +20,7 @@ class VolumeListResponse extends ArrayObject
     /**
      * List of volumes.
      *
-     * @var list<Volume>|null
+     * @var list<Volume>
      */
     protected $volumes;
     /**
@@ -33,9 +33,9 @@ class VolumeListResponse extends ArrayObject
     /**
      * List of volumes.
      *
-     * @return list<Volume>|null
+     * @return list<Volume>
      */
-    public function getVolumes(): ?array
+    public function getVolumes(): array
     {
         return $this->volumes;
     }
@@ -43,11 +43,11 @@ class VolumeListResponse extends ArrayObject
     /**
      * List of volumes.
      *
-     * @param list<Volume>|null $volumes
+     * @param list<Volume> $volumes
      *
      * @return self
      */
-    public function setVolumes(?array $volumes): self
+    public function setVolumes(array $volumes): self
     {
         $this->initialized['volumes'] = true;
         $this->volumes                = $volumes;

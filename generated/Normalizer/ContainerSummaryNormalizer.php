@@ -44,6 +44,9 @@ class ContainerSummaryNormalizer implements DenormalizerInterface, NormalizerInt
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerSummary();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ContainerSummaryConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -79,15 +82,13 @@ class ContainerSummaryNormalizer implements DenormalizerInterface, NormalizerInt
             $object->setCreated($data['Created']);
             unset($data['Created']);
         }
-        if (array_key_exists('Ports', $data) && null !== $data['Ports']) {
+        if (array_key_exists('Ports', $data)) {
             $values_1 = [];
             foreach ($data['Ports'] as $value_1) {
                 $values_1[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\Port::class, 'json', $context);
             }
             $object->setPorts($values_1);
             unset($data['Ports']);
-        } elseif (array_key_exists('Ports', $data) && null === $data['Ports']) {
-            $object->setPorts(null);
         }
         if (array_key_exists('SizeRw', $data) && null !== $data['SizeRw']) {
             $object->setSizeRw($data['SizeRw']);
@@ -213,6 +214,9 @@ class ContainerSummaryNormalizer implements DenormalizerInterface, NormalizerInt
             if (preg_match('/.*/', (string) $key_1)) {
                 $dataArray[$key_1] = $value_4;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ContainerSummaryConstraint());
         }
 
         return $dataArray;

@@ -51,6 +51,9 @@ class ProcessConfigNormalizer implements DenormalizerInterface, NormalizerInterf
         if (array_key_exists('tty', $data) && is_int($data['tty'])) {
             $data['tty'] = (bool) $data['tty'];
         }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ProcessConfigConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -113,6 +116,9 @@ class ProcessConfigNormalizer implements DenormalizerInterface, NormalizerInterf
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_1;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ProcessConfigConstraint());
         }
 
         return $dataArray;

@@ -58,6 +58,7 @@ class SystemAuth extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
             return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\AuthPostResponse200', 'json');
         }
         if (204 === $status) {
+            return null;
         }
         if ((null === $contentType) === false && (401 === $status && false !== mb_strpos($contentType, 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\SystemAuthUnauthorizedException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);

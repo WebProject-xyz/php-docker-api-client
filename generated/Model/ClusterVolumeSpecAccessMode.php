@@ -59,7 +59,7 @@ class ClusterVolumeSpecAccessMode extends ArrayObject
      * Options for using this volume as a Block-type volume.
      * Intentionally empty.
      *
-     * @var ClusterVolumeSpecAccessModeMountVolume
+     * @var array<string, mixed>
      */
     protected $mountVolume;
     /**
@@ -181,9 +181,9 @@ class ClusterVolumeSpecAccessMode extends ArrayObject
      * Options for using this volume as a Block-type volume.
      * Intentionally empty.
      *
-     * @return ClusterVolumeSpecAccessModeMountVolume
+     * @return array<string, mixed>
      */
-    public function getMountVolume(): ClusterVolumeSpecAccessModeMountVolume
+    public function getMountVolume(): iterable
     {
         return $this->mountVolume;
     }
@@ -211,11 +211,11 @@ class ClusterVolumeSpecAccessMode extends ArrayObject
      * Options for using this volume as a Block-type volume.
      * Intentionally empty.
      *
-     * @param ClusterVolumeSpecAccessModeMountVolume $mountVolume
+     * @param array<string, mixed> $mountVolume
      *
      * @return self
      */
-    public function setMountVolume(ClusterVolumeSpecAccessModeMountVolume $mountVolume): self
+    public function setMountVolume(iterable $mountVolume): self
     {
         $this->initialized['mountVolume'] = true;
         $this->mountVolume                = $mountVolume;

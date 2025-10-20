@@ -44,6 +44,9 @@ class SecretNormalizer implements DenormalizerInterface, NormalizerInterface, De
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\Secret();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\SecretConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -98,6 +101,9 @@ class SecretNormalizer implements DenormalizerInterface, NormalizerInterface, De
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\SecretConstraint());
         }
 
         return $dataArray;

@@ -120,7 +120,7 @@ class ImageBuild extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
         $optionsResolver = parent::getQueryOptionsResolver();
         $optionsResolver->setDefined(['dockerfile', 't', 'extrahosts', 'remote', 'q', 'nocache', 'cachefrom', 'pull', 'rm', 'forcerm', 'memory', 'memswap', 'cpushares', 'cpusetcpus', 'cpuperiod', 'cpuquota', 'buildargs', 'shmsize', 'squash', 'labels', 'networkmode', 'platform', 'target', 'outputs', 'version']);
         $optionsResolver->setRequired([]);
-        $optionsResolver->setDefaults(['dockerfile' => 'Dockerfile', 'q' => false, 'nocache' => false, 'rm' => true, 'forcerm' => false, 'version' => '1']);
+        $optionsResolver->setDefaults(['dockerfile' => 'Dockerfile', 'q' => false, 'nocache' => false, 'rm' => true, 'forcerm' => false, 'platform' => '', 'target' => '', 'outputs' => '', 'version' => '1']);
         $optionsResolver->addAllowedTypes('dockerfile', ['string']);
         $optionsResolver->addAllowedTypes('t', ['string']);
         $optionsResolver->addAllowedTypes('extrahosts', ['string']);
@@ -175,6 +175,7 @@ class ImageBuild extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
         if (200 === $status) {
+            return null;
         }
         if ((null === $contentType) === false && (400 === $status && false !== mb_strpos($contentType, 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageBuildBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);

@@ -44,6 +44,9 @@ class TaskSpecNormalizer implements DenormalizerInterface, NormalizerInterface, 
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpec();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\TaskSpecConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -55,11 +58,9 @@ class TaskSpecNormalizer implements DenormalizerInterface, NormalizerInterface, 
             $object->setContainerSpec($this->denormalizer->denormalize($data['ContainerSpec'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpec::class, 'json', $context));
             unset($data['ContainerSpec']);
         }
-        if (array_key_exists('NetworkAttachmentSpec', $data) && null !== $data['NetworkAttachmentSpec']) {
+        if (array_key_exists('NetworkAttachmentSpec', $data)) {
             $object->setNetworkAttachmentSpec($this->denormalizer->denormalize($data['NetworkAttachmentSpec'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecNetworkAttachmentSpec::class, 'json', $context));
             unset($data['NetworkAttachmentSpec']);
-        } elseif (array_key_exists('NetworkAttachmentSpec', $data) && null === $data['NetworkAttachmentSpec']) {
-            $object->setNetworkAttachmentSpec(null);
         }
         if (array_key_exists('Resources', $data)) {
             $object->setResources($this->denormalizer->denormalize($data['Resources'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecResources::class, 'json', $context));
@@ -143,6 +144,9 @@ class TaskSpecNormalizer implements DenormalizerInterface, NormalizerInterface, 
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_1;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\TaskSpecConstraint());
         }
 
         return $dataArray;

@@ -44,6 +44,9 @@ class AuthConfigNormalizer implements DenormalizerInterface, NormalizerInterface
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\AuthConfig();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\AuthConfigConstraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -91,6 +94,9 @@ class AuthConfigNormalizer implements DenormalizerInterface, NormalizerInterface
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\AuthConfigConstraint());
         }
 
         return $dataArray;

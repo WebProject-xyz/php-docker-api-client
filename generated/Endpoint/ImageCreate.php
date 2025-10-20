@@ -97,7 +97,7 @@ class ImageCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Client
         $optionsResolver = parent::getQueryOptionsResolver();
         $optionsResolver->setDefined(['fromImage', 'fromSrc', 'repo', 'tag', 'message', 'changes', 'platform']);
         $optionsResolver->setRequired([]);
-        $optionsResolver->setDefaults([]);
+        $optionsResolver->setDefaults(['platform' => '']);
         $optionsResolver->addAllowedTypes('fromImage', ['string']);
         $optionsResolver->addAllowedTypes('fromSrc', ['string']);
         $optionsResolver->addAllowedTypes('repo', ['string']);
@@ -133,6 +133,7 @@ class ImageCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Client
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
         if (200 === $status) {
+            return null;
         }
         if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageCreateNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);

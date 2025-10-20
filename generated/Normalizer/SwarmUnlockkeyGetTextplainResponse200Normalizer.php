@@ -44,6 +44,9 @@ class SwarmUnlockkeyGetTextplainResponse200Normalizer implements DenormalizerInt
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\SwarmUnlockkeyGetTextplainResponse200();
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\SwarmUnlockkeyGetTextplainResponse200Constraint());
+        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -70,6 +73,9 @@ class SwarmUnlockkeyGetTextplainResponse200Normalizer implements DenormalizerInt
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
+        }
+        if (!($context['skip_validation'] ?? false)) {
+            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\SwarmUnlockkeyGetTextplainResponse200Constraint());
         }
 
         return $dataArray;
