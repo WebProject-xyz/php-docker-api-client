@@ -8520,6 +8520,7 @@ components:
             [{"Path": "device_path", "Weight": weight}]
             ```
           type: array
+          nullable: true
           items:
             type: object
             properties:
@@ -8536,6 +8537,7 @@ components:
             [{"Path": "device_path", "Rate": rate}]
             ```
           type: array
+          nullable: true
           items:
             $ref: "#/components/schemas/ThrottleDevice"
         BlkioDeviceWriteBps:
@@ -8546,6 +8548,7 @@ components:
             [{"Path": "device_path", "Rate": rate}]
             ```
           type: array
+          nullable: true
           items:
             $ref: "#/components/schemas/ThrottleDevice"
         BlkioDeviceReadIOps:
@@ -8556,6 +8559,7 @@ components:
             [{"Path": "device_path", "Rate": rate}]
             ```
           type: array
+          nullable: true
           items:
             $ref: "#/components/schemas/ThrottleDevice"
         BlkioDeviceWriteIOps:
@@ -8566,6 +8570,7 @@ components:
             [{"Path": "device_path", "Rate": rate}]
             ```
           type: array
+          nullable: true
           items:
             $ref: "#/components/schemas/ThrottleDevice"
         CpuPeriod:
@@ -8602,11 +8607,13 @@ components:
         Devices:
           description: A list of devices to add to the container.
           type: array
+          nullable: true
           items:
             $ref: "#/components/schemas/DeviceMapping"
         DeviceCgroupRules:
           description: a list of cgroup rules to apply to the container
           type: array
+          nullable: true
           items:
             type: string
             example: c 13:* rwm
@@ -8614,6 +8621,7 @@ components:
           description: |
             A list of requests for devices to be sent to device drivers.
           type: array
+          nullable: true
           items:
             $ref: "#/components/schemas/DeviceRequest"
         KernelMemoryTCP:
@@ -8648,14 +8656,17 @@ components:
             Tune a container's memory swappiness behavior. Accepts an integer
             between 0 and 100.
           type: integer
+          nullable: true
           format: int64
           minimum: 0
           maximum: 100
         NanoCpus:
+          nullable: true
           description: CPU quota in units of 10<sup>-9</sup> CPUs.
           type: integer
           format: int64
         OomKillDisable:
+          nullable: true
           description: Disable OOM Killer for the container.
           type: boolean
         Init:
@@ -8682,6 +8693,7 @@ components:
             {"Name": "nofile", "Soft": 1024, "Hard": 2048}
             ```
           type: array
+          nullable: true
           items:
             type: object
             properties:
@@ -8695,6 +8707,7 @@ components:
                 description: Hard limit
                 type: integer
         CpuCount:
+          nullable: true
           description: >
             The number of usable CPUs (Windows only).
 
@@ -8718,16 +8731,19 @@ components:
             `CPUShares`, and `CPUPercent` last.
           type: integer
           format: int64
+          nullable: true
         IOMaximumIOps:
           description: Maximum IOps for the container system drive (Windows only)
           type: integer
           format: int64
+          nullable: true
         IOMaximumBandwidth:
           description: |
             Maximum IO in bytes per second for the container system drive
             (Windows only).
           type: integer
           format: int64
+          nullable: true
     Limit:
       description: >
         An object describing a limit on resources which can be requested by a
@@ -8927,6 +8943,7 @@ components:
           properties:
             Binds:
               type: array
+              nullable: true
               description: >
                 A list of volume bindings for this container. Each volume
                 binding
@@ -9028,6 +9045,7 @@ components:
               type: string
               description: Driver that this container uses to mount volumes.
             VolumesFrom:
+              nullable: true
               type: array
               description: >
                 A list of volumes to inherit from another container, specified
@@ -9037,6 +9055,7 @@ components:
               items:
                 type: string
             Mounts:
+              nullable: true
               description: |
                 Specification for mounts to be added to the container.
               type: array
@@ -9056,6 +9075,7 @@ components:
                 - 64
               nullable: true
             Annotations:
+              nullable: true
               type: object
               description: |
                 Arbitrary non-identifying metadata attached to container and
@@ -9064,6 +9084,7 @@ components:
                 type: string
             CapAdd:
               type: array
+              nullable: true
               description: |
                 A list of kernel capabilities to add to the container. Conflicts
                 with option 'Capabilities'.
@@ -9071,6 +9092,7 @@ components:
                 type: string
             CapDrop:
               type: array
+              nullable: true
               description: >
                 A list of kernel capabilities to drop from the container.
                 Conflicts
@@ -9097,21 +9119,25 @@ components:
                 or `"host"`, depending on daemon version, kernel support and configuration.
             Dns:
               type: array
+              nullable: true
               description: A list of DNS servers for the container to use.
               items:
                 type: string
             DnsOptions:
               type: array
+              nullable: true
               description: A list of DNS options.
               items:
                 type: string
             DnsSearch:
               type: array
+              nullable: true
               description: A list of DNS search domains.
               items:
                 type: string
             ExtraHosts:
               type: array
+              nullable: true
               description: >
                 A list of hostnames/IP mappings to add to the container's
                 `/etc/hosts`
@@ -9121,12 +9147,14 @@ components:
                 type: string
             GroupAdd:
               type: array
+              nullable: true
               description: >
                 A list of additional groups that the container process will run
                 as.
               items:
                 type: string
             IpcMode:
+              nullable: true
               type: string
               description: >
                 IPC sharing mode for the container. Possible values are:
@@ -9147,22 +9175,26 @@ components:
 
                 or `"shareable"`, depending on daemon version and configuration.
             Cgroup:
+              nullable: true
               type: string
               description: Cgroup to use for the container.
             Links:
               type: array
+              nullable: true
               description: >
                 A list of links for the container in the form
                 `container_name:alias`.
               items:
                 type: string
             OomScoreAdj:
+              nullable: true
               type: integer
               description: |
                 An integer value containing the score given to the container in
                 order to tune OOM killer preferences.
               example: 500
             PidMode:
+              nullable: true
               type: string
               description: >
                 Set the PID (Process) Namespace mode for the container. It can
@@ -9646,6 +9678,7 @@ components:
             Deprecated: This field is only set when the daemon is started with the --bridge flag specified.
           type: string
           example: docker0
+          nullable: true
         SandboxID:
           description: SandboxID uniquely represents a container's network stack.
           type: string
@@ -11011,6 +11044,7 @@ components:
         IPAMConfig:
           $ref: "#/components/schemas/EndpointIPAMConfig"
         Links:
+          nullable: true
           type: array
           items:
             type: string
@@ -11025,6 +11059,7 @@ components:
           example: 02:42:ac:11:00:04
         Aliases:
           type: array
+          nullable: true
           items:
             type: string
           example:
@@ -11112,6 +11147,7 @@ components:
 
             `my.ctr.testnet`.
           type: array
+          nullable: true
           items:
             type: string
           example:
@@ -12674,6 +12710,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/NetworkAttachmentConfig"
+          nullable: true
         LogDriver:
           description: |
             Specifies the log driver to use for tasks created from this spec. If
@@ -13004,6 +13041,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/NetworkAttachmentConfig"
+          nullable: true
         EndpointSpec:
           $ref: "#/components/schemas/EndpointSpec"
     EndpointPortConfig:
@@ -15587,6 +15625,7 @@ components:
           description: |
             Discoverable alternate names for the service on this network.
           type: array
+          nullable: true
           items:
             type: string
         DriverOpts:
