@@ -9239,6 +9239,7 @@ components:
                 such
 
                 as SELinux.
+              nullable: true
               items:
                 type: string
             StorageOpt:
@@ -9304,6 +9305,7 @@ components:
                 overrides
 
                 the default set of paths).
+              nullable: true
               items:
                 type: string
               example:
@@ -9914,6 +9916,7 @@ components:
         items:
           $ref: "#/components/schemas/PortBinding"
         nullable: true
+      nullable: true
       example:
         443/tcp:
           - HostIp: 127.0.0.1
