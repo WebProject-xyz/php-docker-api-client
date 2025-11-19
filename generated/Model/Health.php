@@ -37,7 +37,7 @@ class Health extends ArrayObject
     /**
      * Log contains the last few results (oldest first).
      *
-     * @var list<HealthcheckResult>
+     * @var list<HealthcheckResult>|null
      */
     protected $log;
 
@@ -104,9 +104,9 @@ class Health extends ArrayObject
     /**
      * Log contains the last few results (oldest first).
      *
-     * @return list<HealthcheckResult>
+     * @return list<HealthcheckResult>|null
      */
-    public function getLog(): array
+    public function getLog(): ?array
     {
         return $this->log;
     }
@@ -114,11 +114,11 @@ class Health extends ArrayObject
     /**
      * Log contains the last few results (oldest first).
      *
-     * @param list<HealthcheckResult> $log
+     * @param list<HealthcheckResult>|null $log
      *
      * @return self
      */
-    public function setLog(array $log): self
+    public function setLog(?array $log): self
     {
         $this->initialized['log'] = true;
         $this->log                = $log;

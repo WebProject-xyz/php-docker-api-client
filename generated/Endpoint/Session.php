@@ -37,6 +37,7 @@ class Session extends \WebProject\DockerApi\Library\Generated\Runtime\Client\Bas
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
         if (101 === $status) {
+            return null;
         }
         if (400 === $status) {
         }

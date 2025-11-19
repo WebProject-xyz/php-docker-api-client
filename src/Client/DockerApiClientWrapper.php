@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApiClient\Client;
 
+use JsonException;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpClient\Psr18Client;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Contracts\HttpClient\ChunkInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use WebProject\DockerApi\Library\Generated\Client;
 use WebProject\DockerApiClient\Event\ContainerEvent;
 use function json_decode;
@@ -25,6 +27,9 @@ final class DockerApiClientWrapper
 
     /**
      * @phpstan-param callable(ContainerEvent $event):void $eventCallback
+     *
+     * @throws TransportExceptionInterface
+     * @throws JsonException
      */
     public function listenForEvents(callable $eventCallback): true
     {

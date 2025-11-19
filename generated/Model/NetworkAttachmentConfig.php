@@ -26,7 +26,7 @@ class NetworkAttachmentConfig extends ArrayObject
     /**
      * Discoverable alternate names for the service on this network.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $aliases;
     /**
@@ -64,9 +64,9 @@ class NetworkAttachmentConfig extends ArrayObject
     /**
      * Discoverable alternate names for the service on this network.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getAliases(): array
+    public function getAliases(): ?array
     {
         return $this->aliases;
     }
@@ -74,11 +74,11 @@ class NetworkAttachmentConfig extends ArrayObject
     /**
      * Discoverable alternate names for the service on this network.
      *
-     * @param list<string> $aliases
+     * @param list<string>|null $aliases
      *
      * @return self
      */
-    public function setAliases(array $aliases): self
+    public function setAliases(?array $aliases): self
     {
         $this->initialized['aliases'] = true;
         $this->aliases                = $aliases;

@@ -62,7 +62,7 @@ class ContainersCreatePostBody extends ArrayObject
      *
      * `{"<port>/<tcp|udp|sctp>": {}}`
      *
-     * @var array<string, ContainerConfigExposedPortsItem>|null
+     * @var array<string, array<string, mixed>>|null
      */
     protected $exposedPorts;
     /**
@@ -88,7 +88,7 @@ class ContainersCreatePostBody extends ArrayObject
      * form `["VAR=value", ...]`. A variable without `=` is removed from the
      * environment, rather than to have an empty value.
      *
-     * @var list<string>|null
+     * @var list<string>
      */
     protected $env;
     /**
@@ -120,7 +120,7 @@ class ContainersCreatePostBody extends ArrayObject
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @var array<string, ContainerConfigVolumesItem>|null
+     * @var array<string, array<string, mixed>>|null
      */
     protected $volumes;
     /**
@@ -176,7 +176,7 @@ class ContainersCreatePostBody extends ArrayObject
      *
      * @var int|null
      */
-    protected $stopTimeout;
+    protected $stopTimeout = 10;
     /**
      * Shell for when `RUN`, `CMD`, and `ENTRYPOINT` uses a shell.
      *
@@ -186,7 +186,7 @@ class ContainersCreatePostBody extends ArrayObject
     /**
      * Container configuration that depends on the host we are running on.
      *
-     * @var HostConfig
+     * @var HostConfig|null
      */
     protected $hostConfig;
     /**
@@ -362,7 +362,7 @@ class ContainersCreatePostBody extends ArrayObject
      *
      * `{"<port>/<tcp|udp|sctp>": {}}`
      *
-     * @return array<string, ContainerConfigExposedPortsItem>|null
+     * @return array<string, array<string, mixed>>|null
      */
     public function getExposedPorts(): ?iterable
     {
@@ -374,7 +374,7 @@ class ContainersCreatePostBody extends ArrayObject
      *
      * `{"<port>/<tcp|udp|sctp>": {}}`
      *
-     * @param array<string, ContainerConfigExposedPortsItem>|null $exposedPorts
+     * @param array<string, array<string, mixed>>|null $exposedPorts
      *
      * @return self
      */
@@ -466,9 +466,9 @@ class ContainersCreatePostBody extends ArrayObject
      * form `["VAR=value", ...]`. A variable without `=` is removed from the
      * environment, rather than to have an empty value.
      *
-     * @return list<string>|null
+     * @return list<string>
      */
-    public function getEnv(): ?array
+    public function getEnv(): array
     {
         return $this->env;
     }
@@ -478,11 +478,11 @@ class ContainersCreatePostBody extends ArrayObject
      * form `["VAR=value", ...]`. A variable without `=` is removed from the
      * environment, rather than to have an empty value.
      *
-     * @param list<string>|null $env
+     * @param list<string> $env
      *
      * @return self
      */
-    public function setEnv(?array $env): self
+    public function setEnv(array $env): self
     {
         $this->initialized['env'] = true;
         $this->env                = $env;
@@ -596,7 +596,7 @@ class ContainersCreatePostBody extends ArrayObject
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @return array<string, ContainerConfigVolumesItem>|null
+     * @return array<string, array<string, mixed>>|null
      */
     public function getVolumes(): ?iterable
     {
@@ -607,7 +607,7 @@ class ContainersCreatePostBody extends ArrayObject
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @param array<string, ContainerConfigVolumesItem>|null $volumes
+     * @param array<string, array<string, mixed>>|null $volumes
      *
      * @return self
      */
@@ -859,9 +859,9 @@ class ContainersCreatePostBody extends ArrayObject
     /**
      * Container configuration that depends on the host we are running on.
      *
-     * @return HostConfig
+     * @return HostConfig|null
      */
-    public function getHostConfig(): HostConfig
+    public function getHostConfig(): ?HostConfig
     {
         return $this->hostConfig;
     }
@@ -869,11 +869,11 @@ class ContainersCreatePostBody extends ArrayObject
     /**
      * Container configuration that depends on the host we are running on.
      *
-     * @param HostConfig $hostConfig
+     * @param HostConfig|null $hostConfig
      *
      * @return self
      */
-    public function setHostConfig(HostConfig $hostConfig): self
+    public function setHostConfig(?HostConfig $hostConfig): self
     {
         $this->initialized['hostConfig'] = true;
         $this->hostConfig                = $hostConfig;

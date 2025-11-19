@@ -56,14 +56,18 @@ class SystemVersionComponentsItemNormalizer implements DenormalizerInterface, No
             unset($data['Version']);
         }
         if (array_key_exists('Details', $data) && null !== $data['Details']) {
-            $object->setDetails($this->denormalizer->denormalize($data['Details'], \WebProject\DockerApi\Library\Generated\Model\SystemVersionComponentsItemDetails::class, 'json', $context));
+            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data['Details'] as $key => $value) {
+                $values[$key] = $value;
+            }
+            $object->setDetails($values);
             unset($data['Details']);
         } elseif (array_key_exists('Details', $data) && null === $data['Details']) {
             $object->setDetails(null);
         }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        foreach ($data as $key_1 => $value_1) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_1;
             }
         }
 
@@ -76,11 +80,15 @@ class SystemVersionComponentsItemNormalizer implements DenormalizerInterface, No
         $dataArray['Name']    = $data->getName();
         $dataArray['Version'] = $data->getVersion();
         if ($data->isInitialized('details') && null !== $data->getDetails()) {
-            $dataArray['Details'] = $this->normalizer->normalize($data->getDetails(), 'json', $context);
+            $values = [];
+            foreach ($data->getDetails() as $key => $value) {
+                $values[$key] = $value;
+            }
+            $dataArray['Details'] = $values;
         }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        foreach ($data as $key_1 => $value_1) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_1;
             }
         }
 

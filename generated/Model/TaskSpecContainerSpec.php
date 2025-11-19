@@ -205,7 +205,7 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * A list of resource limits to set in the container. For example: `{"Name": "nofile", "Soft": 1024, "Hard": 2048}`".
      *
-     * @var list<TaskSpecContainerSpecUlimitsItem>|null
+     * @var list<TaskSpecContainerSpecUlimitsItem>
      */
     protected $ulimits;
 
@@ -933,9 +933,9 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * A list of resource limits to set in the container. For example: `{"Name": "nofile", "Soft": 1024, "Hard": 2048}`".
      *
-     * @return list<TaskSpecContainerSpecUlimitsItem>|null
+     * @return list<TaskSpecContainerSpecUlimitsItem>
      */
-    public function getUlimits(): ?array
+    public function getUlimits(): array
     {
         return $this->ulimits;
     }
@@ -943,11 +943,11 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * A list of resource limits to set in the container. For example: `{"Name": "nofile", "Soft": 1024, "Hard": 2048}`".
      *
-     * @param list<TaskSpecContainerSpecUlimitsItem>|null $ulimits
+     * @param list<TaskSpecContainerSpecUlimitsItem> $ulimits
      *
      * @return self
      */
-    public function setUlimits(?array $ulimits): self
+    public function setUlimits(array $ulimits): self
     {
         $this->initialized['ulimits'] = true;
         $this->ulimits                = $ulimits;

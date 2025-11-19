@@ -62,7 +62,7 @@ class ContainerConfig extends ArrayObject
      *
      * `{"<port>/<tcp|udp|sctp>": {}}`
      *
-     * @var array<string, ContainerConfigExposedPortsItem>|null
+     * @var array<string, array<string, mixed>>|null
      */
     protected $exposedPorts;
     /**
@@ -88,7 +88,7 @@ class ContainerConfig extends ArrayObject
      * form `["VAR=value", ...]`. A variable without `=` is removed from the
      * environment, rather than to have an empty value.
      *
-     * @var list<string>|null
+     * @var list<string>
      */
     protected $env;
     /**
@@ -120,7 +120,7 @@ class ContainerConfig extends ArrayObject
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @var array<string, ContainerConfigVolumesItem>|null
+     * @var array<string, array<string, mixed>>|null
      */
     protected $volumes;
     /**
@@ -176,7 +176,7 @@ class ContainerConfig extends ArrayObject
      *
      * @var int|null
      */
-    protected $stopTimeout;
+    protected $stopTimeout = 10;
     /**
      * Shell for when `RUN`, `CMD`, and `ENTRYPOINT` uses a shell.
      *
@@ -347,7 +347,7 @@ class ContainerConfig extends ArrayObject
      *
      * `{"<port>/<tcp|udp|sctp>": {}}`
      *
-     * @return array<string, ContainerConfigExposedPortsItem>|null
+     * @return array<string, array<string, mixed>>|null
      */
     public function getExposedPorts(): ?iterable
     {
@@ -359,7 +359,7 @@ class ContainerConfig extends ArrayObject
      *
      * `{"<port>/<tcp|udp|sctp>": {}}`
      *
-     * @param array<string, ContainerConfigExposedPortsItem>|null $exposedPorts
+     * @param array<string, array<string, mixed>>|null $exposedPorts
      *
      * @return self
      */
@@ -451,9 +451,9 @@ class ContainerConfig extends ArrayObject
      * form `["VAR=value", ...]`. A variable without `=` is removed from the
      * environment, rather than to have an empty value.
      *
-     * @return list<string>|null
+     * @return list<string>
      */
-    public function getEnv(): ?array
+    public function getEnv(): array
     {
         return $this->env;
     }
@@ -463,11 +463,11 @@ class ContainerConfig extends ArrayObject
      * form `["VAR=value", ...]`. A variable without `=` is removed from the
      * environment, rather than to have an empty value.
      *
-     * @param list<string>|null $env
+     * @param list<string> $env
      *
      * @return self
      */
-    public function setEnv(?array $env): self
+    public function setEnv(array $env): self
     {
         $this->initialized['env'] = true;
         $this->env                = $env;
@@ -581,7 +581,7 @@ class ContainerConfig extends ArrayObject
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @return array<string, ContainerConfigVolumesItem>|null
+     * @return array<string, array<string, mixed>>|null
      */
     public function getVolumes(): ?iterable
     {
@@ -592,7 +592,7 @@ class ContainerConfig extends ArrayObject
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @param array<string, ContainerConfigVolumesItem>|null $volumes
+     * @param array<string, array<string, mixed>>|null $volumes
      *
      * @return self
      */

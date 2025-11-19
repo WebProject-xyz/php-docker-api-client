@@ -20,6 +20,10 @@ class PluginConfig extends ArrayObject
     /**
      * Docker Version used to create the plugin.
      *
+     * Depending on how the plugin was created, this field may be empty or omitted.
+     *
+     * Deprecated: this field is no longer set, and will be removed in the next API version.
+     *
      * @var string
      */
     protected $dockerVersion;
@@ -38,7 +42,7 @@ class PluginConfig extends ArrayObject
      */
     protected $interface;
     /**
-     * @var list<string>|null
+     * @var list<string>
      */
     protected $entrypoint;
     /**
@@ -89,6 +93,10 @@ class PluginConfig extends ArrayObject
     /**
      * Docker Version used to create the plugin.
      *
+     * Depending on how the plugin was created, this field may be empty or omitted.
+     *
+     * Deprecated: this field is no longer set, and will be removed in the next API version.
+     *
      * @return string
      */
     public function getDockerVersion(): string
@@ -98,6 +106,10 @@ class PluginConfig extends ArrayObject
 
     /**
      * Docker Version used to create the plugin.
+     *
+     * Depending on how the plugin was created, this field may be empty or omitted.
+     *
+     * Deprecated: this field is no longer set, and will be removed in the next API version.
      *
      * @param string $dockerVersion
      *
@@ -179,19 +191,19 @@ class PluginConfig extends ArrayObject
     }
 
     /**
-     * @return list<string>|null
+     * @return list<string>
      */
-    public function getEntrypoint(): ?array
+    public function getEntrypoint(): array
     {
         return $this->entrypoint;
     }
 
     /**
-     * @param list<string>|null $entrypoint
+     * @param list<string> $entrypoint
      *
      * @return self
      */
-    public function setEntrypoint(?array $entrypoint): self
+    public function setEntrypoint(array $entrypoint): self
     {
         $this->initialized['entrypoint'] = true;
         $this->entrypoint                = $entrypoint;

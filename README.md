@@ -1,8 +1,8 @@
 # php-docker-api-client - A PHP docker API client
 
 
-## Based on Docker API Version spec [docker-v1.48.yaml](spec/docker-v1.48.yaml)
-> patched types from real world [docker-v1.48-patched.yaml](spec/docker-v1.48-patched.yaml) responses and minor code patches (WIP) 
+## Based on Docker API Version spec [docker-v1.51.yaml](spec/docker-v1.51.yaml)
+> converted to openapi v3.1.0 [docker-v1.51-patched.yaml](spec/docker-v1.51-patched.yaml) see  [UPDATE.md](spec/UPDATE.md) how to upgrade client
 
 ## Example
 ```shell

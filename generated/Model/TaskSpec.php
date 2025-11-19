@@ -54,7 +54,7 @@ class TaskSpec extends ArrayObject
      * > is set to `plugin`. NetworkAttachmentSpec is used when the Runtime
      * > field is set to `attachment`.
      *
-     * @var TaskSpecNetworkAttachmentSpec|null
+     * @var TaskSpecNetworkAttachmentSpec
      */
     protected $networkAttachmentSpec;
     /**
@@ -91,7 +91,7 @@ class TaskSpec extends ArrayObject
     /**
      * Specifies which networks the service should attach to.
      *
-     * @var list<NetworkAttachmentConfig>
+     * @var list<NetworkAttachmentConfig>|null
      */
     protected $networks;
     /**
@@ -192,9 +192,9 @@ class TaskSpec extends ArrayObject
      * > is set to `plugin`. NetworkAttachmentSpec is used when the Runtime
      * > field is set to `attachment`.
      *
-     * @return TaskSpecNetworkAttachmentSpec|null
+     * @return TaskSpecNetworkAttachmentSpec
      */
-    public function getNetworkAttachmentSpec(): ?TaskSpecNetworkAttachmentSpec
+    public function getNetworkAttachmentSpec(): TaskSpecNetworkAttachmentSpec
     {
         return $this->networkAttachmentSpec;
     }
@@ -210,11 +210,11 @@ class TaskSpec extends ArrayObject
      * > is set to `plugin`. NetworkAttachmentSpec is used when the Runtime
      * > field is set to `attachment`.
      *
-     * @param TaskSpecNetworkAttachmentSpec|null $networkAttachmentSpec
+     * @param TaskSpecNetworkAttachmentSpec $networkAttachmentSpec
      *
      * @return self
      */
-    public function setNetworkAttachmentSpec(?TaskSpecNetworkAttachmentSpec $networkAttachmentSpec): self
+    public function setNetworkAttachmentSpec(TaskSpecNetworkAttachmentSpec $networkAttachmentSpec): self
     {
         $this->initialized['networkAttachmentSpec'] = true;
         $this->networkAttachmentSpec                = $networkAttachmentSpec;
@@ -352,9 +352,9 @@ class TaskSpec extends ArrayObject
     /**
      * Specifies which networks the service should attach to.
      *
-     * @return list<NetworkAttachmentConfig>
+     * @return list<NetworkAttachmentConfig>|null
      */
-    public function getNetworks(): array
+    public function getNetworks(): ?array
     {
         return $this->networks;
     }
@@ -362,11 +362,11 @@ class TaskSpec extends ArrayObject
     /**
      * Specifies which networks the service should attach to.
      *
-     * @param list<NetworkAttachmentConfig> $networks
+     * @param list<NetworkAttachmentConfig>|null $networks
      *
      * @return self
      */
-    public function setNetworks(array $networks): self
+    public function setNetworks(?array $networks): self
     {
         $this->initialized['networks'] = true;
         $this->networks                = $networks;

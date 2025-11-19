@@ -161,7 +161,7 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * Container configuration that depends on the host we are running on.
      *
-     * @var HostConfig
+     * @var HostConfig|null
      */
     protected $hostConfig;
     /**
@@ -741,9 +741,9 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * Container configuration that depends on the host we are running on.
      *
-     * @return HostConfig
+     * @return HostConfig|null
      */
-    public function getHostConfig(): HostConfig
+    public function getHostConfig(): ?HostConfig
     {
         return $this->hostConfig;
     }
@@ -751,11 +751,11 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * Container configuration that depends on the host we are running on.
      *
-     * @param HostConfig $hostConfig
+     * @param HostConfig|null $hostConfig
      *
      * @return self
      */
-    public function setHostConfig(HostConfig $hostConfig): self
+    public function setHostConfig(?HostConfig $hostConfig): self
     {
         $this->initialized['hostConfig'] = true;
         $this->hostConfig                = $hostConfig;

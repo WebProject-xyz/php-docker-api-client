@@ -55,11 +55,9 @@ class TaskSpecNormalizer implements DenormalizerInterface, NormalizerInterface, 
             $object->setContainerSpec($this->denormalizer->denormalize($data['ContainerSpec'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpec::class, 'json', $context));
             unset($data['ContainerSpec']);
         }
-        if (array_key_exists('NetworkAttachmentSpec', $data) && null !== $data['NetworkAttachmentSpec']) {
+        if (array_key_exists('NetworkAttachmentSpec', $data)) {
             $object->setNetworkAttachmentSpec($this->denormalizer->denormalize($data['NetworkAttachmentSpec'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecNetworkAttachmentSpec::class, 'json', $context));
             unset($data['NetworkAttachmentSpec']);
-        } elseif (array_key_exists('NetworkAttachmentSpec', $data) && null === $data['NetworkAttachmentSpec']) {
-            $object->setNetworkAttachmentSpec(null);
         }
         if (array_key_exists('Resources', $data)) {
             $object->setResources($this->denormalizer->denormalize($data['Resources'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecResources::class, 'json', $context));
@@ -81,13 +79,15 @@ class TaskSpecNormalizer implements DenormalizerInterface, NormalizerInterface, 
             $object->setRuntime($data['Runtime']);
             unset($data['Runtime']);
         }
-        if (array_key_exists('Networks', $data)) {
+        if (array_key_exists('Networks', $data) && null !== $data['Networks']) {
             $values = [];
             foreach ($data['Networks'] as $value) {
                 $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\NetworkAttachmentConfig::class, 'json', $context);
             }
             $object->setNetworks($values);
             unset($data['Networks']);
+        } elseif (array_key_exists('Networks', $data) && null === $data['Networks']) {
+            $object->setNetworks(null);
         }
         if (array_key_exists('LogDriver', $data)) {
             $object->setLogDriver($this->denormalizer->denormalize($data['LogDriver'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecLogDriver::class, 'json', $context));

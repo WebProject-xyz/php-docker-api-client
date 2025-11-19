@@ -51,7 +51,7 @@ class EndpointSettings extends ArrayObject
      * lexicographically sorted based on their network name, and the one
      * that sorts first is picked.
      *
-     * @var float
+     * @var int
      */
     protected $gwPriority;
     /**
@@ -243,9 +243,9 @@ class EndpointSettings extends ArrayObject
      * lexicographically sorted based on their network name, and the one
      * that sorts first is picked.
      *
-     * @return float
+     * @return int
      */
-    public function getGwPriority(): float
+    public function getGwPriority(): int
     {
         return $this->gwPriority;
     }
@@ -257,11 +257,11 @@ class EndpointSettings extends ArrayObject
      * lexicographically sorted based on their network name, and the one
      * that sorts first is picked.
      *
-     * @param float $gwPriority
+     * @param int $gwPriority
      *
      * @return self
      */
-    public function setGwPriority(float $gwPriority): self
+    public function setGwPriority(int $gwPriority): self
     {
         $this->initialized['gwPriority'] = true;
         $this->gwPriority                = $gwPriority;

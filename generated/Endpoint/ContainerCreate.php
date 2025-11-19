@@ -70,7 +70,7 @@ class ContainerCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Cl
         $optionsResolver = parent::getQueryOptionsResolver();
         $optionsResolver->setDefined(['name', 'platform']);
         $optionsResolver->setRequired([]);
-        $optionsResolver->setDefaults([]);
+        $optionsResolver->setDefaults(['platform' => '']);
         $optionsResolver->addAllowedTypes('name', ['string']);
         $optionsResolver->addAllowedTypes('platform', ['string']);
 

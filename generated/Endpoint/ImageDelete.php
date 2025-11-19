@@ -18,9 +18,13 @@ class ImageDelete extends \WebProject\DockerApi\Library\Generated\Runtime\Client
      * @param string $name            Image name or ID
      * @param array  $queryParameters {
      *
-     * @var bool $force Remove the image even if it is being used by stopped containers or has other tags
-     * @var bool $noprune Do not delete untagged parent images
-     *           }
+     * @var bool  $force Remove the image even if it is being used by stopped containers or has other tags
+     * @var bool  $noprune Do not delete untagged parent images
+     * @var array $platforms Select platform-specific content to delete.
+     *            Multiple values are accepted.
+     *            Each platform is a OCI platform encoded as a JSON string.
+     *
+     * }
      */
     public function __construct(string $name, array $queryParameters = [])
     {
@@ -51,11 +55,12 @@ class ImageDelete extends \WebProject\DockerApi\Library\Generated\Runtime\Client
     protected function getQueryOptionsResolver(): \Symfony\Component\OptionsResolver\OptionsResolver
     {
         $optionsResolver = parent::getQueryOptionsResolver();
-        $optionsResolver->setDefined(['force', 'noprune']);
+        $optionsResolver->setDefined(['force', 'noprune', 'platforms']);
         $optionsResolver->setRequired([]);
         $optionsResolver->setDefaults(['force' => false, 'noprune' => false]);
         $optionsResolver->addAllowedTypes('force', ['bool']);
         $optionsResolver->addAllowedTypes('noprune', ['bool']);
+        $optionsResolver->addAllowedTypes('platforms', ['array']);
 
         return $optionsResolver;
     }

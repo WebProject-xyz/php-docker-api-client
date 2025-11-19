@@ -1116,9 +1116,13 @@ class Client extends Runtime\Client\Client
      * @param string $name            Image name or ID
      * @param array  $queryParameters {
      *
-     * @var bool $force Remove the image even if it is being used by stopped containers or has other tags
-     * @var bool $noprune Do not delete untagged parent images
-     *           }
+     * @var bool  $force Remove the image even if it is being used by stopped containers or has other tags
+     * @var bool  $noprune Do not delete untagged parent images
+     * @var array $platforms Select platform-specific content to delete.
+     *            Multiple values are accepted.
+     *            Each platform is a OCI platform encoded as a JSON string.
+     *
+     * }
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
@@ -1353,13 +1357,9 @@ class Client extends Runtime\Client\Client
      *
      * ### Image tarball format
      *
-     * An image tarball contains one directory per image layer (named using its long ID), each containing these files:
+     * An image tarball contains [Content as defined in the OCI Image Layout Specification](https://github.com/opencontainers/image-spec/blob/v1.1.1/image-layout.md#content).
      *
-     * - `VERSION`: currently `1.0` - the file format version
-     * - `json`: detailed layer information, similar to `docker inspect layer_id`
-     * - `layer.tar`: A tarfile containing the filesystem changes in this layer
-     *
-     * The `layer.tar` file contains `aufs` style `.wh..wh.aufs` files and directories for storing attribute changes and deletions.
+     * Additionally, includes the manifest.json file associated with a backwards compatible docker save format.
      *
      * If the tarball defines a repository, the tarball should also include a `repositories` file at the root that contains a list of repository and tag names mapped to layer IDs.
      *
@@ -1406,8 +1406,15 @@ class Client extends Runtime\Client\Client
      *
      * @param array $queryParameters {
      *
-     * @var array $names Image names to filter by
-     *            }
+     * @var array  $names Image names to filter by
+     * @var string $platform JSON encoded OCI platform describing a platform which will be used
+     *             to select a platform-specific image to be saved if the image is
+     *             multi-platform.
+     *             If not provided, the full multi-platform image will be saved.
+     *
+     * Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
+     *
+     * }
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
@@ -2735,7 +2742,7 @@ class Client extends Runtime\Client\Client
         if (null === $httpClient) {
             $httpClient = \Http\Discovery\Psr18ClientDiscovery::find();
             $plugins    = [];
-            $uri        = \Http\Discovery\Psr17FactoryDiscovery::findUriFactory()->createUri('/v1.48');
+            $uri        = \Http\Discovery\Psr17FactoryDiscovery::findUriFactory()->createUri('/v1.51');
             $plugins[]  = new \Http\Client\Common\Plugin\AddPathPlugin($uri);
             if (count($additionalPlugins) > 0) {
                 $plugins = array_merge($plugins, $additionalPlugins);

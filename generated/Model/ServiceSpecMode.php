@@ -22,7 +22,7 @@ class ServiceSpecMode extends ArrayObject
      */
     protected $replicated;
     /**
-     * @var ServiceSpecModeGlobal
+     * @var array<string, mixed>
      */
     protected $global;
     /**
@@ -36,7 +36,7 @@ class ServiceSpecMode extends ArrayObject
      * The mode used for services which run a task to the completed state
      * on each valid node.
      *
-     * @var ServiceSpecModeGlobalJob
+     * @var array<string, mixed>
      */
     protected $globalJob;
 
@@ -62,19 +62,19 @@ class ServiceSpecMode extends ArrayObject
     }
 
     /**
-     * @return ServiceSpecModeGlobal
+     * @return array<string, mixed>
      */
-    public function getGlobal(): ServiceSpecModeGlobal
+    public function getGlobal(): iterable
     {
         return $this->global;
     }
 
     /**
-     * @param ServiceSpecModeGlobal $global
+     * @param array<string, mixed> $global
      *
      * @return self
      */
-    public function setGlobal(ServiceSpecModeGlobal $global): self
+    public function setGlobal(iterable $global): self
     {
         $this->initialized['global'] = true;
         $this->global                = $global;
@@ -113,9 +113,9 @@ class ServiceSpecMode extends ArrayObject
      * The mode used for services which run a task to the completed state
      * on each valid node.
      *
-     * @return ServiceSpecModeGlobalJob
+     * @return array<string, mixed>
      */
-    public function getGlobalJob(): ServiceSpecModeGlobalJob
+    public function getGlobalJob(): iterable
     {
         return $this->globalJob;
     }
@@ -124,11 +124,11 @@ class ServiceSpecMode extends ArrayObject
      * The mode used for services which run a task to the completed state
      * on each valid node.
      *
-     * @param ServiceSpecModeGlobalJob $globalJob
+     * @param array<string, mixed> $globalJob
      *
      * @return self
      */
-    public function setGlobalJob(ServiceSpecModeGlobalJob $globalJob): self
+    public function setGlobalJob(iterable $globalJob): self
     {
         $this->initialized['globalJob'] = true;
         $this->globalJob                = $globalJob;

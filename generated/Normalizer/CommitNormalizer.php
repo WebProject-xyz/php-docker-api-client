@@ -51,10 +51,6 @@ class CommitNormalizer implements DenormalizerInterface, NormalizerInterface, De
             $object->setID($data['ID']);
             unset($data['ID']);
         }
-        if (array_key_exists('Expected', $data)) {
-            $object->setExpected($data['Expected']);
-            unset($data['Expected']);
-        }
         foreach ($data as $key => $value) {
             if (preg_match('/.*/', (string) $key)) {
                 $object[$key] = $value;
@@ -69,9 +65,6 @@ class CommitNormalizer implements DenormalizerInterface, NormalizerInterface, De
         $dataArray = [];
         if ($data->isInitialized('iD') && null !== $data->getID()) {
             $dataArray['ID'] = $data->getID();
-        }
-        if ($data->isInitialized('expected') && null !== $data->getExpected()) {
-            $dataArray['Expected'] = $data->getExpected();
         }
         foreach ($data as $key => $value) {
             if (preg_match('/.*/', (string) $key)) {

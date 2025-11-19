@@ -69,16 +69,18 @@ class NetworkSettingsNormalizer implements DenormalizerInterface, NormalizerInte
             $object->setLinkLocalIPv6Address($data['LinkLocalIPv6Address']);
             unset($data['LinkLocalIPv6Address']);
         }
-        if (array_key_exists('LinkLocalIPv6PrefixLen', $data) && null !== $data['LinkLocalIPv6PrefixLen']) {
+        if (array_key_exists('LinkLocalIPv6PrefixLen', $data)) {
             $object->setLinkLocalIPv6PrefixLen($data['LinkLocalIPv6PrefixLen']);
             unset($data['LinkLocalIPv6PrefixLen']);
-        } elseif (array_key_exists('LinkLocalIPv6PrefixLen', $data) && null === $data['LinkLocalIPv6PrefixLen']) {
-            $object->setLinkLocalIPv6PrefixLen(null);
         }
         if (array_key_exists('Ports', $data) && null !== $data['Ports']) {
             $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
             foreach ($data['Ports'] as $key => $value) {
-                $values[$key] = $value;
+                $value_1 = $value;
+                if (is_array($value)) {
+                    $value_1 = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\PortBinding::class, 'json', $context);
+                }
+                $values[$key] = $value_1;
             }
             $object->setPorts($values);
             unset($data['Ports']);
@@ -91,8 +93,8 @@ class NetworkSettingsNormalizer implements DenormalizerInterface, NormalizerInte
         }
         if (array_key_exists('SecondaryIPAddresses', $data) && null !== $data['SecondaryIPAddresses']) {
             $values_1 = [];
-            foreach ($data['SecondaryIPAddresses'] as $value_1) {
-                $values_1[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\Address::class, 'json', $context);
+            foreach ($data['SecondaryIPAddresses'] as $value_2) {
+                $values_1[] = $this->denormalizer->denormalize($value_2, \WebProject\DockerApi\Library\Generated\Model\Address::class, 'json', $context);
             }
             $object->setSecondaryIPAddresses($values_1);
             unset($data['SecondaryIPAddresses']);
@@ -101,8 +103,8 @@ class NetworkSettingsNormalizer implements DenormalizerInterface, NormalizerInte
         }
         if (array_key_exists('SecondaryIPv6Addresses', $data) && null !== $data['SecondaryIPv6Addresses']) {
             $values_2 = [];
-            foreach ($data['SecondaryIPv6Addresses'] as $value_2) {
-                $values_2[] = $this->denormalizer->denormalize($value_2, \WebProject\DockerApi\Library\Generated\Model\Address::class, 'json', $context);
+            foreach ($data['SecondaryIPv6Addresses'] as $value_3) {
+                $values_2[] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\Address::class, 'json', $context);
             }
             $object->setSecondaryIPv6Addresses($values_2);
             unset($data['SecondaryIPv6Addresses']);
@@ -143,15 +145,15 @@ class NetworkSettingsNormalizer implements DenormalizerInterface, NormalizerInte
         }
         if (array_key_exists('Networks', $data)) {
             $values_3 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['Networks'] as $key_1 => $value_3) {
-                $values_3[$key_1] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\EndpointSettings::class, 'json', $context);
+            foreach ($data['Networks'] as $key_1 => $value_4) {
+                $values_3[$key_1] = $this->denormalizer->denormalize($value_4, \WebProject\DockerApi\Library\Generated\Model\EndpointSettings::class, 'json', $context);
             }
             $object->setNetworks($values_3);
             unset($data['Networks']);
         }
-        foreach ($data as $key_2 => $value_4) {
+        foreach ($data as $key_2 => $value_5) {
             if (preg_match('/.*/', (string) $key_2)) {
-                $object[$key_2] = $value_4;
+                $object[$key_2] = $value_5;
             }
         }
 
@@ -179,7 +181,11 @@ class NetworkSettingsNormalizer implements DenormalizerInterface, NormalizerInte
         if ($data->isInitialized('ports') && null !== $data->getPorts()) {
             $values = [];
             foreach ($data->getPorts() as $key => $value) {
-                $values[$key] = $value;
+                $value_1 = $value;
+                if (is_object($value)) {
+                    $value_1 = $this->normalizer->normalize($value, 'json', $context);
+                }
+                $values[$key] = $value_1;
             }
             $dataArray['Ports'] = $values;
         }
@@ -188,15 +194,15 @@ class NetworkSettingsNormalizer implements DenormalizerInterface, NormalizerInte
         }
         if ($data->isInitialized('secondaryIPAddresses') && null !== $data->getSecondaryIPAddresses()) {
             $values_1 = [];
-            foreach ($data->getSecondaryIPAddresses() as $value_1) {
-                $values_1[] = $this->normalizer->normalize($value_1, 'json', $context);
+            foreach ($data->getSecondaryIPAddresses() as $value_2) {
+                $values_1[] = $this->normalizer->normalize($value_2, 'json', $context);
             }
             $dataArray['SecondaryIPAddresses'] = $values_1;
         }
         if ($data->isInitialized('secondaryIPv6Addresses') && null !== $data->getSecondaryIPv6Addresses()) {
             $values_2 = [];
-            foreach ($data->getSecondaryIPv6Addresses() as $value_2) {
-                $values_2[] = $this->normalizer->normalize($value_2, 'json', $context);
+            foreach ($data->getSecondaryIPv6Addresses() as $value_3) {
+                $values_2[] = $this->normalizer->normalize($value_3, 'json', $context);
             }
             $dataArray['SecondaryIPv6Addresses'] = $values_2;
         }
@@ -226,14 +232,14 @@ class NetworkSettingsNormalizer implements DenormalizerInterface, NormalizerInte
         }
         if ($data->isInitialized('networks') && null !== $data->getNetworks()) {
             $values_3 = [];
-            foreach ($data->getNetworks() as $key_1 => $value_3) {
-                $values_3[$key_1] = $this->normalizer->normalize($value_3, 'json', $context);
+            foreach ($data->getNetworks() as $key_1 => $value_4) {
+                $values_3[$key_1] = $this->normalizer->normalize($value_4, 'json', $context);
             }
             $dataArray['Networks'] = $values_3;
         }
-        foreach ($data as $key_2 => $value_4) {
+        foreach ($data as $key_2 => $value_5) {
             if (preg_match('/.*/', (string) $key_2)) {
-                $dataArray[$key_2] = $value_4;
+                $dataArray[$key_2] = $value_5;
             }
         }
 

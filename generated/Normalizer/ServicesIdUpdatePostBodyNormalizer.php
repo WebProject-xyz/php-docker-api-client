@@ -75,13 +75,15 @@ class ServicesIdUpdatePostBodyNormalizer implements DenormalizerInterface, Norma
             $object->setRollbackConfig($this->denormalizer->denormalize($data['RollbackConfig'], \WebProject\DockerApi\Library\Generated\Model\ServiceSpecRollbackConfig::class, 'json', $context));
             unset($data['RollbackConfig']);
         }
-        if (array_key_exists('Networks', $data)) {
+        if (array_key_exists('Networks', $data) && null !== $data['Networks']) {
             $values_1 = [];
             foreach ($data['Networks'] as $value_1) {
                 $values_1[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\NetworkAttachmentConfig::class, 'json', $context);
             }
             $object->setNetworks($values_1);
             unset($data['Networks']);
+        } elseif (array_key_exists('Networks', $data) && null === $data['Networks']) {
+            $object->setNetworks(null);
         }
         if (array_key_exists('EndpointSpec', $data)) {
             $object->setEndpointSpec($this->denormalizer->denormalize($data['EndpointSpec'], \WebProject\DockerApi\Library\Generated\Model\EndpointSpec::class, 'json', $context));

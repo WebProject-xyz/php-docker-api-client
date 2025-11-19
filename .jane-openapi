@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 return [
-    'openapi-file'                  => __DIR__ . '/spec/docker-v1.48-patched.yaml',
+    'openapi-file'                  => __DIR__ . '/spec/docker-v1.51-patched.yaml',
     'namespace'                     => 'WebProject\DockerApi\Library\Generated',
     'directory'                     => __DIR__ . '/generated',
     'strict'                        => true,
@@ -11,5 +11,5 @@ return [
     'clean-generated'               => true,
     'reference'                     => true,
     'use-cacheable-supports-method' => true,
-    'validation'                    => false,
+    'validation'                    => false, // needs more patches to fully work
 ];

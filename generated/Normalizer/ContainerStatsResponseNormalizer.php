@@ -107,18 +107,14 @@ class ContainerStatsResponseNormalizer implements DenormalizerInterface, Normali
             unset($data['memory_stats']);
         }
         if (array_key_exists('networks', $data) && null !== $data['networks']) {
-            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['networks'] as $key => $value) {
-                $values[$key] = $value;
-            }
-            $object->setNetworks($values);
+            $object->setNetworks($data['networks']);
             unset($data['networks']);
         } elseif (array_key_exists('networks', $data) && null === $data['networks']) {
             $object->setNetworks(null);
         }
-        foreach ($data as $key_1 => $value_1) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $object[$key_1] = $value_1;
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
             }
         }
 
@@ -162,15 +158,11 @@ class ContainerStatsResponseNormalizer implements DenormalizerInterface, Normali
             $dataArray['memory_stats'] = $this->normalizer->normalize($data->getMemoryStats(), 'json', $context);
         }
         if ($data->isInitialized('networks') && null !== $data->getNetworks()) {
-            $values = [];
-            foreach ($data->getNetworks() as $key => $value) {
-                $values[$key] = $value;
-            }
-            $dataArray['networks'] = $values;
+            $dataArray['networks'] = $data->getNetworks();
         }
-        foreach ($data as $key_1 => $value_1) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $dataArray[$key_1] = $value_1;
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
             }
         }
 

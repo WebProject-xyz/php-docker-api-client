@@ -83,10 +83,6 @@ class ImageSummaryNormalizer implements DenormalizerInterface, NormalizerInterfa
             $object->setSharedSize($data['SharedSize']);
             unset($data['SharedSize']);
         }
-        if (array_key_exists('VirtualSize', $data)) {
-            $object->setVirtualSize($data['VirtualSize']);
-            unset($data['VirtualSize']);
-        }
         if (array_key_exists('Labels', $data)) {
             $values_2 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
             foreach ($data['Labels'] as $key => $value_2) {
@@ -138,10 +134,7 @@ class ImageSummaryNormalizer implements DenormalizerInterface, NormalizerInterfa
         $dataArray['Created']     = $data->getCreated();
         $dataArray['Size']        = $data->getSize();
         $dataArray['SharedSize']  = $data->getSharedSize();
-        if ($data->isInitialized('virtualSize') && null !== $data->getVirtualSize()) {
-            $dataArray['VirtualSize'] = $data->getVirtualSize();
-        }
-        $values_2 = [];
+        $values_2                 = [];
         foreach ($data->getLabels() as $key => $value_2) {
             $values_2[$key] = $value_2;
         }

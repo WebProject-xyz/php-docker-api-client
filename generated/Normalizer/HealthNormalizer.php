@@ -55,13 +55,15 @@ class HealthNormalizer implements DenormalizerInterface, NormalizerInterface, De
             $object->setFailingStreak($data['FailingStreak']);
             unset($data['FailingStreak']);
         }
-        if (array_key_exists('Log', $data)) {
+        if (array_key_exists('Log', $data) && null !== $data['Log']) {
             $values = [];
             foreach ($data['Log'] as $value) {
                 $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\HealthcheckResult::class, 'json', $context);
             }
             $object->setLog($values);
             unset($data['Log']);
+        } elseif (array_key_exists('Log', $data) && null === $data['Log']) {
+            $object->setLog(null);
         }
         foreach ($data as $key => $value_1) {
             if (preg_match('/.*/', (string) $key)) {

@@ -104,27 +104,27 @@ class HostConfig extends ArrayObject
     /**
      * Microseconds of CPU time that the container can get in a CPU period.
      *
-     * @var int|null
+     * @var int
      */
     protected $cpuQuota;
     /**
      * The length of a CPU real-time period in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @var int|null
+     * @var int
      */
     protected $cpuRealtimePeriod;
     /**
      * The length of a CPU real-time runtime in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @var int|null
+     * @var int
      */
     protected $cpuRealtimeRuntime;
     /**
      * CPUs in which to allow execution (e.g., `0-3`, `0,1`).
      *
-     * @var string|null
+     * @var string
      */
     protected $cpusetCpus;
     /**
@@ -159,6 +159,9 @@ class HostConfig extends ArrayObject
      *
      * This field is omitted when empty.
      *
+     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated `memory.kmem.tcp.limit_in_bytes` field
+     * for cgroups v1. This field will be removed in a future release.
+     *
      * @var int
      */
     protected $kernelMemoryTCP;
@@ -185,7 +188,7 @@ class HostConfig extends ArrayObject
     /**
      * CPU quota in units of 10<sup>-9</sup> CPUs.
      *
-     * @var int
+     * @var int|null
      */
     protected $nanoCpus;
     /**
@@ -226,7 +229,7 @@ class HostConfig extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuCount;
     /**
@@ -236,20 +239,20 @@ class HostConfig extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuPercent;
     /**
      * Maximum IOps for the container system drive (Windows only).
      *
-     * @var int
+     * @var int|null
      */
     protected $iOMaximumIOps;
     /**
      * Maximum IO in bytes per second for the container system drive
      * (Windows only).
      *
-     * @var int
+     * @var int|null
      */
     protected $iOMaximumBandwidth;
     /**
@@ -262,7 +265,6 @@ class HostConfig extends ArrayObject
      * - `volume-name:container-dest[:options]` to bind-mount a volume
      * managed by a volume driver into the container. `container-dest`
      * must be an _absolute_ path.
-     *
      * `options` is an optional, comma-delimited list of:
      *
      * - `nocopy` disables automatic copying of data from the container
@@ -324,7 +326,7 @@ class HostConfig extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @var array<string, mixed>|null
+     * @var array<string, PortBinding>|null
      */
     protected $portBindings;
     /**
@@ -373,7 +375,7 @@ class HostConfig extends ArrayObject
      * Arbitrary non-identifying metadata attached to container and
      * provided to the runtime when the container is started.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $annotations;
     /**
@@ -399,7 +401,7 @@ class HostConfig extends ArrayObject
      * If not specified, the daemon default is used, which can either be `"private"`
      * or `"host"`, depending on daemon version, kernel support and configuration.
      *
-     * @var string|null
+     * @var string
      */
     protected $cgroupnsMode;
     /**
@@ -451,7 +453,7 @@ class HostConfig extends ArrayObject
     /**
      * Cgroup to use for the container.
      *
-     * @var string
+     * @var string|null
      */
     protected $cgroup;
     /**
@@ -464,7 +466,7 @@ class HostConfig extends ArrayObject
      * An integer value containing the score given to the container in
      * order to tune OOM killer preferences.
      *
-     * @var int
+     * @var int|null
      */
     protected $oomScoreAdj;
     /**
@@ -474,7 +476,7 @@ class HostConfig extends ArrayObject
      * - `"container:<name|id>"`: joins another container's PID namespace
      * - `"host"`: use the host's PID namespace inside the container
      *
-     * @var string
+     * @var string|null
      */
     protected $pidMode;
     /**
@@ -578,7 +580,7 @@ class HostConfig extends ArrayObject
      * The list of paths to be set as read-only inside the container
      * (this overrides the default set of paths).
      *
-     * @var list<string>|null
+     * @var list<string>
      */
     protected $readonlyPaths;
 
@@ -883,9 +885,9 @@ class HostConfig extends ArrayObject
     /**
      * Microseconds of CPU time that the container can get in a CPU period.
      *
-     * @return int|null
+     * @return int
      */
-    public function getCpuQuota(): ?int
+    public function getCpuQuota(): int
     {
         return $this->cpuQuota;
     }
@@ -893,11 +895,11 @@ class HostConfig extends ArrayObject
     /**
      * Microseconds of CPU time that the container can get in a CPU period.
      *
-     * @param int|null $cpuQuota
+     * @param int $cpuQuota
      *
      * @return self
      */
-    public function setCpuQuota(?int $cpuQuota): self
+    public function setCpuQuota(int $cpuQuota): self
     {
         $this->initialized['cpuQuota'] = true;
         $this->cpuQuota                = $cpuQuota;
@@ -909,9 +911,9 @@ class HostConfig extends ArrayObject
      * The length of a CPU real-time period in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @return int|null
+     * @return int
      */
-    public function getCpuRealtimePeriod(): ?int
+    public function getCpuRealtimePeriod(): int
     {
         return $this->cpuRealtimePeriod;
     }
@@ -920,11 +922,11 @@ class HostConfig extends ArrayObject
      * The length of a CPU real-time period in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @param int|null $cpuRealtimePeriod
+     * @param int $cpuRealtimePeriod
      *
      * @return self
      */
-    public function setCpuRealtimePeriod(?int $cpuRealtimePeriod): self
+    public function setCpuRealtimePeriod(int $cpuRealtimePeriod): self
     {
         $this->initialized['cpuRealtimePeriod'] = true;
         $this->cpuRealtimePeriod                = $cpuRealtimePeriod;
@@ -936,9 +938,9 @@ class HostConfig extends ArrayObject
      * The length of a CPU real-time runtime in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @return int|null
+     * @return int
      */
-    public function getCpuRealtimeRuntime(): ?int
+    public function getCpuRealtimeRuntime(): int
     {
         return $this->cpuRealtimeRuntime;
     }
@@ -947,11 +949,11 @@ class HostConfig extends ArrayObject
      * The length of a CPU real-time runtime in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @param int|null $cpuRealtimeRuntime
+     * @param int $cpuRealtimeRuntime
      *
      * @return self
      */
-    public function setCpuRealtimeRuntime(?int $cpuRealtimeRuntime): self
+    public function setCpuRealtimeRuntime(int $cpuRealtimeRuntime): self
     {
         $this->initialized['cpuRealtimeRuntime'] = true;
         $this->cpuRealtimeRuntime                = $cpuRealtimeRuntime;
@@ -962,9 +964,9 @@ class HostConfig extends ArrayObject
     /**
      * CPUs in which to allow execution (e.g., `0-3`, `0,1`).
      *
-     * @return string|null
+     * @return string
      */
-    public function getCpusetCpus(): ?string
+    public function getCpusetCpus(): string
     {
         return $this->cpusetCpus;
     }
@@ -972,11 +974,11 @@ class HostConfig extends ArrayObject
     /**
      * CPUs in which to allow execution (e.g., `0-3`, `0,1`).
      *
-     * @param string|null $cpusetCpus
+     * @param string $cpusetCpus
      *
      * @return self
      */
-    public function setCpusetCpus(?string $cpusetCpus): self
+    public function setCpusetCpus(string $cpusetCpus): self
     {
         $this->initialized['cpusetCpus'] = true;
         $this->cpusetCpus                = $cpusetCpus;
@@ -1093,6 +1095,9 @@ class HostConfig extends ArrayObject
      *
      * This field is omitted when empty.
      *
+     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated `memory.kmem.tcp.limit_in_bytes` field
+     * for cgroups v1. This field will be removed in a future release.
+     *
      * @return int
      */
     public function getKernelMemoryTCP(): int
@@ -1106,6 +1111,9 @@ class HostConfig extends ArrayObject
      * by the default (runc) runtime.
      *
      * This field is omitted when empty.
+     *
+     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated `memory.kmem.tcp.limit_in_bytes` field
+     * for cgroups v1. This field will be removed in a future release.
      *
      * @param int $kernelMemoryTCP
      *
@@ -1201,9 +1209,9 @@ class HostConfig extends ArrayObject
     /**
      * CPU quota in units of 10<sup>-9</sup> CPUs.
      *
-     * @return int
+     * @return int|null
      */
-    public function getNanoCpus(): int
+    public function getNanoCpus(): ?int
     {
         return $this->nanoCpus;
     }
@@ -1211,11 +1219,11 @@ class HostConfig extends ArrayObject
     /**
      * CPU quota in units of 10<sup>-9</sup> CPUs.
      *
-     * @param int $nanoCpus
+     * @param int|null $nanoCpus
      *
      * @return self
      */
-    public function setNanoCpus(int $nanoCpus): self
+    public function setNanoCpus(?int $nanoCpus): self
     {
         $this->initialized['nanoCpus'] = true;
         $this->nanoCpus                = $nanoCpus;
@@ -1344,9 +1352,9 @@ class HostConfig extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuCount(): int
+    public function getCpuCount(): ?int
     {
         return $this->cpuCount;
     }
@@ -1358,11 +1366,11 @@ class HostConfig extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @param int $cpuCount
+     * @param int|null $cpuCount
      *
      * @return self
      */
-    public function setCpuCount(int $cpuCount): self
+    public function setCpuCount(?int $cpuCount): self
     {
         $this->initialized['cpuCount'] = true;
         $this->cpuCount                = $cpuCount;
@@ -1377,9 +1385,9 @@ class HostConfig extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuPercent(): int
+    public function getCpuPercent(): ?int
     {
         return $this->cpuPercent;
     }
@@ -1391,11 +1399,11 @@ class HostConfig extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @param int $cpuPercent
+     * @param int|null $cpuPercent
      *
      * @return self
      */
-    public function setCpuPercent(int $cpuPercent): self
+    public function setCpuPercent(?int $cpuPercent): self
     {
         $this->initialized['cpuPercent'] = true;
         $this->cpuPercent                = $cpuPercent;
@@ -1406,9 +1414,9 @@ class HostConfig extends ArrayObject
     /**
      * Maximum IOps for the container system drive (Windows only).
      *
-     * @return int
+     * @return int|null
      */
-    public function getIOMaximumIOps(): int
+    public function getIOMaximumIOps(): ?int
     {
         return $this->iOMaximumIOps;
     }
@@ -1416,11 +1424,11 @@ class HostConfig extends ArrayObject
     /**
      * Maximum IOps for the container system drive (Windows only).
      *
-     * @param int $iOMaximumIOps
+     * @param int|null $iOMaximumIOps
      *
      * @return self
      */
-    public function setIOMaximumIOps(int $iOMaximumIOps): self
+    public function setIOMaximumIOps(?int $iOMaximumIOps): self
     {
         $this->initialized['iOMaximumIOps'] = true;
         $this->iOMaximumIOps                = $iOMaximumIOps;
@@ -1432,9 +1440,9 @@ class HostConfig extends ArrayObject
      * Maximum IO in bytes per second for the container system drive
      * (Windows only).
      *
-     * @return int
+     * @return int|null
      */
-    public function getIOMaximumBandwidth(): int
+    public function getIOMaximumBandwidth(): ?int
     {
         return $this->iOMaximumBandwidth;
     }
@@ -1443,11 +1451,11 @@ class HostConfig extends ArrayObject
      * Maximum IO in bytes per second for the container system drive
      * (Windows only).
      *
-     * @param int $iOMaximumBandwidth
+     * @param int|null $iOMaximumBandwidth
      *
      * @return self
      */
-    public function setIOMaximumBandwidth(int $iOMaximumBandwidth): self
+    public function setIOMaximumBandwidth(?int $iOMaximumBandwidth): self
     {
         $this->initialized['iOMaximumBandwidth'] = true;
         $this->iOMaximumBandwidth                = $iOMaximumBandwidth;
@@ -1465,7 +1473,6 @@ class HostConfig extends ArrayObject
      * - `volume-name:container-dest[:options]` to bind-mount a volume
      * managed by a volume driver into the container. `container-dest`
      * must be an _absolute_ path.
-     *
      * `options` is an optional, comma-delimited list of:
      *
      * - `nocopy` disables automatic copying of data from the container
@@ -1512,7 +1519,6 @@ class HostConfig extends ArrayObject
      * - `volume-name:container-dest[:options]` to bind-mount a volume
      * managed by a volume driver into the container. `container-dest`
      * must be an _absolute_ path.
-     *
      * `options` is an optional, comma-delimited list of:
      *
      * - `nocopy` disables automatic copying of data from the container
@@ -1643,7 +1649,7 @@ class HostConfig extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @return array<string, mixed>|null
+     * @return array<string, PortBinding>|null
      */
     public function getPortBindings(): ?iterable
     {
@@ -1658,7 +1664,7 @@ class HostConfig extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @param array<string, mixed>|null $portBindings
+     * @param array<string, PortBinding>|null $portBindings
      *
      * @return self
      */
@@ -1836,9 +1842,9 @@ class HostConfig extends ArrayObject
      * Arbitrary non-identifying metadata attached to container and
      * provided to the runtime when the container is started.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getAnnotations(): iterable
+    public function getAnnotations(): ?iterable
     {
         return $this->annotations;
     }
@@ -1847,11 +1853,11 @@ class HostConfig extends ArrayObject
      * Arbitrary non-identifying metadata attached to container and
      * provided to the runtime when the container is started.
      *
-     * @param array<string, string> $annotations
+     * @param array<string, string>|null $annotations
      *
      * @return self
      */
-    public function setAnnotations(iterable $annotations): self
+    public function setAnnotations(?iterable $annotations): self
     {
         $this->initialized['annotations'] = true;
         $this->annotations                = $annotations;
@@ -1922,9 +1928,9 @@ class HostConfig extends ArrayObject
      * If not specified, the daemon default is used, which can either be `"private"`
      * or `"host"`, depending on daemon version, kernel support and configuration.
      *
-     * @return string|null
+     * @return string
      */
-    public function getCgroupnsMode(): ?string
+    public function getCgroupnsMode(): string
     {
         return $this->cgroupnsMode;
     }
@@ -1938,11 +1944,11 @@ class HostConfig extends ArrayObject
      * If not specified, the daemon default is used, which can either be `"private"`
      * or `"host"`, depending on daemon version, kernel support and configuration.
      *
-     * @param string|null $cgroupnsMode
+     * @param string $cgroupnsMode
      *
      * @return self
      */
-    public function setCgroupnsMode(?string $cgroupnsMode): self
+    public function setCgroupnsMode(string $cgroupnsMode): self
     {
         $this->initialized['cgroupnsMode'] = true;
         $this->cgroupnsMode                = $cgroupnsMode;
@@ -2123,9 +2129,9 @@ class HostConfig extends ArrayObject
     /**
      * Cgroup to use for the container.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCgroup(): string
+    public function getCgroup(): ?string
     {
         return $this->cgroup;
     }
@@ -2133,11 +2139,11 @@ class HostConfig extends ArrayObject
     /**
      * Cgroup to use for the container.
      *
-     * @param string $cgroup
+     * @param string|null $cgroup
      *
      * @return self
      */
-    public function setCgroup(string $cgroup): self
+    public function setCgroup(?string $cgroup): self
     {
         $this->initialized['cgroup'] = true;
         $this->cgroup                = $cgroup;
@@ -2174,9 +2180,9 @@ class HostConfig extends ArrayObject
      * An integer value containing the score given to the container in
      * order to tune OOM killer preferences.
      *
-     * @return int
+     * @return int|null
      */
-    public function getOomScoreAdj(): int
+    public function getOomScoreAdj(): ?int
     {
         return $this->oomScoreAdj;
     }
@@ -2185,11 +2191,11 @@ class HostConfig extends ArrayObject
      * An integer value containing the score given to the container in
      * order to tune OOM killer preferences.
      *
-     * @param int $oomScoreAdj
+     * @param int|null $oomScoreAdj
      *
      * @return self
      */
-    public function setOomScoreAdj(int $oomScoreAdj): self
+    public function setOomScoreAdj(?int $oomScoreAdj): self
     {
         $this->initialized['oomScoreAdj'] = true;
         $this->oomScoreAdj                = $oomScoreAdj;
@@ -2204,9 +2210,9 @@ class HostConfig extends ArrayObject
      * - `"container:<name|id>"`: joins another container's PID namespace
      * - `"host"`: use the host's PID namespace inside the container
      *
-     * @return string
+     * @return string|null
      */
-    public function getPidMode(): string
+    public function getPidMode(): ?string
     {
         return $this->pidMode;
     }
@@ -2218,11 +2224,11 @@ class HostConfig extends ArrayObject
      * - `"container:<name|id>"`: joins another container's PID namespace
      * - `"host"`: use the host's PID namespace inside the container
      *
-     * @param string $pidMode
+     * @param string|null $pidMode
      *
      * @return self
      */
-    public function setPidMode(string $pidMode): self
+    public function setPidMode(?string $pidMode): self
     {
         $this->initialized['pidMode'] = true;
         $this->pidMode                = $pidMode;
@@ -2597,9 +2603,9 @@ class HostConfig extends ArrayObject
      * The list of paths to be set as read-only inside the container
      * (this overrides the default set of paths).
      *
-     * @return list<string>|null
+     * @return list<string>
      */
-    public function getReadonlyPaths(): ?array
+    public function getReadonlyPaths(): array
     {
         return $this->readonlyPaths;
     }
@@ -2608,11 +2614,11 @@ class HostConfig extends ArrayObject
      * The list of paths to be set as read-only inside the container
      * (this overrides the default set of paths).
      *
-     * @param list<string>|null $readonlyPaths
+     * @param list<string> $readonlyPaths
      *
      * @return self
      */
-    public function setReadonlyPaths(?array $readonlyPaths): self
+    public function setReadonlyPaths(array $readonlyPaths): self
     {
         $this->initialized['readonlyPaths'] = true;
         $this->readonlyPaths                = $readonlyPaths;

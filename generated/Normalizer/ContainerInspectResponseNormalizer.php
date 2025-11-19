@@ -139,9 +139,11 @@ class ContainerInspectResponseNormalizer implements DenormalizerInterface, Norma
         } elseif (array_key_exists('ExecIDs', $data) && null === $data['ExecIDs']) {
             $object->setExecIDs(null);
         }
-        if (array_key_exists('HostConfig', $data)) {
+        if (array_key_exists('HostConfig', $data) && null !== $data['HostConfig']) {
             $object->setHostConfig($this->denormalizer->denormalize($data['HostConfig'], \WebProject\DockerApi\Library\Generated\Model\HostConfig::class, 'json', $context));
             unset($data['HostConfig']);
+        } elseif (array_key_exists('HostConfig', $data) && null === $data['HostConfig']) {
+            $object->setHostConfig(null);
         }
         if (array_key_exists('GraphDriver', $data)) {
             $object->setGraphDriver($this->denormalizer->denormalize($data['GraphDriver'], \WebProject\DockerApi\Library\Generated\Model\DriverData::class, 'json', $context));

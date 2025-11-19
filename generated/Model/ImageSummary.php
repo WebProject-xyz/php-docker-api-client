@@ -87,14 +87,6 @@ class ImageSummary extends ArrayObject
      */
     protected $sharedSize;
     /**
-     * Total size of the image including all layers it is composed of.
-     *
-     * Deprecated: this field is omitted in API v1.44, but kept for backward compatibility. Use Size instead.
-     *
-     * @var int
-     */
-    protected $virtualSize;
-    /**
      * User-defined key/value metadata.
      *
      * @var array<string, string>
@@ -104,8 +96,7 @@ class ImageSummary extends ArrayObject
      * Number of containers using this image. Includes both stopped and running
      * containers.
      *
-     * This size is not calculated by default, and depends on which API endpoint
-     * is used. `-1` indicates that the value has not been set / calculated.
+     * `-1` indicates that the value has not been set / calculated.
      *
      * @var int
      */
@@ -359,35 +350,6 @@ class ImageSummary extends ArrayObject
     }
 
     /**
-     * Total size of the image including all layers it is composed of.
-     *
-     * Deprecated: this field is omitted in API v1.44, but kept for backward compatibility. Use Size instead.
-     *
-     * @return int
-     */
-    public function getVirtualSize(): int
-    {
-        return $this->virtualSize;
-    }
-
-    /**
-     * Total size of the image including all layers it is composed of.
-     *
-     * Deprecated: this field is omitted in API v1.44, but kept for backward compatibility. Use Size instead.
-     *
-     * @param int $virtualSize
-     *
-     * @return self
-     */
-    public function setVirtualSize(int $virtualSize): self
-    {
-        $this->initialized['virtualSize'] = true;
-        $this->virtualSize                = $virtualSize;
-
-        return $this;
-    }
-
-    /**
      * User-defined key/value metadata.
      *
      * @return array<string, string>
@@ -416,8 +378,7 @@ class ImageSummary extends ArrayObject
      * Number of containers using this image. Includes both stopped and running
      * containers.
      *
-     * This size is not calculated by default, and depends on which API endpoint
-     * is used. `-1` indicates that the value has not been set / calculated.
+     * `-1` indicates that the value has not been set / calculated.
      *
      * @return int
      */
@@ -430,8 +391,7 @@ class ImageSummary extends ArrayObject
      * Number of containers using this image. Includes both stopped and running
      * containers.
      *
-     * This size is not calculated by default, and depends on which API endpoint
-     * is used. `-1` indicates that the value has not been set / calculated.
+     * `-1` indicates that the value has not been set / calculated.
      *
      * @param int $containers
      *

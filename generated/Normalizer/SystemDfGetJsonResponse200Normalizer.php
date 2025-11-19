@@ -67,15 +67,13 @@ class SystemDfGetJsonResponse200Normalizer implements DenormalizerInterface, Nor
             $object->setContainers($values_1);
             unset($data['Containers']);
         }
-        if (array_key_exists('Volumes', $data) && null !== $data['Volumes']) {
+        if (array_key_exists('Volumes', $data)) {
             $values_2 = [];
             foreach ($data['Volumes'] as $value_2) {
                 $values_2[] = $this->denormalizer->denormalize($value_2, \WebProject\DockerApi\Library\Generated\Model\Volume::class, 'json', $context);
             }
             $object->setVolumes($values_2);
             unset($data['Volumes']);
-        } elseif (array_key_exists('Volumes', $data) && null === $data['Volumes']) {
-            $object->setVolumes(null);
         }
         if (array_key_exists('BuildCache', $data)) {
             $values_3 = [];

@@ -70,15 +70,13 @@ class PluginConfigNormalizer implements DenormalizerInterface, NormalizerInterfa
             $object->setInterface($this->denormalizer->denormalize($data['Interface'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigInterface::class, 'json', $context));
             unset($data['Interface']);
         }
-        if (array_key_exists('Entrypoint', $data) && null !== $data['Entrypoint']) {
+        if (array_key_exists('Entrypoint', $data)) {
             $values = [];
             foreach ($data['Entrypoint'] as $value) {
                 $values[] = $value;
             }
             $object->setEntrypoint($values);
             unset($data['Entrypoint']);
-        } elseif (array_key_exists('Entrypoint', $data) && null === $data['Entrypoint']) {
-            $object->setEntrypoint(null);
         }
         if (array_key_exists('WorkDir', $data)) {
             $object->setWorkDir($data['WorkDir']);

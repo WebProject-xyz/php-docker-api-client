@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WebProject\DockerApiClient\Tests;
+namespace WebProject\DockerApiClient\Tests\Unit\Util;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use WebProject\DockerApi\Library\Generated\Model\EndpointSettings;
@@ -21,9 +21,11 @@ class ContainerResponseToContainerDtoUtilTest extends \Codeception\Test\Unit
 
         $networkSettings = new \WebProject\DockerApi\Library\Generated\Model\NetworkSettings();
         $networkSettings->setNetworks(networks: []);
+        $networkSettings->setPorts(ports: []);
         $containerInspectResponse->setNetworkSettings(networkSettings: $networkSettings);
 
         $containerConfig = new \WebProject\DockerApi\Library\Generated\Model\ContainerConfig();
+        $containerConfig->setEnv(env: []);
         $containerInspectResponse->setConfig(config: $containerConfig);
 
         // Act
@@ -57,6 +59,7 @@ class ContainerResponseToContainerDtoUtilTest extends \Codeception\Test\Unit
 
         $networkSettings = new \WebProject\DockerApi\Library\Generated\Model\NetworkSettings();
         $networkSettings->setNetworks(networks: [$endpoint, $endpoint2]);
+        $networkSettings->setPorts([]);
 
         $containerInspectResponse->setNetworkSettings(networkSettings: $networkSettings);
 

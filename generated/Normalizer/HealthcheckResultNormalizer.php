@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace WebProject\DockerApi\Library\Generated\Normalizer;
 
 use ArrayObject;
-use DateTime;
 use Jane\Component\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -48,23 +47,17 @@ class HealthcheckResultNormalizer implements DenormalizerInterface, NormalizerIn
         if (null === $data || false === is_array($data)) {
             return $object;
         }
-        if (array_key_exists('Start', $data) && null !== $data['Start']) {
-            $object->setStart(DateTime::createFromFormat('Y-m-d\TH:i:sP', $data['Start']));
+        if (array_key_exists('Start', $data)) {
+            $object->setStart($data['Start']);
             unset($data['Start']);
-        } elseif (array_key_exists('Start', $data) && null === $data['Start']) {
-            $object->setStart(null);
         }
-        if (array_key_exists('End', $data) && null !== $data['End']) {
+        if (array_key_exists('End', $data)) {
             $object->setEnd($data['End']);
             unset($data['End']);
-        } elseif (array_key_exists('End', $data) && null === $data['End']) {
-            $object->setEnd(null);
         }
-        if (array_key_exists('ExitCode', $data) && null !== $data['ExitCode']) {
+        if (array_key_exists('ExitCode', $data)) {
             $object->setExitCode($data['ExitCode']);
             unset($data['ExitCode']);
-        } elseif (array_key_exists('ExitCode', $data) && null === $data['ExitCode']) {
-            $object->setExitCode(null);
         }
         if (array_key_exists('Output', $data)) {
             $object->setOutput($data['Output']);
@@ -83,7 +76,7 @@ class HealthcheckResultNormalizer implements DenormalizerInterface, NormalizerIn
     {
         $dataArray = [];
         if ($data->isInitialized('start') && null !== $data->getStart()) {
-            $dataArray['Start'] = $data->getStart()->format('Y-m-d\TH:i:sP');
+            $dataArray['Start'] = $data->getStart();
         }
         if ($data->isInitialized('end') && null !== $data->getEnd()) {
             $dataArray['End'] = $data->getEnd();

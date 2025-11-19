@@ -52,7 +52,11 @@ class ServiceSpecModeNormalizer implements DenormalizerInterface, NormalizerInte
             unset($data['Replicated']);
         }
         if (array_key_exists('Global', $data)) {
-            $object->setGlobal($this->denormalizer->denormalize($data['Global'], \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeGlobal::class, 'json', $context));
+            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data['Global'] as $key => $value) {
+                $values[$key] = $value;
+            }
+            $object->setGlobal($values);
             unset($data['Global']);
         }
         if (array_key_exists('ReplicatedJob', $data)) {
@@ -60,12 +64,16 @@ class ServiceSpecModeNormalizer implements DenormalizerInterface, NormalizerInte
             unset($data['ReplicatedJob']);
         }
         if (array_key_exists('GlobalJob', $data)) {
-            $object->setGlobalJob($this->denormalizer->denormalize($data['GlobalJob'], \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeGlobalJob::class, 'json', $context));
+            $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data['GlobalJob'] as $key_1 => $value_1) {
+                $values_1[$key_1] = $value_1;
+            }
+            $object->setGlobalJob($values_1);
             unset($data['GlobalJob']);
         }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        foreach ($data as $key_2 => $value_2) {
+            if (preg_match('/.*/', (string) $key_2)) {
+                $object[$key_2] = $value_2;
             }
         }
 
@@ -79,17 +87,25 @@ class ServiceSpecModeNormalizer implements DenormalizerInterface, NormalizerInte
             $dataArray['Replicated'] = $this->normalizer->normalize($data->getReplicated(), 'json', $context);
         }
         if ($data->isInitialized('global') && null !== $data->getGlobal()) {
-            $dataArray['Global'] = $this->normalizer->normalize($data->getGlobal(), 'json', $context);
+            $values = [];
+            foreach ($data->getGlobal() as $key => $value) {
+                $values[$key] = $value;
+            }
+            $dataArray['Global'] = $values;
         }
         if ($data->isInitialized('replicatedJob') && null !== $data->getReplicatedJob()) {
             $dataArray['ReplicatedJob'] = $this->normalizer->normalize($data->getReplicatedJob(), 'json', $context);
         }
         if ($data->isInitialized('globalJob') && null !== $data->getGlobalJob()) {
-            $dataArray['GlobalJob'] = $this->normalizer->normalize($data->getGlobalJob(), 'json', $context);
+            $values_1 = [];
+            foreach ($data->getGlobalJob() as $key_1 => $value_1) {
+                $values_1[$key_1] = $value_1;
+            }
+            $dataArray['GlobalJob'] = $values_1;
         }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        foreach ($data as $key_2 => $value_2) {
+            if (preg_match('/.*/', (string) $key_2)) {
+                $dataArray[$key_2] = $value_2;
             }
         }
 

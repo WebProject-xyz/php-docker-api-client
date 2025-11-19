@@ -74,6 +74,7 @@ class ContainerArchive extends \WebProject\DockerApi\Library\Generated\Runtime\C
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
         if (200 === $status) {
+            return null;
         }
         if (400 === $status) {
         }

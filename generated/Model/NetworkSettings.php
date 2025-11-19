@@ -20,6 +20,8 @@ class NetworkSettings extends ArrayObject
     /**
      * Name of the default bridge interface when dockerd's --bridge flag is set.
      *
+     * Deprecated: This field is only set when the daemon is started with the --bridge flag specified.
+     *
      * @var string|null
      */
     protected $bridge;
@@ -50,7 +52,7 @@ class NetworkSettings extends ArrayObject
      *
      * Deprecated: This field is never set and will be removed in a future release.
      *
-     * @var int|null
+     * @var int
      */
     protected $linkLocalIPv6PrefixLen;
     /**
@@ -61,7 +63,7 @@ class NetworkSettings extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @var array<string, mixed>|null
+     * @var array<string, PortBinding>|null
      */
     protected $ports;
     /**
@@ -204,6 +206,8 @@ class NetworkSettings extends ArrayObject
     /**
      * Name of the default bridge interface when dockerd's --bridge flag is set.
      *
+     * Deprecated: This field is only set when the daemon is started with the --bridge flag specified.
+     *
      * @return string|null
      */
     public function getBridge(): ?string
@@ -213,6 +217,8 @@ class NetworkSettings extends ArrayObject
 
     /**
      * Name of the default bridge interface when dockerd's --bridge flag is set.
+     *
+     * Deprecated: This field is only set when the daemon is started with the --bridge flag specified.
      *
      * @param string|null $bridge
      *
@@ -314,9 +320,9 @@ class NetworkSettings extends ArrayObject
      *
      * Deprecated: This field is never set and will be removed in a future release.
      *
-     * @return int|null
+     * @return int
      */
-    public function getLinkLocalIPv6PrefixLen(): ?int
+    public function getLinkLocalIPv6PrefixLen(): int
     {
         return $this->linkLocalIPv6PrefixLen;
     }
@@ -326,11 +332,11 @@ class NetworkSettings extends ArrayObject
      *
      * Deprecated: This field is never set and will be removed in a future release.
      *
-     * @param int|null $linkLocalIPv6PrefixLen
+     * @param int $linkLocalIPv6PrefixLen
      *
      * @return self
      */
-    public function setLinkLocalIPv6PrefixLen(?int $linkLocalIPv6PrefixLen): self
+    public function setLinkLocalIPv6PrefixLen(int $linkLocalIPv6PrefixLen): self
     {
         $this->initialized['linkLocalIPv6PrefixLen'] = true;
         $this->linkLocalIPv6PrefixLen                = $linkLocalIPv6PrefixLen;
@@ -346,7 +352,7 @@ class NetworkSettings extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @return array<string, mixed>|null
+     * @return array<string, PortBinding>|null
      */
     public function getPorts(): ?iterable
     {
@@ -361,7 +367,7 @@ class NetworkSettings extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @param array<string, mixed>|null $ports
+     * @param array<string, PortBinding>|null $ports
      *
      * @return self
      */

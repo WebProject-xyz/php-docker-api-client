@@ -104,27 +104,27 @@ class Resources extends ArrayObject
     /**
      * Microseconds of CPU time that the container can get in a CPU period.
      *
-     * @var int|null
+     * @var int
      */
     protected $cpuQuota;
     /**
      * The length of a CPU real-time period in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @var int|null
+     * @var int
      */
     protected $cpuRealtimePeriod;
     /**
      * The length of a CPU real-time runtime in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @var int|null
+     * @var int
      */
     protected $cpuRealtimeRuntime;
     /**
      * CPUs in which to allow execution (e.g., `0-3`, `0,1`).
      *
-     * @var string|null
+     * @var string
      */
     protected $cpusetCpus;
     /**
@@ -159,6 +159,9 @@ class Resources extends ArrayObject
      *
      * This field is omitted when empty.
      *
+     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated `memory.kmem.tcp.limit_in_bytes` field
+     * for cgroups v1. This field will be removed in a future release.
+     *
      * @var int
      */
     protected $kernelMemoryTCP;
@@ -185,7 +188,7 @@ class Resources extends ArrayObject
     /**
      * CPU quota in units of 10<sup>-9</sup> CPUs.
      *
-     * @var int
+     * @var int|null
      */
     protected $nanoCpus;
     /**
@@ -226,7 +229,7 @@ class Resources extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuCount;
     /**
@@ -236,20 +239,20 @@ class Resources extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuPercent;
     /**
      * Maximum IOps for the container system drive (Windows only).
      *
-     * @var int
+     * @var int|null
      */
     protected $iOMaximumIOps;
     /**
      * Maximum IO in bytes per second for the container system drive
      * (Windows only).
      *
-     * @var int
+     * @var int|null
      */
     protected $iOMaximumBandwidth;
 
@@ -554,9 +557,9 @@ class Resources extends ArrayObject
     /**
      * Microseconds of CPU time that the container can get in a CPU period.
      *
-     * @return int|null
+     * @return int
      */
-    public function getCpuQuota(): ?int
+    public function getCpuQuota(): int
     {
         return $this->cpuQuota;
     }
@@ -564,11 +567,11 @@ class Resources extends ArrayObject
     /**
      * Microseconds of CPU time that the container can get in a CPU period.
      *
-     * @param int|null $cpuQuota
+     * @param int $cpuQuota
      *
      * @return self
      */
-    public function setCpuQuota(?int $cpuQuota): self
+    public function setCpuQuota(int $cpuQuota): self
     {
         $this->initialized['cpuQuota'] = true;
         $this->cpuQuota                = $cpuQuota;
@@ -580,9 +583,9 @@ class Resources extends ArrayObject
      * The length of a CPU real-time period in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @return int|null
+     * @return int
      */
-    public function getCpuRealtimePeriod(): ?int
+    public function getCpuRealtimePeriod(): int
     {
         return $this->cpuRealtimePeriod;
     }
@@ -591,11 +594,11 @@ class Resources extends ArrayObject
      * The length of a CPU real-time period in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @param int|null $cpuRealtimePeriod
+     * @param int $cpuRealtimePeriod
      *
      * @return self
      */
-    public function setCpuRealtimePeriod(?int $cpuRealtimePeriod): self
+    public function setCpuRealtimePeriod(int $cpuRealtimePeriod): self
     {
         $this->initialized['cpuRealtimePeriod'] = true;
         $this->cpuRealtimePeriod                = $cpuRealtimePeriod;
@@ -607,9 +610,9 @@ class Resources extends ArrayObject
      * The length of a CPU real-time runtime in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @return int|null
+     * @return int
      */
-    public function getCpuRealtimeRuntime(): ?int
+    public function getCpuRealtimeRuntime(): int
     {
         return $this->cpuRealtimeRuntime;
     }
@@ -618,11 +621,11 @@ class Resources extends ArrayObject
      * The length of a CPU real-time runtime in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @param int|null $cpuRealtimeRuntime
+     * @param int $cpuRealtimeRuntime
      *
      * @return self
      */
-    public function setCpuRealtimeRuntime(?int $cpuRealtimeRuntime): self
+    public function setCpuRealtimeRuntime(int $cpuRealtimeRuntime): self
     {
         $this->initialized['cpuRealtimeRuntime'] = true;
         $this->cpuRealtimeRuntime                = $cpuRealtimeRuntime;
@@ -633,9 +636,9 @@ class Resources extends ArrayObject
     /**
      * CPUs in which to allow execution (e.g., `0-3`, `0,1`).
      *
-     * @return string|null
+     * @return string
      */
-    public function getCpusetCpus(): ?string
+    public function getCpusetCpus(): string
     {
         return $this->cpusetCpus;
     }
@@ -643,11 +646,11 @@ class Resources extends ArrayObject
     /**
      * CPUs in which to allow execution (e.g., `0-3`, `0,1`).
      *
-     * @param string|null $cpusetCpus
+     * @param string $cpusetCpus
      *
      * @return self
      */
-    public function setCpusetCpus(?string $cpusetCpus): self
+    public function setCpusetCpus(string $cpusetCpus): self
     {
         $this->initialized['cpusetCpus'] = true;
         $this->cpusetCpus                = $cpusetCpus;
@@ -764,6 +767,9 @@ class Resources extends ArrayObject
      *
      * This field is omitted when empty.
      *
+     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated `memory.kmem.tcp.limit_in_bytes` field
+     * for cgroups v1. This field will be removed in a future release.
+     *
      * @return int
      */
     public function getKernelMemoryTCP(): int
@@ -777,6 +783,9 @@ class Resources extends ArrayObject
      * by the default (runc) runtime.
      *
      * This field is omitted when empty.
+     *
+     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated `memory.kmem.tcp.limit_in_bytes` field
+     * for cgroups v1. This field will be removed in a future release.
      *
      * @param int $kernelMemoryTCP
      *
@@ -872,9 +881,9 @@ class Resources extends ArrayObject
     /**
      * CPU quota in units of 10<sup>-9</sup> CPUs.
      *
-     * @return int
+     * @return int|null
      */
-    public function getNanoCpus(): int
+    public function getNanoCpus(): ?int
     {
         return $this->nanoCpus;
     }
@@ -882,11 +891,11 @@ class Resources extends ArrayObject
     /**
      * CPU quota in units of 10<sup>-9</sup> CPUs.
      *
-     * @param int $nanoCpus
+     * @param int|null $nanoCpus
      *
      * @return self
      */
-    public function setNanoCpus(int $nanoCpus): self
+    public function setNanoCpus(?int $nanoCpus): self
     {
         $this->initialized['nanoCpus'] = true;
         $this->nanoCpus                = $nanoCpus;
@@ -1015,9 +1024,9 @@ class Resources extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuCount(): int
+    public function getCpuCount(): ?int
     {
         return $this->cpuCount;
     }
@@ -1029,11 +1038,11 @@ class Resources extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @param int $cpuCount
+     * @param int|null $cpuCount
      *
      * @return self
      */
-    public function setCpuCount(int $cpuCount): self
+    public function setCpuCount(?int $cpuCount): self
     {
         $this->initialized['cpuCount'] = true;
         $this->cpuCount                = $cpuCount;
@@ -1048,9 +1057,9 @@ class Resources extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuPercent(): int
+    public function getCpuPercent(): ?int
     {
         return $this->cpuPercent;
     }
@@ -1062,11 +1071,11 @@ class Resources extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @param int $cpuPercent
+     * @param int|null $cpuPercent
      *
      * @return self
      */
-    public function setCpuPercent(int $cpuPercent): self
+    public function setCpuPercent(?int $cpuPercent): self
     {
         $this->initialized['cpuPercent'] = true;
         $this->cpuPercent                = $cpuPercent;
@@ -1077,9 +1086,9 @@ class Resources extends ArrayObject
     /**
      * Maximum IOps for the container system drive (Windows only).
      *
-     * @return int
+     * @return int|null
      */
-    public function getIOMaximumIOps(): int
+    public function getIOMaximumIOps(): ?int
     {
         return $this->iOMaximumIOps;
     }
@@ -1087,11 +1096,11 @@ class Resources extends ArrayObject
     /**
      * Maximum IOps for the container system drive (Windows only).
      *
-     * @param int $iOMaximumIOps
+     * @param int|null $iOMaximumIOps
      *
      * @return self
      */
-    public function setIOMaximumIOps(int $iOMaximumIOps): self
+    public function setIOMaximumIOps(?int $iOMaximumIOps): self
     {
         $this->initialized['iOMaximumIOps'] = true;
         $this->iOMaximumIOps                = $iOMaximumIOps;
@@ -1103,9 +1112,9 @@ class Resources extends ArrayObject
      * Maximum IO in bytes per second for the container system drive
      * (Windows only).
      *
-     * @return int
+     * @return int|null
      */
-    public function getIOMaximumBandwidth(): int
+    public function getIOMaximumBandwidth(): ?int
     {
         return $this->iOMaximumBandwidth;
     }
@@ -1114,11 +1123,11 @@ class Resources extends ArrayObject
      * Maximum IO in bytes per second for the container system drive
      * (Windows only).
      *
-     * @param int $iOMaximumBandwidth
+     * @param int|null $iOMaximumBandwidth
      *
      * @return self
      */
-    public function setIOMaximumBandwidth(int $iOMaximumBandwidth): self
+    public function setIOMaximumBandwidth(?int $iOMaximumBandwidth): self
     {
         $this->initialized['iOMaximumBandwidth'] = true;
         $this->iOMaximumBandwidth                = $iOMaximumBandwidth;

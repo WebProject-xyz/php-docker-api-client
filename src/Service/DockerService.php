@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApiClient\Service;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use WebProject\DockerApi\Library\Generated\Model\ContainerInspectResponse;
 use WebProject\DockerApiClient\Client\DockerApiClientWrapper;
 use WebProject\DockerApiClient\Dto\DockerContainerDto;
 use WebProject\DockerApiClient\Event\ContainerEvent;
 use WebProject\DockerApiClient\Util\ContainerResponseToContainerDtoUtil;
 
-final readonly class DockerService
+final class DockerService implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     public function __construct(
-        private DockerApiClientWrapper $dockerApiClient,
+        private readonly DockerApiClientWrapper $dockerApiClient,
     ) {
     }
 
@@ -23,16 +27,25 @@ final readonly class DockerService
     public function findAllContainer(): iterable
     {
         $util = new ContainerResponseToContainerDtoUtil();
+        try {
+            foreach ($this->dockerApiClient->getDockerClient()->containerList() as $container) {
+                $id               = $container->getId();
+                $containerInspect = $this->dockerApiClient->getDockerClient()->containerInspect($id);
 
-        foreach ($this->dockerApiClient->getDockerClient()->containerList() as $container) {
-            $id               = $container->getId();
-            $containerInspect = $this->dockerApiClient->getDockerClient()->containerInspect($id);
+                if (!$containerInspect instanceof ContainerInspectResponse) {
+                    continue;
+                }
 
-            if (!$containerInspect instanceof ContainerInspectResponse) {
-                continue;
+                yield $id => $util($containerInspect);
             }
+        } catch (\WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidationException $e) {
+            $errors = $e->getMessage();
+            foreach ($e->getViolationList() as $item) {
+                $errors .= ' || ' . $item;
+            }
+            $this->logger?->error($errors);
 
-            yield $id => $util($containerInspect);
+            throw $e;
         }
     }
 

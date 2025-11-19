@@ -186,8 +186,10 @@ class ContainerAttach extends \WebProject\DockerApi\Library\Generated\Runtime\Cl
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
         if (101 === $status) {
+            return null;
         }
         if (200 === $status) {
+            return null;
         }
         if (400 === $status) {
         }

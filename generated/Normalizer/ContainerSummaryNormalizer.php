@@ -79,15 +79,13 @@ class ContainerSummaryNormalizer implements DenormalizerInterface, NormalizerInt
             $object->setCreated($data['Created']);
             unset($data['Created']);
         }
-        if (array_key_exists('Ports', $data) && null !== $data['Ports']) {
+        if (array_key_exists('Ports', $data)) {
             $values_1 = [];
             foreach ($data['Ports'] as $value_1) {
                 $values_1[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\Port::class, 'json', $context);
             }
             $object->setPorts($values_1);
             unset($data['Ports']);
-        } elseif (array_key_exists('Ports', $data) && null === $data['Ports']) {
-            $object->setPorts(null);
         }
         if (array_key_exists('SizeRw', $data) && null !== $data['SizeRw']) {
             $object->setSizeRw($data['SizeRw']);

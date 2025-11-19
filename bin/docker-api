@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Symfony\Component\Console\Application;
+use WebProject\DockerApiClient\Command\EventsListenCommand;
 use WebProject\DockerApiClient\Command\ListContainersCommand;
 
 if (!is_dir(dirname(__DIR__) . '/vendor')) {
@@ -18,7 +19,8 @@ require_once dirname(__DIR__) . '/vendor/autoload_runtime.php';
 return static function (array $context) {
     $application = new Application('Docker API', '@package_version@');
     $application->add(new ListContainersCommand());
-    $application->setDefaultCommand('synchronize-hosts');
+    $application->add(new EventsListenCommand());
+    $application->setDefaultCommand('docker:list-containers');
 
     return $application;
 };

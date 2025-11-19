@@ -47,15 +47,13 @@ class VolumeListResponseNormalizer implements DenormalizerInterface, NormalizerI
         if (null === $data || false === is_array($data)) {
             return $object;
         }
-        if (array_key_exists('Volumes', $data) && null !== $data['Volumes']) {
+        if (array_key_exists('Volumes', $data)) {
             $values = [];
             foreach ($data['Volumes'] as $value) {
                 $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\Volume::class, 'json', $context);
             }
             $object->setVolumes($values);
             unset($data['Volumes']);
-        } elseif (array_key_exists('Volumes', $data) && null === $data['Volumes']) {
-            $object->setVolumes(null);
         }
         if (array_key_exists('Warnings', $data)) {
             $values_1 = [];

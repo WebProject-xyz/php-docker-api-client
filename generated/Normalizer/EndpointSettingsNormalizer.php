@@ -16,7 +16,6 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
-use function is_int;
 use function is_object;
 
 class EndpointSettingsNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
@@ -45,9 +44,6 @@ class EndpointSettingsNormalizer implements DenormalizerInterface, NormalizerInt
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\EndpointSettings();
-        if (array_key_exists('GwPriority', $data) && is_int($data['GwPriority'])) {
-            $data['GwPriority'] = (float) $data['GwPriority'];
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }

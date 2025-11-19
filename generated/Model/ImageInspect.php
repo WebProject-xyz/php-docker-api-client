@@ -81,6 +81,11 @@ class ImageInspect extends ArrayObject
      * is only set for images that were built/created locally. This field
      * is empty if the image was pulled from an image registry.
      *
+     * > **Deprecated**: This field is only set when using the deprecated
+     * > legacy builder. It is included in API responses for informational
+     * > purposes, but should not be depended on as it will be omitted
+     * > once the legacy builder is removed.
+     *
      * @var string
      */
     protected $parent;
@@ -104,6 +109,11 @@ class ImageInspect extends ArrayObject
      * The version of Docker that was used to build the image.
      *
      * Depending on how the image was created, this field may be empty.
+     *
+     * > **Deprecated**: This field is only set when using the deprecated
+     * > legacy builder. It is included in API responses for informational
+     * > purposes, but should not be depended on as it will be omitted
+     * > once the legacy builder is removed.
      *
      * @var string
      */
@@ -153,14 +163,6 @@ class ImageInspect extends ArrayObject
      * @var int
      */
     protected $size;
-    /**
-     * Total size of the image including all layers it is composed of.
-     *
-     * Deprecated: this field is omitted in API v1.44, but kept for backward compatibility. Use Size instead.
-     *
-     * @var int
-     */
-    protected $virtualSize;
     /**
      * Information about the storage driver used to store the container's and
      * image's filesystem.
@@ -368,6 +370,11 @@ class ImageInspect extends ArrayObject
      * is only set for images that were built/created locally. This field
      * is empty if the image was pulled from an image registry.
      *
+     * > **Deprecated**: This field is only set when using the deprecated
+     * > legacy builder. It is included in API responses for informational
+     * > purposes, but should not be depended on as it will be omitted
+     * > once the legacy builder is removed.
+     *
      * @return string
      */
     public function getParent(): string
@@ -381,6 +388,11 @@ class ImageInspect extends ArrayObject
      * Depending on how the image was created, this field may be empty and
      * is only set for images that were built/created locally. This field
      * is empty if the image was pulled from an image registry.
+     *
+     * > **Deprecated**: This field is only set when using the deprecated
+     * > legacy builder. It is included in API responses for informational
+     * > purposes, but should not be depended on as it will be omitted
+     * > once the legacy builder is removed.
      *
      * @param string $parent
      *
@@ -457,6 +469,11 @@ class ImageInspect extends ArrayObject
      *
      * Depending on how the image was created, this field may be empty.
      *
+     * > **Deprecated**: This field is only set when using the deprecated
+     * > legacy builder. It is included in API responses for informational
+     * > purposes, but should not be depended on as it will be omitted
+     * > once the legacy builder is removed.
+     *
      * @return string
      */
     public function getDockerVersion(): string
@@ -468,6 +485,11 @@ class ImageInspect extends ArrayObject
      * The version of Docker that was used to build the image.
      *
      * Depending on how the image was created, this field may be empty.
+     *
+     * > **Deprecated**: This field is only set when using the deprecated
+     * > legacy builder. It is included in API responses for informational
+     * > purposes, but should not be depended on as it will be omitted
+     * > once the legacy builder is removed.
      *
      * @param string $dockerVersion
      *
@@ -658,35 +680,6 @@ class ImageInspect extends ArrayObject
     {
         $this->initialized['size'] = true;
         $this->size                = $size;
-
-        return $this;
-    }
-
-    /**
-     * Total size of the image including all layers it is composed of.
-     *
-     * Deprecated: this field is omitted in API v1.44, but kept for backward compatibility. Use Size instead.
-     *
-     * @return int
-     */
-    public function getVirtualSize(): int
-    {
-        return $this->virtualSize;
-    }
-
-    /**
-     * Total size of the image including all layers it is composed of.
-     *
-     * Deprecated: this field is omitted in API v1.44, but kept for backward compatibility. Use Size instead.
-     *
-     * @param int $virtualSize
-     *
-     * @return self
-     */
-    public function setVirtualSize(int $virtualSize): self
-    {
-        $this->initialized['virtualSize'] = true;
-        $this->virtualSize                = $virtualSize;
 
         return $this;
     }

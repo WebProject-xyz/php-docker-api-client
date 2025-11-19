@@ -124,29 +124,21 @@ class ContainersIdUpdatePostBodyNormalizer implements DenormalizerInterface, Nor
             $object->setCpuPeriod($data['CpuPeriod']);
             unset($data['CpuPeriod']);
         }
-        if (array_key_exists('CpuQuota', $data) && null !== $data['CpuQuota']) {
+        if (array_key_exists('CpuQuota', $data)) {
             $object->setCpuQuota($data['CpuQuota']);
             unset($data['CpuQuota']);
-        } elseif (array_key_exists('CpuQuota', $data) && null === $data['CpuQuota']) {
-            $object->setCpuQuota(null);
         }
-        if (array_key_exists('CpuRealtimePeriod', $data) && null !== $data['CpuRealtimePeriod']) {
+        if (array_key_exists('CpuRealtimePeriod', $data)) {
             $object->setCpuRealtimePeriod($data['CpuRealtimePeriod']);
             unset($data['CpuRealtimePeriod']);
-        } elseif (array_key_exists('CpuRealtimePeriod', $data) && null === $data['CpuRealtimePeriod']) {
-            $object->setCpuRealtimePeriod(null);
         }
-        if (array_key_exists('CpuRealtimeRuntime', $data) && null !== $data['CpuRealtimeRuntime']) {
+        if (array_key_exists('CpuRealtimeRuntime', $data)) {
             $object->setCpuRealtimeRuntime($data['CpuRealtimeRuntime']);
             unset($data['CpuRealtimeRuntime']);
-        } elseif (array_key_exists('CpuRealtimeRuntime', $data) && null === $data['CpuRealtimeRuntime']) {
-            $object->setCpuRealtimeRuntime(null);
         }
-        if (array_key_exists('CpusetCpus', $data) && null !== $data['CpusetCpus']) {
+        if (array_key_exists('CpusetCpus', $data)) {
             $object->setCpusetCpus($data['CpusetCpus']);
             unset($data['CpusetCpus']);
-        } elseif (array_key_exists('CpusetCpus', $data) && null === $data['CpusetCpus']) {
-            $object->setCpusetCpus(null);
         }
         if (array_key_exists('CpusetMems', $data)) {
             $object->setCpusetMems($data['CpusetMems']);
@@ -200,9 +192,11 @@ class ContainersIdUpdatePostBodyNormalizer implements DenormalizerInterface, Nor
         } elseif (array_key_exists('MemorySwappiness', $data) && null === $data['MemorySwappiness']) {
             $object->setMemorySwappiness(null);
         }
-        if (array_key_exists('NanoCpus', $data)) {
+        if (array_key_exists('NanoCpus', $data) && null !== $data['NanoCpus']) {
             $object->setNanoCpus($data['NanoCpus']);
             unset($data['NanoCpus']);
+        } elseif (array_key_exists('NanoCpus', $data) && null === $data['NanoCpus']) {
+            $object->setNanoCpus(null);
         }
         if (array_key_exists('OomKillDisable', $data) && null !== $data['OomKillDisable']) {
             $object->setOomKillDisable($data['OomKillDisable']);
@@ -232,21 +226,29 @@ class ContainersIdUpdatePostBodyNormalizer implements DenormalizerInterface, Nor
         } elseif (array_key_exists('Ulimits', $data) && null === $data['Ulimits']) {
             $object->setUlimits(null);
         }
-        if (array_key_exists('CpuCount', $data)) {
+        if (array_key_exists('CpuCount', $data) && null !== $data['CpuCount']) {
             $object->setCpuCount($data['CpuCount']);
             unset($data['CpuCount']);
+        } elseif (array_key_exists('CpuCount', $data) && null === $data['CpuCount']) {
+            $object->setCpuCount(null);
         }
-        if (array_key_exists('CpuPercent', $data)) {
+        if (array_key_exists('CpuPercent', $data) && null !== $data['CpuPercent']) {
             $object->setCpuPercent($data['CpuPercent']);
             unset($data['CpuPercent']);
+        } elseif (array_key_exists('CpuPercent', $data) && null === $data['CpuPercent']) {
+            $object->setCpuPercent(null);
         }
-        if (array_key_exists('IOMaximumIOps', $data)) {
+        if (array_key_exists('IOMaximumIOps', $data) && null !== $data['IOMaximumIOps']) {
             $object->setIOMaximumIOps($data['IOMaximumIOps']);
             unset($data['IOMaximumIOps']);
+        } elseif (array_key_exists('IOMaximumIOps', $data) && null === $data['IOMaximumIOps']) {
+            $object->setIOMaximumIOps(null);
         }
-        if (array_key_exists('IOMaximumBandwidth', $data)) {
+        if (array_key_exists('IOMaximumBandwidth', $data) && null !== $data['IOMaximumBandwidth']) {
             $object->setIOMaximumBandwidth($data['IOMaximumBandwidth']);
             unset($data['IOMaximumBandwidth']);
+        } elseif (array_key_exists('IOMaximumBandwidth', $data) && null === $data['IOMaximumBandwidth']) {
+            $object->setIOMaximumBandwidth(null);
         }
         if (array_key_exists('RestartPolicy', $data)) {
             $object->setRestartPolicy($this->denormalizer->denormalize($data['RestartPolicy'], \WebProject\DockerApi\Library\Generated\Model\RestartPolicy::class, 'json', $context));

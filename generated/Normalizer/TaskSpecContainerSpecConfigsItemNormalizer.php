@@ -52,7 +52,11 @@ class TaskSpecContainerSpecConfigsItemNormalizer implements DenormalizerInterfac
             unset($data['File']);
         }
         if (array_key_exists('Runtime', $data)) {
-            $object->setRuntime($this->denormalizer->denormalize($data['Runtime'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecConfigsItemRuntime::class, 'json', $context));
+            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data['Runtime'] as $key => $value) {
+                $values[$key] = $value;
+            }
+            $object->setRuntime($values);
             unset($data['Runtime']);
         }
         if (array_key_exists('ConfigID', $data)) {
@@ -63,9 +67,9 @@ class TaskSpecContainerSpecConfigsItemNormalizer implements DenormalizerInterfac
             $object->setConfigName($data['ConfigName']);
             unset($data['ConfigName']);
         }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        foreach ($data as $key_1 => $value_1) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_1;
             }
         }
 
@@ -79,7 +83,11 @@ class TaskSpecContainerSpecConfigsItemNormalizer implements DenormalizerInterfac
             $dataArray['File'] = $this->normalizer->normalize($data->getFile(), 'json', $context);
         }
         if ($data->isInitialized('runtime') && null !== $data->getRuntime()) {
-            $dataArray['Runtime'] = $this->normalizer->normalize($data->getRuntime(), 'json', $context);
+            $values = [];
+            foreach ($data->getRuntime() as $key => $value) {
+                $values[$key] = $value;
+            }
+            $dataArray['Runtime'] = $values;
         }
         if ($data->isInitialized('configID') && null !== $data->getConfigID()) {
             $dataArray['ConfigID'] = $data->getConfigID();
@@ -87,9 +95,9 @@ class TaskSpecContainerSpecConfigsItemNormalizer implements DenormalizerInterfac
         if ($data->isInitialized('configName') && null !== $data->getConfigName()) {
             $dataArray['ConfigName'] = $data->getConfigName();
         }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        foreach ($data as $key_1 => $value_1) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_1;
             }
         }
 

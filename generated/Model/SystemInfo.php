@@ -123,6 +123,8 @@ class SystemInfo extends ArrayObject
      * Kernel memory TCP limits are not supported when using cgroups v2, which
      * does not support the corresponding `memory.kmem.tcp.limit_in_bytes` cgroup.
      *
+     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated kernel memory TCP accounting.
+     *
      * @var bool
      */
     protected $kernelMemoryTCP;
@@ -172,31 +174,6 @@ class SystemInfo extends ArrayObject
      * @var bool
      */
     protected $iPv4Forwarding;
-    /**
-     * Indicates if `bridge-nf-call-iptables` is available on the host when
-     * the daemon was started.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: netfilter module is now loaded on-demand and no longer
-     * > during daemon startup, making this field obsolete. This field is always
-     * > `false` and will be removed in a API v1.49.
-     *
-     * @var bool
-     */
-    protected $bridgeNfIptables;
-    /**
-     * Indicates if `bridge-nf-call-ip6tables` is available on the host.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: netfilter module is now loaded on-demand, and no longer
-     * > during daemon startup, making this field obsolete. This field is always
-     * > `false` and will be removed in a API v1.49.
-     *
-     * @var bool
-     */
-    protected $bridgeNfIp6tables;
     /**
      * Indicates if the daemon is running in debug-mode / with debug-level
      * logging enabled.
@@ -513,6 +490,23 @@ class SystemInfo extends ArrayObject
      * @var list<SystemInfoDefaultAddressPoolsItem>
      */
     protected $defaultAddressPools;
+    /**
+     * Information about the daemon's firewalling configuration.
+     *
+     * This field is currently only used on Linux, and omitted on other platforms.
+     *
+     * @var FirewallInfo|null
+     */
+    protected $firewallBackend;
+    /**
+     * List of devices discovered by device drivers.
+     *
+     * Each device includes information about its source driver, kind, name,
+     * and additional driver-specific attributes.
+     *
+     * @var list<DeviceInfo>
+     */
+    protected $discoveredDevices;
     /**
      * List of warnings / informational messages about missing features, or
      * issues related to the daemon configuration.
@@ -907,6 +901,8 @@ class SystemInfo extends ArrayObject
      * Kernel memory TCP limits are not supported when using cgroups v2, which
      * does not support the corresponding `memory.kmem.tcp.limit_in_bytes` cgroup.
      *
+     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated kernel memory TCP accounting.
+     *
      * @return bool
      */
     public function getKernelMemoryTCP(): bool
@@ -920,6 +916,8 @@ class SystemInfo extends ArrayObject
      *
      * Kernel memory TCP limits are not supported when using cgroups v2, which
      * does not support the corresponding `memory.kmem.tcp.limit_in_bytes` cgroup.
+     *
+     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated kernel memory TCP accounting.
      *
      * @param bool $kernelMemoryTCP
      *
@@ -1112,82 +1110,6 @@ class SystemInfo extends ArrayObject
     {
         $this->initialized['iPv4Forwarding'] = true;
         $this->iPv4Forwarding                = $iPv4Forwarding;
-
-        return $this;
-    }
-
-    /**
-     * Indicates if `bridge-nf-call-iptables` is available on the host when
-     * the daemon was started.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: netfilter module is now loaded on-demand and no longer
-     * > during daemon startup, making this field obsolete. This field is always
-     * > `false` and will be removed in a API v1.49.
-     *
-     * @return bool
-     */
-    public function getBridgeNfIptables(): bool
-    {
-        return $this->bridgeNfIptables;
-    }
-
-    /**
-     * Indicates if `bridge-nf-call-iptables` is available on the host when
-     * the daemon was started.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: netfilter module is now loaded on-demand and no longer
-     * > during daemon startup, making this field obsolete. This field is always
-     * > `false` and will be removed in a API v1.49.
-     *
-     * @param bool $bridgeNfIptables
-     *
-     * @return self
-     */
-    public function setBridgeNfIptables(bool $bridgeNfIptables): self
-    {
-        $this->initialized['bridgeNfIptables'] = true;
-        $this->bridgeNfIptables                = $bridgeNfIptables;
-
-        return $this;
-    }
-
-    /**
-     * Indicates if `bridge-nf-call-ip6tables` is available on the host.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: netfilter module is now loaded on-demand, and no longer
-     * > during daemon startup, making this field obsolete. This field is always
-     * > `false` and will be removed in a API v1.49.
-     *
-     * @return bool
-     */
-    public function getBridgeNfIp6tables(): bool
-    {
-        return $this->bridgeNfIp6tables;
-    }
-
-    /**
-     * Indicates if `bridge-nf-call-ip6tables` is available on the host.
-     *
-     * <p><br /></p>
-     *
-     * > **Deprecated**: netfilter module is now loaded on-demand, and no longer
-     * > during daemon startup, making this field obsolete. This field is always
-     * > `false` and will be removed in a API v1.49.
-     *
-     * @param bool $bridgeNfIp6tables
-     *
-     * @return self
-     */
-    public function setBridgeNfIp6tables(bool $bridgeNfIp6tables): self
-    {
-        $this->initialized['bridgeNfIp6tables'] = true;
-        $this->bridgeNfIp6tables                = $bridgeNfIp6tables;
 
         return $this;
     }
@@ -2301,6 +2223,66 @@ class SystemInfo extends ArrayObject
     {
         $this->initialized['defaultAddressPools'] = true;
         $this->defaultAddressPools                = $defaultAddressPools;
+
+        return $this;
+    }
+
+    /**
+     * Information about the daemon's firewalling configuration.
+     *
+     * This field is currently only used on Linux, and omitted on other platforms.
+     *
+     * @return FirewallInfo|null
+     */
+    public function getFirewallBackend(): ?FirewallInfo
+    {
+        return $this->firewallBackend;
+    }
+
+    /**
+     * Information about the daemon's firewalling configuration.
+     *
+     * This field is currently only used on Linux, and omitted on other platforms.
+     *
+     * @param FirewallInfo|null $firewallBackend
+     *
+     * @return self
+     */
+    public function setFirewallBackend(?FirewallInfo $firewallBackend): self
+    {
+        $this->initialized['firewallBackend'] = true;
+        $this->firewallBackend                = $firewallBackend;
+
+        return $this;
+    }
+
+    /**
+     * List of devices discovered by device drivers.
+     *
+     * Each device includes information about its source driver, kind, name,
+     * and additional driver-specific attributes.
+     *
+     * @return list<DeviceInfo>
+     */
+    public function getDiscoveredDevices(): array
+    {
+        return $this->discoveredDevices;
+    }
+
+    /**
+     * List of devices discovered by device drivers.
+     *
+     * Each device includes information about its source driver, kind, name,
+     * and additional driver-specific attributes.
+     *
+     * @param list<DeviceInfo> $discoveredDevices
+     *
+     * @return self
+     */
+    public function setDiscoveredDevices(array $discoveredDevices): self
+    {
+        $this->initialized['discoveredDevices'] = true;
+        $this->discoveredDevices                = $discoveredDevices;
 
         return $this;
     }

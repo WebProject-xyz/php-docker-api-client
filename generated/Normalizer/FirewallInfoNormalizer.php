@@ -13,11 +13,12 @@ use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\CheckArray;
 use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
+use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
 
-class ServiceSpecModeGlobalJobNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
+class FirewallInfoNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
     use CheckArray;
     use DenormalizerAwareTrait;
@@ -26,12 +27,12 @@ class ServiceSpecModeGlobalJobNormalizer implements DenormalizerInterface, Norma
 
     public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
-        return \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeGlobalJob::class === $type;
+        return \WebProject\DockerApi\Library\Generated\Model\FirewallInfo::class === $type;
     }
 
     public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
-        return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeGlobalJob::class === get_class($data);
+        return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\FirewallInfo::class === get_class($data);
     }
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
@@ -42,13 +43,29 @@ class ServiceSpecModeGlobalJobNormalizer implements DenormalizerInterface, Norma
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeGlobalJob();
+        $object = new \WebProject\DockerApi\Library\Generated\Model\FirewallInfo();
         if (null === $data || false === is_array($data)) {
             return $object;
         }
-        foreach ($data as $key => $value) {
+        if (array_key_exists('Driver', $data)) {
+            $object->setDriver($data['Driver']);
+            unset($data['Driver']);
+        }
+        if (array_key_exists('Info', $data)) {
+            $values = [];
+            foreach ($data['Info'] as $value) {
+                $values_1 = [];
+                foreach ($value as $value_1) {
+                    $values_1[] = $value_1;
+                }
+                $values[] = $values_1;
+            }
+            $object->setInfo($values);
+            unset($data['Info']);
+        }
+        foreach ($data as $key => $value_2) {
             if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+                $object[$key] = $value_2;
             }
         }
 
@@ -58,9 +75,23 @@ class ServiceSpecModeGlobalJobNormalizer implements DenormalizerInterface, Norma
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        foreach ($data as $key => $value) {
+        if ($data->isInitialized('driver') && null !== $data->getDriver()) {
+            $dataArray['Driver'] = $data->getDriver();
+        }
+        if ($data->isInitialized('info') && null !== $data->getInfo()) {
+            $values = [];
+            foreach ($data->getInfo() as $value) {
+                $values_1 = [];
+                foreach ($value as $value_1) {
+                    $values_1[] = $value_1;
+                }
+                $values[] = $values_1;
+            }
+            $dataArray['Info'] = $values;
+        }
+        foreach ($data as $key => $value_2) {
             if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+                $dataArray[$key] = $value_2;
             }
         }
 
@@ -69,7 +100,7 @@ class ServiceSpecModeGlobalJobNormalizer implements DenormalizerInterface, Norma
 
     public function getSupportedTypes(?string $format = null): array
     {
-        return [\WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeGlobalJob::class => true];
+        return [\WebProject\DockerApi\Library\Generated\Model\FirewallInfo::class => true];
     }
 
     public function hasCacheableSupportsMethod(): bool

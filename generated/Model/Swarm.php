@@ -78,7 +78,7 @@ class Swarm extends ArrayObject
      *
      * @var int
      */
-    protected $dataPathPort;
+    protected $dataPathPort = 4789;
     /**
      * Default Address Pool specifies default subnet pools for global scope
      * networks.
@@ -92,7 +92,7 @@ class Swarm extends ArrayObject
      *
      * @var int
      */
-    protected $subnetSize;
+    protected $subnetSize = 24;
     /**
      * JoinTokens contains the tokens workers and managers need to join the swarm.
      *

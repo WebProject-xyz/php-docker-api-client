@@ -36,7 +36,7 @@ class TaskSpecContainerSpecConfigsItem extends ArrayObject
      * > **Note**: `Configs.File` and `Configs.Runtime` are mutually
      * > exclusive
      *
-     * @var TaskSpecContainerSpecConfigsItemRuntime
+     * @var array<string, mixed>
      */
     protected $runtime;
     /**
@@ -97,9 +97,9 @@ class TaskSpecContainerSpecConfigsItem extends ArrayObject
      * > **Note**: `Configs.File` and `Configs.Runtime` are mutually
      * > exclusive
      *
-     * @return TaskSpecContainerSpecConfigsItemRuntime
+     * @return array<string, mixed>
      */
-    public function getRuntime(): TaskSpecContainerSpecConfigsItemRuntime
+    public function getRuntime(): iterable
     {
         return $this->runtime;
     }
@@ -113,11 +113,11 @@ class TaskSpecContainerSpecConfigsItem extends ArrayObject
      * > **Note**: `Configs.File` and `Configs.Runtime` are mutually
      * > exclusive
      *
-     * @param TaskSpecContainerSpecConfigsItemRuntime $runtime
+     * @param array<string, mixed> $runtime
      *
      * @return self
      */
-    public function setRuntime(TaskSpecContainerSpecConfigsItemRuntime $runtime): self
+    public function setRuntime(iterable $runtime): self
     {
         $this->initialized['runtime'] = true;
         $this->runtime                = $runtime;

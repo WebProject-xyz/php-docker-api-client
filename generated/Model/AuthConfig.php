@@ -26,6 +26,10 @@ class AuthConfig extends ArrayObject
      */
     protected $password;
     /**
+     * Email is an optional value associated with the username.
+     *
+     * > **Deprecated**: This field is deprecated since docker 1.11 (API v1.23) and will be removed in a future release.
+     *
      * @var string
      */
     protected $email;
@@ -77,6 +81,10 @@ class AuthConfig extends ArrayObject
     }
 
     /**
+     * Email is an optional value associated with the username.
+     *
+     * > **Deprecated**: This field is deprecated since docker 1.11 (API v1.23) and will be removed in a future release.
+     *
      * @return string
      */
     public function getEmail(): string
@@ -85,6 +93,10 @@ class AuthConfig extends ArrayObject
     }
 
     /**
+     * Email is an optional value associated with the username.
+     *
+     * > **Deprecated**: This field is deprecated since docker 1.11 (API v1.23) and will be removed in a future release.
+     *
      * @param string $email
      *
      * @return self

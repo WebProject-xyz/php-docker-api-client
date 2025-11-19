@@ -51,13 +51,15 @@ class NetworkAttachmentConfigNormalizer implements DenormalizerInterface, Normal
             $object->setTarget($data['Target']);
             unset($data['Target']);
         }
-        if (array_key_exists('Aliases', $data)) {
+        if (array_key_exists('Aliases', $data) && null !== $data['Aliases']) {
             $values = [];
             foreach ($data['Aliases'] as $value) {
                 $values[] = $value;
             }
             $object->setAliases($values);
             unset($data['Aliases']);
+        } elseif (array_key_exists('Aliases', $data) && null === $data['Aliases']) {
+            $object->setAliases(null);
         }
         if (array_key_exists('DriverOpts', $data)) {
             $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
