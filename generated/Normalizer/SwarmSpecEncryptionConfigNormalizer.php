@@ -48,9 +48,6 @@ class SwarmSpecEncryptionConfigNormalizer implements DenormalizerInterface, Norm
         if (array_key_exists('AutoLockManagers', $data) && is_int($data['AutoLockManagers'])) {
             $data['AutoLockManagers'] = (bool) $data['AutoLockManagers'];
         }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\SwarmSpecEncryptionConfigConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -77,9 +74,6 @@ class SwarmSpecEncryptionConfigNormalizer implements DenormalizerInterface, Norm
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\SwarmSpecEncryptionConfigConstraint());
         }
 
         return $dataArray;

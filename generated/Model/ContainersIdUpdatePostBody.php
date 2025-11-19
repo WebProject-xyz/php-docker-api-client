@@ -52,7 +52,7 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * [{"Path": "device_path", "Weight": weight}]
      * ```
      *
-     * @var list<ResourcesBlkioWeightDeviceItem>
+     * @var list<ResourcesBlkioWeightDeviceItem>|null
      */
     protected $blkioWeightDevice;
     /**
@@ -62,7 +62,7 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @var list<ThrottleDevice>
+     * @var list<ThrottleDevice>|null
      */
     protected $blkioDeviceReadBps;
     /**
@@ -72,7 +72,7 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @var list<ThrottleDevice>
+     * @var list<ThrottleDevice>|null
      */
     protected $blkioDeviceWriteBps;
     /**
@@ -82,7 +82,7 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @var list<ThrottleDevice>
+     * @var list<ThrottleDevice>|null
      */
     protected $blkioDeviceReadIOps;
     /**
@@ -92,7 +92,7 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @var list<ThrottleDevice>
+     * @var list<ThrottleDevice>|null
      */
     protected $blkioDeviceWriteIOps;
     /**
@@ -137,19 +137,19 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * A list of devices to add to the container.
      *
-     * @var list<DeviceMapping>
+     * @var list<DeviceMapping>|null
      */
     protected $devices;
     /**
      * a list of cgroup rules to apply to the container.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $deviceCgroupRules;
     /**
      * A list of requests for devices to be sent to device drivers.
      *
-     * @var list<DeviceRequest>
+     * @var list<DeviceRequest>|null
      */
     protected $deviceRequests;
     /**
@@ -182,19 +182,19 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * Tune a container's memory swappiness behavior. Accepts an integer
      * between 0 and 100.
      *
-     * @var int
+     * @var int|null
      */
     protected $memorySwappiness;
     /**
      * CPU quota in units of 10<sup>-9</sup> CPUs.
      *
-     * @var int
+     * @var int|null
      */
     protected $nanoCpus;
     /**
      * Disable OOM Killer for the container.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $oomKillDisable;
     /**
@@ -219,7 +219,7 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * {"Name": "nofile", "Soft": 1024, "Hard": 2048}
      * ```
      *
-     * @var list<ResourcesUlimitsItem>
+     * @var list<ResourcesUlimitsItem>|null
      */
     protected $ulimits;
     /**
@@ -229,7 +229,7 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuCount;
     /**
@@ -239,20 +239,20 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuPercent;
     /**
      * Maximum IOps for the container system drive (Windows only).
      *
-     * @var int
+     * @var int|null
      */
     protected $iOMaximumIOps;
     /**
      * Maximum IO in bytes per second for the container system drive
      * (Windows only).
      *
-     * @var int
+     * @var int|null
      */
     protected $iOMaximumBandwidth;
     /**
@@ -381,9 +381,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * [{"Path": "device_path", "Weight": weight}]
      * ```
      *
-     * @return list<ResourcesBlkioWeightDeviceItem>
+     * @return list<ResourcesBlkioWeightDeviceItem>|null
      */
-    public function getBlkioWeightDevice(): array
+    public function getBlkioWeightDevice(): ?array
     {
         return $this->blkioWeightDevice;
     }
@@ -395,11 +395,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * [{"Path": "device_path", "Weight": weight}]
      * ```
      *
-     * @param list<ResourcesBlkioWeightDeviceItem> $blkioWeightDevice
+     * @param list<ResourcesBlkioWeightDeviceItem>|null $blkioWeightDevice
      *
      * @return self
      */
-    public function setBlkioWeightDevice(array $blkioWeightDevice): self
+    public function setBlkioWeightDevice(?array $blkioWeightDevice): self
     {
         $this->initialized['blkioWeightDevice'] = true;
         $this->blkioWeightDevice                = $blkioWeightDevice;
@@ -414,9 +414,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @return list<ThrottleDevice>
+     * @return list<ThrottleDevice>|null
      */
-    public function getBlkioDeviceReadBps(): array
+    public function getBlkioDeviceReadBps(): ?array
     {
         return $this->blkioDeviceReadBps;
     }
@@ -428,11 +428,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @param list<ThrottleDevice> $blkioDeviceReadBps
+     * @param list<ThrottleDevice>|null $blkioDeviceReadBps
      *
      * @return self
      */
-    public function setBlkioDeviceReadBps(array $blkioDeviceReadBps): self
+    public function setBlkioDeviceReadBps(?array $blkioDeviceReadBps): self
     {
         $this->initialized['blkioDeviceReadBps'] = true;
         $this->blkioDeviceReadBps                = $blkioDeviceReadBps;
@@ -447,9 +447,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @return list<ThrottleDevice>
+     * @return list<ThrottleDevice>|null
      */
-    public function getBlkioDeviceWriteBps(): array
+    public function getBlkioDeviceWriteBps(): ?array
     {
         return $this->blkioDeviceWriteBps;
     }
@@ -461,11 +461,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @param list<ThrottleDevice> $blkioDeviceWriteBps
+     * @param list<ThrottleDevice>|null $blkioDeviceWriteBps
      *
      * @return self
      */
-    public function setBlkioDeviceWriteBps(array $blkioDeviceWriteBps): self
+    public function setBlkioDeviceWriteBps(?array $blkioDeviceWriteBps): self
     {
         $this->initialized['blkioDeviceWriteBps'] = true;
         $this->blkioDeviceWriteBps                = $blkioDeviceWriteBps;
@@ -480,9 +480,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @return list<ThrottleDevice>
+     * @return list<ThrottleDevice>|null
      */
-    public function getBlkioDeviceReadIOps(): array
+    public function getBlkioDeviceReadIOps(): ?array
     {
         return $this->blkioDeviceReadIOps;
     }
@@ -494,11 +494,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @param list<ThrottleDevice> $blkioDeviceReadIOps
+     * @param list<ThrottleDevice>|null $blkioDeviceReadIOps
      *
      * @return self
      */
-    public function setBlkioDeviceReadIOps(array $blkioDeviceReadIOps): self
+    public function setBlkioDeviceReadIOps(?array $blkioDeviceReadIOps): self
     {
         $this->initialized['blkioDeviceReadIOps'] = true;
         $this->blkioDeviceReadIOps                = $blkioDeviceReadIOps;
@@ -513,9 +513,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @return list<ThrottleDevice>
+     * @return list<ThrottleDevice>|null
      */
-    public function getBlkioDeviceWriteIOps(): array
+    public function getBlkioDeviceWriteIOps(): ?array
     {
         return $this->blkioDeviceWriteIOps;
     }
@@ -527,11 +527,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @param list<ThrottleDevice> $blkioDeviceWriteIOps
+     * @param list<ThrottleDevice>|null $blkioDeviceWriteIOps
      *
      * @return self
      */
-    public function setBlkioDeviceWriteIOps(array $blkioDeviceWriteIOps): self
+    public function setBlkioDeviceWriteIOps(?array $blkioDeviceWriteIOps): self
     {
         $this->initialized['blkioDeviceWriteIOps'] = true;
         $this->blkioDeviceWriteIOps                = $blkioDeviceWriteIOps;
@@ -698,9 +698,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * A list of devices to add to the container.
      *
-     * @return list<DeviceMapping>
+     * @return list<DeviceMapping>|null
      */
-    public function getDevices(): array
+    public function getDevices(): ?array
     {
         return $this->devices;
     }
@@ -708,11 +708,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * A list of devices to add to the container.
      *
-     * @param list<DeviceMapping> $devices
+     * @param list<DeviceMapping>|null $devices
      *
      * @return self
      */
-    public function setDevices(array $devices): self
+    public function setDevices(?array $devices): self
     {
         $this->initialized['devices'] = true;
         $this->devices                = $devices;
@@ -723,9 +723,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * a list of cgroup rules to apply to the container.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getDeviceCgroupRules(): array
+    public function getDeviceCgroupRules(): ?array
     {
         return $this->deviceCgroupRules;
     }
@@ -733,11 +733,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * a list of cgroup rules to apply to the container.
      *
-     * @param list<string> $deviceCgroupRules
+     * @param list<string>|null $deviceCgroupRules
      *
      * @return self
      */
-    public function setDeviceCgroupRules(array $deviceCgroupRules): self
+    public function setDeviceCgroupRules(?array $deviceCgroupRules): self
     {
         $this->initialized['deviceCgroupRules'] = true;
         $this->deviceCgroupRules                = $deviceCgroupRules;
@@ -748,9 +748,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * A list of requests for devices to be sent to device drivers.
      *
-     * @return list<DeviceRequest>
+     * @return list<DeviceRequest>|null
      */
-    public function getDeviceRequests(): array
+    public function getDeviceRequests(): ?array
     {
         return $this->deviceRequests;
     }
@@ -758,11 +758,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * A list of requests for devices to be sent to device drivers.
      *
-     * @param list<DeviceRequest> $deviceRequests
+     * @param list<DeviceRequest>|null $deviceRequests
      *
      * @return self
      */
-    public function setDeviceRequests(array $deviceRequests): self
+    public function setDeviceRequests(?array $deviceRequests): self
     {
         $this->initialized['deviceRequests'] = true;
         $this->deviceRequests                = $deviceRequests;
@@ -865,9 +865,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * Tune a container's memory swappiness behavior. Accepts an integer
      * between 0 and 100.
      *
-     * @return int
+     * @return int|null
      */
-    public function getMemorySwappiness(): int
+    public function getMemorySwappiness(): ?int
     {
         return $this->memorySwappiness;
     }
@@ -876,11 +876,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * Tune a container's memory swappiness behavior. Accepts an integer
      * between 0 and 100.
      *
-     * @param int $memorySwappiness
+     * @param int|null $memorySwappiness
      *
      * @return self
      */
-    public function setMemorySwappiness(int $memorySwappiness): self
+    public function setMemorySwappiness(?int $memorySwappiness): self
     {
         $this->initialized['memorySwappiness'] = true;
         $this->memorySwappiness                = $memorySwappiness;
@@ -891,9 +891,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * CPU quota in units of 10<sup>-9</sup> CPUs.
      *
-     * @return int
+     * @return int|null
      */
-    public function getNanoCpus(): int
+    public function getNanoCpus(): ?int
     {
         return $this->nanoCpus;
     }
@@ -901,11 +901,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * CPU quota in units of 10<sup>-9</sup> CPUs.
      *
-     * @param int $nanoCpus
+     * @param int|null $nanoCpus
      *
      * @return self
      */
-    public function setNanoCpus(int $nanoCpus): self
+    public function setNanoCpus(?int $nanoCpus): self
     {
         $this->initialized['nanoCpus'] = true;
         $this->nanoCpus                = $nanoCpus;
@@ -916,9 +916,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * Disable OOM Killer for the container.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getOomKillDisable(): bool
+    public function getOomKillDisable(): ?bool
     {
         return $this->oomKillDisable;
     }
@@ -926,11 +926,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * Disable OOM Killer for the container.
      *
-     * @param bool $oomKillDisable
+     * @param bool|null $oomKillDisable
      *
      * @return self
      */
-    public function setOomKillDisable(bool $oomKillDisable): self
+    public function setOomKillDisable(?bool $oomKillDisable): self
     {
         $this->initialized['oomKillDisable'] = true;
         $this->oomKillDisable                = $oomKillDisable;
@@ -1001,9 +1001,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * {"Name": "nofile", "Soft": 1024, "Hard": 2048}
      * ```
      *
-     * @return list<ResourcesUlimitsItem>
+     * @return list<ResourcesUlimitsItem>|null
      */
-    public function getUlimits(): array
+    public function getUlimits(): ?array
     {
         return $this->ulimits;
     }
@@ -1015,11 +1015,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * {"Name": "nofile", "Soft": 1024, "Hard": 2048}
      * ```
      *
-     * @param list<ResourcesUlimitsItem> $ulimits
+     * @param list<ResourcesUlimitsItem>|null $ulimits
      *
      * @return self
      */
-    public function setUlimits(array $ulimits): self
+    public function setUlimits(?array $ulimits): self
     {
         $this->initialized['ulimits'] = true;
         $this->ulimits                = $ulimits;
@@ -1034,9 +1034,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuCount(): int
+    public function getCpuCount(): ?int
     {
         return $this->cpuCount;
     }
@@ -1048,11 +1048,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @param int $cpuCount
+     * @param int|null $cpuCount
      *
      * @return self
      */
-    public function setCpuCount(int $cpuCount): self
+    public function setCpuCount(?int $cpuCount): self
     {
         $this->initialized['cpuCount'] = true;
         $this->cpuCount                = $cpuCount;
@@ -1067,9 +1067,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuPercent(): int
+    public function getCpuPercent(): ?int
     {
         return $this->cpuPercent;
     }
@@ -1081,11 +1081,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @param int $cpuPercent
+     * @param int|null $cpuPercent
      *
      * @return self
      */
-    public function setCpuPercent(int $cpuPercent): self
+    public function setCpuPercent(?int $cpuPercent): self
     {
         $this->initialized['cpuPercent'] = true;
         $this->cpuPercent                = $cpuPercent;
@@ -1096,9 +1096,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * Maximum IOps for the container system drive (Windows only).
      *
-     * @return int
+     * @return int|null
      */
-    public function getIOMaximumIOps(): int
+    public function getIOMaximumIOps(): ?int
     {
         return $this->iOMaximumIOps;
     }
@@ -1106,11 +1106,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * Maximum IOps for the container system drive (Windows only).
      *
-     * @param int $iOMaximumIOps
+     * @param int|null $iOMaximumIOps
      *
      * @return self
      */
-    public function setIOMaximumIOps(int $iOMaximumIOps): self
+    public function setIOMaximumIOps(?int $iOMaximumIOps): self
     {
         $this->initialized['iOMaximumIOps'] = true;
         $this->iOMaximumIOps                = $iOMaximumIOps;
@@ -1122,9 +1122,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * Maximum IO in bytes per second for the container system drive
      * (Windows only).
      *
-     * @return int
+     * @return int|null
      */
-    public function getIOMaximumBandwidth(): int
+    public function getIOMaximumBandwidth(): ?int
     {
         return $this->iOMaximumBandwidth;
     }
@@ -1133,11 +1133,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * Maximum IO in bytes per second for the container system drive
      * (Windows only).
      *
-     * @param int $iOMaximumBandwidth
+     * @param int|null $iOMaximumBandwidth
      *
      * @return self
      */
-    public function setIOMaximumBandwidth(int $iOMaximumBandwidth): self
+    public function setIOMaximumBandwidth(?int $iOMaximumBandwidth): self
     {
         $this->initialized['iOMaximumBandwidth'] = true;
         $this->iOMaximumBandwidth                = $iOMaximumBandwidth;

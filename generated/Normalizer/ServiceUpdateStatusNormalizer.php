@@ -44,9 +44,6 @@ class ServiceUpdateStatusNormalizer implements DenormalizerInterface, Normalizer
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\ServiceUpdateStatus();
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ServiceUpdateStatusConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -94,9 +91,6 @@ class ServiceUpdateStatusNormalizer implements DenormalizerInterface, Normalizer
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ServiceUpdateStatusConstraint());
         }
 
         return $dataArray;

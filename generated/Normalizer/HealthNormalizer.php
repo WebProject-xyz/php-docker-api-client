@@ -44,9 +44,6 @@ class HealthNormalizer implements DenormalizerInterface, NormalizerInterface, De
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\Health();
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\HealthConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -58,13 +55,15 @@ class HealthNormalizer implements DenormalizerInterface, NormalizerInterface, De
             $object->setFailingStreak($data['FailingStreak']);
             unset($data['FailingStreak']);
         }
-        if (array_key_exists('Log', $data)) {
+        if (array_key_exists('Log', $data) && null !== $data['Log']) {
             $values = [];
             foreach ($data['Log'] as $value) {
                 $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\HealthcheckResult::class, 'json', $context);
             }
             $object->setLog($values);
             unset($data['Log']);
+        } elseif (array_key_exists('Log', $data) && null === $data['Log']) {
+            $object->setLog(null);
         }
         foreach ($data as $key => $value_1) {
             if (preg_match('/.*/', (string) $key)) {
@@ -95,9 +94,6 @@ class HealthNormalizer implements DenormalizerInterface, NormalizerInterface, De
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_1;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\HealthConstraint());
         }
 
         return $dataArray;

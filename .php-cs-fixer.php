@@ -29,10 +29,9 @@ $rules = [
     /** symfony set @see \PhpCsFixer\RuleSet\Sets\SymfonyRiskySet */
     '@Symfony:risky'           => true,
     '@PhpCsFixer:risky'        => true,
-    '@PHP83Migration'          => true,
+    '@PHP8x3Migration'         => true,
     '@DoctrineAnnotation'      => true,
-    // OEG Set:
-    'binary_operator_spaces'                        => [
+    'binary_operator_spaces'   => [
         'default'   => 'align',
         'operators' => [
             '??' => 'single_space',

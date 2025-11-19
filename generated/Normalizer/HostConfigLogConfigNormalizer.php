@@ -44,9 +44,6 @@ class HostConfigLogConfigNormalizer implements DenormalizerInterface, Normalizer
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\HostConfigLogConfig();
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\HostConfigLogConfigConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -88,9 +85,6 @@ class HostConfigLogConfigNormalizer implements DenormalizerInterface, Normalizer
             if (preg_match('/.*/', (string) $key_1)) {
                 $dataArray[$key_1] = $value_1;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\HostConfigLogConfigConstraint());
         }
 
         return $dataArray;

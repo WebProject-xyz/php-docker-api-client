@@ -44,9 +44,6 @@ class PluginMountNormalizer implements DenormalizerInterface, NormalizerInterfac
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\PluginMount();
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\PluginMountConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -117,9 +114,6 @@ class PluginMountNormalizer implements DenormalizerInterface, NormalizerInterfac
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_2;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\PluginMountConstraint());
         }
 
         return $dataArray;

@@ -44,9 +44,6 @@ class EndpointSpecNormalizer implements DenormalizerInterface, NormalizerInterfa
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\EndpointSpec();
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\EndpointSpecConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -88,9 +85,6 @@ class EndpointSpecNormalizer implements DenormalizerInterface, NormalizerInterfa
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_1;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\EndpointSpecConstraint());
         }
 
         return $dataArray;

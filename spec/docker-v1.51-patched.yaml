@@ -8896,6 +8896,7 @@ components:
           type: array
           description: |
             Log contains the last few results (oldest first)
+          nullable: true
           items:
             $ref: "#/components/schemas/HealthcheckResult"
       nullable: true
@@ -8911,7 +8912,7 @@ components:
 
             [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
           type: string
-          format: date-time
+          # format: date-time
           example: 2020-01-04T10:44:24.496525531Z
         End:
           description: >
@@ -8937,9 +8938,12 @@ components:
       nullable: true
     HostConfig:
       description: Container configuration that depends on the host we are running on
+      nullable: true
       allOf:
         - $ref: "#/components/schemas/Resources"
         - type: object
+          additionalProperties: true
+          nullable: true
           properties:
             Binds:
               type: array
@@ -9378,6 +9382,7 @@ components:
             `{"<port>/<tcp|udp|sctp>": {}}`
           type: object
           additionalProperties:
+            nullable: true
             type: object
             enum:
               - {}
@@ -9416,6 +9421,7 @@ components:
           description: |
             Command to run specified as a string or an array of strings.
           type: array
+          nullable: true
           items:
             type: string
           example:
@@ -9441,6 +9447,7 @@ components:
             An object mapping mount point paths inside the container to empty
             objects.
           type: object
+          nullable: true
           additionalProperties:
             type: object
             enum:
@@ -9464,6 +9471,7 @@ components:
           type: array
           items:
             type: string
+          nullable: true
           example: []
         NetworkDisabled:
           description: Disable networking for the container.
@@ -9913,9 +9921,10 @@ components:
       type: object
       additionalProperties:
         type: array
-        items:
-          $ref: "#/components/schemas/PortBinding"
         nullable: true
+        anyOf:
+          - $ref: "#/components/schemas/PortBinding"
+          - null
       nullable: true
       example:
         443/tcp:
@@ -11162,12 +11171,15 @@ components:
       description: |
         EndpointIPAMConfig represents an endpoint's IPAM configuration.
       type: object
+      nullable: true
       properties:
         IPv4Address:
           type: string
+          nullable: true
           example: 172.20.30.33
         IPv6Address:
           type: string
+          nullable: true
           example: 2001:db8:abcd::3033
         LinkLocalIPs:
           type: array
@@ -11176,7 +11188,6 @@ components:
           example:
             - 169.254.34.68
             - fe80::3468
-      nullable: true
     PluginMount:
       type: object
       required:

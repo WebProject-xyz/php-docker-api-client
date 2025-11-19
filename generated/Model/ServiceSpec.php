@@ -58,7 +58,7 @@ class ServiceSpec extends ArrayObject
      *
      * Deprecated: This field is deprecated since v1.44. The Networks field in TaskSpec should be used instead.
      *
-     * @var list<NetworkAttachmentConfig>
+     * @var list<NetworkAttachmentConfig>|null
      */
     protected $networks;
     /**
@@ -223,9 +223,9 @@ class ServiceSpec extends ArrayObject
      *
      * Deprecated: This field is deprecated since v1.44. The Networks field in TaskSpec should be used instead.
      *
-     * @return list<NetworkAttachmentConfig>
+     * @return list<NetworkAttachmentConfig>|null
      */
-    public function getNetworks(): array
+    public function getNetworks(): ?array
     {
         return $this->networks;
     }
@@ -235,11 +235,11 @@ class ServiceSpec extends ArrayObject
      *
      * Deprecated: This field is deprecated since v1.44. The Networks field in TaskSpec should be used instead.
      *
-     * @param list<NetworkAttachmentConfig> $networks
+     * @param list<NetworkAttachmentConfig>|null $networks
      *
      * @return self
      */
-    public function setNetworks(array $networks): self
+    public function setNetworks(?array $networks): self
     {
         $this->initialized['networks'] = true;
         $this->networks                = $networks;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace WebProject\DockerApi\Library\Generated\Normalizer;
 
 use ArrayObject;
-use DateTime;
 use Jane\Component\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -45,14 +44,11 @@ class HealthcheckResultNormalizer implements DenormalizerInterface, NormalizerIn
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\HealthcheckResult();
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\HealthcheckResultConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
         if (array_key_exists('Start', $data)) {
-            $object->setStart(DateTime::createFromFormat('Y-m-d\TH:i:sP', $data['Start']));
+            $object->setStart($data['Start']);
             unset($data['Start']);
         }
         if (array_key_exists('End', $data)) {
@@ -80,7 +76,7 @@ class HealthcheckResultNormalizer implements DenormalizerInterface, NormalizerIn
     {
         $dataArray = [];
         if ($data->isInitialized('start') && null !== $data->getStart()) {
-            $dataArray['Start'] = $data->getStart()?->format('Y-m-d\TH:i:sP');
+            $dataArray['Start'] = $data->getStart();
         }
         if ($data->isInitialized('end') && null !== $data->getEnd()) {
             $dataArray['End'] = $data->getEnd();
@@ -95,9 +91,6 @@ class HealthcheckResultNormalizer implements DenormalizerInterface, NormalizerIn
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\HealthcheckResultConstraint());
         }
 
         return $dataArray;

@@ -44,9 +44,6 @@ class TaskSpecNormalizer implements DenormalizerInterface, NormalizerInterface, 
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpec();
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\TaskSpecConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -82,13 +79,15 @@ class TaskSpecNormalizer implements DenormalizerInterface, NormalizerInterface, 
             $object->setRuntime($data['Runtime']);
             unset($data['Runtime']);
         }
-        if (array_key_exists('Networks', $data)) {
+        if (array_key_exists('Networks', $data) && null !== $data['Networks']) {
             $values = [];
             foreach ($data['Networks'] as $value) {
                 $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\NetworkAttachmentConfig::class, 'json', $context);
             }
             $object->setNetworks($values);
             unset($data['Networks']);
+        } elseif (array_key_exists('Networks', $data) && null === $data['Networks']) {
+            $object->setNetworks(null);
         }
         if (array_key_exists('LogDriver', $data)) {
             $object->setLogDriver($this->denormalizer->denormalize($data['LogDriver'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecLogDriver::class, 'json', $context));
@@ -144,9 +143,6 @@ class TaskSpecNormalizer implements DenormalizerInterface, NormalizerInterface, 
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_1;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\TaskSpecConstraint());
         }
 
         return $dataArray;

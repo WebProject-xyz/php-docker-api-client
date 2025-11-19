@@ -48,9 +48,6 @@ class TaskSpecPluginSpecNormalizer implements DenormalizerInterface, NormalizerI
         if (array_key_exists('Disabled', $data) && is_int($data['Disabled'])) {
             $data['Disabled'] = (bool) $data['Disabled'];
         }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\TaskSpecPluginSpecConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -106,9 +103,6 @@ class TaskSpecPluginSpecNormalizer implements DenormalizerInterface, NormalizerI
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_1;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\TaskSpecPluginSpecConstraint());
         }
 
         return $dataArray;

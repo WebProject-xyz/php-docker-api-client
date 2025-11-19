@@ -18,7 +18,7 @@ require_once dirname(__DIR__) . '/vendor/autoload_runtime.php';
 return static function (array $context) {
     $application = new Application('Docker API', '@package_version@');
     $application->add(new ListContainersCommand());
-    $application->setDefaultCommand('synchronize-hosts');
+    $application->setDefaultCommand('docker:list-containers');
 
     return $application;
 };

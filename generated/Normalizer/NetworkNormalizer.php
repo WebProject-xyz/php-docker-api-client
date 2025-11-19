@@ -63,9 +63,6 @@ class NetworkNormalizer implements DenormalizerInterface, NormalizerInterface, D
         if (array_key_exists('ConfigOnly', $data) && is_int($data['ConfigOnly'])) {
             $data['ConfigOnly'] = (bool) $data['ConfigOnly'];
         }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\NetworkConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -238,9 +235,6 @@ class NetworkNormalizer implements DenormalizerInterface, NormalizerInterface, D
             if (preg_match('/.*/', (string) $key_3)) {
                 $dataArray[$key_3] = $value_4;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\NetworkConstraint());
         }
 
         return $dataArray;

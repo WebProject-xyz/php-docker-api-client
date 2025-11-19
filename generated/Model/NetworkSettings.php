@@ -22,7 +22,7 @@ class NetworkSettings extends ArrayObject
      *
      * Deprecated: This field is only set when the daemon is started with the --bridge flag specified.
      *
-     * @var string
+     * @var string|null
      */
     protected $bridge;
     /**
@@ -63,7 +63,7 @@ class NetworkSettings extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @var array<string, list<PortBinding>>
+     * @var array<string, PortBinding>|null
      */
     protected $ports;
     /**
@@ -208,9 +208,9 @@ class NetworkSettings extends ArrayObject
      *
      * Deprecated: This field is only set when the daemon is started with the --bridge flag specified.
      *
-     * @return string
+     * @return string|null
      */
-    public function getBridge(): string
+    public function getBridge(): ?string
     {
         return $this->bridge;
     }
@@ -220,11 +220,11 @@ class NetworkSettings extends ArrayObject
      *
      * Deprecated: This field is only set when the daemon is started with the --bridge flag specified.
      *
-     * @param string $bridge
+     * @param string|null $bridge
      *
      * @return self
      */
-    public function setBridge(string $bridge): self
+    public function setBridge(?string $bridge): self
     {
         $this->initialized['bridge'] = true;
         $this->bridge                = $bridge;
@@ -352,9 +352,9 @@ class NetworkSettings extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @return array<string, list<PortBinding>>
+     * @return array<string, PortBinding>|null
      */
-    public function getPorts(): iterable
+    public function getPorts(): ?iterable
     {
         return $this->ports;
     }
@@ -367,11 +367,11 @@ class NetworkSettings extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @param array<string, list<PortBinding>> $ports
+     * @param array<string, PortBinding>|null $ports
      *
      * @return self
      */
-    public function setPorts(iterable $ports): self
+    public function setPorts(?iterable $ports): self
     {
         $this->initialized['ports'] = true;
         $this->ports                = $ports;

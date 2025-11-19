@@ -52,7 +52,7 @@ class HostConfig extends ArrayObject
      * [{"Path": "device_path", "Weight": weight}]
      * ```
      *
-     * @var list<ResourcesBlkioWeightDeviceItem>
+     * @var list<ResourcesBlkioWeightDeviceItem>|null
      */
     protected $blkioWeightDevice;
     /**
@@ -62,7 +62,7 @@ class HostConfig extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @var list<ThrottleDevice>
+     * @var list<ThrottleDevice>|null
      */
     protected $blkioDeviceReadBps;
     /**
@@ -72,7 +72,7 @@ class HostConfig extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @var list<ThrottleDevice>
+     * @var list<ThrottleDevice>|null
      */
     protected $blkioDeviceWriteBps;
     /**
@@ -82,7 +82,7 @@ class HostConfig extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @var list<ThrottleDevice>
+     * @var list<ThrottleDevice>|null
      */
     protected $blkioDeviceReadIOps;
     /**
@@ -92,7 +92,7 @@ class HostConfig extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @var list<ThrottleDevice>
+     * @var list<ThrottleDevice>|null
      */
     protected $blkioDeviceWriteIOps;
     /**
@@ -137,19 +137,19 @@ class HostConfig extends ArrayObject
     /**
      * A list of devices to add to the container.
      *
-     * @var list<DeviceMapping>
+     * @var list<DeviceMapping>|null
      */
     protected $devices;
     /**
      * a list of cgroup rules to apply to the container.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $deviceCgroupRules;
     /**
      * A list of requests for devices to be sent to device drivers.
      *
-     * @var list<DeviceRequest>
+     * @var list<DeviceRequest>|null
      */
     protected $deviceRequests;
     /**
@@ -182,19 +182,19 @@ class HostConfig extends ArrayObject
      * Tune a container's memory swappiness behavior. Accepts an integer
      * between 0 and 100.
      *
-     * @var int
+     * @var int|null
      */
     protected $memorySwappiness;
     /**
      * CPU quota in units of 10<sup>-9</sup> CPUs.
      *
-     * @var int
+     * @var int|null
      */
     protected $nanoCpus;
     /**
      * Disable OOM Killer for the container.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $oomKillDisable;
     /**
@@ -219,7 +219,7 @@ class HostConfig extends ArrayObject
      * {"Name": "nofile", "Soft": 1024, "Hard": 2048}
      * ```
      *
-     * @var list<ResourcesUlimitsItem>
+     * @var list<ResourcesUlimitsItem>|null
      */
     protected $ulimits;
     /**
@@ -229,7 +229,7 @@ class HostConfig extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuCount;
     /**
@@ -239,20 +239,20 @@ class HostConfig extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuPercent;
     /**
      * Maximum IOps for the container system drive (Windows only).
      *
-     * @var int
+     * @var int|null
      */
     protected $iOMaximumIOps;
     /**
      * Maximum IO in bytes per second for the container system drive
      * (Windows only).
      *
-     * @var int
+     * @var int|null
      */
     protected $iOMaximumBandwidth;
     /**
@@ -294,7 +294,7 @@ class HostConfig extends ArrayObject
      * For slave volumes, the mount must be set to either `shared` or
      * `slave`.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $binds;
     /**
@@ -326,7 +326,7 @@ class HostConfig extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @var array<string, list<PortBinding>>
+     * @var array<string, PortBinding>|null
      */
     protected $portBindings;
     /**
@@ -356,13 +356,13 @@ class HostConfig extends ArrayObject
      * A list of volumes to inherit from another container, specified in
      * the form `<container name>[:<ro|rw>]`.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $volumesFrom;
     /**
      * Specification for mounts to be added to the container.
      *
-     * @var list<Mount>
+     * @var list<Mount>|null
      */
     protected $mounts;
     /**
@@ -375,21 +375,21 @@ class HostConfig extends ArrayObject
      * Arbitrary non-identifying metadata attached to container and
      * provided to the runtime when the container is started.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $annotations;
     /**
      * A list of kernel capabilities to add to the container. Conflicts
      * with option 'Capabilities'.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $capAdd;
     /**
      * A list of kernel capabilities to drop from the container. Conflicts
      * with option 'Capabilities'.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $capDrop;
     /**
@@ -407,32 +407,32 @@ class HostConfig extends ArrayObject
     /**
      * A list of DNS servers for the container to use.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $dns;
     /**
      * A list of DNS options.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $dnsOptions;
     /**
      * A list of DNS search domains.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $dnsSearch;
     /**
      * A list of hostnames/IP mappings to add to the container's `/etc/hosts`
      * file. Specified in the form `["hostname:IP"]`.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $extraHosts;
     /**
      * A list of additional groups that the container process will run as.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $groupAdd;
     /**
@@ -447,13 +447,13 @@ class HostConfig extends ArrayObject
      * If not specified, daemon default is used, which can either be `"private"`
      * or `"shareable"`, depending on daemon version and configuration.
      *
-     * @var string
+     * @var string|null
      */
     protected $ipcMode;
     /**
      * Cgroup to use for the container.
      *
-     * @var string
+     * @var string|null
      */
     protected $cgroup;
     /**
@@ -466,7 +466,7 @@ class HostConfig extends ArrayObject
      * An integer value containing the score given to the container in
      * order to tune OOM killer preferences.
      *
-     * @var int
+     * @var int|null
      */
     protected $oomScoreAdj;
     /**
@@ -476,7 +476,7 @@ class HostConfig extends ArrayObject
      * - `"container:<name|id>"`: joins another container's PID namespace
      * - `"host"`: use the host's PID namespace inside the container
      *
-     * @var string
+     * @var string|null
      */
     protected $pidMode;
     /**
@@ -510,7 +510,7 @@ class HostConfig extends ArrayObject
      * A list of string values to customize labels for MLS systems, such
      * as SELinux.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $securityOpt;
     /**
@@ -573,7 +573,7 @@ class HostConfig extends ArrayObject
      * The list of paths to be masked inside the container (this overrides
      * the default set of paths).
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $maskedPaths;
     /**
@@ -699,9 +699,9 @@ class HostConfig extends ArrayObject
      * [{"Path": "device_path", "Weight": weight}]
      * ```
      *
-     * @return list<ResourcesBlkioWeightDeviceItem>
+     * @return list<ResourcesBlkioWeightDeviceItem>|null
      */
-    public function getBlkioWeightDevice(): array
+    public function getBlkioWeightDevice(): ?array
     {
         return $this->blkioWeightDevice;
     }
@@ -713,11 +713,11 @@ class HostConfig extends ArrayObject
      * [{"Path": "device_path", "Weight": weight}]
      * ```
      *
-     * @param list<ResourcesBlkioWeightDeviceItem> $blkioWeightDevice
+     * @param list<ResourcesBlkioWeightDeviceItem>|null $blkioWeightDevice
      *
      * @return self
      */
-    public function setBlkioWeightDevice(array $blkioWeightDevice): self
+    public function setBlkioWeightDevice(?array $blkioWeightDevice): self
     {
         $this->initialized['blkioWeightDevice'] = true;
         $this->blkioWeightDevice                = $blkioWeightDevice;
@@ -732,9 +732,9 @@ class HostConfig extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @return list<ThrottleDevice>
+     * @return list<ThrottleDevice>|null
      */
-    public function getBlkioDeviceReadBps(): array
+    public function getBlkioDeviceReadBps(): ?array
     {
         return $this->blkioDeviceReadBps;
     }
@@ -746,11 +746,11 @@ class HostConfig extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @param list<ThrottleDevice> $blkioDeviceReadBps
+     * @param list<ThrottleDevice>|null $blkioDeviceReadBps
      *
      * @return self
      */
-    public function setBlkioDeviceReadBps(array $blkioDeviceReadBps): self
+    public function setBlkioDeviceReadBps(?array $blkioDeviceReadBps): self
     {
         $this->initialized['blkioDeviceReadBps'] = true;
         $this->blkioDeviceReadBps                = $blkioDeviceReadBps;
@@ -765,9 +765,9 @@ class HostConfig extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @return list<ThrottleDevice>
+     * @return list<ThrottleDevice>|null
      */
-    public function getBlkioDeviceWriteBps(): array
+    public function getBlkioDeviceWriteBps(): ?array
     {
         return $this->blkioDeviceWriteBps;
     }
@@ -779,11 +779,11 @@ class HostConfig extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @param list<ThrottleDevice> $blkioDeviceWriteBps
+     * @param list<ThrottleDevice>|null $blkioDeviceWriteBps
      *
      * @return self
      */
-    public function setBlkioDeviceWriteBps(array $blkioDeviceWriteBps): self
+    public function setBlkioDeviceWriteBps(?array $blkioDeviceWriteBps): self
     {
         $this->initialized['blkioDeviceWriteBps'] = true;
         $this->blkioDeviceWriteBps                = $blkioDeviceWriteBps;
@@ -798,9 +798,9 @@ class HostConfig extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @return list<ThrottleDevice>
+     * @return list<ThrottleDevice>|null
      */
-    public function getBlkioDeviceReadIOps(): array
+    public function getBlkioDeviceReadIOps(): ?array
     {
         return $this->blkioDeviceReadIOps;
     }
@@ -812,11 +812,11 @@ class HostConfig extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @param list<ThrottleDevice> $blkioDeviceReadIOps
+     * @param list<ThrottleDevice>|null $blkioDeviceReadIOps
      *
      * @return self
      */
-    public function setBlkioDeviceReadIOps(array $blkioDeviceReadIOps): self
+    public function setBlkioDeviceReadIOps(?array $blkioDeviceReadIOps): self
     {
         $this->initialized['blkioDeviceReadIOps'] = true;
         $this->blkioDeviceReadIOps                = $blkioDeviceReadIOps;
@@ -831,9 +831,9 @@ class HostConfig extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @return list<ThrottleDevice>
+     * @return list<ThrottleDevice>|null
      */
-    public function getBlkioDeviceWriteIOps(): array
+    public function getBlkioDeviceWriteIOps(): ?array
     {
         return $this->blkioDeviceWriteIOps;
     }
@@ -845,11 +845,11 @@ class HostConfig extends ArrayObject
      * [{"Path": "device_path", "Rate": rate}]
      * ```
      *
-     * @param list<ThrottleDevice> $blkioDeviceWriteIOps
+     * @param list<ThrottleDevice>|null $blkioDeviceWriteIOps
      *
      * @return self
      */
-    public function setBlkioDeviceWriteIOps(array $blkioDeviceWriteIOps): self
+    public function setBlkioDeviceWriteIOps(?array $blkioDeviceWriteIOps): self
     {
         $this->initialized['blkioDeviceWriteIOps'] = true;
         $this->blkioDeviceWriteIOps                = $blkioDeviceWriteIOps;
@@ -1016,9 +1016,9 @@ class HostConfig extends ArrayObject
     /**
      * A list of devices to add to the container.
      *
-     * @return list<DeviceMapping>
+     * @return list<DeviceMapping>|null
      */
-    public function getDevices(): array
+    public function getDevices(): ?array
     {
         return $this->devices;
     }
@@ -1026,11 +1026,11 @@ class HostConfig extends ArrayObject
     /**
      * A list of devices to add to the container.
      *
-     * @param list<DeviceMapping> $devices
+     * @param list<DeviceMapping>|null $devices
      *
      * @return self
      */
-    public function setDevices(array $devices): self
+    public function setDevices(?array $devices): self
     {
         $this->initialized['devices'] = true;
         $this->devices                = $devices;
@@ -1041,9 +1041,9 @@ class HostConfig extends ArrayObject
     /**
      * a list of cgroup rules to apply to the container.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getDeviceCgroupRules(): array
+    public function getDeviceCgroupRules(): ?array
     {
         return $this->deviceCgroupRules;
     }
@@ -1051,11 +1051,11 @@ class HostConfig extends ArrayObject
     /**
      * a list of cgroup rules to apply to the container.
      *
-     * @param list<string> $deviceCgroupRules
+     * @param list<string>|null $deviceCgroupRules
      *
      * @return self
      */
-    public function setDeviceCgroupRules(array $deviceCgroupRules): self
+    public function setDeviceCgroupRules(?array $deviceCgroupRules): self
     {
         $this->initialized['deviceCgroupRules'] = true;
         $this->deviceCgroupRules                = $deviceCgroupRules;
@@ -1066,9 +1066,9 @@ class HostConfig extends ArrayObject
     /**
      * A list of requests for devices to be sent to device drivers.
      *
-     * @return list<DeviceRequest>
+     * @return list<DeviceRequest>|null
      */
-    public function getDeviceRequests(): array
+    public function getDeviceRequests(): ?array
     {
         return $this->deviceRequests;
     }
@@ -1076,11 +1076,11 @@ class HostConfig extends ArrayObject
     /**
      * A list of requests for devices to be sent to device drivers.
      *
-     * @param list<DeviceRequest> $deviceRequests
+     * @param list<DeviceRequest>|null $deviceRequests
      *
      * @return self
      */
-    public function setDeviceRequests(array $deviceRequests): self
+    public function setDeviceRequests(?array $deviceRequests): self
     {
         $this->initialized['deviceRequests'] = true;
         $this->deviceRequests                = $deviceRequests;
@@ -1183,9 +1183,9 @@ class HostConfig extends ArrayObject
      * Tune a container's memory swappiness behavior. Accepts an integer
      * between 0 and 100.
      *
-     * @return int
+     * @return int|null
      */
-    public function getMemorySwappiness(): int
+    public function getMemorySwappiness(): ?int
     {
         return $this->memorySwappiness;
     }
@@ -1194,11 +1194,11 @@ class HostConfig extends ArrayObject
      * Tune a container's memory swappiness behavior. Accepts an integer
      * between 0 and 100.
      *
-     * @param int $memorySwappiness
+     * @param int|null $memorySwappiness
      *
      * @return self
      */
-    public function setMemorySwappiness(int $memorySwappiness): self
+    public function setMemorySwappiness(?int $memorySwappiness): self
     {
         $this->initialized['memorySwappiness'] = true;
         $this->memorySwappiness                = $memorySwappiness;
@@ -1209,9 +1209,9 @@ class HostConfig extends ArrayObject
     /**
      * CPU quota in units of 10<sup>-9</sup> CPUs.
      *
-     * @return int
+     * @return int|null
      */
-    public function getNanoCpus(): int
+    public function getNanoCpus(): ?int
     {
         return $this->nanoCpus;
     }
@@ -1219,11 +1219,11 @@ class HostConfig extends ArrayObject
     /**
      * CPU quota in units of 10<sup>-9</sup> CPUs.
      *
-     * @param int $nanoCpus
+     * @param int|null $nanoCpus
      *
      * @return self
      */
-    public function setNanoCpus(int $nanoCpus): self
+    public function setNanoCpus(?int $nanoCpus): self
     {
         $this->initialized['nanoCpus'] = true;
         $this->nanoCpus                = $nanoCpus;
@@ -1234,9 +1234,9 @@ class HostConfig extends ArrayObject
     /**
      * Disable OOM Killer for the container.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getOomKillDisable(): bool
+    public function getOomKillDisable(): ?bool
     {
         return $this->oomKillDisable;
     }
@@ -1244,11 +1244,11 @@ class HostConfig extends ArrayObject
     /**
      * Disable OOM Killer for the container.
      *
-     * @param bool $oomKillDisable
+     * @param bool|null $oomKillDisable
      *
      * @return self
      */
-    public function setOomKillDisable(bool $oomKillDisable): self
+    public function setOomKillDisable(?bool $oomKillDisable): self
     {
         $this->initialized['oomKillDisable'] = true;
         $this->oomKillDisable                = $oomKillDisable;
@@ -1319,9 +1319,9 @@ class HostConfig extends ArrayObject
      * {"Name": "nofile", "Soft": 1024, "Hard": 2048}
      * ```
      *
-     * @return list<ResourcesUlimitsItem>
+     * @return list<ResourcesUlimitsItem>|null
      */
-    public function getUlimits(): array
+    public function getUlimits(): ?array
     {
         return $this->ulimits;
     }
@@ -1333,11 +1333,11 @@ class HostConfig extends ArrayObject
      * {"Name": "nofile", "Soft": 1024, "Hard": 2048}
      * ```
      *
-     * @param list<ResourcesUlimitsItem> $ulimits
+     * @param list<ResourcesUlimitsItem>|null $ulimits
      *
      * @return self
      */
-    public function setUlimits(array $ulimits): self
+    public function setUlimits(?array $ulimits): self
     {
         $this->initialized['ulimits'] = true;
         $this->ulimits                = $ulimits;
@@ -1352,9 +1352,9 @@ class HostConfig extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuCount(): int
+    public function getCpuCount(): ?int
     {
         return $this->cpuCount;
     }
@@ -1366,11 +1366,11 @@ class HostConfig extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @param int $cpuCount
+     * @param int|null $cpuCount
      *
      * @return self
      */
-    public function setCpuCount(int $cpuCount): self
+    public function setCpuCount(?int $cpuCount): self
     {
         $this->initialized['cpuCount'] = true;
         $this->cpuCount                = $cpuCount;
@@ -1385,9 +1385,9 @@ class HostConfig extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuPercent(): int
+    public function getCpuPercent(): ?int
     {
         return $this->cpuPercent;
     }
@@ -1399,11 +1399,11 @@ class HostConfig extends ArrayObject
      * mutually exclusive. The order of precedence is `CPUCount` first, then
      * `CPUShares`, and `CPUPercent` last.
      *
-     * @param int $cpuPercent
+     * @param int|null $cpuPercent
      *
      * @return self
      */
-    public function setCpuPercent(int $cpuPercent): self
+    public function setCpuPercent(?int $cpuPercent): self
     {
         $this->initialized['cpuPercent'] = true;
         $this->cpuPercent                = $cpuPercent;
@@ -1414,9 +1414,9 @@ class HostConfig extends ArrayObject
     /**
      * Maximum IOps for the container system drive (Windows only).
      *
-     * @return int
+     * @return int|null
      */
-    public function getIOMaximumIOps(): int
+    public function getIOMaximumIOps(): ?int
     {
         return $this->iOMaximumIOps;
     }
@@ -1424,11 +1424,11 @@ class HostConfig extends ArrayObject
     /**
      * Maximum IOps for the container system drive (Windows only).
      *
-     * @param int $iOMaximumIOps
+     * @param int|null $iOMaximumIOps
      *
      * @return self
      */
-    public function setIOMaximumIOps(int $iOMaximumIOps): self
+    public function setIOMaximumIOps(?int $iOMaximumIOps): self
     {
         $this->initialized['iOMaximumIOps'] = true;
         $this->iOMaximumIOps                = $iOMaximumIOps;
@@ -1440,9 +1440,9 @@ class HostConfig extends ArrayObject
      * Maximum IO in bytes per second for the container system drive
      * (Windows only).
      *
-     * @return int
+     * @return int|null
      */
-    public function getIOMaximumBandwidth(): int
+    public function getIOMaximumBandwidth(): ?int
     {
         return $this->iOMaximumBandwidth;
     }
@@ -1451,11 +1451,11 @@ class HostConfig extends ArrayObject
      * Maximum IO in bytes per second for the container system drive
      * (Windows only).
      *
-     * @param int $iOMaximumBandwidth
+     * @param int|null $iOMaximumBandwidth
      *
      * @return self
      */
-    public function setIOMaximumBandwidth(int $iOMaximumBandwidth): self
+    public function setIOMaximumBandwidth(?int $iOMaximumBandwidth): self
     {
         $this->initialized['iOMaximumBandwidth'] = true;
         $this->iOMaximumBandwidth                = $iOMaximumBandwidth;
@@ -1502,9 +1502,9 @@ class HostConfig extends ArrayObject
      * For slave volumes, the mount must be set to either `shared` or
      * `slave`.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getBinds(): array
+    public function getBinds(): ?array
     {
         return $this->binds;
     }
@@ -1548,11 +1548,11 @@ class HostConfig extends ArrayObject
      * For slave volumes, the mount must be set to either `shared` or
      * `slave`.
      *
-     * @param list<string> $binds
+     * @param list<string>|null $binds
      *
      * @return self
      */
-    public function setBinds(array $binds): self
+    public function setBinds(?array $binds): self
     {
         $this->initialized['binds'] = true;
         $this->binds                = $binds;
@@ -1649,9 +1649,9 @@ class HostConfig extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @return array<string, list<PortBinding>>
+     * @return array<string, PortBinding>|null
      */
-    public function getPortBindings(): iterable
+    public function getPortBindings(): ?iterable
     {
         return $this->portBindings;
     }
@@ -1664,11 +1664,11 @@ class HostConfig extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @param array<string, list<PortBinding>> $portBindings
+     * @param array<string, PortBinding>|null $portBindings
      *
      * @return self
      */
-    public function setPortBindings(iterable $portBindings): self
+    public function setPortBindings(?iterable $portBindings): self
     {
         $this->initialized['portBindings'] = true;
         $this->portBindings                = $portBindings;
@@ -1765,9 +1765,9 @@ class HostConfig extends ArrayObject
      * A list of volumes to inherit from another container, specified in
      * the form `<container name>[:<ro|rw>]`.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getVolumesFrom(): array
+    public function getVolumesFrom(): ?array
     {
         return $this->volumesFrom;
     }
@@ -1776,11 +1776,11 @@ class HostConfig extends ArrayObject
      * A list of volumes to inherit from another container, specified in
      * the form `<container name>[:<ro|rw>]`.
      *
-     * @param list<string> $volumesFrom
+     * @param list<string>|null $volumesFrom
      *
      * @return self
      */
-    public function setVolumesFrom(array $volumesFrom): self
+    public function setVolumesFrom(?array $volumesFrom): self
     {
         $this->initialized['volumesFrom'] = true;
         $this->volumesFrom                = $volumesFrom;
@@ -1791,9 +1791,9 @@ class HostConfig extends ArrayObject
     /**
      * Specification for mounts to be added to the container.
      *
-     * @return list<Mount>
+     * @return list<Mount>|null
      */
-    public function getMounts(): array
+    public function getMounts(): ?array
     {
         return $this->mounts;
     }
@@ -1801,11 +1801,11 @@ class HostConfig extends ArrayObject
     /**
      * Specification for mounts to be added to the container.
      *
-     * @param list<Mount> $mounts
+     * @param list<Mount>|null $mounts
      *
      * @return self
      */
-    public function setMounts(array $mounts): self
+    public function setMounts(?array $mounts): self
     {
         $this->initialized['mounts'] = true;
         $this->mounts                = $mounts;
@@ -1842,9 +1842,9 @@ class HostConfig extends ArrayObject
      * Arbitrary non-identifying metadata attached to container and
      * provided to the runtime when the container is started.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getAnnotations(): iterable
+    public function getAnnotations(): ?iterable
     {
         return $this->annotations;
     }
@@ -1853,11 +1853,11 @@ class HostConfig extends ArrayObject
      * Arbitrary non-identifying metadata attached to container and
      * provided to the runtime when the container is started.
      *
-     * @param array<string, string> $annotations
+     * @param array<string, string>|null $annotations
      *
      * @return self
      */
-    public function setAnnotations(iterable $annotations): self
+    public function setAnnotations(?iterable $annotations): self
     {
         $this->initialized['annotations'] = true;
         $this->annotations                = $annotations;
@@ -1869,9 +1869,9 @@ class HostConfig extends ArrayObject
      * A list of kernel capabilities to add to the container. Conflicts
      * with option 'Capabilities'.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getCapAdd(): array
+    public function getCapAdd(): ?array
     {
         return $this->capAdd;
     }
@@ -1880,11 +1880,11 @@ class HostConfig extends ArrayObject
      * A list of kernel capabilities to add to the container. Conflicts
      * with option 'Capabilities'.
      *
-     * @param list<string> $capAdd
+     * @param list<string>|null $capAdd
      *
      * @return self
      */
-    public function setCapAdd(array $capAdd): self
+    public function setCapAdd(?array $capAdd): self
     {
         $this->initialized['capAdd'] = true;
         $this->capAdd                = $capAdd;
@@ -1896,9 +1896,9 @@ class HostConfig extends ArrayObject
      * A list of kernel capabilities to drop from the container. Conflicts
      * with option 'Capabilities'.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getCapDrop(): array
+    public function getCapDrop(): ?array
     {
         return $this->capDrop;
     }
@@ -1907,11 +1907,11 @@ class HostConfig extends ArrayObject
      * A list of kernel capabilities to drop from the container. Conflicts
      * with option 'Capabilities'.
      *
-     * @param list<string> $capDrop
+     * @param list<string>|null $capDrop
      *
      * @return self
      */
-    public function setCapDrop(array $capDrop): self
+    public function setCapDrop(?array $capDrop): self
     {
         $this->initialized['capDrop'] = true;
         $this->capDrop                = $capDrop;
@@ -1959,9 +1959,9 @@ class HostConfig extends ArrayObject
     /**
      * A list of DNS servers for the container to use.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getDns(): array
+    public function getDns(): ?array
     {
         return $this->dns;
     }
@@ -1969,11 +1969,11 @@ class HostConfig extends ArrayObject
     /**
      * A list of DNS servers for the container to use.
      *
-     * @param list<string> $dns
+     * @param list<string>|null $dns
      *
      * @return self
      */
-    public function setDns(array $dns): self
+    public function setDns(?array $dns): self
     {
         $this->initialized['dns'] = true;
         $this->dns                = $dns;
@@ -1984,9 +1984,9 @@ class HostConfig extends ArrayObject
     /**
      * A list of DNS options.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getDnsOptions(): array
+    public function getDnsOptions(): ?array
     {
         return $this->dnsOptions;
     }
@@ -1994,11 +1994,11 @@ class HostConfig extends ArrayObject
     /**
      * A list of DNS options.
      *
-     * @param list<string> $dnsOptions
+     * @param list<string>|null $dnsOptions
      *
      * @return self
      */
-    public function setDnsOptions(array $dnsOptions): self
+    public function setDnsOptions(?array $dnsOptions): self
     {
         $this->initialized['dnsOptions'] = true;
         $this->dnsOptions                = $dnsOptions;
@@ -2009,9 +2009,9 @@ class HostConfig extends ArrayObject
     /**
      * A list of DNS search domains.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getDnsSearch(): array
+    public function getDnsSearch(): ?array
     {
         return $this->dnsSearch;
     }
@@ -2019,11 +2019,11 @@ class HostConfig extends ArrayObject
     /**
      * A list of DNS search domains.
      *
-     * @param list<string> $dnsSearch
+     * @param list<string>|null $dnsSearch
      *
      * @return self
      */
-    public function setDnsSearch(array $dnsSearch): self
+    public function setDnsSearch(?array $dnsSearch): self
     {
         $this->initialized['dnsSearch'] = true;
         $this->dnsSearch                = $dnsSearch;
@@ -2035,9 +2035,9 @@ class HostConfig extends ArrayObject
      * A list of hostnames/IP mappings to add to the container's `/etc/hosts`
      * file. Specified in the form `["hostname:IP"]`.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getExtraHosts(): array
+    public function getExtraHosts(): ?array
     {
         return $this->extraHosts;
     }
@@ -2046,11 +2046,11 @@ class HostConfig extends ArrayObject
      * A list of hostnames/IP mappings to add to the container's `/etc/hosts`
      * file. Specified in the form `["hostname:IP"]`.
      *
-     * @param list<string> $extraHosts
+     * @param list<string>|null $extraHosts
      *
      * @return self
      */
-    public function setExtraHosts(array $extraHosts): self
+    public function setExtraHosts(?array $extraHosts): self
     {
         $this->initialized['extraHosts'] = true;
         $this->extraHosts                = $extraHosts;
@@ -2061,9 +2061,9 @@ class HostConfig extends ArrayObject
     /**
      * A list of additional groups that the container process will run as.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getGroupAdd(): array
+    public function getGroupAdd(): ?array
     {
         return $this->groupAdd;
     }
@@ -2071,11 +2071,11 @@ class HostConfig extends ArrayObject
     /**
      * A list of additional groups that the container process will run as.
      *
-     * @param list<string> $groupAdd
+     * @param list<string>|null $groupAdd
      *
      * @return self
      */
-    public function setGroupAdd(array $groupAdd): self
+    public function setGroupAdd(?array $groupAdd): self
     {
         $this->initialized['groupAdd'] = true;
         $this->groupAdd                = $groupAdd;
@@ -2095,9 +2095,9 @@ class HostConfig extends ArrayObject
      * If not specified, daemon default is used, which can either be `"private"`
      * or `"shareable"`, depending on daemon version and configuration.
      *
-     * @return string
+     * @return string|null
      */
-    public function getIpcMode(): string
+    public function getIpcMode(): ?string
     {
         return $this->ipcMode;
     }
@@ -2114,11 +2114,11 @@ class HostConfig extends ArrayObject
      * If not specified, daemon default is used, which can either be `"private"`
      * or `"shareable"`, depending on daemon version and configuration.
      *
-     * @param string $ipcMode
+     * @param string|null $ipcMode
      *
      * @return self
      */
-    public function setIpcMode(string $ipcMode): self
+    public function setIpcMode(?string $ipcMode): self
     {
         $this->initialized['ipcMode'] = true;
         $this->ipcMode                = $ipcMode;
@@ -2129,9 +2129,9 @@ class HostConfig extends ArrayObject
     /**
      * Cgroup to use for the container.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCgroup(): string
+    public function getCgroup(): ?string
     {
         return $this->cgroup;
     }
@@ -2139,11 +2139,11 @@ class HostConfig extends ArrayObject
     /**
      * Cgroup to use for the container.
      *
-     * @param string $cgroup
+     * @param string|null $cgroup
      *
      * @return self
      */
-    public function setCgroup(string $cgroup): self
+    public function setCgroup(?string $cgroup): self
     {
         $this->initialized['cgroup'] = true;
         $this->cgroup                = $cgroup;
@@ -2180,9 +2180,9 @@ class HostConfig extends ArrayObject
      * An integer value containing the score given to the container in
      * order to tune OOM killer preferences.
      *
-     * @return int
+     * @return int|null
      */
-    public function getOomScoreAdj(): int
+    public function getOomScoreAdj(): ?int
     {
         return $this->oomScoreAdj;
     }
@@ -2191,11 +2191,11 @@ class HostConfig extends ArrayObject
      * An integer value containing the score given to the container in
      * order to tune OOM killer preferences.
      *
-     * @param int $oomScoreAdj
+     * @param int|null $oomScoreAdj
      *
      * @return self
      */
-    public function setOomScoreAdj(int $oomScoreAdj): self
+    public function setOomScoreAdj(?int $oomScoreAdj): self
     {
         $this->initialized['oomScoreAdj'] = true;
         $this->oomScoreAdj                = $oomScoreAdj;
@@ -2210,9 +2210,9 @@ class HostConfig extends ArrayObject
      * - `"container:<name|id>"`: joins another container's PID namespace
      * - `"host"`: use the host's PID namespace inside the container
      *
-     * @return string
+     * @return string|null
      */
-    public function getPidMode(): string
+    public function getPidMode(): ?string
     {
         return $this->pidMode;
     }
@@ -2224,11 +2224,11 @@ class HostConfig extends ArrayObject
      * - `"container:<name|id>"`: joins another container's PID namespace
      * - `"host"`: use the host's PID namespace inside the container
      *
-     * @param string $pidMode
+     * @param string|null $pidMode
      *
      * @return self
      */
-    public function setPidMode(string $pidMode): self
+    public function setPidMode(?string $pidMode): self
     {
         $this->initialized['pidMode'] = true;
         $this->pidMode                = $pidMode;
@@ -2333,9 +2333,9 @@ class HostConfig extends ArrayObject
      * A list of string values to customize labels for MLS systems, such
      * as SELinux.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getSecurityOpt(): array
+    public function getSecurityOpt(): ?array
     {
         return $this->securityOpt;
     }
@@ -2344,11 +2344,11 @@ class HostConfig extends ArrayObject
      * A list of string values to customize labels for MLS systems, such
      * as SELinux.
      *
-     * @param list<string> $securityOpt
+     * @param list<string>|null $securityOpt
      *
      * @return self
      */
-    public function setSecurityOpt(array $securityOpt): self
+    public function setSecurityOpt(?array $securityOpt): self
     {
         $this->initialized['securityOpt'] = true;
         $this->securityOpt                = $securityOpt;
@@ -2576,9 +2576,9 @@ class HostConfig extends ArrayObject
      * The list of paths to be masked inside the container (this overrides
      * the default set of paths).
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getMaskedPaths(): array
+    public function getMaskedPaths(): ?array
     {
         return $this->maskedPaths;
     }
@@ -2587,11 +2587,11 @@ class HostConfig extends ArrayObject
      * The list of paths to be masked inside the container (this overrides
      * the default set of paths).
      *
-     * @param list<string> $maskedPaths
+     * @param list<string>|null $maskedPaths
      *
      * @return self
      */
-    public function setMaskedPaths(array $maskedPaths): self
+    public function setMaskedPaths(?array $maskedPaths): self
     {
         $this->initialized['maskedPaths'] = true;
         $this->maskedPaths                = $maskedPaths;

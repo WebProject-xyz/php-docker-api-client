@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace WebProject\DockerApi\Library\Generated\Model;
 
 use ArrayObject;
-use DateTime;
 use function array_key_exists;
 
 class HealthcheckResult extends ArrayObject
@@ -22,7 +21,7 @@ class HealthcheckResult extends ArrayObject
      * Date and time at which this check started in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @var DateTime
+     * @var string
      */
     protected $start;
     /**
@@ -54,9 +53,9 @@ class HealthcheckResult extends ArrayObject
      * Date and time at which this check started in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @return DateTime
+     * @return string
      */
-    public function getStart(): DateTime
+    public function getStart(): string
     {
         return $this->start;
     }
@@ -65,11 +64,11 @@ class HealthcheckResult extends ArrayObject
      * Date and time at which this check started in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @param DateTime $start
+     * @param string $start
      *
      * @return self
      */
-    public function setStart(DateTime $start): self
+    public function setStart(string $start): self
     {
         $this->initialized['start'] = true;
         $this->start                = $start;

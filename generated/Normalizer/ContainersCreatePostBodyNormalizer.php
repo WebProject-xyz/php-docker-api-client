@@ -69,9 +69,6 @@ class ContainersCreatePostBodyNormalizer implements DenormalizerInterface, Norma
         if (array_key_exists('NetworkDisabled', $data) && is_int($data['NetworkDisabled'])) {
             $data['NetworkDisabled'] = (bool) $data['NetworkDisabled'];
         }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ContainersCreatePostBodyConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -133,13 +130,15 @@ class ContainersCreatePostBodyNormalizer implements DenormalizerInterface, Norma
             $object->setEnv($values_2);
             unset($data['Env']);
         }
-        if (array_key_exists('Cmd', $data)) {
+        if (array_key_exists('Cmd', $data) && null !== $data['Cmd']) {
             $values_3 = [];
             foreach ($data['Cmd'] as $value_3) {
                 $values_3[] = $value_3;
             }
             $object->setCmd($values_3);
             unset($data['Cmd']);
+        } elseif (array_key_exists('Cmd', $data) && null === $data['Cmd']) {
+            $object->setCmd(null);
         }
         if (array_key_exists('Healthcheck', $data)) {
             $object->setHealthcheck($this->denormalizer->denormalize($data['Healthcheck'], \WebProject\DockerApi\Library\Generated\Model\HealthConfig::class, 'json', $context));
@@ -155,7 +154,7 @@ class ContainersCreatePostBodyNormalizer implements DenormalizerInterface, Norma
             $object->setImage($data['Image']);
             unset($data['Image']);
         }
-        if (array_key_exists('Volumes', $data)) {
+        if (array_key_exists('Volumes', $data) && null !== $data['Volumes']) {
             $values_4 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
             foreach ($data['Volumes'] as $key_2 => $value_4) {
                 $values_5 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
@@ -166,18 +165,22 @@ class ContainersCreatePostBodyNormalizer implements DenormalizerInterface, Norma
             }
             $object->setVolumes($values_4);
             unset($data['Volumes']);
+        } elseif (array_key_exists('Volumes', $data) && null === $data['Volumes']) {
+            $object->setVolumes(null);
         }
         if (array_key_exists('WorkingDir', $data)) {
             $object->setWorkingDir($data['WorkingDir']);
             unset($data['WorkingDir']);
         }
-        if (array_key_exists('Entrypoint', $data)) {
+        if (array_key_exists('Entrypoint', $data) && null !== $data['Entrypoint']) {
             $values_6 = [];
             foreach ($data['Entrypoint'] as $value_6) {
                 $values_6[] = $value_6;
             }
             $object->setEntrypoint($values_6);
             unset($data['Entrypoint']);
+        } elseif (array_key_exists('Entrypoint', $data) && null === $data['Entrypoint']) {
+            $object->setEntrypoint(null);
         }
         if (array_key_exists('NetworkDisabled', $data) && null !== $data['NetworkDisabled']) {
             $object->setNetworkDisabled($data['NetworkDisabled']);
@@ -231,9 +234,11 @@ class ContainersCreatePostBodyNormalizer implements DenormalizerInterface, Norma
         } elseif (array_key_exists('Shell', $data) && null === $data['Shell']) {
             $object->setShell(null);
         }
-        if (array_key_exists('HostConfig', $data)) {
+        if (array_key_exists('HostConfig', $data) && null !== $data['HostConfig']) {
             $object->setHostConfig($this->denormalizer->denormalize($data['HostConfig'], \WebProject\DockerApi\Library\Generated\Model\HostConfig::class, 'json', $context));
             unset($data['HostConfig']);
+        } elseif (array_key_exists('HostConfig', $data) && null === $data['HostConfig']) {
+            $object->setHostConfig(null);
         }
         if (array_key_exists('NetworkingConfig', $data)) {
             $object->setNetworkingConfig($this->denormalizer->denormalize($data['NetworkingConfig'], \WebProject\DockerApi\Library\Generated\Model\NetworkingConfig::class, 'json', $context));
@@ -376,9 +381,6 @@ class ContainersCreatePostBodyNormalizer implements DenormalizerInterface, Norma
             if (preg_match('/.*/', (string) $key_5)) {
                 $dataArray[$key_5] = $value_10;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ContainersCreatePostBodyConstraint());
         }
 
         return $dataArray;

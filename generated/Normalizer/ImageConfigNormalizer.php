@@ -48,9 +48,6 @@ class ImageConfigNormalizer implements DenormalizerInterface, NormalizerInterfac
         if (array_key_exists('ArgsEscaped', $data) && is_int($data['ArgsEscaped'])) {
             $data['ArgsEscaped'] = (bool) $data['ArgsEscaped'];
         }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ImageConfigConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -251,9 +248,6 @@ class ImageConfigNormalizer implements DenormalizerInterface, NormalizerInterfac
             if (preg_match('/.*/', (string) $key_5)) {
                 $dataArray[$key_5] = $value_10;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ImageConfigConstraint());
         }
 
         return $dataArray;

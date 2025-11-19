@@ -48,9 +48,6 @@ class ServiceSpecUpdateConfigNormalizer implements DenormalizerInterface, Normal
         if (array_key_exists('MaxFailureRatio', $data) && is_int($data['MaxFailureRatio'])) {
             $data['MaxFailureRatio'] = (float) $data['MaxFailureRatio'];
         }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ServiceSpecUpdateConfigConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -112,9 +109,6 @@ class ServiceSpecUpdateConfigNormalizer implements DenormalizerInterface, Normal
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ServiceSpecUpdateConfigConstraint());
         }
 
         return $dataArray;

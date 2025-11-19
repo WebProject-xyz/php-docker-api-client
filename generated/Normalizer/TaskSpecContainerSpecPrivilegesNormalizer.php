@@ -48,9 +48,6 @@ class TaskSpecContainerSpecPrivilegesNormalizer implements DenormalizerInterface
         if (array_key_exists('NoNewPrivileges', $data) && is_int($data['NoNewPrivileges'])) {
             $data['NoNewPrivileges'] = (bool) $data['NoNewPrivileges'];
         }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\TaskSpecContainerSpecPrivilegesConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -105,9 +102,6 @@ class TaskSpecContainerSpecPrivilegesNormalizer implements DenormalizerInterface
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\TaskSpecContainerSpecPrivilegesConstraint());
         }
 
         return $dataArray;

@@ -44,9 +44,6 @@ class VolumeNormalizer implements DenormalizerInterface, NormalizerInterface, De
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\Volume();
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\VolumeConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -158,9 +155,6 @@ class VolumeNormalizer implements DenormalizerInterface, NormalizerInterface, De
             if (preg_match('/.*/', (string) $key_4)) {
                 $dataArray[$key_4] = $value_4;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\VolumeConstraint());
         }
 
         return $dataArray;

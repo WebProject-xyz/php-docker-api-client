@@ -44,9 +44,6 @@ class MountTmpfsOptionsNormalizer implements DenormalizerInterface, NormalizerIn
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\MountTmpfsOptions();
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\MountTmpfsOptionsConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -103,9 +100,6 @@ class MountTmpfsOptionsNormalizer implements DenormalizerInterface, NormalizerIn
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_2;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\MountTmpfsOptionsConstraint());
         }
 
         return $dataArray;

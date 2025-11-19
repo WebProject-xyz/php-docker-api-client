@@ -48,9 +48,6 @@ class SwarmNormalizer implements DenormalizerInterface, NormalizerInterface, Den
         if (array_key_exists('RootRotationInProgress', $data) && is_int($data['RootRotationInProgress'])) {
             $data['RootRotationInProgress'] = (bool) $data['RootRotationInProgress'];
         }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\SwarmConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -155,9 +152,6 @@ class SwarmNormalizer implements DenormalizerInterface, NormalizerInterface, Den
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_1;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\SwarmConstraint());
         }
 
         return $dataArray;

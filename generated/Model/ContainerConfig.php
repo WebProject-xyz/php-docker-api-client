@@ -94,7 +94,7 @@ class ContainerConfig extends ArrayObject
     /**
      * Command to run specified as a string or an array of strings.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $cmd;
     /**
@@ -120,7 +120,7 @@ class ContainerConfig extends ArrayObject
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @var array<string, array<string, mixed>>
+     * @var array<string, array<string, mixed>>|null
      */
     protected $volumes;
     /**
@@ -136,7 +136,7 @@ class ContainerConfig extends ArrayObject
      * entry point is reset to system default (i.e., the entry point used by
      * docker when there is no `ENTRYPOINT` instruction in the `Dockerfile`).
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $entrypoint;
     /**
@@ -478,9 +478,9 @@ class ContainerConfig extends ArrayObject
     /**
      * Command to run specified as a string or an array of strings.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getCmd(): array
+    public function getCmd(): ?array
     {
         return $this->cmd;
     }
@@ -488,11 +488,11 @@ class ContainerConfig extends ArrayObject
     /**
      * Command to run specified as a string or an array of strings.
      *
-     * @param list<string> $cmd
+     * @param list<string>|null $cmd
      *
      * @return self
      */
-    public function setCmd(array $cmd): self
+    public function setCmd(?array $cmd): self
     {
         $this->initialized['cmd'] = true;
         $this->cmd                = $cmd;
@@ -581,9 +581,9 @@ class ContainerConfig extends ArrayObject
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @return array<string, array<string, mixed>>
+     * @return array<string, array<string, mixed>>|null
      */
-    public function getVolumes(): iterable
+    public function getVolumes(): ?iterable
     {
         return $this->volumes;
     }
@@ -592,11 +592,11 @@ class ContainerConfig extends ArrayObject
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @param array<string, array<string, mixed>> $volumes
+     * @param array<string, array<string, mixed>>|null $volumes
      *
      * @return self
      */
-    public function setVolumes(iterable $volumes): self
+    public function setVolumes(?iterable $volumes): self
     {
         $this->initialized['volumes'] = true;
         $this->volumes                = $volumes;
@@ -636,9 +636,9 @@ class ContainerConfig extends ArrayObject
      * entry point is reset to system default (i.e., the entry point used by
      * docker when there is no `ENTRYPOINT` instruction in the `Dockerfile`).
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getEntrypoint(): array
+    public function getEntrypoint(): ?array
     {
         return $this->entrypoint;
     }
@@ -650,11 +650,11 @@ class ContainerConfig extends ArrayObject
      * entry point is reset to system default (i.e., the entry point used by
      * docker when there is no `ENTRYPOINT` instruction in the `Dockerfile`).
      *
-     * @param list<string> $entrypoint
+     * @param list<string>|null $entrypoint
      *
      * @return self
      */
-    public function setEntrypoint(array $entrypoint): self
+    public function setEntrypoint(?array $entrypoint): self
     {
         $this->initialized['entrypoint'] = true;
         $this->entrypoint                = $entrypoint;

@@ -18,11 +18,11 @@ class EndpointIPAMConfig extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $iPv4Address;
     /**
-     * @var string
+     * @var string|null
      */
     protected $iPv6Address;
     /**
@@ -31,19 +31,19 @@ class EndpointIPAMConfig extends ArrayObject
     protected $linkLocalIPs;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getIPv4Address(): string
+    public function getIPv4Address(): ?string
     {
         return $this->iPv4Address;
     }
 
     /**
-     * @param string $iPv4Address
+     * @param string|null $iPv4Address
      *
      * @return self
      */
-    public function setIPv4Address(string $iPv4Address): self
+    public function setIPv4Address(?string $iPv4Address): self
     {
         $this->initialized['iPv4Address'] = true;
         $this->iPv4Address                = $iPv4Address;
@@ -52,19 +52,19 @@ class EndpointIPAMConfig extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getIPv6Address(): string
+    public function getIPv6Address(): ?string
     {
         return $this->iPv6Address;
     }
 
     /**
-     * @param string $iPv6Address
+     * @param string|null $iPv6Address
      *
      * @return self
      */
-    public function setIPv6Address(string $iPv6Address): self
+    public function setIPv6Address(?string $iPv6Address): self
     {
         $this->initialized['iPv6Address'] = true;
         $this->iPv6Address                = $iPv6Address;

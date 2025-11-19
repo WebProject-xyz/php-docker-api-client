@@ -48,9 +48,6 @@ class MountVolumeOptionsNormalizer implements DenormalizerInterface, NormalizerI
         if (array_key_exists('NoCopy', $data) && is_int($data['NoCopy'])) {
             $data['NoCopy'] = (bool) $data['NoCopy'];
         }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\MountVolumeOptionsConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -106,9 +103,6 @@ class MountVolumeOptionsNormalizer implements DenormalizerInterface, NormalizerI
             if (preg_match('/.*/', (string) $key_1)) {
                 $dataArray[$key_1] = $value_1;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\MountVolumeOptionsConstraint());
         }
 
         return $dataArray;

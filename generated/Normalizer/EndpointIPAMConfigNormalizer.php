@@ -44,19 +44,20 @@ class EndpointIPAMConfigNormalizer implements DenormalizerInterface, NormalizerI
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\EndpointIPAMConfig();
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\EndpointIPAMConfigConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
-        if (array_key_exists('IPv4Address', $data)) {
+        if (array_key_exists('IPv4Address', $data) && null !== $data['IPv4Address']) {
             $object->setIPv4Address($data['IPv4Address']);
             unset($data['IPv4Address']);
+        } elseif (array_key_exists('IPv4Address', $data) && null === $data['IPv4Address']) {
+            $object->setIPv4Address(null);
         }
-        if (array_key_exists('IPv6Address', $data)) {
+        if (array_key_exists('IPv6Address', $data) && null !== $data['IPv6Address']) {
             $object->setIPv6Address($data['IPv6Address']);
             unset($data['IPv6Address']);
+        } elseif (array_key_exists('IPv6Address', $data) && null === $data['IPv6Address']) {
+            $object->setIPv6Address(null);
         }
         if (array_key_exists('LinkLocalIPs', $data)) {
             $values = [];
@@ -95,9 +96,6 @@ class EndpointIPAMConfigNormalizer implements DenormalizerInterface, NormalizerI
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value_1;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\EndpointIPAMConfigConstraint());
         }
 
         return $dataArray;

@@ -48,9 +48,6 @@ class ImageManifestSummaryNormalizer implements DenormalizerInterface, Normalize
         if (array_key_exists('Available', $data) && is_int($data['Available'])) {
             $data['Available'] = (bool) $data['Available'];
         }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ImageManifestSummaryConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -113,9 +110,6 @@ class ImageManifestSummaryNormalizer implements DenormalizerInterface, Normalize
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ImageManifestSummaryConstraint());
         }
 
         return $dataArray;

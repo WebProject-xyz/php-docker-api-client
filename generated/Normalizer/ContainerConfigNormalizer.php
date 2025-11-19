@@ -69,9 +69,6 @@ class ContainerConfigNormalizer implements DenormalizerInterface, NormalizerInte
         if (array_key_exists('NetworkDisabled', $data) && is_int($data['NetworkDisabled'])) {
             $data['NetworkDisabled'] = (bool) $data['NetworkDisabled'];
         }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ContainerConfigConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -133,13 +130,15 @@ class ContainerConfigNormalizer implements DenormalizerInterface, NormalizerInte
             $object->setEnv($values_2);
             unset($data['Env']);
         }
-        if (array_key_exists('Cmd', $data)) {
+        if (array_key_exists('Cmd', $data) && null !== $data['Cmd']) {
             $values_3 = [];
             foreach ($data['Cmd'] as $value_3) {
                 $values_3[] = $value_3;
             }
             $object->setCmd($values_3);
             unset($data['Cmd']);
+        } elseif (array_key_exists('Cmd', $data) && null === $data['Cmd']) {
+            $object->setCmd(null);
         }
         if (array_key_exists('Healthcheck', $data)) {
             $object->setHealthcheck($this->denormalizer->denormalize($data['Healthcheck'], \WebProject\DockerApi\Library\Generated\Model\HealthConfig::class, 'json', $context));
@@ -155,7 +154,7 @@ class ContainerConfigNormalizer implements DenormalizerInterface, NormalizerInte
             $object->setImage($data['Image']);
             unset($data['Image']);
         }
-        if (array_key_exists('Volumes', $data)) {
+        if (array_key_exists('Volumes', $data) && null !== $data['Volumes']) {
             $values_4 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
             foreach ($data['Volumes'] as $key_2 => $value_4) {
                 $values_5 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
@@ -166,18 +165,22 @@ class ContainerConfigNormalizer implements DenormalizerInterface, NormalizerInte
             }
             $object->setVolumes($values_4);
             unset($data['Volumes']);
+        } elseif (array_key_exists('Volumes', $data) && null === $data['Volumes']) {
+            $object->setVolumes(null);
         }
         if (array_key_exists('WorkingDir', $data)) {
             $object->setWorkingDir($data['WorkingDir']);
             unset($data['WorkingDir']);
         }
-        if (array_key_exists('Entrypoint', $data)) {
+        if (array_key_exists('Entrypoint', $data) && null !== $data['Entrypoint']) {
             $values_6 = [];
             foreach ($data['Entrypoint'] as $value_6) {
                 $values_6[] = $value_6;
             }
             $object->setEntrypoint($values_6);
             unset($data['Entrypoint']);
+        } elseif (array_key_exists('Entrypoint', $data) && null === $data['Entrypoint']) {
+            $object->setEntrypoint(null);
         }
         if (array_key_exists('NetworkDisabled', $data) && null !== $data['NetworkDisabled']) {
             $object->setNetworkDisabled($data['NetworkDisabled']);
@@ -362,9 +365,6 @@ class ContainerConfigNormalizer implements DenormalizerInterface, NormalizerInte
             if (preg_match('/.*/', (string) $key_5)) {
                 $dataArray[$key_5] = $value_10;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ContainerConfigConstraint());
         }
 
         return $dataArray;

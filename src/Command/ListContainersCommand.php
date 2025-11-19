@@ -44,9 +44,8 @@ final class ListContainersCommand extends Command
             }
 
             $envs = [];
-            foreach ($container->envVariables as $value) {
-                [$envName, $envValue] = $value;
-                $var                  = $envName . ': ' . $envValue;
+            foreach ($container->envVariables as $envName => $envValue) {
+                $var                  = $envName . ":\n" . $envValue;
                 $envs[]               = $var;
                 if ($output->isVerbose()) {
                     $io->writeln('[+] env: ' . $var);

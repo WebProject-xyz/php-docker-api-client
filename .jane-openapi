@@ -11,5 +11,5 @@ return [
     'clean-generated'               => true,
     'reference'                     => true,
     'use-cacheable-supports-method' => true,
-    'validation'                    => true,
+    'validation'                    => false, // needs more patches to fully work
 ];

@@ -44,9 +44,6 @@ class ContainerMemoryStatsNormalizer implements DenormalizerInterface, Normalize
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerMemoryStats();
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ContainerMemoryStatsConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -144,9 +141,6 @@ class ContainerMemoryStatsNormalizer implements DenormalizerInterface, Normalize
             if (preg_match('/.*/', (string) $key_1)) {
                 $dataArray[$key_1] = $value_1;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ContainerMemoryStatsConstraint());
         }
 
         return $dataArray;

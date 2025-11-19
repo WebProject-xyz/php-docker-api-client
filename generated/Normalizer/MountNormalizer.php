@@ -48,9 +48,6 @@ class MountNormalizer implements DenormalizerInterface, NormalizerInterface, Den
         if (array_key_exists('ReadOnly', $data) && is_int($data['ReadOnly'])) {
             $data['ReadOnly'] = (bool) $data['ReadOnly'];
         }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\MountConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -133,9 +130,6 @@ class MountNormalizer implements DenormalizerInterface, NormalizerInterface, Den
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\MountConstraint());
         }
 
         return $dataArray;

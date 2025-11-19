@@ -34,7 +34,7 @@ class EndpointSettings extends ArrayObject
      */
     protected $macAddress;
     /**
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $aliases;
     /**
@@ -113,7 +113,7 @@ class EndpointSettings extends ArrayObject
      * `testnet`, `DNSNames` will contain `my.ctr` and the FQDN will be
      * `my.ctr.testnet`.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $dNSNames;
 
@@ -189,19 +189,19 @@ class EndpointSettings extends ArrayObject
     }
 
     /**
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getAliases(): array
+    public function getAliases(): ?array
     {
         return $this->aliases;
     }
 
     /**
-     * @param list<string> $aliases
+     * @param list<string>|null $aliases
      *
      * @return self
      */
-    public function setAliases(array $aliases): self
+    public function setAliases(?array $aliases): self
     {
         $this->initialized['aliases'] = true;
         $this->aliases                = $aliases;
@@ -480,9 +480,9 @@ class EndpointSettings extends ArrayObject
      * `testnet`, `DNSNames` will contain `my.ctr` and the FQDN will be
      * `my.ctr.testnet`.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getDNSNames(): array
+    public function getDNSNames(): ?array
     {
         return $this->dNSNames;
     }
@@ -498,11 +498,11 @@ class EndpointSettings extends ArrayObject
      * `testnet`, `DNSNames` will contain `my.ctr` and the FQDN will be
      * `my.ctr.testnet`.
      *
-     * @param list<string> $dNSNames
+     * @param list<string>|null $dNSNames
      *
      * @return self
      */
-    public function setDNSNames(array $dNSNames): self
+    public function setDNSNames(?array $dNSNames): self
     {
         $this->initialized['dNSNames'] = true;
         $this->dNSNames                = $dNSNames;

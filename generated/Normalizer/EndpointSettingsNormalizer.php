@@ -44,9 +44,6 @@ class EndpointSettingsNormalizer implements DenormalizerInterface, NormalizerInt
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\EndpointSettings();
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\EndpointSettingsConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -70,13 +67,15 @@ class EndpointSettingsNormalizer implements DenormalizerInterface, NormalizerInt
             $object->setMacAddress($data['MacAddress']);
             unset($data['MacAddress']);
         }
-        if (array_key_exists('Aliases', $data)) {
+        if (array_key_exists('Aliases', $data) && null !== $data['Aliases']) {
             $values_1 = [];
             foreach ($data['Aliases'] as $value_1) {
                 $values_1[] = $value_1;
             }
             $object->setAliases($values_1);
             unset($data['Aliases']);
+        } elseif (array_key_exists('Aliases', $data) && null === $data['Aliases']) {
+            $object->setAliases(null);
         }
         if (array_key_exists('DriverOpts', $data) && null !== $data['DriverOpts']) {
             $values_2 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
@@ -124,13 +123,15 @@ class EndpointSettingsNormalizer implements DenormalizerInterface, NormalizerInt
             $object->setGlobalIPv6PrefixLen($data['GlobalIPv6PrefixLen']);
             unset($data['GlobalIPv6PrefixLen']);
         }
-        if (array_key_exists('DNSNames', $data)) {
+        if (array_key_exists('DNSNames', $data) && null !== $data['DNSNames']) {
             $values_3 = [];
             foreach ($data['DNSNames'] as $value_3) {
                 $values_3[] = $value_3;
             }
             $object->setDNSNames($values_3);
             unset($data['DNSNames']);
+        } elseif (array_key_exists('DNSNames', $data) && null === $data['DNSNames']) {
+            $object->setDNSNames(null);
         }
         foreach ($data as $key_1 => $value_4) {
             if (preg_match('/.*/', (string) $key_1)) {
@@ -209,9 +210,6 @@ class EndpointSettingsNormalizer implements DenormalizerInterface, NormalizerInt
             if (preg_match('/.*/', (string) $key_1)) {
                 $dataArray[$key_1] = $value_4;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\EndpointSettingsConstraint());
         }
 
         return $dataArray;

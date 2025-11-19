@@ -48,9 +48,6 @@ class MountPointNormalizer implements DenormalizerInterface, NormalizerInterface
         if (array_key_exists('RW', $data) && is_int($data['RW'])) {
             $data['RW'] = (bool) $data['RW'];
         }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\MountPointConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -126,9 +123,6 @@ class MountPointNormalizer implements DenormalizerInterface, NormalizerInterface
             if (preg_match('/.*/', (string) $key)) {
                 $dataArray[$key] = $value;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\MountPointConstraint());
         }
 
         return $dataArray;

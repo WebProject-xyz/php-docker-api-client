@@ -44,9 +44,6 @@ class ContainerSummaryNormalizer implements DenormalizerInterface, NormalizerInt
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerSummary();
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($data, new \WebProject\DockerApi\Library\Generated\Validator\ContainerSummaryConstraint());
-        }
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -214,9 +211,6 @@ class ContainerSummaryNormalizer implements DenormalizerInterface, NormalizerInt
             if (preg_match('/.*/', (string) $key_1)) {
                 $dataArray[$key_1] = $value_4;
             }
-        }
-        if (!($context['skip_validation'] ?? false)) {
-            $this->validate($dataArray, new \WebProject\DockerApi\Library\Generated\Validator\ContainerSummaryConstraint());
         }
 
         return $dataArray;
