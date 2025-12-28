@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e1d72542c0a30a9a34ff69340945f90",
+    "content-hash": "dc83368f6c670b938e42708f267de815",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -4692,16 +4692,16 @@
         },
         {
             "name": "jane-php/open-api-3",
-            "version": "v7.10.2",
+            "version": "v7.10.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/janephp/open-api-3.git",
-                "reference": "3625706dbe655538fd4ede357636067089325e67"
+                "reference": "dfa5136b56a50b9540d6cbafd56541893685d425"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janephp/open-api-3/zipball/3625706dbe655538fd4ede357636067089325e67",
-                "reference": "3625706dbe655538fd4ede357636067089325e67",
+                "url": "https://api.github.com/repos/janephp/open-api-3/zipball/dfa5136b56a50b9540d6cbafd56541893685d425",
+                "reference": "dfa5136b56a50b9540d6cbafd56541893685d425",
                 "shasum": ""
             },
             "require": {
@@ -4760,9 +4760,9 @@
                 "swagger"
             ],
             "support": {
-                "source": "https://github.com/janephp/open-api-3/tree/v7.10.2"
+                "source": "https://github.com/janephp/open-api-3/tree/v7.10.3"
             },
-            "time": "2025-12-15T13:45:16+00:00"
+            "time": "2025-12-24T19:03:08+00:00"
         },
         {
             "name": "jane-php/open-api-common",
