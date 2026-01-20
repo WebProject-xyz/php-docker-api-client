@@ -13,7 +13,7 @@ final class DockerApiClientWrapperTest extends Unit
     public function testGetDockerClient(): void
     {
         $mockClient = $this->createMock(Client::class);
-        $wrapper = new DockerApiClientWrapper('http://localhost', '/var/run/docker.sock', $mockClient);
+        $wrapper    = new DockerApiClientWrapper('http://localhost', '/var/run/docker.sock', $mockClient);
 
         $this->assertSame($mockClient, $wrapper->getDockerClient());
     }

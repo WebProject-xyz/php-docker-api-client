@@ -6,6 +6,7 @@ namespace Tests\Unit\Service;
 
 use Codeception\Test\Unit;
 use PHPUnit\Framework\MockObject\MockObject;
+use stdClass;
 use WebProject\DockerApi\Library\Generated\Client;
 use WebProject\DockerApi\Library\Generated\Model\ContainerConfig;
 use WebProject\DockerApi\Library\Generated\Model\ContainerInspectResponse;
@@ -24,9 +25,9 @@ final class DockerServiceTest extends Unit
 
     protected function _before(): void
     {
-        $this->client = $this->createMock(Client::class);
+        $this->client           = $this->createMock(Client::class);
         $this->apiClientWrapper = new DockerApiClientWrapper('http://mocked-uri', '/mocked/socket', $this->client);
-        $this->service = new DockerService($this->apiClientWrapper);
+        $this->service          = new DockerService($this->apiClientWrapper);
     }
 
     public function testFindAllContainer(): void
@@ -39,11 +40,11 @@ final class DockerServiceTest extends Unit
             ->willReturn([$containerSummary]);
 
         $inspectResponse = $this->createConfiguredMock(ContainerInspectResponse::class, [
-            'getId' => '123',
-            'getName' => '/test-container',
-            'getImage' => 'nginx:latest',
-            'getState' => $this->createConfiguredMock(ContainerState::class, ['getRunning' => true]),
-            'getConfig' => $this->createConfiguredMock(ContainerConfig::class, ['getEnv' => ['FOO=bar']]),
+            'getId'              => '123',
+            'getName'            => '/test-container',
+            'getImage'           => 'nginx:latest',
+            'getState'           => $this->createConfiguredMock(ContainerState::class, ['getRunning' => true]),
+            'getConfig'          => $this->createConfiguredMock(ContainerConfig::class, ['getEnv' => ['FOO=bar']]),
             'getNetworkSettings' => $this->createConfiguredMock(NetworkSettings::class, ['getNetworks' => [], 'getPorts' => []]),
         ]);
 
@@ -53,7 +54,7 @@ final class DockerServiceTest extends Unit
             ->willReturn($inspectResponse);
 
         $result = $this->service->findAllContainer();
-        $dtos = iterator_to_array($result);
+        $dtos   = iterator_to_array($result);
 
         $this->assertCount(1, $dtos);
         $this->assertArrayHasKey('123', $dtos);
@@ -65,11 +66,11 @@ final class DockerServiceTest extends Unit
     public function testFindContainer(): void
     {
         $inspectResponse = $this->createConfiguredMock(ContainerInspectResponse::class, [
-            'getId' => '456',
-            'getName' => '/single-container',
-            'getImage' => 'php:8.3',
-            'getState' => $this->createConfiguredMock(ContainerState::class, ['getRunning' => false]),
-            'getConfig' => $this->createConfiguredMock(ContainerConfig::class, ['getEnv' => []]),
+            'getId'              => '456',
+            'getName'            => '/single-container',
+            'getImage'           => 'php:8.3',
+            'getState'           => $this->createConfiguredMock(ContainerState::class, ['getRunning' => false]),
+            'getConfig'          => $this->createConfiguredMock(ContainerConfig::class, ['getEnv' => []]),
             'getNetworkSettings' => $this->createConfiguredMock(NetworkSettings::class, ['getNetworks' => [], 'getPorts' => []]),
         ]);
 
@@ -89,7 +90,7 @@ final class DockerServiceTest extends Unit
         $this->client->expects($this->once())
             ->method('containerInspect')
             ->with('999')
-            ->willReturn(new \stdClass());
+            ->willReturn(new stdClass());
 
         $dto = $this->service->findContainer('999');
 
