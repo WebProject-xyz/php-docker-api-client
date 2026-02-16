@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](https://github.com/WebProject-xyz/php-docker-api-client/compare/1.3.0...1.3.1) (2026-02-16)
+
+### Bug Fixes
+
+* **docs:** update readme and add code examples ([48659c2](https://github.com/WebProject-xyz/php-docker-api-client/commit/48659c23e518d2320d33a0c472a788d137866881))
+
 ## [1.3.0](https://github.com/WebProject-xyz/php-docker-api-client/compare/1.2.1...1.3.0) (2025-11-19)
 
 ### Features
