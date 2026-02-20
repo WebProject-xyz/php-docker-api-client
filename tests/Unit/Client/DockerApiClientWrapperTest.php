@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Client;
+namespace WebProject\DockerApiClient\Tests\Unit\Client;
 
 use Codeception\Test\Unit;
 use WebProject\DockerApi\Library\Generated\Client;

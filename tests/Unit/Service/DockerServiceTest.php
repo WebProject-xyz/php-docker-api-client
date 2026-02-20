@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Service;
+namespace WebProject\DockerApiClient\Tests\Unit\Service;
 
 use Codeception\Test\Unit;
 use PHPUnit\Framework\MockObject\MockObject;
