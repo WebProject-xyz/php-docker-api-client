@@ -1,0 +1,9 @@
+parameters:
+    level: max
+    parallel:
+        maximumNumberOfProcesses: 1
+    paths:
+        - src
+        - tests
+    excludePaths:
+        - tests/Support/_generated

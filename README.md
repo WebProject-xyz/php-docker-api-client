@@ -1,6 +1,6 @@
 # PHP Docker API Client
 
-[![Tests](https://github.com/WebProject-xyz/php-docker-api-client/actions/workflows/php-tests.yml/badge.svg)](https://github.com/WebProject-xyz/php-docker-api-client/actions/workflows/php-tests.yml)
+[![CI](https://github.com/WebProject-xyz/php-docker-api-client/actions/workflows/ci.yml/badge.svg)](https://github.com/WebProject-xyz/php-docker-api-client/actions/workflows/ci.yml)
 [![Release](https://github.com/WebProject-xyz/php-docker-api-client/actions/workflows/release.yml/badge.svg)](https://github.com/WebProject-xyz/php-docker-api-client/actions/workflows/release.yml)
 [![PHP Version](https://img.shields.io/packagist/php-v/webproject-xyz/docker-api-client)](https://packagist.org/packages/webproject-xyz/docker-api-client)
 [![Latest Stable Version](https://img.shields.io/packagist/v/webproject-xyz/docker-api-client)](https://packagist.org/packages/webproject-xyz/docker-api-client)

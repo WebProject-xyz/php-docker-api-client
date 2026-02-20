@@ -6,7 +6,9 @@ namespace WebProject\DockerApiClient\Service;
 
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use Webmozart\Assert\Assert;
 use WebProject\DockerApi\Library\Generated\Model\ContainerInspectResponse;
+use WebProject\DockerApi\Library\Generated\Model\ContainerSummary;
 use WebProject\DockerApiClient\Client\DockerApiClientWrapper;
 use WebProject\DockerApiClient\Dto\DockerContainerDto;
 use WebProject\DockerApiClient\Event\ContainerEvent;
@@ -28,7 +30,11 @@ final class DockerService implements LoggerAwareInterface
     {
         $util = new ContainerResponseToContainerDtoUtil();
         try {
-            foreach ($this->dockerApiClient->getDockerClient()->containerList() as $container) {
+            $containerSummaries = $this->dockerApiClient->getDockerClient()->containerList() ?? [];
+            Assert::isIterable($containerSummaries);
+            Assert::allIsInstanceOf($containerSummaries, ContainerSummary::class);
+
+            foreach ($containerSummaries as $container) {
                 $id               = $container->getId();
                 $containerInspect = $this->dockerApiClient->getDockerClient()->containerInspect($id);
 
@@ -63,8 +69,8 @@ final class DockerService implements LoggerAwareInterface
     /**
      * @phpstan-param callable(ContainerEvent $event):void $eventCallback
      */
-    public function listenForEvents(callable $eventCallback): true
+    public function listenForEvents(callable $eventCallback): void
     {
-        return $this->dockerApiClient->listenForEvents($eventCallback);
+        $this->dockerApiClient->listenForEvents($eventCallback);
     }
 }

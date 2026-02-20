@@ -8,7 +8,6 @@ use WebProject\DockerApi\Library\Generated\Model\ContainerInspectResponse;
 use WebProject\DockerApiClient\Dto\DockerContainerDto;
 use function array_unique;
 use function explode;
-use function is_string;
 
 final readonly class ContainerResponseToContainerDtoUtil
 {
@@ -28,8 +27,8 @@ final readonly class ContainerResponseToContainerDtoUtil
         }
 
         $envVariables = [];
-        foreach ($containerInspect->getConfig()->getEnv() ?? [] as $envVar) {
-            if (!is_string($envVar) || !str_contains($envVar, '=')) {
+        foreach ($containerInspect->getConfig()->getEnv() as $envVar) {
+            if (!str_contains($envVar, '=')) {
                 continue;
             }
             [$name, $value]      = explode('=', $envVar);

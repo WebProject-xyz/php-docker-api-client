@@ -19,8 +19,7 @@ use function substr;
 #[AsCommand(
     name: 'docker:events:listen',
     description: 'Listen for socket events.'
-),
-]
+),]
 final class EventsListenCommand extends Command
 {
     /** @var array<DockerContainerDto|false> */

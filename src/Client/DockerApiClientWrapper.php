@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace WebProject\DockerApiClient\Client;
 
 use JsonException;
+use Symfony\Component\HttpClient\Chunk\ServerSentEvent;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpClient\Psr18Client;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
-use Symfony\Contracts\HttpClient\ChunkInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Webmozart\Assert\Assert;
 use WebProject\DockerApi\Library\Generated\Client;
 use WebProject\DockerApiClient\Event\ContainerEvent;
+use function is_array;
 use function json_decode;
 
 final class DockerApiClientWrapper
@@ -31,7 +33,7 @@ final class DockerApiClientWrapper
      * @throws TransportExceptionInterface
      * @throws JsonException
      */
-    public function listenForEvents(callable $eventCallback): true
+    public function listenForEvents(callable $eventCallback): void
     {
         $client = HttpClient::create([
             'base_uri' => $this->baseUri,
@@ -40,15 +42,15 @@ final class DockerApiClientWrapper
         ]);
 
         $serializer = new Serializer(
-            [new ObjectNormalizer()],
-            [new JsonEncoder()]
+            normalizers: [new ObjectNormalizer()],
+            encoders: [new JsonEncoder()]
         );
 
         // Connect to the Docker API event stream
-        $source = $client->request('GET', '/events');
+        $source = $client->request(method: 'GET', url: '/events');
 
-        while ($client->request('GET', '/events')) {
-            foreach ($client->stream($source, 2) as $r => $chunk) {
+        while ($client->request(method: 'GET', url: '/events')) {
+            foreach ($client->stream(responses: $source, timeout: 2) as $r => $chunk) {
                 if ($chunk->isTimeout()) {
                     // Handle timeout
                     continue;
@@ -56,31 +58,26 @@ final class DockerApiClientWrapper
 
                 if ($chunk->isLast()) {
                     // Handle end of stream
-                    return true;
+                    return;
                 }
 
                 // Process the ServerSentEvent chunk
-                if ($chunk instanceof ChunkInterface) {
+                if ($chunk instanceof ServerSentEvent) {
                     // Do something with the event data
                     $content = $chunk->getContent();
                     if (!json_validate($content)) {
                         continue;
                     }
 
-                    $eventObject = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
-                    if ($eventObject && ($eventObject['Type'] ?? false) === 'container') {
-                        $event = $serializer->deserialize($content, ContainerEvent::class, 'json');
-                        if (!$event instanceof ContainerEvent) {
-                            continue;
-                        }
+                    $eventObject = json_decode(json: $content, associative: true, depth: 512, flags: JSON_THROW_ON_ERROR);
+                    if (is_array($eventObject) && ($eventObject['Type'] ?? false) === 'container') {
+                        $event = $serializer->deserialize(data: $content, type: ContainerEvent::class, format: 'json');
 
                         $eventCallback($event);
                     }
                 }
             }
         }
-
-        return true;
     }
 
     public function getDockerClient(): Client
@@ -99,10 +96,13 @@ final class DockerApiClientWrapper
             'timeout'  => $timeout,
         ]);
 
+        $client = Client::create($httpClient);
+        Assert::isInstanceOf(value: $client, class: Client::class);
+
         return new self(
-            $baseUri,
-            $socketPath,
-            Client::create($httpClient)
+            baseUri: $baseUri,
+            socketPath: $socketPath,
+            client: $client
         );
     }
 }

@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use WebProject\DockerApi\Library\Generated\Model\EndpointSettings;
 use WebProject\DockerApiClient\Util\ContainerResponseToContainerDtoUtil;
 
-#[CoversClass(className: ContainerResponseToContainerDtoUtil::class)]
+#[CoversClass(ContainerResponseToContainerDtoUtil::class)]
 class ContainerResponseToContainerDtoUtilTest extends \Codeception\Test\Unit
 {
     public function testInvokeMinValues(): void
@@ -32,13 +32,13 @@ class ContainerResponseToContainerDtoUtilTest extends \Codeception\Test\Unit
         $containerDto = (new ContainerResponseToContainerDtoUtil())(containerInspect: $containerInspectResponse);
 
         // Assert
-        $this->assertSame(expected: 'container-idValue', actual: $containerDto->id);
-        $this->assertSame(expected: 'container-imageValue', actual: $containerDto->image);
-        $this->assertSame(expected: [], actual: $containerDto->ipAddresses);
-        $this->assertSame(expected: [], actual: $containerDto->networks);
+        $this->assertSame('container-idValue', $containerDto->id);
+        $this->assertSame('container-imageValue', $containerDto->image);
+        $this->assertSame([], $containerDto->ipAddresses);
+        $this->assertSame([], $containerDto->networks);
         $this->assertFalse($containerDto->running);
-        $this->assertSame(expected: 'container-name', actual: $containerDto->getName());
-        $this->assertSame(expected: ['container-name'], actual: $containerDto->getHostnames(tld: ''));
+        $this->assertSame('container-name', $containerDto->getName());
+        $this->assertSame(['container-name'], $containerDto->getHostnames(tld: ''));
     }
 
     public function testInvokeMaxValues(): void
@@ -58,7 +58,7 @@ class ContainerResponseToContainerDtoUtilTest extends \Codeception\Test\Unit
         $endpoint2->setAliases(['e2-alias1', 'e2-alias2']);
 
         $networkSettings = new \WebProject\DockerApi\Library\Generated\Model\NetworkSettings();
-        $networkSettings->setNetworks(networks: [$endpoint, $endpoint2]);
+        $networkSettings->setNetworks(networks: ['ca7d9ec2cf61951cf24ed7c91006927fa1259aabaf07e334f5e0b0fe36ce5794' => $endpoint, '4a7d9ec2cf61951cf24ed7c91006927fa1259aabaf07e334f5e0b0fe36ce5794' =>  $endpoint2]);
         $networkSettings->setPorts([]);
 
         $containerInspectResponse->setNetworkSettings(networkSettings: $networkSettings);
@@ -84,9 +84,9 @@ class ContainerResponseToContainerDtoUtilTest extends \Codeception\Test\Unit
         $containerDto = (new ContainerResponseToContainerDtoUtil())(containerInspect: $containerInspectResponse);
 
         // Assert
-        $this->assertSame(expected: 'container-idValue', actual: $containerDto->id);
-        $this->assertSame(expected: 'container-imageValue', actual: $containerDto->image);
-        $this->assertSame(expected: ['192.12.12.12', '123.12.12.12'], actual: $containerDto->ipAddresses);
+        $this->assertSame('container-idValue', $containerDto->id);
+        $this->assertSame('container-imageValue', $containerDto->image);
+        $this->assertSame(['192.12.12.12', '123.12.12.12'], $containerDto->ipAddresses);
 
         $expectedNetworks = [
             0 => [
@@ -103,13 +103,13 @@ class ContainerResponseToContainerDtoUtilTest extends \Codeception\Test\Unit
                 'ip' => '123.12.12.12',
             ],
         ];
-        $this->assertSame(expected: $expectedNetworks, actual: $containerDto->networks);
+        $this->assertSame($expectedNetworks, $containerDto->networks);
         $this->assertFalse($containerDto->running);
-        $this->assertSame(expected: 'container-name', actual: $containerDto->getName());
-        $this->assertSame(expected: ['container-name'], actual: $containerDto->getHostnames(tld: ''));
+        $this->assertSame('container-name', $containerDto->getName());
+        $this->assertSame(['container-name'], $containerDto->getHostnames(tld: ''));
         $this->assertSame(
-            expected: ['actual.reverse-proxy-subdomain.xyz', 'domain-name.reverse-proxy-subdomain.xyz'],
-            actual: $containerDto->extractUrlsFromEnvVars(extractFromEnvVars: ['DOMAIN_NAME', 'VIRTUAL_HOST'])
+            ['actual.reverse-proxy-subdomain.xyz', 'domain-name.reverse-proxy-subdomain.xyz'],
+            $containerDto->extractUrlsFromEnvVars(extractFromEnvVars: ['DOMAIN_NAME', 'VIRTUAL_HOST'])
         );
     }
 }

@@ -1,14 +1,16 @@
 name: Release
 "on":
   workflow_run:
-    workflows: ["Tests"]
+    workflows: ["CI"]
     types:
       - completed
     branches:
       - main
 jobs:
   release:
-    if: github.event.workflow_run.conclusion == 'success'
+    if: >-
+      github.event.workflow_run.conclusion == 'success'
+      && !startsWith(github.event.workflow_run.head_commit.message, 'chore(release)')
     name: release
     runs-on: ubuntu-latest
     steps:
@@ -28,7 +30,7 @@ jobs:
 
       - name: Semantic Release
         id: semantic
-        uses: cycjimmy/semantic-release-action@v4
+        uses: cycjimmy/semantic-release-action@b12c8f6015dc215fe37bc154d4ad456dd3833c90 # v6.0.0
         with:
           tag_format: ${version}
           branches: |

@@ -16,8 +16,7 @@ use function substr;
 #[AsCommand(
     name: 'docker:list-containers',
     description: 'List docker containers.'
-),
-]
+),]
 final class ListContainersCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int

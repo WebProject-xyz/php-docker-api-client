@@ -25,7 +25,7 @@ final readonly class DockerContainerDto
          * @var array<string, array{aliases: array<string>, ip: string}>
          */
         public array $networks,
-        /** @var array<string, list<PortBinding>> */
+        /** @var array<string, PortBinding> */
         public array $ports,
     ) {
     }
@@ -46,6 +46,8 @@ final readonly class DockerContainerDto
 
     /**
      * Note: the default container name is excluded to prevent issues with docker dns.
+     *
+     * @phpstan-return array<string>
      */
     public function getHostnames(string $tld): array
     {
@@ -59,7 +61,8 @@ final readonly class DockerContainerDto
 
     /**
      * @phpstan-param array<string> $extractFromEnvVars
-     * @phpstan-param array<string> $hosts
+     *
+     * @phpstan-return array<string>
      */
     public function extractUrlsFromEnvVars(array $extractFromEnvVars): array
     {

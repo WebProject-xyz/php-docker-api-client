@@ -57,7 +57,6 @@ $rules = [
     'ordered_imports'                               => [
         'imports_order'  => [
             // symfony order: Class Function Const
-            // OEG:
             'const',
             'class',
             'function',
@@ -92,5 +91,6 @@ $config->setLineEnding("\n");
 $config->setRiskyAllowed(true);
 $config->setParallelConfig(ParallelConfigFactory::detect());
 $config->setFinder($finder);
+$config->setUnsupportedPhpVersionAllowed(true);
 
 return $config;

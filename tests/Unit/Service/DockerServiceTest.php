@@ -32,15 +32,17 @@ final class DockerServiceTest extends Unit
 
     public function testFindAllContainer(): void
     {
+        $containerId = 'd013dcefb265f19ef734b4f51abe1db1db22861fa44b7a6f11613e2e8519519c';
+
         $containerSummary = $this->createMock(ContainerSummary::class);
-        $containerSummary->method('getId')->willReturn('123');
+        $containerSummary->method('getId')->willReturn($containerId);
 
         $this->client->expects($this->once())
             ->method('containerList')
             ->willReturn([$containerSummary]);
 
         $inspectResponse = $this->createConfiguredMock(ContainerInspectResponse::class, [
-            'getId'              => '123',
+            'getId'              => $containerId,
             'getName'            => '/test-container',
             'getImage'           => 'nginx:latest',
             'getState'           => $this->createConfiguredMock(ContainerState::class, ['getRunning' => true]),
@@ -50,17 +52,17 @@ final class DockerServiceTest extends Unit
 
         $this->client->expects($this->once())
             ->method('containerInspect')
-            ->with('123')
+            ->with($containerId)
             ->willReturn($inspectResponse);
 
         $result = $this->service->findAllContainer();
         $dtos   = iterator_to_array($result);
 
         $this->assertCount(1, $dtos);
-        $this->assertArrayHasKey('123', $dtos);
-        $this->assertInstanceOf(DockerContainerDto::class, $dtos['123']);
-        $this->assertSame('123', $dtos['123']->id);
-        $this->assertSame('test-container', $dtos['123']->getName());
+        $this->assertArrayHasKey($containerId, $dtos);
+        $this->assertInstanceOf(DockerContainerDto::class, $dtos[$containerId]);
+        $this->assertSame($containerId, $dtos[$containerId]->id);
+        $this->assertSame('test-container', $dtos[$containerId]->getName());
     }
 
     public function testFindContainer(): void
