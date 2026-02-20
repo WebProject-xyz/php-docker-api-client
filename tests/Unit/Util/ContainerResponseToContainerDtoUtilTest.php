@@ -89,13 +89,13 @@ class ContainerResponseToContainerDtoUtilTest extends \Codeception\Test\Unit
         $this->assertSame(['192.12.12.12', '123.12.12.12'], $containerDto->ipAddresses);
 
         $expectedNetworks = [
-            0 => [
+            'ca7d9ec2cf61951cf24ed7c91006927fa1259aabaf07e334f5e0b0fe36ce5794' => [
                 'aliases' => [
                     0 => 'e1-alias1',
                 ],
                 'ip' => '192.12.12.12',
             ],
-            1 => [
+            '4a7d9ec2cf61951cf24ed7c91006927fa1259aabaf07e334f5e0b0fe36ce5794'  => [
                 'aliases' => [
                     0 => 'e2-alias1',
                     1 => 'e2-alias2',

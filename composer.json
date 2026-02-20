@@ -65,7 +65,7 @@
   },
   "scripts": {
     "generate": "XDEBUG_MODE=off jane-openapi generate",
-    "cs:check": "php-cs-fixer fix --allow-risky=yes --dry-run --diff",
+    "cs:check": "php-cs-fixer fix --allow-risky=yes --dry-run --diff --show-progress=dots",
     "cs:fix": "php-cs-fixer fix --allow-risky=yes",
     "stan": "phpstan analyse --no-progress --debug",
     "test": "codecept run --report",
