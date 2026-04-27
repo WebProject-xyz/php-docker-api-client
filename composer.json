@@ -30,11 +30,12 @@
     "codeception/module-phpbrowser": "^4.0.0",
     "friendsofphp/php-cs-fixer": "3.94.2",
     "jane-php/open-api-3": "^7.11.2",
-    "roave/security-advisories": "dev-latest",
-    "symfony/var-dumper": "7.4.0 || ^8.0",
+    "jane-php/open-api-3-1": "^7.11.2",
+    "phpstan/extension-installer": "^1.4.3",
     "phpstan/phpstan": "^2.1.51",
     "phpstan/phpstan-webmozart-assert": "^2.0.0",
-    "phpstan/extension-installer": "^1.4.3",
+    "roave/security-advisories": "dev-latest",
+    "symfony/var-dumper": "7.4.0 || ^8.0",
     "webproject-xyz/codeception-module-ai-reporter": "^1.1.1"
   },
   "autoload": {
@@ -64,7 +65,7 @@
     "optimize-autoloader": true
   },
   "scripts": {
-    "generate": "XDEBUG_MODE=off jane-openapi generate",
+    "generate": "XDEBUG_MODE=off jane-openapi generate -vvv",
     "cs:check": "XDEBUG_MODE=off php-cs-fixer fix --allow-risky=yes --dry-run --diff --show-progress=dots",
     "cs:fix": "XDEBUG_MODE=off php-cs-fixer fix --show-progress=none --allow-risky=yes",
     "stan": "XDEBUG_MODE=off phpstan analyse --no-progress --no-ansi --memory-limit=-1",

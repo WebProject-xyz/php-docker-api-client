@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4d76821b06e924c3f21bc77afa7ca698",
+    "content-hash": "60a1a762a2c2d0d54b6d9e6be6197a60",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -4779,6 +4779,75 @@
                 "source": "https://github.com/janephp/open-api-3/tree/v7.11.2"
             },
             "time": "2026-04-02T15:50:30+00:00"
+        },
+        {
+            "name": "jane-php/open-api-3-1",
+            "version": "v7.11.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/janephp/open-api-3-1.git",
+                "reference": "a68a670b29ca7fb20beca9875ddca732089b048b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/janephp/open-api-3-1/zipball/a68a670b29ca7fb20beca9875ddca732089b048b",
+                "reference": "a68a670b29ca7fb20beca9875ddca732089b048b",
+                "shasum": ""
+            },
+            "require": {
+                "jane-php/json-schema": "^7.5",
+                "jane-php/open-api-common": "^7.5",
+                "nikic/php-parser": "^4.19 || ^5.1",
+                "php": "^8.1",
+                "symfony/serializer": "^5.4 || ^6.4 || ^7.0 || ^8.0",
+                "symfony/yaml": "^5.4 || ^6.4 || ^7.0 || ^8.0"
+            },
+            "conflict": {
+                "symfony/framework-bundle": "5.1.0"
+            },
+            "require-dev": {
+                "kriswallsmith/buzz": "^1.2",
+                "nyholm/psr7": "^1.8",
+                "phpunit/phpunit": "^8.5",
+                "symfony/finder": "^5.4 || ^6.4 || ^7.0 || ^8.0"
+            },
+            "suggest": {
+                "friendsofphp/php-cs-fixer": "To have a nice formatting of the generated files"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-next": "7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Jane\\Component\\OpenApi31\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Leduc",
+                    "email": "baptiste.leduc@gmail.com"
+                }
+            ],
+            "description": "Generate a PHP Client API (PSR7/PSR18 compatible) given a OpenApi 3.1.x specification",
+            "keywords": [
+                "jane",
+                "openapi"
+            ],
+            "support": {
+                "issues": "https://github.com/janephp/open-api-3-1/issues",
+                "source": "https://github.com/janephp/open-api-3-1/tree/v7.11.2"
+            },
+            "time": "2026-04-02T16:20:26+00:00"
         },
         {
             "name": "jane-php/open-api-common",
