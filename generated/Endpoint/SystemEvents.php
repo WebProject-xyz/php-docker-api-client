@@ -6,6 +6,7 @@ namespace WebProject\DockerApi\Library\Generated\Endpoint;
 class SystemEvents extends \WebProject\DockerApi\Library\Generated\Runtime\Client\BaseEndpoint implements \WebProject\DockerApi\Library\Generated\Runtime\Client\Endpoint
 {
     use \WebProject\DockerApi\Library\Generated\Runtime\Client\EndpointTrait;
+    protected $accept;
 
     /**
      * Stream real-time events from the server.
@@ -32,11 +33,10 @@ class SystemEvents extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
      *
      * The Builder reports `prune` events
      *
-     * @param array $queryParameters {
-     *
-     * @var string $since show events created since this timestamp then stream new events
-     * @var string $until show events created until this timestamp then stop streaming
-     * @var string $filters A JSON encoded value of filters (a `map[string][]string`) to process on the event list. Available filters:
+     * @param array{
+     *    "since"?: string, //Show events created since this timestamp then stream new events.
+     *    "until"?: string, //Show events created until this timestamp then stop streaming.
+     *    "filters"?: string, //A JSON encoded value of filters (a `map[string][]string`) to process on the event list. Available filters:
      *
      * - `config=<string>` config name or ID
      * - `container=<string>` container name or ID
@@ -52,12 +52,13 @@ class SystemEvents extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
      * - `service=<string>` service name or ID
      * - `type=<string>` object to filter by, one of `container`, `image`, `volume`, `network`, `daemon`, `plugin`, `node`, `service`, `secret` or `config`
      * - `volume=<string>` volume name
-     *
-     * }
+     * } $queryParameters
+     * @param array $accept Accept content header application/jsonl|application/x-ndjson|application/json-seq
      */
-    public function __construct(array $queryParameters = [])
+    public function __construct(array $queryParameters = [], array $accept = [])
     {
         $this->queryParameters = $queryParameters;
+        $this->accept          = $accept;
     }
 
     public function getMethod(): string
@@ -77,7 +78,11 @@ class SystemEvents extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
 
     public function getExtraHeaders(): array
     {
-        return ['Accept' => ['application/json']];
+        if (empty($this->accept)) {
+            return ['Accept' => ['application/jsonl', 'application/x-ndjson', 'application/json-seq']];
+        }
+
+        return $this->accept;
     }
 
     protected function getQueryOptionsResolver(): \Symfony\Component\OptionsResolver\OptionsResolver
@@ -96,23 +101,17 @@ class SystemEvents extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     /**
      * {@inheritdoc}
      *
-     * @return \WebProject\DockerApi\Library\Generated\Model\EventMessage|null
-     *
-     * @throws \WebProject\DockerApi\Library\Generated\Exception\SystemEventsBadRequestException
-     * @throws \WebProject\DockerApi\Library\Generated\Exception\SystemEventsInternalServerErrorException
+     * @return null
      */
     protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
-            return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\EventMessage', 'json');
+        if (200 === $status) {
         }
-        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos($contentType, 'application/json'))) {
-            throw new \WebProject\DockerApi\Library\Generated\Exception\SystemEventsBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
+        if (400 === $status) {
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
-            throw new \WebProject\DockerApi\Library\Generated\Exception\SystemEventsInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
+        if (500 === $status) {
         }
     }
 

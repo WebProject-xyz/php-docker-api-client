@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecPlacementPreferencesItemSpread extends ArrayObject
+class TaskSpecPlacementPreferencesItemSpread
 {
     /**
      * @var array
@@ -20,16 +19,16 @@ class TaskSpecPlacementPreferencesItemSpread extends ArrayObject
     /**
      * label descriptor, such as `engine.labels.az`.
      *
-     * @var string
+     * @var string|null
      */
     protected $spreadDescriptor;
 
     /**
      * label descriptor, such as `engine.labels.az`.
      *
-     * @return string
+     * @return string|null
      */
-    public function getSpreadDescriptor(): string
+    public function getSpreadDescriptor(): ?string
     {
         return $this->spreadDescriptor;
     }
@@ -37,11 +36,11 @@ class TaskSpecPlacementPreferencesItemSpread extends ArrayObject
     /**
      * label descriptor, such as `engine.labels.az`.
      *
-     * @param string $spreadDescriptor
+     * @param string|null $spreadDescriptor
      *
      * @return self
      */
-    public function setSpreadDescriptor(string $spreadDescriptor): self
+    public function setSpreadDescriptor(?string $spreadDescriptor): self
     {
         $this->initialized['spreadDescriptor'] = true;
         $this->spreadDescriptor                = $spreadDescriptor;

@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class NodeSpec extends ArrayObject
+class NodeSpec
 {
     /**
      * @var array
@@ -20,34 +19,34 @@ class NodeSpec extends ArrayObject
     /**
      * Name for the node.
      *
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
      * User-defined key/value metadata.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $labels;
     /**
      * Role of the node.
      *
-     * @var string
+     * @var string|null
      */
     protected $role;
     /**
      * Availability of the node.
      *
-     * @var string
+     * @var string|null
      */
     protected $availability;
 
     /**
      * Name for the node.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -55,11 +54,11 @@ class NodeSpec extends ArrayObject
     /**
      * Name for the node.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -70,9 +69,9 @@ class NodeSpec extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getLabels(): iterable
+    public function getLabels(): ?iterable
     {
         return $this->labels;
     }
@@ -80,11 +79,11 @@ class NodeSpec extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @param array<string, string> $labels
+     * @param array<string, string>|null $labels
      *
      * @return self
      */
-    public function setLabels(iterable $labels): self
+    public function setLabels(?iterable $labels): self
     {
         $this->initialized['labels'] = true;
         $this->labels                = $labels;
@@ -95,9 +94,9 @@ class NodeSpec extends ArrayObject
     /**
      * Role of the node.
      *
-     * @return string
+     * @return string|null
      */
-    public function getRole(): string
+    public function getRole(): ?string
     {
         return $this->role;
     }
@@ -105,11 +104,11 @@ class NodeSpec extends ArrayObject
     /**
      * Role of the node.
      *
-     * @param string $role
+     * @param string|null $role
      *
      * @return self
      */
-    public function setRole(string $role): self
+    public function setRole(?string $role): self
     {
         $this->initialized['role'] = true;
         $this->role                = $role;
@@ -120,9 +119,9 @@ class NodeSpec extends ArrayObject
     /**
      * Availability of the node.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAvailability(): string
+    public function getAvailability(): ?string
     {
         return $this->availability;
     }
@@ -130,11 +129,11 @@ class NodeSpec extends ArrayObject
     /**
      * Availability of the node.
      *
-     * @param string $availability
+     * @param string|null $availability
      *
      * @return self
      */
-    public function setAvailability(string $availability): self
+    public function setAvailability(?string $availability): self
     {
         $this->initialized['availability'] = true;
         $this->availability                = $availability;

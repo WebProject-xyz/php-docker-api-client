@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecContainerSpecPrivilegesSELinuxContext extends ArrayObject
+class TaskSpecContainerSpecPrivilegesSELinuxContext
 {
     /**
      * @var array
@@ -20,40 +19,40 @@ class TaskSpecContainerSpecPrivilegesSELinuxContext extends ArrayObject
     /**
      * Disable SELinux.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $disable;
     /**
      * SELinux user label.
      *
-     * @var string
+     * @var string|null
      */
     protected $user;
     /**
      * SELinux role label.
      *
-     * @var string
+     * @var string|null
      */
     protected $role;
     /**
      * SELinux type label.
      *
-     * @var string
+     * @var string|null
      */
     protected $type;
     /**
      * SELinux level label.
      *
-     * @var string
+     * @var string|null
      */
     protected $level;
 
     /**
      * Disable SELinux.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getDisable(): bool
+    public function getDisable(): ?bool
     {
         return $this->disable;
     }
@@ -61,11 +60,11 @@ class TaskSpecContainerSpecPrivilegesSELinuxContext extends ArrayObject
     /**
      * Disable SELinux.
      *
-     * @param bool $disable
+     * @param bool|null $disable
      *
      * @return self
      */
-    public function setDisable(bool $disable): self
+    public function setDisable(?bool $disable): self
     {
         $this->initialized['disable'] = true;
         $this->disable                = $disable;
@@ -76,9 +75,9 @@ class TaskSpecContainerSpecPrivilegesSELinuxContext extends ArrayObject
     /**
      * SELinux user label.
      *
-     * @return string
+     * @return string|null
      */
-    public function getUser(): string
+    public function getUser(): ?string
     {
         return $this->user;
     }
@@ -86,11 +85,11 @@ class TaskSpecContainerSpecPrivilegesSELinuxContext extends ArrayObject
     /**
      * SELinux user label.
      *
-     * @param string $user
+     * @param string|null $user
      *
      * @return self
      */
-    public function setUser(string $user): self
+    public function setUser(?string $user): self
     {
         $this->initialized['user'] = true;
         $this->user                = $user;
@@ -101,9 +100,9 @@ class TaskSpecContainerSpecPrivilegesSELinuxContext extends ArrayObject
     /**
      * SELinux role label.
      *
-     * @return string
+     * @return string|null
      */
-    public function getRole(): string
+    public function getRole(): ?string
     {
         return $this->role;
     }
@@ -111,11 +110,11 @@ class TaskSpecContainerSpecPrivilegesSELinuxContext extends ArrayObject
     /**
      * SELinux role label.
      *
-     * @param string $role
+     * @param string|null $role
      *
      * @return self
      */
-    public function setRole(string $role): self
+    public function setRole(?string $role): self
     {
         $this->initialized['role'] = true;
         $this->role                = $role;
@@ -126,9 +125,9 @@ class TaskSpecContainerSpecPrivilegesSELinuxContext extends ArrayObject
     /**
      * SELinux type label.
      *
-     * @return string
+     * @return string|null
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -136,11 +135,11 @@ class TaskSpecContainerSpecPrivilegesSELinuxContext extends ArrayObject
     /**
      * SELinux type label.
      *
-     * @param string $type
+     * @param string|null $type
      *
      * @return self
      */
-    public function setType(string $type): self
+    public function setType(?string $type): self
     {
         $this->initialized['type'] = true;
         $this->type                = $type;
@@ -151,9 +150,9 @@ class TaskSpecContainerSpecPrivilegesSELinuxContext extends ArrayObject
     /**
      * SELinux level label.
      *
-     * @return string
+     * @return string|null
      */
-    public function getLevel(): string
+    public function getLevel(): ?string
     {
         return $this->level;
     }
@@ -161,11 +160,11 @@ class TaskSpecContainerSpecPrivilegesSELinuxContext extends ArrayObject
     /**
      * SELinux level label.
      *
-     * @param string $level
+     * @param string|null $level
      *
      * @return self
      */
-    public function setLevel(string $level): self
+    public function setLevel(?string $level): self
     {
         $this->initialized['level'] = true;
         $this->level                = $level;

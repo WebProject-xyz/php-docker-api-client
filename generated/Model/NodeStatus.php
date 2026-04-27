@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class NodeStatus extends ArrayObject
+class NodeStatus
 {
     /**
      * @var array
@@ -24,13 +23,13 @@ class NodeStatus extends ArrayObject
      */
     protected $state;
     /**
-     * @var string
+     * @var string|null
      */
     protected $message;
     /**
      * IP address of the node.
      *
-     * @var string
+     * @var string|null
      */
     protected $addr;
 
@@ -60,19 +59,19 @@ class NodeStatus extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return $this->message;
     }
 
     /**
-     * @param string $message
+     * @param string|null $message
      *
      * @return self
      */
-    public function setMessage(string $message): self
+    public function setMessage(?string $message): self
     {
         $this->initialized['message'] = true;
         $this->message                = $message;
@@ -83,9 +82,9 @@ class NodeStatus extends ArrayObject
     /**
      * IP address of the node.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAddr(): string
+    public function getAddr(): ?string
     {
         return $this->addr;
     }
@@ -93,11 +92,11 @@ class NodeStatus extends ArrayObject
     /**
      * IP address of the node.
      *
-     * @param string $addr
+     * @param string|null $addr
      *
      * @return self
      */
-    public function setAddr(string $addr): self
+    public function setAddr(?string $addr): self
     {
         $this->initialized['addr'] = true;
         $this->addr                = $addr;

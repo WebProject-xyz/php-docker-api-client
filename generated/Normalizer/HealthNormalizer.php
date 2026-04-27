@@ -16,7 +16,9 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
+use function is_string;
 
 class HealthNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,38 +39,52 @@ class HealthNormalizer implements DenormalizerInterface, NormalizerInterface, De
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\Health();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\Health();
-        if (null === $data || false === is_array($data)) {
-            return $object;
+        if (array_key_exists('Status', $data) && null !== $data['Status']) {
+            $value = $data['Status'];
+            if (is_string($data['Status'])) {
+                $value = $data['Status'];
+            } elseif (null === $data['Status']) {
+                $value = $data['Status'];
+            }
+            $object->setStatus($value);
+        } elseif (array_key_exists('Status', $data) && null === $data['Status']) {
+            $object->setStatus(null);
         }
-        if (array_key_exists('Status', $data)) {
-            $object->setStatus($data['Status']);
-            unset($data['Status']);
-        }
-        if (array_key_exists('FailingStreak', $data)) {
-            $object->setFailingStreak($data['FailingStreak']);
-            unset($data['FailingStreak']);
+        if (array_key_exists('FailingStreak', $data) && null !== $data['FailingStreak']) {
+            $value_1 = $data['FailingStreak'];
+            if (is_int($data['FailingStreak'])) {
+                $value_1 = $data['FailingStreak'];
+            } elseif (null === $data['FailingStreak']) {
+                $value_1 = $data['FailingStreak'];
+            }
+            $object->setFailingStreak($value_1);
+        } elseif (array_key_exists('FailingStreak', $data) && null === $data['FailingStreak']) {
+            $object->setFailingStreak(null);
         }
         if (array_key_exists('Log', $data) && null !== $data['Log']) {
-            $values = [];
-            foreach ($data['Log'] as $value) {
-                $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\HealthcheckResult::class, 'json', $context);
+            $value_2 = $data['Log'];
+            if (is_array($data['Log']) && $this->isOnlyNumericKeys($data['Log'])) {
+                $values = [];
+                foreach ($data['Log'] as $value_3) {
+                    $values[] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\HealthcheckResult::class, 'json', $context);
+                }
+                $value_2 = $values;
+            } elseif (null === $data['Log']) {
+                $value_2 = $data['Log'];
             }
-            $object->setLog($values);
-            unset($data['Log']);
+            $object->setLog($value_2);
         } elseif (array_key_exists('Log', $data) && null === $data['Log']) {
             $object->setLog(null);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
-            }
         }
 
         return $object;
@@ -77,23 +93,36 @@ class HealthNormalizer implements DenormalizerInterface, NormalizerInterface, De
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('status') && null !== $data->getStatus()) {
-            $dataArray['Status'] = $data->getStatus();
-        }
-        if ($data->isInitialized('failingStreak') && null !== $data->getFailingStreak()) {
-            $dataArray['FailingStreak'] = $data->getFailingStreak();
-        }
-        if ($data->isInitialized('log') && null !== $data->getLog()) {
-            $values = [];
-            foreach ($data->getLog() as $value) {
-                $values[] = $this->normalizer->normalize($value, 'json', $context);
+        if ($data->isInitialized('status')) {
+            $value = $data->getStatus();
+            if (is_string($data->getStatus())) {
+                $value = $data->getStatus();
+            } elseif (null === $data->getStatus()) {
+                $value = $data->getStatus();
             }
-            $dataArray['Log'] = $values;
+            $dataArray['Status'] = $value;
         }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
+        if ($data->isInitialized('failingStreak')) {
+            $value_1 = $data->getFailingStreak();
+            if (is_int($data->getFailingStreak())) {
+                $value_1 = $data->getFailingStreak();
+            } elseif (null === $data->getFailingStreak()) {
+                $value_1 = $data->getFailingStreak();
             }
+            $dataArray['FailingStreak'] = $value_1;
+        }
+        if ($data->isInitialized('log')) {
+            $value_2 = $data->getLog();
+            if (is_array($data->getLog())) {
+                $values = [];
+                foreach ($data->getLog() as $value_3) {
+                    $values[] = $this->normalizer->normalize($value_3, 'json', $context);
+                }
+                $value_2 = $values;
+            } elseif (null === $data->getLog()) {
+                $value_2 = $data->getLog();
+            }
+            $dataArray['Log'] = $value_2;
         }
 
         return $dataArray;

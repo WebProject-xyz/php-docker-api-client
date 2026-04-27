@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class NodeDescription extends ArrayObject
+class NodeDescription
 {
     /**
      * @var array
@@ -18,7 +17,7 @@ class NodeDescription extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $hostname;
     /**
@@ -49,19 +48,19 @@ class NodeDescription extends ArrayObject
     protected $tLSInfo;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getHostname(): string
+    public function getHostname(): ?string
     {
         return $this->hostname;
     }
 
     /**
-     * @param string $hostname
+     * @param string|null $hostname
      *
      * @return self
      */
-    public function setHostname(string $hostname): self
+    public function setHostname(?string $hostname): self
     {
         $this->initialized['hostname'] = true;
         $this->hostname                = $hostname;

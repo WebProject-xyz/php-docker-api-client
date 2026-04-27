@@ -38,44 +38,42 @@ class ExecIdStartPostBodyNormalizer implements DenormalizerInterface, Normalizer
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ExecIdStartPostBody();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ExecIdStartPostBody();
         if (array_key_exists('Detach', $data) && is_int($data['Detach'])) {
             $data['Detach'] = (bool) $data['Detach'];
         }
         if (array_key_exists('Tty', $data) && is_int($data['Tty'])) {
             $data['Tty'] = (bool) $data['Tty'];
         }
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('Detach', $data)) {
             $object->setDetach($data['Detach']);
-            unset($data['Detach']);
         }
         if (array_key_exists('Tty', $data)) {
             $object->setTty($data['Tty']);
-            unset($data['Tty']);
         }
         if (array_key_exists('ConsoleSize', $data) && null !== $data['ConsoleSize']) {
-            $values = [];
-            foreach ($data['ConsoleSize'] as $value) {
-                $values[] = $value;
+            $value = $data['ConsoleSize'];
+            if (is_array($data['ConsoleSize']) && $this->isOnlyNumericKeys($data['ConsoleSize'])) {
+                $values = [];
+                foreach ($data['ConsoleSize'] as $value_1) {
+                    $values[] = $value_1;
+                }
+                $value = $values;
+            } elseif (null === $data['ConsoleSize']) {
+                $value = $data['ConsoleSize'];
             }
-            $object->setConsoleSize($values);
-            unset($data['ConsoleSize']);
+            $object->setConsoleSize($value);
         } elseif (array_key_exists('ConsoleSize', $data) && null === $data['ConsoleSize']) {
             $object->setConsoleSize(null);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
-            }
         }
 
         return $object;
@@ -90,17 +88,18 @@ class ExecIdStartPostBodyNormalizer implements DenormalizerInterface, Normalizer
         if ($data->isInitialized('tty') && null !== $data->getTty()) {
             $dataArray['Tty'] = $data->getTty();
         }
-        if ($data->isInitialized('consoleSize') && null !== $data->getConsoleSize()) {
-            $values = [];
-            foreach ($data->getConsoleSize() as $value) {
-                $values[] = $value;
+        if ($data->isInitialized('consoleSize')) {
+            $value = $data->getConsoleSize();
+            if (is_array($data->getConsoleSize())) {
+                $values = [];
+                foreach ($data->getConsoleSize() as $value_1) {
+                    $values[] = $value_1;
+                }
+                $value = $values;
+            } elseif (null === $data->getConsoleSize()) {
+                $value = $data->getConsoleSize();
             }
-            $dataArray['ConsoleSize'] = $values;
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
-            }
+            $dataArray['ConsoleSize'] = $value;
         }
 
         return $dataArray;

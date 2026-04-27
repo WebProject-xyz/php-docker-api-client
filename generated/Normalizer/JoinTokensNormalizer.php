@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class JoinTokensNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,28 +38,37 @@ class JoinTokensNormalizer implements DenormalizerInterface, NormalizerInterface
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\JoinTokens();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\JoinTokens();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Worker', $data)) {
-            $object->setWorker($data['Worker']);
-            unset($data['Worker']);
-        }
-        if (array_key_exists('Manager', $data)) {
-            $object->setManager($data['Manager']);
-            unset($data['Manager']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Worker', $data) && null !== $data['Worker']) {
+            $value = $data['Worker'];
+            if (is_string($data['Worker'])) {
+                $value = $data['Worker'];
+            } elseif (null === $data['Worker']) {
+                $value = $data['Worker'];
             }
+            $object->setWorker($value);
+        } elseif (array_key_exists('Worker', $data) && null === $data['Worker']) {
+            $object->setWorker(null);
+        }
+        if (array_key_exists('Manager', $data) && null !== $data['Manager']) {
+            $value_1 = $data['Manager'];
+            if (is_string($data['Manager'])) {
+                $value_1 = $data['Manager'];
+            } elseif (null === $data['Manager']) {
+                $value_1 = $data['Manager'];
+            }
+            $object->setManager($value_1);
+        } elseif (array_key_exists('Manager', $data) && null === $data['Manager']) {
+            $object->setManager(null);
         }
 
         return $object;
@@ -67,16 +77,23 @@ class JoinTokensNormalizer implements DenormalizerInterface, NormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('worker') && null !== $data->getWorker()) {
-            $dataArray['Worker'] = $data->getWorker();
-        }
-        if ($data->isInitialized('manager') && null !== $data->getManager()) {
-            $dataArray['Manager'] = $data->getManager();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('worker')) {
+            $value = $data->getWorker();
+            if (is_string($data->getWorker())) {
+                $value = $data->getWorker();
+            } elseif (null === $data->getWorker()) {
+                $value = $data->getWorker();
             }
+            $dataArray['Worker'] = $value;
+        }
+        if ($data->isInitialized('manager')) {
+            $value_1 = $data->getManager();
+            if (is_string($data->getManager())) {
+                $value_1 = $data->getManager();
+            } elseif (null === $data->getManager()) {
+                $value_1 = $data->getManager();
+            }
+            $dataArray['Manager'] = $value_1;
         }
 
         return $dataArray;

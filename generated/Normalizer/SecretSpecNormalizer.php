@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class SecretSpecNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,44 +38,58 @@ class SecretSpecNormalizer implements DenormalizerInterface, NormalizerInterface
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\SecretSpec();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\SecretSpec();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Name', $data)) {
-            $object->setName($data['Name']);
-            unset($data['Name']);
-        }
-        if (array_key_exists('Labels', $data)) {
-            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['Labels'] as $key => $value) {
-                $values[$key] = $value;
+        if (array_key_exists('Name', $data) && null !== $data['Name']) {
+            $value = $data['Name'];
+            if (is_string($data['Name'])) {
+                $value = $data['Name'];
+            } elseif (null === $data['Name']) {
+                $value = $data['Name'];
             }
-            $object->setLabels($values);
-            unset($data['Labels']);
+            $object->setName($value);
+        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
+            $object->setName(null);
         }
-        if (array_key_exists('Data', $data)) {
-            $object->setData($data['Data']);
-            unset($data['Data']);
+        if (array_key_exists('Labels', $data) && null !== $data['Labels']) {
+            $value_1 = $data['Labels'];
+            if (is_array($data['Labels']) && $this->isOnlyNumericKeys($data['Labels'])) {
+                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                foreach ($data['Labels'] as $key => $value_2) {
+                    $values[$key] = $value_2;
+                }
+                $value_1 = $values;
+            } elseif (null === $data['Labels']) {
+                $value_1 = $data['Labels'];
+            }
+            $object->setLabels($value_1);
+        } elseif (array_key_exists('Labels', $data) && null === $data['Labels']) {
+            $object->setLabels(null);
+        }
+        if (array_key_exists('Data', $data) && null !== $data['Data']) {
+            $value_3 = $data['Data'];
+            if (is_string($data['Data'])) {
+                $value_3 = $data['Data'];
+            } elseif (null === $data['Data']) {
+                $value_3 = $data['Data'];
+            }
+            $object->setData($value_3);
+        } elseif (array_key_exists('Data', $data) && null === $data['Data']) {
+            $object->setData(null);
         }
         if (array_key_exists('Driver', $data)) {
             $object->setDriver($this->denormalizer->denormalize($data['Driver'], \WebProject\DockerApi\Library\Generated\Model\Driver::class, 'json', $context));
-            unset($data['Driver']);
         }
         if (array_key_exists('Templating', $data)) {
             $object->setTemplating($this->denormalizer->denormalize($data['Templating'], \WebProject\DockerApi\Library\Generated\Model\Driver::class, 'json', $context));
-            unset($data['Templating']);
-        }
-        foreach ($data as $key_1 => $value_1) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $object[$key_1] = $value_1;
-            }
         }
 
         return $object;
@@ -83,29 +98,42 @@ class SecretSpecNormalizer implements DenormalizerInterface, NormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name') && null !== $data->getName()) {
-            $dataArray['Name'] = $data->getName();
-        }
-        if ($data->isInitialized('labels') && null !== $data->getLabels()) {
-            $values = [];
-            foreach ($data->getLabels() as $key => $value) {
-                $values[$key] = $value;
+        if ($data->isInitialized('name')) {
+            $value = $data->getName();
+            if (is_string($data->getName())) {
+                $value = $data->getName();
+            } elseif (null === $data->getName()) {
+                $value = $data->getName();
             }
-            $dataArray['Labels'] = $values;
+            $dataArray['Name'] = $value;
         }
-        if ($data->isInitialized('data') && null !== $data->getData()) {
-            $dataArray['Data'] = $data->getData();
+        if ($data->isInitialized('labels')) {
+            $value_1 = $data->getLabels();
+            if (is_object($data->getLabels())) {
+                $values = [];
+                foreach ($data->getLabels() as $key => $value_2) {
+                    $values[$key] = $value_2;
+                }
+                $value_1 = $values;
+            } elseif (null === $data->getLabels()) {
+                $value_1 = $data->getLabels();
+            }
+            $dataArray['Labels'] = $value_1;
+        }
+        if ($data->isInitialized('data')) {
+            $value_3 = $data->getData();
+            if (is_string($data->getData())) {
+                $value_3 = $data->getData();
+            } elseif (null === $data->getData()) {
+                $value_3 = $data->getData();
+            }
+            $dataArray['Data'] = $value_3;
         }
         if ($data->isInitialized('driver') && null !== $data->getDriver()) {
             $dataArray['Driver'] = $this->normalizer->normalize($data->getDriver(), 'json', $context);
         }
         if ($data->isInitialized('templating') && null !== $data->getTemplating()) {
             $dataArray['Templating'] = $this->normalizer->normalize($data->getTemplating(), 'json', $context);
-        }
-        foreach ($data as $key_1 => $value_1) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $dataArray[$key_1] = $value_1;
-            }
         }
 
         return $dataArray;

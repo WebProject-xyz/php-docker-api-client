@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class CreateImageInfoNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,48 +38,43 @@ class CreateImageInfoNormalizer implements DenormalizerInterface, NormalizerInte
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\CreateImageInfo();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\CreateImageInfo();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('id', $data)) {
-            $object->setId($data['id']);
-            unset($data['id']);
-        }
-        if (array_key_exists('error', $data) && null !== $data['error']) {
-            $object->setError($data['error']);
-            unset($data['error']);
-        } elseif (array_key_exists('error', $data) && null === $data['error']) {
-            $object->setError(null);
+        if (array_key_exists('id', $data) && null !== $data['id']) {
+            $value = $data['id'];
+            if (is_string($data['id'])) {
+                $value = $data['id'];
+            } elseif (null === $data['id']) {
+                $value = $data['id'];
+            }
+            $object->setId($value);
+        } elseif (array_key_exists('id', $data) && null === $data['id']) {
+            $object->setId(null);
         }
         if (array_key_exists('errorDetail', $data)) {
             $object->setErrorDetail($this->denormalizer->denormalize($data['errorDetail'], \WebProject\DockerApi\Library\Generated\Model\ErrorDetail::class, 'json', $context));
-            unset($data['errorDetail']);
         }
-        if (array_key_exists('status', $data)) {
-            $object->setStatus($data['status']);
-            unset($data['status']);
-        }
-        if (array_key_exists('progress', $data) && null !== $data['progress']) {
-            $object->setProgress($data['progress']);
-            unset($data['progress']);
-        } elseif (array_key_exists('progress', $data) && null === $data['progress']) {
-            $object->setProgress(null);
+        if (array_key_exists('status', $data) && null !== $data['status']) {
+            $value_1 = $data['status'];
+            if (is_string($data['status'])) {
+                $value_1 = $data['status'];
+            } elseif (null === $data['status']) {
+                $value_1 = $data['status'];
+            }
+            $object->setStatus($value_1);
+        } elseif (array_key_exists('status', $data) && null === $data['status']) {
+            $object->setStatus(null);
         }
         if (array_key_exists('progressDetail', $data)) {
             $object->setProgressDetail($this->denormalizer->denormalize($data['progressDetail'], \WebProject\DockerApi\Library\Generated\Model\ProgressDetail::class, 'json', $context));
-            unset($data['progressDetail']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
-            }
         }
 
         return $object;
@@ -87,28 +83,29 @@ class CreateImageInfoNormalizer implements DenormalizerInterface, NormalizerInte
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('id') && null !== $data->getId()) {
-            $dataArray['id'] = $data->getId();
-        }
-        if ($data->isInitialized('error') && null !== $data->getError()) {
-            $dataArray['error'] = $data->getError();
+        if ($data->isInitialized('id')) {
+            $value = $data->getId();
+            if (is_string($data->getId())) {
+                $value = $data->getId();
+            } elseif (null === $data->getId()) {
+                $value = $data->getId();
+            }
+            $dataArray['id'] = $value;
         }
         if ($data->isInitialized('errorDetail') && null !== $data->getErrorDetail()) {
             $dataArray['errorDetail'] = $this->normalizer->normalize($data->getErrorDetail(), 'json', $context);
         }
-        if ($data->isInitialized('status') && null !== $data->getStatus()) {
-            $dataArray['status'] = $data->getStatus();
-        }
-        if ($data->isInitialized('progress') && null !== $data->getProgress()) {
-            $dataArray['progress'] = $data->getProgress();
+        if ($data->isInitialized('status')) {
+            $value_1 = $data->getStatus();
+            if (is_string($data->getStatus())) {
+                $value_1 = $data->getStatus();
+            } elseif (null === $data->getStatus()) {
+                $value_1 = $data->getStatus();
+            }
+            $dataArray['status'] = $value_1;
         }
         if ($data->isInitialized('progressDetail') && null !== $data->getProgressDetail()) {
             $dataArray['progressDetail'] = $this->normalizer->normalize($data->getProgressDetail(), 'json', $context);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
-            }
         }
 
         return $dataArray;

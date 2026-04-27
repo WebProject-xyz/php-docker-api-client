@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class MountPoint extends ArrayObject
+class MountPoint
 {
     /**
      * @var array
@@ -21,11 +20,11 @@ class MountPoint extends ArrayObject
      * The mount type:
      *
      * - `bind` a mount of a file or directory from the host into the container.
-     * - `volume` a docker volume with the given `Name`.
-     * - `image` a docker image
-     * - `tmpfs` a `tmpfs`.
+     * - `cluster` a Swarm cluster volume.
+     * - `image` an OCI image.
      * - `npipe` a named pipe from the host into the container.
-     * - `cluster` a Swarm cluster volume
+     * - `tmpfs` a `tmpfs`.
+     * - `volume` a docker volume with the given `Name`.
      *
      * @var string
      */
@@ -34,7 +33,7 @@ class MountPoint extends ArrayObject
      * Name is the name reference to the underlying data defined by `Source`
      * e.g., the volume name.
      *
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
@@ -45,20 +44,20 @@ class MountPoint extends ArrayObject
      * the source (host) part of the bind-mount. For `tmpfs` mount points, this
      * field is empty.
      *
-     * @var string
+     * @var string|null
      */
     protected $source;
     /**
      * Destination is the path relative to the container root (`/`) where
      * the `Source` is mounted inside the container.
      *
-     * @var string
+     * @var string|null
      */
     protected $destination;
     /**
      * Driver is the volume driver used to create the volume (if it is a volume).
      *
-     * @var string
+     * @var string|null
      */
     protected $driver;
     /**
@@ -67,13 +66,13 @@ class MountPoint extends ArrayObject
      *
      * The default is platform-specific (`"z"` on Linux, empty on Windows).
      *
-     * @var string
+     * @var string|null
      */
     protected $mode;
     /**
      * Whether the mount is mounted writable (read-write).
      *
-     * @var bool
+     * @var bool|null
      */
     protected $rW;
     /**
@@ -81,7 +80,7 @@ class MountPoint extends ArrayObject
      * mount point, and vice-versa. Refer to the [Linux kernel documentation](https://www.kernel.org/doc/Documentation/filesystems/sharedsubtree.txt)
      * for details. This field is not used on Windows.
      *
-     * @var string
+     * @var string|null
      */
     protected $propagation;
 
@@ -89,11 +88,11 @@ class MountPoint extends ArrayObject
      * The mount type:
      *
      * - `bind` a mount of a file or directory from the host into the container.
-     * - `volume` a docker volume with the given `Name`.
-     * - `image` a docker image
-     * - `tmpfs` a `tmpfs`.
+     * - `cluster` a Swarm cluster volume.
+     * - `image` an OCI image.
      * - `npipe` a named pipe from the host into the container.
-     * - `cluster` a Swarm cluster volume
+     * - `tmpfs` a `tmpfs`.
+     * - `volume` a docker volume with the given `Name`.
      *
      * @return string
      */
@@ -106,11 +105,11 @@ class MountPoint extends ArrayObject
      * The mount type:
      *
      * - `bind` a mount of a file or directory from the host into the container.
-     * - `volume` a docker volume with the given `Name`.
-     * - `image` a docker image
-     * - `tmpfs` a `tmpfs`.
+     * - `cluster` a Swarm cluster volume.
+     * - `image` an OCI image.
      * - `npipe` a named pipe from the host into the container.
-     * - `cluster` a Swarm cluster volume
+     * - `tmpfs` a `tmpfs`.
+     * - `volume` a docker volume with the given `Name`.
      *
      * @param string $type
      *
@@ -128,9 +127,9 @@ class MountPoint extends ArrayObject
      * Name is the name reference to the underlying data defined by `Source`
      * e.g., the volume name.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -139,11 +138,11 @@ class MountPoint extends ArrayObject
      * Name is the name reference to the underlying data defined by `Source`
      * e.g., the volume name.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -159,9 +158,9 @@ class MountPoint extends ArrayObject
      * the source (host) part of the bind-mount. For `tmpfs` mount points, this
      * field is empty.
      *
-     * @return string
+     * @return string|null
      */
-    public function getSource(): string
+    public function getSource(): ?string
     {
         return $this->source;
     }
@@ -174,11 +173,11 @@ class MountPoint extends ArrayObject
      * the source (host) part of the bind-mount. For `tmpfs` mount points, this
      * field is empty.
      *
-     * @param string $source
+     * @param string|null $source
      *
      * @return self
      */
-    public function setSource(string $source): self
+    public function setSource(?string $source): self
     {
         $this->initialized['source'] = true;
         $this->source                = $source;
@@ -190,9 +189,9 @@ class MountPoint extends ArrayObject
      * Destination is the path relative to the container root (`/`) where
      * the `Source` is mounted inside the container.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDestination(): string
+    public function getDestination(): ?string
     {
         return $this->destination;
     }
@@ -201,11 +200,11 @@ class MountPoint extends ArrayObject
      * Destination is the path relative to the container root (`/`) where
      * the `Source` is mounted inside the container.
      *
-     * @param string $destination
+     * @param string|null $destination
      *
      * @return self
      */
-    public function setDestination(string $destination): self
+    public function setDestination(?string $destination): self
     {
         $this->initialized['destination'] = true;
         $this->destination                = $destination;
@@ -216,9 +215,9 @@ class MountPoint extends ArrayObject
     /**
      * Driver is the volume driver used to create the volume (if it is a volume).
      *
-     * @return string
+     * @return string|null
      */
-    public function getDriver(): string
+    public function getDriver(): ?string
     {
         return $this->driver;
     }
@@ -226,11 +225,11 @@ class MountPoint extends ArrayObject
     /**
      * Driver is the volume driver used to create the volume (if it is a volume).
      *
-     * @param string $driver
+     * @param string|null $driver
      *
      * @return self
      */
-    public function setDriver(string $driver): self
+    public function setDriver(?string $driver): self
     {
         $this->initialized['driver'] = true;
         $this->driver                = $driver;
@@ -244,9 +243,9 @@ class MountPoint extends ArrayObject
      *
      * The default is platform-specific (`"z"` on Linux, empty on Windows).
      *
-     * @return string
+     * @return string|null
      */
-    public function getMode(): string
+    public function getMode(): ?string
     {
         return $this->mode;
     }
@@ -257,11 +256,11 @@ class MountPoint extends ArrayObject
      *
      * The default is platform-specific (`"z"` on Linux, empty on Windows).
      *
-     * @param string $mode
+     * @param string|null $mode
      *
      * @return self
      */
-    public function setMode(string $mode): self
+    public function setMode(?string $mode): self
     {
         $this->initialized['mode'] = true;
         $this->mode                = $mode;
@@ -272,9 +271,9 @@ class MountPoint extends ArrayObject
     /**
      * Whether the mount is mounted writable (read-write).
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getRW(): bool
+    public function getRW(): ?bool
     {
         return $this->rW;
     }
@@ -282,11 +281,11 @@ class MountPoint extends ArrayObject
     /**
      * Whether the mount is mounted writable (read-write).
      *
-     * @param bool $rW
+     * @param bool|null $rW
      *
      * @return self
      */
-    public function setRW(bool $rW): self
+    public function setRW(?bool $rW): self
     {
         $this->initialized['rW'] = true;
         $this->rW                = $rW;
@@ -299,9 +298,9 @@ class MountPoint extends ArrayObject
      * mount point, and vice-versa. Refer to the [Linux kernel documentation](https://www.kernel.org/doc/Documentation/filesystems/sharedsubtree.txt)
      * for details. This field is not used on Windows.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPropagation(): string
+    public function getPropagation(): ?string
     {
         return $this->propagation;
     }
@@ -311,11 +310,11 @@ class MountPoint extends ArrayObject
      * mount point, and vice-versa. Refer to the [Linux kernel documentation](https://www.kernel.org/doc/Documentation/filesystems/sharedsubtree.txt)
      * for details. This field is not used on Windows.
      *
-     * @param string $propagation
+     * @param string|null $propagation
      *
      * @return self
      */
-    public function setPropagation(string $propagation): self
+    public function setPropagation(?string $propagation): self
     {
         $this->initialized['propagation'] = true;
         $this->propagation                = $propagation;

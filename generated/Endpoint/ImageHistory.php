@@ -11,12 +11,11 @@ class ImageHistory extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     /**
      * Return parent layers of an image.
      *
-     * @param string $name            Image name or ID
-     * @param array  $queryParameters {
-     *
-     * @var string $platform JSON-encoded OCI platform to select the platform-variant.
-     *             If omitted, it defaults to any locally available platform,
-     *             prioritizing the daemon's host platform.
+     * @param string $name Image name or ID
+     * @param array{
+     *    "platform"?: string, //JSON-encoded OCI platform to select the platform-variant.
+     * If omitted, it defaults to any locally available platform,
+     * prioritizing the daemon's host platform.
      *
      * If the daemon provides a multi-platform image store, this selects
      * the platform-variant to show the history for. If the image is
@@ -24,8 +23,7 @@ class ImageHistory extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
      * provide a variant matching the given platform, an error is returned.
      *
      * Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
-     *
-     * }
+     * } $queryParameters
      */
     public function __construct(string $name, array $queryParameters = [])
     {
@@ -67,7 +65,7 @@ class ImageHistory extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     /**
      * {@inheritdoc}
      *
-     * @return \WebProject\DockerApi\Library\Generated\Model\ImagesNameHistoryGetResponse200Item[]|null
+     * @return \WebProject\DockerApi\Library\Generated\Model\ImageHistoryResponseItem[]|null
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ImageHistoryNotFoundException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ImageHistoryInternalServerErrorException
@@ -76,13 +74,13 @@ class ImageHistory extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
-            return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ImagesNameHistoryGetResponse200Item[]', 'json');
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+            return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ImageHistoryResponseItem[]', 'json');
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageHistoryNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageHistoryInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

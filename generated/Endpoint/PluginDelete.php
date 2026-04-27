@@ -10,15 +10,12 @@ class PluginDelete extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     protected $accept;
 
     /**
-     * @param string $name            The name of the plugin. The `:latest` tag is optional, and is the
-     *                                default if omitted.
-     * @param array  $queryParameters {
-     *
-     * @var bool $force Disable the plugin before removing. This may result in issues if the
-     *           plugin is in use by a container.
-     *
-     * }
-     *
+     * @param string $name The name of the plugin. The `:latest` tag is optional, and is the
+     *                     default if omitted.
+     * @param array{
+     *    "force"?: bool, //Disable the plugin before removing. This may result in issues if the
+     * plugin is in use by a container.
+     * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
     public function __construct(string $name, array $queryParameters = [], array $accept = [])
@@ -75,13 +72,13 @@ class PluginDelete extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\Plugin', 'json');
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\PluginDeleteNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\PluginDeleteInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

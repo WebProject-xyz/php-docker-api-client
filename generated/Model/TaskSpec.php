@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpec extends ArrayObject
+class TaskSpec
 {
     /**
      * @var array
@@ -27,7 +26,7 @@ class TaskSpec extends ArrayObject
      * > is set to `plugin`. NetworkAttachmentSpec is used when the Runtime
      * > field is set to `attachment`.
      *
-     * @var TaskSpecPluginSpec
+     * @var TaskSpecPluginSpec|null
      */
     protected $pluginSpec;
     /**
@@ -40,7 +39,7 @@ class TaskSpec extends ArrayObject
      * > is set to `plugin`. NetworkAttachmentSpec is used when the Runtime
      * > field is set to `attachment`.
      *
-     * @var TaskSpecContainerSpec
+     * @var TaskSpecContainerSpec|null
      */
     protected $containerSpec;
     /**
@@ -54,38 +53,38 @@ class TaskSpec extends ArrayObject
      * > is set to `plugin`. NetworkAttachmentSpec is used when the Runtime
      * > field is set to `attachment`.
      *
-     * @var TaskSpecNetworkAttachmentSpec
+     * @var TaskSpecNetworkAttachmentSpec|null
      */
     protected $networkAttachmentSpec;
     /**
      * Resource requirements which apply to each individual container created
      * as part of the service.
      *
-     * @var TaskSpecResources
+     * @var TaskSpecResources|null
      */
     protected $resources;
     /**
      * Specification for the restart policy which applies to containers
      * created as part of this service.
      *
-     * @var TaskSpecRestartPolicy
+     * @var TaskSpecRestartPolicy|null
      */
     protected $restartPolicy;
     /**
-     * @var TaskSpecPlacement
+     * @var TaskSpecPlacement|null
      */
     protected $placement;
     /**
      * A counter that triggers an update even if no relevant parameters have
      * been changed.
      *
-     * @var int
+     * @var int|null
      */
     protected $forceUpdate;
     /**
      * Runtime is the type of runtime specified for the task executor.
      *
-     * @var string
+     * @var string|null
      */
     protected $runtime;
     /**
@@ -99,7 +98,7 @@ class TaskSpec extends ArrayObject
      * not present, the default one for the swarm will be used, finally
      * falling back to the engine default if not specified.
      *
-     * @var TaskSpecLogDriver
+     * @var TaskSpecLogDriver|null
      */
     protected $logDriver;
 
@@ -113,9 +112,9 @@ class TaskSpec extends ArrayObject
      * > is set to `plugin`. NetworkAttachmentSpec is used when the Runtime
      * > field is set to `attachment`.
      *
-     * @return TaskSpecPluginSpec
+     * @return TaskSpecPluginSpec|null
      */
-    public function getPluginSpec(): TaskSpecPluginSpec
+    public function getPluginSpec(): ?TaskSpecPluginSpec
     {
         return $this->pluginSpec;
     }
@@ -130,11 +129,11 @@ class TaskSpec extends ArrayObject
      * > is set to `plugin`. NetworkAttachmentSpec is used when the Runtime
      * > field is set to `attachment`.
      *
-     * @param TaskSpecPluginSpec $pluginSpec
+     * @param TaskSpecPluginSpec|null $pluginSpec
      *
      * @return self
      */
-    public function setPluginSpec(TaskSpecPluginSpec $pluginSpec): self
+    public function setPluginSpec(?TaskSpecPluginSpec $pluginSpec): self
     {
         $this->initialized['pluginSpec'] = true;
         $this->pluginSpec                = $pluginSpec;
@@ -152,9 +151,9 @@ class TaskSpec extends ArrayObject
      * > is set to `plugin`. NetworkAttachmentSpec is used when the Runtime
      * > field is set to `attachment`.
      *
-     * @return TaskSpecContainerSpec
+     * @return TaskSpecContainerSpec|null
      */
-    public function getContainerSpec(): TaskSpecContainerSpec
+    public function getContainerSpec(): ?TaskSpecContainerSpec
     {
         return $this->containerSpec;
     }
@@ -169,11 +168,11 @@ class TaskSpec extends ArrayObject
      * > is set to `plugin`. NetworkAttachmentSpec is used when the Runtime
      * > field is set to `attachment`.
      *
-     * @param TaskSpecContainerSpec $containerSpec
+     * @param TaskSpecContainerSpec|null $containerSpec
      *
      * @return self
      */
-    public function setContainerSpec(TaskSpecContainerSpec $containerSpec): self
+    public function setContainerSpec(?TaskSpecContainerSpec $containerSpec): self
     {
         $this->initialized['containerSpec'] = true;
         $this->containerSpec                = $containerSpec;
@@ -192,9 +191,9 @@ class TaskSpec extends ArrayObject
      * > is set to `plugin`. NetworkAttachmentSpec is used when the Runtime
      * > field is set to `attachment`.
      *
-     * @return TaskSpecNetworkAttachmentSpec
+     * @return TaskSpecNetworkAttachmentSpec|null
      */
-    public function getNetworkAttachmentSpec(): TaskSpecNetworkAttachmentSpec
+    public function getNetworkAttachmentSpec(): ?TaskSpecNetworkAttachmentSpec
     {
         return $this->networkAttachmentSpec;
     }
@@ -210,11 +209,11 @@ class TaskSpec extends ArrayObject
      * > is set to `plugin`. NetworkAttachmentSpec is used when the Runtime
      * > field is set to `attachment`.
      *
-     * @param TaskSpecNetworkAttachmentSpec $networkAttachmentSpec
+     * @param TaskSpecNetworkAttachmentSpec|null $networkAttachmentSpec
      *
      * @return self
      */
-    public function setNetworkAttachmentSpec(TaskSpecNetworkAttachmentSpec $networkAttachmentSpec): self
+    public function setNetworkAttachmentSpec(?TaskSpecNetworkAttachmentSpec $networkAttachmentSpec): self
     {
         $this->initialized['networkAttachmentSpec'] = true;
         $this->networkAttachmentSpec                = $networkAttachmentSpec;
@@ -226,9 +225,9 @@ class TaskSpec extends ArrayObject
      * Resource requirements which apply to each individual container created
      * as part of the service.
      *
-     * @return TaskSpecResources
+     * @return TaskSpecResources|null
      */
-    public function getResources(): TaskSpecResources
+    public function getResources(): ?TaskSpecResources
     {
         return $this->resources;
     }
@@ -237,11 +236,11 @@ class TaskSpec extends ArrayObject
      * Resource requirements which apply to each individual container created
      * as part of the service.
      *
-     * @param TaskSpecResources $resources
+     * @param TaskSpecResources|null $resources
      *
      * @return self
      */
-    public function setResources(TaskSpecResources $resources): self
+    public function setResources(?TaskSpecResources $resources): self
     {
         $this->initialized['resources'] = true;
         $this->resources                = $resources;
@@ -253,9 +252,9 @@ class TaskSpec extends ArrayObject
      * Specification for the restart policy which applies to containers
      * created as part of this service.
      *
-     * @return TaskSpecRestartPolicy
+     * @return TaskSpecRestartPolicy|null
      */
-    public function getRestartPolicy(): TaskSpecRestartPolicy
+    public function getRestartPolicy(): ?TaskSpecRestartPolicy
     {
         return $this->restartPolicy;
     }
@@ -264,11 +263,11 @@ class TaskSpec extends ArrayObject
      * Specification for the restart policy which applies to containers
      * created as part of this service.
      *
-     * @param TaskSpecRestartPolicy $restartPolicy
+     * @param TaskSpecRestartPolicy|null $restartPolicy
      *
      * @return self
      */
-    public function setRestartPolicy(TaskSpecRestartPolicy $restartPolicy): self
+    public function setRestartPolicy(?TaskSpecRestartPolicy $restartPolicy): self
     {
         $this->initialized['restartPolicy'] = true;
         $this->restartPolicy                = $restartPolicy;
@@ -277,19 +276,19 @@ class TaskSpec extends ArrayObject
     }
 
     /**
-     * @return TaskSpecPlacement
+     * @return TaskSpecPlacement|null
      */
-    public function getPlacement(): TaskSpecPlacement
+    public function getPlacement(): ?TaskSpecPlacement
     {
         return $this->placement;
     }
 
     /**
-     * @param TaskSpecPlacement $placement
+     * @param TaskSpecPlacement|null $placement
      *
      * @return self
      */
-    public function setPlacement(TaskSpecPlacement $placement): self
+    public function setPlacement(?TaskSpecPlacement $placement): self
     {
         $this->initialized['placement'] = true;
         $this->placement                = $placement;
@@ -301,9 +300,9 @@ class TaskSpec extends ArrayObject
      * A counter that triggers an update even if no relevant parameters have
      * been changed.
      *
-     * @return int
+     * @return int|null
      */
-    public function getForceUpdate(): int
+    public function getForceUpdate(): ?int
     {
         return $this->forceUpdate;
     }
@@ -312,11 +311,11 @@ class TaskSpec extends ArrayObject
      * A counter that triggers an update even if no relevant parameters have
      * been changed.
      *
-     * @param int $forceUpdate
+     * @param int|null $forceUpdate
      *
      * @return self
      */
-    public function setForceUpdate(int $forceUpdate): self
+    public function setForceUpdate(?int $forceUpdate): self
     {
         $this->initialized['forceUpdate'] = true;
         $this->forceUpdate                = $forceUpdate;
@@ -327,9 +326,9 @@ class TaskSpec extends ArrayObject
     /**
      * Runtime is the type of runtime specified for the task executor.
      *
-     * @return string
+     * @return string|null
      */
-    public function getRuntime(): string
+    public function getRuntime(): ?string
     {
         return $this->runtime;
     }
@@ -337,11 +336,11 @@ class TaskSpec extends ArrayObject
     /**
      * Runtime is the type of runtime specified for the task executor.
      *
-     * @param string $runtime
+     * @param string|null $runtime
      *
      * @return self
      */
-    public function setRuntime(string $runtime): self
+    public function setRuntime(?string $runtime): self
     {
         $this->initialized['runtime'] = true;
         $this->runtime                = $runtime;
@@ -379,9 +378,9 @@ class TaskSpec extends ArrayObject
      * not present, the default one for the swarm will be used, finally
      * falling back to the engine default if not specified.
      *
-     * @return TaskSpecLogDriver
+     * @return TaskSpecLogDriver|null
      */
-    public function getLogDriver(): TaskSpecLogDriver
+    public function getLogDriver(): ?TaskSpecLogDriver
     {
         return $this->logDriver;
     }
@@ -391,11 +390,11 @@ class TaskSpec extends ArrayObject
      * not present, the default one for the swarm will be used, finally
      * falling back to the engine default if not specified.
      *
-     * @param TaskSpecLogDriver $logDriver
+     * @param TaskSpecLogDriver|null $logDriver
      *
      * @return self
      */
-    public function setLogDriver(TaskSpecLogDriver $logDriver): self
+    public function setLogDriver(?TaskSpecLogDriver $logDriver): self
     {
         $this->initialized['logDriver'] = true;
         $this->logDriver                = $logDriver;

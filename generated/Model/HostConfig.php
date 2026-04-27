@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class HostConfig extends ArrayObject
+class HostConfig
 {
     /**
      * @var array
@@ -21,13 +20,13 @@ class HostConfig extends ArrayObject
      * An integer value representing this container's relative CPU weight
      * versus other containers.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuShares;
     /**
      * Memory limit in bytes.
      *
-     * @var int
+     * @var int|null
      */
     protected $memory = 0;
     /**
@@ -36,13 +35,13 @@ class HostConfig extends ArrayObject
      * `cgroups` path of the init process. Cgroups are created if they do not
      * already exist.
      *
-     * @var string
+     * @var string|null
      */
     protected $cgroupParent;
     /**
      * Block IO weight (relative weight).
      *
-     * @var int
+     * @var int|null
      */
     protected $blkioWeight;
     /**
@@ -98,40 +97,40 @@ class HostConfig extends ArrayObject
     /**
      * The length of a CPU period in microseconds.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuPeriod;
     /**
      * Microseconds of CPU time that the container can get in a CPU period.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuQuota;
     /**
      * The length of a CPU real-time period in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuRealtimePeriod;
     /**
      * The length of a CPU real-time runtime in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuRealtimeRuntime;
     /**
      * CPUs in which to allow execution (e.g., `0-3`, `0,1`).
      *
-     * @var string
+     * @var string|null
      */
     protected $cpusetCpus;
     /**
      * Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only
      * effective on NUMA systems.
      *
-     * @var string
+     * @var string|null
      */
     protected $cpusetMems;
     /**
@@ -153,29 +152,16 @@ class HostConfig extends ArrayObject
      */
     protected $deviceRequests;
     /**
-     * Hard limit for kernel TCP buffer memory (in bytes). Depending on the
-     * OCI runtime in use, this option may be ignored. It is no longer supported
-     * by the default (runc) runtime.
-     *
-     * This field is omitted when empty.
-     *
-     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated `memory.kmem.tcp.limit_in_bytes` field
-     * for cgroups v1. This field will be removed in a future release.
-     *
-     * @var int
-     */
-    protected $kernelMemoryTCP;
-    /**
      * Memory soft limit in bytes.
      *
-     * @var int
+     * @var int|null
      */
     protected $memoryReservation;
     /**
      * Total memory limit (memory + swap). Set as `-1` to enable unlimited
      * swap.
      *
-     * @var int
+     * @var int|null
      */
     protected $memorySwap;
     /**
@@ -260,39 +246,39 @@ class HostConfig extends ArrayObject
      * is a string in one of these forms:
      *
      * - `host-src:container-dest[:options]` to bind-mount a host path
-     * into the container. Both `host-src`, and `container-dest` must
-     * be an _absolute_ path.
+     *   into the container. Both `host-src`, and `container-dest` must
+     *   be an _absolute_ path.
      * - `volume-name:container-dest[:options]` to bind-mount a volume
-     * managed by a volume driver into the container. `container-dest`
-     * must be an _absolute_ path.
+     *   managed by a volume driver into the container. `container-dest`
+     *   must be an _absolute_ path.
      * `options` is an optional, comma-delimited list of:
      *
      * - `nocopy` disables automatic copying of data from the container
-     * path to the volume. The `nocopy` flag only applies to named volumes.
+     *   path to the volume. The `nocopy` flag only applies to named volumes.
      * - `[ro|rw]` mounts a volume read-only or read-write, respectively.
-     * If omitted or set to `rw`, volumes are mounted read-write.
+     *   If omitted or set to `rw`, volumes are mounted read-write.
      * - `[z|Z]` applies SELinux labels to allow or deny multiple containers
-     * to read and write to the same volume.
-     * - `z`: a _shared_ content label is applied to the content. This
-     * label indicates that multiple containers can share the volume
-     * content, for both reading and writing.
-     * - `Z`: a _private unshared_ label is applied to the content.
-     * This label indicates that only the current container can use
-     * a private volume. Labeling systems such as SELinux require
-     * proper labels to be placed on volume content that is mounted
-     * into a container. Without a label, the security system can
-     * prevent a container's processes from using the content. By
-     * default, the labels set by the host operating system are not
-     * modified.
+     *   to read and write to the same volume.
+     *     - `z`: a _shared_ content label is applied to the content. This
+     *       label indicates that multiple containers can share the volume
+     *       content, for both reading and writing.
+     *     - `Z`: a _private unshared_ label is applied to the content.
+     *       This label indicates that only the current container can use
+     *       a private volume. Labeling systems such as SELinux require
+     *       proper labels to be placed on volume content that is mounted
+     *       into a container. Without a label, the security system can
+     *       prevent a container's processes from using the content. By
+     *       default, the labels set by the host operating system are not
+     *       modified.
      * - `[[r]shared|[r]slave|[r]private]` specifies mount
-     * [propagation behavior](https://www.kernel.org/doc/Documentation/filesystems/sharedsubtree.txt).
-     * This only applies to bind-mounted volumes, not internal volumes
-     * or named volumes. Mount propagation requires the source mount
-     * point (the location where the source directory is mounted in the
-     * host operating system) to have the correct propagation properties.
-     * For shared volumes, the source mount point must be set to `shared`.
-     * For slave volumes, the mount must be set to either `shared` or
-     * `slave`.
+     *   [propagation behavior](https://www.kernel.org/doc/Documentation/filesystems/sharedsubtree.txt).
+     *   This only applies to bind-mounted volumes, not internal volumes
+     *   or named volumes. Mount propagation requires the source mount
+     *   point (the location where the source directory is mounted in the
+     *   host operating system) to have the correct propagation properties.
+     *   For shared volumes, the source mount point must be set to `shared`.
+     *   For slave volumes, the mount must be set to either `shared` or
+     *   `slave`.
      *
      * @var list<string>|null
      */
@@ -300,13 +286,13 @@ class HostConfig extends ArrayObject
     /**
      * Path to a file where the container ID is written.
      *
-     * @var string
+     * @var string|null
      */
     protected $containerIDFile;
     /**
      * The logging configuration for this container.
      *
-     * @var HostConfigLogConfig
+     * @var HostConfigLogConfig|null
      */
     protected $logConfig;
     /**
@@ -315,7 +301,7 @@ class HostConfig extends ArrayObject
      * other value is taken as a custom network's name to which this
      * container should connect to.
      *
-     * @var string
+     * @var string|null
      */
     protected $networkMode;
     /**
@@ -326,7 +312,7 @@ class HostConfig extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @var array<string, PortBinding>|null
+     * @var array<string, list<PortBinding>|null>|null
      */
     protected $portBindings;
     /**
@@ -343,13 +329,13 @@ class HostConfig extends ArrayObject
      * Automatically remove the container when the container's process
      * exits. This has no effect if `RestartPolicy` is set.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $autoRemove;
     /**
      * Driver that this container uses to mount volumes.
      *
-     * @var string
+     * @var string|null
      */
     protected $volumeDriver;
     /**
@@ -401,7 +387,7 @@ class HostConfig extends ArrayObject
      * If not specified, the daemon default is used, which can either be `"private"`
      * or `"host"`, depending on daemon version, kernel support and configuration.
      *
-     * @var string
+     * @var string|null
      */
     protected $cgroupnsMode;
     /**
@@ -482,7 +468,7 @@ class HostConfig extends ArrayObject
     /**
      * Gives the container full access to the host.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $privileged;
     /**
@@ -497,13 +483,13 @@ class HostConfig extends ArrayObject
      * the kernel. For example, on Linux the range is defined by
      * `/proc/sys/net/ipv4/ip_local_port_range`.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $publishAllPorts;
     /**
      * Mount the container's root filesystem as read only.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $readonlyRootfs;
     /**
@@ -516,7 +502,7 @@ class HostConfig extends ArrayObject
     /**
      * Storage driver options for this container, in the form `{"size": "120G"}`.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $storageOpt;
     /**
@@ -527,26 +513,26 @@ class HostConfig extends ArrayObject
      * { "/run": "rw,noexec,nosuid,size=65536k" }
      * ```
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $tmpfs;
     /**
      * UTS namespace to use for the container.
      *
-     * @var string
+     * @var string|null
      */
     protected $uTSMode;
     /**
      * Sets the usernamespace mode for the container when usernamespace
      * remapping option is enabled.
      *
-     * @var string
+     * @var string|null
      */
     protected $usernsMode;
     /**
      * Size of `/dev/shm` in bytes. If omitted, the system uses 64MB.
      *
-     * @var int
+     * @var int|null
      */
     protected $shmSize;
     /**
@@ -566,7 +552,7 @@ class HostConfig extends ArrayObject
     /**
      * Isolation technology of the container. (Windows only).
      *
-     * @var string
+     * @var string|null
      */
     protected $isolation;
     /**
@@ -580,7 +566,7 @@ class HostConfig extends ArrayObject
      * The list of paths to be set as read-only inside the container
      * (this overrides the default set of paths).
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $readonlyPaths;
 
@@ -588,9 +574,9 @@ class HostConfig extends ArrayObject
      * An integer value representing this container's relative CPU weight
      * versus other containers.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuShares(): int
+    public function getCpuShares(): ?int
     {
         return $this->cpuShares;
     }
@@ -599,11 +585,11 @@ class HostConfig extends ArrayObject
      * An integer value representing this container's relative CPU weight
      * versus other containers.
      *
-     * @param int $cpuShares
+     * @param int|null $cpuShares
      *
      * @return self
      */
-    public function setCpuShares(int $cpuShares): self
+    public function setCpuShares(?int $cpuShares): self
     {
         $this->initialized['cpuShares'] = true;
         $this->cpuShares                = $cpuShares;
@@ -614,9 +600,9 @@ class HostConfig extends ArrayObject
     /**
      * Memory limit in bytes.
      *
-     * @return int
+     * @return int|null
      */
-    public function getMemory(): int
+    public function getMemory(): ?int
     {
         return $this->memory;
     }
@@ -624,11 +610,11 @@ class HostConfig extends ArrayObject
     /**
      * Memory limit in bytes.
      *
-     * @param int $memory
+     * @param int|null $memory
      *
      * @return self
      */
-    public function setMemory(int $memory): self
+    public function setMemory(?int $memory): self
     {
         $this->initialized['memory'] = true;
         $this->memory                = $memory;
@@ -642,9 +628,9 @@ class HostConfig extends ArrayObject
      * `cgroups` path of the init process. Cgroups are created if they do not
      * already exist.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCgroupParent(): string
+    public function getCgroupParent(): ?string
     {
         return $this->cgroupParent;
     }
@@ -655,11 +641,11 @@ class HostConfig extends ArrayObject
      * `cgroups` path of the init process. Cgroups are created if they do not
      * already exist.
      *
-     * @param string $cgroupParent
+     * @param string|null $cgroupParent
      *
      * @return self
      */
-    public function setCgroupParent(string $cgroupParent): self
+    public function setCgroupParent(?string $cgroupParent): self
     {
         $this->initialized['cgroupParent'] = true;
         $this->cgroupParent                = $cgroupParent;
@@ -670,9 +656,9 @@ class HostConfig extends ArrayObject
     /**
      * Block IO weight (relative weight).
      *
-     * @return int
+     * @return int|null
      */
-    public function getBlkioWeight(): int
+    public function getBlkioWeight(): ?int
     {
         return $this->blkioWeight;
     }
@@ -680,11 +666,11 @@ class HostConfig extends ArrayObject
     /**
      * Block IO weight (relative weight).
      *
-     * @param int $blkioWeight
+     * @param int|null $blkioWeight
      *
      * @return self
      */
-    public function setBlkioWeight(int $blkioWeight): self
+    public function setBlkioWeight(?int $blkioWeight): self
     {
         $this->initialized['blkioWeight'] = true;
         $this->blkioWeight                = $blkioWeight;
@@ -860,9 +846,9 @@ class HostConfig extends ArrayObject
     /**
      * The length of a CPU period in microseconds.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuPeriod(): int
+    public function getCpuPeriod(): ?int
     {
         return $this->cpuPeriod;
     }
@@ -870,11 +856,11 @@ class HostConfig extends ArrayObject
     /**
      * The length of a CPU period in microseconds.
      *
-     * @param int $cpuPeriod
+     * @param int|null $cpuPeriod
      *
      * @return self
      */
-    public function setCpuPeriod(int $cpuPeriod): self
+    public function setCpuPeriod(?int $cpuPeriod): self
     {
         $this->initialized['cpuPeriod'] = true;
         $this->cpuPeriod                = $cpuPeriod;
@@ -885,9 +871,9 @@ class HostConfig extends ArrayObject
     /**
      * Microseconds of CPU time that the container can get in a CPU period.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuQuota(): int
+    public function getCpuQuota(): ?int
     {
         return $this->cpuQuota;
     }
@@ -895,11 +881,11 @@ class HostConfig extends ArrayObject
     /**
      * Microseconds of CPU time that the container can get in a CPU period.
      *
-     * @param int $cpuQuota
+     * @param int|null $cpuQuota
      *
      * @return self
      */
-    public function setCpuQuota(int $cpuQuota): self
+    public function setCpuQuota(?int $cpuQuota): self
     {
         $this->initialized['cpuQuota'] = true;
         $this->cpuQuota                = $cpuQuota;
@@ -911,9 +897,9 @@ class HostConfig extends ArrayObject
      * The length of a CPU real-time period in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuRealtimePeriod(): int
+    public function getCpuRealtimePeriod(): ?int
     {
         return $this->cpuRealtimePeriod;
     }
@@ -922,11 +908,11 @@ class HostConfig extends ArrayObject
      * The length of a CPU real-time period in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @param int $cpuRealtimePeriod
+     * @param int|null $cpuRealtimePeriod
      *
      * @return self
      */
-    public function setCpuRealtimePeriod(int $cpuRealtimePeriod): self
+    public function setCpuRealtimePeriod(?int $cpuRealtimePeriod): self
     {
         $this->initialized['cpuRealtimePeriod'] = true;
         $this->cpuRealtimePeriod                = $cpuRealtimePeriod;
@@ -938,9 +924,9 @@ class HostConfig extends ArrayObject
      * The length of a CPU real-time runtime in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuRealtimeRuntime(): int
+    public function getCpuRealtimeRuntime(): ?int
     {
         return $this->cpuRealtimeRuntime;
     }
@@ -949,11 +935,11 @@ class HostConfig extends ArrayObject
      * The length of a CPU real-time runtime in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @param int $cpuRealtimeRuntime
+     * @param int|null $cpuRealtimeRuntime
      *
      * @return self
      */
-    public function setCpuRealtimeRuntime(int $cpuRealtimeRuntime): self
+    public function setCpuRealtimeRuntime(?int $cpuRealtimeRuntime): self
     {
         $this->initialized['cpuRealtimeRuntime'] = true;
         $this->cpuRealtimeRuntime                = $cpuRealtimeRuntime;
@@ -964,9 +950,9 @@ class HostConfig extends ArrayObject
     /**
      * CPUs in which to allow execution (e.g., `0-3`, `0,1`).
      *
-     * @return string
+     * @return string|null
      */
-    public function getCpusetCpus(): string
+    public function getCpusetCpus(): ?string
     {
         return $this->cpusetCpus;
     }
@@ -974,11 +960,11 @@ class HostConfig extends ArrayObject
     /**
      * CPUs in which to allow execution (e.g., `0-3`, `0,1`).
      *
-     * @param string $cpusetCpus
+     * @param string|null $cpusetCpus
      *
      * @return self
      */
-    public function setCpusetCpus(string $cpusetCpus): self
+    public function setCpusetCpus(?string $cpusetCpus): self
     {
         $this->initialized['cpusetCpus'] = true;
         $this->cpusetCpus                = $cpusetCpus;
@@ -990,9 +976,9 @@ class HostConfig extends ArrayObject
      * Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only
      * effective on NUMA systems.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCpusetMems(): string
+    public function getCpusetMems(): ?string
     {
         return $this->cpusetMems;
     }
@@ -1001,11 +987,11 @@ class HostConfig extends ArrayObject
      * Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only
      * effective on NUMA systems.
      *
-     * @param string $cpusetMems
+     * @param string|null $cpusetMems
      *
      * @return self
      */
-    public function setCpusetMems(string $cpusetMems): self
+    public function setCpusetMems(?string $cpusetMems): self
     {
         $this->initialized['cpusetMems'] = true;
         $this->cpusetMems                = $cpusetMems;
@@ -1089,50 +1075,11 @@ class HostConfig extends ArrayObject
     }
 
     /**
-     * Hard limit for kernel TCP buffer memory (in bytes). Depending on the
-     * OCI runtime in use, this option may be ignored. It is no longer supported
-     * by the default (runc) runtime.
-     *
-     * This field is omitted when empty.
-     *
-     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated `memory.kmem.tcp.limit_in_bytes` field
-     * for cgroups v1. This field will be removed in a future release.
-     *
-     * @return int
-     */
-    public function getKernelMemoryTCP(): int
-    {
-        return $this->kernelMemoryTCP;
-    }
-
-    /**
-     * Hard limit for kernel TCP buffer memory (in bytes). Depending on the
-     * OCI runtime in use, this option may be ignored. It is no longer supported
-     * by the default (runc) runtime.
-     *
-     * This field is omitted when empty.
-     *
-     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated `memory.kmem.tcp.limit_in_bytes` field
-     * for cgroups v1. This field will be removed in a future release.
-     *
-     * @param int $kernelMemoryTCP
-     *
-     * @return self
-     */
-    public function setKernelMemoryTCP(int $kernelMemoryTCP): self
-    {
-        $this->initialized['kernelMemoryTCP'] = true;
-        $this->kernelMemoryTCP                = $kernelMemoryTCP;
-
-        return $this;
-    }
-
-    /**
      * Memory soft limit in bytes.
      *
-     * @return int
+     * @return int|null
      */
-    public function getMemoryReservation(): int
+    public function getMemoryReservation(): ?int
     {
         return $this->memoryReservation;
     }
@@ -1140,11 +1087,11 @@ class HostConfig extends ArrayObject
     /**
      * Memory soft limit in bytes.
      *
-     * @param int $memoryReservation
+     * @param int|null $memoryReservation
      *
      * @return self
      */
-    public function setMemoryReservation(int $memoryReservation): self
+    public function setMemoryReservation(?int $memoryReservation): self
     {
         $this->initialized['memoryReservation'] = true;
         $this->memoryReservation                = $memoryReservation;
@@ -1156,9 +1103,9 @@ class HostConfig extends ArrayObject
      * Total memory limit (memory + swap). Set as `-1` to enable unlimited
      * swap.
      *
-     * @return int
+     * @return int|null
      */
-    public function getMemorySwap(): int
+    public function getMemorySwap(): ?int
     {
         return $this->memorySwap;
     }
@@ -1167,11 +1114,11 @@ class HostConfig extends ArrayObject
      * Total memory limit (memory + swap). Set as `-1` to enable unlimited
      * swap.
      *
-     * @param int $memorySwap
+     * @param int|null $memorySwap
      *
      * @return self
      */
-    public function setMemorySwap(int $memorySwap): self
+    public function setMemorySwap(?int $memorySwap): self
     {
         $this->initialized['memorySwap'] = true;
         $this->memorySwap                = $memorySwap;
@@ -1468,39 +1415,39 @@ class HostConfig extends ArrayObject
      * is a string in one of these forms:
      *
      * - `host-src:container-dest[:options]` to bind-mount a host path
-     * into the container. Both `host-src`, and `container-dest` must
-     * be an _absolute_ path.
+     *   into the container. Both `host-src`, and `container-dest` must
+     *   be an _absolute_ path.
      * - `volume-name:container-dest[:options]` to bind-mount a volume
-     * managed by a volume driver into the container. `container-dest`
-     * must be an _absolute_ path.
+     *   managed by a volume driver into the container. `container-dest`
+     *   must be an _absolute_ path.
      * `options` is an optional, comma-delimited list of:
      *
      * - `nocopy` disables automatic copying of data from the container
-     * path to the volume. The `nocopy` flag only applies to named volumes.
+     *   path to the volume. The `nocopy` flag only applies to named volumes.
      * - `[ro|rw]` mounts a volume read-only or read-write, respectively.
-     * If omitted or set to `rw`, volumes are mounted read-write.
+     *   If omitted or set to `rw`, volumes are mounted read-write.
      * - `[z|Z]` applies SELinux labels to allow or deny multiple containers
-     * to read and write to the same volume.
-     * - `z`: a _shared_ content label is applied to the content. This
-     * label indicates that multiple containers can share the volume
-     * content, for both reading and writing.
-     * - `Z`: a _private unshared_ label is applied to the content.
-     * This label indicates that only the current container can use
-     * a private volume. Labeling systems such as SELinux require
-     * proper labels to be placed on volume content that is mounted
-     * into a container. Without a label, the security system can
-     * prevent a container's processes from using the content. By
-     * default, the labels set by the host operating system are not
-     * modified.
+     *   to read and write to the same volume.
+     *     - `z`: a _shared_ content label is applied to the content. This
+     *       label indicates that multiple containers can share the volume
+     *       content, for both reading and writing.
+     *     - `Z`: a _private unshared_ label is applied to the content.
+     *       This label indicates that only the current container can use
+     *       a private volume. Labeling systems such as SELinux require
+     *       proper labels to be placed on volume content that is mounted
+     *       into a container. Without a label, the security system can
+     *       prevent a container's processes from using the content. By
+     *       default, the labels set by the host operating system are not
+     *       modified.
      * - `[[r]shared|[r]slave|[r]private]` specifies mount
-     * [propagation behavior](https://www.kernel.org/doc/Documentation/filesystems/sharedsubtree.txt).
-     * This only applies to bind-mounted volumes, not internal volumes
-     * or named volumes. Mount propagation requires the source mount
-     * point (the location where the source directory is mounted in the
-     * host operating system) to have the correct propagation properties.
-     * For shared volumes, the source mount point must be set to `shared`.
-     * For slave volumes, the mount must be set to either `shared` or
-     * `slave`.
+     *   [propagation behavior](https://www.kernel.org/doc/Documentation/filesystems/sharedsubtree.txt).
+     *   This only applies to bind-mounted volumes, not internal volumes
+     *   or named volumes. Mount propagation requires the source mount
+     *   point (the location where the source directory is mounted in the
+     *   host operating system) to have the correct propagation properties.
+     *   For shared volumes, the source mount point must be set to `shared`.
+     *   For slave volumes, the mount must be set to either `shared` or
+     *   `slave`.
      *
      * @return list<string>|null
      */
@@ -1563,9 +1510,9 @@ class HostConfig extends ArrayObject
     /**
      * Path to a file where the container ID is written.
      *
-     * @return string
+     * @return string|null
      */
-    public function getContainerIDFile(): string
+    public function getContainerIDFile(): ?string
     {
         return $this->containerIDFile;
     }
@@ -1573,11 +1520,11 @@ class HostConfig extends ArrayObject
     /**
      * Path to a file where the container ID is written.
      *
-     * @param string $containerIDFile
+     * @param string|null $containerIDFile
      *
      * @return self
      */
-    public function setContainerIDFile(string $containerIDFile): self
+    public function setContainerIDFile(?string $containerIDFile): self
     {
         $this->initialized['containerIDFile'] = true;
         $this->containerIDFile                = $containerIDFile;
@@ -1588,9 +1535,9 @@ class HostConfig extends ArrayObject
     /**
      * The logging configuration for this container.
      *
-     * @return HostConfigLogConfig
+     * @return HostConfigLogConfig|null
      */
-    public function getLogConfig(): HostConfigLogConfig
+    public function getLogConfig(): ?HostConfigLogConfig
     {
         return $this->logConfig;
     }
@@ -1598,11 +1545,11 @@ class HostConfig extends ArrayObject
     /**
      * The logging configuration for this container.
      *
-     * @param HostConfigLogConfig $logConfig
+     * @param HostConfigLogConfig|null $logConfig
      *
      * @return self
      */
-    public function setLogConfig(HostConfigLogConfig $logConfig): self
+    public function setLogConfig(?HostConfigLogConfig $logConfig): self
     {
         $this->initialized['logConfig'] = true;
         $this->logConfig                = $logConfig;
@@ -1616,9 +1563,9 @@ class HostConfig extends ArrayObject
      * other value is taken as a custom network's name to which this
      * container should connect to.
      *
-     * @return string
+     * @return string|null
      */
-    public function getNetworkMode(): string
+    public function getNetworkMode(): ?string
     {
         return $this->networkMode;
     }
@@ -1629,11 +1576,11 @@ class HostConfig extends ArrayObject
      * other value is taken as a custom network's name to which this
      * container should connect to.
      *
-     * @param string $networkMode
+     * @param string|null $networkMode
      *
      * @return self
      */
-    public function setNetworkMode(string $networkMode): self
+    public function setNetworkMode(?string $networkMode): self
     {
         $this->initialized['networkMode'] = true;
         $this->networkMode                = $networkMode;
@@ -1649,7 +1596,7 @@ class HostConfig extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @return array<string, PortBinding>|null
+     * @return array<string, list<PortBinding>|null>|null
      */
     public function getPortBindings(): ?iterable
     {
@@ -1664,7 +1611,7 @@ class HostConfig extends ArrayObject
      * If a container's port is mapped for multiple protocols, separate entries
      * are added to the mapping table.
      *
-     * @param array<string, PortBinding>|null $portBindings
+     * @param array<string, list<PortBinding>|null>|null $portBindings
      *
      * @return self
      */
@@ -1713,9 +1660,9 @@ class HostConfig extends ArrayObject
      * Automatically remove the container when the container's process
      * exits. This has no effect if `RestartPolicy` is set.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getAutoRemove(): bool
+    public function getAutoRemove(): ?bool
     {
         return $this->autoRemove;
     }
@@ -1724,11 +1671,11 @@ class HostConfig extends ArrayObject
      * Automatically remove the container when the container's process
      * exits. This has no effect if `RestartPolicy` is set.
      *
-     * @param bool $autoRemove
+     * @param bool|null $autoRemove
      *
      * @return self
      */
-    public function setAutoRemove(bool $autoRemove): self
+    public function setAutoRemove(?bool $autoRemove): self
     {
         $this->initialized['autoRemove'] = true;
         $this->autoRemove                = $autoRemove;
@@ -1739,9 +1686,9 @@ class HostConfig extends ArrayObject
     /**
      * Driver that this container uses to mount volumes.
      *
-     * @return string
+     * @return string|null
      */
-    public function getVolumeDriver(): string
+    public function getVolumeDriver(): ?string
     {
         return $this->volumeDriver;
     }
@@ -1749,11 +1696,11 @@ class HostConfig extends ArrayObject
     /**
      * Driver that this container uses to mount volumes.
      *
-     * @param string $volumeDriver
+     * @param string|null $volumeDriver
      *
      * @return self
      */
-    public function setVolumeDriver(string $volumeDriver): self
+    public function setVolumeDriver(?string $volumeDriver): self
     {
         $this->initialized['volumeDriver'] = true;
         $this->volumeDriver                = $volumeDriver;
@@ -1928,9 +1875,9 @@ class HostConfig extends ArrayObject
      * If not specified, the daemon default is used, which can either be `"private"`
      * or `"host"`, depending on daemon version, kernel support and configuration.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCgroupnsMode(): string
+    public function getCgroupnsMode(): ?string
     {
         return $this->cgroupnsMode;
     }
@@ -1944,11 +1891,11 @@ class HostConfig extends ArrayObject
      * If not specified, the daemon default is used, which can either be `"private"`
      * or `"host"`, depending on daemon version, kernel support and configuration.
      *
-     * @param string $cgroupnsMode
+     * @param string|null $cgroupnsMode
      *
      * @return self
      */
-    public function setCgroupnsMode(string $cgroupnsMode): self
+    public function setCgroupnsMode(?string $cgroupnsMode): self
     {
         $this->initialized['cgroupnsMode'] = true;
         $this->cgroupnsMode                = $cgroupnsMode;
@@ -2239,9 +2186,9 @@ class HostConfig extends ArrayObject
     /**
      * Gives the container full access to the host.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getPrivileged(): bool
+    public function getPrivileged(): ?bool
     {
         return $this->privileged;
     }
@@ -2249,11 +2196,11 @@ class HostConfig extends ArrayObject
     /**
      * Gives the container full access to the host.
      *
-     * @param bool $privileged
+     * @param bool|null $privileged
      *
      * @return self
      */
-    public function setPrivileged(bool $privileged): self
+    public function setPrivileged(?bool $privileged): self
     {
         $this->initialized['privileged'] = true;
         $this->privileged                = $privileged;
@@ -2273,9 +2220,9 @@ class HostConfig extends ArrayObject
      * the kernel. For example, on Linux the range is defined by
      * `/proc/sys/net/ipv4/ip_local_port_range`.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getPublishAllPorts(): bool
+    public function getPublishAllPorts(): ?bool
     {
         return $this->publishAllPorts;
     }
@@ -2292,11 +2239,11 @@ class HostConfig extends ArrayObject
      * the kernel. For example, on Linux the range is defined by
      * `/proc/sys/net/ipv4/ip_local_port_range`.
      *
-     * @param bool $publishAllPorts
+     * @param bool|null $publishAllPorts
      *
      * @return self
      */
-    public function setPublishAllPorts(bool $publishAllPorts): self
+    public function setPublishAllPorts(?bool $publishAllPorts): self
     {
         $this->initialized['publishAllPorts'] = true;
         $this->publishAllPorts                = $publishAllPorts;
@@ -2307,9 +2254,9 @@ class HostConfig extends ArrayObject
     /**
      * Mount the container's root filesystem as read only.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getReadonlyRootfs(): bool
+    public function getReadonlyRootfs(): ?bool
     {
         return $this->readonlyRootfs;
     }
@@ -2317,11 +2264,11 @@ class HostConfig extends ArrayObject
     /**
      * Mount the container's root filesystem as read only.
      *
-     * @param bool $readonlyRootfs
+     * @param bool|null $readonlyRootfs
      *
      * @return self
      */
-    public function setReadonlyRootfs(bool $readonlyRootfs): self
+    public function setReadonlyRootfs(?bool $readonlyRootfs): self
     {
         $this->initialized['readonlyRootfs'] = true;
         $this->readonlyRootfs                = $readonlyRootfs;
@@ -2359,9 +2306,9 @@ class HostConfig extends ArrayObject
     /**
      * Storage driver options for this container, in the form `{"size": "120G"}`.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getStorageOpt(): iterable
+    public function getStorageOpt(): ?iterable
     {
         return $this->storageOpt;
     }
@@ -2369,11 +2316,11 @@ class HostConfig extends ArrayObject
     /**
      * Storage driver options for this container, in the form `{"size": "120G"}`.
      *
-     * @param array<string, string> $storageOpt
+     * @param array<string, string>|null $storageOpt
      *
      * @return self
      */
-    public function setStorageOpt(iterable $storageOpt): self
+    public function setStorageOpt(?iterable $storageOpt): self
     {
         $this->initialized['storageOpt'] = true;
         $this->storageOpt                = $storageOpt;
@@ -2389,9 +2336,9 @@ class HostConfig extends ArrayObject
      * { "/run": "rw,noexec,nosuid,size=65536k" }
      * ```
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getTmpfs(): iterable
+    public function getTmpfs(): ?iterable
     {
         return $this->tmpfs;
     }
@@ -2404,11 +2351,11 @@ class HostConfig extends ArrayObject
      * { "/run": "rw,noexec,nosuid,size=65536k" }
      * ```
      *
-     * @param array<string, string> $tmpfs
+     * @param array<string, string>|null $tmpfs
      *
      * @return self
      */
-    public function setTmpfs(iterable $tmpfs): self
+    public function setTmpfs(?iterable $tmpfs): self
     {
         $this->initialized['tmpfs'] = true;
         $this->tmpfs                = $tmpfs;
@@ -2419,9 +2366,9 @@ class HostConfig extends ArrayObject
     /**
      * UTS namespace to use for the container.
      *
-     * @return string
+     * @return string|null
      */
-    public function getUTSMode(): string
+    public function getUTSMode(): ?string
     {
         return $this->uTSMode;
     }
@@ -2429,11 +2376,11 @@ class HostConfig extends ArrayObject
     /**
      * UTS namespace to use for the container.
      *
-     * @param string $uTSMode
+     * @param string|null $uTSMode
      *
      * @return self
      */
-    public function setUTSMode(string $uTSMode): self
+    public function setUTSMode(?string $uTSMode): self
     {
         $this->initialized['uTSMode'] = true;
         $this->uTSMode                = $uTSMode;
@@ -2445,9 +2392,9 @@ class HostConfig extends ArrayObject
      * Sets the usernamespace mode for the container when usernamespace
      * remapping option is enabled.
      *
-     * @return string
+     * @return string|null
      */
-    public function getUsernsMode(): string
+    public function getUsernsMode(): ?string
     {
         return $this->usernsMode;
     }
@@ -2456,11 +2403,11 @@ class HostConfig extends ArrayObject
      * Sets the usernamespace mode for the container when usernamespace
      * remapping option is enabled.
      *
-     * @param string $usernsMode
+     * @param string|null $usernsMode
      *
      * @return self
      */
-    public function setUsernsMode(string $usernsMode): self
+    public function setUsernsMode(?string $usernsMode): self
     {
         $this->initialized['usernsMode'] = true;
         $this->usernsMode                = $usernsMode;
@@ -2471,9 +2418,9 @@ class HostConfig extends ArrayObject
     /**
      * Size of `/dev/shm` in bytes. If omitted, the system uses 64MB.
      *
-     * @return int
+     * @return int|null
      */
-    public function getShmSize(): int
+    public function getShmSize(): ?int
     {
         return $this->shmSize;
     }
@@ -2481,11 +2428,11 @@ class HostConfig extends ArrayObject
     /**
      * Size of `/dev/shm` in bytes. If omitted, the system uses 64MB.
      *
-     * @param int $shmSize
+     * @param int|null $shmSize
      *
      * @return self
      */
-    public function setShmSize(int $shmSize): self
+    public function setShmSize(?int $shmSize): self
     {
         $this->initialized['shmSize'] = true;
         $this->shmSize                = $shmSize;
@@ -2550,9 +2497,9 @@ class HostConfig extends ArrayObject
     /**
      * Isolation technology of the container. (Windows only).
      *
-     * @return string
+     * @return string|null
      */
-    public function getIsolation(): string
+    public function getIsolation(): ?string
     {
         return $this->isolation;
     }
@@ -2560,11 +2507,11 @@ class HostConfig extends ArrayObject
     /**
      * Isolation technology of the container. (Windows only).
      *
-     * @param string $isolation
+     * @param string|null $isolation
      *
      * @return self
      */
-    public function setIsolation(string $isolation): self
+    public function setIsolation(?string $isolation): self
     {
         $this->initialized['isolation'] = true;
         $this->isolation                = $isolation;
@@ -2603,9 +2550,9 @@ class HostConfig extends ArrayObject
      * The list of paths to be set as read-only inside the container
      * (this overrides the default set of paths).
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getReadonlyPaths(): array
+    public function getReadonlyPaths(): ?array
     {
         return $this->readonlyPaths;
     }
@@ -2614,11 +2561,11 @@ class HostConfig extends ArrayObject
      * The list of paths to be set as read-only inside the container
      * (this overrides the default set of paths).
      *
-     * @param list<string> $readonlyPaths
+     * @param list<string>|null $readonlyPaths
      *
      * @return self
      */
-    public function setReadonlyPaths(array $readonlyPaths): self
+    public function setReadonlyPaths(?array $readonlyPaths): self
     {
         $this->initialized['readonlyPaths'] = true;
         $this->readonlyPaths                = $readonlyPaths;

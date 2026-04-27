@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ImageConfig extends ArrayObject
+class ImageConfig
 {
     /**
      * @var array
@@ -20,7 +19,7 @@ class ImageConfig extends ArrayObject
     /**
      * The user that commands are run as inside the container.
      *
-     * @var string
+     * @var string|null
      */
     protected $user;
     /**
@@ -28,7 +27,7 @@ class ImageConfig extends ArrayObject
      *
      * `{"<port>/<tcp|udp|sctp>": {}}`
      *
-     * @var array<string, array<string, mixed>>|null
+     * @var array<string, mixed>|null
      */
     protected $exposedPorts;
     /**
@@ -36,17 +35,18 @@ class ImageConfig extends ArrayObject
      * form `["VAR=value", ...]`. A variable without `=` is removed from the
      * environment, rather than to have an empty value.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $env;
     /**
      * Command to run specified as a string or an array of strings.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $cmd;
     /**
      * A test to perform to check that the container is healthy.
+     * Healthcheck commands should be side-effect free.
      *
      * @var HealthConfig
      */
@@ -61,13 +61,13 @@ class ImageConfig extends ArrayObject
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @var array<string, array<string, mixed>>
+     * @var array<string, mixed>|null
      */
     protected $volumes;
     /**
      * The working directory for commands to run in.
      *
-     * @var string
+     * @var string|null
      */
     protected $workingDir;
     /**
@@ -77,7 +77,7 @@ class ImageConfig extends ArrayObject
      * entry point is reset to system default (i.e., the entry point used by
      * docker when there is no `ENTRYPOINT` instruction in the `Dockerfile`).
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $entrypoint;
     /**
@@ -89,7 +89,7 @@ class ImageConfig extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $labels;
     /**
@@ -108,9 +108,9 @@ class ImageConfig extends ArrayObject
     /**
      * The user that commands are run as inside the container.
      *
-     * @return string
+     * @return string|null
      */
-    public function getUser(): string
+    public function getUser(): ?string
     {
         return $this->user;
     }
@@ -118,11 +118,11 @@ class ImageConfig extends ArrayObject
     /**
      * The user that commands are run as inside the container.
      *
-     * @param string $user
+     * @param string|null $user
      *
      * @return self
      */
-    public function setUser(string $user): self
+    public function setUser(?string $user): self
     {
         $this->initialized['user'] = true;
         $this->user                = $user;
@@ -135,7 +135,7 @@ class ImageConfig extends ArrayObject
      *
      * `{"<port>/<tcp|udp|sctp>": {}}`
      *
-     * @return array<string, array<string, mixed>>|null
+     * @return array<string, mixed>|null
      */
     public function getExposedPorts(): ?iterable
     {
@@ -147,7 +147,7 @@ class ImageConfig extends ArrayObject
      *
      * `{"<port>/<tcp|udp|sctp>": {}}`
      *
-     * @param array<string, array<string, mixed>>|null $exposedPorts
+     * @param array<string, mixed>|null $exposedPorts
      *
      * @return self
      */
@@ -164,9 +164,9 @@ class ImageConfig extends ArrayObject
      * form `["VAR=value", ...]`. A variable without `=` is removed from the
      * environment, rather than to have an empty value.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getEnv(): array
+    public function getEnv(): ?array
     {
         return $this->env;
     }
@@ -176,11 +176,11 @@ class ImageConfig extends ArrayObject
      * form `["VAR=value", ...]`. A variable without `=` is removed from the
      * environment, rather than to have an empty value.
      *
-     * @param list<string> $env
+     * @param list<string>|null $env
      *
      * @return self
      */
-    public function setEnv(array $env): self
+    public function setEnv(?array $env): self
     {
         $this->initialized['env'] = true;
         $this->env                = $env;
@@ -191,9 +191,9 @@ class ImageConfig extends ArrayObject
     /**
      * Command to run specified as a string or an array of strings.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getCmd(): array
+    public function getCmd(): ?array
     {
         return $this->cmd;
     }
@@ -201,11 +201,11 @@ class ImageConfig extends ArrayObject
     /**
      * Command to run specified as a string or an array of strings.
      *
-     * @param list<string> $cmd
+     * @param list<string>|null $cmd
      *
      * @return self
      */
-    public function setCmd(array $cmd): self
+    public function setCmd(?array $cmd): self
     {
         $this->initialized['cmd'] = true;
         $this->cmd                = $cmd;
@@ -215,6 +215,7 @@ class ImageConfig extends ArrayObject
 
     /**
      * A test to perform to check that the container is healthy.
+     * Healthcheck commands should be side-effect free.
      *
      * @return HealthConfig
      */
@@ -225,6 +226,7 @@ class ImageConfig extends ArrayObject
 
     /**
      * A test to perform to check that the container is healthy.
+     * Healthcheck commands should be side-effect free.
      *
      * @param HealthConfig $healthcheck
      *
@@ -267,9 +269,9 @@ class ImageConfig extends ArrayObject
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @return array<string, array<string, mixed>>
+     * @return array<string, mixed>|null
      */
-    public function getVolumes(): iterable
+    public function getVolumes(): ?iterable
     {
         return $this->volumes;
     }
@@ -278,11 +280,11 @@ class ImageConfig extends ArrayObject
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @param array<string, array<string, mixed>> $volumes
+     * @param array<string, mixed>|null $volumes
      *
      * @return self
      */
-    public function setVolumes(iterable $volumes): self
+    public function setVolumes(?iterable $volumes): self
     {
         $this->initialized['volumes'] = true;
         $this->volumes                = $volumes;
@@ -293,9 +295,9 @@ class ImageConfig extends ArrayObject
     /**
      * The working directory for commands to run in.
      *
-     * @return string
+     * @return string|null
      */
-    public function getWorkingDir(): string
+    public function getWorkingDir(): ?string
     {
         return $this->workingDir;
     }
@@ -303,11 +305,11 @@ class ImageConfig extends ArrayObject
     /**
      * The working directory for commands to run in.
      *
-     * @param string $workingDir
+     * @param string|null $workingDir
      *
      * @return self
      */
-    public function setWorkingDir(string $workingDir): self
+    public function setWorkingDir(?string $workingDir): self
     {
         $this->initialized['workingDir'] = true;
         $this->workingDir                = $workingDir;
@@ -322,9 +324,9 @@ class ImageConfig extends ArrayObject
      * entry point is reset to system default (i.e., the entry point used by
      * docker when there is no `ENTRYPOINT` instruction in the `Dockerfile`).
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getEntrypoint(): array
+    public function getEntrypoint(): ?array
     {
         return $this->entrypoint;
     }
@@ -336,11 +338,11 @@ class ImageConfig extends ArrayObject
      * entry point is reset to system default (i.e., the entry point used by
      * docker when there is no `ENTRYPOINT` instruction in the `Dockerfile`).
      *
-     * @param list<string> $entrypoint
+     * @param list<string>|null $entrypoint
      *
      * @return self
      */
-    public function setEntrypoint(array $entrypoint): self
+    public function setEntrypoint(?array $entrypoint): self
     {
         $this->initialized['entrypoint'] = true;
         $this->entrypoint                = $entrypoint;
@@ -376,9 +378,9 @@ class ImageConfig extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getLabels(): iterable
+    public function getLabels(): ?iterable
     {
         return $this->labels;
     }
@@ -386,11 +388,11 @@ class ImageConfig extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @param array<string, string> $labels
+     * @param array<string, string>|null $labels
      *
      * @return self
      */
-    public function setLabels(iterable $labels): self
+    public function setLabels(?iterable $labels): self
     {
         $this->initialized['labels'] = true;
         $this->labels                = $labels;

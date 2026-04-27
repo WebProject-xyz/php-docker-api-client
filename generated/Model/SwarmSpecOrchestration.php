@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class SwarmSpecOrchestration extends ArrayObject
+class SwarmSpecOrchestration
 {
     /**
      * @var array
@@ -21,7 +20,7 @@ class SwarmSpecOrchestration extends ArrayObject
      * The number of historic tasks to keep per instance or node. If
      * negative, never remove completed or failed tasks.
      *
-     * @var int
+     * @var int|null
      */
     protected $taskHistoryRetentionLimit;
 
@@ -29,9 +28,9 @@ class SwarmSpecOrchestration extends ArrayObject
      * The number of historic tasks to keep per instance or node. If
      * negative, never remove completed or failed tasks.
      *
-     * @return int
+     * @return int|null
      */
-    public function getTaskHistoryRetentionLimit(): int
+    public function getTaskHistoryRetentionLimit(): ?int
     {
         return $this->taskHistoryRetentionLimit;
     }
@@ -40,11 +39,11 @@ class SwarmSpecOrchestration extends ArrayObject
      * The number of historic tasks to keep per instance or node. If
      * negative, never remove completed or failed tasks.
      *
-     * @param int $taskHistoryRetentionLimit
+     * @param int|null $taskHistoryRetentionLimit
      *
      * @return self
      */
-    public function setTaskHistoryRetentionLimit(int $taskHistoryRetentionLimit): self
+    public function setTaskHistoryRetentionLimit(?int $taskHistoryRetentionLimit): self
     {
         $this->initialized['taskHistoryRetentionLimit'] = true;
         $this->taskHistoryRetentionLimit                = $taskHistoryRetentionLimit;

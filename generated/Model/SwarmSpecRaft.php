@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class SwarmSpecRaft extends ArrayObject
+class SwarmSpecRaft
 {
     /**
      * @var array
@@ -20,20 +19,20 @@ class SwarmSpecRaft extends ArrayObject
     /**
      * The number of log entries between snapshots.
      *
-     * @var int
+     * @var int|null
      */
     protected $snapshotInterval;
     /**
      * The number of snapshots to keep beyond the current snapshot.
      *
-     * @var int
+     * @var int|null
      */
     protected $keepOldSnapshots;
     /**
      * The number of log entries to keep around to sync up slow followers
      * after a snapshot is created.
      *
-     * @var int
+     * @var int|null
      */
     protected $logEntriesForSlowFollowers;
     /**
@@ -44,7 +43,7 @@ class SwarmSpecRaft extends ArrayObject
      * A tick currently defaults to one second, so these translate
      * directly to seconds currently, but this is NOT guaranteed.
      *
-     * @var int
+     * @var int|null
      */
     protected $electionTick;
     /**
@@ -54,16 +53,16 @@ class SwarmSpecRaft extends ArrayObject
      * A tick currently defaults to one second, so these translate
      * directly to seconds currently, but this is NOT guaranteed.
      *
-     * @var int
+     * @var int|null
      */
     protected $heartbeatTick;
 
     /**
      * The number of log entries between snapshots.
      *
-     * @return int
+     * @return int|null
      */
-    public function getSnapshotInterval(): int
+    public function getSnapshotInterval(): ?int
     {
         return $this->snapshotInterval;
     }
@@ -71,11 +70,11 @@ class SwarmSpecRaft extends ArrayObject
     /**
      * The number of log entries between snapshots.
      *
-     * @param int $snapshotInterval
+     * @param int|null $snapshotInterval
      *
      * @return self
      */
-    public function setSnapshotInterval(int $snapshotInterval): self
+    public function setSnapshotInterval(?int $snapshotInterval): self
     {
         $this->initialized['snapshotInterval'] = true;
         $this->snapshotInterval                = $snapshotInterval;
@@ -86,9 +85,9 @@ class SwarmSpecRaft extends ArrayObject
     /**
      * The number of snapshots to keep beyond the current snapshot.
      *
-     * @return int
+     * @return int|null
      */
-    public function getKeepOldSnapshots(): int
+    public function getKeepOldSnapshots(): ?int
     {
         return $this->keepOldSnapshots;
     }
@@ -96,11 +95,11 @@ class SwarmSpecRaft extends ArrayObject
     /**
      * The number of snapshots to keep beyond the current snapshot.
      *
-     * @param int $keepOldSnapshots
+     * @param int|null $keepOldSnapshots
      *
      * @return self
      */
-    public function setKeepOldSnapshots(int $keepOldSnapshots): self
+    public function setKeepOldSnapshots(?int $keepOldSnapshots): self
     {
         $this->initialized['keepOldSnapshots'] = true;
         $this->keepOldSnapshots                = $keepOldSnapshots;
@@ -112,9 +111,9 @@ class SwarmSpecRaft extends ArrayObject
      * The number of log entries to keep around to sync up slow followers
      * after a snapshot is created.
      *
-     * @return int
+     * @return int|null
      */
-    public function getLogEntriesForSlowFollowers(): int
+    public function getLogEntriesForSlowFollowers(): ?int
     {
         return $this->logEntriesForSlowFollowers;
     }
@@ -123,11 +122,11 @@ class SwarmSpecRaft extends ArrayObject
      * The number of log entries to keep around to sync up slow followers
      * after a snapshot is created.
      *
-     * @param int $logEntriesForSlowFollowers
+     * @param int|null $logEntriesForSlowFollowers
      *
      * @return self
      */
-    public function setLogEntriesForSlowFollowers(int $logEntriesForSlowFollowers): self
+    public function setLogEntriesForSlowFollowers(?int $logEntriesForSlowFollowers): self
     {
         $this->initialized['logEntriesForSlowFollowers'] = true;
         $this->logEntriesForSlowFollowers                = $logEntriesForSlowFollowers;
@@ -143,9 +142,9 @@ class SwarmSpecRaft extends ArrayObject
      * A tick currently defaults to one second, so these translate
      * directly to seconds currently, but this is NOT guaranteed.
      *
-     * @return int
+     * @return int|null
      */
-    public function getElectionTick(): int
+    public function getElectionTick(): ?int
     {
         return $this->electionTick;
     }
@@ -158,11 +157,11 @@ class SwarmSpecRaft extends ArrayObject
      * A tick currently defaults to one second, so these translate
      * directly to seconds currently, but this is NOT guaranteed.
      *
-     * @param int $electionTick
+     * @param int|null $electionTick
      *
      * @return self
      */
-    public function setElectionTick(int $electionTick): self
+    public function setElectionTick(?int $electionTick): self
     {
         $this->initialized['electionTick'] = true;
         $this->electionTick                = $electionTick;
@@ -177,9 +176,9 @@ class SwarmSpecRaft extends ArrayObject
      * A tick currently defaults to one second, so these translate
      * directly to seconds currently, but this is NOT guaranteed.
      *
-     * @return int
+     * @return int|null
      */
-    public function getHeartbeatTick(): int
+    public function getHeartbeatTick(): ?int
     {
         return $this->heartbeatTick;
     }
@@ -191,11 +190,11 @@ class SwarmSpecRaft extends ArrayObject
      * A tick currently defaults to one second, so these translate
      * directly to seconds currently, but this is NOT guaranteed.
      *
-     * @param int $heartbeatTick
+     * @param int|null $heartbeatTick
      *
      * @return self
      */
-    public function setHeartbeatTick(int $heartbeatTick): self
+    public function setHeartbeatTick(?int $heartbeatTick): self
     {
         $this->initialized['heartbeatTick'] = true;
         $this->heartbeatTick                = $heartbeatTick;

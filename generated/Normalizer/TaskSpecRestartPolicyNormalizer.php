@@ -16,7 +16,9 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
+use function is_string;
 
 class TaskSpecRestartPolicyNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,36 +39,59 @@ class TaskSpecRestartPolicyNormalizer implements DenormalizerInterface, Normaliz
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpecRestartPolicy();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpecRestartPolicy();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Condition', $data)) {
-            $object->setCondition($data['Condition']);
-            unset($data['Condition']);
-        }
-        if (array_key_exists('Delay', $data)) {
-            $object->setDelay($data['Delay']);
-            unset($data['Delay']);
-        }
-        if (array_key_exists('MaxAttempts', $data)) {
-            $object->setMaxAttempts($data['MaxAttempts']);
-            unset($data['MaxAttempts']);
-        }
-        if (array_key_exists('Window', $data)) {
-            $object->setWindow($data['Window']);
-            unset($data['Window']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Condition', $data) && null !== $data['Condition']) {
+            $value = $data['Condition'];
+            if (is_string($data['Condition'])) {
+                $value = $data['Condition'];
+            } elseif (null === $data['Condition']) {
+                $value = $data['Condition'];
             }
+            $object->setCondition($value);
+        } elseif (array_key_exists('Condition', $data) && null === $data['Condition']) {
+            $object->setCondition(null);
+        }
+        if (array_key_exists('Delay', $data) && null !== $data['Delay']) {
+            $value_1 = $data['Delay'];
+            if (is_int($data['Delay'])) {
+                $value_1 = $data['Delay'];
+            } elseif (null === $data['Delay']) {
+                $value_1 = $data['Delay'];
+            }
+            $object->setDelay($value_1);
+        } elseif (array_key_exists('Delay', $data) && null === $data['Delay']) {
+            $object->setDelay(null);
+        }
+        if (array_key_exists('MaxAttempts', $data) && null !== $data['MaxAttempts']) {
+            $value_2 = $data['MaxAttempts'];
+            if (is_int($data['MaxAttempts'])) {
+                $value_2 = $data['MaxAttempts'];
+            } elseif (null === $data['MaxAttempts']) {
+                $value_2 = $data['MaxAttempts'];
+            }
+            $object->setMaxAttempts($value_2);
+        } elseif (array_key_exists('MaxAttempts', $data) && null === $data['MaxAttempts']) {
+            $object->setMaxAttempts(null);
+        }
+        if (array_key_exists('Window', $data) && null !== $data['Window']) {
+            $value_3 = $data['Window'];
+            if (is_int($data['Window'])) {
+                $value_3 = $data['Window'];
+            } elseif (null === $data['Window']) {
+                $value_3 = $data['Window'];
+            }
+            $object->setWindow($value_3);
+        } elseif (array_key_exists('Window', $data) && null === $data['Window']) {
+            $object->setWindow(null);
         }
 
         return $object;
@@ -75,22 +100,41 @@ class TaskSpecRestartPolicyNormalizer implements DenormalizerInterface, Normaliz
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('condition') && null !== $data->getCondition()) {
-            $dataArray['Condition'] = $data->getCondition();
-        }
-        if ($data->isInitialized('delay') && null !== $data->getDelay()) {
-            $dataArray['Delay'] = $data->getDelay();
-        }
-        if ($data->isInitialized('maxAttempts') && null !== $data->getMaxAttempts()) {
-            $dataArray['MaxAttempts'] = $data->getMaxAttempts();
-        }
-        if ($data->isInitialized('window') && null !== $data->getWindow()) {
-            $dataArray['Window'] = $data->getWindow();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('condition')) {
+            $value = $data->getCondition();
+            if (is_string($data->getCondition())) {
+                $value = $data->getCondition();
+            } elseif (null === $data->getCondition()) {
+                $value = $data->getCondition();
             }
+            $dataArray['Condition'] = $value;
+        }
+        if ($data->isInitialized('delay')) {
+            $value_1 = $data->getDelay();
+            if (is_int($data->getDelay())) {
+                $value_1 = $data->getDelay();
+            } elseif (null === $data->getDelay()) {
+                $value_1 = $data->getDelay();
+            }
+            $dataArray['Delay'] = $value_1;
+        }
+        if ($data->isInitialized('maxAttempts')) {
+            $value_2 = $data->getMaxAttempts();
+            if (is_int($data->getMaxAttempts())) {
+                $value_2 = $data->getMaxAttempts();
+            } elseif (null === $data->getMaxAttempts()) {
+                $value_2 = $data->getMaxAttempts();
+            }
+            $dataArray['MaxAttempts'] = $value_2;
+        }
+        if ($data->isInitialized('window')) {
+            $value_3 = $data->getWindow();
+            if (is_int($data->getWindow())) {
+                $value_3 = $data->getWindow();
+            } elseif (null === $data->getWindow()) {
+                $value_3 = $data->getWindow();
+            }
+            $dataArray['Window'] = $value_3;
         }
 
         return $dataArray;

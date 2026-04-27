@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ErrorDetail extends ArrayObject
+class ErrorDetail
 {
     /**
      * @var array
@@ -18,28 +17,28 @@ class ErrorDetail extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var int
+     * @var int|null
      */
     protected $code;
     /**
-     * @var string
+     * @var string|null
      */
     protected $message;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getCode(): int
+    public function getCode(): ?int
     {
         return $this->code;
     }
 
     /**
-     * @param int $code
+     * @param int|null $code
      *
      * @return self
      */
-    public function setCode(int $code): self
+    public function setCode(?int $code): self
     {
         $this->initialized['code'] = true;
         $this->code                = $code;
@@ -48,19 +47,19 @@ class ErrorDetail extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return $this->message;
     }
 
     /**
-     * @param string $message
+     * @param string|null $message
      *
      * @return self
      */
-    public function setMessage(string $message): self
+    public function setMessage(?string $message): self
     {
         $this->initialized['message'] = true;
         $this->message                = $message;

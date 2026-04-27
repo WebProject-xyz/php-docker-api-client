@@ -37,28 +37,30 @@ class ServiceUpdateResponseNormalizer implements DenormalizerInterface, Normaliz
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ServiceUpdateResponse();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ServiceUpdateResponse();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Warnings', $data)) {
-            $values = [];
-            foreach ($data['Warnings'] as $value) {
-                $values[] = $value;
+        if (array_key_exists('Warnings', $data) && null !== $data['Warnings']) {
+            $value = $data['Warnings'];
+            if (is_array($data['Warnings']) && $this->isOnlyNumericKeys($data['Warnings'])) {
+                $values = [];
+                foreach ($data['Warnings'] as $value_1) {
+                    $values[] = $value_1;
+                }
+                $value = $values;
+            } elseif (null === $data['Warnings']) {
+                $value = $data['Warnings'];
             }
-            $object->setWarnings($values);
-            unset($data['Warnings']);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
-            }
+            $object->setWarnings($value);
+        } elseif (array_key_exists('Warnings', $data) && null === $data['Warnings']) {
+            $object->setWarnings(null);
         }
 
         return $object;
@@ -67,17 +69,18 @@ class ServiceUpdateResponseNormalizer implements DenormalizerInterface, Normaliz
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('warnings') && null !== $data->getWarnings()) {
-            $values = [];
-            foreach ($data->getWarnings() as $value) {
-                $values[] = $value;
+        if ($data->isInitialized('warnings')) {
+            $value = $data->getWarnings();
+            if (is_array($data->getWarnings())) {
+                $values = [];
+                foreach ($data->getWarnings() as $value_1) {
+                    $values[] = $value_1;
+                }
+                $value = $values;
+            } elseif (null === $data->getWarnings()) {
+                $value = $data->getWarnings();
             }
-            $dataArray['Warnings'] = $values;
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
-            }
+            $dataArray['Warnings'] = $value;
         }
 
         return $dataArray;

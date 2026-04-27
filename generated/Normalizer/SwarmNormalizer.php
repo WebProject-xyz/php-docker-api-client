@@ -16,8 +16,10 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_bool;
 use function is_int;
 use function is_object;
+use function is_string;
 
 class SwarmNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -38,71 +40,108 @@ class SwarmNormalizer implements DenormalizerInterface, NormalizerInterface, Den
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\Swarm();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\Swarm();
-        if (array_key_exists('RootRotationInProgress', $data) && is_int($data['RootRotationInProgress'])) {
-            $data['RootRotationInProgress'] = (bool) $data['RootRotationInProgress'];
-        }
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('ID', $data)) {
-            $object->setID($data['ID']);
-            unset($data['ID']);
+        if (array_key_exists('ID', $data) && null !== $data['ID']) {
+            $value = $data['ID'];
+            if (is_string($data['ID'])) {
+                $value = $data['ID'];
+            } elseif (null === $data['ID']) {
+                $value = $data['ID'];
+            }
+            $object->setID($value);
+        } elseif (array_key_exists('ID', $data) && null === $data['ID']) {
+            $object->setID(null);
         }
         if (array_key_exists('Version', $data)) {
             $object->setVersion($this->denormalizer->denormalize($data['Version'], \WebProject\DockerApi\Library\Generated\Model\ObjectVersion::class, 'json', $context));
-            unset($data['Version']);
         }
-        if (array_key_exists('CreatedAt', $data)) {
-            $object->setCreatedAt($data['CreatedAt']);
-            unset($data['CreatedAt']);
+        if (array_key_exists('CreatedAt', $data) && null !== $data['CreatedAt']) {
+            $value_1 = $data['CreatedAt'];
+            if (is_string($data['CreatedAt'])) {
+                $value_1 = $data['CreatedAt'];
+            } elseif (null === $data['CreatedAt']) {
+                $value_1 = $data['CreatedAt'];
+            }
+            $object->setCreatedAt($value_1);
+        } elseif (array_key_exists('CreatedAt', $data) && null === $data['CreatedAt']) {
+            $object->setCreatedAt(null);
         }
-        if (array_key_exists('UpdatedAt', $data)) {
-            $object->setUpdatedAt($data['UpdatedAt']);
-            unset($data['UpdatedAt']);
+        if (array_key_exists('UpdatedAt', $data) && null !== $data['UpdatedAt']) {
+            $value_2 = $data['UpdatedAt'];
+            if (is_string($data['UpdatedAt'])) {
+                $value_2 = $data['UpdatedAt'];
+            } elseif (null === $data['UpdatedAt']) {
+                $value_2 = $data['UpdatedAt'];
+            }
+            $object->setUpdatedAt($value_2);
+        } elseif (array_key_exists('UpdatedAt', $data) && null === $data['UpdatedAt']) {
+            $object->setUpdatedAt(null);
         }
         if (array_key_exists('Spec', $data)) {
             $object->setSpec($this->denormalizer->denormalize($data['Spec'], \WebProject\DockerApi\Library\Generated\Model\SwarmSpec::class, 'json', $context));
-            unset($data['Spec']);
         }
         if (array_key_exists('TLSInfo', $data)) {
             $object->setTLSInfo($this->denormalizer->denormalize($data['TLSInfo'], \WebProject\DockerApi\Library\Generated\Model\TLSInfo::class, 'json', $context));
-            unset($data['TLSInfo']);
         }
-        if (array_key_exists('RootRotationInProgress', $data)) {
-            $object->setRootRotationInProgress($data['RootRotationInProgress']);
-            unset($data['RootRotationInProgress']);
-        }
-        if (array_key_exists('DataPathPort', $data)) {
-            $object->setDataPathPort($data['DataPathPort']);
-            unset($data['DataPathPort']);
-        }
-        if (array_key_exists('DefaultAddrPool', $data)) {
-            $values = [];
-            foreach ($data['DefaultAddrPool'] as $value) {
-                $values[] = $value;
+        if (array_key_exists('RootRotationInProgress', $data) && null !== $data['RootRotationInProgress']) {
+            $value_3 = $data['RootRotationInProgress'];
+            if (is_bool($data['RootRotationInProgress'])) {
+                $value_3 = $data['RootRotationInProgress'];
+            } elseif (null === $data['RootRotationInProgress']) {
+                $value_3 = $data['RootRotationInProgress'];
             }
-            $object->setDefaultAddrPool($values);
-            unset($data['DefaultAddrPool']);
+            $object->setRootRotationInProgress($value_3);
+        } elseif (array_key_exists('RootRotationInProgress', $data) && null === $data['RootRotationInProgress']) {
+            $object->setRootRotationInProgress(null);
         }
-        if (array_key_exists('SubnetSize', $data)) {
-            $object->setSubnetSize($data['SubnetSize']);
-            unset($data['SubnetSize']);
+        if (array_key_exists('DataPathPort', $data) && null !== $data['DataPathPort']) {
+            $value_4 = $data['DataPathPort'];
+            if (is_int($data['DataPathPort'])) {
+                $value_4 = $data['DataPathPort'];
+            } elseif (null === $data['DataPathPort']) {
+                $value_4 = $data['DataPathPort'];
+            }
+            $object->setDataPathPort($value_4);
+        } elseif (array_key_exists('DataPathPort', $data) && null === $data['DataPathPort']) {
+            $object->setDataPathPort(null);
+        }
+        if (array_key_exists('DefaultAddrPool', $data) && null !== $data['DefaultAddrPool']) {
+            $value_5 = $data['DefaultAddrPool'];
+            if (is_array($data['DefaultAddrPool']) && $this->isOnlyNumericKeys($data['DefaultAddrPool'])) {
+                $values = [];
+                foreach ($data['DefaultAddrPool'] as $value_6) {
+                    $values[] = $value_6;
+                }
+                $value_5 = $values;
+            } elseif (null === $data['DefaultAddrPool']) {
+                $value_5 = $data['DefaultAddrPool'];
+            }
+            $object->setDefaultAddrPool($value_5);
+        } elseif (array_key_exists('DefaultAddrPool', $data) && null === $data['DefaultAddrPool']) {
+            $object->setDefaultAddrPool(null);
+        }
+        if (array_key_exists('SubnetSize', $data) && null !== $data['SubnetSize']) {
+            $value_7 = $data['SubnetSize'];
+            if (is_int($data['SubnetSize'])) {
+                $value_7 = $data['SubnetSize'];
+            } elseif (null === $data['SubnetSize']) {
+                $value_7 = $data['SubnetSize'];
+            }
+            $object->setSubnetSize($value_7);
+        } elseif (array_key_exists('SubnetSize', $data) && null === $data['SubnetSize']) {
+            $object->setSubnetSize(null);
         }
         if (array_key_exists('JoinTokens', $data)) {
             $object->setJoinTokens($this->denormalizer->denormalize($data['JoinTokens'], \WebProject\DockerApi\Library\Generated\Model\JoinTokens::class, 'json', $context));
-            unset($data['JoinTokens']);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
-            }
         }
 
         return $object;
@@ -111,17 +150,35 @@ class SwarmNormalizer implements DenormalizerInterface, NormalizerInterface, Den
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('iD') && null !== $data->getID()) {
-            $dataArray['ID'] = $data->getID();
+        if ($data->isInitialized('iD')) {
+            $value = $data->getID();
+            if (is_string($data->getID())) {
+                $value = $data->getID();
+            } elseif (null === $data->getID()) {
+                $value = $data->getID();
+            }
+            $dataArray['ID'] = $value;
         }
         if ($data->isInitialized('version') && null !== $data->getVersion()) {
             $dataArray['Version'] = $this->normalizer->normalize($data->getVersion(), 'json', $context);
         }
-        if ($data->isInitialized('createdAt') && null !== $data->getCreatedAt()) {
-            $dataArray['CreatedAt'] = $data->getCreatedAt();
+        if ($data->isInitialized('createdAt')) {
+            $value_1 = $data->getCreatedAt();
+            if (is_string($data->getCreatedAt())) {
+                $value_1 = $data->getCreatedAt();
+            } elseif (null === $data->getCreatedAt()) {
+                $value_1 = $data->getCreatedAt();
+            }
+            $dataArray['CreatedAt'] = $value_1;
         }
-        if ($data->isInitialized('updatedAt') && null !== $data->getUpdatedAt()) {
-            $dataArray['UpdatedAt'] = $data->getUpdatedAt();
+        if ($data->isInitialized('updatedAt')) {
+            $value_2 = $data->getUpdatedAt();
+            if (is_string($data->getUpdatedAt())) {
+                $value_2 = $data->getUpdatedAt();
+            } elseif (null === $data->getUpdatedAt()) {
+                $value_2 = $data->getUpdatedAt();
+            }
+            $dataArray['UpdatedAt'] = $value_2;
         }
         if ($data->isInitialized('spec') && null !== $data->getSpec()) {
             $dataArray['Spec'] = $this->normalizer->normalize($data->getSpec(), 'json', $context);
@@ -129,29 +186,48 @@ class SwarmNormalizer implements DenormalizerInterface, NormalizerInterface, Den
         if ($data->isInitialized('tLSInfo') && null !== $data->getTLSInfo()) {
             $dataArray['TLSInfo'] = $this->normalizer->normalize($data->getTLSInfo(), 'json', $context);
         }
-        if ($data->isInitialized('rootRotationInProgress') && null !== $data->getRootRotationInProgress()) {
-            $dataArray['RootRotationInProgress'] = $data->getRootRotationInProgress();
-        }
-        if ($data->isInitialized('dataPathPort') && null !== $data->getDataPathPort()) {
-            $dataArray['DataPathPort'] = $data->getDataPathPort();
-        }
-        if ($data->isInitialized('defaultAddrPool') && null !== $data->getDefaultAddrPool()) {
-            $values = [];
-            foreach ($data->getDefaultAddrPool() as $value) {
-                $values[] = $value;
+        if ($data->isInitialized('rootRotationInProgress')) {
+            $value_3 = $data->getRootRotationInProgress();
+            if (is_bool($data->getRootRotationInProgress())) {
+                $value_3 = $data->getRootRotationInProgress();
+            } elseif (null === $data->getRootRotationInProgress()) {
+                $value_3 = $data->getRootRotationInProgress();
             }
-            $dataArray['DefaultAddrPool'] = $values;
+            $dataArray['RootRotationInProgress'] = $value_3;
         }
-        if ($data->isInitialized('subnetSize') && null !== $data->getSubnetSize()) {
-            $dataArray['SubnetSize'] = $data->getSubnetSize();
+        if ($data->isInitialized('dataPathPort')) {
+            $value_4 = $data->getDataPathPort();
+            if (is_int($data->getDataPathPort())) {
+                $value_4 = $data->getDataPathPort();
+            } elseif (null === $data->getDataPathPort()) {
+                $value_4 = $data->getDataPathPort();
+            }
+            $dataArray['DataPathPort'] = $value_4;
+        }
+        if ($data->isInitialized('defaultAddrPool')) {
+            $value_5 = $data->getDefaultAddrPool();
+            if (is_array($data->getDefaultAddrPool())) {
+                $values = [];
+                foreach ($data->getDefaultAddrPool() as $value_6) {
+                    $values[] = $value_6;
+                }
+                $value_5 = $values;
+            } elseif (null === $data->getDefaultAddrPool()) {
+                $value_5 = $data->getDefaultAddrPool();
+            }
+            $dataArray['DefaultAddrPool'] = $value_5;
+        }
+        if ($data->isInitialized('subnetSize')) {
+            $value_7 = $data->getSubnetSize();
+            if (is_int($data->getSubnetSize())) {
+                $value_7 = $data->getSubnetSize();
+            } elseif (null === $data->getSubnetSize()) {
+                $value_7 = $data->getSubnetSize();
+            }
+            $dataArray['SubnetSize'] = $value_7;
         }
         if ($data->isInitialized('joinTokens') && null !== $data->getJoinTokens()) {
             $dataArray['JoinTokens'] = $this->normalizer->normalize($data->getJoinTokens(), 'json', $context);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
-            }
         }
 
         return $dataArray;

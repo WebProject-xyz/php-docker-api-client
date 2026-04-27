@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class DeviceInfo extends ArrayObject
+class DeviceInfo
 {
     /**
      * @var array
@@ -20,23 +19,23 @@ class DeviceInfo extends ArrayObject
     /**
      * The origin device driver.
      *
-     * @var string
+     * @var string|null
      */
     protected $source;
     /**
      * The unique identifier for the device within its source driver.
      * For CDI devices, this would be an FQDN like "vendor.com/gpu=0".
      *
-     * @var string
+     * @var string|null
      */
     protected $iD;
 
     /**
      * The origin device driver.
      *
-     * @return string
+     * @return string|null
      */
-    public function getSource(): string
+    public function getSource(): ?string
     {
         return $this->source;
     }
@@ -44,11 +43,11 @@ class DeviceInfo extends ArrayObject
     /**
      * The origin device driver.
      *
-     * @param string $source
+     * @param string|null $source
      *
      * @return self
      */
-    public function setSource(string $source): self
+    public function setSource(?string $source): self
     {
         $this->initialized['source'] = true;
         $this->source                = $source;
@@ -60,9 +59,9 @@ class DeviceInfo extends ArrayObject
      * The unique identifier for the device within its source driver.
      * For CDI devices, this would be an FQDN like "vendor.com/gpu=0".
      *
-     * @return string
+     * @return string|null
      */
-    public function getID(): string
+    public function getID(): ?string
     {
         return $this->iD;
     }
@@ -71,11 +70,11 @@ class DeviceInfo extends ArrayObject
      * The unique identifier for the device within its source driver.
      * For CDI devices, this would be an FQDN like "vendor.com/gpu=0".
      *
-     * @param string $iD
+     * @param string|null $iD
      *
      * @return self
      */
-    public function setID(string $iD): self
+    public function setID(?string $iD): self
     {
         $this->initialized['iD'] = true;
         $this->iD                = $iD;

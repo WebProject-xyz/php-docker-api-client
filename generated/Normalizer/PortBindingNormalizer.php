@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class PortBindingNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,28 +38,37 @@ class PortBindingNormalizer implements DenormalizerInterface, NormalizerInterfac
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\PortBinding();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\PortBinding();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('HostIp', $data)) {
-            $object->setHostIp($data['HostIp']);
-            unset($data['HostIp']);
-        }
-        if (array_key_exists('HostPort', $data)) {
-            $object->setHostPort($data['HostPort']);
-            unset($data['HostPort']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('HostIp', $data) && null !== $data['HostIp']) {
+            $value = $data['HostIp'];
+            if (is_string($data['HostIp'])) {
+                $value = $data['HostIp'];
+            } elseif (null === $data['HostIp']) {
+                $value = $data['HostIp'];
             }
+            $object->setHostIp($value);
+        } elseif (array_key_exists('HostIp', $data) && null === $data['HostIp']) {
+            $object->setHostIp(null);
+        }
+        if (array_key_exists('HostPort', $data) && null !== $data['HostPort']) {
+            $value_1 = $data['HostPort'];
+            if (is_string($data['HostPort'])) {
+                $value_1 = $data['HostPort'];
+            } elseif (null === $data['HostPort']) {
+                $value_1 = $data['HostPort'];
+            }
+            $object->setHostPort($value_1);
+        } elseif (array_key_exists('HostPort', $data) && null === $data['HostPort']) {
+            $object->setHostPort(null);
         }
 
         return $object;
@@ -67,16 +77,23 @@ class PortBindingNormalizer implements DenormalizerInterface, NormalizerInterfac
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('hostIp') && null !== $data->getHostIp()) {
-            $dataArray['HostIp'] = $data->getHostIp();
-        }
-        if ($data->isInitialized('hostPort') && null !== $data->getHostPort()) {
-            $dataArray['HostPort'] = $data->getHostPort();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('hostIp')) {
+            $value = $data->getHostIp();
+            if (is_string($data->getHostIp())) {
+                $value = $data->getHostIp();
+            } elseif (null === $data->getHostIp()) {
+                $value = $data->getHostIp();
             }
+            $dataArray['HostIp'] = $value;
+        }
+        if ($data->isInitialized('hostPort')) {
+            $value_1 = $data->getHostPort();
+            if (is_string($data->getHostPort())) {
+                $value_1 = $data->getHostPort();
+            } elseif (null === $data->getHostPort()) {
+                $value_1 = $data->getHostPort();
+            }
+            $dataArray['HostPort'] = $value_1;
         }
 
         return $dataArray;

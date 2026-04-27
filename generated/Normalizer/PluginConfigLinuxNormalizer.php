@@ -38,18 +38,18 @@ class PluginConfigLinuxNormalizer implements DenormalizerInterface, NormalizerIn
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginConfigLinux();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginConfigLinux();
         if (array_key_exists('AllowAllDevices', $data) && is_int($data['AllowAllDevices'])) {
             $data['AllowAllDevices'] = (bool) $data['AllowAllDevices'];
-        }
-        if (null === $data || false === is_array($data)) {
-            return $object;
         }
         if (array_key_exists('Capabilities', $data)) {
             $values = [];
@@ -57,11 +57,9 @@ class PluginConfigLinuxNormalizer implements DenormalizerInterface, NormalizerIn
                 $values[] = $value;
             }
             $object->setCapabilities($values);
-            unset($data['Capabilities']);
         }
         if (array_key_exists('AllowAllDevices', $data)) {
             $object->setAllowAllDevices($data['AllowAllDevices']);
-            unset($data['AllowAllDevices']);
         }
         if (array_key_exists('Devices', $data)) {
             $values_1 = [];
@@ -69,12 +67,6 @@ class PluginConfigLinuxNormalizer implements DenormalizerInterface, NormalizerIn
                 $values_1[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\PluginDevice::class, 'json', $context);
             }
             $object->setDevices($values_1);
-            unset($data['Devices']);
-        }
-        foreach ($data as $key => $value_2) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_2;
-            }
         }
 
         return $object;
@@ -94,11 +86,6 @@ class PluginConfigLinuxNormalizer implements DenormalizerInterface, NormalizerIn
             $values_1[] = $this->normalizer->normalize($value_1, 'json', $context);
         }
         $dataArray['Devices'] = $values_1;
-        foreach ($data as $key => $value_2) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_2;
-            }
-        }
 
         return $dataArray;
     }

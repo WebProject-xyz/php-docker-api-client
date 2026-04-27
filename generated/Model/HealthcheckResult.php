@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class HealthcheckResult extends ArrayObject
+class HealthcheckResult
 {
     /**
      * @var array
@@ -21,14 +20,14 @@ class HealthcheckResult extends ArrayObject
      * Date and time at which this check started in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @var string
+     * @var string|null
      */
     protected $start;
     /**
      * Date and time at which this check ended in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @var string
+     * @var string|null
      */
     protected $end;
     /**
@@ -39,13 +38,13 @@ class HealthcheckResult extends ArrayObject
      * - `2` reserved (considered unhealthy)
      * - other values: error running probe
      *
-     * @var int
+     * @var int|null
      */
     protected $exitCode;
     /**
      * Output from last check.
      *
-     * @var string
+     * @var string|null
      */
     protected $output;
 
@@ -53,9 +52,9 @@ class HealthcheckResult extends ArrayObject
      * Date and time at which this check started in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @return string
+     * @return string|null
      */
-    public function getStart(): string
+    public function getStart(): ?string
     {
         return $this->start;
     }
@@ -64,11 +63,11 @@ class HealthcheckResult extends ArrayObject
      * Date and time at which this check started in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @param string $start
+     * @param string|null $start
      *
      * @return self
      */
-    public function setStart(string $start): self
+    public function setStart(?string $start): self
     {
         $this->initialized['start'] = true;
         $this->start                = $start;
@@ -80,9 +79,9 @@ class HealthcheckResult extends ArrayObject
      * Date and time at which this check ended in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @return string
+     * @return string|null
      */
-    public function getEnd(): string
+    public function getEnd(): ?string
     {
         return $this->end;
     }
@@ -91,11 +90,11 @@ class HealthcheckResult extends ArrayObject
      * Date and time at which this check ended in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @param string $end
+     * @param string|null $end
      *
      * @return self
      */
-    public function setEnd(string $end): self
+    public function setEnd(?string $end): self
     {
         $this->initialized['end'] = true;
         $this->end                = $end;
@@ -111,9 +110,9 @@ class HealthcheckResult extends ArrayObject
      * - `2` reserved (considered unhealthy)
      * - other values: error running probe
      *
-     * @return int
+     * @return int|null
      */
-    public function getExitCode(): int
+    public function getExitCode(): ?int
     {
         return $this->exitCode;
     }
@@ -126,11 +125,11 @@ class HealthcheckResult extends ArrayObject
      * - `2` reserved (considered unhealthy)
      * - other values: error running probe
      *
-     * @param int $exitCode
+     * @param int|null $exitCode
      *
      * @return self
      */
-    public function setExitCode(int $exitCode): self
+    public function setExitCode(?int $exitCode): self
     {
         $this->initialized['exitCode'] = true;
         $this->exitCode                = $exitCode;
@@ -141,9 +140,9 @@ class HealthcheckResult extends ArrayObject
     /**
      * Output from last check.
      *
-     * @return string
+     * @return string|null
      */
-    public function getOutput(): string
+    public function getOutput(): ?string
     {
         return $this->output;
     }
@@ -151,11 +150,11 @@ class HealthcheckResult extends ArrayObject
     /**
      * Output from last check.
      *
-     * @param string $output
+     * @param string|null $output
      *
      * @return self
      */
-    public function setOutput(string $output): self
+    public function setOutput(?string $output): self
     {
         $this->initialized['output'] = true;
         $this->output                = $output;

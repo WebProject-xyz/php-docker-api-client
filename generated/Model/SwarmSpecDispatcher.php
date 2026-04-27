@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class SwarmSpecDispatcher extends ArrayObject
+class SwarmSpecDispatcher
 {
     /**
      * @var array
@@ -20,16 +19,16 @@ class SwarmSpecDispatcher extends ArrayObject
     /**
      * The delay for an agent to send a heartbeat to the dispatcher.
      *
-     * @var int
+     * @var int|null
      */
     protected $heartbeatPeriod;
 
     /**
      * The delay for an agent to send a heartbeat to the dispatcher.
      *
-     * @return int
+     * @return int|null
      */
-    public function getHeartbeatPeriod(): int
+    public function getHeartbeatPeriod(): ?int
     {
         return $this->heartbeatPeriod;
     }
@@ -37,11 +36,11 @@ class SwarmSpecDispatcher extends ArrayObject
     /**
      * The delay for an agent to send a heartbeat to the dispatcher.
      *
-     * @param int $heartbeatPeriod
+     * @param int|null $heartbeatPeriod
      *
      * @return self
      */
-    public function setHeartbeatPeriod(int $heartbeatPeriod): self
+    public function setHeartbeatPeriod(?int $heartbeatPeriod): self
     {
         $this->initialized['heartbeatPeriod'] = true;
         $this->heartbeatPeriod                = $heartbeatPeriod;

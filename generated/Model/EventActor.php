@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class EventActor extends ArrayObject
+class EventActor
 {
     /**
      * @var array
@@ -20,22 +19,22 @@ class EventActor extends ArrayObject
     /**
      * The ID of the object emitting the event.
      *
-     * @var string
+     * @var string|null
      */
     protected $iD;
     /**
      * Various key/value attributes of the object, depending on its type.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $attributes;
 
     /**
      * The ID of the object emitting the event.
      *
-     * @return string
+     * @return string|null
      */
-    public function getID(): string
+    public function getID(): ?string
     {
         return $this->iD;
     }
@@ -43,11 +42,11 @@ class EventActor extends ArrayObject
     /**
      * The ID of the object emitting the event.
      *
-     * @param string $iD
+     * @param string|null $iD
      *
      * @return self
      */
-    public function setID(string $iD): self
+    public function setID(?string $iD): self
     {
         $this->initialized['iD'] = true;
         $this->iD                = $iD;
@@ -58,9 +57,9 @@ class EventActor extends ArrayObject
     /**
      * Various key/value attributes of the object, depending on its type.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getAttributes(): iterable
+    public function getAttributes(): ?iterable
     {
         return $this->attributes;
     }
@@ -68,11 +67,11 @@ class EventActor extends ArrayObject
     /**
      * Various key/value attributes of the object, depending on its type.
      *
-     * @param array<string, string> $attributes
+     * @param array<string, string>|null $attributes
      *
      * @return self
      */
-    public function setAttributes(iterable $attributes): self
+    public function setAttributes(?iterable $attributes): self
     {
         $this->initialized['attributes'] = true;
         $this->attributes                = $attributes;

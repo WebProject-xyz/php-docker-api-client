@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class SystemVersion extends ArrayObject
+class SystemVersion
 {
     /**
      * @var array
@@ -18,56 +17,58 @@ class SystemVersion extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var SystemVersionPlatform
+     * @var SystemVersionPlatform|null
      */
     protected $platform;
     /**
      * Information about system components.
      *
-     * @var list<SystemVersionComponentsItem>
+     * @var list<SystemVersionComponentsItem>|null
      */
     protected $components;
     /**
      * The version of the daemon.
      *
-     * @var string
+     * @var string|null
      */
     protected $version;
     /**
      * The default (and highest) API version that is supported by the daemon.
      *
-     * @var string
+     * @var string|null
      */
     protected $apiVersion;
     /**
      * The minimum API version that is supported by the daemon.
      *
-     * @var string
+     * @var string|null
      */
     protected $minAPIVersion;
     /**
      * The Git commit of the source code that was used to build the daemon.
      *
-     * @var string
+     * @var string|null
      */
     protected $gitCommit;
     /**
      * The version Go used to compile the daemon, and the version of the Go
      * runtime in use.
      *
-     * @var string
+     * @var string|null
      */
     protected $goVersion;
     /**
      * The operating system that the daemon is running on ("linux" or "windows").
      *
-     * @var string
+     * @var string|null
      */
     protected $os;
     /**
-     * The architecture that the daemon is running on.
+     * Architecture of the daemon, as returned by the Go runtime (`GOARCH`).
      *
-     * @var string
+     * A full list of possible values can be found in the [Go documentation](https://go.dev/doc/install/source#environment).
+     *
+     * @var string|null
      */
     protected $arch;
     /**
@@ -75,7 +76,7 @@ class SystemVersion extends ArrayObject
      *
      * This field is omitted when empty.
      *
-     * @var string
+     * @var string|null
      */
     protected $kernelVersion;
     /**
@@ -83,30 +84,30 @@ class SystemVersion extends ArrayObject
      *
      * This field is omitted when empty / false.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $experimental;
     /**
      * The date and time that the daemon was compiled.
      *
-     * @var string
+     * @var string|null
      */
     protected $buildTime;
 
     /**
-     * @return SystemVersionPlatform
+     * @return SystemVersionPlatform|null
      */
-    public function getPlatform(): SystemVersionPlatform
+    public function getPlatform(): ?SystemVersionPlatform
     {
         return $this->platform;
     }
 
     /**
-     * @param SystemVersionPlatform $platform
+     * @param SystemVersionPlatform|null $platform
      *
      * @return self
      */
-    public function setPlatform(SystemVersionPlatform $platform): self
+    public function setPlatform(?SystemVersionPlatform $platform): self
     {
         $this->initialized['platform'] = true;
         $this->platform                = $platform;
@@ -117,9 +118,9 @@ class SystemVersion extends ArrayObject
     /**
      * Information about system components.
      *
-     * @return list<SystemVersionComponentsItem>
+     * @return list<SystemVersionComponentsItem>|null
      */
-    public function getComponents(): array
+    public function getComponents(): ?array
     {
         return $this->components;
     }
@@ -127,11 +128,11 @@ class SystemVersion extends ArrayObject
     /**
      * Information about system components.
      *
-     * @param list<SystemVersionComponentsItem> $components
+     * @param list<SystemVersionComponentsItem>|null $components
      *
      * @return self
      */
-    public function setComponents(array $components): self
+    public function setComponents(?array $components): self
     {
         $this->initialized['components'] = true;
         $this->components                = $components;
@@ -142,9 +143,9 @@ class SystemVersion extends ArrayObject
     /**
      * The version of the daemon.
      *
-     * @return string
+     * @return string|null
      */
-    public function getVersion(): string
+    public function getVersion(): ?string
     {
         return $this->version;
     }
@@ -152,11 +153,11 @@ class SystemVersion extends ArrayObject
     /**
      * The version of the daemon.
      *
-     * @param string $version
+     * @param string|null $version
      *
      * @return self
      */
-    public function setVersion(string $version): self
+    public function setVersion(?string $version): self
     {
         $this->initialized['version'] = true;
         $this->version                = $version;
@@ -167,9 +168,9 @@ class SystemVersion extends ArrayObject
     /**
      * The default (and highest) API version that is supported by the daemon.
      *
-     * @return string
+     * @return string|null
      */
-    public function getApiVersion(): string
+    public function getApiVersion(): ?string
     {
         return $this->apiVersion;
     }
@@ -177,11 +178,11 @@ class SystemVersion extends ArrayObject
     /**
      * The default (and highest) API version that is supported by the daemon.
      *
-     * @param string $apiVersion
+     * @param string|null $apiVersion
      *
      * @return self
      */
-    public function setApiVersion(string $apiVersion): self
+    public function setApiVersion(?string $apiVersion): self
     {
         $this->initialized['apiVersion'] = true;
         $this->apiVersion                = $apiVersion;
@@ -192,9 +193,9 @@ class SystemVersion extends ArrayObject
     /**
      * The minimum API version that is supported by the daemon.
      *
-     * @return string
+     * @return string|null
      */
-    public function getMinAPIVersion(): string
+    public function getMinAPIVersion(): ?string
     {
         return $this->minAPIVersion;
     }
@@ -202,11 +203,11 @@ class SystemVersion extends ArrayObject
     /**
      * The minimum API version that is supported by the daemon.
      *
-     * @param string $minAPIVersion
+     * @param string|null $minAPIVersion
      *
      * @return self
      */
-    public function setMinAPIVersion(string $minAPIVersion): self
+    public function setMinAPIVersion(?string $minAPIVersion): self
     {
         $this->initialized['minAPIVersion'] = true;
         $this->minAPIVersion                = $minAPIVersion;
@@ -217,9 +218,9 @@ class SystemVersion extends ArrayObject
     /**
      * The Git commit of the source code that was used to build the daemon.
      *
-     * @return string
+     * @return string|null
      */
-    public function getGitCommit(): string
+    public function getGitCommit(): ?string
     {
         return $this->gitCommit;
     }
@@ -227,11 +228,11 @@ class SystemVersion extends ArrayObject
     /**
      * The Git commit of the source code that was used to build the daemon.
      *
-     * @param string $gitCommit
+     * @param string|null $gitCommit
      *
      * @return self
      */
-    public function setGitCommit(string $gitCommit): self
+    public function setGitCommit(?string $gitCommit): self
     {
         $this->initialized['gitCommit'] = true;
         $this->gitCommit                = $gitCommit;
@@ -243,9 +244,9 @@ class SystemVersion extends ArrayObject
      * The version Go used to compile the daemon, and the version of the Go
      * runtime in use.
      *
-     * @return string
+     * @return string|null
      */
-    public function getGoVersion(): string
+    public function getGoVersion(): ?string
     {
         return $this->goVersion;
     }
@@ -254,11 +255,11 @@ class SystemVersion extends ArrayObject
      * The version Go used to compile the daemon, and the version of the Go
      * runtime in use.
      *
-     * @param string $goVersion
+     * @param string|null $goVersion
      *
      * @return self
      */
-    public function setGoVersion(string $goVersion): self
+    public function setGoVersion(?string $goVersion): self
     {
         $this->initialized['goVersion'] = true;
         $this->goVersion                = $goVersion;
@@ -269,9 +270,9 @@ class SystemVersion extends ArrayObject
     /**
      * The operating system that the daemon is running on ("linux" or "windows").
      *
-     * @return string
+     * @return string|null
      */
-    public function getOs(): string
+    public function getOs(): ?string
     {
         return $this->os;
     }
@@ -279,11 +280,11 @@ class SystemVersion extends ArrayObject
     /**
      * The operating system that the daemon is running on ("linux" or "windows").
      *
-     * @param string $os
+     * @param string|null $os
      *
      * @return self
      */
-    public function setOs(string $os): self
+    public function setOs(?string $os): self
     {
         $this->initialized['os'] = true;
         $this->os                = $os;
@@ -292,23 +293,27 @@ class SystemVersion extends ArrayObject
     }
 
     /**
-     * The architecture that the daemon is running on.
+     * Architecture of the daemon, as returned by the Go runtime (`GOARCH`).
      *
-     * @return string
+     * A full list of possible values can be found in the [Go documentation](https://go.dev/doc/install/source#environment).
+     *
+     * @return string|null
      */
-    public function getArch(): string
+    public function getArch(): ?string
     {
         return $this->arch;
     }
 
     /**
-     * The architecture that the daemon is running on.
+     * Architecture of the daemon, as returned by the Go runtime (`GOARCH`).
      *
-     * @param string $arch
+     * A full list of possible values can be found in the [Go documentation](https://go.dev/doc/install/source#environment).
+     *
+     * @param string|null $arch
      *
      * @return self
      */
-    public function setArch(string $arch): self
+    public function setArch(?string $arch): self
     {
         $this->initialized['arch'] = true;
         $this->arch                = $arch;
@@ -321,9 +326,9 @@ class SystemVersion extends ArrayObject
      *
      * This field is omitted when empty.
      *
-     * @return string
+     * @return string|null
      */
-    public function getKernelVersion(): string
+    public function getKernelVersion(): ?string
     {
         return $this->kernelVersion;
     }
@@ -333,11 +338,11 @@ class SystemVersion extends ArrayObject
      *
      * This field is omitted when empty.
      *
-     * @param string $kernelVersion
+     * @param string|null $kernelVersion
      *
      * @return self
      */
-    public function setKernelVersion(string $kernelVersion): self
+    public function setKernelVersion(?string $kernelVersion): self
     {
         $this->initialized['kernelVersion'] = true;
         $this->kernelVersion                = $kernelVersion;
@@ -350,9 +355,9 @@ class SystemVersion extends ArrayObject
      *
      * This field is omitted when empty / false.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getExperimental(): bool
+    public function getExperimental(): ?bool
     {
         return $this->experimental;
     }
@@ -362,11 +367,11 @@ class SystemVersion extends ArrayObject
      *
      * This field is omitted when empty / false.
      *
-     * @param bool $experimental
+     * @param bool|null $experimental
      *
      * @return self
      */
-    public function setExperimental(bool $experimental): self
+    public function setExperimental(?bool $experimental): self
     {
         $this->initialized['experimental'] = true;
         $this->experimental                = $experimental;
@@ -377,9 +382,9 @@ class SystemVersion extends ArrayObject
     /**
      * The date and time that the daemon was compiled.
      *
-     * @return string
+     * @return string|null
      */
-    public function getBuildTime(): string
+    public function getBuildTime(): ?string
     {
         return $this->buildTime;
     }
@@ -387,11 +392,11 @@ class SystemVersion extends ArrayObject
     /**
      * The date and time that the daemon was compiled.
      *
-     * @param string $buildTime
+     * @param string|null $buildTime
      *
      * @return self
      */
-    public function setBuildTime(string $buildTime): self
+    public function setBuildTime(?string $buildTime): self
     {
         $this->initialized['buildTime'] = true;
         $this->buildTime                = $buildTime;

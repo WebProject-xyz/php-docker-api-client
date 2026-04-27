@@ -37,24 +37,18 @@ class SwarmUnlockPostBodyNormalizer implements DenormalizerInterface, Normalizer
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\SwarmUnlockPostBody();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\SwarmUnlockPostBody();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('UnlockKey', $data)) {
             $object->setUnlockKey($data['UnlockKey']);
-            unset($data['UnlockKey']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
-            }
         }
 
         return $object;
@@ -65,11 +59,6 @@ class SwarmUnlockPostBodyNormalizer implements DenormalizerInterface, Normalizer
         $dataArray = [];
         if ($data->isInitialized('unlockKey') && null !== $data->getUnlockKey()) {
             $dataArray['UnlockKey'] = $data->getUnlockKey();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
-            }
         }
 
         return $dataArray;

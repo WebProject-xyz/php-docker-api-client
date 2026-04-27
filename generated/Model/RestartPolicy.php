@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class RestartPolicy extends ArrayObject
+class RestartPolicy
 {
     /**
      * @var array
@@ -24,13 +23,13 @@ class RestartPolicy extends ArrayObject
      * - `unless-stopped` Restart always except when the user has manually stopped the container
      * - `on-failure` Restart only when the container exit code is non-zero.
      *
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
      * If `on-failure` is used, the number of times to retry before giving up.
      *
-     * @var int
+     * @var int|null
      */
     protected $maximumRetryCount;
 
@@ -41,9 +40,9 @@ class RestartPolicy extends ArrayObject
      * - `unless-stopped` Restart always except when the user has manually stopped the container
      * - `on-failure` Restart only when the container exit code is non-zero.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -55,11 +54,11 @@ class RestartPolicy extends ArrayObject
      * - `unless-stopped` Restart always except when the user has manually stopped the container
      * - `on-failure` Restart only when the container exit code is non-zero.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -70,9 +69,9 @@ class RestartPolicy extends ArrayObject
     /**
      * If `on-failure` is used, the number of times to retry before giving up.
      *
-     * @return int
+     * @return int|null
      */
-    public function getMaximumRetryCount(): int
+    public function getMaximumRetryCount(): ?int
     {
         return $this->maximumRetryCount;
     }
@@ -80,11 +79,11 @@ class RestartPolicy extends ArrayObject
     /**
      * If `on-failure` is used, the number of times to retry before giving up.
      *
-     * @param int $maximumRetryCount
+     * @param int|null $maximumRetryCount
      *
      * @return self
      */
-    public function setMaximumRetryCount(int $maximumRetryCount): self
+    public function setMaximumRetryCount(?int $maximumRetryCount): self
     {
         $this->initialized['maximumRetryCount'] = true;
         $this->maximumRetryCount                = $maximumRetryCount;

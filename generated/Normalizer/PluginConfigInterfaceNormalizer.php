@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class PluginConfigInterfaceNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,36 +38,36 @@ class PluginConfigInterfaceNormalizer implements DenormalizerInterface, Normaliz
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginConfigInterface();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginConfigInterface();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('Types', $data)) {
             $values = [];
             foreach ($data['Types'] as $value) {
-                $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\PluginInterfaceType::class, 'json', $context);
+                $values[] = $value;
             }
             $object->setTypes($values);
-            unset($data['Types']);
         }
         if (array_key_exists('Socket', $data)) {
             $object->setSocket($data['Socket']);
-            unset($data['Socket']);
         }
-        if (array_key_exists('ProtocolScheme', $data)) {
-            $object->setProtocolScheme($data['ProtocolScheme']);
-            unset($data['ProtocolScheme']);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
+        if (array_key_exists('ProtocolScheme', $data) && null !== $data['ProtocolScheme']) {
+            $value_1 = $data['ProtocolScheme'];
+            if (is_string($data['ProtocolScheme'])) {
+                $value_1 = $data['ProtocolScheme'];
+            } elseif (null === $data['ProtocolScheme']) {
+                $value_1 = $data['ProtocolScheme'];
             }
+            $object->setProtocolScheme($value_1);
+        } elseif (array_key_exists('ProtocolScheme', $data) && null === $data['ProtocolScheme']) {
+            $object->setProtocolScheme(null);
         }
 
         return $object;
@@ -77,17 +78,18 @@ class PluginConfigInterfaceNormalizer implements DenormalizerInterface, Normaliz
         $dataArray = [];
         $values    = [];
         foreach ($data->getTypes() as $value) {
-            $values[] = $this->normalizer->normalize($value, 'json', $context);
+            $values[] = $value;
         }
         $dataArray['Types']  = $values;
         $dataArray['Socket'] = $data->getSocket();
-        if ($data->isInitialized('protocolScheme') && null !== $data->getProtocolScheme()) {
-            $dataArray['ProtocolScheme'] = $data->getProtocolScheme();
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
+        if ($data->isInitialized('protocolScheme')) {
+            $value_1 = $data->getProtocolScheme();
+            if (is_string($data->getProtocolScheme())) {
+                $value_1 = $data->getProtocolScheme();
+            } elseif (null === $data->getProtocolScheme()) {
+                $value_1 = $data->getProtocolScheme();
             }
+            $dataArray['ProtocolScheme'] = $value_1;
         }
 
         return $dataArray;

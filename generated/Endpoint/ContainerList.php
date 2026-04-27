@@ -15,15 +15,14 @@ class ContainerList extends \WebProject\DockerApi\Library\Generated\Runtime\Clie
      * than inspecting a single container. For example, the list of linked
      * containers is not propagated .
      *
-     * @param array $queryParameters {
-     *
-     * @var bool   $all Return all containers. By default, only running containers are shown.
-     * @var int    $limit return this number of most recently created containers, including
-     *             non-running ones
-     * @var bool   $size return the size of container as fields `SizeRw` and `SizeRootFs`
-     * @var string $filters Filters to process on the container list, encoded as JSON (a
-     *             `map[string][]string`). For example, `{"status": ["paused"]}` will
-     *             only return paused containers.
+     * @param array{
+     *    "all"?: bool, //Return all containers. By default, only running containers are shown.
+     *    "limit"?: int, //Return this number of most recently created containers, including
+     * non-running ones.
+     *    "size"?: bool, //Return the size of container as fields `SizeRw` and `SizeRootFs`.
+     *    "filters"?: string, //Filters to process on the container list, encoded as JSON (a
+     * `map[string][]string`). For example, `{"status": ["paused"]}` will
+     * only return paused containers.
      *
      * Available filters:
      *
@@ -42,8 +41,7 @@ class ContainerList extends \WebProject\DockerApi\Library\Generated\Runtime\Clie
      * - `since`=(`<container id>` or `<container name>`)
      * - `status=`(`created`|`restarting`|`running`|`removing`|`paused`|`exited`|`dead`)
      * - `volume`=(`<volume name>` or `<mount point destination>`)
-     *
-     * }
+     * } $queryParameters
      */
     public function __construct(array $queryParameters = [])
     {
@@ -96,13 +94,13 @@ class ContainerList extends \WebProject\DockerApi\Library\Generated\Runtime\Clie
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ContainerSummary[]', 'json');
         }
-        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerListBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerListInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

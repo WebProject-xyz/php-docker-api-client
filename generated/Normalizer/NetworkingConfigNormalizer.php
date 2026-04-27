@@ -37,15 +37,15 @@ class NetworkingConfigNormalizer implements DenormalizerInterface, NormalizerInt
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\NetworkingConfig();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
-        }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\NetworkingConfig();
-        if (null === $data || false === is_array($data)) {
-            return $object;
         }
         if (array_key_exists('EndpointsConfig', $data)) {
             $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
@@ -53,12 +53,6 @@ class NetworkingConfigNormalizer implements DenormalizerInterface, NormalizerInt
                 $values[$key] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\EndpointSettings::class, 'json', $context);
             }
             $object->setEndpointsConfig($values);
-            unset($data['EndpointsConfig']);
-        }
-        foreach ($data as $key_1 => $value_1) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $object[$key_1] = $value_1;
-            }
         }
 
         return $object;
@@ -73,11 +67,6 @@ class NetworkingConfigNormalizer implements DenormalizerInterface, NormalizerInt
                 $values[$key] = $this->normalizer->normalize($value, 'json', $context);
             }
             $dataArray['EndpointsConfig'] = $values;
-        }
-        foreach ($data as $key_1 => $value_1) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $dataArray[$key_1] = $value_1;
-            }
         }
 
         return $dataArray;

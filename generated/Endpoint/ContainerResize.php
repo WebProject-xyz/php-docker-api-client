@@ -12,13 +12,11 @@ class ContainerResize extends \WebProject\DockerApi\Library\Generated\Runtime\Cl
     /**
      * Resize the TTY for a container.
      *
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var int $h Height of the TTY session in characters
-     * @var int $w Width of the TTY session in characters
-     *          }
-     *
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "h": int, //Height of the TTY session in characters
+     *    "w": int, //Width of the TTY session in characters
+     * } $queryParameters
      * @param array $accept Accept content header text/plain|application/json
      */
     public function __construct(string $id, array $queryParameters = [], array $accept = [])
@@ -78,7 +76,7 @@ class ContainerResize extends \WebProject\DockerApi\Library\Generated\Runtime\Cl
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerResizeNotFoundException($response);
         }
         if (500 === $status) {

@@ -23,7 +23,9 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
     use NormalizerAwareTrait;
     use ValidatorTrait;
     protected $normalizers = [
-        \WebProject\DockerApi\Library\Generated\Model\Port::class => PortNormalizer::class,
+        \WebProject\DockerApi\Library\Generated\Model\ImageHistoryResponseItem::class => ImageHistoryResponseItemNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\PortSummary::class => PortSummaryNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\MountPoint::class => MountPointNormalizer::class,
 
@@ -87,6 +89,12 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
 
         \WebProject\DockerApi\Library\Generated\Model\DriverData::class => DriverDataNormalizer::class,
 
+        \WebProject\DockerApi\Library\Generated\Model\Storage::class => StorageNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\RootFSStorage::class => RootFSStorageNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\RootFSStorageSnapshot::class => RootFSStorageSnapshotNormalizer::class,
+
         \WebProject\DockerApi\Library\Generated\Model\FilesystemChange::class => FilesystemChangeNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\ImageInspect::class => ImageInspectNormalizer::class,
@@ -95,9 +103,25 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
 
         \WebProject\DockerApi\Library\Generated\Model\ImageInspectMetadata::class => ImageInspectMetadataNormalizer::class,
 
+        \WebProject\DockerApi\Library\Generated\Model\Identity::class => IdentityNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\BuildIdentity::class => BuildIdentityNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\PullIdentity::class => PullIdentityNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\SignatureIdentity::class => SignatureIdentityNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\SignatureTimestamp::class => SignatureTimestampNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\SignerIdentity::class => SignerIdentityNormalizer::class,
+
         \WebProject\DockerApi\Library\Generated\Model\ImageSummary::class => ImageSummaryNormalizer::class,
 
+        \WebProject\DockerApi\Library\Generated\Model\ImagesDiskUsage::class => ImagesDiskUsageNormalizer::class,
+
         \WebProject\DockerApi\Library\Generated\Model\AuthConfig::class => AuthConfigNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\AuthResponse::class => AuthResponseNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\ProcessConfig::class => ProcessConfigNormalizer::class,
 
@@ -105,11 +129,23 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
 
         \WebProject\DockerApi\Library\Generated\Model\VolumeUsageData::class => VolumeUsageDataNormalizer::class,
 
-        \WebProject\DockerApi\Library\Generated\Model\VolumeCreateOptions::class => VolumeCreateOptionsNormalizer::class,
+        \WebProject\DockerApi\Library\Generated\Model\VolumesDiskUsage::class => VolumesDiskUsageNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\VolumeCreateRequest::class => VolumeCreateRequestNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\VolumeListResponse::class => VolumeListResponseNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\Network::class => NetworkNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\NetworkSummary::class => NetworkSummaryNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\NetworkInspect::class => NetworkInspectNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\NetworkStatus::class => NetworkStatusNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\ServiceInfo::class => ServiceInfoNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\NetworkTaskInfo::class => NetworkTaskInfoNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\ConfigReference::class => ConfigReferenceNormalizer::class,
 
@@ -117,7 +153,11 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
 
         \WebProject\DockerApi\Library\Generated\Model\IPAMConfig::class => IPAMConfigNormalizer::class,
 
-        \WebProject\DockerApi\Library\Generated\Model\NetworkContainer::class => NetworkContainerNormalizer::class,
+        \WebProject\DockerApi\Library\Generated\Model\IPAMStatus::class => IPAMStatusNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\SubnetStatus::class => SubnetStatusNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\EndpointResource::class => EndpointResourceNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\PeerInfo::class => PeerInfoNormalizer::class,
 
@@ -127,6 +167,8 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
 
         \WebProject\DockerApi\Library\Generated\Model\BuildCache::class => BuildCacheNormalizer::class,
 
+        \WebProject\DockerApi\Library\Generated\Model\BuildCacheDiskUsage::class => BuildCacheDiskUsageNormalizer::class,
+
         \WebProject\DockerApi\Library\Generated\Model\ImageID::class => ImageIDNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\CreateImageInfo::class => CreateImageInfoNormalizer::class,
@@ -135,6 +177,8 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
 
         \WebProject\DockerApi\Library\Generated\Model\DeviceInfo::class => DeviceInfoNormalizer::class,
 
+        \WebProject\DockerApi\Library\Generated\Model\NRIInfo::class => NRIInfoNormalizer::class,
+
         \WebProject\DockerApi\Library\Generated\Model\ErrorDetail::class => ErrorDetailNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\ProgressDetail::class => ProgressDetailNormalizer::class,
@@ -142,6 +186,10 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
         \WebProject\DockerApi\Library\Generated\Model\ErrorResponse::class => ErrorResponseNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\IDResponse::class => IDResponseNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\NetworkConnectRequest::class => NetworkConnectRequestNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\NetworkDisconnectRequest::class => NetworkDisconnectRequestNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\EndpointSettings::class => EndpointSettingsNormalizer::class,
 
@@ -152,8 +200,6 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
         \WebProject\DockerApi\Library\Generated\Model\PluginDevice::class => PluginDeviceNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\PluginEnv::class => PluginEnvNormalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\PluginInterfaceType::class => PluginInterfaceTypeNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\PluginPrivilege::class => PluginPrivilegeNormalizer::class,
 
@@ -311,6 +357,10 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
 
         \WebProject\DockerApi\Library\Generated\Model\ContainerSummaryNetworkSettings::class => ContainerSummaryNetworkSettingsNormalizer::class,
 
+        \WebProject\DockerApi\Library\Generated\Model\ContainerSummaryHealth::class => ContainerSummaryHealthNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\ContainersDiskUsage::class => ContainersDiskUsageNormalizer::class,
+
         \WebProject\DockerApi\Library\Generated\Model\Driver::class => DriverNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\SecretSpec::class => SecretSpecNormalizer::class,
@@ -425,47 +475,17 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
 
         \WebProject\DockerApi\Library\Generated\Model\ContainersIdUpdatePostBody::class => ContainersIdUpdatePostBodyNormalizer::class,
 
-        \WebProject\DockerApi\Library\Generated\Model\ContainersPrunePostResponse200::class => ContainersPrunePostResponse200Normalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\BuildPrunePostResponse200::class => BuildPrunePostResponse200Normalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\ImagesNameHistoryGetResponse200Item::class => ImagesNameHistoryGetResponse200ItemNormalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\ImagesSearchGetResponse200Item::class => ImagesSearchGetResponse200ItemNormalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\ImagesPrunePostResponse200::class => ImagesPrunePostResponse200Normalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\AuthPostResponse200::class => AuthPostResponse200Normalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\SystemDfGetJsonResponse200::class => SystemDfGetJsonResponse200Normalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\SystemDfGetTextplainResponse200::class => SystemDfGetTextplainResponse200Normalizer::class,
-
         \WebProject\DockerApi\Library\Generated\Model\ContainersIdExecPostBody::class => ContainersIdExecPostBodyNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\ExecIdStartPostBody::class => ExecIdStartPostBodyNormalizer::class,
 
-        \WebProject\DockerApi\Library\Generated\Model\ExecIdJsonGetResponse200::class => ExecIdJsonGetResponse200Normalizer::class,
-
         \WebProject\DockerApi\Library\Generated\Model\VolumesNamePutBody::class => VolumesNamePutBodyNormalizer::class,
 
-        \WebProject\DockerApi\Library\Generated\Model\VolumesPrunePostResponse200::class => VolumesPrunePostResponse200Normalizer::class,
-
         \WebProject\DockerApi\Library\Generated\Model\NetworksCreatePostBody::class => NetworksCreatePostBodyNormalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\NetworksIdConnectPostBody::class => NetworksIdConnectPostBodyNormalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\NetworksIdDisconnectPostBody::class => NetworksIdDisconnectPostBodyNormalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\NetworksPrunePostResponse200::class => NetworksPrunePostResponse200Normalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\SwarmInitPostBody::class => SwarmInitPostBodyNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\SwarmJoinPostBody::class => SwarmJoinPostBodyNormalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\SwarmUnlockkeyGetJsonResponse200::class => SwarmUnlockkeyGetJsonResponse200Normalizer::class,
-
-        \WebProject\DockerApi\Library\Generated\Model\SwarmUnlockkeyGetTextplainResponse200::class => SwarmUnlockkeyGetTextplainResponse200Normalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\SwarmUnlockPostBody::class => SwarmUnlockPostBodyNormalizer::class,
 
@@ -525,7 +545,8 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
     public function getSupportedTypes(?string $format = null): array
     {
         return [
-            \WebProject\DockerApi\Library\Generated\Model\Port::class                                                 => false,
+            \WebProject\DockerApi\Library\Generated\Model\ImageHistoryResponseItem::class                             => false,
+            \WebProject\DockerApi\Library\Generated\Model\PortSummary::class                                          => false,
             \WebProject\DockerApi\Library\Generated\Model\MountPoint::class                                           => false,
             \WebProject\DockerApi\Library\Generated\Model\DeviceMapping::class                                        => false,
             \WebProject\DockerApi\Library\Generated\Model\DeviceRequest::class                                        => false,
@@ -557,40 +578,62 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
             \WebProject\DockerApi\Library\Generated\Model\Address::class                                              => false,
             \WebProject\DockerApi\Library\Generated\Model\PortBinding::class                                          => false,
             \WebProject\DockerApi\Library\Generated\Model\DriverData::class                                           => false,
+            \WebProject\DockerApi\Library\Generated\Model\Storage::class                                              => false,
+            \WebProject\DockerApi\Library\Generated\Model\RootFSStorage::class                                        => false,
+            \WebProject\DockerApi\Library\Generated\Model\RootFSStorageSnapshot::class                                => false,
             \WebProject\DockerApi\Library\Generated\Model\FilesystemChange::class                                     => false,
             \WebProject\DockerApi\Library\Generated\Model\ImageInspect::class                                         => false,
             \WebProject\DockerApi\Library\Generated\Model\ImageInspectRootFS::class                                   => false,
             \WebProject\DockerApi\Library\Generated\Model\ImageInspectMetadata::class                                 => false,
+            \WebProject\DockerApi\Library\Generated\Model\Identity::class                                             => false,
+            \WebProject\DockerApi\Library\Generated\Model\BuildIdentity::class                                        => false,
+            \WebProject\DockerApi\Library\Generated\Model\PullIdentity::class                                         => false,
+            \WebProject\DockerApi\Library\Generated\Model\SignatureIdentity::class                                    => false,
+            \WebProject\DockerApi\Library\Generated\Model\SignatureTimestamp::class                                   => false,
+            \WebProject\DockerApi\Library\Generated\Model\SignerIdentity::class                                       => false,
             \WebProject\DockerApi\Library\Generated\Model\ImageSummary::class                                         => false,
+            \WebProject\DockerApi\Library\Generated\Model\ImagesDiskUsage::class                                      => false,
             \WebProject\DockerApi\Library\Generated\Model\AuthConfig::class                                           => false,
+            \WebProject\DockerApi\Library\Generated\Model\AuthResponse::class                                         => false,
             \WebProject\DockerApi\Library\Generated\Model\ProcessConfig::class                                        => false,
             \WebProject\DockerApi\Library\Generated\Model\Volume::class                                               => false,
             \WebProject\DockerApi\Library\Generated\Model\VolumeUsageData::class                                      => false,
-            \WebProject\DockerApi\Library\Generated\Model\VolumeCreateOptions::class                                  => false,
+            \WebProject\DockerApi\Library\Generated\Model\VolumesDiskUsage::class                                     => false,
+            \WebProject\DockerApi\Library\Generated\Model\VolumeCreateRequest::class                                  => false,
             \WebProject\DockerApi\Library\Generated\Model\VolumeListResponse::class                                   => false,
             \WebProject\DockerApi\Library\Generated\Model\Network::class                                              => false,
+            \WebProject\DockerApi\Library\Generated\Model\NetworkSummary::class                                       => false,
+            \WebProject\DockerApi\Library\Generated\Model\NetworkInspect::class                                       => false,
+            \WebProject\DockerApi\Library\Generated\Model\NetworkStatus::class                                        => false,
+            \WebProject\DockerApi\Library\Generated\Model\ServiceInfo::class                                          => false,
+            \WebProject\DockerApi\Library\Generated\Model\NetworkTaskInfo::class                                      => false,
             \WebProject\DockerApi\Library\Generated\Model\ConfigReference::class                                      => false,
             \WebProject\DockerApi\Library\Generated\Model\IPAM::class                                                 => false,
             \WebProject\DockerApi\Library\Generated\Model\IPAMConfig::class                                           => false,
-            \WebProject\DockerApi\Library\Generated\Model\NetworkContainer::class                                     => false,
+            \WebProject\DockerApi\Library\Generated\Model\IPAMStatus::class                                           => false,
+            \WebProject\DockerApi\Library\Generated\Model\SubnetStatus::class                                         => false,
+            \WebProject\DockerApi\Library\Generated\Model\EndpointResource::class                                     => false,
             \WebProject\DockerApi\Library\Generated\Model\PeerInfo::class                                             => false,
             \WebProject\DockerApi\Library\Generated\Model\NetworkCreateResponse::class                                => false,
             \WebProject\DockerApi\Library\Generated\Model\BuildInfo::class                                            => false,
             \WebProject\DockerApi\Library\Generated\Model\BuildCache::class                                           => false,
+            \WebProject\DockerApi\Library\Generated\Model\BuildCacheDiskUsage::class                                  => false,
             \WebProject\DockerApi\Library\Generated\Model\ImageID::class                                              => false,
             \WebProject\DockerApi\Library\Generated\Model\CreateImageInfo::class                                      => false,
             \WebProject\DockerApi\Library\Generated\Model\PushImageInfo::class                                        => false,
             \WebProject\DockerApi\Library\Generated\Model\DeviceInfo::class                                           => false,
+            \WebProject\DockerApi\Library\Generated\Model\NRIInfo::class                                              => false,
             \WebProject\DockerApi\Library\Generated\Model\ErrorDetail::class                                          => false,
             \WebProject\DockerApi\Library\Generated\Model\ProgressDetail::class                                       => false,
             \WebProject\DockerApi\Library\Generated\Model\ErrorResponse::class                                        => false,
             \WebProject\DockerApi\Library\Generated\Model\IDResponse::class                                           => false,
+            \WebProject\DockerApi\Library\Generated\Model\NetworkConnectRequest::class                                => false,
+            \WebProject\DockerApi\Library\Generated\Model\NetworkDisconnectRequest::class                             => false,
             \WebProject\DockerApi\Library\Generated\Model\EndpointSettings::class                                     => false,
             \WebProject\DockerApi\Library\Generated\Model\EndpointIPAMConfig::class                                   => false,
             \WebProject\DockerApi\Library\Generated\Model\PluginMount::class                                          => false,
             \WebProject\DockerApi\Library\Generated\Model\PluginDevice::class                                         => false,
             \WebProject\DockerApi\Library\Generated\Model\PluginEnv::class                                            => false,
-            \WebProject\DockerApi\Library\Generated\Model\PluginInterfaceType::class                                  => false,
             \WebProject\DockerApi\Library\Generated\Model\PluginPrivilege::class                                      => false,
             \WebProject\DockerApi\Library\Generated\Model\Plugin::class                                               => false,
             \WebProject\DockerApi\Library\Generated\Model\PluginSettings::class                                       => false,
@@ -669,6 +712,8 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
             \WebProject\DockerApi\Library\Generated\Model\ContainerSummary::class                                     => false,
             \WebProject\DockerApi\Library\Generated\Model\ContainerSummaryHostConfig::class                           => false,
             \WebProject\DockerApi\Library\Generated\Model\ContainerSummaryNetworkSettings::class                      => false,
+            \WebProject\DockerApi\Library\Generated\Model\ContainerSummaryHealth::class                               => false,
+            \WebProject\DockerApi\Library\Generated\Model\ContainersDiskUsage::class                                  => false,
             \WebProject\DockerApi\Library\Generated\Model\Driver::class                                               => false,
             \WebProject\DockerApi\Library\Generated\Model\SecretSpec::class                                           => false,
             \WebProject\DockerApi\Library\Generated\Model\Secret::class                                               => false,
@@ -726,27 +771,12 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
             \WebProject\DockerApi\Library\Generated\Model\ImageManifestSummaryAttestationData::class                  => false,
             \WebProject\DockerApi\Library\Generated\Model\ContainersCreatePostBody::class                             => false,
             \WebProject\DockerApi\Library\Generated\Model\ContainersIdUpdatePostBody::class                           => false,
-            \WebProject\DockerApi\Library\Generated\Model\ContainersPrunePostResponse200::class                       => false,
-            \WebProject\DockerApi\Library\Generated\Model\BuildPrunePostResponse200::class                            => false,
-            \WebProject\DockerApi\Library\Generated\Model\ImagesNameHistoryGetResponse200Item::class                  => false,
-            \WebProject\DockerApi\Library\Generated\Model\ImagesSearchGetResponse200Item::class                       => false,
-            \WebProject\DockerApi\Library\Generated\Model\ImagesPrunePostResponse200::class                           => false,
-            \WebProject\DockerApi\Library\Generated\Model\AuthPostResponse200::class                                  => false,
-            \WebProject\DockerApi\Library\Generated\Model\SystemDfGetJsonResponse200::class                           => false,
-            \WebProject\DockerApi\Library\Generated\Model\SystemDfGetTextplainResponse200::class                      => false,
             \WebProject\DockerApi\Library\Generated\Model\ContainersIdExecPostBody::class                             => false,
             \WebProject\DockerApi\Library\Generated\Model\ExecIdStartPostBody::class                                  => false,
-            \WebProject\DockerApi\Library\Generated\Model\ExecIdJsonGetResponse200::class                             => false,
             \WebProject\DockerApi\Library\Generated\Model\VolumesNamePutBody::class                                   => false,
-            \WebProject\DockerApi\Library\Generated\Model\VolumesPrunePostResponse200::class                          => false,
             \WebProject\DockerApi\Library\Generated\Model\NetworksCreatePostBody::class                               => false,
-            \WebProject\DockerApi\Library\Generated\Model\NetworksIdConnectPostBody::class                            => false,
-            \WebProject\DockerApi\Library\Generated\Model\NetworksIdDisconnectPostBody::class                         => false,
-            \WebProject\DockerApi\Library\Generated\Model\NetworksPrunePostResponse200::class                         => false,
             \WebProject\DockerApi\Library\Generated\Model\SwarmInitPostBody::class                                    => false,
             \WebProject\DockerApi\Library\Generated\Model\SwarmJoinPostBody::class                                    => false,
-            \WebProject\DockerApi\Library\Generated\Model\SwarmUnlockkeyGetJsonResponse200::class                     => false,
-            \WebProject\DockerApi\Library\Generated\Model\SwarmUnlockkeyGetTextplainResponse200::class                => false,
             \WebProject\DockerApi\Library\Generated\Model\SwarmUnlockPostBody::class                                  => false,
             \WebProject\DockerApi\Library\Generated\Model\ServicesCreatePostBody::class                               => false,
             \WebProject\DockerApi\Library\Generated\Model\ServicesIdUpdatePostBody::class                             => false,

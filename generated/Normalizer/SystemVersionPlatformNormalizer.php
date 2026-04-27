@@ -37,24 +37,18 @@ class SystemVersionPlatformNormalizer implements DenormalizerInterface, Normaliz
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\SystemVersionPlatform();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\SystemVersionPlatform();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('Name', $data)) {
             $object->setName($data['Name']);
-            unset($data['Name']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
-            }
         }
 
         return $object;
@@ -64,11 +58,6 @@ class SystemVersionPlatformNormalizer implements DenormalizerInterface, Normaliz
     {
         $dataArray         = [];
         $dataArray['Name'] = $data->getName();
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
-            }
-        }
 
         return $dataArray;
     }

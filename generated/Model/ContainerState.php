@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ContainerState extends ArrayObject
+class ContainerState
 {
     /**
      * @var array
@@ -21,7 +20,7 @@ class ContainerState extends ArrayObject
      * String representation of the container state. Can be one of "created",
      * "running", "paused", "restarting", "removing", "exited", or "dead".
      *
-     * @var string
+     * @var string|null
      */
     protected $status;
     /**
@@ -36,58 +35,58 @@ class ContainerState extends ArrayObject
      *
      * Use the `Status` field instead to determine if a container's state is "running".
      *
-     * @var bool
+     * @var bool|null
      */
     protected $running;
     /**
      * Whether this container is paused.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $paused;
     /**
      * Whether this container is restarting.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $restarting;
     /**
      * Whether a process within this container has been killed because it ran
      * out of memory since the container was last started.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $oOMKilled;
     /**
-     * @var bool
+     * @var bool|null
      */
     protected $dead;
     /**
      * The process ID of this container.
      *
-     * @var int
+     * @var int|null
      */
     protected $pid;
     /**
      * The last exit code of this container.
      *
-     * @var int
+     * @var int|null
      */
     protected $exitCode;
     /**
-     * @var string
+     * @var string|null
      */
     protected $error;
     /**
      * The time when this container was last started.
      *
-     * @var string
+     * @var string|null
      */
     protected $startedAt;
     /**
      * The time when this container last exited.
      *
-     * @var string
+     * @var string|null
      */
     protected $finishedAt;
     /**
@@ -101,9 +100,9 @@ class ContainerState extends ArrayObject
      * String representation of the container state. Can be one of "created",
      * "running", "paused", "restarting", "removing", "exited", or "dead".
      *
-     * @return string
+     * @return string|null
      */
-    public function getStatus(): string
+    public function getStatus(): ?string
     {
         return $this->status;
     }
@@ -112,11 +111,11 @@ class ContainerState extends ArrayObject
      * String representation of the container state. Can be one of "created",
      * "running", "paused", "restarting", "removing", "exited", or "dead".
      *
-     * @param string $status
+     * @param string|null $status
      *
      * @return self
      */
-    public function setStatus(string $status): self
+    public function setStatus(?string $status): self
     {
         $this->initialized['status'] = true;
         $this->status                = $status;
@@ -136,9 +135,9 @@ class ContainerState extends ArrayObject
      *
      * Use the `Status` field instead to determine if a container's state is "running".
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getRunning(): bool
+    public function getRunning(): ?bool
     {
         return $this->running;
     }
@@ -155,11 +154,11 @@ class ContainerState extends ArrayObject
      *
      * Use the `Status` field instead to determine if a container's state is "running".
      *
-     * @param bool $running
+     * @param bool|null $running
      *
      * @return self
      */
-    public function setRunning(bool $running): self
+    public function setRunning(?bool $running): self
     {
         $this->initialized['running'] = true;
         $this->running                = $running;
@@ -170,9 +169,9 @@ class ContainerState extends ArrayObject
     /**
      * Whether this container is paused.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getPaused(): bool
+    public function getPaused(): ?bool
     {
         return $this->paused;
     }
@@ -180,11 +179,11 @@ class ContainerState extends ArrayObject
     /**
      * Whether this container is paused.
      *
-     * @param bool $paused
+     * @param bool|null $paused
      *
      * @return self
      */
-    public function setPaused(bool $paused): self
+    public function setPaused(?bool $paused): self
     {
         $this->initialized['paused'] = true;
         $this->paused                = $paused;
@@ -195,9 +194,9 @@ class ContainerState extends ArrayObject
     /**
      * Whether this container is restarting.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getRestarting(): bool
+    public function getRestarting(): ?bool
     {
         return $this->restarting;
     }
@@ -205,11 +204,11 @@ class ContainerState extends ArrayObject
     /**
      * Whether this container is restarting.
      *
-     * @param bool $restarting
+     * @param bool|null $restarting
      *
      * @return self
      */
-    public function setRestarting(bool $restarting): self
+    public function setRestarting(?bool $restarting): self
     {
         $this->initialized['restarting'] = true;
         $this->restarting                = $restarting;
@@ -221,9 +220,9 @@ class ContainerState extends ArrayObject
      * Whether a process within this container has been killed because it ran
      * out of memory since the container was last started.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getOOMKilled(): bool
+    public function getOOMKilled(): ?bool
     {
         return $this->oOMKilled;
     }
@@ -232,11 +231,11 @@ class ContainerState extends ArrayObject
      * Whether a process within this container has been killed because it ran
      * out of memory since the container was last started.
      *
-     * @param bool $oOMKilled
+     * @param bool|null $oOMKilled
      *
      * @return self
      */
-    public function setOOMKilled(bool $oOMKilled): self
+    public function setOOMKilled(?bool $oOMKilled): self
     {
         $this->initialized['oOMKilled'] = true;
         $this->oOMKilled                = $oOMKilled;
@@ -245,19 +244,19 @@ class ContainerState extends ArrayObject
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function getDead(): bool
+    public function getDead(): ?bool
     {
         return $this->dead;
     }
 
     /**
-     * @param bool $dead
+     * @param bool|null $dead
      *
      * @return self
      */
-    public function setDead(bool $dead): self
+    public function setDead(?bool $dead): self
     {
         $this->initialized['dead'] = true;
         $this->dead                = $dead;
@@ -268,9 +267,9 @@ class ContainerState extends ArrayObject
     /**
      * The process ID of this container.
      *
-     * @return int
+     * @return int|null
      */
-    public function getPid(): int
+    public function getPid(): ?int
     {
         return $this->pid;
     }
@@ -278,11 +277,11 @@ class ContainerState extends ArrayObject
     /**
      * The process ID of this container.
      *
-     * @param int $pid
+     * @param int|null $pid
      *
      * @return self
      */
-    public function setPid(int $pid): self
+    public function setPid(?int $pid): self
     {
         $this->initialized['pid'] = true;
         $this->pid                = $pid;
@@ -293,9 +292,9 @@ class ContainerState extends ArrayObject
     /**
      * The last exit code of this container.
      *
-     * @return int
+     * @return int|null
      */
-    public function getExitCode(): int
+    public function getExitCode(): ?int
     {
         return $this->exitCode;
     }
@@ -303,11 +302,11 @@ class ContainerState extends ArrayObject
     /**
      * The last exit code of this container.
      *
-     * @param int $exitCode
+     * @param int|null $exitCode
      *
      * @return self
      */
-    public function setExitCode(int $exitCode): self
+    public function setExitCode(?int $exitCode): self
     {
         $this->initialized['exitCode'] = true;
         $this->exitCode                = $exitCode;
@@ -316,19 +315,19 @@ class ContainerState extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getError(): string
+    public function getError(): ?string
     {
         return $this->error;
     }
 
     /**
-     * @param string $error
+     * @param string|null $error
      *
      * @return self
      */
-    public function setError(string $error): self
+    public function setError(?string $error): self
     {
         $this->initialized['error'] = true;
         $this->error                = $error;
@@ -339,9 +338,9 @@ class ContainerState extends ArrayObject
     /**
      * The time when this container was last started.
      *
-     * @return string
+     * @return string|null
      */
-    public function getStartedAt(): string
+    public function getStartedAt(): ?string
     {
         return $this->startedAt;
     }
@@ -349,11 +348,11 @@ class ContainerState extends ArrayObject
     /**
      * The time when this container was last started.
      *
-     * @param string $startedAt
+     * @param string|null $startedAt
      *
      * @return self
      */
-    public function setStartedAt(string $startedAt): self
+    public function setStartedAt(?string $startedAt): self
     {
         $this->initialized['startedAt'] = true;
         $this->startedAt                = $startedAt;
@@ -364,9 +363,9 @@ class ContainerState extends ArrayObject
     /**
      * The time when this container last exited.
      *
-     * @return string
+     * @return string|null
      */
-    public function getFinishedAt(): string
+    public function getFinishedAt(): ?string
     {
         return $this->finishedAt;
     }
@@ -374,11 +373,11 @@ class ContainerState extends ArrayObject
     /**
      * The time when this container last exited.
      *
-     * @param string $finishedAt
+     * @param string|null $finishedAt
      *
      * @return self
      */
-    public function setFinishedAt(string $finishedAt): self
+    public function setFinishedAt(?string $finishedAt): self
     {
         $this->initialized['finishedAt'] = true;
         $this->finishedAt                = $finishedAt;

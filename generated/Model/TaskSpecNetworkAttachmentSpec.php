@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecNetworkAttachmentSpec extends ArrayObject
+class TaskSpecNetworkAttachmentSpec
 {
     /**
      * @var array
@@ -20,16 +19,16 @@ class TaskSpecNetworkAttachmentSpec extends ArrayObject
     /**
      * ID of the container represented by this task.
      *
-     * @var string
+     * @var string|null
      */
     protected $containerID;
 
     /**
      * ID of the container represented by this task.
      *
-     * @return string
+     * @return string|null
      */
-    public function getContainerID(): string
+    public function getContainerID(): ?string
     {
         return $this->containerID;
     }
@@ -37,11 +36,11 @@ class TaskSpecNetworkAttachmentSpec extends ArrayObject
     /**
      * ID of the container represented by this task.
      *
-     * @param string $containerID
+     * @param string|null $containerID
      *
      * @return self
      */
-    public function setContainerID(string $containerID): self
+    public function setContainerID(?string $containerID): self
     {
         $this->initialized['containerID'] = true;
         $this->containerID                = $containerID;

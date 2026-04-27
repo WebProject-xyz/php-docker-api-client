@@ -37,28 +37,21 @@ class VolumeUsageDataNormalizer implements DenormalizerInterface, NormalizerInte
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\VolumeUsageData();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\VolumeUsageData();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('Size', $data)) {
             $object->setSize($data['Size']);
-            unset($data['Size']);
         }
         if (array_key_exists('RefCount', $data)) {
             $object->setRefCount($data['RefCount']);
-            unset($data['RefCount']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
-            }
         }
 
         return $object;
@@ -69,11 +62,6 @@ class VolumeUsageDataNormalizer implements DenormalizerInterface, NormalizerInte
         $dataArray             = [];
         $dataArray['Size']     = $data->getSize();
         $dataArray['RefCount'] = $data->getRefCount();
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
-            }
-        }
 
         return $dataArray;
     }

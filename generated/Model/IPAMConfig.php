@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class IPAMConfig extends ArrayObject
+class IPAMConfig
 {
     /**
      * @var array
@@ -18,36 +17,36 @@ class IPAMConfig extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $subnet;
     /**
-     * @var string
+     * @var string|null
      */
     protected $iPRange;
     /**
-     * @var string
+     * @var string|null
      */
     protected $gateway;
     /**
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $auxiliaryAddresses;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSubnet(): string
+    public function getSubnet(): ?string
     {
         return $this->subnet;
     }
 
     /**
-     * @param string $subnet
+     * @param string|null $subnet
      *
      * @return self
      */
-    public function setSubnet(string $subnet): self
+    public function setSubnet(?string $subnet): self
     {
         $this->initialized['subnet'] = true;
         $this->subnet                = $subnet;
@@ -56,19 +55,19 @@ class IPAMConfig extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getIPRange(): string
+    public function getIPRange(): ?string
     {
         return $this->iPRange;
     }
 
     /**
-     * @param string $iPRange
+     * @param string|null $iPRange
      *
      * @return self
      */
-    public function setIPRange(string $iPRange): self
+    public function setIPRange(?string $iPRange): self
     {
         $this->initialized['iPRange'] = true;
         $this->iPRange                = $iPRange;
@@ -77,19 +76,19 @@ class IPAMConfig extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getGateway(): string
+    public function getGateway(): ?string
     {
         return $this->gateway;
     }
 
     /**
-     * @param string $gateway
+     * @param string|null $gateway
      *
      * @return self
      */
-    public function setGateway(string $gateway): self
+    public function setGateway(?string $gateway): self
     {
         $this->initialized['gateway'] = true;
         $this->gateway                = $gateway;
@@ -98,19 +97,19 @@ class IPAMConfig extends ArrayObject
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getAuxiliaryAddresses(): iterable
+    public function getAuxiliaryAddresses(): ?iterable
     {
         return $this->auxiliaryAddresses;
     }
 
     /**
-     * @param array<string, string> $auxiliaryAddresses
+     * @param array<string, string>|null $auxiliaryAddresses
      *
      * @return self
      */
-    public function setAuxiliaryAddresses(iterable $auxiliaryAddresses): self
+    public function setAuxiliaryAddresses(?iterable $auxiliaryAddresses): self
     {
         $this->initialized['auxiliaryAddresses'] = true;
         $this->auxiliaryAddresses                = $auxiliaryAddresses;

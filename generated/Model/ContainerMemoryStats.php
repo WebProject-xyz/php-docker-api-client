@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ContainerMemoryStats extends ArrayObject
+class ContainerMemoryStats
 {
     /**
      * @var array
@@ -35,11 +34,15 @@ class ContainerMemoryStats extends ArrayObject
      */
     protected $maxUsage;
     /**
-     * All the stats exported via memory.stat. when using cgroups v2.
+     * All the stats exported via memory.stat.
+     *
+     * The fields in this object differ between cgroups v1 and v2.
+     * On cgroups v1, fields such as `cache`, `rss`, `mapped_file` are available.
+     * On cgroups v2, fields such as `file`, `anon`, `inactive_file` are available.
      *
      * This field is Linux-specific and omitted for Windows containers.
      *
-     * @var array<string, int>
+     * @var array<string, int|null>|null
      */
     protected $stats;
     /**
@@ -143,27 +146,35 @@ class ContainerMemoryStats extends ArrayObject
     }
 
     /**
-     * All the stats exported via memory.stat. when using cgroups v2.
+     * All the stats exported via memory.stat.
+     *
+     * The fields in this object differ between cgroups v1 and v2.
+     * On cgroups v1, fields such as `cache`, `rss`, `mapped_file` are available.
+     * On cgroups v2, fields such as `file`, `anon`, `inactive_file` are available.
      *
      * This field is Linux-specific and omitted for Windows containers.
      *
-     * @return array<string, int>
+     * @return array<string, int|null>|null
      */
-    public function getStats(): iterable
+    public function getStats(): ?iterable
     {
         return $this->stats;
     }
 
     /**
-     * All the stats exported via memory.stat. when using cgroups v2.
+     * All the stats exported via memory.stat.
+     *
+     * The fields in this object differ between cgroups v1 and v2.
+     * On cgroups v1, fields such as `cache`, `rss`, `mapped_file` are available.
+     * On cgroups v2, fields such as `file`, `anon`, `inactive_file` are available.
      *
      * This field is Linux-specific and omitted for Windows containers.
      *
-     * @param array<string, int> $stats
+     * @param array<string, int|null>|null $stats
      *
      * @return self
      */
-    public function setStats(iterable $stats): self
+    public function setStats(?iterable $stats): self
     {
         $this->initialized['stats'] = true;
         $this->stats                = $stats;

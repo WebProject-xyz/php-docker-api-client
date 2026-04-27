@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class PluginConfig extends ArrayObject
+class PluginConfig
 {
     /**
      * @var array
@@ -17,16 +16,6 @@ class PluginConfig extends ArrayObject
     {
         return array_key_exists($property, $this->initialized);
     }
-    /**
-     * Docker Version used to create the plugin.
-     *
-     * Depending on how the plugin was created, this field may be empty or omitted.
-     *
-     * Deprecated: this field is no longer set, and will be removed in the next API version.
-     *
-     * @var string
-     */
-    protected $dockerVersion;
     /**
      * @var string
      */
@@ -86,42 +75,9 @@ class PluginConfig extends ArrayObject
      */
     protected $args;
     /**
-     * @var PluginConfigRootfs
+     * @var PluginConfigRootfs|null
      */
     protected $rootfs;
-
-    /**
-     * Docker Version used to create the plugin.
-     *
-     * Depending on how the plugin was created, this field may be empty or omitted.
-     *
-     * Deprecated: this field is no longer set, and will be removed in the next API version.
-     *
-     * @return string
-     */
-    public function getDockerVersion(): string
-    {
-        return $this->dockerVersion;
-    }
-
-    /**
-     * Docker Version used to create the plugin.
-     *
-     * Depending on how the plugin was created, this field may be empty or omitted.
-     *
-     * Deprecated: this field is no longer set, and will be removed in the next API version.
-     *
-     * @param string $dockerVersion
-     *
-     * @return self
-     */
-    public function setDockerVersion(string $dockerVersion): self
-    {
-        $this->initialized['dockerVersion'] = true;
-        $this->dockerVersion                = $dockerVersion;
-
-        return $this;
-    }
 
     /**
      * @return string
@@ -422,19 +378,19 @@ class PluginConfig extends ArrayObject
     }
 
     /**
-     * @return PluginConfigRootfs
+     * @return PluginConfigRootfs|null
      */
-    public function getRootfs(): PluginConfigRootfs
+    public function getRootfs(): ?PluginConfigRootfs
     {
         return $this->rootfs;
     }
 
     /**
-     * @param PluginConfigRootfs $rootfs
+     * @param PluginConfigRootfs|null $rootfs
      *
      * @return self
      */
-    public function setRootfs(PluginConfigRootfs $rootfs): self
+    public function setRootfs(?PluginConfigRootfs $rootfs): self
     {
         $this->initialized['rootfs'] = true;
         $this->rootfs                = $rootfs;

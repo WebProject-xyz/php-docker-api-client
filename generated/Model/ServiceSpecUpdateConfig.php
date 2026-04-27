@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ServiceSpecUpdateConfig extends ArrayObject
+class ServiceSpecUpdateConfig
 {
     /**
      * @var array
@@ -21,27 +20,27 @@ class ServiceSpecUpdateConfig extends ArrayObject
      * Maximum number of tasks to be updated in one iteration (0 means
      * unlimited parallelism).
      *
-     * @var int
+     * @var int|null
      */
     protected $parallelism;
     /**
      * Amount of time between updates, in nanoseconds.
      *
-     * @var int
+     * @var int|null
      */
     protected $delay;
     /**
      * Action to take if an updated task fails to run, or stops running
      * during the update.
      *
-     * @var string
+     * @var string|null
      */
     protected $failureAction;
     /**
      * Amount of time to monitor each updated task for failures, in
      * nanoseconds.
      *
-     * @var int
+     * @var int|null
      */
     protected $monitor;
     /**
@@ -49,7 +48,7 @@ class ServiceSpecUpdateConfig extends ArrayObject
      * failure action is invoked, specified as a floating point number
      * between 0 and 1.
      *
-     * @var float
+     * @var float|null
      */
     protected $maxFailureRatio = 0;
     /**
@@ -57,7 +56,7 @@ class ServiceSpecUpdateConfig extends ArrayObject
      * the old task is shut down before the new task is started, or the
      * new task is started before the old task is shut down.
      *
-     * @var string
+     * @var string|null
      */
     protected $order;
 
@@ -65,9 +64,9 @@ class ServiceSpecUpdateConfig extends ArrayObject
      * Maximum number of tasks to be updated in one iteration (0 means
      * unlimited parallelism).
      *
-     * @return int
+     * @return int|null
      */
-    public function getParallelism(): int
+    public function getParallelism(): ?int
     {
         return $this->parallelism;
     }
@@ -76,11 +75,11 @@ class ServiceSpecUpdateConfig extends ArrayObject
      * Maximum number of tasks to be updated in one iteration (0 means
      * unlimited parallelism).
      *
-     * @param int $parallelism
+     * @param int|null $parallelism
      *
      * @return self
      */
-    public function setParallelism(int $parallelism): self
+    public function setParallelism(?int $parallelism): self
     {
         $this->initialized['parallelism'] = true;
         $this->parallelism                = $parallelism;
@@ -91,9 +90,9 @@ class ServiceSpecUpdateConfig extends ArrayObject
     /**
      * Amount of time between updates, in nanoseconds.
      *
-     * @return int
+     * @return int|null
      */
-    public function getDelay(): int
+    public function getDelay(): ?int
     {
         return $this->delay;
     }
@@ -101,11 +100,11 @@ class ServiceSpecUpdateConfig extends ArrayObject
     /**
      * Amount of time between updates, in nanoseconds.
      *
-     * @param int $delay
+     * @param int|null $delay
      *
      * @return self
      */
-    public function setDelay(int $delay): self
+    public function setDelay(?int $delay): self
     {
         $this->initialized['delay'] = true;
         $this->delay                = $delay;
@@ -117,9 +116,9 @@ class ServiceSpecUpdateConfig extends ArrayObject
      * Action to take if an updated task fails to run, or stops running
      * during the update.
      *
-     * @return string
+     * @return string|null
      */
-    public function getFailureAction(): string
+    public function getFailureAction(): ?string
     {
         return $this->failureAction;
     }
@@ -128,11 +127,11 @@ class ServiceSpecUpdateConfig extends ArrayObject
      * Action to take if an updated task fails to run, or stops running
      * during the update.
      *
-     * @param string $failureAction
+     * @param string|null $failureAction
      *
      * @return self
      */
-    public function setFailureAction(string $failureAction): self
+    public function setFailureAction(?string $failureAction): self
     {
         $this->initialized['failureAction'] = true;
         $this->failureAction                = $failureAction;
@@ -144,9 +143,9 @@ class ServiceSpecUpdateConfig extends ArrayObject
      * Amount of time to monitor each updated task for failures, in
      * nanoseconds.
      *
-     * @return int
+     * @return int|null
      */
-    public function getMonitor(): int
+    public function getMonitor(): ?int
     {
         return $this->monitor;
     }
@@ -155,11 +154,11 @@ class ServiceSpecUpdateConfig extends ArrayObject
      * Amount of time to monitor each updated task for failures, in
      * nanoseconds.
      *
-     * @param int $monitor
+     * @param int|null $monitor
      *
      * @return self
      */
-    public function setMonitor(int $monitor): self
+    public function setMonitor(?int $monitor): self
     {
         $this->initialized['monitor'] = true;
         $this->monitor                = $monitor;
@@ -172,9 +171,9 @@ class ServiceSpecUpdateConfig extends ArrayObject
      * failure action is invoked, specified as a floating point number
      * between 0 and 1.
      *
-     * @return float
+     * @return float|null
      */
-    public function getMaxFailureRatio(): float
+    public function getMaxFailureRatio(): ?float
     {
         return $this->maxFailureRatio;
     }
@@ -184,11 +183,11 @@ class ServiceSpecUpdateConfig extends ArrayObject
      * failure action is invoked, specified as a floating point number
      * between 0 and 1.
      *
-     * @param float $maxFailureRatio
+     * @param float|null $maxFailureRatio
      *
      * @return self
      */
-    public function setMaxFailureRatio(float $maxFailureRatio): self
+    public function setMaxFailureRatio(?float $maxFailureRatio): self
     {
         $this->initialized['maxFailureRatio'] = true;
         $this->maxFailureRatio                = $maxFailureRatio;
@@ -201,9 +200,9 @@ class ServiceSpecUpdateConfig extends ArrayObject
      * the old task is shut down before the new task is started, or the
      * new task is started before the old task is shut down.
      *
-     * @return string
+     * @return string|null
      */
-    public function getOrder(): string
+    public function getOrder(): ?string
     {
         return $this->order;
     }
@@ -213,11 +212,11 @@ class ServiceSpecUpdateConfig extends ArrayObject
      * the old task is shut down before the new task is started, or the
      * new task is started before the old task is shut down.
      *
-     * @param string $order
+     * @param string|null $order
      *
      * @return self
      */
-    public function setOrder(string $order): self
+    public function setOrder(?string $order): self
     {
         $this->initialized['order'] = true;
         $this->order                = $order;

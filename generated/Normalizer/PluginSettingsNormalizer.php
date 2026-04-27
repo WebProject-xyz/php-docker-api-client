@@ -37,15 +37,15 @@ class PluginSettingsNormalizer implements DenormalizerInterface, NormalizerInter
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginSettings();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
-        }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginSettings();
-        if (null === $data || false === is_array($data)) {
-            return $object;
         }
         if (array_key_exists('Mounts', $data)) {
             $values = [];
@@ -53,7 +53,6 @@ class PluginSettingsNormalizer implements DenormalizerInterface, NormalizerInter
                 $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\PluginMount::class, 'json', $context);
             }
             $object->setMounts($values);
-            unset($data['Mounts']);
         }
         if (array_key_exists('Env', $data)) {
             $values_1 = [];
@@ -61,7 +60,6 @@ class PluginSettingsNormalizer implements DenormalizerInterface, NormalizerInter
                 $values_1[] = $value_1;
             }
             $object->setEnv($values_1);
-            unset($data['Env']);
         }
         if (array_key_exists('Args', $data)) {
             $values_2 = [];
@@ -69,7 +67,6 @@ class PluginSettingsNormalizer implements DenormalizerInterface, NormalizerInter
                 $values_2[] = $value_2;
             }
             $object->setArgs($values_2);
-            unset($data['Args']);
         }
         if (array_key_exists('Devices', $data)) {
             $values_3 = [];
@@ -77,12 +74,6 @@ class PluginSettingsNormalizer implements DenormalizerInterface, NormalizerInter
                 $values_3[] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\PluginDevice::class, 'json', $context);
             }
             $object->setDevices($values_3);
-            unset($data['Devices']);
-        }
-        foreach ($data as $key => $value_4) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_4;
-            }
         }
 
         return $object;
@@ -111,11 +102,6 @@ class PluginSettingsNormalizer implements DenormalizerInterface, NormalizerInter
             $values_3[] = $this->normalizer->normalize($value_3, 'json', $context);
         }
         $dataArray['Devices'] = $values_3;
-        foreach ($data as $key => $value_4) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_4;
-            }
-        }
 
         return $dataArray;
     }

@@ -10,15 +10,12 @@ class SecretUpdate extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     protected $accept;
 
     /**
-     * @param string                                                        $id              The ID or name of the secret
+     * @param string                                                        $id          The ID or name of the secret
      * @param \WebProject\DockerApi\Library\Generated\Model\SecretSpec|null $requestBody
-     * @param array                                                         $queryParameters {
-     *
-     * @var int $version The version number of the secret object being updated. This is
-     *          required to avoid conflicting writes.
-     *
-     * }
-     *
+     * @param array{
+     *    "version": int, //The version number of the secret object being updated. This is
+     * required to avoid conflicting writes.
+     * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
     public function __construct(string $id, ?\WebProject\DockerApi\Library\Generated\Model\SecretSpec $requestBody = null, array $queryParameters = [], array $accept = [])
@@ -88,16 +85,16 @@ class SecretUpdate extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\SecretUpdateBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\SecretUpdateNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\SecretUpdateInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (503 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (503 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\SecretUpdateServiceUnavailableException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

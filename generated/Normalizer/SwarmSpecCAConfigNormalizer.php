@@ -16,7 +16,9 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
+use function is_string;
 
 class SwarmSpecCAConfigNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,44 +39,74 @@ class SwarmSpecCAConfigNormalizer implements DenormalizerInterface, NormalizerIn
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\SwarmSpecCAConfig();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\SwarmSpecCAConfig();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('NodeCertExpiry', $data)) {
-            $object->setNodeCertExpiry($data['NodeCertExpiry']);
-            unset($data['NodeCertExpiry']);
-        }
-        if (array_key_exists('ExternalCAs', $data)) {
-            $values = [];
-            foreach ($data['ExternalCAs'] as $value) {
-                $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\SwarmSpecCAConfigExternalCAsItem::class, 'json', $context);
+        if (array_key_exists('NodeCertExpiry', $data) && null !== $data['NodeCertExpiry']) {
+            $value = $data['NodeCertExpiry'];
+            if (is_int($data['NodeCertExpiry'])) {
+                $value = $data['NodeCertExpiry'];
+            } elseif (null === $data['NodeCertExpiry']) {
+                $value = $data['NodeCertExpiry'];
             }
-            $object->setExternalCAs($values);
-            unset($data['ExternalCAs']);
+            $object->setNodeCertExpiry($value);
+        } elseif (array_key_exists('NodeCertExpiry', $data) && null === $data['NodeCertExpiry']) {
+            $object->setNodeCertExpiry(null);
         }
-        if (array_key_exists('SigningCACert', $data)) {
-            $object->setSigningCACert($data['SigningCACert']);
-            unset($data['SigningCACert']);
-        }
-        if (array_key_exists('SigningCAKey', $data)) {
-            $object->setSigningCAKey($data['SigningCAKey']);
-            unset($data['SigningCAKey']);
-        }
-        if (array_key_exists('ForceRotate', $data)) {
-            $object->setForceRotate($data['ForceRotate']);
-            unset($data['ForceRotate']);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
+        if (array_key_exists('ExternalCAs', $data) && null !== $data['ExternalCAs']) {
+            $value_1 = $data['ExternalCAs'];
+            if (is_array($data['ExternalCAs']) && $this->isOnlyNumericKeys($data['ExternalCAs'])) {
+                $values = [];
+                foreach ($data['ExternalCAs'] as $value_2) {
+                    $values[] = $this->denormalizer->denormalize($value_2, \WebProject\DockerApi\Library\Generated\Model\SwarmSpecCAConfigExternalCAsItem::class, 'json', $context);
+                }
+                $value_1 = $values;
+            } elseif (null === $data['ExternalCAs']) {
+                $value_1 = $data['ExternalCAs'];
             }
+            $object->setExternalCAs($value_1);
+        } elseif (array_key_exists('ExternalCAs', $data) && null === $data['ExternalCAs']) {
+            $object->setExternalCAs(null);
+        }
+        if (array_key_exists('SigningCACert', $data) && null !== $data['SigningCACert']) {
+            $value_3 = $data['SigningCACert'];
+            if (is_string($data['SigningCACert'])) {
+                $value_3 = $data['SigningCACert'];
+            } elseif (null === $data['SigningCACert']) {
+                $value_3 = $data['SigningCACert'];
+            }
+            $object->setSigningCACert($value_3);
+        } elseif (array_key_exists('SigningCACert', $data) && null === $data['SigningCACert']) {
+            $object->setSigningCACert(null);
+        }
+        if (array_key_exists('SigningCAKey', $data) && null !== $data['SigningCAKey']) {
+            $value_4 = $data['SigningCAKey'];
+            if (is_string($data['SigningCAKey'])) {
+                $value_4 = $data['SigningCAKey'];
+            } elseif (null === $data['SigningCAKey']) {
+                $value_4 = $data['SigningCAKey'];
+            }
+            $object->setSigningCAKey($value_4);
+        } elseif (array_key_exists('SigningCAKey', $data) && null === $data['SigningCAKey']) {
+            $object->setSigningCAKey(null);
+        }
+        if (array_key_exists('ForceRotate', $data) && null !== $data['ForceRotate']) {
+            $value_5 = $data['ForceRotate'];
+            if (is_int($data['ForceRotate'])) {
+                $value_5 = $data['ForceRotate'];
+            } elseif (null === $data['ForceRotate']) {
+                $value_5 = $data['ForceRotate'];
+            }
+            $object->setForceRotate($value_5);
+        } elseif (array_key_exists('ForceRotate', $data) && null === $data['ForceRotate']) {
+            $object->setForceRotate(null);
         }
 
         return $object;
@@ -83,29 +115,54 @@ class SwarmSpecCAConfigNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('nodeCertExpiry') && null !== $data->getNodeCertExpiry()) {
-            $dataArray['NodeCertExpiry'] = $data->getNodeCertExpiry();
-        }
-        if ($data->isInitialized('externalCAs') && null !== $data->getExternalCAs()) {
-            $values = [];
-            foreach ($data->getExternalCAs() as $value) {
-                $values[] = $this->normalizer->normalize($value, 'json', $context);
+        if ($data->isInitialized('nodeCertExpiry')) {
+            $value = $data->getNodeCertExpiry();
+            if (is_int($data->getNodeCertExpiry())) {
+                $value = $data->getNodeCertExpiry();
+            } elseif (null === $data->getNodeCertExpiry()) {
+                $value = $data->getNodeCertExpiry();
             }
-            $dataArray['ExternalCAs'] = $values;
+            $dataArray['NodeCertExpiry'] = $value;
         }
-        if ($data->isInitialized('signingCACert') && null !== $data->getSigningCACert()) {
-            $dataArray['SigningCACert'] = $data->getSigningCACert();
-        }
-        if ($data->isInitialized('signingCAKey') && null !== $data->getSigningCAKey()) {
-            $dataArray['SigningCAKey'] = $data->getSigningCAKey();
-        }
-        if ($data->isInitialized('forceRotate') && null !== $data->getForceRotate()) {
-            $dataArray['ForceRotate'] = $data->getForceRotate();
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
+        if ($data->isInitialized('externalCAs')) {
+            $value_1 = $data->getExternalCAs();
+            if (is_array($data->getExternalCAs())) {
+                $values = [];
+                foreach ($data->getExternalCAs() as $value_2) {
+                    $values[] = $this->normalizer->normalize($value_2, 'json', $context);
+                }
+                $value_1 = $values;
+            } elseif (null === $data->getExternalCAs()) {
+                $value_1 = $data->getExternalCAs();
             }
+            $dataArray['ExternalCAs'] = $value_1;
+        }
+        if ($data->isInitialized('signingCACert')) {
+            $value_3 = $data->getSigningCACert();
+            if (is_string($data->getSigningCACert())) {
+                $value_3 = $data->getSigningCACert();
+            } elseif (null === $data->getSigningCACert()) {
+                $value_3 = $data->getSigningCACert();
+            }
+            $dataArray['SigningCACert'] = $value_3;
+        }
+        if ($data->isInitialized('signingCAKey')) {
+            $value_4 = $data->getSigningCAKey();
+            if (is_string($data->getSigningCAKey())) {
+                $value_4 = $data->getSigningCAKey();
+            } elseif (null === $data->getSigningCAKey()) {
+                $value_4 = $data->getSigningCAKey();
+            }
+            $dataArray['SigningCAKey'] = $value_4;
+        }
+        if ($data->isInitialized('forceRotate')) {
+            $value_5 = $data->getForceRotate();
+            if (is_int($data->getForceRotate())) {
+                $value_5 = $data->getForceRotate();
+            } elseif (null === $data->getForceRotate()) {
+                $value_5 = $data->getForceRotate();
+            }
+            $dataArray['ForceRotate'] = $value_5;
         }
 
         return $dataArray;

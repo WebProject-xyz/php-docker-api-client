@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class TaskSpecPlacementPreferencesItemSpreadNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,24 +38,26 @@ class TaskSpecPlacementPreferencesItemSpreadNormalizer implements DenormalizerIn
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpecPlacementPreferencesItemSpread();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpecPlacementPreferencesItemSpread();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('SpreadDescriptor', $data)) {
-            $object->setSpreadDescriptor($data['SpreadDescriptor']);
-            unset($data['SpreadDescriptor']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('SpreadDescriptor', $data) && null !== $data['SpreadDescriptor']) {
+            $value = $data['SpreadDescriptor'];
+            if (is_string($data['SpreadDescriptor'])) {
+                $value = $data['SpreadDescriptor'];
+            } elseif (null === $data['SpreadDescriptor']) {
+                $value = $data['SpreadDescriptor'];
             }
+            $object->setSpreadDescriptor($value);
+        } elseif (array_key_exists('SpreadDescriptor', $data) && null === $data['SpreadDescriptor']) {
+            $object->setSpreadDescriptor(null);
         }
 
         return $object;
@@ -63,13 +66,14 @@ class TaskSpecPlacementPreferencesItemSpreadNormalizer implements DenormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('spreadDescriptor') && null !== $data->getSpreadDescriptor()) {
-            $dataArray['SpreadDescriptor'] = $data->getSpreadDescriptor();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('spreadDescriptor')) {
+            $value = $data->getSpreadDescriptor();
+            if (is_string($data->getSpreadDescriptor())) {
+                $value = $data->getSpreadDescriptor();
+            } elseif (null === $data->getSpreadDescriptor()) {
+                $value = $data->getSpreadDescriptor();
             }
+            $dataArray['SpreadDescriptor'] = $value;
         }
 
         return $dataArray;

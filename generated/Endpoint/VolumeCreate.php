@@ -8,9 +8,9 @@ class VolumeCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     use \WebProject\DockerApi\Library\Generated\Runtime\Client\EndpointTrait;
 
     /**
-     * @param \WebProject\DockerApi\Library\Generated\Model\VolumeCreateOptions $requestBody
+     * @param \WebProject\DockerApi\Library\Generated\Model\VolumeCreateRequest $requestBody
      */
-    public function __construct(\WebProject\DockerApi\Library\Generated\Model\VolumeCreateOptions $requestBody)
+    public function __construct(\WebProject\DockerApi\Library\Generated\Model\VolumeCreateRequest $requestBody)
     {
         $this->body = $requestBody;
     }
@@ -27,7 +27,7 @@ class VolumeCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
 
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
     {
-        if ($this->body instanceof \WebProject\DockerApi\Library\Generated\Model\VolumeCreateOptions) {
+        if ($this->body instanceof \WebProject\DockerApi\Library\Generated\Model\VolumeCreateRequest) {
             return [['Content-Type' => ['application/json']], $serializer->serialize($this->body, 'json')];
         }
 
@@ -50,10 +50,10 @@ class VolumeCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (201 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (201 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\Volume', 'json');
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\VolumeCreateInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

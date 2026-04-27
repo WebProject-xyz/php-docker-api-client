@@ -15,15 +15,14 @@ class Client extends Runtime\Client\Client
      * than inspecting a single container. For example, the list of linked
      * containers is not propagated .
      *
-     * @param array $queryParameters {
-     *
-     * @var bool   $all Return all containers. By default, only running containers are shown.
-     * @var int    $limit return this number of most recently created containers, including
-     *             non-running ones
-     * @var bool   $size return the size of container as fields `SizeRw` and `SizeRootFs`
-     * @var string $filters Filters to process on the container list, encoded as JSON (a
-     *             `map[string][]string`). For example, `{"status": ["paused"]}` will
-     *             only return paused containers.
+     * @param array{
+     *    "all"?: bool, //Return all containers. By default, only running containers are shown.
+     *    "limit"?: int, //Return this number of most recently created containers, including
+     * non-running ones.
+     *    "size"?: bool, //Return the size of container as fields `SizeRw` and `SizeRootFs`.
+     *    "filters"?: string, //Filters to process on the container list, encoded as JSON (a
+     * `map[string][]string`). For example, `{"status": ["paused"]}` will
+     * only return paused containers.
      *
      * Available filters:
      *
@@ -42,12 +41,10 @@ class Client extends Runtime\Client\Client
      * - `since`=(`<container id>` or `<container name>`)
      * - `status=`(`created`|`restarting`|`running`|`removing`|`paused`|`exited`|`dead`)
      * - `volume`=(`<volume name>` or `<mount point destination>`)
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ContainerSummary[]|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\ContainerSummary[]|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerListBadRequestException
      * @throws Exception\ContainerListInternalServerErrorException
@@ -59,11 +56,10 @@ class Client extends Runtime\Client\Client
 
     /**
      * @param Model\ContainersCreatePostBody $requestBody
-     * @param array                          $queryParameters {
-     *
-     * @var string $name Assign the specified name to the container. Must match
-     *             `/?[a-zA-Z0-9][a-zA-Z0-9_.-]+`.
-     * @var string $platform Platform in the format `os[/arch[/variant]]` used for image lookup.
+     * @param array{
+     *    "name"?: string, //Assign the specified name to the container. Must match
+     * `/?[a-zA-Z0-9][a-zA-Z0-9_.-]+`.
+     *    "platform"?: string, //Platform in the format `os[/arch[/variant]]` used for image lookup.
      *
      * When specified, the daemon checks if the requested image is present
      * in the local image cache with the given OS and Architecture, and
@@ -79,12 +75,10 @@ class Client extends Runtime\Client\Client
      * WARNING: The requested image's platform (linux/arm64/v8) does not
      * match the detected host platform (linux/amd64) and no
      * specific platform was requested
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ContainerCreateResponse|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\ContainerCreateResponse|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerCreateBadRequestException
      * @throws Exception\ContainerCreateNotFoundException
@@ -99,15 +93,13 @@ class Client extends Runtime\Client\Client
     /**
      * Return low-level information about a container.
      *
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var bool $size Return the size of container as fields `SizeRw` and `SizeRootFs`
-     *           }
-     *
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "size"?: bool, //Return the size of container as fields `SizeRw` and `SizeRootFs`
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ContainerInspectResponse|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\ContainerInspectResponse|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerInspectNotFoundException
      * @throws Exception\ContainerInspectInternalServerErrorException
@@ -121,16 +113,14 @@ class Client extends Runtime\Client\Client
      * On Unix systems, this is done by running the `ps` command. This endpoint
      * is not supported on Windows.
      *
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var string $ps_args The arguments to pass to `ps`. For example, `aux`
-     *             }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "ps_args"?: string, //The arguments to pass to `ps`. For example, `aux`
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ContainerTopResponse|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\ContainerTopResponse|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerTopNotFoundException
      * @throws Exception\ContainerTopInternalServerErrorException
@@ -146,24 +136,21 @@ class Client extends Runtime\Client\Client
      * Note: This endpoint works only for containers with the `json-file` or
      * `journald` logging driver.
      *
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var bool   $follow keep connection after returning logs
-     * @var bool   $stdout Return logs from `stdout`
-     * @var bool   $stderr Return logs from `stderr`
-     * @var int    $since Only return logs since this time, as a UNIX timestamp
-     * @var int    $until Only return logs before this time, as a UNIX timestamp
-     * @var bool   $timestamps Add timestamps to every log line
-     * @var string $tail Only return this number of log lines from the end of the logs.
-     *             Specify as an integer or `all` to output all log lines.
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "follow"?: bool, //Keep connection after returning logs.
+     *    "stdout"?: bool, //Return logs from `stdout`
+     *    "stderr"?: bool, //Return logs from `stderr`
+     *    "since"?: int, //Only return logs since this time, as a UNIX timestamp
+     *    "until"?: int, //Only return logs before this time, as a UNIX timestamp
+     *    "timestamps"?: bool, //Add timestamps to every log line
+     *    "tail"?: string, //Only return this number of log lines from the end of the logs.
+     * Specify as an integer or `all` to output all log lines.
+     * } $queryParameters
      * @param array  $accept Accept content header application/vnd.docker.raw-stream|application/vnd.docker.multiplexed-stream|application/json
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerLogsNotFoundException
      */
@@ -183,7 +170,7 @@ class Client extends Runtime\Client\Client
      * @param string $id    ID or name of the container
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\FilesystemChange[]|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\FilesystemChange[]|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerChangesNotFoundException
      * @throws Exception\ContainerChangesInternalServerErrorException
@@ -197,10 +184,10 @@ class Client extends Runtime\Client\Client
      * Export the contents of a container as a tarball.
      *
      * @param string $id     ID or name of the container
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      * @param array  $accept Accept content header application/octet-stream|application/json
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerExportNotFoundException
      */
@@ -222,34 +209,32 @@ class Client extends Runtime\Client\Client
      * corresponding `cpu_usage.percpu_usage` array should be used.
      *
      * On a cgroup v2 host, the following fields are not set
-     * `blkio_stats`: all fields other than `io_service_bytes_recursive`
-     * `cpu_stats`: `cpu_usage.percpu_usage`
-     * `memory_stats`: `max_usage` and `failcnt`
+     * * `blkio_stats`: all fields other than `io_service_bytes_recursive`
+     * * `cpu_stats`: `cpu_usage.percpu_usage`
+     * * `memory_stats`: `max_usage` and `failcnt`
      * Also, `memory_stats.stats` fields are incompatible with cgroup v1.
      *
      * To calculate the values shown by the `stats` command of the docker cli tool
      * the following formulas can be used:
-     * used_memory = `memory_stats.usage - memory_stats.stats.cache`
-     * available_memory = `memory_stats.limit`
-     * Memory usage % = `(used_memory / available_memory) * 100.0`
-     * cpu_delta = `cpu_stats.cpu_usage.total_usage - precpu_stats.cpu_usage.total_usage`
-     * system_cpu_delta = `cpu_stats.system_cpu_usage - precpu_stats.system_cpu_usage`
-     * number_cpus = `length(cpu_stats.cpu_usage.percpu_usage)` or `cpu_stats.online_cpus`
-     * CPU usage % = `(cpu_delta / system_cpu_delta) * number_cpus * 100.0`
+     * * used_memory = `memory_stats.usage - memory_stats.stats.cache` (cgroups v1)
+     * * used_memory = `memory_stats.usage - memory_stats.stats.inactive_file` (cgroups v2)
+     * * available_memory = `memory_stats.limit`
+     * * Memory usage % = `(used_memory / available_memory) * 100.0`
+     * * cpu_delta = `cpu_stats.cpu_usage.total_usage - precpu_stats.cpu_usage.total_usage`
+     * * system_cpu_delta = `cpu_stats.system_cpu_usage - precpu_stats.system_cpu_usage`
+     * * number_cpus = `length(cpu_stats.cpu_usage.percpu_usage)` or `cpu_stats.online_cpus`
+     * * CPU usage % = `(cpu_delta / system_cpu_delta) * number_cpus * 100.0`
      *
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var bool $stream Stream the output. If false, the stats will be output once and then
-     *           it will disconnect.
-     * @var bool $one-shot Only get a single stat instead of waiting for 2 cycles. Must be used
-     *           with `stream=false`.
-     *
-     * }
-     *
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "stream"?: bool, //Stream the output. If false, the stats will be output once and then
+     * it will disconnect.
+     *    "one-shot"?: bool, //Only get a single stat instead of waiting for 2 cycles. Must be used
+     * with `stream=false`.
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ContainerStatsResponse|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\ContainerStatsResponse|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerStatsNotFoundException
      * @throws Exception\ContainerStatsInternalServerErrorException
@@ -262,17 +247,15 @@ class Client extends Runtime\Client\Client
     /**
      * Resize the TTY for a container.
      *
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var int $h Height of the TTY session in characters
-     * @var int $w Width of the TTY session in characters
-     *          }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "h": int, //Height of the TTY session in characters
+     *    "w": int, //Width of the TTY session in characters
+     * } $queryParameters
      * @param array  $accept Accept content header text/plain|application/json
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerResizeNotFoundException
      */
@@ -282,19 +265,16 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var string $detachKeys Override the key sequence for detaching a container. Format is a
-     *             single character `[a-Z]` or `ctrl-<value>` where `<value>` is one
-     *             of: `a-z`, `@`, `^`, `[`, `,` or `_`.
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "detachKeys"?: string, //Override the key sequence for detaching a container. Format is a
+     * single character `[a-Z]` or `ctrl-<value>` where `<value>` is one
+     * of: `a-z`, `@`, `^`, `[`, `,` or `_`.
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerStartNotFoundException
      * @throws Exception\ContainerStartInternalServerErrorException
@@ -305,17 +285,15 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var string $signal Signal to send to the container as an integer or string (e.g. `SIGINT`).
-     * @var int    $t Number of seconds to wait before killing the container
-     *             }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "signal"?: string, //Signal to send to the container as an integer or string (e.g. `SIGINT`).
+     *    "t"?: int, //Number of seconds to wait before killing the container
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerStopNotFoundException
      * @throws Exception\ContainerStopInternalServerErrorException
@@ -326,17 +304,15 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var string $signal Signal to send to the container as an integer or string (e.g. `SIGINT`).
-     * @var int    $t Number of seconds to wait before killing the container
-     *             }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "signal"?: string, //Signal to send to the container as an integer or string (e.g. `SIGINT`).
+     *    "t"?: int, //Number of seconds to wait before killing the container
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerRestartNotFoundException
      * @throws Exception\ContainerRestartInternalServerErrorException
@@ -350,17 +326,14 @@ class Client extends Runtime\Client\Client
      * Send a POSIX signal to a container, defaulting to killing to the
      * container.
      *
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var string $signal Signal to send to the container as an integer or string (e.g. `SIGINT`).
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "signal"?: string, //Signal to send to the container as an integer or string (e.g. `SIGINT`).
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerKillNotFoundException
      * @throws Exception\ContainerKillConflictException
@@ -379,7 +352,7 @@ class Client extends Runtime\Client\Client
      * @param Model\ContainersIdUpdatePostBody $requestBody
      * @param string                           $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ContainerUpdateResponse|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\ContainerUpdateResponse|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerUpdateNotFoundException
      * @throws Exception\ContainerUpdateInternalServerErrorException
@@ -390,16 +363,14 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var string $name New name for the container
-     *             }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "name": string, //New name for the container
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerRenameNotFoundException
      * @throws Exception\ContainerRenameConflictException
@@ -419,10 +390,10 @@ class Client extends Runtime\Client\Client
      * suspended, and subsequently resumed.
      *
      * @param string $id     ID or name of the container
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerPauseNotFoundException
      * @throws Exception\ContainerPauseInternalServerErrorException
@@ -436,10 +407,10 @@ class Client extends Runtime\Client\Client
      * Resume a container which has been paused.
      *
      * @param string $id     ID or name of the container
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerUnpauseNotFoundException
      * @throws Exception\ContainerUnpauseInternalServerErrorException
@@ -545,13 +516,12 @@ class Client extends Runtime\Client\Client
      * connection is simply the raw data from the process PTY and client's
      * `stdin`.
      *
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var string $detachKeys Override the key sequence for detaching a container.Format is a single
-     *             character `[a-Z]` or `ctrl-<value>` where `<value>` is one of: `a-z`,
-     *             `@`, `^`, `[`, `,` or `_`.
-     * @var bool   $logs Replay previous logs from the container.
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "detachKeys"?: string, //Override the key sequence for detaching a container.Format is a single
+     * character `[a-Z]` or `ctrl-<value>` where `<value>` is one of: `a-z`,
+     * `@`, `^`, `[`, `,` or `_`.
+     *    "logs"?: bool, //Replay previous logs from the container.
      *
      * This is useful for attaching to a container that has started and you
      * want to output everything since the container started.
@@ -559,16 +529,15 @@ class Client extends Runtime\Client\Client
      * If `stream` is also enabled, once all the previous output has been
      * returned, it will seamlessly transition into streaming current
      * output.
-     * @var bool $stream stream attached streams from the time the request was made onwards
-     * @var bool $stdin Attach to `stdin`
-     * @var bool $stdout Attach to `stdout`
-     * @var bool $stderr Attach to `stderr`
-     *           }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     *    "stream"?: bool, //Stream attached streams from the time the request was made onwards.
+     *    "stdin"?: bool, //Attach to `stdin`
+     *    "stdout"?: bool, //Attach to `stdout`
+     *    "stderr"?: bool, //Attach to `stderr`
+     * } $queryParameters
      * @param array  $accept Accept content header application/vnd.docker.raw-stream|application/vnd.docker.multiplexed-stream|application/json
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerAttachNotFoundException
      */
@@ -578,23 +547,21 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var string $detachKeys Override the key sequence for detaching a container.Format is a single
-     *             character `[a-Z]` or `ctrl-<value>` where `<value>` is one of: `a-z`,
-     *             `@`, `^`, `[`, `,`, or `_`.
-     * @var bool   $logs Return logs
-     * @var bool   $stream Return stream
-     * @var bool   $stdin Attach to `stdin`
-     * @var bool   $stdout Attach to `stdout`
-     * @var bool   $stderr Attach to `stderr`
-     *             }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "detachKeys"?: string, //Override the key sequence for detaching a container.Format is a single
+     * character `[a-Z]` or `ctrl-<value>` where `<value>` is one of: `a-z`,
+     * `@`, `^`, `[`, `,`, or `_`.
+     *    "logs"?: bool, //Return logs
+     *    "stream"?: bool, //Return stream
+     *    "stdin"?: bool, //Attach to `stdin`
+     *    "stdout"?: bool, //Attach to `stdout`
+     *    "stderr"?: bool, //Attach to `stderr`
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerAttachWebsocketBadRequestException
      * @throws Exception\ContainerAttachWebsocketNotFoundException
@@ -608,18 +575,15 @@ class Client extends Runtime\Client\Client
     /**
      * Block until a container stops, then returns the exit code.
      *
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var string $condition Wait until a container state reaches the given condition.
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "condition"?: string, //Wait until a container state reaches the given condition.
      *
      * Defaults to `not-running` if omitted or empty.
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ContainerWaitResponse|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\ContainerWaitResponse|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerWaitBadRequestException
      * @throws Exception\ContainerWaitNotFoundException
@@ -631,18 +595,16 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var bool $v remove anonymous volumes associated with the container
-     * @var bool $force if the container is running, kill it before removing it
-     * @var bool $link Remove the specified link associated with the container.
-     *           }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "v"?: bool, //Remove anonymous volumes associated with the container.
+     *    "force"?: bool, //If the container is running, kill it before removing it.
+     *    "link"?: bool, //Remove the specified link associated with the container.
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerDeleteBadRequestException
      * @throws Exception\ContainerDeleteNotFoundException
@@ -657,16 +619,14 @@ class Client extends Runtime\Client\Client
     /**
      * Get a tar archive of a resource in the filesystem of container id.
      *
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var string $path Resource in the container’s filesystem to archive.
-     *             }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "path": string, //Resource in the container’s filesystem to archive.
+     * } $queryParameters
      * @param array  $accept Accept content header application/x-tar|application/json
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerArchiveNotFoundException
      */
@@ -680,16 +640,14 @@ class Client extends Runtime\Client\Client
      * a base64 - encoded JSON object with some filesystem header information
      * about the path.
      *
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var string $path Resource in the container’s filesystem to archive.
-     *             }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "path": string, //Resource in the container’s filesystem to archive.
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerArchiveInfoBadRequestException
      * @throws Exception\ContainerArchiveInfoNotFoundException
@@ -705,23 +663,20 @@ class Client extends Runtime\Client\Client
      * `path` parameter is asserted to be a directory. If it exists as a file, 400 error
      * will be returned with message "not a directory".
      *
-     * @param string                                            $id              ID or name of the container
+     * @param string                                            $id          ID or name of the container
      * @param string|resource|\Psr\Http\Message\StreamInterface $requestBody
-     * @param array                                             $queryParameters {
-     *
-     * @var string $path path to a directory in the container to extract the archive’s contents into
-     * @var string $noOverwriteDirNonDir if `1`, `true`, or `True` then it will be an error if unpacking the
-     *             given content would cause an existing directory to be replaced with
-     *             a non-directory and vice versa
-     * @var string $copyUIDGID If `1`, `true`, then it will copy UID/GID maps to the dest file or
-     *             dir
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param array{
+     *    "path": string, //Path to a directory in the container to extract the archive’s contents into.
+     *    "noOverwriteDirNonDir"?: string, //If `1`, `true`, or `True` then it will be an error if unpacking the
+     * given content would cause an existing directory to be replaced with
+     * a non-directory and vice versa.
+     *    "copyUIDGID"?: string, //If `1`, `true`, then it will copy UID/GID maps to the dest file or
+     * dir
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\PutContainerArchiveBadRequestException
      * @throws Exception\PutContainerArchiveForbiddenException
@@ -734,19 +689,16 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var string $filters Filters to process on the prune list, encoded as JSON (a `map[string][]string`).
+     * @param array{
+     *    "filters"?: string, //Filters to process on the prune list, encoded as JSON (a `map[string][]string`).
      *
      * Available filters:
      * - `until=<timestamp>` Prune containers created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.
      * - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune containers with (or without, in case `label!=...` is used) the specified labels.
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ContainersPrunePostResponse200|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerPruneInternalServerErrorException
      */
@@ -758,11 +710,10 @@ class Client extends Runtime\Client\Client
     /**
      * Returns a list of images on the server. Note that it uses a different, smaller representation of an image than inspecting a single image.
      *
-     * @param array $queryParameters {
-     *
-     * @var bool   $all Show all images. Only images from a final layer (no children) are shown by default.
-     * @var string $filters A JSON encoded value of the filters (a `map[string][]string`) to
-     *             process on the images list.
+     * @param array{
+     *    "all"?: bool, //Show all images. Only images from a final layer (no children) are shown by default.
+     *    "filters"?: string, //A JSON encoded value of the filters (a `map[string][]string`) to
+     * process on the images list.
      *
      * Available filters:
      *
@@ -772,14 +723,14 @@ class Client extends Runtime\Client\Client
      * - `reference`=(`<image-name>[:<tag>]`)
      * - `since`=(`<image-name>[:<tag>]`,  `<image id>` or `<image@digest>`)
      * - `until=<timestamp>`
-     * @var bool $shared-size Compute and show shared size as a `SharedSize` field on each image
-     * @var bool $digests show digest information as a `RepoDigests` field on each image
-     * @var bool $manifests Include `Manifests` in the image summary.
-     *           }
-     *
+     *    "shared-size"?: bool, //Compute and show shared size as a `SharedSize` field on each image.
+     *    "digests"?: bool, //Show digest information as a `RepoDigests` field on each image.
+     *    "manifests"?: bool, //Include `Manifests` in the image summary.
+     *    "identity"?: bool, //Include `Identity` in each manifest summary. Requires `manifests=1`.
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ImageSummary[]|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\ImageSummary[]|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ImageListInternalServerErrorException
      */
@@ -798,50 +749,56 @@ class Client extends Runtime\Client\Client
      * The build is canceled if the client drops the connection by quitting or being killed.
      *
      * @param string|resource|\Psr\Http\Message\StreamInterface|null $requestBody
-     * @param array                                                  $queryParameters {
-     *
-     * @var string $dockerfile Path within the build context to the `Dockerfile`. This is ignored if `remote` is specified and points to an external `Dockerfile`.
-     * @var string $t A name and optional tag to apply to the image in the `name:tag` format. If you omit the tag the default `latest` value is assumed. You can provide several `t` parameters.
-     * @var string $extrahosts Extra hosts to add to /etc/hosts
-     * @var string $remote A Git repository URI or HTTP/HTTPS context URI. If the URI points to a single text file, the file’s contents are placed into a file called `Dockerfile` and the image is built from that file. If the URI points to a tarball, the file is downloaded by the daemon and the contents therein used as the context for the build. If the URI points to a tarball and the `dockerfile` parameter is also specified, there must be a file with the corresponding path inside the tarball.
-     * @var bool   $q suppress verbose build output
-     * @var bool   $nocache do not use the cache when building the image
-     * @var string $cachefrom JSON array of images used for build cache resolution
-     * @var string $pull attempt to pull the image even if an older image exists locally
-     * @var bool   $rm remove intermediate containers after a successful build
-     * @var bool   $forcerm always remove intermediate containers, even upon failure
-     * @var int    $memory set memory limit for build
-     * @var int    $memswap Total memory (memory + swap). Set as `-1` to disable swap.
-     * @var int    $cpushares CPU shares (relative weight)
-     * @var string $cpusetcpus CPUs in which to allow execution (e.g., `0-3`, `0,1`).
-     * @var int    $cpuperiod the length of a CPU period in microseconds
-     * @var int    $cpuquota microseconds of CPU time that the container can get in a CPU period
-     * @var string $buildargs JSON map of string pairs for build-time variables. Users pass these values at build-time. Docker uses the buildargs as the environment context for commands run via the `Dockerfile` RUN instruction, or for variable expansion in other `Dockerfile` instructions. This is not meant for passing secret values.
+     * @param array{
+     *    "dockerfile"?: string, //Path within the build context to the `Dockerfile`. This is ignored if `remote` is specified and points to an external `Dockerfile`.
+     *    "t"?: string, //A name and optional tag to apply to the image in the `name:tag` format. If you omit the tag the default `latest` value is assumed. You can provide several `t` parameters.
+     *    "extrahosts"?: string, //Extra hosts to add to /etc/hosts
+     *    "remote"?: string, //A Git repository URI or HTTP/HTTPS context URI. If the URI points to a single text file, the file’s contents are placed into a file called `Dockerfile` and the image is built from that file. If the URI points to a tarball, the file is downloaded by the daemon and the contents therein used as the context for the build. If the URI points to a tarball and the `dockerfile` parameter is also specified, there must be a file with the corresponding path inside the tarball.
+     *    "q"?: bool, //Suppress verbose build output.
+     *    "nocache"?: bool, //Do not use the cache when building the image.
+     *    "cachefrom"?: string, //JSON array of images used for build cache resolution.
+     *    "pull"?: string, //Attempt to pull the image even if an older image exists locally.
+     *    "rm"?: bool, //Remove intermediate containers after a successful build.
+     *    "forcerm"?: bool, //Always remove intermediate containers, even upon failure.
+     *    "memory"?: int, //Set memory limit for build.
+     *    "memswap"?: int, //Total memory (memory + swap). Set as `-1` to disable swap.
+     *    "cpushares"?: int, //CPU shares (relative weight).
+     *    "cpusetcpus"?: string, //CPUs in which to allow execution (e.g., `0-3`, `0,1`).
+     *    "cpuperiod"?: int, //The length of a CPU period in microseconds.
+     *    "cpuquota"?: int, //Microseconds of CPU time that the container can get in a CPU period.
+     *    "buildargs"?: string, //JSON map of string pairs for build-time variables. Users pass these values at build-time. Docker uses the buildargs as the environment context for commands run via the `Dockerfile` RUN instruction, or for variable expansion in other `Dockerfile` instructions. This is not meant for passing secret values.
      *
      * For example, the build arg `FOO=bar` would become `{"FOO":"bar"}` in JSON. This would result in the query parameter `buildargs={"FOO":"bar"}`. Note that `{"FOO":"bar"}` should be URI component encoded.
      *
      * [Read more about the buildargs instruction.](https://docs.docker.com/engine/reference/builder/#arg)
-     * @var int    $shmsize Size of `/dev/shm` in bytes. The size must be greater than 0. If omitted the system uses 64MB.
-     * @var bool   $squash Squash the resulting images layers into a single layer. *(Experimental release only.)*
-     * @var string $labels arbitrary key/value labels to set on the image, as a JSON map of string pairs
-     * @var string $networkmode Sets the networking mode for the run commands during build. Supported
-     *             standard values are: `bridge`, `host`, `none`, and `container:<name|id>`.
-     *             Any other value is taken as a custom network's name or ID to which this
-     *             container should connect to.
-     * @var string $platform Platform in the format os[/arch[/variant]]
-     * @var string $target Target build stage
-     * @var string $outputs BuildKit output configuration
-     * @var string $version Version of the builder backend to use.
+     *    "shmsize"?: int, //Size of `/dev/shm` in bytes. The size must be greater than 0. If omitted the system uses 64MB.
+     *    "squash"?: bool, //Squash the resulting images layers into a single layer. *(Experimental release only.)*
+     *    "labels"?: string, //Arbitrary key/value labels to set on the image, as a JSON map of string pairs.
+     *    "networkmode"?: string, //Sets the networking mode for the run commands during build. Supported
+     * standard values are: `bridge`, `host`, `none`, and `container:<name|id>`.
+     * Any other value is taken as a custom network's name or ID to which this
+     * container should connect to.
+     *    "platform"?: string, //Platform in the format os[/arch[/variant]]
+     *    "target"?: string, //Target build stage
+     *    "outputs"?: string, //BuildKit output configuration in the format of a stringified JSON array of objects.
+     * Each object must have two top-level properties: `Type` and `Attrs`.
+     * The `Type` property must be set to 'moby'.
+     * The `Attrs` property is a map of attributes for the BuildKit output configuration.
+     * See https://docs.docker.com/build/exporters/oci-docker/ for more information.
+     *
+     * Example:
+     *
+     * ```
+     * [{"Type":"moby","Attrs":{"type":"image","force-compression":"true","compression":"zstd"}}]
+     * ```
+     *    "version"?: string, //Version of the builder backend to use.
      *
      * - `1` is the first generation classic (deprecated) builder in the Docker daemon (default)
      * - `2` is [BuildKit](https://github.com/moby/buildkit)
-     *
-     * }
-     *
-     * @param array $headerParameters {
-     *
-     * @var string $Content-type
-     * @var string $X-Registry-Config This is a base64-encoded JSON object with auth configurations for multiple registries that a build may refer to.
+     * } $queryParameters
+     * @param array{
+     *    "Content-type"?: string,
+     *    "X-Registry-Config"?: string, //This is a base64-encoded JSON object with auth configurations for multiple registries that a build may refer to.
      *
      * The key is a registry URL, and the value is an auth configuration object, [as described in the authentication section](#section/Authentication). For example:
      *
@@ -859,12 +816,10 @@ class Client extends Runtime\Client\Client
      * ```
      *
      * Only the registry domain name (and port if not the default 443) are required. However, for legacy reasons, the Docker Hub registry must be specified with both a `https://` prefix and a `/v1/` suffix even though Docker will prefer to use the v2 registry API.
-     *
-     * }
-     *
+     * } $headerParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ImageBuildBadRequestException
      * @throws Exception\ImageBuildInternalServerErrorException
@@ -875,18 +830,13 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var int $keep-storage Amount of disk space in bytes to keep for cache
-     *
-     * > **Deprecated**: This parameter is deprecated and has been renamed to "reserved-space".
-     * > It is kept for backward compatibility and will be removed in API v1.49.
-     * @var int    $reserved-space Amount of disk space in bytes to keep for cache
-     * @var int    $max-used-space Maximum amount of disk space allowed to keep for cache
-     * @var int    $min-free-space Target amount of free disk space after pruning
-     * @var bool   $all Remove all types of build cache
-     * @var string $filters A JSON encoded value of the filters (a `map[string][]string`) to
-     *             process on the list of build cache objects.
+     * @param array{
+     *    "reserved-space"?: int, //Amount of disk space in bytes to keep for cache
+     *    "max-used-space"?: int, //Maximum amount of disk space allowed to keep for cache
+     *    "min-free-space"?: int, //Target amount of free disk space after pruning
+     *    "all"?: bool, //Remove all types of build cache
+     *    "filters"?: string, //A JSON encoded value of the filters (a `map[string][]string`) to
+     * process on the list of build cache objects.
      *
      * Available filters:
      *
@@ -898,12 +848,10 @@ class Client extends Runtime\Client\Client
      * - `inuse`
      * - `shared`
      * - `private`
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\BuildPrunePostResponse200|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\BuildPruneInternalServerErrorException
      */
@@ -916,25 +864,24 @@ class Client extends Runtime\Client\Client
      * Pull or import an image.
      *
      * @param string|null $requestBody
-     * @param array       $queryParameters {
-     *
-     * @var string $fromImage Name of the image to pull. If the name includes a tag or digest, specific behavior applies:
+     * @param array{
+     *    "fromImage"?: string, //Name of the image to pull. If the name includes a tag or digest, specific behavior applies:
      *
      * - If only `fromImage` includes a tag, that tag is used.
      * - If both `fromImage` and `tag` are provided, `tag` takes precedence.
      * - If `fromImage` includes a digest, the image is pulled by digest, and `tag` is ignored.
      * - If neither a tag nor digest is specified, all tags are pulled.
-     * @var string $fromSrc Source to import. The value may be a URL from which the image can be retrieved or `-` to read the image from the request body. This parameter may only be used when importing an image.
-     * @var string $repo Repository name given to an image when it is imported. The repo may include a tag. This parameter may only be used when importing an image.
-     * @var string $tag Tag or digest. If empty when pulling an image, this causes all tags for the given image to be pulled.
-     * @var string $message set commit message for imported image
-     * @var array  $changes Apply `Dockerfile` instructions to the image that is created,
-     *             for example: `changes=ENV DEBUG=true`.
-     *             Note that `ENV DEBUG=true` should be URI component encoded.
+     *    "fromSrc"?: string, //Source to import. The value may be a URL from which the image can be retrieved or `-` to read the image from the request body. This parameter may only be used when importing an image.
+     *    "repo"?: string, //Repository name given to an image when it is imported. The repo may include a tag. This parameter may only be used when importing an image.
+     *    "tag"?: string, //Tag or digest. If empty when pulling an image, this causes all tags for the given image to be pulled.
+     *    "message"?: string, //Set commit message for imported image.
+     *    "changes"?: array, //Apply `Dockerfile` instructions to the image that is created,
+     * for example: `changes=ENV DEBUG=true`.
+     * Note that `ENV DEBUG=true` should be URI component encoded.
      *
      * Supported `Dockerfile` instructions:
      * `CMD`|`ENTRYPOINT`|`ENV`|`EXPOSE`|`ONBUILD`|`USER`|`VOLUME`|`WORKDIR`
-     * @var string $platform Platform in the format os[/arch[/variant]].
+     *    "platform"?: string, //Platform in the format os[/arch[/variant]].
      *
      * When used in combination with the `fromImage` option, the daemon checks
      * if the given image is present in the local image cache with the given
@@ -949,21 +896,16 @@ class Client extends Runtime\Client\Client
      * this option sets the platform information for the imported image. If
      * the option is not set, the host's native OS and Architecture are used
      * for the imported image.
-     *
-     * }
-     *
-     * @param array $headerParameters {
-     *
-     * @var string $X-Registry-Auth A base64url-encoded auth configuration.
+     * } $queryParameters
+     * @param array{
+     *    "X-Registry-Auth"?: string, //A base64url-encoded auth configuration.
      *
      * Refer to the [authentication section](#section/Authentication) for
      * details.
-     *
-     * }
-     *
+     * } $headerParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ImageCreateNotFoundException
      * @throws Exception\ImageCreateInternalServerErrorException
@@ -976,15 +918,29 @@ class Client extends Runtime\Client\Client
     /**
      * Return low-level information about an image.
      *
-     * @param string $name            Image name or id
-     * @param array  $queryParameters {
+     * @param string $name Image name or id
+     * @param array{
+     *    "manifests"?: bool, //Include Manifests in the image summary.
      *
-     * @var bool $manifests Include Manifests in the image summary.
-     *           }
+     * The `manifests` and `platform` options are mutually exclusive, and
+     * an error is produced if both are set.
+     *    "platform"?: string, //JSON-encoded OCI platform to select the platform-variant.
+     * If omitted, it defaults to any locally available platform,
+     * prioritizing the daemon's host platform.
      *
+     * If the daemon provides a multi-platform image store, this selects
+     * the platform-variant to show inspect. If the image is
+     * a single-platform image, or if the multi-platform image does not
+     * provide a variant matching the given platform, an error is returned.
+     *
+     * The `platform` and `manifests` options are mutually exclusive, and
+     * an error is produced if both are set.
+     *
+     * Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ImageInspect|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\ImageInspect|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ImageInspectNotFoundException
      * @throws Exception\ImageInspectInternalServerErrorException
@@ -997,12 +953,11 @@ class Client extends Runtime\Client\Client
     /**
      * Return parent layers of an image.
      *
-     * @param string $name            Image name or ID
-     * @param array  $queryParameters {
-     *
-     * @var string $platform JSON-encoded OCI platform to select the platform-variant.
-     *             If omitted, it defaults to any locally available platform,
-     *             prioritizing the daemon's host platform.
+     * @param string $name Image name or ID
+     * @param array{
+     *    "platform"?: string, //JSON-encoded OCI platform to select the platform-variant.
+     * If omitted, it defaults to any locally available platform,
+     * prioritizing the daemon's host platform.
      *
      * If the daemon provides a multi-platform image store, this selects
      * the platform-variant to show the history for. If the image is
@@ -1010,12 +965,10 @@ class Client extends Runtime\Client\Client
      * provide a variant matching the given platform, an error is returned.
      *
      * Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ImagesNameHistoryGetResponse200Item[]|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\ImageHistoryResponseItem[]|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ImageHistoryNotFoundException
      * @throws Exception\ImageHistoryInternalServerErrorException
@@ -1042,13 +995,12 @@ class Client extends Runtime\Client\Client
      * considered equivalent to `registry.example.com/myimage`.
      *
      * Use the `tag` parameter to specify the tag to push.
-     * @param array $queryParameters {
-     *
-     * @var string $tag Tag of the image to push. For example, `latest`. If no tag is provided,
-     *             all tags of the given image that are present in the local image store
-     *             are pushed.
-     * @var string $platform JSON-encoded OCI platform to select the platform-variant to push.
-     *             If not provided, all available variants will attempt to be pushed.
+     * @param array{
+     *    "tag"?: string, //Tag of the image to push. For example, `latest`. If no tag is provided,
+     * all tags of the given image that are present in the local image store
+     * are pushed.
+     *    "platform"?: string, //JSON-encoded OCI platform to select the platform-variant to push.
+     * If not provided, all available variants will attempt to be pushed.
      *
      * If the daemon provides a multi-platform image store, this selects
      * the platform-variant to push to the registry. If the image is
@@ -1056,22 +1008,17 @@ class Client extends Runtime\Client\Client
      * provide a variant matching the given platform, an error is returned.
      *
      * Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
-     *
-     * }
-     *
-     * @param array $headerParameters {
-     *
-     * @var string $X-Registry-Auth A base64url-encoded auth configuration.
+     * } $queryParameters
+     * @param array{
+     *    "X-Registry-Auth": string, //A base64url-encoded auth configuration.
      *
      * Refer to the [authentication section](#section/Authentication) for
      * details.
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * } $headerParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ImagePushNotFoundException
      * @throws Exception\ImagePushInternalServerErrorException
@@ -1082,19 +1029,21 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * Tag an image so that it becomes part of a repository.
+     * Create a tag that refers to a source image.
      *
-     * @param string $name            image name or ID to tag
-     * @param array  $queryParameters {
+     * This creates an additional reference (tag) to the source image. The tag
+     * can include a different repository name and/or tag. If the repository
+     * or tag already exists, it will be overwritten.
      *
-     * @var string $repo The repository to tag in. For example, `someuser/someimage`.
-     * @var string $tag The name of the new tag.
-     *             }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $name image name or ID to tag
+     * @param array{
+     *    "repo"?: string, //The repository to tag in. For example, `someuser/someimage`.
+     *    "tag"?: string, //The name of the new tag.
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ImageTagBadRequestException
      * @throws Exception\ImageTagNotFoundException
@@ -1113,20 +1062,17 @@ class Client extends Runtime\Client\Client
      * Images can't be removed if they have descendant images, are being
      * used by a running container or are being used by a build.
      *
-     * @param string $name            Image name or ID
-     * @param array  $queryParameters {
-     *
-     * @var bool  $force Remove the image even if it is being used by stopped containers or has other tags
-     * @var bool  $noprune Do not delete untagged parent images
-     * @var array $platforms Select platform-specific content to delete.
-     *            Multiple values are accepted.
-     *            Each platform is a OCI platform encoded as a JSON string.
-     *
-     * }
-     *
+     * @param string $name Image name or ID
+     * @param array{
+     *    "force"?: bool, //Remove the image even if it is being used by stopped containers or has other tags
+     *    "noprune"?: bool, //Do not delete untagged parent images
+     *    "platforms"?: array, //Select platform-specific content to delete.
+     * Multiple values are accepted.
+     * Each platform is a OCI platform encoded as a JSON string.
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ImageDeleteResponseItem[]|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\ImageDeleteResponseItem[]|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ImageDeleteNotFoundException
      * @throws Exception\ImageDeleteConflictException
@@ -1140,20 +1086,17 @@ class Client extends Runtime\Client\Client
     /**
      * Search for an image on Docker Hub.
      *
-     * @param array $queryParameters {
-     *
-     * @var string $term Term to search
-     * @var int    $limit Maximum number of results to return
-     * @var string $filters A JSON encoded value of the filters (a `map[string][]string`) to process on the images list. Available filters:
+     * @param array{
+     *    "term": string, //Term to search
+     *    "limit"?: int, //Maximum number of results to return
+     *    "filters"?: string, //A JSON encoded value of the filters (a `map[string][]string`) to process on the images list. Available filters:
      *
      * - `is-official=(true|false)`
      * - `stars=<number>` Matches images that has at least 'number' stars.
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ImagesSearchGetResponse200Item[]|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ImageSearchInternalServerErrorException
      */
@@ -1163,21 +1106,18 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var string $filters Filters to process on the prune list, encoded as JSON (a `map[string][]string`). Available filters:
+     * @param array{
+     *    "filters"?: string, //Filters to process on the prune list, encoded as JSON (a `map[string][]string`). Available filters:
      *
      * - `dangling=<boolean>` When set to `true` (or `1`), prune only
      * unused *and* untagged images. When set to `false`
      * (or `0`), all unused images are pruned.
      * - `until=<string>` Prune images created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.
      * - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune images with (or without, in case `label!=...` is used) the specified labels.
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ImagesPrunePostResponse200|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ImagePruneInternalServerErrorException
      */
@@ -1193,7 +1133,7 @@ class Client extends Runtime\Client\Client
      * @param Model\AuthConfig|null $requestBody
      * @param string                $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\AuthPostResponse200|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\AuthResponse|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\SystemAuthUnauthorizedException
      * @throws Exception\SystemAuthInternalServerErrorException
@@ -1206,7 +1146,7 @@ class Client extends Runtime\Client\Client
     /**
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\SystemInfo|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\SystemInfo|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\SystemInfoInternalServerErrorException
      */
@@ -1218,7 +1158,7 @@ class Client extends Runtime\Client\Client
     /**
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\SystemVersion|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\SystemVersion|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\SystemVersionInternalServerErrorException
      */
@@ -1230,7 +1170,7 @@ class Client extends Runtime\Client\Client
     /**
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      */
     public function systemPing(string $fetch = self::FETCH_OBJECT)
     {
@@ -1240,7 +1180,7 @@ class Client extends Runtime\Client\Client
     /**
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      */
     public function systemPingHead(string $fetch = self::FETCH_OBJECT)
     {
@@ -1249,20 +1189,18 @@ class Client extends Runtime\Client\Client
 
     /**
      * @param Model\ContainerConfig|null $requestBody
-     * @param array                      $queryParameters {
-     *
-     * @var string $container The ID or name of the container to commit
-     * @var string $repo Repository name for the created image
-     * @var string $tag Tag name for the create image
-     * @var string $comment Commit message
-     * @var string $author Author of the image (e.g., `John Hannibal Smith <hannibal@a-team.com>`)
-     * @var bool   $pause Whether to pause the container before committing
-     * @var string $changes `Dockerfile` instructions to apply while committing
-     *             }
-     *
+     * @param array{
+     *    "container"?: string, //The ID or name of the container to commit
+     *    "repo"?: string, //Repository name for the created image
+     *    "tag"?: string, //Tag name for the create image
+     *    "comment"?: string, //Commit message
+     *    "author"?: string, //Author of the image (e.g., `John Hannibal Smith <hannibal@a-team.com>`)
+     *    "pause"?: bool, //Whether to pause the container before committing
+     *    "changes"?: string, //`Dockerfile` instructions to apply while committing
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\IDResponse|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\IDResponse|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ImageCommitNotFoundException
      * @throws Exception\ImageCommitInternalServerErrorException
@@ -1297,11 +1235,10 @@ class Client extends Runtime\Client\Client
      *
      * The Builder reports `prune` events
      *
-     * @param array $queryParameters {
-     *
-     * @var string $since show events created since this timestamp then stream new events
-     * @var string $until show events created until this timestamp then stop streaming
-     * @var string $filters A JSON encoded value of filters (a `map[string][]string`) to process on the event list. Available filters:
+     * @param array{
+     *    "since"?: string, //Show events created since this timestamp then stream new events.
+     *    "until"?: string, //Show events created until this timestamp then stop streaming.
+     *    "filters"?: string, //A JSON encoded value of filters (a `map[string][]string`) to process on the event list. Available filters:
      *
      * - `config=<string>` config name or ID
      * - `container=<string>` container name or ID
@@ -1317,31 +1254,26 @@ class Client extends Runtime\Client\Client
      * - `service=<string>` service name or ID
      * - `type=<string>` object to filter by, one of `container`, `image`, `volume`, `network`, `daemon`, `plugin`, `node`, `service`, `secret` or `config`
      * - `volume=<string>` volume name
+     * } $queryParameters
+     * @param array  $accept Accept content header application/jsonl|application/x-ndjson|application/json-seq
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * }
-     *
-     * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
-     *
-     * @return Model\EventMessage|\Psr\Http\Message\ResponseInterface|null
-     *
-     * @throws Exception\SystemEventsBadRequestException
-     * @throws Exception\SystemEventsInternalServerErrorException
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      */
-    public function systemEvents(array $queryParameters = [], string $fetch = self::FETCH_OBJECT)
+    public function systemEvents(array $queryParameters = [], string $fetch = self::FETCH_OBJECT, array $accept = [])
     {
-        return $this->executeEndpoint(new Endpoint\SystemEvents($queryParameters), $fetch);
+        return $this->executeEndpoint(new Endpoint\SystemEvents($queryParameters, $accept), $fetch);
     }
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var array $type Object types, for which to compute and return data.
-     *            }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param array{
+     *    "type"?: array, //Object types, for which to compute and return data.
+     *    "verbose"?: bool, //Show detailed information on space usage.
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\SystemDfGetJsonResponse200|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\SystemDataUsageInternalServerErrorException
      */
@@ -1365,27 +1297,24 @@ class Client extends Runtime\Client\Client
      *
      * ```json
      * {
-     * "hello-world": {
-     * "latest": "565a9d68a73f6706862bfe8409a7f659776d4d60a8d096eb4a3cbce6999cc2a1"
-     * }
+     *   "hello-world": {
+     *     "latest": "565a9d68a73f6706862bfe8409a7f659776d4d60a8d096eb4a3cbce6999cc2a1"
+     *   }
      * }
      * ```
      *
-     * @param string $name            Image name or ID
-     * @param array  $queryParameters {
-     *
-     * @var string $platform JSON encoded OCI platform describing a platform which will be used
-     *             to select a platform-specific image to be saved if the image is
-     *             multi-platform.
-     *             If not provided, the full multi-platform image will be saved.
+     * @param string $name Image name or ID
+     * @param array{
+     *    "platform"?: array, //JSON encoded OCI platform describing a platform which will be used
+     * to select a platform-specific image to be saved if the image is
+     * multi-platform.
+     * If not provided, the full multi-platform image will be saved.
      *
      * Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      */
     public function imageGet(string $name, array $queryParameters = [], string $fetch = self::FETCH_OBJECT)
     {
@@ -1404,21 +1333,18 @@ class Client extends Runtime\Client\Client
      *
      * For details on the format, see the [export image endpoint](#operation/ImageGet).
      *
-     * @param array $queryParameters {
-     *
-     * @var array  $names Image names to filter by
-     * @var string $platform JSON encoded OCI platform describing a platform which will be used
-     *             to select a platform-specific image to be saved if the image is
-     *             multi-platform.
-     *             If not provided, the full multi-platform image will be saved.
+     * @param array{
+     *    "names"?: array, //Image names to filter by
+     *    "platform"?: array, //JSON encoded OCI platform(s) which will be used to select the
+     * platform-specific image(s) to be saved if the image is
+     * multi-platform. If not provided, the full multi-platform image
+     * will be saved.
      *
      * Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      */
     public function imageGetAll(array $queryParameters = [], string $fetch = self::FETCH_OBJECT)
     {
@@ -1431,21 +1357,18 @@ class Client extends Runtime\Client\Client
      * For details on the format, see the [export image endpoint](#operation/ImageGet).
      *
      * @param string|resource|\Psr\Http\Message\StreamInterface|null $requestBody
-     * @param array                                                  $queryParameters {
-     *
-     * @var bool   $quiet suppress progress details during load
-     * @var string $platform JSON encoded OCI platform describing a platform which will be used
-     *             to select a platform-specific image to be load if the image is
-     *             multi-platform.
-     *             If not provided, the full multi-platform image will be loaded.
+     * @param array{
+     *    "quiet"?: bool, //Suppress progress details during load.
+     *    "platform"?: array, //JSON encoded OCI platform(s) which will be used to select the
+     * platform-specific image(s) to load if the image is
+     * multi-platform. If not provided, the full multi-platform image
+     * will be loaded.
      *
      * Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ImageLoadInternalServerErrorException
      */
@@ -1461,7 +1384,7 @@ class Client extends Runtime\Client\Client
      * @param Model\ContainersIdExecPostBody $requestBody
      * @param string                         $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\IDResponse|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\IDResponse|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ContainerExecNotFoundException
      * @throws Exception\ContainerExecConflictException
@@ -1479,10 +1402,10 @@ class Client extends Runtime\Client\Client
      *
      * @param string                         $id          Exec instance ID
      * @param Model\ExecIdStartPostBody|null $requestBody
-     * @param string                         $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      * @param array                          $accept      Accept content header application/vnd.docker.raw-stream|application/vnd.docker.multiplexed-stream
+     * @param string                         $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      */
     public function execStart(string $id, ?Model\ExecIdStartPostBody $requestBody = null, string $fetch = self::FETCH_OBJECT, array $accept = [])
     {
@@ -1493,17 +1416,15 @@ class Client extends Runtime\Client\Client
      * Resize the TTY session used by an exec instance. This endpoint only works
      * if `tty` was specified as part of creating and starting the exec instance.
      *
-     * @param string $id              Exec instance ID
-     * @param array  $queryParameters {
-     *
-     * @var int $h Height of the TTY session in characters
-     * @var int $w Width of the TTY session in characters
-     *          }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id Exec instance ID
+     * @param array{
+     *    "h": int, //Height of the TTY session in characters
+     *    "w": int, //Width of the TTY session in characters
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ExecResizeBadRequestException
      * @throws Exception\ExecResizeNotFoundException
@@ -1520,7 +1441,7 @@ class Client extends Runtime\Client\Client
      * @param string $id    Exec instance ID
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ExecIdJsonGetResponse200|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ExecInspectNotFoundException
      * @throws Exception\ExecInspectInternalServerErrorException
@@ -1531,10 +1452,9 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var string $filters JSON encoded value of the filters (a `map[string][]string`) to
-     *             process on the volumes list. Available filters:
+     * @param array{
+     *    "filters"?: string, //JSON encoded value of the filters (a `map[string][]string`) to
+     * process on the volumes list. Available filters:
      *
      * - `dangling=<boolean>` When set to `true` (or `1`), returns all
      * volumes that are not in use by a container. When set to `false`
@@ -1544,12 +1464,10 @@ class Client extends Runtime\Client\Client
      * - `label=<key>` or `label=<key>:<value>` Matches volumes based on
      * the presence of a `label` alone or a `label` and a value.
      * - `name=<volume-name>` Matches all or part of a volume name.
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\VolumeListResponse|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\VolumeListResponse|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\VolumeListInternalServerErrorException
      */
@@ -1559,14 +1477,14 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param Model\VolumeCreateOptions $requestBody
+     * @param Model\VolumeCreateRequest $requestBody
      * @param string                    $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Volume|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\Volume|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\VolumeCreateInternalServerErrorException
      */
-    public function volumeCreate(Model\VolumeCreateOptions $requestBody, string $fetch = self::FETCH_OBJECT)
+    public function volumeCreate(Model\VolumeCreateRequest $requestBody, string $fetch = self::FETCH_OBJECT)
     {
         return $this->executeEndpoint(new Endpoint\VolumeCreate($requestBody), $fetch);
     }
@@ -1574,16 +1492,14 @@ class Client extends Runtime\Client\Client
     /**
      * Instruct the driver to remove the volume.
      *
-     * @param string $name            Volume name or ID
-     * @param array  $queryParameters {
-     *
-     * @var bool $force Force the removal of the volume
-     *           }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $name Volume name or ID
+     * @param array{
+     *    "force"?: bool, //Force the removal of the volume
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\VolumeDeleteNotFoundException
      * @throws Exception\VolumeDeleteConflictException
@@ -1598,7 +1514,7 @@ class Client extends Runtime\Client\Client
      * @param string $name  Volume name or ID
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Volume|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\Volume|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\VolumeInspectNotFoundException
      * @throws Exception\VolumeInspectInternalServerErrorException
@@ -1609,19 +1525,16 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string                        $name            The name or ID of the volume
+     * @param string                        $name        The name or ID of the volume
      * @param Model\VolumesNamePutBody|null $requestBody
-     * @param array                         $queryParameters {
-     *
-     * @var int $version The version number of the volume being updated. This is required to
-     *          avoid conflicting writes. Found in the volume's `ClusterVolume`
-     *          field.
-     *
-     * }
-     *
+     * @param array{
+     *    "version": int, //The version number of the volume being updated. This is required to
+     * avoid conflicting writes. Found in the volume's `ClusterVolume`
+     * field.
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\VolumeUpdateBadRequestException
      * @throws Exception\VolumeUpdateNotFoundException
@@ -1634,19 +1547,16 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var string $filters Filters to process on the prune list, encoded as JSON (a `map[string][]string`).
+     * @param array{
+     *    "filters"?: string, //Filters to process on the prune list, encoded as JSON (a `map[string][]string`).
      *
      * Available filters:
      * - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune volumes with (or without, in case `label!=...` is used) the specified labels.
      * - `all` (`all=true`) - Consider all (local) volumes for pruning and not just anonymous volumes.
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\VolumesPrunePostResponse200|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\VolumePruneInternalServerErrorException
      */
@@ -1663,10 +1573,9 @@ class Client extends Runtime\Client\Client
      * inspecting a single network. For example, the list of containers attached
      * to the network is not propagated in API versions 1.28 and up.
      *
-     * @param array $queryParameters {
-     *
-     * @var string $filters JSON encoded value of the filters (a `map[string][]string`) to process
-     *             on the networks list.
+     * @param array{
+     *    "filters"?: string, //JSON encoded value of the filters (a `map[string][]string`) to process
+     * on the networks list.
      *
      * Available filters:
      *
@@ -1680,12 +1589,10 @@ class Client extends Runtime\Client\Client
      * - `name=<network-name>` Matches all or part of a network name.
      * - `scope=["swarm"|"global"|"local"]` Filters networks by scope (`swarm`, `global`, or `local`).
      * - `type=["custom"|"builtin"]` Filters networks by type. The `custom` keyword returns all user-defined networks.
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Network[]|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\NetworkSummary[]|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\NetworkListInternalServerErrorException
      */
@@ -1696,10 +1603,10 @@ class Client extends Runtime\Client\Client
 
     /**
      * @param string $id     Network ID or name
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\NetworkDeleteForbiddenException
      * @throws Exception\NetworkDeleteNotFoundException
@@ -1711,16 +1618,14 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string $id              Network ID or name
-     * @param array  $queryParameters {
-     *
-     * @var bool   $verbose Detailed inspect output for troubleshooting
-     * @var string $scope Filter the network by scope (swarm, global, or local)
-     *             }
-     *
+     * @param string $id Network ID or name
+     * @param array{
+     *    "verbose"?: bool, //Detailed inspect output for troubleshooting
+     *    "scope"?: string, //Filter the network by scope (swarm, global, or local)
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Network|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\NetworkInspect|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\NetworkInspectNotFoundException
      * @throws Exception\NetworkInspectInternalServerErrorException
@@ -1734,7 +1639,7 @@ class Client extends Runtime\Client\Client
      * @param Model\NetworksCreatePostBody $requestBody
      * @param string                       $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\NetworkCreateResponse|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\NetworkCreateResponse|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\NetworkCreateBadRequestException
      * @throws Exception\NetworkCreateForbiddenException
@@ -1749,54 +1654,51 @@ class Client extends Runtime\Client\Client
     /**
      * The network must be either a local-scoped network or a swarm-scoped network with the `attachable` option set. A network cannot be re-attached to a running container.
      *
-     * @param string                          $id          Network ID or name
-     * @param Model\NetworksIdConnectPostBody $requestBody
-     * @param string                          $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
-     * @param array                           $accept      Accept content header application/json|text/plain
+     * @param string                      $id          Network ID or name
+     * @param Model\NetworkConnectRequest $requestBody
+     * @param array                       $accept      Accept content header application/json|text/plain
+     * @param string                      $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\NetworkConnectBadRequestException
      * @throws Exception\NetworkConnectForbiddenException
      * @throws Exception\NetworkConnectNotFoundException
      * @throws Exception\NetworkConnectInternalServerErrorException
      */
-    public function networkConnect(string $id, Model\NetworksIdConnectPostBody $requestBody, string $fetch = self::FETCH_OBJECT, array $accept = [])
+    public function networkConnect(string $id, Model\NetworkConnectRequest $requestBody, string $fetch = self::FETCH_OBJECT, array $accept = [])
     {
         return $this->executeEndpoint(new Endpoint\NetworkConnect($id, $requestBody, $accept), $fetch);
     }
 
     /**
-     * @param string                             $id          Network ID or name
-     * @param Model\NetworksIdDisconnectPostBody $requestBody
-     * @param string                             $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
-     * @param array                              $accept      Accept content header application/json|text/plain
+     * @param string                         $id          Network ID or name
+     * @param Model\NetworkDisconnectRequest $requestBody
+     * @param array                          $accept      Accept content header application/json|text/plain
+     * @param string                         $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\NetworkDisconnectForbiddenException
      * @throws Exception\NetworkDisconnectNotFoundException
      * @throws Exception\NetworkDisconnectInternalServerErrorException
      */
-    public function networkDisconnect(string $id, Model\NetworksIdDisconnectPostBody $requestBody, string $fetch = self::FETCH_OBJECT, array $accept = [])
+    public function networkDisconnect(string $id, Model\NetworkDisconnectRequest $requestBody, string $fetch = self::FETCH_OBJECT, array $accept = [])
     {
         return $this->executeEndpoint(new Endpoint\NetworkDisconnect($id, $requestBody, $accept), $fetch);
     }
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var string $filters Filters to process on the prune list, encoded as JSON (a `map[string][]string`).
+     * @param array{
+     *    "filters"?: string, //Filters to process on the prune list, encoded as JSON (a `map[string][]string`).
      *
      * Available filters:
      * - `until=<timestamp>` Prune networks created before this timestamp. The `<timestamp>` can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. `10m`, `1h30m`) computed relative to the daemon machine’s time.
      * - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune networks with (or without, in case `label!=...` is used) the specified labels.
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\NetworksPrunePostResponse200|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\NetworkPruneInternalServerErrorException
      */
@@ -1808,21 +1710,18 @@ class Client extends Runtime\Client\Client
     /**
      * Returns information about installed plugins.
      *
-     * @param array $queryParameters {
-     *
-     * @var string $filters A JSON encoded value of the filters (a `map[string][]string`) to
-     *             process on the plugin list.
+     * @param array{
+     *    "filters"?: string, //A JSON encoded value of the filters (a `map[string][]string`) to
+     * process on the plugin list.
      *
      * Available filters:
      *
      * - `capability=<capability name>`
      * - `enable=<true>|<false>`
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Plugin[]|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\Plugin[]|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\PluginListInternalServerErrorException
      */
@@ -1832,17 +1731,14 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var string $remote The name of the plugin. The `:latest` tag is optional, and is the
-     *             default if omitted.
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param array{
+     *    "remote": string, //The name of the plugin. The `:latest` tag is optional, and is the
+     * default if omitted.
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\PluginPrivilege[]|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\PluginPrivilege[]|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\GetPluginPrivilegesInternalServerErrorException
      */
@@ -1856,30 +1752,24 @@ class Client extends Runtime\Client\Client
      * enabled using the [`POST /plugins/{name}/enable` endpoint](#operation/PostPluginsEnable).
      *
      * @param Model\PluginPrivilege[]|null $requestBody
-     * @param array                        $queryParameters {
-     *
-     * @var string $remote Remote reference for plugin to install.
-     *
-     * The `:latest` tag is optional, and is used as the default if omitted.
-     * @var string $name Local name for the pulled plugin.
+     * @param array{
+     *    "remote": string, //Remote reference for plugin to install.
      *
      * The `:latest` tag is optional, and is used as the default if omitted.
+     *    "name"?: string, //Local name for the pulled plugin.
      *
-     * }
-     *
-     * @param array $headerParameters {
-     *
-     * @var string $X-Registry-Auth A base64url-encoded auth configuration to use when pulling a plugin
-     *             from a registry.
+     * The `:latest` tag is optional, and is used as the default if omitted.
+     * } $queryParameters
+     * @param array{
+     *    "X-Registry-Auth"?: string, //A base64url-encoded auth configuration to use when pulling a plugin
+     * from a registry.
      *
      * Refer to the [authentication section](#section/Authentication) for
      * details.
-     *
-     * }
-     *
+     * } $headerParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\PluginPullInternalServerErrorException
      */
@@ -1891,10 +1781,10 @@ class Client extends Runtime\Client\Client
     /**
      * @param string $name   The name of the plugin. The `:latest` tag is optional, and is the
      *                       default if omitted.
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Plugin|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\Plugin|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\PluginInspectNotFoundException
      * @throws Exception\PluginInspectInternalServerErrorException
@@ -1905,19 +1795,16 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string $name            The name of the plugin. The `:latest` tag is optional, and is the
-     *                                default if omitted.
-     * @param array  $queryParameters {
-     *
-     * @var bool $force Disable the plugin before removing. This may result in issues if the
-     *           plugin is in use by a container.
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $name The name of the plugin. The `:latest` tag is optional, and is the
+     *                     default if omitted.
+     * @param array{
+     *    "force"?: bool, //Disable the plugin before removing. This may result in issues if the
+     * plugin is in use by a container.
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Plugin|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\Plugin|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\PluginDeleteNotFoundException
      * @throws Exception\PluginDeleteInternalServerErrorException
@@ -1928,17 +1815,15 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string $name            The name of the plugin. The `:latest` tag is optional, and is the
-     *                                default if omitted.
-     * @param array  $queryParameters {
-     *
-     * @var int $timeout Set the HTTP client timeout (in seconds)
-     *          }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $name The name of the plugin. The `:latest` tag is optional, and is the
+     *                     default if omitted.
+     * @param array{
+     *    "timeout"?: int, //Set the HTTP client timeout (in seconds)
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\PluginEnableNotFoundException
      * @throws Exception\PluginEnableInternalServerErrorException
@@ -1949,18 +1834,15 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string $name            The name of the plugin. The `:latest` tag is optional, and is the
-     *                                default if omitted.
-     * @param array  $queryParameters {
-     *
-     * @var bool $force Force disable a plugin even if still in use.
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $name The name of the plugin. The `:latest` tag is optional, and is the
+     *                     default if omitted.
+     * @param array{
+     *    "force"?: bool, //Force disable a plugin even if still in use.
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\PluginDisableNotFoundException
      * @throws Exception\PluginDisableInternalServerErrorException
@@ -1971,31 +1853,25 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string                       $name            The name of the plugin. The `:latest` tag is optional, and is the
-     *                                                      default if omitted.
+     * @param string                       $name        The name of the plugin. The `:latest` tag is optional, and is the
+     *                                                  default if omitted.
      * @param Model\PluginPrivilege[]|null $requestBody
-     * @param array                        $queryParameters {
-     *
-     * @var string $remote Remote reference to upgrade to.
+     * @param array{
+     *    "remote": string, //Remote reference to upgrade to.
      *
      * The `:latest` tag is optional, and is used as the default if omitted.
-     *
-     * }
-     *
-     * @param array $headerParameters {
-     *
-     * @var string $X-Registry-Auth A base64url-encoded auth configuration to use when pulling a plugin
-     *             from a registry.
+     * } $queryParameters
+     * @param array{
+     *    "X-Registry-Auth"?: string, //A base64url-encoded auth configuration to use when pulling a plugin
+     * from a registry.
      *
      * Refer to the [authentication section](#section/Authentication) for
      * details.
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * } $headerParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\PluginUpgradeNotFoundException
      * @throws Exception\PluginUpgradeInternalServerErrorException
@@ -2007,17 +1883,14 @@ class Client extends Runtime\Client\Client
 
     /**
      * @param string|resource|\Psr\Http\Message\StreamInterface|null $requestBody
-     * @param array                                                  $queryParameters {
-     *
-     * @var string $name The name of the plugin. The `:latest` tag is optional, and is the
-     *             default if omitted.
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param array{
+     *    "name": string, //The name of the plugin. The `:latest` tag is optional, and is the
+     * default if omitted.
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\PluginCreateInternalServerErrorException
      */
@@ -2031,10 +1904,10 @@ class Client extends Runtime\Client\Client
      *
      * @param string $name   The name of the plugin. The `:latest` tag is optional, and is the
      *                       default if omitted.
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\PluginPushNotFoundException
      * @throws Exception\PluginPushInternalServerErrorException
@@ -2048,10 +1921,10 @@ class Client extends Runtime\Client\Client
      * @param string       $name        The name of the plugin. The `:latest` tag is optional, and is the
      *                                  default if omitted.
      * @param array[]|null $requestBody
-     * @param string       $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      * @param array        $accept      Accept content header application/json|text/plain
+     * @param string       $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\PluginSetNotFoundException
      * @throws Exception\PluginSetInternalServerErrorException
@@ -2062,9 +1935,8 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var string $filters Filters to process on the nodes list, encoded as JSON (a `map[string][]string`).
+     * @param array{
+     *    "filters"?: string, //Filters to process on the nodes list, encoded as JSON (a `map[string][]string`).
      *
      * Available filters:
      * - `id=<node id>`
@@ -2073,13 +1945,11 @@ class Client extends Runtime\Client\Client
      * - `name=<node name>`
      * - `node.label=<node label>`
      * - `role=`(`manager`|`worker`)`
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Node[]|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\Node[]|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\NodeListInternalServerErrorException
      * @throws Exception\NodeListServiceUnavailableException
@@ -2090,16 +1960,14 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string $id              The ID or name of the node
-     * @param array  $queryParameters {
-     *
-     * @var bool $force Force remove a node from the swarm
-     *           }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id The ID or name of the node
+     * @param array{
+     *    "force"?: bool, //Force remove a node from the swarm
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\NodeDeleteNotFoundException
      * @throws Exception\NodeDeleteInternalServerErrorException
@@ -2112,10 +1980,10 @@ class Client extends Runtime\Client\Client
 
     /**
      * @param string $id     The ID or name of the node
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Node|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\Node|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\NodeInspectNotFoundException
      * @throws Exception\NodeInspectInternalServerErrorException
@@ -2127,19 +1995,16 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string              $id              The ID of the node
+     * @param string              $id          The ID of the node
      * @param Model\NodeSpec|null $requestBody
-     * @param array               $queryParameters {
-     *
-     * @var int $version The version number of the node object being updated. This is required
-     *          to avoid conflicting writes.
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param array{
+     *    "version": int, //The version number of the node object being updated. This is required
+     * to avoid conflicting writes.
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\NodeUpdateBadRequestException
      * @throws Exception\NodeUpdateNotFoundException
@@ -2152,10 +2017,10 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Swarm|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\Swarm|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\SwarmInspectNotFoundException
      * @throws Exception\SwarmInspectInternalServerErrorException
@@ -2168,10 +2033,10 @@ class Client extends Runtime\Client\Client
 
     /**
      * @param Model\SwarmInitPostBody $requestBody
-     * @param string                  $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      * @param array                   $accept      Accept content header application/json|text/plain
+     * @param string                  $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\SwarmInitBadRequestException
      * @throws Exception\SwarmInitInternalServerErrorException
@@ -2184,10 +2049,10 @@ class Client extends Runtime\Client\Client
 
     /**
      * @param Model\SwarmJoinPostBody $requestBody
-     * @param string                  $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      * @param array                   $accept      Accept content header application/json|text/plain
+     * @param string                  $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\SwarmJoinBadRequestException
      * @throws Exception\SwarmJoinInternalServerErrorException
@@ -2199,17 +2064,14 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var bool $force Force leave swarm, even if this is the last manager or that it will
-     *           break the cluster.
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param array{
+     *    "force"?: bool, //Force leave swarm, even if this is the last manager or that it will
+     * break the cluster.
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\SwarmLeaveInternalServerErrorException
      * @throws Exception\SwarmLeaveServiceUnavailableException
@@ -2221,19 +2083,17 @@ class Client extends Runtime\Client\Client
 
     /**
      * @param Model\SwarmSpec $requestBody
-     * @param array           $queryParameters {
-     *
-     * @var int  $version The version number of the swarm object being updated. This is
-     *           required to avoid conflicting writes.
-     * @var bool $rotateWorkerToken rotate the worker join token
-     * @var bool $rotateManagerToken rotate the manager join token
-     * @var bool $rotateManagerUnlockKey Rotate the manager unlock key.
-     *           }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param array{
+     *    "version": int, //The version number of the swarm object being updated. This is
+     * required to avoid conflicting writes.
+     *    "rotateWorkerToken"?: bool, //Rotate the worker join token.
+     *    "rotateManagerToken"?: bool, //Rotate the manager join token.
+     *    "rotateManagerUnlockKey"?: bool, //Rotate the manager unlock key.
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\SwarmUpdateBadRequestException
      * @throws Exception\SwarmUpdateInternalServerErrorException
@@ -2245,10 +2105,10 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\SwarmUnlockkeyGetJsonResponse200|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\SwarmUnlockkeyInternalServerErrorException
      * @throws Exception\SwarmUnlockkeyServiceUnavailableException
@@ -2262,7 +2122,7 @@ class Client extends Runtime\Client\Client
      * @param Model\SwarmUnlockPostBody $requestBody
      * @param string                    $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\SwarmUnlockInternalServerErrorException
      * @throws Exception\SwarmUnlockServiceUnavailableException
@@ -2273,10 +2133,9 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var string $filters A JSON encoded value of the filters (a `map[string][]string`) to
-     *             process on the services list.
+     * @param array{
+     *    "filters"?: string, //A JSON encoded value of the filters (a `map[string][]string`) to
+     * process on the services list.
      *
      * Available filters:
      *
@@ -2284,14 +2143,12 @@ class Client extends Runtime\Client\Client
      * - `label=<service label>`
      * - `mode=["replicated"|"global"]`
      * - `name=<service name>`
-     * @var bool $status Include service status, with count of running and desired tasks.
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     *    "status"?: bool, //Include service status, with count of running and desired tasks.
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Service[]|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\Service[]|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ServiceListInternalServerErrorException
      * @throws Exception\ServiceListServiceUnavailableException
@@ -2303,19 +2160,16 @@ class Client extends Runtime\Client\Client
 
     /**
      * @param Model\ServicesCreatePostBody $requestBody
-     * @param array                        $headerParameters {
-     *
-     * @var string $X-Registry-Auth A base64url-encoded auth configuration for pulling from private
-     *             registries.
+     * @param array{
+     *    "X-Registry-Auth"?: string, //A base64url-encoded auth configuration for pulling from private
+     * registries.
      *
      * Refer to the [authentication section](#section/Authentication) for
      * details.
-     *
-     * }
-     *
+     * } $headerParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ServiceCreateResponse|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\ServiceCreateResponse|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ServiceCreateBadRequestException
      * @throws Exception\ServiceCreateForbiddenException
@@ -2330,10 +2184,10 @@ class Client extends Runtime\Client\Client
 
     /**
      * @param string $id     ID or name of service
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ServiceDeleteNotFoundException
      * @throws Exception\ServiceDeleteInternalServerErrorException
@@ -2345,16 +2199,14 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string $id              ID or name of service
-     * @param array  $queryParameters {
-     *
-     * @var bool $insertDefaults Fill empty fields with default values.
-     *           }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id ID or name of service
+     * @param array{
+     *    "insertDefaults"?: bool, //Fill empty fields with default values.
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Service|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\Service|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ServiceInspectNotFoundException
      * @throws Exception\ServiceInspectInternalServerErrorException
@@ -2366,36 +2218,30 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string                         $id              ID or name of service
+     * @param string                         $id          ID or name of service
      * @param Model\ServicesIdUpdatePostBody $requestBody
-     * @param array                          $queryParameters {
-     *
-     * @var int    $version The version number of the service object being updated. This is
-     *             required to avoid conflicting writes.
-     *             This version number should be the value as currently set on the
-     *             service *before* the update. You can find the current version by
-     *             calling `GET /services/{id}`
-     * @var string $registryAuthFrom if the `X-Registry-Auth` header is not specified, this parameter
-     *             indicates where to find registry authorization credentials
-     * @var string $rollback Set to this parameter to `previous` to cause a server-side rollback
-     *             to the previous service spec. The supplied spec will be ignored in
-     *             this case.
-     *
-     * }
-     *
-     * @param array $headerParameters {
-     *
-     * @var string $X-Registry-Auth A base64url-encoded auth configuration for pulling from private
-     *             registries.
+     * @param array{
+     *    "version": int, //The version number of the service object being updated. This is
+     * required to avoid conflicting writes.
+     * This version number should be the value as currently set on the
+     * service *before* the update. You can find the current version by
+     * calling `GET /services/{id}`
+     *    "registryAuthFrom"?: string, //If the `X-Registry-Auth` header is not specified, this parameter
+     * indicates where to find registry authorization credentials.
+     *    "rollback"?: string, //Set to this parameter to `previous` to cause a server-side rollback
+     * to the previous service spec. The supplied spec will be ignored in
+     * this case.
+     * } $queryParameters
+     * @param array{
+     *    "X-Registry-Auth"?: string, //A base64url-encoded auth configuration for pulling from private
+     * registries.
      *
      * Refer to the [authentication section](#section/Authentication) for
      * details.
-     *
-     * }
-     *
+     * } $headerParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\ServiceUpdateResponse|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\ServiceUpdateResponse|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ServiceUpdateBadRequestException
      * @throws Exception\ServiceUpdateNotFoundException
@@ -2411,27 +2257,24 @@ class Client extends Runtime\Client\Client
      * Get `stdout` and `stderr` logs from a service. See also
      * [`/containers/{id}/logs`](#operation/ContainerLogs).
      *
-     **Note**: This endpoint works only for services with the `local`,
+     * **Note**: This endpoint works only for services with the `local`,
      * `json-file` or `journald` logging drivers.
      *
-     * @param string $id              ID or name of the service
-     * @param array  $queryParameters {
-     *
-     * @var bool   $details show service context and extra details provided to logs
-     * @var bool   $follow keep connection after returning logs
-     * @var bool   $stdout Return logs from `stdout`
-     * @var bool   $stderr Return logs from `stderr`
-     * @var int    $since Only return logs since this time, as a UNIX timestamp
-     * @var bool   $timestamps Add timestamps to every log line
-     * @var string $tail Only return this number of log lines from the end of the logs.
-     *             Specify as an integer or `all` to output all log lines.
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id ID or name of the service
+     * @param array{
+     *    "details"?: bool, //Show service context and extra details provided to logs.
+     *    "follow"?: bool, //Keep connection after returning logs.
+     *    "stdout"?: bool, //Return logs from `stdout`
+     *    "stderr"?: bool, //Return logs from `stderr`
+     *    "since"?: int, //Only return logs since this time, as a UNIX timestamp
+     *    "timestamps"?: bool, //Add timestamps to every log line
+     *    "tail"?: string, //Only return this number of log lines from the end of the logs.
+     * Specify as an integer or `all` to output all log lines.
+     * } $queryParameters
      * @param array  $accept Accept content header application/vnd.docker.raw-stream|application/vnd.docker.multiplexed-stream|application/json
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ServiceLogsNotFoundException
      */
@@ -2441,10 +2284,9 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var string $filters A JSON encoded value of the filters (a `map[string][]string`) to
-     *             process on the tasks list.
+     * @param array{
+     *    "filters"?: string, //A JSON encoded value of the filters (a `map[string][]string`) to
+     * process on the tasks list.
      *
      * Available filters:
      *
@@ -2454,12 +2296,10 @@ class Client extends Runtime\Client\Client
      * - `name=<task name>`
      * - `node=<node id or name>`
      * - `service=<service name>`
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Task[]|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\Task[]|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\TaskListInternalServerErrorException
      * @throws Exception\TaskListServiceUnavailableException
@@ -2473,7 +2313,7 @@ class Client extends Runtime\Client\Client
      * @param string $id    ID of the task
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Task|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\Task|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\TaskInspectNotFoundException
      * @throws Exception\TaskInspectInternalServerErrorException
@@ -2488,27 +2328,24 @@ class Client extends Runtime\Client\Client
      * Get `stdout` and `stderr` logs from a task.
      * See also [`/containers/{id}/logs`](#operation/ContainerLogs).
      *
-     **Note**: This endpoint works only for services with the `local`,
+     * **Note**: This endpoint works only for services with the `local`,
      * `json-file` or `journald` logging drivers.
      *
-     * @param string $id              ID of the task
-     * @param array  $queryParameters {
-     *
-     * @var bool   $details show task context and extra details provided to logs
-     * @var bool   $follow keep connection after returning logs
-     * @var bool   $stdout Return logs from `stdout`
-     * @var bool   $stderr Return logs from `stderr`
-     * @var int    $since Only return logs since this time, as a UNIX timestamp
-     * @var bool   $timestamps Add timestamps to every log line
-     * @var string $tail Only return this number of log lines from the end of the logs.
-     *             Specify as an integer or `all` to output all log lines.
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param string $id ID of the task
+     * @param array{
+     *    "details"?: bool, //Show task context and extra details provided to logs.
+     *    "follow"?: bool, //Keep connection after returning logs.
+     *    "stdout"?: bool, //Return logs from `stdout`
+     *    "stderr"?: bool, //Return logs from `stderr`
+     *    "since"?: int, //Only return logs since this time, as a UNIX timestamp
+     *    "timestamps"?: bool, //Add timestamps to every log line
+     *    "tail"?: string, //Only return this number of log lines from the end of the logs.
+     * Specify as an integer or `all` to output all log lines.
+     * } $queryParameters
      * @param array  $accept Accept content header application/vnd.docker.raw-stream|application/vnd.docker.multiplexed-stream|application/json
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\TaskLogsNotFoundException
      */
@@ -2518,10 +2355,9 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var string $filters A JSON encoded value of the filters (a `map[string][]string`) to
-     *             process on the secrets list.
+     * @param array{
+     *    "filters"?: string, //A JSON encoded value of the filters (a `map[string][]string`) to
+     * process on the secrets list.
      *
      * Available filters:
      *
@@ -2529,12 +2365,10 @@ class Client extends Runtime\Client\Client
      * - `label=<key> or label=<key>=value`
      * - `name=<secret name>`
      * - `names=<secret name>`
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Secret[]|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\Secret[]|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\SecretListInternalServerErrorException
      * @throws Exception\SecretListServiceUnavailableException
@@ -2548,7 +2382,7 @@ class Client extends Runtime\Client\Client
      * @param Model\SecretsCreatePostBody|null $requestBody
      * @param string                           $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\IDResponse|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\IDResponse|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\SecretCreateConflictException
      * @throws Exception\SecretCreateInternalServerErrorException
@@ -2563,7 +2397,7 @@ class Client extends Runtime\Client\Client
      * @param string $id    ID of the secret
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\SecretDeleteNotFoundException
      * @throws Exception\SecretDeleteInternalServerErrorException
@@ -2578,7 +2412,7 @@ class Client extends Runtime\Client\Client
      * @param string $id    ID of the secret
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Secret|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\Secret|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\SecretInspectNotFoundException
      * @throws Exception\SecretInspectInternalServerErrorException
@@ -2590,19 +2424,16 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string                $id              The ID or name of the secret
+     * @param string                $id          The ID or name of the secret
      * @param Model\SecretSpec|null $requestBody
-     * @param array                 $queryParameters {
-     *
-     * @var int $version The version number of the secret object being updated. This is
-     *          required to avoid conflicting writes.
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param array{
+     *    "version": int, //The version number of the secret object being updated. This is
+     * required to avoid conflicting writes.
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\SecretUpdateBadRequestException
      * @throws Exception\SecretUpdateNotFoundException
@@ -2615,10 +2446,9 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var string $filters A JSON encoded value of the filters (a `map[string][]string`) to
-     *             process on the configs list.
+     * @param array{
+     *    "filters"?: string, //A JSON encoded value of the filters (a `map[string][]string`) to
+     * process on the configs list.
      *
      * Available filters:
      *
@@ -2626,12 +2456,10 @@ class Client extends Runtime\Client\Client
      * - `label=<key> or label=<key>=value`
      * - `name=<config name>`
      * - `names=<config name>`
-     *
-     * }
-     *
+     * } $queryParameters
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Config[]|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\Config[]|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ConfigListInternalServerErrorException
      * @throws Exception\ConfigListServiceUnavailableException
@@ -2645,7 +2473,7 @@ class Client extends Runtime\Client\Client
      * @param Model\ConfigsCreatePostBody|null $requestBody
      * @param string                           $fetch       Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\IDResponse|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\IDResponse|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ConfigCreateConflictException
      * @throws Exception\ConfigCreateInternalServerErrorException
@@ -2660,7 +2488,7 @@ class Client extends Runtime\Client\Client
      * @param string $id    ID of the config
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ConfigDeleteNotFoundException
      * @throws Exception\ConfigDeleteInternalServerErrorException
@@ -2675,7 +2503,7 @@ class Client extends Runtime\Client\Client
      * @param string $id    ID of the config
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\Config|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\Config|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ConfigInspectNotFoundException
      * @throws Exception\ConfigInspectInternalServerErrorException
@@ -2687,19 +2515,16 @@ class Client extends Runtime\Client\Client
     }
 
     /**
-     * @param string                $id              The ID or name of the config
+     * @param string                $id          The ID or name of the config
      * @param Model\ConfigSpec|null $requestBody
-     * @param array                 $queryParameters {
-     *
-     * @var int $version The version number of the config object being updated. This is
-     *          required to avoid conflicting writes.
-     *
-     * }
-     *
-     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
+     * @param array{
+     *    "version": int, //The version number of the config object being updated. This is
+     * required to avoid conflicting writes.
+     * } $queryParameters
      * @param array  $accept Accept content header application/json|text/plain
+     * @param string $fetch  Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\ConfigUpdateBadRequestException
      * @throws Exception\ConfigUpdateNotFoundException
@@ -2717,7 +2542,7 @@ class Client extends Runtime\Client\Client
      * @param string $name  Image name or id
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return Model\DistributionInspect|\Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? Model\DistributionInspect|null : \Psr\Http\Message\ResponseInterface)
      *
      * @throws Exception\DistributionInspectUnauthorizedException
      * @throws Exception\DistributionInspectInternalServerErrorException
@@ -2730,7 +2555,7 @@ class Client extends Runtime\Client\Client
     /**
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return ($fetch is 'object' ? null : \Psr\Http\Message\ResponseInterface)
      */
     public function session(string $fetch = self::FETCH_OBJECT)
     {
@@ -2742,7 +2567,7 @@ class Client extends Runtime\Client\Client
         if (null === $httpClient) {
             $httpClient = \Http\Discovery\Psr18ClientDiscovery::find();
             $plugins    = [];
-            $uri        = \Http\Discovery\Psr17FactoryDiscovery::findUriFactory()->createUri('/v1.51');
+            $uri        = \Http\Discovery\Psr17FactoryDiscovery::findUriFactory()->createUri('/v1.54');
             $plugins[]  = new \Http\Client\Common\Plugin\AddPathPlugin($uri);
             if (count($additionalPlugins) > 0) {
                 $plugins = array_merge($plugins, $additionalPlugins);

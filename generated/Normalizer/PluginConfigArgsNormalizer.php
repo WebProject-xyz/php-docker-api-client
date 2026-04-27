@@ -37,23 +37,21 @@ class PluginConfigArgsNormalizer implements DenormalizerInterface, NormalizerInt
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginConfigArgs();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginConfigArgs();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('Name', $data)) {
             $object->setName($data['Name']);
-            unset($data['Name']);
         }
         if (array_key_exists('Description', $data)) {
             $object->setDescription($data['Description']);
-            unset($data['Description']);
         }
         if (array_key_exists('Settable', $data)) {
             $values = [];
@@ -61,7 +59,6 @@ class PluginConfigArgsNormalizer implements DenormalizerInterface, NormalizerInt
                 $values[] = $value;
             }
             $object->setSettable($values);
-            unset($data['Settable']);
         }
         if (array_key_exists('Value', $data)) {
             $values_1 = [];
@@ -69,12 +66,6 @@ class PluginConfigArgsNormalizer implements DenormalizerInterface, NormalizerInt
                 $values_1[] = $value_1;
             }
             $object->setValue($values_1);
-            unset($data['Value']);
-        }
-        foreach ($data as $key => $value_2) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_2;
-            }
         }
 
         return $object;
@@ -95,11 +86,6 @@ class PluginConfigArgsNormalizer implements DenormalizerInterface, NormalizerInt
             $values_1[] = $value_1;
         }
         $dataArray['Value'] = $values_1;
-        foreach ($data as $key => $value_2) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_2;
-            }
-        }
 
         return $dataArray;
     }

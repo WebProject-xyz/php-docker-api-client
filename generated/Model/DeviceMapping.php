@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class DeviceMapping extends ArrayObject
+class DeviceMapping
 {
     /**
      * @var array
@@ -18,32 +17,32 @@ class DeviceMapping extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $pathOnHost;
     /**
-     * @var string
+     * @var string|null
      */
     protected $pathInContainer;
     /**
-     * @var string
+     * @var string|null
      */
     protected $cgroupPermissions;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPathOnHost(): string
+    public function getPathOnHost(): ?string
     {
         return $this->pathOnHost;
     }
 
     /**
-     * @param string $pathOnHost
+     * @param string|null $pathOnHost
      *
      * @return self
      */
-    public function setPathOnHost(string $pathOnHost): self
+    public function setPathOnHost(?string $pathOnHost): self
     {
         $this->initialized['pathOnHost'] = true;
         $this->pathOnHost                = $pathOnHost;
@@ -52,19 +51,19 @@ class DeviceMapping extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPathInContainer(): string
+    public function getPathInContainer(): ?string
     {
         return $this->pathInContainer;
     }
 
     /**
-     * @param string $pathInContainer
+     * @param string|null $pathInContainer
      *
      * @return self
      */
-    public function setPathInContainer(string $pathInContainer): self
+    public function setPathInContainer(?string $pathInContainer): self
     {
         $this->initialized['pathInContainer'] = true;
         $this->pathInContainer                = $pathInContainer;
@@ -73,19 +72,19 @@ class DeviceMapping extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCgroupPermissions(): string
+    public function getCgroupPermissions(): ?string
     {
         return $this->cgroupPermissions;
     }
 
     /**
-     * @param string $cgroupPermissions
+     * @param string|null $cgroupPermissions
      *
      * @return self
      */
-    public function setCgroupPermissions(string $cgroupPermissions): self
+    public function setCgroupPermissions(?string $cgroupPermissions): self
     {
         $this->initialized['cgroupPermissions'] = true;
         $this->cgroupPermissions                = $cgroupPermissions;

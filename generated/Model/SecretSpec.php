@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class SecretSpec extends ArrayObject
+class SecretSpec
 {
     /**
      * @var array
@@ -20,26 +19,26 @@ class SecretSpec extends ArrayObject
     /**
      * User-defined name of the secret.
      *
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
      * User-defined key/value metadata.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $labels;
     /**
-     * Data is the data to store as a secret, formatted as a Base64-url-safe-encoded
-     * ([RFC 4648](https://tools.ietf.org/html/rfc4648#section-5)) string.
+     * Data is the data to store as a secret, formatted as a standard base64-encoded
+     * ([RFC 4648](https://tools.ietf.org/html/rfc4648#section-4)) string.
      * It must be empty if the Driver field is set, in which case the data is
      * loaded from an external secret store. The maximum allowed size is 500KB,
-     * as defined in [MaxSecretSize](https://pkg.go.dev/github.com/moby/swarmkit/v2@v2.0.0-20250103191802-8c1959736554/api/validation#MaxSecretSize).
+     * as defined in [MaxSecretSize](https://pkg.go.dev/github.com/moby/swarmkit/v2@v2.0.0/api/validation#MaxSecretSize).
      *
      * This field is only used to _create_ a secret, and is not returned by
      * other endpoints.
      *
-     * @var string
+     * @var string|null
      */
     protected $data;
     /**
@@ -58,9 +57,9 @@ class SecretSpec extends ArrayObject
     /**
      * User-defined name of the secret.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -68,11 +67,11 @@ class SecretSpec extends ArrayObject
     /**
      * User-defined name of the secret.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -83,9 +82,9 @@ class SecretSpec extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getLabels(): iterable
+    public function getLabels(): ?iterable
     {
         return $this->labels;
     }
@@ -93,11 +92,11 @@ class SecretSpec extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @param array<string, string> $labels
+     * @param array<string, string>|null $labels
      *
      * @return self
      */
-    public function setLabels(iterable $labels): self
+    public function setLabels(?iterable $labels): self
     {
         $this->initialized['labels'] = true;
         $this->labels                = $labels;
@@ -106,37 +105,37 @@ class SecretSpec extends ArrayObject
     }
 
     /**
-     * Data is the data to store as a secret, formatted as a Base64-url-safe-encoded
-     * ([RFC 4648](https://tools.ietf.org/html/rfc4648#section-5)) string.
+     * Data is the data to store as a secret, formatted as a standard base64-encoded
+     * ([RFC 4648](https://tools.ietf.org/html/rfc4648#section-4)) string.
      * It must be empty if the Driver field is set, in which case the data is
      * loaded from an external secret store. The maximum allowed size is 500KB,
-     * as defined in [MaxSecretSize](https://pkg.go.dev/github.com/moby/swarmkit/v2@v2.0.0-20250103191802-8c1959736554/api/validation#MaxSecretSize).
+     * as defined in [MaxSecretSize](https://pkg.go.dev/github.com/moby/swarmkit/v2@v2.0.0/api/validation#MaxSecretSize).
      *
      * This field is only used to _create_ a secret, and is not returned by
      * other endpoints.
      *
-     * @return string
+     * @return string|null
      */
-    public function getData(): string
+    public function getData(): ?string
     {
         return $this->data;
     }
 
     /**
-     * Data is the data to store as a secret, formatted as a Base64-url-safe-encoded
-     * ([RFC 4648](https://tools.ietf.org/html/rfc4648#section-5)) string.
+     * Data is the data to store as a secret, formatted as a standard base64-encoded
+     * ([RFC 4648](https://tools.ietf.org/html/rfc4648#section-4)) string.
      * It must be empty if the Driver field is set, in which case the data is
      * loaded from an external secret store. The maximum allowed size is 500KB,
-     * as defined in [MaxSecretSize](https://pkg.go.dev/github.com/moby/swarmkit/v2@v2.0.0-20250103191802-8c1959736554/api/validation#MaxSecretSize).
+     * as defined in [MaxSecretSize](https://pkg.go.dev/github.com/moby/swarmkit/v2@v2.0.0/api/validation#MaxSecretSize).
      *
      * This field is only used to _create_ a secret, and is not returned by
      * other endpoints.
      *
-     * @param string $data
+     * @param string|null $data
      *
      * @return self
      */
-    public function setData(string $data): self
+    public function setData(?string $data): self
     {
         $this->initialized['data'] = true;
         $this->data                = $data;

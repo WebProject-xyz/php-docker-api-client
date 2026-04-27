@@ -16,17 +16,15 @@ class ImageLoad extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
      * For details on the format, see the [export image endpoint](#operation/ImageGet).
      *
      * @param string|resource|\Psr\Http\Message\StreamInterface|null $requestBody
-     * @param array                                                  $queryParameters {
-     *
-     * @var bool   $quiet suppress progress details during load
-     * @var string $platform JSON encoded OCI platform describing a platform which will be used
-     *             to select a platform-specific image to be load if the image is
-     *             multi-platform.
-     *             If not provided, the full multi-platform image will be loaded.
+     * @param array{
+     *    "quiet"?: bool, //Suppress progress details during load.
+     *    "platform"?: array, //JSON encoded OCI platform(s) which will be used to select the
+     * platform-specific image(s) to load if the image is
+     * multi-platform. If not provided, the full multi-platform image
+     * will be loaded.
      *
      * Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
-     *
-     * }
+     * } $queryParameters
      */
     public function __construct($requestBody = null, array $queryParameters = [])
     {
@@ -65,7 +63,7 @@ class ImageLoad extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
         $optionsResolver->setRequired([]);
         $optionsResolver->setDefaults(['quiet' => false]);
         $optionsResolver->addAllowedTypes('quiet', ['bool']);
-        $optionsResolver->addAllowedTypes('platform', ['string']);
+        $optionsResolver->addAllowedTypes('platform', ['array']);
 
         return $optionsResolver;
     }
@@ -84,7 +82,7 @@ class ImageLoad extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageLoadInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

@@ -8,15 +8,13 @@ class VolumePrune extends \WebProject\DockerApi\Library\Generated\Runtime\Client
     use \WebProject\DockerApi\Library\Generated\Runtime\Client\EndpointTrait;
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var string $filters Filters to process on the prune list, encoded as JSON (a `map[string][]string`).
+     * @param array{
+     *    "filters"?: string, //Filters to process on the prune list, encoded as JSON (a `map[string][]string`).
      *
      * Available filters:
      * - `label` (`label=<key>`, `label=<key>=<value>`, `label!=<key>`, or `label!=<key>=<value>`) Prune volumes with (or without, in case `label!=...` is used) the specified labels.
      * - `all` (`all=true`) - Consider all (local) volumes for pruning and not just anonymous volumes.
-     *
-     * }
+     * } $queryParameters
      */
     public function __construct(array $queryParameters = [])
     {
@@ -57,7 +55,7 @@ class VolumePrune extends \WebProject\DockerApi\Library\Generated\Runtime\Client
     /**
      * {@inheritdoc}
      *
-     * @return \WebProject\DockerApi\Library\Generated\Model\VolumesPrunePostResponse200|null
+     * @return null
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\VolumePruneInternalServerErrorException
      */
@@ -65,10 +63,10 @@ class VolumePrune extends \WebProject\DockerApi\Library\Generated\Runtime\Client
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
-            return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\VolumesPrunePostResponse200', 'json');
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+            return json_decode($body);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\VolumePruneInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecPlacementPreferencesItem extends ArrayObject
+class TaskSpecPlacementPreferencesItem
 {
     /**
      * @var array
@@ -18,24 +17,24 @@ class TaskSpecPlacementPreferencesItem extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var TaskSpecPlacementPreferencesItemSpread
+     * @var TaskSpecPlacementPreferencesItemSpread|null
      */
     protected $spread;
 
     /**
-     * @return TaskSpecPlacementPreferencesItemSpread
+     * @return TaskSpecPlacementPreferencesItemSpread|null
      */
-    public function getSpread(): TaskSpecPlacementPreferencesItemSpread
+    public function getSpread(): ?TaskSpecPlacementPreferencesItemSpread
     {
         return $this->spread;
     }
 
     /**
-     * @param TaskSpecPlacementPreferencesItemSpread $spread
+     * @param TaskSpecPlacementPreferencesItemSpread|null $spread
      *
      * @return self
      */
-    public function setSpread(TaskSpecPlacementPreferencesItemSpread $spread): self
+    public function setSpread(?TaskSpecPlacementPreferencesItemSpread $spread): self
     {
         $this->initialized['spread'] = true;
         $this->spread                = $spread;

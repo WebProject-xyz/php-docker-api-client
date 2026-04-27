@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class NodeStatusNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,32 +38,40 @@ class NodeStatusNormalizer implements DenormalizerInterface, NormalizerInterface
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\NodeStatus();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\NodeStatus();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('State', $data)) {
             $object->setState($data['State']);
-            unset($data['State']);
         }
-        if (array_key_exists('Message', $data)) {
-            $object->setMessage($data['Message']);
-            unset($data['Message']);
-        }
-        if (array_key_exists('Addr', $data)) {
-            $object->setAddr($data['Addr']);
-            unset($data['Addr']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Message', $data) && null !== $data['Message']) {
+            $value = $data['Message'];
+            if (is_string($data['Message'])) {
+                $value = $data['Message'];
+            } elseif (null === $data['Message']) {
+                $value = $data['Message'];
             }
+            $object->setMessage($value);
+        } elseif (array_key_exists('Message', $data) && null === $data['Message']) {
+            $object->setMessage(null);
+        }
+        if (array_key_exists('Addr', $data) && null !== $data['Addr']) {
+            $value_1 = $data['Addr'];
+            if (is_string($data['Addr'])) {
+                $value_1 = $data['Addr'];
+            } elseif (null === $data['Addr']) {
+                $value_1 = $data['Addr'];
+            }
+            $object->setAddr($value_1);
+        } elseif (array_key_exists('Addr', $data) && null === $data['Addr']) {
+            $object->setAddr(null);
         }
 
         return $object;
@@ -74,16 +83,23 @@ class NodeStatusNormalizer implements DenormalizerInterface, NormalizerInterface
         if ($data->isInitialized('state') && null !== $data->getState()) {
             $dataArray['State'] = $data->getState();
         }
-        if ($data->isInitialized('message') && null !== $data->getMessage()) {
-            $dataArray['Message'] = $data->getMessage();
-        }
-        if ($data->isInitialized('addr') && null !== $data->getAddr()) {
-            $dataArray['Addr'] = $data->getAddr();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('message')) {
+            $value = $data->getMessage();
+            if (is_string($data->getMessage())) {
+                $value = $data->getMessage();
+            } elseif (null === $data->getMessage()) {
+                $value = $data->getMessage();
             }
+            $dataArray['Message'] = $value;
+        }
+        if ($data->isInitialized('addr')) {
+            $value_1 = $data->getAddr();
+            if (is_string($data->getAddr())) {
+                $value_1 = $data->getAddr();
+            } elseif (null === $data->getAddr()) {
+                $value_1 = $data->getAddr();
+            }
+            $dataArray['Addr'] = $value_1;
         }
 
         return $dataArray;

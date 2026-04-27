@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class AuthConfig extends ArrayObject
+class AuthConfig
 {
     /**
      * @var array
@@ -18,40 +17,32 @@ class AuthConfig extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $username;
     /**
-     * @var string
+     * @var string|null
      */
     protected $password;
     /**
-     * Email is an optional value associated with the username.
-     *
-     * > **Deprecated**: This field is deprecated since docker 1.11 (API v1.23) and will be removed in a future release.
-     *
-     * @var string
-     */
-    protected $email;
-    /**
-     * @var string
+     * @var string|null
      */
     protected $serveraddress;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
 
     /**
-     * @param string $username
+     * @param string|null $username
      *
      * @return self
      */
-    public function setUsername(string $username): self
+    public function setUsername(?string $username): self
     {
         $this->initialized['username'] = true;
         $this->username                = $username;
@@ -60,19 +51,19 @@ class AuthConfig extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
     /**
-     * @param string $password
+     * @param string|null $password
      *
      * @return self
      */
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->initialized['password'] = true;
         $this->password                = $password;
@@ -81,48 +72,19 @@ class AuthConfig extends ArrayObject
     }
 
     /**
-     * Email is an optional value associated with the username.
-     *
-     * > **Deprecated**: This field is deprecated since docker 1.11 (API v1.23) and will be removed in a future release.
-     *
-     * @return string
+     * @return string|null
      */
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    /**
-     * Email is an optional value associated with the username.
-     *
-     * > **Deprecated**: This field is deprecated since docker 1.11 (API v1.23) and will be removed in a future release.
-     *
-     * @param string $email
-     *
-     * @return self
-     */
-    public function setEmail(string $email): self
-    {
-        $this->initialized['email'] = true;
-        $this->email                = $email;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getServeraddress(): string
+    public function getServeraddress(): ?string
     {
         return $this->serveraddress;
     }
 
     /**
-     * @param string $serveraddress
+     * @param string|null $serveraddress
      *
      * @return self
      */
-    public function setServeraddress(string $serveraddress): self
+    public function setServeraddress(?string $serveraddress): self
     {
         $this->initialized['serveraddress'] = true;
         $this->serveraddress                = $serveraddress;

@@ -16,8 +16,10 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_bool;
 use function is_int;
 use function is_object;
+use function is_string;
 
 class NetworkNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -38,18 +40,15 @@ class NetworkNormalizer implements DenormalizerInterface, NormalizerInterface, D
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\Network();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
-        }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\Network();
-        if (array_key_exists('EnableIPv4', $data) && is_int($data['EnableIPv4'])) {
-            $data['EnableIPv4'] = (bool) $data['EnableIPv4'];
-        }
-        if (array_key_exists('EnableIPv6', $data) && is_int($data['EnableIPv6'])) {
-            $data['EnableIPv6'] = (bool) $data['EnableIPv6'];
         }
         if (array_key_exists('Internal', $data) && is_int($data['Internal'])) {
             $data['Internal'] = (bool) $data['Internal'];
@@ -63,99 +62,145 @@ class NetworkNormalizer implements DenormalizerInterface, NormalizerInterface, D
         if (array_key_exists('ConfigOnly', $data) && is_int($data['ConfigOnly'])) {
             $data['ConfigOnly'] = (bool) $data['ConfigOnly'];
         }
-        if (null === $data || false === is_array($data)) {
-            return $object;
+        if (array_key_exists('Name', $data) && null !== $data['Name']) {
+            $value = $data['Name'];
+            if (is_string($data['Name'])) {
+                $value = $data['Name'];
+            } elseif (null === $data['Name']) {
+                $value = $data['Name'];
+            }
+            $object->setName($value);
+        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
+            $object->setName(null);
         }
-        if (array_key_exists('Name', $data)) {
-            $object->setName($data['Name']);
-            unset($data['Name']);
+        if (array_key_exists('Id', $data) && null !== $data['Id']) {
+            $value_1 = $data['Id'];
+            if (is_string($data['Id'])) {
+                $value_1 = $data['Id'];
+            } elseif (null === $data['Id']) {
+                $value_1 = $data['Id'];
+            }
+            $object->setId($value_1);
+        } elseif (array_key_exists('Id', $data) && null === $data['Id']) {
+            $object->setId(null);
         }
-        if (array_key_exists('Id', $data)) {
-            $object->setId($data['Id']);
-            unset($data['Id']);
+        if (array_key_exists('Created', $data) && null !== $data['Created']) {
+            $value_2 = $data['Created'];
+            if (is_string($data['Created'])) {
+                $value_2 = $data['Created'];
+            } elseif (null === $data['Created']) {
+                $value_2 = $data['Created'];
+            }
+            $object->setCreated($value_2);
+        } elseif (array_key_exists('Created', $data) && null === $data['Created']) {
+            $object->setCreated(null);
         }
-        if (array_key_exists('Created', $data)) {
-            $object->setCreated($data['Created']);
-            unset($data['Created']);
+        if (array_key_exists('Scope', $data) && null !== $data['Scope']) {
+            $value_3 = $data['Scope'];
+            if (is_string($data['Scope'])) {
+                $value_3 = $data['Scope'];
+            } elseif (null === $data['Scope']) {
+                $value_3 = $data['Scope'];
+            }
+            $object->setScope($value_3);
+        } elseif (array_key_exists('Scope', $data) && null === $data['Scope']) {
+            $object->setScope(null);
         }
-        if (array_key_exists('Scope', $data)) {
-            $object->setScope($data['Scope']);
-            unset($data['Scope']);
+        if (array_key_exists('Driver', $data) && null !== $data['Driver']) {
+            $value_4 = $data['Driver'];
+            if (is_string($data['Driver'])) {
+                $value_4 = $data['Driver'];
+            } elseif (null === $data['Driver']) {
+                $value_4 = $data['Driver'];
+            }
+            $object->setDriver($value_4);
+        } elseif (array_key_exists('Driver', $data) && null === $data['Driver']) {
+            $object->setDriver(null);
         }
-        if (array_key_exists('Driver', $data)) {
-            $object->setDriver($data['Driver']);
-            unset($data['Driver']);
+        if (array_key_exists('EnableIPv4', $data) && null !== $data['EnableIPv4']) {
+            $value_5 = $data['EnableIPv4'];
+            if (is_bool($data['EnableIPv4'])) {
+                $value_5 = $data['EnableIPv4'];
+            } elseif (null === $data['EnableIPv4']) {
+                $value_5 = $data['EnableIPv4'];
+            }
+            $object->setEnableIPv4($value_5);
+        } elseif (array_key_exists('EnableIPv4', $data) && null === $data['EnableIPv4']) {
+            $object->setEnableIPv4(null);
         }
-        if (array_key_exists('EnableIPv4', $data)) {
-            $object->setEnableIPv4($data['EnableIPv4']);
-            unset($data['EnableIPv4']);
-        }
-        if (array_key_exists('EnableIPv6', $data)) {
-            $object->setEnableIPv6($data['EnableIPv6']);
-            unset($data['EnableIPv6']);
+        if (array_key_exists('EnableIPv6', $data) && null !== $data['EnableIPv6']) {
+            $value_6 = $data['EnableIPv6'];
+            if (is_bool($data['EnableIPv6'])) {
+                $value_6 = $data['EnableIPv6'];
+            } elseif (null === $data['EnableIPv6']) {
+                $value_6 = $data['EnableIPv6'];
+            }
+            $object->setEnableIPv6($value_6);
+        } elseif (array_key_exists('EnableIPv6', $data) && null === $data['EnableIPv6']) {
+            $object->setEnableIPv6(null);
         }
         if (array_key_exists('IPAM', $data)) {
             $object->setIPAM($this->denormalizer->denormalize($data['IPAM'], \WebProject\DockerApi\Library\Generated\Model\IPAM::class, 'json', $context));
-            unset($data['IPAM']);
         }
         if (array_key_exists('Internal', $data)) {
             $object->setInternal($data['Internal']);
-            unset($data['Internal']);
         }
         if (array_key_exists('Attachable', $data)) {
             $object->setAttachable($data['Attachable']);
-            unset($data['Attachable']);
         }
         if (array_key_exists('Ingress', $data)) {
             $object->setIngress($data['Ingress']);
-            unset($data['Ingress']);
         }
         if (array_key_exists('ConfigFrom', $data)) {
             $object->setConfigFrom($this->denormalizer->denormalize($data['ConfigFrom'], \WebProject\DockerApi\Library\Generated\Model\ConfigReference::class, 'json', $context));
-            unset($data['ConfigFrom']);
         }
         if (array_key_exists('ConfigOnly', $data)) {
             $object->setConfigOnly($data['ConfigOnly']);
-            unset($data['ConfigOnly']);
         }
-        if (array_key_exists('Containers', $data)) {
-            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['Containers'] as $key => $value) {
-                $values[$key] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\NetworkContainer::class, 'json', $context);
+        if (array_key_exists('Options', $data) && null !== $data['Options']) {
+            $value_7 = $data['Options'];
+            if (is_array($data['Options']) && $this->isOnlyNumericKeys($data['Options'])) {
+                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                foreach ($data['Options'] as $key => $value_8) {
+                    $values[$key] = $value_8;
+                }
+                $value_7 = $values;
+            } elseif (null === $data['Options']) {
+                $value_7 = $data['Options'];
             }
-            $object->setContainers($values);
-            unset($data['Containers']);
+            $object->setOptions($value_7);
+        } elseif (array_key_exists('Options', $data) && null === $data['Options']) {
+            $object->setOptions(null);
         }
-        if (array_key_exists('Options', $data)) {
-            $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['Options'] as $key_1 => $value_1) {
-                $values_1[$key_1] = $value_1;
+        if (array_key_exists('Labels', $data) && null !== $data['Labels']) {
+            $value_9 = $data['Labels'];
+            if (is_array($data['Labels']) && $this->isOnlyNumericKeys($data['Labels'])) {
+                $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                foreach ($data['Labels'] as $key_1 => $value_10) {
+                    $values_1[$key_1] = $value_10;
+                }
+                $value_9 = $values_1;
+            } elseif (null === $data['Labels']) {
+                $value_9 = $data['Labels'];
             }
-            $object->setOptions($values_1);
-            unset($data['Options']);
-        }
-        if (array_key_exists('Labels', $data)) {
-            $values_2 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['Labels'] as $key_2 => $value_2) {
-                $values_2[$key_2] = $value_2;
-            }
-            $object->setLabels($values_2);
-            unset($data['Labels']);
+            $object->setLabels($value_9);
+        } elseif (array_key_exists('Labels', $data) && null === $data['Labels']) {
+            $object->setLabels(null);
         }
         if (array_key_exists('Peers', $data) && null !== $data['Peers']) {
-            $values_3 = [];
-            foreach ($data['Peers'] as $value_3) {
-                $values_3[] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\PeerInfo::class, 'json', $context);
+            $value_11 = $data['Peers'];
+            if (is_array($data['Peers']) && $this->isOnlyNumericKeys($data['Peers'])) {
+                $values_2 = [];
+                foreach ($data['Peers'] as $value_12) {
+                    $values_2[] = $this->denormalizer->denormalize($value_12, \WebProject\DockerApi\Library\Generated\Model\PeerInfo::class, 'json', $context);
+                }
+                $value_11 = $values_2;
+            } elseif (null === $data['Peers']) {
+                $value_11 = $data['Peers'];
             }
-            $object->setPeers($values_3);
-            unset($data['Peers']);
+            $object->setPeers($value_11);
         } elseif (array_key_exists('Peers', $data) && null === $data['Peers']) {
             $object->setPeers(null);
-        }
-        foreach ($data as $key_3 => $value_4) {
-            if (preg_match('/.*/', (string) $key_3)) {
-                $object[$key_3] = $value_4;
-            }
         }
 
         return $object;
@@ -164,26 +209,68 @@ class NetworkNormalizer implements DenormalizerInterface, NormalizerInterface, D
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name') && null !== $data->getName()) {
-            $dataArray['Name'] = $data->getName();
+        if ($data->isInitialized('name')) {
+            $value = $data->getName();
+            if (is_string($data->getName())) {
+                $value = $data->getName();
+            } elseif (null === $data->getName()) {
+                $value = $data->getName();
+            }
+            $dataArray['Name'] = $value;
         }
-        if ($data->isInitialized('id') && null !== $data->getId()) {
-            $dataArray['Id'] = $data->getId();
+        if ($data->isInitialized('id')) {
+            $value_1 = $data->getId();
+            if (is_string($data->getId())) {
+                $value_1 = $data->getId();
+            } elseif (null === $data->getId()) {
+                $value_1 = $data->getId();
+            }
+            $dataArray['Id'] = $value_1;
         }
-        if ($data->isInitialized('created') && null !== $data->getCreated()) {
-            $dataArray['Created'] = $data->getCreated();
+        if ($data->isInitialized('created')) {
+            $value_2 = $data->getCreated();
+            if (is_string($data->getCreated())) {
+                $value_2 = $data->getCreated();
+            } elseif (null === $data->getCreated()) {
+                $value_2 = $data->getCreated();
+            }
+            $dataArray['Created'] = $value_2;
         }
-        if ($data->isInitialized('scope') && null !== $data->getScope()) {
-            $dataArray['Scope'] = $data->getScope();
+        if ($data->isInitialized('scope')) {
+            $value_3 = $data->getScope();
+            if (is_string($data->getScope())) {
+                $value_3 = $data->getScope();
+            } elseif (null === $data->getScope()) {
+                $value_3 = $data->getScope();
+            }
+            $dataArray['Scope'] = $value_3;
         }
-        if ($data->isInitialized('driver') && null !== $data->getDriver()) {
-            $dataArray['Driver'] = $data->getDriver();
+        if ($data->isInitialized('driver')) {
+            $value_4 = $data->getDriver();
+            if (is_string($data->getDriver())) {
+                $value_4 = $data->getDriver();
+            } elseif (null === $data->getDriver()) {
+                $value_4 = $data->getDriver();
+            }
+            $dataArray['Driver'] = $value_4;
         }
-        if ($data->isInitialized('enableIPv4') && null !== $data->getEnableIPv4()) {
-            $dataArray['EnableIPv4'] = $data->getEnableIPv4();
+        if ($data->isInitialized('enableIPv4')) {
+            $value_5 = $data->getEnableIPv4();
+            if (is_bool($data->getEnableIPv4())) {
+                $value_5 = $data->getEnableIPv4();
+            } elseif (null === $data->getEnableIPv4()) {
+                $value_5 = $data->getEnableIPv4();
+            }
+            $dataArray['EnableIPv4'] = $value_5;
         }
-        if ($data->isInitialized('enableIPv6') && null !== $data->getEnableIPv6()) {
-            $dataArray['EnableIPv6'] = $data->getEnableIPv6();
+        if ($data->isInitialized('enableIPv6')) {
+            $value_6 = $data->getEnableIPv6();
+            if (is_bool($data->getEnableIPv6())) {
+                $value_6 = $data->getEnableIPv6();
+            } elseif (null === $data->getEnableIPv6()) {
+                $value_6 = $data->getEnableIPv6();
+            }
+            $dataArray['EnableIPv6'] = $value_6;
         }
         if ($data->isInitialized('iPAM') && null !== $data->getIPAM()) {
             $dataArray['IPAM'] = $this->normalizer->normalize($data->getIPAM(), 'json', $context);
@@ -203,38 +290,44 @@ class NetworkNormalizer implements DenormalizerInterface, NormalizerInterface, D
         if ($data->isInitialized('configOnly') && null !== $data->getConfigOnly()) {
             $dataArray['ConfigOnly'] = $data->getConfigOnly();
         }
-        if ($data->isInitialized('containers') && null !== $data->getContainers()) {
-            $values = [];
-            foreach ($data->getContainers() as $key => $value) {
-                $values[$key] = $this->normalizer->normalize($value, 'json', $context);
+        if ($data->isInitialized('options')) {
+            $value_7 = $data->getOptions();
+            if (is_object($data->getOptions())) {
+                $values = [];
+                foreach ($data->getOptions() as $key => $value_8) {
+                    $values[$key] = $value_8;
+                }
+                $value_7 = $values;
+            } elseif (null === $data->getOptions()) {
+                $value_7 = $data->getOptions();
             }
-            $dataArray['Containers'] = $values;
+            $dataArray['Options'] = $value_7;
         }
-        if ($data->isInitialized('options') && null !== $data->getOptions()) {
-            $values_1 = [];
-            foreach ($data->getOptions() as $key_1 => $value_1) {
-                $values_1[$key_1] = $value_1;
+        if ($data->isInitialized('labels')) {
+            $value_9 = $data->getLabels();
+            if (is_object($data->getLabels())) {
+                $values_1 = [];
+                foreach ($data->getLabels() as $key_1 => $value_10) {
+                    $values_1[$key_1] = $value_10;
+                }
+                $value_9 = $values_1;
+            } elseif (null === $data->getLabels()) {
+                $value_9 = $data->getLabels();
             }
-            $dataArray['Options'] = $values_1;
+            $dataArray['Labels'] = $value_9;
         }
-        if ($data->isInitialized('labels') && null !== $data->getLabels()) {
-            $values_2 = [];
-            foreach ($data->getLabels() as $key_2 => $value_2) {
-                $values_2[$key_2] = $value_2;
+        if ($data->isInitialized('peers')) {
+            $value_11 = $data->getPeers();
+            if (is_array($data->getPeers())) {
+                $values_2 = [];
+                foreach ($data->getPeers() as $value_12) {
+                    $values_2[] = $this->normalizer->normalize($value_12, 'json', $context);
+                }
+                $value_11 = $values_2;
+            } elseif (null === $data->getPeers()) {
+                $value_11 = $data->getPeers();
             }
-            $dataArray['Labels'] = $values_2;
-        }
-        if ($data->isInitialized('peers') && null !== $data->getPeers()) {
-            $values_3 = [];
-            foreach ($data->getPeers() as $value_3) {
-                $values_3[] = $this->normalizer->normalize($value_3, 'json', $context);
-            }
-            $dataArray['Peers'] = $values_3;
-        }
-        foreach ($data as $key_3 => $value_4) {
-            if (preg_match('/.*/', (string) $key_3)) {
-                $dataArray[$key_3] = $value_4;
-            }
+            $dataArray['Peers'] = $value_11;
         }
 
         return $dataArray;

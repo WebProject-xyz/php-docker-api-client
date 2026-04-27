@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecContainerSpecSecretsItem extends ArrayObject
+class TaskSpecContainerSpecSecretsItem
 {
     /**
      * @var array
@@ -20,14 +19,14 @@ class TaskSpecContainerSpecSecretsItem extends ArrayObject
     /**
      * File represents a specific target that is backed by a file.
      *
-     * @var TaskSpecContainerSpecSecretsItemFile
+     * @var TaskSpecContainerSpecSecretsItemFile|null
      */
     protected $file;
     /**
      * SecretID represents the ID of the specific secret that we're
      * referencing.
      *
-     * @var string
+     * @var string|null
      */
     protected $secretID;
     /**
@@ -35,16 +34,16 @@ class TaskSpecContainerSpecSecretsItem extends ArrayObject
      * but this is just provided for lookup/display purposes. The
      * secret in the reference will be identified by its ID.
      *
-     * @var string
+     * @var string|null
      */
     protected $secretName;
 
     /**
      * File represents a specific target that is backed by a file.
      *
-     * @return TaskSpecContainerSpecSecretsItemFile
+     * @return TaskSpecContainerSpecSecretsItemFile|null
      */
-    public function getFile(): TaskSpecContainerSpecSecretsItemFile
+    public function getFile(): ?TaskSpecContainerSpecSecretsItemFile
     {
         return $this->file;
     }
@@ -52,11 +51,11 @@ class TaskSpecContainerSpecSecretsItem extends ArrayObject
     /**
      * File represents a specific target that is backed by a file.
      *
-     * @param TaskSpecContainerSpecSecretsItemFile $file
+     * @param TaskSpecContainerSpecSecretsItemFile|null $file
      *
      * @return self
      */
-    public function setFile(TaskSpecContainerSpecSecretsItemFile $file): self
+    public function setFile(?TaskSpecContainerSpecSecretsItemFile $file): self
     {
         $this->initialized['file'] = true;
         $this->file                = $file;
@@ -68,9 +67,9 @@ class TaskSpecContainerSpecSecretsItem extends ArrayObject
      * SecretID represents the ID of the specific secret that we're
      * referencing.
      *
-     * @return string
+     * @return string|null
      */
-    public function getSecretID(): string
+    public function getSecretID(): ?string
     {
         return $this->secretID;
     }
@@ -79,11 +78,11 @@ class TaskSpecContainerSpecSecretsItem extends ArrayObject
      * SecretID represents the ID of the specific secret that we're
      * referencing.
      *
-     * @param string $secretID
+     * @param string|null $secretID
      *
      * @return self
      */
-    public function setSecretID(string $secretID): self
+    public function setSecretID(?string $secretID): self
     {
         $this->initialized['secretID'] = true;
         $this->secretID                = $secretID;
@@ -96,9 +95,9 @@ class TaskSpecContainerSpecSecretsItem extends ArrayObject
      * but this is just provided for lookup/display purposes. The
      * secret in the reference will be identified by its ID.
      *
-     * @return string
+     * @return string|null
      */
-    public function getSecretName(): string
+    public function getSecretName(): ?string
     {
         return $this->secretName;
     }
@@ -108,11 +107,11 @@ class TaskSpecContainerSpecSecretsItem extends ArrayObject
      * but this is just provided for lookup/display purposes. The
      * secret in the reference will be identified by its ID.
      *
-     * @param string $secretName
+     * @param string|null $secretName
      *
      * @return self
      */
-    public function setSecretName(string $secretName): self
+    public function setSecretName(?string $secretName): self
     {
         $this->initialized['secretName'] = true;
         $this->secretName                = $secretName;

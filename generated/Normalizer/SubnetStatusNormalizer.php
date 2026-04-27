@@ -1,0 +1,111 @@
+<?php
+declare(strict_types=1);
+
+namespace WebProject\DockerApi\Library\Generated\Normalizer;
+
+use ArrayObject;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\CheckArray;
+use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
+use function array_key_exists;
+use function get_class;
+use function is_array;
+use function is_int;
+use function is_object;
+
+class SubnetStatusNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
+{
+    use CheckArray;
+    use DenormalizerAwareTrait;
+    use NormalizerAwareTrait;
+    use ValidatorTrait;
+
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
+    {
+        return \WebProject\DockerApi\Library\Generated\Model\SubnetStatus::class === $type;
+    }
+
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
+    {
+        return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\SubnetStatus::class === get_class($data);
+    }
+
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
+    {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\SubnetStatus();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
+            return new Reference($data['$ref'], $context['document-origin']);
+        }
+        if (isset($data['$recursiveRef'])) {
+            return new Reference($data['$recursiveRef'], $context['document-origin']);
+        }
+        if (array_key_exists('IPsInUse', $data) && null !== $data['IPsInUse']) {
+            $value = $data['IPsInUse'];
+            if (is_int($data['IPsInUse'])) {
+                $value = $data['IPsInUse'];
+            } elseif (null === $data['IPsInUse']) {
+                $value = $data['IPsInUse'];
+            }
+            $object->setIPsInUse($value);
+        } elseif (array_key_exists('IPsInUse', $data) && null === $data['IPsInUse']) {
+            $object->setIPsInUse(null);
+        }
+        if (array_key_exists('DynamicIPsAvailable', $data) && null !== $data['DynamicIPsAvailable']) {
+            $value_1 = $data['DynamicIPsAvailable'];
+            if (is_int($data['DynamicIPsAvailable'])) {
+                $value_1 = $data['DynamicIPsAvailable'];
+            } elseif (null === $data['DynamicIPsAvailable']) {
+                $value_1 = $data['DynamicIPsAvailable'];
+            }
+            $object->setDynamicIPsAvailable($value_1);
+        } elseif (array_key_exists('DynamicIPsAvailable', $data) && null === $data['DynamicIPsAvailable']) {
+            $object->setDynamicIPsAvailable(null);
+        }
+
+        return $object;
+    }
+
+    public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
+    {
+        $dataArray = [];
+        if ($data->isInitialized('iPsInUse')) {
+            $value = $data->getIPsInUse();
+            if (is_int($data->getIPsInUse())) {
+                $value = $data->getIPsInUse();
+            } elseif (null === $data->getIPsInUse()) {
+                $value = $data->getIPsInUse();
+            }
+            $dataArray['IPsInUse'] = $value;
+        }
+        if ($data->isInitialized('dynamicIPsAvailable')) {
+            $value_1 = $data->getDynamicIPsAvailable();
+            if (is_int($data->getDynamicIPsAvailable())) {
+                $value_1 = $data->getDynamicIPsAvailable();
+            } elseif (null === $data->getDynamicIPsAvailable()) {
+                $value_1 = $data->getDynamicIPsAvailable();
+            }
+            $dataArray['DynamicIPsAvailable'] = $value_1;
+        }
+
+        return $dataArray;
+    }
+
+    public function getSupportedTypes(?string $format = null): array
+    {
+        return [\WebProject\DockerApi\Library\Generated\Model\SubnetStatus::class => true];
+    }
+
+    public function hasCacheableSupportsMethod(): bool
+    {
+        return true;
+    }
+}

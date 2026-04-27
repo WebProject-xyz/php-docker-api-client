@@ -16,6 +16,7 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
 
 class ProgressDetailNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
@@ -37,28 +38,37 @@ class ProgressDetailNormalizer implements DenormalizerInterface, NormalizerInter
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ProgressDetail();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ProgressDetail();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('current', $data)) {
-            $object->setCurrent($data['current']);
-            unset($data['current']);
-        }
-        if (array_key_exists('total', $data)) {
-            $object->setTotal($data['total']);
-            unset($data['total']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('current', $data) && null !== $data['current']) {
+            $value = $data['current'];
+            if (is_int($data['current'])) {
+                $value = $data['current'];
+            } elseif (null === $data['current']) {
+                $value = $data['current'];
             }
+            $object->setCurrent($value);
+        } elseif (array_key_exists('current', $data) && null === $data['current']) {
+            $object->setCurrent(null);
+        }
+        if (array_key_exists('total', $data) && null !== $data['total']) {
+            $value_1 = $data['total'];
+            if (is_int($data['total'])) {
+                $value_1 = $data['total'];
+            } elseif (null === $data['total']) {
+                $value_1 = $data['total'];
+            }
+            $object->setTotal($value_1);
+        } elseif (array_key_exists('total', $data) && null === $data['total']) {
+            $object->setTotal(null);
         }
 
         return $object;
@@ -67,16 +77,23 @@ class ProgressDetailNormalizer implements DenormalizerInterface, NormalizerInter
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('current') && null !== $data->getCurrent()) {
-            $dataArray['current'] = $data->getCurrent();
-        }
-        if ($data->isInitialized('total') && null !== $data->getTotal()) {
-            $dataArray['total'] = $data->getTotal();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('current')) {
+            $value = $data->getCurrent();
+            if (is_int($data->getCurrent())) {
+                $value = $data->getCurrent();
+            } elseif (null === $data->getCurrent()) {
+                $value = $data->getCurrent();
             }
+            $dataArray['current'] = $value;
+        }
+        if ($data->isInitialized('total')) {
+            $value_1 = $data->getTotal();
+            if (is_int($data->getTotal())) {
+                $value_1 = $data->getTotal();
+            } elseif (null === $data->getTotal()) {
+                $value_1 = $data->getTotal();
+            }
+            $dataArray['total'] = $value_1;
         }
 
         return $dataArray;

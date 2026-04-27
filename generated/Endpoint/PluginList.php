@@ -10,17 +10,15 @@ class PluginList extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
     /**
      * Returns information about installed plugins.
      *
-     * @param array $queryParameters {
-     *
-     * @var string $filters A JSON encoded value of the filters (a `map[string][]string`) to
-     *             process on the plugin list.
+     * @param array{
+     *    "filters"?: string, //A JSON encoded value of the filters (a `map[string][]string`) to
+     * process on the plugin list.
      *
      * Available filters:
      *
      * - `capability=<capability name>`
      * - `enable=<true>|<false>`
-     *
-     * }
+     * } $queryParameters
      */
     public function __construct(array $queryParameters = [])
     {
@@ -69,10 +67,10 @@ class PluginList extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\Plugin[]', 'json');
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\PluginListInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

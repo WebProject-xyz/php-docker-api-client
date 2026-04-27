@@ -16,7 +16,9 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
+use function is_string;
 
 class ResourcesBlkioWeightDeviceItemNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,28 +39,37 @@ class ResourcesBlkioWeightDeviceItemNormalizer implements DenormalizerInterface,
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ResourcesBlkioWeightDeviceItem();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ResourcesBlkioWeightDeviceItem();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Path', $data)) {
-            $object->setPath($data['Path']);
-            unset($data['Path']);
-        }
-        if (array_key_exists('Weight', $data)) {
-            $object->setWeight($data['Weight']);
-            unset($data['Weight']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Path', $data) && null !== $data['Path']) {
+            $value = $data['Path'];
+            if (is_string($data['Path'])) {
+                $value = $data['Path'];
+            } elseif (null === $data['Path']) {
+                $value = $data['Path'];
             }
+            $object->setPath($value);
+        } elseif (array_key_exists('Path', $data) && null === $data['Path']) {
+            $object->setPath(null);
+        }
+        if (array_key_exists('Weight', $data) && null !== $data['Weight']) {
+            $value_1 = $data['Weight'];
+            if (is_int($data['Weight'])) {
+                $value_1 = $data['Weight'];
+            } elseif (null === $data['Weight']) {
+                $value_1 = $data['Weight'];
+            }
+            $object->setWeight($value_1);
+        } elseif (array_key_exists('Weight', $data) && null === $data['Weight']) {
+            $object->setWeight(null);
         }
 
         return $object;
@@ -67,16 +78,23 @@ class ResourcesBlkioWeightDeviceItemNormalizer implements DenormalizerInterface,
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('path') && null !== $data->getPath()) {
-            $dataArray['Path'] = $data->getPath();
-        }
-        if ($data->isInitialized('weight') && null !== $data->getWeight()) {
-            $dataArray['Weight'] = $data->getWeight();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('path')) {
+            $value = $data->getPath();
+            if (is_string($data->getPath())) {
+                $value = $data->getPath();
+            } elseif (null === $data->getPath()) {
+                $value = $data->getPath();
             }
+            $dataArray['Path'] = $value;
+        }
+        if ($data->isInitialized('weight')) {
+            $value_1 = $data->getWeight();
+            if (is_int($data->getWeight())) {
+                $value_1 = $data->getWeight();
+            } elseif (null === $data->getWeight()) {
+                $value_1 = $data->getWeight();
+            }
+            $dataArray['Weight'] = $value_1;
         }
 
         return $dataArray;

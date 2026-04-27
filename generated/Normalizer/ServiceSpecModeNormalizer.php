@@ -37,44 +37,47 @@ class ServiceSpecModeNormalizer implements DenormalizerInterface, NormalizerInte
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ServiceSpecMode();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ServiceSpecMode();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Replicated', $data)) {
+        if (array_key_exists('Replicated', $data) && null !== $data['Replicated']) {
             $object->setReplicated($this->denormalizer->denormalize($data['Replicated'], \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeReplicated::class, 'json', $context));
-            unset($data['Replicated']);
+        } elseif (array_key_exists('Replicated', $data) && null === $data['Replicated']) {
+            $object->setReplicated(null);
         }
-        if (array_key_exists('Global', $data)) {
-            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['Global'] as $key => $value) {
-                $values[$key] = $value;
+        if (array_key_exists('Global', $data) && null !== $data['Global']) {
+            $value = $data['Global'];
+            if (null === $data['Global']) {
+                $value = $data['Global'];
+            } elseif (isset($data['Global'])) {
+                $value = $data['Global'];
             }
-            $object->setGlobal($values);
-            unset($data['Global']);
+            $object->setGlobal($value);
+        } elseif (array_key_exists('Global', $data) && null === $data['Global']) {
+            $object->setGlobal(null);
         }
-        if (array_key_exists('ReplicatedJob', $data)) {
+        if (array_key_exists('ReplicatedJob', $data) && null !== $data['ReplicatedJob']) {
             $object->setReplicatedJob($this->denormalizer->denormalize($data['ReplicatedJob'], \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeReplicatedJob::class, 'json', $context));
-            unset($data['ReplicatedJob']);
+        } elseif (array_key_exists('ReplicatedJob', $data) && null === $data['ReplicatedJob']) {
+            $object->setReplicatedJob(null);
         }
-        if (array_key_exists('GlobalJob', $data)) {
-            $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['GlobalJob'] as $key_1 => $value_1) {
-                $values_1[$key_1] = $value_1;
+        if (array_key_exists('GlobalJob', $data) && null !== $data['GlobalJob']) {
+            $value_1 = $data['GlobalJob'];
+            if (null === $data['GlobalJob']) {
+                $value_1 = $data['GlobalJob'];
+            } elseif (isset($data['GlobalJob'])) {
+                $value_1 = $data['GlobalJob'];
             }
-            $object->setGlobalJob($values_1);
-            unset($data['GlobalJob']);
-        }
-        foreach ($data as $key_2 => $value_2) {
-            if (preg_match('/.*/', (string) $key_2)) {
-                $object[$key_2] = $value_2;
-            }
+            $object->setGlobalJob($value_1);
+        } elseif (array_key_exists('GlobalJob', $data) && null === $data['GlobalJob']) {
+            $object->setGlobalJob(null);
         }
 
         return $object;
@@ -83,30 +86,29 @@ class ServiceSpecModeNormalizer implements DenormalizerInterface, NormalizerInte
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('replicated') && null !== $data->getReplicated()) {
+        if ($data->isInitialized('replicated')) {
             $dataArray['Replicated'] = $this->normalizer->normalize($data->getReplicated(), 'json', $context);
         }
-        if ($data->isInitialized('global') && null !== $data->getGlobal()) {
-            $values = [];
-            foreach ($data->getGlobal() as $key => $value) {
-                $values[$key] = $value;
+        if ($data->isInitialized('global')) {
+            $value = $data->getGlobal();
+            if (null === $data->getGlobal()) {
+                $value = $data->getGlobal();
+            } elseif (null !== $data->getGlobal()) {
+                $value = $data->getGlobal();
             }
-            $dataArray['Global'] = $values;
+            $dataArray['Global'] = $value;
         }
-        if ($data->isInitialized('replicatedJob') && null !== $data->getReplicatedJob()) {
+        if ($data->isInitialized('replicatedJob')) {
             $dataArray['ReplicatedJob'] = $this->normalizer->normalize($data->getReplicatedJob(), 'json', $context);
         }
-        if ($data->isInitialized('globalJob') && null !== $data->getGlobalJob()) {
-            $values_1 = [];
-            foreach ($data->getGlobalJob() as $key_1 => $value_1) {
-                $values_1[$key_1] = $value_1;
+        if ($data->isInitialized('globalJob')) {
+            $value_1 = $data->getGlobalJob();
+            if (null === $data->getGlobalJob()) {
+                $value_1 = $data->getGlobalJob();
+            } elseif (null !== $data->getGlobalJob()) {
+                $value_1 = $data->getGlobalJob();
             }
-            $dataArray['GlobalJob'] = $values_1;
-        }
-        foreach ($data as $key_2 => $value_2) {
-            if (preg_match('/.*/', (string) $key_2)) {
-                $dataArray[$key_2] = $value_2;
-            }
+            $dataArray['GlobalJob'] = $value_1;
         }
 
         return $dataArray;

@@ -16,7 +16,9 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
+use function is_string;
 
 class SystemInfoDefaultAddressPoolsItemNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,28 +39,37 @@ class SystemInfoDefaultAddressPoolsItemNormalizer implements DenormalizerInterfa
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\SystemInfoDefaultAddressPoolsItem();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\SystemInfoDefaultAddressPoolsItem();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Base', $data)) {
-            $object->setBase($data['Base']);
-            unset($data['Base']);
-        }
-        if (array_key_exists('Size', $data)) {
-            $object->setSize($data['Size']);
-            unset($data['Size']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Base', $data) && null !== $data['Base']) {
+            $value = $data['Base'];
+            if (is_string($data['Base'])) {
+                $value = $data['Base'];
+            } elseif (null === $data['Base']) {
+                $value = $data['Base'];
             }
+            $object->setBase($value);
+        } elseif (array_key_exists('Base', $data) && null === $data['Base']) {
+            $object->setBase(null);
+        }
+        if (array_key_exists('Size', $data) && null !== $data['Size']) {
+            $value_1 = $data['Size'];
+            if (is_int($data['Size'])) {
+                $value_1 = $data['Size'];
+            } elseif (null === $data['Size']) {
+                $value_1 = $data['Size'];
+            }
+            $object->setSize($value_1);
+        } elseif (array_key_exists('Size', $data) && null === $data['Size']) {
+            $object->setSize(null);
         }
 
         return $object;
@@ -67,16 +78,23 @@ class SystemInfoDefaultAddressPoolsItemNormalizer implements DenormalizerInterfa
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('base') && null !== $data->getBase()) {
-            $dataArray['Base'] = $data->getBase();
-        }
-        if ($data->isInitialized('size') && null !== $data->getSize()) {
-            $dataArray['Size'] = $data->getSize();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('base')) {
+            $value = $data->getBase();
+            if (is_string($data->getBase())) {
+                $value = $data->getBase();
+            } elseif (null === $data->getBase()) {
+                $value = $data->getBase();
             }
+            $dataArray['Base'] = $value;
+        }
+        if ($data->isInitialized('size')) {
+            $value_1 = $data->getSize();
+            if (is_int($data->getSize())) {
+                $value_1 = $data->getSize();
+            } elseif (null === $data->getSize()) {
+                $value_1 = $data->getSize();
+            }
+            $dataArray['Size'] = $value_1;
         }
 
         return $dataArray;

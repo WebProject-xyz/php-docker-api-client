@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ResourceObject extends ArrayObject
+class ResourceObject
 {
     /**
      * @var array
@@ -18,11 +17,11 @@ class ResourceObject extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var int
+     * @var int|null
      */
     protected $nanoCPUs;
     /**
-     * @var int
+     * @var int|null
      */
     protected $memoryBytes;
     /**
@@ -34,19 +33,19 @@ class ResourceObject extends ArrayObject
     protected $genericResources;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getNanoCPUs(): int
+    public function getNanoCPUs(): ?int
     {
         return $this->nanoCPUs;
     }
 
     /**
-     * @param int $nanoCPUs
+     * @param int|null $nanoCPUs
      *
      * @return self
      */
-    public function setNanoCPUs(int $nanoCPUs): self
+    public function setNanoCPUs(?int $nanoCPUs): self
     {
         $this->initialized['nanoCPUs'] = true;
         $this->nanoCPUs                = $nanoCPUs;
@@ -55,19 +54,19 @@ class ResourceObject extends ArrayObject
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMemoryBytes(): int
+    public function getMemoryBytes(): ?int
     {
         return $this->memoryBytes;
     }
 
     /**
-     * @param int $memoryBytes
+     * @param int|null $memoryBytes
      *
      * @return self
      */
-    public function setMemoryBytes(int $memoryBytes): self
+    public function setMemoryBytes(?int $memoryBytes): self
     {
         $this->initialized['memoryBytes'] = true;
         $this->memoryBytes                = $memoryBytes;

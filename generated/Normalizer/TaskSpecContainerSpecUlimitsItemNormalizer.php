@@ -16,7 +16,9 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
+use function is_string;
 
 class TaskSpecContainerSpecUlimitsItemNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,32 +39,48 @@ class TaskSpecContainerSpecUlimitsItemNormalizer implements DenormalizerInterfac
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecUlimitsItem();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecUlimitsItem();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Name', $data)) {
-            $object->setName($data['Name']);
-            unset($data['Name']);
-        }
-        if (array_key_exists('Soft', $data)) {
-            $object->setSoft($data['Soft']);
-            unset($data['Soft']);
-        }
-        if (array_key_exists('Hard', $data)) {
-            $object->setHard($data['Hard']);
-            unset($data['Hard']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Name', $data) && null !== $data['Name']) {
+            $value = $data['Name'];
+            if (is_string($data['Name'])) {
+                $value = $data['Name'];
+            } elseif (null === $data['Name']) {
+                $value = $data['Name'];
             }
+            $object->setName($value);
+        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
+            $object->setName(null);
+        }
+        if (array_key_exists('Soft', $data) && null !== $data['Soft']) {
+            $value_1 = $data['Soft'];
+            if (is_int($data['Soft'])) {
+                $value_1 = $data['Soft'];
+            } elseif (null === $data['Soft']) {
+                $value_1 = $data['Soft'];
+            }
+            $object->setSoft($value_1);
+        } elseif (array_key_exists('Soft', $data) && null === $data['Soft']) {
+            $object->setSoft(null);
+        }
+        if (array_key_exists('Hard', $data) && null !== $data['Hard']) {
+            $value_2 = $data['Hard'];
+            if (is_int($data['Hard'])) {
+                $value_2 = $data['Hard'];
+            } elseif (null === $data['Hard']) {
+                $value_2 = $data['Hard'];
+            }
+            $object->setHard($value_2);
+        } elseif (array_key_exists('Hard', $data) && null === $data['Hard']) {
+            $object->setHard(null);
         }
 
         return $object;
@@ -71,19 +89,32 @@ class TaskSpecContainerSpecUlimitsItemNormalizer implements DenormalizerInterfac
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name') && null !== $data->getName()) {
-            $dataArray['Name'] = $data->getName();
-        }
-        if ($data->isInitialized('soft') && null !== $data->getSoft()) {
-            $dataArray['Soft'] = $data->getSoft();
-        }
-        if ($data->isInitialized('hard') && null !== $data->getHard()) {
-            $dataArray['Hard'] = $data->getHard();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('name')) {
+            $value = $data->getName();
+            if (is_string($data->getName())) {
+                $value = $data->getName();
+            } elseif (null === $data->getName()) {
+                $value = $data->getName();
             }
+            $dataArray['Name'] = $value;
+        }
+        if ($data->isInitialized('soft')) {
+            $value_1 = $data->getSoft();
+            if (is_int($data->getSoft())) {
+                $value_1 = $data->getSoft();
+            } elseif (null === $data->getSoft()) {
+                $value_1 = $data->getSoft();
+            }
+            $dataArray['Soft'] = $value_1;
+        }
+        if ($data->isInitialized('hard')) {
+            $value_2 = $data->getHard();
+            if (is_int($data->getHard())) {
+                $value_2 = $data->getHard();
+            } elseif (null === $data->getHard()) {
+                $value_2 = $data->getHard();
+            }
+            $dataArray['Hard'] = $value_2;
         }
 
         return $dataArray;

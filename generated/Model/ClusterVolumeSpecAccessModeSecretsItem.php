@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ClusterVolumeSpecAccessModeSecretsItem extends ArrayObject
+class ClusterVolumeSpecAccessModeSecretsItem
 {
     /**
      * @var array
@@ -21,7 +20,7 @@ class ClusterVolumeSpecAccessModeSecretsItem extends ArrayObject
      * Key is the name of the key of the key-value pair passed to
      * the plugin.
      *
-     * @var string
+     * @var string|null
      */
     protected $key;
     /**
@@ -30,7 +29,7 @@ class ClusterVolumeSpecAccessModeSecretsItem extends ArrayObject
      * retrieved by swarm and used as the value of the key-value
      * pair passed to the plugin.
      *
-     * @var string
+     * @var string|null
      */
     protected $secret;
 
@@ -38,9 +37,9 @@ class ClusterVolumeSpecAccessModeSecretsItem extends ArrayObject
      * Key is the name of the key of the key-value pair passed to
      * the plugin.
      *
-     * @return string
+     * @return string|null
      */
-    public function getKey(): string
+    public function getKey(): ?string
     {
         return $this->key;
     }
@@ -49,11 +48,11 @@ class ClusterVolumeSpecAccessModeSecretsItem extends ArrayObject
      * Key is the name of the key of the key-value pair passed to
      * the plugin.
      *
-     * @param string $key
+     * @param string|null $key
      *
      * @return self
      */
-    public function setKey(string $key): self
+    public function setKey(?string $key): self
     {
         $this->initialized['key'] = true;
         $this->key                = $key;
@@ -67,9 +66,9 @@ class ClusterVolumeSpecAccessModeSecretsItem extends ArrayObject
      * retrieved by swarm and used as the value of the key-value
      * pair passed to the plugin.
      *
-     * @return string
+     * @return string|null
      */
-    public function getSecret(): string
+    public function getSecret(): ?string
     {
         return $this->secret;
     }
@@ -80,11 +79,11 @@ class ClusterVolumeSpecAccessModeSecretsItem extends ArrayObject
      * retrieved by swarm and used as the value of the key-value
      * pair passed to the plugin.
      *
-     * @param string $secret
+     * @param string|null $secret
      *
      * @return self
      */
-    public function setSecret(string $secret): self
+    public function setSecret(?string $secret): self
     {
         $this->initialized['secret'] = true;
         $this->secret                = $secret;

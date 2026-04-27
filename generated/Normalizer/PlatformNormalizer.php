@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class PlatformNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,28 +38,37 @@ class PlatformNormalizer implements DenormalizerInterface, NormalizerInterface, 
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\Platform();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\Platform();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Architecture', $data)) {
-            $object->setArchitecture($data['Architecture']);
-            unset($data['Architecture']);
-        }
-        if (array_key_exists('OS', $data)) {
-            $object->setOS($data['OS']);
-            unset($data['OS']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Architecture', $data) && null !== $data['Architecture']) {
+            $value = $data['Architecture'];
+            if (is_string($data['Architecture'])) {
+                $value = $data['Architecture'];
+            } elseif (null === $data['Architecture']) {
+                $value = $data['Architecture'];
             }
+            $object->setArchitecture($value);
+        } elseif (array_key_exists('Architecture', $data) && null === $data['Architecture']) {
+            $object->setArchitecture(null);
+        }
+        if (array_key_exists('OS', $data) && null !== $data['OS']) {
+            $value_1 = $data['OS'];
+            if (is_string($data['OS'])) {
+                $value_1 = $data['OS'];
+            } elseif (null === $data['OS']) {
+                $value_1 = $data['OS'];
+            }
+            $object->setOS($value_1);
+        } elseif (array_key_exists('OS', $data) && null === $data['OS']) {
+            $object->setOS(null);
         }
 
         return $object;
@@ -67,16 +77,23 @@ class PlatformNormalizer implements DenormalizerInterface, NormalizerInterface, 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('architecture') && null !== $data->getArchitecture()) {
-            $dataArray['Architecture'] = $data->getArchitecture();
-        }
-        if ($data->isInitialized('oS') && null !== $data->getOS()) {
-            $dataArray['OS'] = $data->getOS();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('architecture')) {
+            $value = $data->getArchitecture();
+            if (is_string($data->getArchitecture())) {
+                $value = $data->getArchitecture();
+            } elseif (null === $data->getArchitecture()) {
+                $value = $data->getArchitecture();
             }
+            $dataArray['Architecture'] = $value;
+        }
+        if ($data->isInitialized('oS')) {
+            $value_1 = $data->getOS();
+            if (is_string($data->getOS())) {
+                $value_1 = $data->getOS();
+            } elseif (null === $data->getOS()) {
+                $value_1 = $data->getOS();
+            }
+            $dataArray['OS'] = $value_1;
         }
 
         return $dataArray;

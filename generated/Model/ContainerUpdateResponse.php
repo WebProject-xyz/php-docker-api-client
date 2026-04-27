@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ContainerUpdateResponse extends ArrayObject
+class ContainerUpdateResponse
 {
     /**
      * @var array
@@ -20,16 +19,16 @@ class ContainerUpdateResponse extends ArrayObject
     /**
      * Warnings encountered when updating the container.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $warnings;
 
     /**
      * Warnings encountered when updating the container.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getWarnings(): array
+    public function getWarnings(): ?array
     {
         return $this->warnings;
     }
@@ -37,11 +36,11 @@ class ContainerUpdateResponse extends ArrayObject
     /**
      * Warnings encountered when updating the container.
      *
-     * @param list<string> $warnings
+     * @param list<string>|null $warnings
      *
      * @return self
      */
-    public function setWarnings(array $warnings): self
+    public function setWarnings(?array $warnings): self
     {
         $this->initialized['warnings'] = true;
         $this->warnings                = $warnings;

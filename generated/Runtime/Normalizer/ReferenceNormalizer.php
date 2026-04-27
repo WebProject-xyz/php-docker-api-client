@@ -9,9 +9,6 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class ReferenceNormalizer implements NormalizerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $ref         = [];
@@ -20,9 +17,6 @@ class ReferenceNormalizer implements NormalizerInterface
         return $ref;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         return $data instanceof Reference;

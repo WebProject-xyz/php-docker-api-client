@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class PluginsInfo extends ArrayObject
+class PluginsInfo
 {
     /**
      * @var array
@@ -20,34 +19,34 @@ class PluginsInfo extends ArrayObject
     /**
      * Names of available volume-drivers, and network-driver plugins.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $volume;
     /**
      * Names of available network-drivers, and network-driver plugins.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $network;
     /**
      * Names of available authorization plugins.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $authorization;
     /**
      * Names of available logging-drivers, and logging-driver plugins.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $log;
 
     /**
      * Names of available volume-drivers, and network-driver plugins.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getVolume(): array
+    public function getVolume(): ?array
     {
         return $this->volume;
     }
@@ -55,11 +54,11 @@ class PluginsInfo extends ArrayObject
     /**
      * Names of available volume-drivers, and network-driver plugins.
      *
-     * @param list<string> $volume
+     * @param list<string>|null $volume
      *
      * @return self
      */
-    public function setVolume(array $volume): self
+    public function setVolume(?array $volume): self
     {
         $this->initialized['volume'] = true;
         $this->volume                = $volume;
@@ -70,9 +69,9 @@ class PluginsInfo extends ArrayObject
     /**
      * Names of available network-drivers, and network-driver plugins.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getNetwork(): array
+    public function getNetwork(): ?array
     {
         return $this->network;
     }
@@ -80,11 +79,11 @@ class PluginsInfo extends ArrayObject
     /**
      * Names of available network-drivers, and network-driver plugins.
      *
-     * @param list<string> $network
+     * @param list<string>|null $network
      *
      * @return self
      */
-    public function setNetwork(array $network): self
+    public function setNetwork(?array $network): self
     {
         $this->initialized['network'] = true;
         $this->network                = $network;
@@ -95,9 +94,9 @@ class PluginsInfo extends ArrayObject
     /**
      * Names of available authorization plugins.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getAuthorization(): array
+    public function getAuthorization(): ?array
     {
         return $this->authorization;
     }
@@ -105,11 +104,11 @@ class PluginsInfo extends ArrayObject
     /**
      * Names of available authorization plugins.
      *
-     * @param list<string> $authorization
+     * @param list<string>|null $authorization
      *
      * @return self
      */
-    public function setAuthorization(array $authorization): self
+    public function setAuthorization(?array $authorization): self
     {
         $this->initialized['authorization'] = true;
         $this->authorization                = $authorization;
@@ -120,9 +119,9 @@ class PluginsInfo extends ArrayObject
     /**
      * Names of available logging-drivers, and logging-driver plugins.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getLog(): array
+    public function getLog(): ?array
     {
         return $this->log;
     }
@@ -130,11 +129,11 @@ class PluginsInfo extends ArrayObject
     /**
      * Names of available logging-drivers, and logging-driver plugins.
      *
-     * @param list<string> $log
+     * @param list<string>|null $log
      *
      * @return self
      */
-    public function setLog(array $log): self
+    public function setLog(?array $log): self
     {
         $this->initialized['log'] = true;
         $this->log                = $log;

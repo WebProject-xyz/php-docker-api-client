@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class EndpointIPAMConfig extends ArrayObject
+class EndpointIPAMConfig
 {
     /**
      * @var array
@@ -26,7 +25,7 @@ class EndpointIPAMConfig extends ArrayObject
      */
     protected $iPv6Address;
     /**
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $linkLocalIPs;
 
@@ -73,19 +72,19 @@ class EndpointIPAMConfig extends ArrayObject
     }
 
     /**
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getLinkLocalIPs(): array
+    public function getLinkLocalIPs(): ?array
     {
         return $this->linkLocalIPs;
     }
 
     /**
-     * @param list<string> $linkLocalIPs
+     * @param list<string>|null $linkLocalIPs
      *
      * @return self
      */
-    public function setLinkLocalIPs(array $linkLocalIPs): self
+    public function setLinkLocalIPs(?array $linkLocalIPs): self
     {
         $this->initialized['linkLocalIPs'] = true;
         $this->linkLocalIPs                = $linkLocalIPs;

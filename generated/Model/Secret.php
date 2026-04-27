@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class Secret extends ArrayObject
+class Secret
 {
     /**
      * @var array
@@ -18,7 +17,7 @@ class Secret extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $iD;
     /**
@@ -37,11 +36,11 @@ class Secret extends ArrayObject
      */
     protected $version;
     /**
-     * @var string
+     * @var string|null
      */
     protected $createdAt;
     /**
-     * @var string
+     * @var string|null
      */
     protected $updatedAt;
     /**
@@ -50,19 +49,19 @@ class Secret extends ArrayObject
     protected $spec;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getID(): string
+    public function getID(): ?string
     {
         return $this->iD;
     }
 
     /**
-     * @param string $iD
+     * @param string|null $iD
      *
      * @return self
      */
-    public function setID(string $iD): self
+    public function setID(?string $iD): self
     {
         $this->initialized['iD'] = true;
         $this->iD                = $iD;
@@ -114,19 +113,19 @@ class Secret extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?string
     {
         return $this->createdAt;
     }
 
     /**
-     * @param string $createdAt
+     * @param string|null $createdAt
      *
      * @return self
      */
-    public function setCreatedAt(string $createdAt): self
+    public function setCreatedAt(?string $createdAt): self
     {
         $this->initialized['createdAt'] = true;
         $this->createdAt                = $createdAt;
@@ -135,19 +134,19 @@ class Secret extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): ?string
     {
         return $this->updatedAt;
     }
 
     /**
-     * @param string $updatedAt
+     * @param string|null $updatedAt
      *
      * @return self
      */
-    public function setUpdatedAt(string $updatedAt): self
+    public function setUpdatedAt(?string $updatedAt): self
     {
         $this->initialized['updatedAt'] = true;
         $this->updatedAt                = $updatedAt;

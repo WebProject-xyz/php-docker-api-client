@@ -37,24 +37,20 @@ class TaskSpecPlacementPreferencesItemNormalizer implements DenormalizerInterfac
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpecPlacementPreferencesItem();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpecPlacementPreferencesItem();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Spread', $data)) {
+        if (array_key_exists('Spread', $data) && null !== $data['Spread']) {
             $object->setSpread($this->denormalizer->denormalize($data['Spread'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecPlacementPreferencesItemSpread::class, 'json', $context));
-            unset($data['Spread']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
-            }
+        } elseif (array_key_exists('Spread', $data) && null === $data['Spread']) {
+            $object->setSpread(null);
         }
 
         return $object;
@@ -63,13 +59,8 @@ class TaskSpecPlacementPreferencesItemNormalizer implements DenormalizerInterfac
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('spread') && null !== $data->getSpread()) {
+        if ($data->isInitialized('spread')) {
             $dataArray['Spread'] = $this->normalizer->normalize($data->getSpread(), 'json', $context);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
-            }
         }
 
         return $dataArray;

@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class Address extends ArrayObject
+class Address
 {
     /**
      * @var array
@@ -20,22 +19,22 @@ class Address extends ArrayObject
     /**
      * IP address.
      *
-     * @var string
+     * @var string|null
      */
     protected $addr;
     /**
      * Mask length of the IP address.
      *
-     * @var int
+     * @var int|null
      */
     protected $prefixLen;
 
     /**
      * IP address.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAddr(): string
+    public function getAddr(): ?string
     {
         return $this->addr;
     }
@@ -43,11 +42,11 @@ class Address extends ArrayObject
     /**
      * IP address.
      *
-     * @param string $addr
+     * @param string|null $addr
      *
      * @return self
      */
-    public function setAddr(string $addr): self
+    public function setAddr(?string $addr): self
     {
         $this->initialized['addr'] = true;
         $this->addr                = $addr;
@@ -58,9 +57,9 @@ class Address extends ArrayObject
     /**
      * Mask length of the IP address.
      *
-     * @return int
+     * @return int|null
      */
-    public function getPrefixLen(): int
+    public function getPrefixLen(): ?int
     {
         return $this->prefixLen;
     }
@@ -68,11 +67,11 @@ class Address extends ArrayObject
     /**
      * Mask length of the IP address.
      *
-     * @param int $prefixLen
+     * @param int|null $prefixLen
      *
      * @return self
      */
-    public function setPrefixLen(int $prefixLen): self
+    public function setPrefixLen(?int $prefixLen): self
     {
         $this->initialized['prefixLen'] = true;
         $this->prefixLen                = $prefixLen;

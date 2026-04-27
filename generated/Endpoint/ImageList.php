@@ -10,11 +10,10 @@ class ImageList extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
     /**
      * Returns a list of images on the server. Note that it uses a different, smaller representation of an image than inspecting a single image.
      *
-     * @param array $queryParameters {
-     *
-     * @var bool   $all Show all images. Only images from a final layer (no children) are shown by default.
-     * @var string $filters A JSON encoded value of the filters (a `map[string][]string`) to
-     *             process on the images list.
+     * @param array{
+     *    "all"?: bool, //Show all images. Only images from a final layer (no children) are shown by default.
+     *    "filters"?: string, //A JSON encoded value of the filters (a `map[string][]string`) to
+     * process on the images list.
      *
      * Available filters:
      *
@@ -24,10 +23,11 @@ class ImageList extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
      * - `reference`=(`<image-name>[:<tag>]`)
      * - `since`=(`<image-name>[:<tag>]`,  `<image id>` or `<image@digest>`)
      * - `until=<timestamp>`
-     * @var bool $shared-size Compute and show shared size as a `SharedSize` field on each image
-     * @var bool $digests show digest information as a `RepoDigests` field on each image
-     * @var bool $manifests Include `Manifests` in the image summary.
-     *           }
+     *    "shared-size"?: bool, //Compute and show shared size as a `SharedSize` field on each image.
+     *    "digests"?: bool, //Show digest information as a `RepoDigests` field on each image.
+     *    "manifests"?: bool, //Include `Manifests` in the image summary.
+     *    "identity"?: bool, //Include `Identity` in each manifest summary. Requires `manifests=1`.
+     * } $queryParameters
      */
     public function __construct(array $queryParameters = [])
     {
@@ -57,14 +57,15 @@ class ImageList extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
     protected function getQueryOptionsResolver(): \Symfony\Component\OptionsResolver\OptionsResolver
     {
         $optionsResolver = parent::getQueryOptionsResolver();
-        $optionsResolver->setDefined(['all', 'filters', 'shared-size', 'digests', 'manifests']);
+        $optionsResolver->setDefined(['all', 'filters', 'shared-size', 'digests', 'manifests', 'identity']);
         $optionsResolver->setRequired([]);
-        $optionsResolver->setDefaults(['all' => false, 'shared-size' => false, 'digests' => false, 'manifests' => false]);
+        $optionsResolver->setDefaults(['all' => false, 'shared-size' => false, 'digests' => false, 'manifests' => false, 'identity' => false]);
         $optionsResolver->addAllowedTypes('all', ['bool']);
         $optionsResolver->addAllowedTypes('filters', ['string']);
         $optionsResolver->addAllowedTypes('shared-size', ['bool']);
         $optionsResolver->addAllowedTypes('digests', ['bool']);
         $optionsResolver->addAllowedTypes('manifests', ['bool']);
+        $optionsResolver->addAllowedTypes('identity', ['bool']);
 
         return $optionsResolver;
     }
@@ -80,10 +81,10 @@ class ImageList extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ImageSummary[]', 'json');
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageListInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

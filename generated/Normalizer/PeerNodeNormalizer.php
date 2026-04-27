@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class PeerNodeNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,28 +38,37 @@ class PeerNodeNormalizer implements DenormalizerInterface, NormalizerInterface, 
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\PeerNode();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\PeerNode();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('NodeID', $data)) {
-            $object->setNodeID($data['NodeID']);
-            unset($data['NodeID']);
-        }
-        if (array_key_exists('Addr', $data)) {
-            $object->setAddr($data['Addr']);
-            unset($data['Addr']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('NodeID', $data) && null !== $data['NodeID']) {
+            $value = $data['NodeID'];
+            if (is_string($data['NodeID'])) {
+                $value = $data['NodeID'];
+            } elseif (null === $data['NodeID']) {
+                $value = $data['NodeID'];
             }
+            $object->setNodeID($value);
+        } elseif (array_key_exists('NodeID', $data) && null === $data['NodeID']) {
+            $object->setNodeID(null);
+        }
+        if (array_key_exists('Addr', $data) && null !== $data['Addr']) {
+            $value_1 = $data['Addr'];
+            if (is_string($data['Addr'])) {
+                $value_1 = $data['Addr'];
+            } elseif (null === $data['Addr']) {
+                $value_1 = $data['Addr'];
+            }
+            $object->setAddr($value_1);
+        } elseif (array_key_exists('Addr', $data) && null === $data['Addr']) {
+            $object->setAddr(null);
         }
 
         return $object;
@@ -67,16 +77,23 @@ class PeerNodeNormalizer implements DenormalizerInterface, NormalizerInterface, 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('nodeID') && null !== $data->getNodeID()) {
-            $dataArray['NodeID'] = $data->getNodeID();
-        }
-        if ($data->isInitialized('addr') && null !== $data->getAddr()) {
-            $dataArray['Addr'] = $data->getAddr();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('nodeID')) {
+            $value = $data->getNodeID();
+            if (is_string($data->getNodeID())) {
+                $value = $data->getNodeID();
+            } elseif (null === $data->getNodeID()) {
+                $value = $data->getNodeID();
             }
+            $dataArray['NodeID'] = $value;
+        }
+        if ($data->isInitialized('addr')) {
+            $value_1 = $data->getAddr();
+            if (is_string($data->getAddr())) {
+                $value_1 = $data->getAddr();
+            } elseif (null === $data->getAddr()) {
+                $value_1 = $data->getAddr();
+            }
+            $dataArray['Addr'] = $value_1;
         }
 
         return $dataArray;

@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class PluginConfigUser extends ArrayObject
+class PluginConfigUser
 {
     /**
      * @var array
@@ -18,28 +17,28 @@ class PluginConfigUser extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var int
+     * @var int|null
      */
     protected $uID;
     /**
-     * @var int
+     * @var int|null
      */
     protected $gID;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getUID(): int
+    public function getUID(): ?int
     {
         return $this->uID;
     }
 
     /**
-     * @param int $uID
+     * @param int|null $uID
      *
      * @return self
      */
-    public function setUID(int $uID): self
+    public function setUID(?int $uID): self
     {
         $this->initialized['uID'] = true;
         $this->uID                = $uID;
@@ -48,19 +47,19 @@ class PluginConfigUser extends ArrayObject
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getGID(): int
+    public function getGID(): ?int
     {
         return $this->gID;
     }
 
     /**
-     * @param int $gID
+     * @param int|null $gID
      *
      * @return self
      */
-    public function setGID(int $gID): self
+    public function setGID(?int $gID): self
     {
         $this->initialized['gID'] = true;
         $this->gID                = $gID;

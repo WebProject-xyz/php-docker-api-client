@@ -16,7 +16,7 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
-use function is_int;
+use function is_bool;
 use function is_object;
 
 class SwarmSpecEncryptionConfigNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
@@ -38,27 +38,26 @@ class SwarmSpecEncryptionConfigNormalizer implements DenormalizerInterface, Norm
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\SwarmSpecEncryptionConfig();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\SwarmSpecEncryptionConfig();
-        if (array_key_exists('AutoLockManagers', $data) && is_int($data['AutoLockManagers'])) {
-            $data['AutoLockManagers'] = (bool) $data['AutoLockManagers'];
-        }
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('AutoLockManagers', $data)) {
-            $object->setAutoLockManagers($data['AutoLockManagers']);
-            unset($data['AutoLockManagers']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('AutoLockManagers', $data) && null !== $data['AutoLockManagers']) {
+            $value = $data['AutoLockManagers'];
+            if (is_bool($data['AutoLockManagers'])) {
+                $value = $data['AutoLockManagers'];
+            } elseif (null === $data['AutoLockManagers']) {
+                $value = $data['AutoLockManagers'];
             }
+            $object->setAutoLockManagers($value);
+        } elseif (array_key_exists('AutoLockManagers', $data) && null === $data['AutoLockManagers']) {
+            $object->setAutoLockManagers(null);
         }
 
         return $object;
@@ -67,13 +66,14 @@ class SwarmSpecEncryptionConfigNormalizer implements DenormalizerInterface, Norm
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('autoLockManagers') && null !== $data->getAutoLockManagers()) {
-            $dataArray['AutoLockManagers'] = $data->getAutoLockManagers();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('autoLockManagers')) {
+            $value = $data->getAutoLockManagers();
+            if (is_bool($data->getAutoLockManagers())) {
+                $value = $data->getAutoLockManagers();
+            } elseif (null === $data->getAutoLockManagers()) {
+                $value = $data->getAutoLockManagers();
             }
+            $dataArray['AutoLockManagers'] = $value;
         }
 
         return $dataArray;

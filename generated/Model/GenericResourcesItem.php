@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class GenericResourcesItem extends ArrayObject
+class GenericResourcesItem
 {
     /**
      * @var array
@@ -18,28 +17,28 @@ class GenericResourcesItem extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var GenericResourcesItemNamedResourceSpec
+     * @var GenericResourcesItemNamedResourceSpec|null
      */
     protected $namedResourceSpec;
     /**
-     * @var GenericResourcesItemDiscreteResourceSpec
+     * @var GenericResourcesItemDiscreteResourceSpec|null
      */
     protected $discreteResourceSpec;
 
     /**
-     * @return GenericResourcesItemNamedResourceSpec
+     * @return GenericResourcesItemNamedResourceSpec|null
      */
-    public function getNamedResourceSpec(): GenericResourcesItemNamedResourceSpec
+    public function getNamedResourceSpec(): ?GenericResourcesItemNamedResourceSpec
     {
         return $this->namedResourceSpec;
     }
 
     /**
-     * @param GenericResourcesItemNamedResourceSpec $namedResourceSpec
+     * @param GenericResourcesItemNamedResourceSpec|null $namedResourceSpec
      *
      * @return self
      */
-    public function setNamedResourceSpec(GenericResourcesItemNamedResourceSpec $namedResourceSpec): self
+    public function setNamedResourceSpec(?GenericResourcesItemNamedResourceSpec $namedResourceSpec): self
     {
         $this->initialized['namedResourceSpec'] = true;
         $this->namedResourceSpec                = $namedResourceSpec;
@@ -48,19 +47,19 @@ class GenericResourcesItem extends ArrayObject
     }
 
     /**
-     * @return GenericResourcesItemDiscreteResourceSpec
+     * @return GenericResourcesItemDiscreteResourceSpec|null
      */
-    public function getDiscreteResourceSpec(): GenericResourcesItemDiscreteResourceSpec
+    public function getDiscreteResourceSpec(): ?GenericResourcesItemDiscreteResourceSpec
     {
         return $this->discreteResourceSpec;
     }
 
     /**
-     * @param GenericResourcesItemDiscreteResourceSpec $discreteResourceSpec
+     * @param GenericResourcesItemDiscreteResourceSpec|null $discreteResourceSpec
      *
      * @return self
      */
-    public function setDiscreteResourceSpec(GenericResourcesItemDiscreteResourceSpec $discreteResourceSpec): self
+    public function setDiscreteResourceSpec(?GenericResourcesItemDiscreteResourceSpec $discreteResourceSpec): self
     {
         $this->initialized['discreteResourceSpec'] = true;
         $this->discreteResourceSpec                = $discreteResourceSpec;

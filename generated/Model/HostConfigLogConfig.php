@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class HostConfigLogConfig extends ArrayObject
+class HostConfigLogConfig
 {
     /**
      * @var array
@@ -21,13 +20,13 @@ class HostConfigLogConfig extends ArrayObject
      * Name of the logging driver used for the container or "none"
      * if logging is disabled.
      *
-     * @var string
+     * @var string|null
      */
     protected $type;
     /**
      * Driver-specific configuration options for the logging driver.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $config;
 
@@ -35,9 +34,9 @@ class HostConfigLogConfig extends ArrayObject
      * Name of the logging driver used for the container or "none"
      * if logging is disabled.
      *
-     * @return string
+     * @return string|null
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -46,11 +45,11 @@ class HostConfigLogConfig extends ArrayObject
      * Name of the logging driver used for the container or "none"
      * if logging is disabled.
      *
-     * @param string $type
+     * @param string|null $type
      *
      * @return self
      */
-    public function setType(string $type): self
+    public function setType(?string $type): self
     {
         $this->initialized['type'] = true;
         $this->type                = $type;
@@ -61,9 +60,9 @@ class HostConfigLogConfig extends ArrayObject
     /**
      * Driver-specific configuration options for the logging driver.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getConfig(): iterable
+    public function getConfig(): ?iterable
     {
         return $this->config;
     }
@@ -71,11 +70,11 @@ class HostConfigLogConfig extends ArrayObject
     /**
      * Driver-specific configuration options for the logging driver.
      *
-     * @param array<string, string> $config
+     * @param array<string, string>|null $config
      *
      * @return self
      */
-    public function setConfig(iterable $config): self
+    public function setConfig(?iterable $config): self
     {
         $this->initialized['config'] = true;
         $this->config                = $config;

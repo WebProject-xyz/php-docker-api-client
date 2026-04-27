@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class ContainerdInfoNamespacesNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,28 +38,37 @@ class ContainerdInfoNamespacesNormalizer implements DenormalizerInterface, Norma
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerdInfoNamespaces();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerdInfoNamespaces();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Containers', $data)) {
-            $object->setContainers($data['Containers']);
-            unset($data['Containers']);
-        }
-        if (array_key_exists('Plugins', $data)) {
-            $object->setPlugins($data['Plugins']);
-            unset($data['Plugins']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Containers', $data) && null !== $data['Containers']) {
+            $value = $data['Containers'];
+            if (is_string($data['Containers'])) {
+                $value = $data['Containers'];
+            } elseif (null === $data['Containers']) {
+                $value = $data['Containers'];
             }
+            $object->setContainers($value);
+        } elseif (array_key_exists('Containers', $data) && null === $data['Containers']) {
+            $object->setContainers(null);
+        }
+        if (array_key_exists('Plugins', $data) && null !== $data['Plugins']) {
+            $value_1 = $data['Plugins'];
+            if (is_string($data['Plugins'])) {
+                $value_1 = $data['Plugins'];
+            } elseif (null === $data['Plugins']) {
+                $value_1 = $data['Plugins'];
+            }
+            $object->setPlugins($value_1);
+        } elseif (array_key_exists('Plugins', $data) && null === $data['Plugins']) {
+            $object->setPlugins(null);
         }
 
         return $object;
@@ -67,16 +77,23 @@ class ContainerdInfoNamespacesNormalizer implements DenormalizerInterface, Norma
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('containers') && null !== $data->getContainers()) {
-            $dataArray['Containers'] = $data->getContainers();
-        }
-        if ($data->isInitialized('plugins') && null !== $data->getPlugins()) {
-            $dataArray['Plugins'] = $data->getPlugins();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('containers')) {
+            $value = $data->getContainers();
+            if (is_string($data->getContainers())) {
+                $value = $data->getContainers();
+            } elseif (null === $data->getContainers()) {
+                $value = $data->getContainers();
             }
+            $dataArray['Containers'] = $value;
+        }
+        if ($data->isInitialized('plugins')) {
+            $value_1 = $data->getPlugins();
+            if (is_string($data->getPlugins())) {
+                $value_1 = $data->getPlugins();
+            } elseif (null === $data->getPlugins()) {
+                $value_1 = $data->getPlugins();
+            }
+            $dataArray['Plugins'] = $value_1;
         }
 
         return $dataArray;

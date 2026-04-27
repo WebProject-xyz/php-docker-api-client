@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class SwarmSpecTaskDefaults extends ArrayObject
+class SwarmSpecTaskDefaults
 {
     /**
      * @var array
@@ -24,7 +23,7 @@ class SwarmSpecTaskDefaults extends ArrayObject
      * Updating this value only affects new tasks. Existing tasks continue
      * to use their previously configured log driver until recreated.
      *
-     * @var SwarmSpecTaskDefaultsLogDriver
+     * @var SwarmSpecTaskDefaultsLogDriver|null
      */
     protected $logDriver;
 
@@ -35,9 +34,9 @@ class SwarmSpecTaskDefaults extends ArrayObject
      * Updating this value only affects new tasks. Existing tasks continue
      * to use their previously configured log driver until recreated.
      *
-     * @return SwarmSpecTaskDefaultsLogDriver
+     * @return SwarmSpecTaskDefaultsLogDriver|null
      */
-    public function getLogDriver(): SwarmSpecTaskDefaultsLogDriver
+    public function getLogDriver(): ?SwarmSpecTaskDefaultsLogDriver
     {
         return $this->logDriver;
     }
@@ -49,11 +48,11 @@ class SwarmSpecTaskDefaults extends ArrayObject
      * Updating this value only affects new tasks. Existing tasks continue
      * to use their previously configured log driver until recreated.
      *
-     * @param SwarmSpecTaskDefaultsLogDriver $logDriver
+     * @param SwarmSpecTaskDefaultsLogDriver|null $logDriver
      *
      * @return self
      */
-    public function setLogDriver(SwarmSpecTaskDefaultsLogDriver $logDriver): self
+    public function setLogDriver(?SwarmSpecTaskDefaultsLogDriver $logDriver): self
     {
         $this->initialized['logDriver'] = true;
         $this->logDriver                = $logDriver;

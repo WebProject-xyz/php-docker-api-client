@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecContainerSpecPrivilegesAppArmor extends ArrayObject
+class TaskSpecContainerSpecPrivilegesAppArmor
 {
     /**
      * @var array
@@ -18,24 +17,24 @@ class TaskSpecContainerSpecPrivilegesAppArmor extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $mode;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMode(): string
+    public function getMode(): ?string
     {
         return $this->mode;
     }
 
     /**
-     * @param string $mode
+     * @param string|null $mode
      *
      * @return self
      */
-    public function setMode(string $mode): self
+    public function setMode(?string $mode): self
     {
         $this->initialized['mode'] = true;
         $this->mode                = $mode;

@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class EngineDescriptionNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,40 +38,56 @@ class EngineDescriptionNormalizer implements DenormalizerInterface, NormalizerIn
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\EngineDescription();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\EngineDescription();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('EngineVersion', $data)) {
-            $object->setEngineVersion($data['EngineVersion']);
-            unset($data['EngineVersion']);
-        }
-        if (array_key_exists('Labels', $data)) {
-            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['Labels'] as $key => $value) {
-                $values[$key] = $value;
+        if (array_key_exists('EngineVersion', $data) && null !== $data['EngineVersion']) {
+            $value = $data['EngineVersion'];
+            if (is_string($data['EngineVersion'])) {
+                $value = $data['EngineVersion'];
+            } elseif (null === $data['EngineVersion']) {
+                $value = $data['EngineVersion'];
             }
-            $object->setLabels($values);
-            unset($data['Labels']);
+            $object->setEngineVersion($value);
+        } elseif (array_key_exists('EngineVersion', $data) && null === $data['EngineVersion']) {
+            $object->setEngineVersion(null);
         }
-        if (array_key_exists('Plugins', $data)) {
-            $values_1 = [];
-            foreach ($data['Plugins'] as $value_1) {
-                $values_1[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\EngineDescriptionPluginsItem::class, 'json', $context);
+        if (array_key_exists('Labels', $data) && null !== $data['Labels']) {
+            $value_1 = $data['Labels'];
+            if (is_array($data['Labels']) && $this->isOnlyNumericKeys($data['Labels'])) {
+                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                foreach ($data['Labels'] as $key => $value_2) {
+                    $values[$key] = $value_2;
+                }
+                $value_1 = $values;
+            } elseif (null === $data['Labels']) {
+                $value_1 = $data['Labels'];
             }
-            $object->setPlugins($values_1);
-            unset($data['Plugins']);
+            $object->setLabels($value_1);
+        } elseif (array_key_exists('Labels', $data) && null === $data['Labels']) {
+            $object->setLabels(null);
         }
-        foreach ($data as $key_1 => $value_2) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $object[$key_1] = $value_2;
+        if (array_key_exists('Plugins', $data) && null !== $data['Plugins']) {
+            $value_3 = $data['Plugins'];
+            if (is_array($data['Plugins']) && $this->isOnlyNumericKeys($data['Plugins'])) {
+                $values_1 = [];
+                foreach ($data['Plugins'] as $value_4) {
+                    $values_1[] = $this->denormalizer->denormalize($value_4, \WebProject\DockerApi\Library\Generated\Model\EngineDescriptionPluginsItem::class, 'json', $context);
+                }
+                $value_3 = $values_1;
+            } elseif (null === $data['Plugins']) {
+                $value_3 = $data['Plugins'];
             }
+            $object->setPlugins($value_3);
+        } elseif (array_key_exists('Plugins', $data) && null === $data['Plugins']) {
+            $object->setPlugins(null);
         }
 
         return $object;
@@ -79,27 +96,40 @@ class EngineDescriptionNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('engineVersion') && null !== $data->getEngineVersion()) {
-            $dataArray['EngineVersion'] = $data->getEngineVersion();
-        }
-        if ($data->isInitialized('labels') && null !== $data->getLabels()) {
-            $values = [];
-            foreach ($data->getLabels() as $key => $value) {
-                $values[$key] = $value;
+        if ($data->isInitialized('engineVersion')) {
+            $value = $data->getEngineVersion();
+            if (is_string($data->getEngineVersion())) {
+                $value = $data->getEngineVersion();
+            } elseif (null === $data->getEngineVersion()) {
+                $value = $data->getEngineVersion();
             }
-            $dataArray['Labels'] = $values;
+            $dataArray['EngineVersion'] = $value;
         }
-        if ($data->isInitialized('plugins') && null !== $data->getPlugins()) {
-            $values_1 = [];
-            foreach ($data->getPlugins() as $value_1) {
-                $values_1[] = $this->normalizer->normalize($value_1, 'json', $context);
+        if ($data->isInitialized('labels')) {
+            $value_1 = $data->getLabels();
+            if (is_object($data->getLabels())) {
+                $values = [];
+                foreach ($data->getLabels() as $key => $value_2) {
+                    $values[$key] = $value_2;
+                }
+                $value_1 = $values;
+            } elseif (null === $data->getLabels()) {
+                $value_1 = $data->getLabels();
             }
-            $dataArray['Plugins'] = $values_1;
+            $dataArray['Labels'] = $value_1;
         }
-        foreach ($data as $key_1 => $value_2) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $dataArray[$key_1] = $value_2;
+        if ($data->isInitialized('plugins')) {
+            $value_3 = $data->getPlugins();
+            if (is_array($data->getPlugins())) {
+                $values_1 = [];
+                foreach ($data->getPlugins() as $value_4) {
+                    $values_1[] = $this->normalizer->normalize($value_4, 'json', $context);
+                }
+                $value_3 = $values_1;
+            } elseif (null === $data->getPlugins()) {
+                $value_3 = $data->getPlugins();
             }
+            $dataArray['Plugins'] = $value_3;
         }
 
         return $dataArray;

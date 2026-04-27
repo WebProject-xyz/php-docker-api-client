@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ContainerdInfo extends ArrayObject
+class ContainerdInfo
 {
     /**
      * @var array
@@ -20,7 +19,7 @@ class ContainerdInfo extends ArrayObject
     /**
      * The address of the containerd socket.
      *
-     * @var string
+     * @var string|null
      */
     protected $address;
     /**
@@ -35,16 +34,16 @@ class ContainerdInfo extends ArrayObject
      * or to change them to a value that is used by other systems,
      * such as cri-containerd.
      *
-     * @var ContainerdInfoNamespaces
+     * @var ContainerdInfoNamespaces|null
      */
     protected $namespaces;
 
     /**
      * The address of the containerd socket.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAddress(): string
+    public function getAddress(): ?string
     {
         return $this->address;
     }
@@ -52,11 +51,11 @@ class ContainerdInfo extends ArrayObject
     /**
      * The address of the containerd socket.
      *
-     * @param string $address
+     * @param string|null $address
      *
      * @return self
      */
-    public function setAddress(string $address): self
+    public function setAddress(?string $address): self
     {
         $this->initialized['address'] = true;
         $this->address                = $address;
@@ -76,9 +75,9 @@ class ContainerdInfo extends ArrayObject
      * or to change them to a value that is used by other systems,
      * such as cri-containerd.
      *
-     * @return ContainerdInfoNamespaces
+     * @return ContainerdInfoNamespaces|null
      */
-    public function getNamespaces(): ContainerdInfoNamespaces
+    public function getNamespaces(): ?ContainerdInfoNamespaces
     {
         return $this->namespaces;
     }
@@ -95,11 +94,11 @@ class ContainerdInfo extends ArrayObject
      * or to change them to a value that is used by other systems,
      * such as cri-containerd.
      *
-     * @param ContainerdInfoNamespaces $namespaces
+     * @param ContainerdInfoNamespaces|null $namespaces
      *
      * @return self
      */
-    public function setNamespaces(ContainerdInfoNamespaces $namespaces): self
+    public function setNamespaces(?ContainerdInfoNamespaces $namespaces): self
     {
         $this->initialized['namespaces'] = true;
         $this->namespaces                = $namespaces;

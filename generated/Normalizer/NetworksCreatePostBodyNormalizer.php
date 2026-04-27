@@ -38,13 +38,16 @@ class NetworksCreatePostBodyNormalizer implements DenormalizerInterface, Normali
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\NetworksCreatePostBody();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\NetworksCreatePostBody();
         if (array_key_exists('Internal', $data) && is_int($data['Internal'])) {
             $data['Internal'] = (bool) $data['Internal'];
         }
@@ -63,52 +66,38 @@ class NetworksCreatePostBodyNormalizer implements DenormalizerInterface, Normali
         if (array_key_exists('EnableIPv6', $data) && is_int($data['EnableIPv6'])) {
             $data['EnableIPv6'] = (bool) $data['EnableIPv6'];
         }
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('Name', $data)) {
             $object->setName($data['Name']);
-            unset($data['Name']);
         }
         if (array_key_exists('Driver', $data)) {
             $object->setDriver($data['Driver']);
-            unset($data['Driver']);
         }
         if (array_key_exists('Scope', $data)) {
             $object->setScope($data['Scope']);
-            unset($data['Scope']);
         }
         if (array_key_exists('Internal', $data)) {
             $object->setInternal($data['Internal']);
-            unset($data['Internal']);
         }
         if (array_key_exists('Attachable', $data)) {
             $object->setAttachable($data['Attachable']);
-            unset($data['Attachable']);
         }
         if (array_key_exists('Ingress', $data)) {
             $object->setIngress($data['Ingress']);
-            unset($data['Ingress']);
         }
         if (array_key_exists('ConfigOnly', $data)) {
             $object->setConfigOnly($data['ConfigOnly']);
-            unset($data['ConfigOnly']);
         }
         if (array_key_exists('ConfigFrom', $data)) {
             $object->setConfigFrom($this->denormalizer->denormalize($data['ConfigFrom'], \WebProject\DockerApi\Library\Generated\Model\ConfigReference::class, 'json', $context));
-            unset($data['ConfigFrom']);
         }
         if (array_key_exists('IPAM', $data)) {
             $object->setIPAM($this->denormalizer->denormalize($data['IPAM'], \WebProject\DockerApi\Library\Generated\Model\IPAM::class, 'json', $context));
-            unset($data['IPAM']);
         }
         if (array_key_exists('EnableIPv4', $data)) {
             $object->setEnableIPv4($data['EnableIPv4']);
-            unset($data['EnableIPv4']);
         }
         if (array_key_exists('EnableIPv6', $data)) {
             $object->setEnableIPv6($data['EnableIPv6']);
-            unset($data['EnableIPv6']);
         }
         if (array_key_exists('Options', $data)) {
             $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
@@ -116,7 +105,6 @@ class NetworksCreatePostBodyNormalizer implements DenormalizerInterface, Normali
                 $values[$key] = $value;
             }
             $object->setOptions($values);
-            unset($data['Options']);
         }
         if (array_key_exists('Labels', $data)) {
             $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
@@ -124,12 +112,6 @@ class NetworksCreatePostBodyNormalizer implements DenormalizerInterface, Normali
                 $values_1[$key_1] = $value_1;
             }
             $object->setLabels($values_1);
-            unset($data['Labels']);
-        }
-        foreach ($data as $key_2 => $value_2) {
-            if (preg_match('/.*/', (string) $key_2)) {
-                $object[$key_2] = $value_2;
-            }
         }
 
         return $object;
@@ -182,11 +164,6 @@ class NetworksCreatePostBodyNormalizer implements DenormalizerInterface, Normali
                 $values_1[$key_1] = $value_1;
             }
             $dataArray['Labels'] = $values_1;
-        }
-        foreach ($data as $key_2 => $value_2) {
-            if (preg_match('/.*/', (string) $key_2)) {
-                $dataArray[$key_2] = $value_2;
-            }
         }
 
         return $dataArray;

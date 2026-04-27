@@ -16,8 +16,9 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
-use function is_int;
+use function is_bool;
 use function is_object;
+use function is_string;
 
 class ManagerStatusNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -38,35 +39,40 @@ class ManagerStatusNormalizer implements DenormalizerInterface, NormalizerInterf
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ManagerStatus();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ManagerStatus();
-        if (array_key_exists('Leader', $data) && is_int($data['Leader'])) {
-            $data['Leader'] = (bool) $data['Leader'];
-        }
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Leader', $data)) {
-            $object->setLeader($data['Leader']);
-            unset($data['Leader']);
+        if (array_key_exists('Leader', $data) && null !== $data['Leader']) {
+            $value = $data['Leader'];
+            if (is_bool($data['Leader'])) {
+                $value = $data['Leader'];
+            } elseif (null === $data['Leader']) {
+                $value = $data['Leader'];
+            }
+            $object->setLeader($value);
+        } elseif (array_key_exists('Leader', $data) && null === $data['Leader']) {
+            $object->setLeader(null);
         }
         if (array_key_exists('Reachability', $data)) {
             $object->setReachability($data['Reachability']);
-            unset($data['Reachability']);
         }
-        if (array_key_exists('Addr', $data)) {
-            $object->setAddr($data['Addr']);
-            unset($data['Addr']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Addr', $data) && null !== $data['Addr']) {
+            $value_1 = $data['Addr'];
+            if (is_string($data['Addr'])) {
+                $value_1 = $data['Addr'];
+            } elseif (null === $data['Addr']) {
+                $value_1 = $data['Addr'];
             }
+            $object->setAddr($value_1);
+        } elseif (array_key_exists('Addr', $data) && null === $data['Addr']) {
+            $object->setAddr(null);
         }
 
         return $object;
@@ -75,19 +81,26 @@ class ManagerStatusNormalizer implements DenormalizerInterface, NormalizerInterf
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('leader') && null !== $data->getLeader()) {
-            $dataArray['Leader'] = $data->getLeader();
+        if ($data->isInitialized('leader')) {
+            $value = $data->getLeader();
+            if (is_bool($data->getLeader())) {
+                $value = $data->getLeader();
+            } elseif (null === $data->getLeader()) {
+                $value = $data->getLeader();
+            }
+            $dataArray['Leader'] = $value;
         }
         if ($data->isInitialized('reachability') && null !== $data->getReachability()) {
             $dataArray['Reachability'] = $data->getReachability();
         }
-        if ($data->isInitialized('addr') && null !== $data->getAddr()) {
-            $dataArray['Addr'] = $data->getAddr();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('addr')) {
+            $value_1 = $data->getAddr();
+            if (is_string($data->getAddr())) {
+                $value_1 = $data->getAddr();
+            } elseif (null === $data->getAddr()) {
+                $value_1 = $data->getAddr();
             }
+            $dataArray['Addr'] = $value_1;
         }
 
         return $dataArray;

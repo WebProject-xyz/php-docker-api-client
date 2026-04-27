@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class IndexInfo extends ArrayObject
+class IndexInfo
 {
     /**
      * @var array
@@ -20,13 +19,13 @@ class IndexInfo extends ArrayObject
     /**
      * Name of the registry, such as "docker.io".
      *
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
      * List of mirrors, expressed as URIs.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $mirrors;
     /**
@@ -43,22 +42,22 @@ class IndexInfo extends ArrayObject
      * > security, users should add their CA to their system's list of
      * > trusted CAs instead of enabling this option.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $secure;
     /**
      * Indicates whether this is an official registry (i.e., Docker Hub / docker.io).
      *
-     * @var bool
+     * @var bool|null
      */
     protected $official;
 
     /**
      * Name of the registry, such as "docker.io".
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -66,11 +65,11 @@ class IndexInfo extends ArrayObject
     /**
      * Name of the registry, such as "docker.io".
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -81,9 +80,9 @@ class IndexInfo extends ArrayObject
     /**
      * List of mirrors, expressed as URIs.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getMirrors(): array
+    public function getMirrors(): ?array
     {
         return $this->mirrors;
     }
@@ -91,11 +90,11 @@ class IndexInfo extends ArrayObject
     /**
      * List of mirrors, expressed as URIs.
      *
-     * @param list<string> $mirrors
+     * @param list<string>|null $mirrors
      *
      * @return self
      */
-    public function setMirrors(array $mirrors): self
+    public function setMirrors(?array $mirrors): self
     {
         $this->initialized['mirrors'] = true;
         $this->mirrors                = $mirrors;
@@ -117,9 +116,9 @@ class IndexInfo extends ArrayObject
      * > security, users should add their CA to their system's list of
      * > trusted CAs instead of enabling this option.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getSecure(): bool
+    public function getSecure(): ?bool
     {
         return $this->secure;
     }
@@ -138,11 +137,11 @@ class IndexInfo extends ArrayObject
      * > security, users should add their CA to their system's list of
      * > trusted CAs instead of enabling this option.
      *
-     * @param bool $secure
+     * @param bool|null $secure
      *
      * @return self
      */
-    public function setSecure(bool $secure): self
+    public function setSecure(?bool $secure): self
     {
         $this->initialized['secure'] = true;
         $this->secure                = $secure;
@@ -153,9 +152,9 @@ class IndexInfo extends ArrayObject
     /**
      * Indicates whether this is an official registry (i.e., Docker Hub / docker.io).
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getOfficial(): bool
+    public function getOfficial(): ?bool
     {
         return $this->official;
     }
@@ -163,11 +162,11 @@ class IndexInfo extends ArrayObject
     /**
      * Indicates whether this is an official registry (i.e., Docker Hub / docker.io).
      *
-     * @param bool $official
+     * @param bool|null $official
      *
      * @return self
      */
-    public function setOfficial(bool $official): self
+    public function setOfficial(?bool $official): self
     {
         $this->initialized['official'] = true;
         $this->official                = $official;

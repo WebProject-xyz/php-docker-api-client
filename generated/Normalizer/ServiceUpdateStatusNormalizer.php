@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class ServiceUpdateStatusNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,36 +38,59 @@ class ServiceUpdateStatusNormalizer implements DenormalizerInterface, Normalizer
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ServiceUpdateStatus();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ServiceUpdateStatus();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('State', $data)) {
-            $object->setState($data['State']);
-            unset($data['State']);
-        }
-        if (array_key_exists('StartedAt', $data)) {
-            $object->setStartedAt($data['StartedAt']);
-            unset($data['StartedAt']);
-        }
-        if (array_key_exists('CompletedAt', $data)) {
-            $object->setCompletedAt($data['CompletedAt']);
-            unset($data['CompletedAt']);
-        }
-        if (array_key_exists('Message', $data)) {
-            $object->setMessage($data['Message']);
-            unset($data['Message']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('State', $data) && null !== $data['State']) {
+            $value = $data['State'];
+            if (is_string($data['State'])) {
+                $value = $data['State'];
+            } elseif (null === $data['State']) {
+                $value = $data['State'];
             }
+            $object->setState($value);
+        } elseif (array_key_exists('State', $data) && null === $data['State']) {
+            $object->setState(null);
+        }
+        if (array_key_exists('StartedAt', $data) && null !== $data['StartedAt']) {
+            $value_1 = $data['StartedAt'];
+            if (is_string($data['StartedAt'])) {
+                $value_1 = $data['StartedAt'];
+            } elseif (null === $data['StartedAt']) {
+                $value_1 = $data['StartedAt'];
+            }
+            $object->setStartedAt($value_1);
+        } elseif (array_key_exists('StartedAt', $data) && null === $data['StartedAt']) {
+            $object->setStartedAt(null);
+        }
+        if (array_key_exists('CompletedAt', $data) && null !== $data['CompletedAt']) {
+            $value_2 = $data['CompletedAt'];
+            if (is_string($data['CompletedAt'])) {
+                $value_2 = $data['CompletedAt'];
+            } elseif (null === $data['CompletedAt']) {
+                $value_2 = $data['CompletedAt'];
+            }
+            $object->setCompletedAt($value_2);
+        } elseif (array_key_exists('CompletedAt', $data) && null === $data['CompletedAt']) {
+            $object->setCompletedAt(null);
+        }
+        if (array_key_exists('Message', $data) && null !== $data['Message']) {
+            $value_3 = $data['Message'];
+            if (is_string($data['Message'])) {
+                $value_3 = $data['Message'];
+            } elseif (null === $data['Message']) {
+                $value_3 = $data['Message'];
+            }
+            $object->setMessage($value_3);
+        } elseif (array_key_exists('Message', $data) && null === $data['Message']) {
+            $object->setMessage(null);
         }
 
         return $object;
@@ -75,22 +99,41 @@ class ServiceUpdateStatusNormalizer implements DenormalizerInterface, Normalizer
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('state') && null !== $data->getState()) {
-            $dataArray['State'] = $data->getState();
-        }
-        if ($data->isInitialized('startedAt') && null !== $data->getStartedAt()) {
-            $dataArray['StartedAt'] = $data->getStartedAt();
-        }
-        if ($data->isInitialized('completedAt') && null !== $data->getCompletedAt()) {
-            $dataArray['CompletedAt'] = $data->getCompletedAt();
-        }
-        if ($data->isInitialized('message') && null !== $data->getMessage()) {
-            $dataArray['Message'] = $data->getMessage();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('state')) {
+            $value = $data->getState();
+            if (is_string($data->getState())) {
+                $value = $data->getState();
+            } elseif (null === $data->getState()) {
+                $value = $data->getState();
             }
+            $dataArray['State'] = $value;
+        }
+        if ($data->isInitialized('startedAt')) {
+            $value_1 = $data->getStartedAt();
+            if (is_string($data->getStartedAt())) {
+                $value_1 = $data->getStartedAt();
+            } elseif (null === $data->getStartedAt()) {
+                $value_1 = $data->getStartedAt();
+            }
+            $dataArray['StartedAt'] = $value_1;
+        }
+        if ($data->isInitialized('completedAt')) {
+            $value_2 = $data->getCompletedAt();
+            if (is_string($data->getCompletedAt())) {
+                $value_2 = $data->getCompletedAt();
+            } elseif (null === $data->getCompletedAt()) {
+                $value_2 = $data->getCompletedAt();
+            }
+            $dataArray['CompletedAt'] = $value_2;
+        }
+        if ($data->isInitialized('message')) {
+            $value_3 = $data->getMessage();
+            if (is_string($data->getMessage())) {
+                $value_3 = $data->getMessage();
+            } elseif (null === $data->getMessage()) {
+                $value_3 = $data->getMessage();
+            }
+            $dataArray['Message'] = $value_3;
         }
 
         return $dataArray;

@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class PluginConfigRootfsNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,32 +38,41 @@ class PluginConfigRootfsNormalizer implements DenormalizerInterface, NormalizerI
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginConfigRootfs();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginConfigRootfs();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('type', $data)) {
-            $object->setType($data['type']);
-            unset($data['type']);
-        }
-        if (array_key_exists('diff_ids', $data)) {
-            $values = [];
-            foreach ($data['diff_ids'] as $value) {
-                $values[] = $value;
+        if (array_key_exists('type', $data) && null !== $data['type']) {
+            $value = $data['type'];
+            if (is_string($data['type'])) {
+                $value = $data['type'];
+            } elseif (null === $data['type']) {
+                $value = $data['type'];
             }
-            $object->setDiffIds($values);
-            unset($data['diff_ids']);
+            $object->setType($value);
+        } elseif (array_key_exists('type', $data) && null === $data['type']) {
+            $object->setType(null);
         }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
+        if (array_key_exists('diff_ids', $data) && null !== $data['diff_ids']) {
+            $value_1 = $data['diff_ids'];
+            if (is_array($data['diff_ids']) && $this->isOnlyNumericKeys($data['diff_ids'])) {
+                $values = [];
+                foreach ($data['diff_ids'] as $value_2) {
+                    $values[] = $value_2;
+                }
+                $value_1 = $values;
+            } elseif (null === $data['diff_ids']) {
+                $value_1 = $data['diff_ids'];
             }
+            $object->setDiffIds($value_1);
+        } elseif (array_key_exists('diff_ids', $data) && null === $data['diff_ids']) {
+            $object->setDiffIds(null);
         }
 
         return $object;
@@ -71,20 +81,27 @@ class PluginConfigRootfsNormalizer implements DenormalizerInterface, NormalizerI
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('type') && null !== $data->getType()) {
-            $dataArray['type'] = $data->getType();
-        }
-        if ($data->isInitialized('diffIds') && null !== $data->getDiffIds()) {
-            $values = [];
-            foreach ($data->getDiffIds() as $value) {
-                $values[] = $value;
+        if ($data->isInitialized('type')) {
+            $value = $data->getType();
+            if (is_string($data->getType())) {
+                $value = $data->getType();
+            } elseif (null === $data->getType()) {
+                $value = $data->getType();
             }
-            $dataArray['diff_ids'] = $values;
+            $dataArray['type'] = $value;
         }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
+        if ($data->isInitialized('diffIds')) {
+            $value_1 = $data->getDiffIds();
+            if (is_array($data->getDiffIds())) {
+                $values = [];
+                foreach ($data->getDiffIds() as $value_2) {
+                    $values[] = $value_2;
+                }
+                $value_1 = $values;
+            } elseif (null === $data->getDiffIds()) {
+                $value_1 = $data->getDiffIds();
             }
+            $dataArray['diff_ids'] = $value_1;
         }
 
         return $dataArray;

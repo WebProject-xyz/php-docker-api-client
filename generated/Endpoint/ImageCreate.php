@@ -13,25 +13,24 @@ class ImageCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Client
      * Pull or import an image.
      *
      * @param string|null $requestBody
-     * @param array       $queryParameters {
-     *
-     * @var string $fromImage Name of the image to pull. If the name includes a tag or digest, specific behavior applies:
+     * @param array{
+     *    "fromImage"?: string, //Name of the image to pull. If the name includes a tag or digest, specific behavior applies:
      *
      * - If only `fromImage` includes a tag, that tag is used.
      * - If both `fromImage` and `tag` are provided, `tag` takes precedence.
      * - If `fromImage` includes a digest, the image is pulled by digest, and `tag` is ignored.
      * - If neither a tag nor digest is specified, all tags are pulled.
-     * @var string $fromSrc Source to import. The value may be a URL from which the image can be retrieved or `-` to read the image from the request body. This parameter may only be used when importing an image.
-     * @var string $repo Repository name given to an image when it is imported. The repo may include a tag. This parameter may only be used when importing an image.
-     * @var string $tag Tag or digest. If empty when pulling an image, this causes all tags for the given image to be pulled.
-     * @var string $message set commit message for imported image
-     * @var array  $changes Apply `Dockerfile` instructions to the image that is created,
-     *             for example: `changes=ENV DEBUG=true`.
-     *             Note that `ENV DEBUG=true` should be URI component encoded.
+     *    "fromSrc"?: string, //Source to import. The value may be a URL from which the image can be retrieved or `-` to read the image from the request body. This parameter may only be used when importing an image.
+     *    "repo"?: string, //Repository name given to an image when it is imported. The repo may include a tag. This parameter may only be used when importing an image.
+     *    "tag"?: string, //Tag or digest. If empty when pulling an image, this causes all tags for the given image to be pulled.
+     *    "message"?: string, //Set commit message for imported image.
+     *    "changes"?: array, //Apply `Dockerfile` instructions to the image that is created,
+     * for example: `changes=ENV DEBUG=true`.
+     * Note that `ENV DEBUG=true` should be URI component encoded.
      *
      * Supported `Dockerfile` instructions:
      * `CMD`|`ENTRYPOINT`|`ENV`|`EXPOSE`|`ONBUILD`|`USER`|`VOLUME`|`WORKDIR`
-     * @var string $platform Platform in the format os[/arch[/variant]].
+     *    "platform"?: string, //Platform in the format os[/arch[/variant]].
      *
      * When used in combination with the `fromImage` option, the daemon checks
      * if the given image is present in the local image cache with the given
@@ -46,17 +45,13 @@ class ImageCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Client
      * this option sets the platform information for the imported image. If
      * the option is not set, the host's native OS and Architecture are used
      * for the imported image.
-     *
-     * }
-     *
-     * @param array $headerParameters {
-     *
-     * @var string $X-Registry-Auth A base64url-encoded auth configuration.
+     * } $queryParameters
+     * @param array{
+     *    "X-Registry-Auth"?: string, //A base64url-encoded auth configuration.
      *
      * Refer to the [authentication section](#section/Authentication) for
      * details.
-     *
-     * }
+     * } $headerParameters
      */
     public function __construct(?string $requestBody = null, array $queryParameters = [], array $headerParameters = [])
     {
@@ -135,10 +130,10 @@ class ImageCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Client
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageCreateNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageCreateInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

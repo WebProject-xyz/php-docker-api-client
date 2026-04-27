@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class OCIDescriptor extends ArrayObject
+class OCIDescriptor
 {
     /**
      * @var array
@@ -20,19 +19,19 @@ class OCIDescriptor extends ArrayObject
     /**
      * The media type of the object this schema refers to.
      *
-     * @var string
+     * @var string|null
      */
     protected $mediaType;
     /**
      * The digest of the targeted content.
      *
-     * @var string
+     * @var string|null
      */
     protected $digest;
     /**
      * The size in bytes of the blob.
      *
-     * @var int
+     * @var int|null
      */
     protected $size;
     /**
@@ -72,9 +71,9 @@ class OCIDescriptor extends ArrayObject
     /**
      * The media type of the object this schema refers to.
      *
-     * @return string
+     * @return string|null
      */
-    public function getMediaType(): string
+    public function getMediaType(): ?string
     {
         return $this->mediaType;
     }
@@ -82,11 +81,11 @@ class OCIDescriptor extends ArrayObject
     /**
      * The media type of the object this schema refers to.
      *
-     * @param string $mediaType
+     * @param string|null $mediaType
      *
      * @return self
      */
-    public function setMediaType(string $mediaType): self
+    public function setMediaType(?string $mediaType): self
     {
         $this->initialized['mediaType'] = true;
         $this->mediaType                = $mediaType;
@@ -97,9 +96,9 @@ class OCIDescriptor extends ArrayObject
     /**
      * The digest of the targeted content.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDigest(): string
+    public function getDigest(): ?string
     {
         return $this->digest;
     }
@@ -107,11 +106,11 @@ class OCIDescriptor extends ArrayObject
     /**
      * The digest of the targeted content.
      *
-     * @param string $digest
+     * @param string|null $digest
      *
      * @return self
      */
-    public function setDigest(string $digest): self
+    public function setDigest(?string $digest): self
     {
         $this->initialized['digest'] = true;
         $this->digest                = $digest;
@@ -122,9 +121,9 @@ class OCIDescriptor extends ArrayObject
     /**
      * The size in bytes of the blob.
      *
-     * @return int
+     * @return int|null
      */
-    public function getSize(): int
+    public function getSize(): ?int
     {
         return $this->size;
     }
@@ -132,11 +131,11 @@ class OCIDescriptor extends ArrayObject
     /**
      * The size in bytes of the blob.
      *
-     * @param int $size
+     * @param int|null $size
      *
      * @return self
      */
-    public function setSize(int $size): self
+    public function setSize(?int $size): self
     {
         $this->initialized['size'] = true;
         $this->size                = $size;

@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class SwarmSpec extends ArrayObject
+class SwarmSpec
 {
     /**
      * @var array
@@ -20,13 +19,13 @@ class SwarmSpec extends ArrayObject
     /**
      * Name of the swarm.
      *
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
      * User-defined key/value metadata.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $labels;
     /**
@@ -38,7 +37,7 @@ class SwarmSpec extends ArrayObject
     /**
      * Raft configuration.
      *
-     * @var SwarmSpecRaft
+     * @var SwarmSpecRaft|null
      */
     protected $raft;
     /**
@@ -56,22 +55,22 @@ class SwarmSpec extends ArrayObject
     /**
      * Parameters related to encryption-at-rest.
      *
-     * @var SwarmSpecEncryptionConfig
+     * @var SwarmSpecEncryptionConfig|null
      */
     protected $encryptionConfig;
     /**
      * Defaults for creating tasks in this cluster.
      *
-     * @var SwarmSpecTaskDefaults
+     * @var SwarmSpecTaskDefaults|null
      */
     protected $taskDefaults;
 
     /**
      * Name of the swarm.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -79,11 +78,11 @@ class SwarmSpec extends ArrayObject
     /**
      * Name of the swarm.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -94,9 +93,9 @@ class SwarmSpec extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getLabels(): iterable
+    public function getLabels(): ?iterable
     {
         return $this->labels;
     }
@@ -104,11 +103,11 @@ class SwarmSpec extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @param array<string, string> $labels
+     * @param array<string, string>|null $labels
      *
      * @return self
      */
-    public function setLabels(iterable $labels): self
+    public function setLabels(?iterable $labels): self
     {
         $this->initialized['labels'] = true;
         $this->labels                = $labels;
@@ -144,9 +143,9 @@ class SwarmSpec extends ArrayObject
     /**
      * Raft configuration.
      *
-     * @return SwarmSpecRaft
+     * @return SwarmSpecRaft|null
      */
-    public function getRaft(): SwarmSpecRaft
+    public function getRaft(): ?SwarmSpecRaft
     {
         return $this->raft;
     }
@@ -154,11 +153,11 @@ class SwarmSpec extends ArrayObject
     /**
      * Raft configuration.
      *
-     * @param SwarmSpecRaft $raft
+     * @param SwarmSpecRaft|null $raft
      *
      * @return self
      */
-    public function setRaft(SwarmSpecRaft $raft): self
+    public function setRaft(?SwarmSpecRaft $raft): self
     {
         $this->initialized['raft'] = true;
         $this->raft                = $raft;
@@ -219,9 +218,9 @@ class SwarmSpec extends ArrayObject
     /**
      * Parameters related to encryption-at-rest.
      *
-     * @return SwarmSpecEncryptionConfig
+     * @return SwarmSpecEncryptionConfig|null
      */
-    public function getEncryptionConfig(): SwarmSpecEncryptionConfig
+    public function getEncryptionConfig(): ?SwarmSpecEncryptionConfig
     {
         return $this->encryptionConfig;
     }
@@ -229,11 +228,11 @@ class SwarmSpec extends ArrayObject
     /**
      * Parameters related to encryption-at-rest.
      *
-     * @param SwarmSpecEncryptionConfig $encryptionConfig
+     * @param SwarmSpecEncryptionConfig|null $encryptionConfig
      *
      * @return self
      */
-    public function setEncryptionConfig(SwarmSpecEncryptionConfig $encryptionConfig): self
+    public function setEncryptionConfig(?SwarmSpecEncryptionConfig $encryptionConfig): self
     {
         $this->initialized['encryptionConfig'] = true;
         $this->encryptionConfig                = $encryptionConfig;
@@ -244,9 +243,9 @@ class SwarmSpec extends ArrayObject
     /**
      * Defaults for creating tasks in this cluster.
      *
-     * @return SwarmSpecTaskDefaults
+     * @return SwarmSpecTaskDefaults|null
      */
-    public function getTaskDefaults(): SwarmSpecTaskDefaults
+    public function getTaskDefaults(): ?SwarmSpecTaskDefaults
     {
         return $this->taskDefaults;
     }
@@ -254,11 +253,11 @@ class SwarmSpec extends ArrayObject
     /**
      * Defaults for creating tasks in this cluster.
      *
-     * @param SwarmSpecTaskDefaults $taskDefaults
+     * @param SwarmSpecTaskDefaults|null $taskDefaults
      *
      * @return self
      */
-    public function setTaskDefaults(SwarmSpecTaskDefaults $taskDefaults): self
+    public function setTaskDefaults(?SwarmSpecTaskDefaults $taskDefaults): self
     {
         $this->initialized['taskDefaults'] = true;
         $this->taskDefaults                = $taskDefaults;

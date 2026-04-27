@@ -16,6 +16,7 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
 
 class PluginConfigUserNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
@@ -37,28 +38,37 @@ class PluginConfigUserNormalizer implements DenormalizerInterface, NormalizerInt
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginConfigUser();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginConfigUser();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('UID', $data)) {
-            $object->setUID($data['UID']);
-            unset($data['UID']);
-        }
-        if (array_key_exists('GID', $data)) {
-            $object->setGID($data['GID']);
-            unset($data['GID']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('UID', $data) && null !== $data['UID']) {
+            $value = $data['UID'];
+            if (is_int($data['UID'])) {
+                $value = $data['UID'];
+            } elseif (null === $data['UID']) {
+                $value = $data['UID'];
             }
+            $object->setUID($value);
+        } elseif (array_key_exists('UID', $data) && null === $data['UID']) {
+            $object->setUID(null);
+        }
+        if (array_key_exists('GID', $data) && null !== $data['GID']) {
+            $value_1 = $data['GID'];
+            if (is_int($data['GID'])) {
+                $value_1 = $data['GID'];
+            } elseif (null === $data['GID']) {
+                $value_1 = $data['GID'];
+            }
+            $object->setGID($value_1);
+        } elseif (array_key_exists('GID', $data) && null === $data['GID']) {
+            $object->setGID(null);
         }
 
         return $object;
@@ -67,16 +77,23 @@ class PluginConfigUserNormalizer implements DenormalizerInterface, NormalizerInt
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('uID') && null !== $data->getUID()) {
-            $dataArray['UID'] = $data->getUID();
-        }
-        if ($data->isInitialized('gID') && null !== $data->getGID()) {
-            $dataArray['GID'] = $data->getGID();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('uID')) {
+            $value = $data->getUID();
+            if (is_int($data->getUID())) {
+                $value = $data->getUID();
+            } elseif (null === $data->getUID()) {
+                $value = $data->getUID();
             }
+            $dataArray['UID'] = $value;
+        }
+        if ($data->isInitialized('gID')) {
+            $value_1 = $data->getGID();
+            if (is_int($data->getGID())) {
+                $value_1 = $data->getGID();
+            } elseif (null === $data->getGID()) {
+                $value_1 = $data->getGID();
+            }
+            $dataArray['GID'] = $value_1;
         }
 
         return $dataArray;

@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class TaskStatusNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,44 +38,57 @@ class TaskStatusNormalizer implements DenormalizerInterface, NormalizerInterface
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskStatus();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskStatus();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Timestamp', $data)) {
-            $object->setTimestamp($data['Timestamp']);
-            unset($data['Timestamp']);
+        if (array_key_exists('Timestamp', $data) && null !== $data['Timestamp']) {
+            $value = $data['Timestamp'];
+            if (is_string($data['Timestamp'])) {
+                $value = $data['Timestamp'];
+            } elseif (null === $data['Timestamp']) {
+                $value = $data['Timestamp'];
+            }
+            $object->setTimestamp($value);
+        } elseif (array_key_exists('Timestamp', $data) && null === $data['Timestamp']) {
+            $object->setTimestamp(null);
         }
         if (array_key_exists('State', $data)) {
             $object->setState($data['State']);
-            unset($data['State']);
         }
-        if (array_key_exists('Message', $data)) {
-            $object->setMessage($data['Message']);
-            unset($data['Message']);
+        if (array_key_exists('Message', $data) && null !== $data['Message']) {
+            $value_1 = $data['Message'];
+            if (is_string($data['Message'])) {
+                $value_1 = $data['Message'];
+            } elseif (null === $data['Message']) {
+                $value_1 = $data['Message'];
+            }
+            $object->setMessage($value_1);
+        } elseif (array_key_exists('Message', $data) && null === $data['Message']) {
+            $object->setMessage(null);
         }
-        if (array_key_exists('Err', $data)) {
-            $object->setErr($data['Err']);
-            unset($data['Err']);
+        if (array_key_exists('Err', $data) && null !== $data['Err']) {
+            $value_2 = $data['Err'];
+            if (is_string($data['Err'])) {
+                $value_2 = $data['Err'];
+            } elseif (null === $data['Err']) {
+                $value_2 = $data['Err'];
+            }
+            $object->setErr($value_2);
+        } elseif (array_key_exists('Err', $data) && null === $data['Err']) {
+            $object->setErr(null);
         }
         if (array_key_exists('ContainerStatus', $data)) {
             $object->setContainerStatus($this->denormalizer->denormalize($data['ContainerStatus'], \WebProject\DockerApi\Library\Generated\Model\ContainerStatus::class, 'json', $context));
-            unset($data['ContainerStatus']);
         }
         if (array_key_exists('PortStatus', $data)) {
             $object->setPortStatus($this->denormalizer->denormalize($data['PortStatus'], \WebProject\DockerApi\Library\Generated\Model\PortStatus::class, 'json', $context));
-            unset($data['PortStatus']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
-            }
         }
 
         return $object;
@@ -83,28 +97,41 @@ class TaskStatusNormalizer implements DenormalizerInterface, NormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('timestamp') && null !== $data->getTimestamp()) {
-            $dataArray['Timestamp'] = $data->getTimestamp();
+        if ($data->isInitialized('timestamp')) {
+            $value = $data->getTimestamp();
+            if (is_string($data->getTimestamp())) {
+                $value = $data->getTimestamp();
+            } elseif (null === $data->getTimestamp()) {
+                $value = $data->getTimestamp();
+            }
+            $dataArray['Timestamp'] = $value;
         }
         if ($data->isInitialized('state') && null !== $data->getState()) {
             $dataArray['State'] = $data->getState();
         }
-        if ($data->isInitialized('message') && null !== $data->getMessage()) {
-            $dataArray['Message'] = $data->getMessage();
+        if ($data->isInitialized('message')) {
+            $value_1 = $data->getMessage();
+            if (is_string($data->getMessage())) {
+                $value_1 = $data->getMessage();
+            } elseif (null === $data->getMessage()) {
+                $value_1 = $data->getMessage();
+            }
+            $dataArray['Message'] = $value_1;
         }
-        if ($data->isInitialized('err') && null !== $data->getErr()) {
-            $dataArray['Err'] = $data->getErr();
+        if ($data->isInitialized('err')) {
+            $value_2 = $data->getErr();
+            if (is_string($data->getErr())) {
+                $value_2 = $data->getErr();
+            } elseif (null === $data->getErr()) {
+                $value_2 = $data->getErr();
+            }
+            $dataArray['Err'] = $value_2;
         }
         if ($data->isInitialized('containerStatus') && null !== $data->getContainerStatus()) {
             $dataArray['ContainerStatus'] = $this->normalizer->normalize($data->getContainerStatus(), 'json', $context);
         }
         if ($data->isInitialized('portStatus') && null !== $data->getPortStatus()) {
             $dataArray['PortStatus'] = $this->normalizer->normalize($data->getPortStatus(), 'json', $context);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
-            }
         }
 
         return $dataArray;

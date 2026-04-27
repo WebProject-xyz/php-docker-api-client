@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class MountVolumeOptions extends ArrayObject
+class MountVolumeOptions
 {
     /**
      * @var array
@@ -20,34 +19,34 @@ class MountVolumeOptions extends ArrayObject
     /**
      * Populate volume with data from the target.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $noCopy = false;
     /**
      * User-defined key/value metadata.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $labels;
     /**
      * Map of driver specific options.
      *
-     * @var MountVolumeOptionsDriverConfig
+     * @var MountVolumeOptionsDriverConfig|null
      */
     protected $driverConfig;
     /**
      * Source path inside the volume. Must be relative without any back traversals.
      *
-     * @var string
+     * @var string|null
      */
     protected $subpath;
 
     /**
      * Populate volume with data from the target.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getNoCopy(): bool
+    public function getNoCopy(): ?bool
     {
         return $this->noCopy;
     }
@@ -55,11 +54,11 @@ class MountVolumeOptions extends ArrayObject
     /**
      * Populate volume with data from the target.
      *
-     * @param bool $noCopy
+     * @param bool|null $noCopy
      *
      * @return self
      */
-    public function setNoCopy(bool $noCopy): self
+    public function setNoCopy(?bool $noCopy): self
     {
         $this->initialized['noCopy'] = true;
         $this->noCopy                = $noCopy;
@@ -70,9 +69,9 @@ class MountVolumeOptions extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getLabels(): iterable
+    public function getLabels(): ?iterable
     {
         return $this->labels;
     }
@@ -80,11 +79,11 @@ class MountVolumeOptions extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @param array<string, string> $labels
+     * @param array<string, string>|null $labels
      *
      * @return self
      */
-    public function setLabels(iterable $labels): self
+    public function setLabels(?iterable $labels): self
     {
         $this->initialized['labels'] = true;
         $this->labels                = $labels;
@@ -95,9 +94,9 @@ class MountVolumeOptions extends ArrayObject
     /**
      * Map of driver specific options.
      *
-     * @return MountVolumeOptionsDriverConfig
+     * @return MountVolumeOptionsDriverConfig|null
      */
-    public function getDriverConfig(): MountVolumeOptionsDriverConfig
+    public function getDriverConfig(): ?MountVolumeOptionsDriverConfig
     {
         return $this->driverConfig;
     }
@@ -105,11 +104,11 @@ class MountVolumeOptions extends ArrayObject
     /**
      * Map of driver specific options.
      *
-     * @param MountVolumeOptionsDriverConfig $driverConfig
+     * @param MountVolumeOptionsDriverConfig|null $driverConfig
      *
      * @return self
      */
-    public function setDriverConfig(MountVolumeOptionsDriverConfig $driverConfig): self
+    public function setDriverConfig(?MountVolumeOptionsDriverConfig $driverConfig): self
     {
         $this->initialized['driverConfig'] = true;
         $this->driverConfig                = $driverConfig;
@@ -120,9 +119,9 @@ class MountVolumeOptions extends ArrayObject
     /**
      * Source path inside the volume. Must be relative without any back traversals.
      *
-     * @return string
+     * @return string|null
      */
-    public function getSubpath(): string
+    public function getSubpath(): ?string
     {
         return $this->subpath;
     }
@@ -130,11 +129,11 @@ class MountVolumeOptions extends ArrayObject
     /**
      * Source path inside the volume. Must be relative without any back traversals.
      *
-     * @param string $subpath
+     * @param string|null $subpath
      *
      * @return self
      */
-    public function setSubpath(string $subpath): self
+    public function setSubpath(?string $subpath): self
     {
         $this->initialized['subpath'] = true;
         $this->subpath                = $subpath;

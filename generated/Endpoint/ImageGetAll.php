@@ -19,17 +19,15 @@ class ImageGetAll extends \WebProject\DockerApi\Library\Generated\Runtime\Client
      *
      * For details on the format, see the [export image endpoint](#operation/ImageGet).
      *
-     * @param array $queryParameters {
-     *
-     * @var array  $names Image names to filter by
-     * @var string $platform JSON encoded OCI platform describing a platform which will be used
-     *             to select a platform-specific image to be saved if the image is
-     *             multi-platform.
-     *             If not provided, the full multi-platform image will be saved.
+     * @param array{
+     *    "names"?: array, //Image names to filter by
+     *    "platform"?: array, //JSON encoded OCI platform(s) which will be used to select the
+     * platform-specific image(s) to be saved if the image is
+     * multi-platform. If not provided, the full multi-platform image
+     * will be saved.
      *
      * Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
-     *
-     * }
+     * } $queryParameters
      */
     public function __construct(array $queryParameters = [])
     {
@@ -63,7 +61,7 @@ class ImageGetAll extends \WebProject\DockerApi\Library\Generated\Runtime\Client
         $optionsResolver->setRequired([]);
         $optionsResolver->setDefaults([]);
         $optionsResolver->addAllowedTypes('names', ['array']);
-        $optionsResolver->addAllowedTypes('platform', ['string']);
+        $optionsResolver->addAllowedTypes('platform', ['array']);
 
         return $optionsResolver;
     }

@@ -15,10 +15,9 @@ class NetworkList extends \WebProject\DockerApi\Library\Generated\Runtime\Client
      * inspecting a single network. For example, the list of containers attached
      * to the network is not propagated in API versions 1.28 and up.
      *
-     * @param array $queryParameters {
-     *
-     * @var string $filters JSON encoded value of the filters (a `map[string][]string`) to process
-     *             on the networks list.
+     * @param array{
+     *    "filters"?: string, //JSON encoded value of the filters (a `map[string][]string`) to process
+     * on the networks list.
      *
      * Available filters:
      *
@@ -32,8 +31,7 @@ class NetworkList extends \WebProject\DockerApi\Library\Generated\Runtime\Client
      * - `name=<network-name>` Matches all or part of a network name.
      * - `scope=["swarm"|"global"|"local"]` Filters networks by scope (`swarm`, `global`, or `local`).
      * - `type=["custom"|"builtin"]` Filters networks by type. The `custom` keyword returns all user-defined networks.
-     *
-     * }
+     * } $queryParameters
      */
     public function __construct(array $queryParameters = [])
     {
@@ -74,7 +72,7 @@ class NetworkList extends \WebProject\DockerApi\Library\Generated\Runtime\Client
     /**
      * {@inheritdoc}
      *
-     * @return \WebProject\DockerApi\Library\Generated\Model\Network[]|null
+     * @return \WebProject\DockerApi\Library\Generated\Model\NetworkSummary[]|null
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\NetworkListInternalServerErrorException
      */
@@ -82,10 +80,10 @@ class NetworkList extends \WebProject\DockerApi\Library\Generated\Runtime\Client
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
-            return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\Network[]', 'json');
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+            return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\NetworkSummary[]', 'json');
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NetworkListInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ServiceEndpoint extends ArrayObject
+class ServiceEndpoint
 {
     /**
      * @var array
@@ -24,11 +23,11 @@ class ServiceEndpoint extends ArrayObject
      */
     protected $spec;
     /**
-     * @var list<EndpointPortConfig>
+     * @var list<EndpointPortConfig>|null
      */
     protected $ports;
     /**
-     * @var list<ServiceEndpointVirtualIPsItem>
+     * @var list<ServiceEndpointVirtualIPsItem>|null
      */
     protected $virtualIPs;
 
@@ -58,19 +57,19 @@ class ServiceEndpoint extends ArrayObject
     }
 
     /**
-     * @return list<EndpointPortConfig>
+     * @return list<EndpointPortConfig>|null
      */
-    public function getPorts(): array
+    public function getPorts(): ?array
     {
         return $this->ports;
     }
 
     /**
-     * @param list<EndpointPortConfig> $ports
+     * @param list<EndpointPortConfig>|null $ports
      *
      * @return self
      */
-    public function setPorts(array $ports): self
+    public function setPorts(?array $ports): self
     {
         $this->initialized['ports'] = true;
         $this->ports                = $ports;
@@ -79,19 +78,19 @@ class ServiceEndpoint extends ArrayObject
     }
 
     /**
-     * @return list<ServiceEndpointVirtualIPsItem>
+     * @return list<ServiceEndpointVirtualIPsItem>|null
      */
-    public function getVirtualIPs(): array
+    public function getVirtualIPs(): ?array
     {
         return $this->virtualIPs;
     }
 
     /**
-     * @param list<ServiceEndpointVirtualIPsItem> $virtualIPs
+     * @param list<ServiceEndpointVirtualIPsItem>|null $virtualIPs
      *
      * @return self
      */
-    public function setVirtualIPs(array $virtualIPs): self
+    public function setVirtualIPs(?array $virtualIPs): self
     {
         $this->initialized['virtualIPs'] = true;
         $this->virtualIPs                = $virtualIPs;

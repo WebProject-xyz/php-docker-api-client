@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ThrottleDevice extends ArrayObject
+class ThrottleDevice
 {
     /**
      * @var array
@@ -20,22 +19,22 @@ class ThrottleDevice extends ArrayObject
     /**
      * Device path.
      *
-     * @var string
+     * @var string|null
      */
     protected $path;
     /**
      * Rate.
      *
-     * @var int
+     * @var int|null
      */
     protected $rate;
 
     /**
      * Device path.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPath(): string
+    public function getPath(): ?string
     {
         return $this->path;
     }
@@ -43,11 +42,11 @@ class ThrottleDevice extends ArrayObject
     /**
      * Device path.
      *
-     * @param string $path
+     * @param string|null $path
      *
      * @return self
      */
-    public function setPath(string $path): self
+    public function setPath(?string $path): self
     {
         $this->initialized['path'] = true;
         $this->path                = $path;
@@ -58,9 +57,9 @@ class ThrottleDevice extends ArrayObject
     /**
      * Rate.
      *
-     * @return int
+     * @return int|null
      */
-    public function getRate(): int
+    public function getRate(): ?int
     {
         return $this->rate;
     }
@@ -68,11 +67,11 @@ class ThrottleDevice extends ArrayObject
     /**
      * Rate.
      *
-     * @param int $rate
+     * @param int|null $rate
      *
      * @return self
      */
-    public function setRate(int $rate): self
+    public function setRate(?int $rate): self
     {
         $this->initialized['rate'] = true;
         $this->rate                = $rate;

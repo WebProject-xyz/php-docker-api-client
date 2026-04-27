@@ -16,6 +16,7 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
 
 class ServiceSpecModeReplicatedJobNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
@@ -37,28 +38,37 @@ class ServiceSpecModeReplicatedJobNormalizer implements DenormalizerInterface, N
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeReplicatedJob();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ServiceSpecModeReplicatedJob();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('MaxConcurrent', $data)) {
-            $object->setMaxConcurrent($data['MaxConcurrent']);
-            unset($data['MaxConcurrent']);
-        }
-        if (array_key_exists('TotalCompletions', $data)) {
-            $object->setTotalCompletions($data['TotalCompletions']);
-            unset($data['TotalCompletions']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('MaxConcurrent', $data) && null !== $data['MaxConcurrent']) {
+            $value = $data['MaxConcurrent'];
+            if (is_int($data['MaxConcurrent'])) {
+                $value = $data['MaxConcurrent'];
+            } elseif (null === $data['MaxConcurrent']) {
+                $value = $data['MaxConcurrent'];
             }
+            $object->setMaxConcurrent($value);
+        } elseif (array_key_exists('MaxConcurrent', $data) && null === $data['MaxConcurrent']) {
+            $object->setMaxConcurrent(null);
+        }
+        if (array_key_exists('TotalCompletions', $data) && null !== $data['TotalCompletions']) {
+            $value_1 = $data['TotalCompletions'];
+            if (is_int($data['TotalCompletions'])) {
+                $value_1 = $data['TotalCompletions'];
+            } elseif (null === $data['TotalCompletions']) {
+                $value_1 = $data['TotalCompletions'];
+            }
+            $object->setTotalCompletions($value_1);
+        } elseif (array_key_exists('TotalCompletions', $data) && null === $data['TotalCompletions']) {
+            $object->setTotalCompletions(null);
         }
 
         return $object;
@@ -67,16 +77,23 @@ class ServiceSpecModeReplicatedJobNormalizer implements DenormalizerInterface, N
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('maxConcurrent') && null !== $data->getMaxConcurrent()) {
-            $dataArray['MaxConcurrent'] = $data->getMaxConcurrent();
-        }
-        if ($data->isInitialized('totalCompletions') && null !== $data->getTotalCompletions()) {
-            $dataArray['TotalCompletions'] = $data->getTotalCompletions();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('maxConcurrent')) {
+            $value = $data->getMaxConcurrent();
+            if (is_int($data->getMaxConcurrent())) {
+                $value = $data->getMaxConcurrent();
+            } elseif (null === $data->getMaxConcurrent()) {
+                $value = $data->getMaxConcurrent();
             }
+            $dataArray['MaxConcurrent'] = $value;
+        }
+        if ($data->isInitialized('totalCompletions')) {
+            $value_1 = $data->getTotalCompletions();
+            if (is_int($data->getTotalCompletions())) {
+                $value_1 = $data->getTotalCompletions();
+            } elseif (null === $data->getTotalCompletions()) {
+                $value_1 = $data->getTotalCompletions();
+            }
+            $dataArray['TotalCompletions'] = $value_1;
         }
 
         return $dataArray;

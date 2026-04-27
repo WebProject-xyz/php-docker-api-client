@@ -10,14 +10,11 @@ class PluginDisable extends \WebProject\DockerApi\Library\Generated\Runtime\Clie
     protected $accept;
 
     /**
-     * @param string $name            The name of the plugin. The `:latest` tag is optional, and is the
-     *                                default if omitted.
-     * @param array  $queryParameters {
-     *
-     * @var bool $force Force disable a plugin even if still in use.
-     *
-     * }
-     *
+     * @param string $name The name of the plugin. The `:latest` tag is optional, and is the
+     *                     default if omitted.
+     * @param array{
+     *    "force"?: bool, //Force disable a plugin even if still in use.
+     * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
     public function __construct(string $name, array $queryParameters = [], array $accept = [])
@@ -77,10 +74,10 @@ class PluginDisable extends \WebProject\DockerApi\Library\Generated\Runtime\Clie
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\PluginDisableNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\PluginDisableInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

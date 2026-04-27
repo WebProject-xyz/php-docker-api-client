@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
-use DateTime;
 use function array_key_exists;
 
-class ContainerStatsResponse extends ArrayObject
+class ContainerStatsResponse
 {
     /**
      * @var array
@@ -19,37 +17,53 @@ class ContainerStatsResponse extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * Name of the container.
-     *
-     * @var string|null
-     */
-    protected $name;
-    /**
-     * ID of the container.
+     * ID of the container for which the stats were collected.
      *
      * @var string|null
      */
     protected $id;
     /**
+     * Name of the container for which the stats were collected.
+     *
+     * @var string|null
+     */
+    protected $name;
+    /**
+     * OSType is the OS of the container ("linux" or "windows") to allow
+     * platform-specific handling of stats.
+     *
+     * @var string|null
+     */
+    protected $osType;
+    /**
      * Date and time at which this sample was collected.
      * The value is formatted as [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt)
      * with nano-seconds.
      *
-     * @var DateTime
+     * @var string|null
      */
     protected $read;
     /**
-     * Date and time at which this first sample was collected. This field
-     * is not propagated if the "one-shot" option is set. If the "one-shot"
-     * option is set, this field may be omitted, empty, or set to a default
-     * date (`0001-01-01T00:00:00Z`).
+     * CPU related info of the container.
      *
-     * The value is formatted as [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt)
-     * with nano-seconds.
-     *
-     * @var DateTime
+     * @var ContainerCPUStats|null
      */
-    protected $preread;
+    protected $cpuStats;
+    /**
+     * Aggregates all memory stats since container inception on Linux.
+     * Windows returns stats for commit and private working set only.
+     *
+     * @var ContainerMemoryStats
+     */
+    protected $memoryStats;
+    /**
+     * Network statistics for the container per interface.
+     *
+     * This field is omitted if the container has no networking enabled.
+     *
+     * @var mixed
+     */
+    protected $networks;
     /**
      * PidsStats contains Linux-specific stats of a container's process-IDs (PIDs).
      *
@@ -75,7 +89,7 @@ class ContainerStatsResponse extends ArrayObject
      *
      * This field is Windows-specific and always zero for Linux containers.
      *
-     * @var int
+     * @var int|null
      */
     protected $numProcs;
     /**
@@ -87,60 +101,26 @@ class ContainerStatsResponse extends ArrayObject
      */
     protected $storageStats;
     /**
-     * CPU related info of the container.
+     * Date and time at which this first sample was collected. This field
+     * is not propagated if the "one-shot" option is set. If the "one-shot"
+     * option is set, this field may be omitted, empty, or set to a default
+     * date (`0001-01-01T00:00:00Z`).
      *
-     * @var ContainerCPUStats|null
+     * The value is formatted as [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt)
+     * with nano-seconds.
+     *
+     * @var string|null
      */
-    protected $cpuStats;
+    protected $preread;
     /**
      * CPU related info of the container.
      *
      * @var ContainerCPUStats|null
      */
     protected $precpuStats;
-    /**
-     * Aggregates all memory stats since container inception on Linux.
-     * Windows returns stats for commit and private working set only.
-     *
-     * @var ContainerMemoryStats
-     */
-    protected $memoryStats;
-    /**
-     * Network statistics for the container per interface.
-     *
-     * This field is omitted if the container has no networking enabled.
-     *
-     * @var mixed|null
-     */
-    protected $networks;
 
     /**
-     * Name of the container.
-     *
-     * @return string|null
-     */
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    /**
-     * Name of the container.
-     *
-     * @param string|null $name
-     *
-     * @return self
-     */
-    public function setName(?string $name): self
-    {
-        $this->initialized['name'] = true;
-        $this->name                = $name;
-
-        return $this;
-    }
-
-    /**
-     * ID of the container.
+     * ID of the container for which the stats were collected.
      *
      * @return string|null
      */
@@ -150,7 +130,7 @@ class ContainerStatsResponse extends ArrayObject
     }
 
     /**
-     * ID of the container.
+     * ID of the container for which the stats were collected.
      *
      * @param string|null $id
      *
@@ -165,13 +145,65 @@ class ContainerStatsResponse extends ArrayObject
     }
 
     /**
+     * Name of the container for which the stats were collected.
+     *
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Name of the container for which the stats were collected.
+     *
+     * @param string|null $name
+     *
+     * @return self
+     */
+    public function setName(?string $name): self
+    {
+        $this->initialized['name'] = true;
+        $this->name                = $name;
+
+        return $this;
+    }
+
+    /**
+     * OSType is the OS of the container ("linux" or "windows") to allow
+     * platform-specific handling of stats.
+     *
+     * @return string|null
+     */
+    public function getOsType(): ?string
+    {
+        return $this->osType;
+    }
+
+    /**
+     * OSType is the OS of the container ("linux" or "windows") to allow
+     * platform-specific handling of stats.
+     *
+     * @param string|null $osType
+     *
+     * @return self
+     */
+    public function setOsType(?string $osType): self
+    {
+        $this->initialized['osType'] = true;
+        $this->osType                = $osType;
+
+        return $this;
+    }
+
+    /**
      * Date and time at which this sample was collected.
      * The value is formatted as [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt)
      * with nano-seconds.
      *
-     * @return DateTime
+     * @return string|null
      */
-    public function getRead(): DateTime
+    public function getRead(): ?string
     {
         return $this->read;
     }
@@ -181,11 +213,11 @@ class ContainerStatsResponse extends ArrayObject
      * The value is formatted as [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt)
      * with nano-seconds.
      *
-     * @param DateTime $read
+     * @param string|null $read
      *
      * @return self
      */
-    public function setRead(DateTime $read): self
+    public function setRead(?string $read): self
     {
         $this->initialized['read'] = true;
         $this->read                = $read;
@@ -194,38 +226,82 @@ class ContainerStatsResponse extends ArrayObject
     }
 
     /**
-     * Date and time at which this first sample was collected. This field
-     * is not propagated if the "one-shot" option is set. If the "one-shot"
-     * option is set, this field may be omitted, empty, or set to a default
-     * date (`0001-01-01T00:00:00Z`).
+     * CPU related info of the container.
      *
-     * The value is formatted as [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt)
-     * with nano-seconds.
-     *
-     * @return DateTime
+     * @return ContainerCPUStats|null
      */
-    public function getPreread(): DateTime
+    public function getCpuStats(): ?ContainerCPUStats
     {
-        return $this->preread;
+        return $this->cpuStats;
     }
 
     /**
-     * Date and time at which this first sample was collected. This field
-     * is not propagated if the "one-shot" option is set. If the "one-shot"
-     * option is set, this field may be omitted, empty, or set to a default
-     * date (`0001-01-01T00:00:00Z`).
+     * CPU related info of the container.
      *
-     * The value is formatted as [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt)
-     * with nano-seconds.
-     *
-     * @param DateTime $preread
+     * @param ContainerCPUStats|null $cpuStats
      *
      * @return self
      */
-    public function setPreread(DateTime $preread): self
+    public function setCpuStats(?ContainerCPUStats $cpuStats): self
     {
-        $this->initialized['preread'] = true;
-        $this->preread                = $preread;
+        $this->initialized['cpuStats'] = true;
+        $this->cpuStats                = $cpuStats;
+
+        return $this;
+    }
+
+    /**
+     * Aggregates all memory stats since container inception on Linux.
+     * Windows returns stats for commit and private working set only.
+     *
+     * @return ContainerMemoryStats
+     */
+    public function getMemoryStats(): ContainerMemoryStats
+    {
+        return $this->memoryStats;
+    }
+
+    /**
+     * Aggregates all memory stats since container inception on Linux.
+     * Windows returns stats for commit and private working set only.
+     *
+     * @param ContainerMemoryStats $memoryStats
+     *
+     * @return self
+     */
+    public function setMemoryStats(ContainerMemoryStats $memoryStats): self
+    {
+        $this->initialized['memoryStats'] = true;
+        $this->memoryStats                = $memoryStats;
+
+        return $this;
+    }
+
+    /**
+     * Network statistics for the container per interface.
+     *
+     * This field is omitted if the container has no networking enabled.
+     *
+     * @return mixed
+     */
+    public function getNetworks()
+    {
+        return $this->networks;
+    }
+
+    /**
+     * Network statistics for the container per interface.
+     *
+     * This field is omitted if the container has no networking enabled.
+     *
+     * @param mixed $networks
+     *
+     * @return self
+     */
+    public function setNetworks($networks): self
+    {
+        $this->initialized['networks'] = true;
+        $this->networks                = $networks;
 
         return $this;
     }
@@ -301,9 +377,9 @@ class ContainerStatsResponse extends ArrayObject
      *
      * This field is Windows-specific and always zero for Linux containers.
      *
-     * @return int
+     * @return int|null
      */
-    public function getNumProcs(): int
+    public function getNumProcs(): ?int
     {
         return $this->numProcs;
     }
@@ -313,11 +389,11 @@ class ContainerStatsResponse extends ArrayObject
      *
      * This field is Windows-specific and always zero for Linux containers.
      *
-     * @param int $numProcs
+     * @param int|null $numProcs
      *
      * @return self
      */
-    public function setNumProcs(int $numProcs): self
+    public function setNumProcs(?int $numProcs): self
     {
         $this->initialized['numProcs'] = true;
         $this->numProcs                = $numProcs;
@@ -355,26 +431,38 @@ class ContainerStatsResponse extends ArrayObject
     }
 
     /**
-     * CPU related info of the container.
+     * Date and time at which this first sample was collected. This field
+     * is not propagated if the "one-shot" option is set. If the "one-shot"
+     * option is set, this field may be omitted, empty, or set to a default
+     * date (`0001-01-01T00:00:00Z`).
      *
-     * @return ContainerCPUStats|null
+     * The value is formatted as [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt)
+     * with nano-seconds.
+     *
+     * @return string|null
      */
-    public function getCpuStats(): ?ContainerCPUStats
+    public function getPreread(): ?string
     {
-        return $this->cpuStats;
+        return $this->preread;
     }
 
     /**
-     * CPU related info of the container.
+     * Date and time at which this first sample was collected. This field
+     * is not propagated if the "one-shot" option is set. If the "one-shot"
+     * option is set, this field may be omitted, empty, or set to a default
+     * date (`0001-01-01T00:00:00Z`).
      *
-     * @param ContainerCPUStats|null $cpuStats
+     * The value is formatted as [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt)
+     * with nano-seconds.
+     *
+     * @param string|null $preread
      *
      * @return self
      */
-    public function setCpuStats(?ContainerCPUStats $cpuStats): self
+    public function setPreread(?string $preread): self
     {
-        $this->initialized['cpuStats'] = true;
-        $this->cpuStats                = $cpuStats;
+        $this->initialized['preread'] = true;
+        $this->preread                = $preread;
 
         return $this;
     }
@@ -400,62 +488,6 @@ class ContainerStatsResponse extends ArrayObject
     {
         $this->initialized['precpuStats'] = true;
         $this->precpuStats                = $precpuStats;
-
-        return $this;
-    }
-
-    /**
-     * Aggregates all memory stats since container inception on Linux.
-     * Windows returns stats for commit and private working set only.
-     *
-     * @return ContainerMemoryStats
-     */
-    public function getMemoryStats(): ContainerMemoryStats
-    {
-        return $this->memoryStats;
-    }
-
-    /**
-     * Aggregates all memory stats since container inception on Linux.
-     * Windows returns stats for commit and private working set only.
-     *
-     * @param ContainerMemoryStats $memoryStats
-     *
-     * @return self
-     */
-    public function setMemoryStats(ContainerMemoryStats $memoryStats): self
-    {
-        $this->initialized['memoryStats'] = true;
-        $this->memoryStats                = $memoryStats;
-
-        return $this;
-    }
-
-    /**
-     * Network statistics for the container per interface.
-     *
-     * This field is omitted if the container has no networking enabled.
-     *
-     * @return mixed
-     */
-    public function getNetworks()
-    {
-        return $this->networks;
-    }
-
-    /**
-     * Network statistics for the container per interface.
-     *
-     * This field is omitted if the container has no networking enabled.
-     *
-     * @param mixed $networks
-     *
-     * @return self
-     */
-    public function setNetworks($networks): self
-    {
-        $this->initialized['networks'] = true;
-        $this->networks                = $networks;
 
         return $this;
     }

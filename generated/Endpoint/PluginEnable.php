@@ -10,13 +10,11 @@ class PluginEnable extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     protected $accept;
 
     /**
-     * @param string $name            The name of the plugin. The `:latest` tag is optional, and is the
-     *                                default if omitted.
-     * @param array  $queryParameters {
-     *
-     * @var int $timeout Set the HTTP client timeout (in seconds)
-     *          }
-     *
+     * @param string $name The name of the plugin. The `:latest` tag is optional, and is the
+     *                     default if omitted.
+     * @param array{
+     *    "timeout"?: int, //Set the HTTP client timeout (in seconds)
+     * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
     public function __construct(string $name, array $queryParameters = [], array $accept = [])
@@ -76,10 +74,10 @@ class PluginEnable extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\PluginEnableNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\PluginEnableInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ContainerNetworkStats extends ArrayObject
+class ContainerNetworkStats
 {
     /**
      * @var array
@@ -20,13 +19,13 @@ class ContainerNetworkStats extends ArrayObject
     /**
      * Bytes received. Windows and Linux.
      *
-     * @var int
+     * @var int|null
      */
     protected $rxBytes;
     /**
      * Packets received. Windows and Linux.
      *
-     * @var int
+     * @var int|null
      */
     protected $rxPackets;
     /**
@@ -34,25 +33,25 @@ class ContainerNetworkStats extends ArrayObject
      *
      * This field is Linux-specific and always zero for Windows containers.
      *
-     * @var int
+     * @var int|null
      */
     protected $rxErrors;
     /**
      * Incoming packets dropped. Windows and Linux.
      *
-     * @var int
+     * @var int|null
      */
     protected $rxDropped;
     /**
      * Bytes sent. Windows and Linux.
      *
-     * @var int
+     * @var int|null
      */
     protected $txBytes;
     /**
      * Packets sent. Windows and Linux.
      *
-     * @var int
+     * @var int|null
      */
     protected $txPackets;
     /**
@@ -60,13 +59,13 @@ class ContainerNetworkStats extends ArrayObject
      *
      * This field is Linux-specific and always zero for Windows containers.
      *
-     * @var int
+     * @var int|null
      */
     protected $txErrors;
     /**
      * Outgoing packets dropped. Windows and Linux.
      *
-     * @var int
+     * @var int|null
      */
     protected $txDropped;
     /**
@@ -89,9 +88,9 @@ class ContainerNetworkStats extends ArrayObject
     /**
      * Bytes received. Windows and Linux.
      *
-     * @return int
+     * @return int|null
      */
-    public function getRxBytes(): int
+    public function getRxBytes(): ?int
     {
         return $this->rxBytes;
     }
@@ -99,11 +98,11 @@ class ContainerNetworkStats extends ArrayObject
     /**
      * Bytes received. Windows and Linux.
      *
-     * @param int $rxBytes
+     * @param int|null $rxBytes
      *
      * @return self
      */
-    public function setRxBytes(int $rxBytes): self
+    public function setRxBytes(?int $rxBytes): self
     {
         $this->initialized['rxBytes'] = true;
         $this->rxBytes                = $rxBytes;
@@ -114,9 +113,9 @@ class ContainerNetworkStats extends ArrayObject
     /**
      * Packets received. Windows and Linux.
      *
-     * @return int
+     * @return int|null
      */
-    public function getRxPackets(): int
+    public function getRxPackets(): ?int
     {
         return $this->rxPackets;
     }
@@ -124,11 +123,11 @@ class ContainerNetworkStats extends ArrayObject
     /**
      * Packets received. Windows and Linux.
      *
-     * @param int $rxPackets
+     * @param int|null $rxPackets
      *
      * @return self
      */
-    public function setRxPackets(int $rxPackets): self
+    public function setRxPackets(?int $rxPackets): self
     {
         $this->initialized['rxPackets'] = true;
         $this->rxPackets                = $rxPackets;
@@ -141,9 +140,9 @@ class ContainerNetworkStats extends ArrayObject
      *
      * This field is Linux-specific and always zero for Windows containers.
      *
-     * @return int
+     * @return int|null
      */
-    public function getRxErrors(): int
+    public function getRxErrors(): ?int
     {
         return $this->rxErrors;
     }
@@ -153,11 +152,11 @@ class ContainerNetworkStats extends ArrayObject
      *
      * This field is Linux-specific and always zero for Windows containers.
      *
-     * @param int $rxErrors
+     * @param int|null $rxErrors
      *
      * @return self
      */
-    public function setRxErrors(int $rxErrors): self
+    public function setRxErrors(?int $rxErrors): self
     {
         $this->initialized['rxErrors'] = true;
         $this->rxErrors                = $rxErrors;
@@ -168,9 +167,9 @@ class ContainerNetworkStats extends ArrayObject
     /**
      * Incoming packets dropped. Windows and Linux.
      *
-     * @return int
+     * @return int|null
      */
-    public function getRxDropped(): int
+    public function getRxDropped(): ?int
     {
         return $this->rxDropped;
     }
@@ -178,11 +177,11 @@ class ContainerNetworkStats extends ArrayObject
     /**
      * Incoming packets dropped. Windows and Linux.
      *
-     * @param int $rxDropped
+     * @param int|null $rxDropped
      *
      * @return self
      */
-    public function setRxDropped(int $rxDropped): self
+    public function setRxDropped(?int $rxDropped): self
     {
         $this->initialized['rxDropped'] = true;
         $this->rxDropped                = $rxDropped;
@@ -193,9 +192,9 @@ class ContainerNetworkStats extends ArrayObject
     /**
      * Bytes sent. Windows and Linux.
      *
-     * @return int
+     * @return int|null
      */
-    public function getTxBytes(): int
+    public function getTxBytes(): ?int
     {
         return $this->txBytes;
     }
@@ -203,11 +202,11 @@ class ContainerNetworkStats extends ArrayObject
     /**
      * Bytes sent. Windows and Linux.
      *
-     * @param int $txBytes
+     * @param int|null $txBytes
      *
      * @return self
      */
-    public function setTxBytes(int $txBytes): self
+    public function setTxBytes(?int $txBytes): self
     {
         $this->initialized['txBytes'] = true;
         $this->txBytes                = $txBytes;
@@ -218,9 +217,9 @@ class ContainerNetworkStats extends ArrayObject
     /**
      * Packets sent. Windows and Linux.
      *
-     * @return int
+     * @return int|null
      */
-    public function getTxPackets(): int
+    public function getTxPackets(): ?int
     {
         return $this->txPackets;
     }
@@ -228,11 +227,11 @@ class ContainerNetworkStats extends ArrayObject
     /**
      * Packets sent. Windows and Linux.
      *
-     * @param int $txPackets
+     * @param int|null $txPackets
      *
      * @return self
      */
-    public function setTxPackets(int $txPackets): self
+    public function setTxPackets(?int $txPackets): self
     {
         $this->initialized['txPackets'] = true;
         $this->txPackets                = $txPackets;
@@ -245,9 +244,9 @@ class ContainerNetworkStats extends ArrayObject
      *
      * This field is Linux-specific and always zero for Windows containers.
      *
-     * @return int
+     * @return int|null
      */
-    public function getTxErrors(): int
+    public function getTxErrors(): ?int
     {
         return $this->txErrors;
     }
@@ -257,11 +256,11 @@ class ContainerNetworkStats extends ArrayObject
      *
      * This field is Linux-specific and always zero for Windows containers.
      *
-     * @param int $txErrors
+     * @param int|null $txErrors
      *
      * @return self
      */
-    public function setTxErrors(int $txErrors): self
+    public function setTxErrors(?int $txErrors): self
     {
         $this->initialized['txErrors'] = true;
         $this->txErrors                = $txErrors;
@@ -272,9 +271,9 @@ class ContainerNetworkStats extends ArrayObject
     /**
      * Outgoing packets dropped. Windows and Linux.
      *
-     * @return int
+     * @return int|null
      */
-    public function getTxDropped(): int
+    public function getTxDropped(): ?int
     {
         return $this->txDropped;
     }
@@ -282,11 +281,11 @@ class ContainerNetworkStats extends ArrayObject
     /**
      * Outgoing packets dropped. Windows and Linux.
      *
-     * @param int $txDropped
+     * @param int|null $txDropped
      *
      * @return self
      */
-    public function setTxDropped(int $txDropped): self
+    public function setTxDropped(?int $txDropped): self
     {
         $this->initialized['txDropped'] = true;
         $this->txDropped                = $txDropped;

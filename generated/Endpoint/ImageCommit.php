@@ -9,16 +9,15 @@ class ImageCommit extends \WebProject\DockerApi\Library\Generated\Runtime\Client
 
     /**
      * @param \WebProject\DockerApi\Library\Generated\Model\ContainerConfig|null $requestBody
-     * @param array                                                              $queryParameters {
-     *
-     * @var string $container The ID or name of the container to commit
-     * @var string $repo Repository name for the created image
-     * @var string $tag Tag name for the create image
-     * @var string $comment Commit message
-     * @var string $author Author of the image (e.g., `John Hannibal Smith <hannibal@a-team.com>`)
-     * @var bool   $pause Whether to pause the container before committing
-     * @var string $changes `Dockerfile` instructions to apply while committing
-     *             }
+     * @param array{
+     *    "container"?: string, //The ID or name of the container to commit
+     *    "repo"?: string, //Repository name for the created image
+     *    "tag"?: string, //Tag name for the create image
+     *    "comment"?: string, //Commit message
+     *    "author"?: string, //Author of the image (e.g., `John Hannibal Smith <hannibal@a-team.com>`)
+     *    "pause"?: bool, //Whether to pause the container before committing
+     *    "changes"?: string, //`Dockerfile` instructions to apply while committing
+     * } $queryParameters
      */
     public function __construct(?\WebProject\DockerApi\Library\Generated\Model\ContainerConfig $requestBody = null, array $queryParameters = [])
     {
@@ -79,13 +78,13 @@ class ImageCommit extends \WebProject\DockerApi\Library\Generated\Runtime\Client
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (201 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (201 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\IDResponse', 'json');
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageCommitNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageCommitInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

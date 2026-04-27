@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ConfigReference extends ArrayObject
+class ConfigReference
 {
     /**
      * @var array
@@ -22,7 +21,7 @@ class ConfigReference extends ArrayObject
      * configuration. The specified network must be an existing config-only
      * network. Only network names are allowed, not network IDs.
      *
-     * @var string
+     * @var string|null
      */
     protected $network;
 
@@ -31,9 +30,9 @@ class ConfigReference extends ArrayObject
      * configuration. The specified network must be an existing config-only
      * network. Only network names are allowed, not network IDs.
      *
-     * @return string
+     * @return string|null
      */
-    public function getNetwork(): string
+    public function getNetwork(): ?string
     {
         return $this->network;
     }
@@ -43,11 +42,11 @@ class ConfigReference extends ArrayObject
      * configuration. The specified network must be an existing config-only
      * network. Only network names are allowed, not network IDs.
      *
-     * @param string $network
+     * @param string|null $network
      *
      * @return self
      */
-    public function setNetwork(string $network): self
+    public function setNetwork(?string $network): self
     {
         $this->initialized['network'] = true;
         $this->network                = $network;

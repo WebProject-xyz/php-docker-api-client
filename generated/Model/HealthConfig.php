@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class HealthConfig extends ArrayObject
+class HealthConfig
 {
     /**
      * @var array
@@ -25,28 +24,38 @@ class HealthConfig extends ArrayObject
      * - `["CMD", args...]` exec arguments directly
      * - `["CMD-SHELL", command]` run command with system's default shell
      *
-     * @var list<string>
+     * A non-zero exit code indicates a failed healthcheck:
+     * - `0` healthy
+     * - `1` unhealthy
+     * - `2` reserved (treated as unhealthy)
+     * - other values: error running probe
+     *
+     * @var list<string>|null
      */
     protected $test;
     /**
      * The time to wait between checks in nanoseconds. It should be 0 or at
      * least 1000000 (1 ms). 0 means inherit.
      *
-     * @var int
+     * @var int|null
      */
     protected $interval;
     /**
      * The time to wait before considering the check to have hung. It should
      * be 0 or at least 1000000 (1 ms). 0 means inherit.
      *
-     * @var int
+     * If the health check command does not complete within this timeout,
+     * the check is considered failed and the health check process is
+     * forcibly terminated without a graceful shutdown.
+     *
+     * @var int|null
      */
     protected $timeout;
     /**
      * The number of consecutive failures needed to consider a container as
      * unhealthy. 0 means inherit.
      *
-     * @var int
+     * @var int|null
      */
     protected $retries;
     /**
@@ -54,14 +63,14 @@ class HealthConfig extends ArrayObject
      * health-retries countdown in nanoseconds. It should be 0 or at least
      * 1000000 (1 ms). 0 means inherit.
      *
-     * @var int
+     * @var int|null
      */
     protected $startPeriod;
     /**
      * The time to wait between checks in nanoseconds during the start period.
      * It should be 0 or at least 1000000 (1 ms). 0 means inherit.
      *
-     * @var int
+     * @var int|null
      */
     protected $startInterval;
 
@@ -73,9 +82,15 @@ class HealthConfig extends ArrayObject
      * - `["CMD", args...]` exec arguments directly
      * - `["CMD-SHELL", command]` run command with system's default shell
      *
-     * @return list<string>
+     * A non-zero exit code indicates a failed healthcheck:
+     * - `0` healthy
+     * - `1` unhealthy
+     * - `2` reserved (treated as unhealthy)
+     * - other values: error running probe
+     *
+     * @return list<string>|null
      */
-    public function getTest(): array
+    public function getTest(): ?array
     {
         return $this->test;
     }
@@ -88,11 +103,17 @@ class HealthConfig extends ArrayObject
      * - `["CMD", args...]` exec arguments directly
      * - `["CMD-SHELL", command]` run command with system's default shell
      *
-     * @param list<string> $test
+     * A non-zero exit code indicates a failed healthcheck:
+     * - `0` healthy
+     * - `1` unhealthy
+     * - `2` reserved (treated as unhealthy)
+     * - other values: error running probe
+     *
+     * @param list<string>|null $test
      *
      * @return self
      */
-    public function setTest(array $test): self
+    public function setTest(?array $test): self
     {
         $this->initialized['test'] = true;
         $this->test                = $test;
@@ -104,9 +125,9 @@ class HealthConfig extends ArrayObject
      * The time to wait between checks in nanoseconds. It should be 0 or at
      * least 1000000 (1 ms). 0 means inherit.
      *
-     * @return int
+     * @return int|null
      */
-    public function getInterval(): int
+    public function getInterval(): ?int
     {
         return $this->interval;
     }
@@ -115,11 +136,11 @@ class HealthConfig extends ArrayObject
      * The time to wait between checks in nanoseconds. It should be 0 or at
      * least 1000000 (1 ms). 0 means inherit.
      *
-     * @param int $interval
+     * @param int|null $interval
      *
      * @return self
      */
-    public function setInterval(int $interval): self
+    public function setInterval(?int $interval): self
     {
         $this->initialized['interval'] = true;
         $this->interval                = $interval;
@@ -131,9 +152,13 @@ class HealthConfig extends ArrayObject
      * The time to wait before considering the check to have hung. It should
      * be 0 or at least 1000000 (1 ms). 0 means inherit.
      *
-     * @return int
+     * If the health check command does not complete within this timeout,
+     * the check is considered failed and the health check process is
+     * forcibly terminated without a graceful shutdown.
+     *
+     * @return int|null
      */
-    public function getTimeout(): int
+    public function getTimeout(): ?int
     {
         return $this->timeout;
     }
@@ -142,11 +167,15 @@ class HealthConfig extends ArrayObject
      * The time to wait before considering the check to have hung. It should
      * be 0 or at least 1000000 (1 ms). 0 means inherit.
      *
-     * @param int $timeout
+     * If the health check command does not complete within this timeout,
+     * the check is considered failed and the health check process is
+     * forcibly terminated without a graceful shutdown.
+     *
+     * @param int|null $timeout
      *
      * @return self
      */
-    public function setTimeout(int $timeout): self
+    public function setTimeout(?int $timeout): self
     {
         $this->initialized['timeout'] = true;
         $this->timeout                = $timeout;
@@ -158,9 +187,9 @@ class HealthConfig extends ArrayObject
      * The number of consecutive failures needed to consider a container as
      * unhealthy. 0 means inherit.
      *
-     * @return int
+     * @return int|null
      */
-    public function getRetries(): int
+    public function getRetries(): ?int
     {
         return $this->retries;
     }
@@ -169,11 +198,11 @@ class HealthConfig extends ArrayObject
      * The number of consecutive failures needed to consider a container as
      * unhealthy. 0 means inherit.
      *
-     * @param int $retries
+     * @param int|null $retries
      *
      * @return self
      */
-    public function setRetries(int $retries): self
+    public function setRetries(?int $retries): self
     {
         $this->initialized['retries'] = true;
         $this->retries                = $retries;
@@ -186,9 +215,9 @@ class HealthConfig extends ArrayObject
      * health-retries countdown in nanoseconds. It should be 0 or at least
      * 1000000 (1 ms). 0 means inherit.
      *
-     * @return int
+     * @return int|null
      */
-    public function getStartPeriod(): int
+    public function getStartPeriod(): ?int
     {
         return $this->startPeriod;
     }
@@ -198,11 +227,11 @@ class HealthConfig extends ArrayObject
      * health-retries countdown in nanoseconds. It should be 0 or at least
      * 1000000 (1 ms). 0 means inherit.
      *
-     * @param int $startPeriod
+     * @param int|null $startPeriod
      *
      * @return self
      */
-    public function setStartPeriod(int $startPeriod): self
+    public function setStartPeriod(?int $startPeriod): self
     {
         $this->initialized['startPeriod'] = true;
         $this->startPeriod                = $startPeriod;
@@ -214,9 +243,9 @@ class HealthConfig extends ArrayObject
      * The time to wait between checks in nanoseconds during the start period.
      * It should be 0 or at least 1000000 (1 ms). 0 means inherit.
      *
-     * @return int
+     * @return int|null
      */
-    public function getStartInterval(): int
+    public function getStartInterval(): ?int
     {
         return $this->startInterval;
     }
@@ -225,11 +254,11 @@ class HealthConfig extends ArrayObject
      * The time to wait between checks in nanoseconds during the start period.
      * It should be 0 or at least 1000000 (1 ms). 0 means inherit.
      *
-     * @param int $startInterval
+     * @param int|null $startInterval
      *
      * @return self
      */
-    public function setStartInterval(int $startInterval): self
+    public function setStartInterval(?int $startInterval): self
     {
         $this->initialized['startInterval'] = true;
         $this->startInterval                = $startInterval;

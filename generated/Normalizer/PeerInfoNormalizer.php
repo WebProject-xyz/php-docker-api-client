@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class PeerInfoNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,28 +38,37 @@ class PeerInfoNormalizer implements DenormalizerInterface, NormalizerInterface, 
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\PeerInfo();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\PeerInfo();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Name', $data)) {
-            $object->setName($data['Name']);
-            unset($data['Name']);
-        }
-        if (array_key_exists('IP', $data)) {
-            $object->setIP($data['IP']);
-            unset($data['IP']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Name', $data) && null !== $data['Name']) {
+            $value = $data['Name'];
+            if (is_string($data['Name'])) {
+                $value = $data['Name'];
+            } elseif (null === $data['Name']) {
+                $value = $data['Name'];
             }
+            $object->setName($value);
+        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
+            $object->setName(null);
+        }
+        if (array_key_exists('IP', $data) && null !== $data['IP']) {
+            $value_1 = $data['IP'];
+            if (is_string($data['IP'])) {
+                $value_1 = $data['IP'];
+            } elseif (null === $data['IP']) {
+                $value_1 = $data['IP'];
+            }
+            $object->setIP($value_1);
+        } elseif (array_key_exists('IP', $data) && null === $data['IP']) {
+            $object->setIP(null);
         }
 
         return $object;
@@ -67,16 +77,23 @@ class PeerInfoNormalizer implements DenormalizerInterface, NormalizerInterface, 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name') && null !== $data->getName()) {
-            $dataArray['Name'] = $data->getName();
-        }
-        if ($data->isInitialized('iP') && null !== $data->getIP()) {
-            $dataArray['IP'] = $data->getIP();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('name')) {
+            $value = $data->getName();
+            if (is_string($data->getName())) {
+                $value = $data->getName();
+            } elseif (null === $data->getName()) {
+                $value = $data->getName();
             }
+            $dataArray['Name'] = $value;
+        }
+        if ($data->isInitialized('iP')) {
+            $value_1 = $data->getIP();
+            if (is_string($data->getIP())) {
+                $value_1 = $data->getIP();
+            } elseif (null === $data->getIP()) {
+                $value_1 = $data->getIP();
+            }
+            $dataArray['IP'] = $value_1;
         }
 
         return $dataArray;

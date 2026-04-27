@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class Plugin extends ArrayObject
+class Plugin
 {
     /**
      * @var array
@@ -18,7 +17,7 @@ class Plugin extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $id;
     /**
@@ -32,7 +31,7 @@ class Plugin extends ArrayObject
      */
     protected $enabled;
     /**
-     * Settings that can be modified by users.
+     * user-configurable settings for the plugin.
      *
      * @var PluginSettings
      */
@@ -51,19 +50,19 @@ class Plugin extends ArrayObject
     protected $config;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
     /**
-     * @param string $id
+     * @param string|null $id
      *
      * @return self
      */
-    public function setId(string $id): self
+    public function setId(?string $id): self
     {
         $this->initialized['id'] = true;
         $this->id                = $id;
@@ -118,7 +117,7 @@ class Plugin extends ArrayObject
     }
 
     /**
-     * Settings that can be modified by users.
+     * user-configurable settings for the plugin.
      *
      * @return PluginSettings
      */
@@ -128,7 +127,7 @@ class Plugin extends ArrayObject
     }
 
     /**
-     * Settings that can be modified by users.
+     * user-configurable settings for the plugin.
      *
      * @param PluginSettings $settings
      *

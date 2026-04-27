@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class SwarmSpecEncryptionConfig extends ArrayObject
+class SwarmSpecEncryptionConfig
 {
     /**
      * @var array
@@ -21,7 +20,7 @@ class SwarmSpecEncryptionConfig extends ArrayObject
      * If set, generate a key and use it to lock data stored on the
      * managers.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $autoLockManagers;
 
@@ -29,9 +28,9 @@ class SwarmSpecEncryptionConfig extends ArrayObject
      * If set, generate a key and use it to lock data stored on the
      * managers.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getAutoLockManagers(): bool
+    public function getAutoLockManagers(): ?bool
     {
         return $this->autoLockManagers;
     }
@@ -40,11 +39,11 @@ class SwarmSpecEncryptionConfig extends ArrayObject
      * If set, generate a key and use it to lock data stored on the
      * managers.
      *
-     * @param bool $autoLockManagers
+     * @param bool|null $autoLockManagers
      *
      * @return self
      */
-    public function setAutoLockManagers(bool $autoLockManagers): self
+    public function setAutoLockManagers(?bool $autoLockManagers): self
     {
         $this->initialized['autoLockManagers'] = true;
         $this->autoLockManagers                = $autoLockManagers;

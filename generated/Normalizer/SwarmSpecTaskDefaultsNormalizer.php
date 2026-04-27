@@ -37,24 +37,20 @@ class SwarmSpecTaskDefaultsNormalizer implements DenormalizerInterface, Normaliz
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\SwarmSpecTaskDefaults();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\SwarmSpecTaskDefaults();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('LogDriver', $data)) {
+        if (array_key_exists('LogDriver', $data) && null !== $data['LogDriver']) {
             $object->setLogDriver($this->denormalizer->denormalize($data['LogDriver'], \WebProject\DockerApi\Library\Generated\Model\SwarmSpecTaskDefaultsLogDriver::class, 'json', $context));
-            unset($data['LogDriver']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
-            }
+        } elseif (array_key_exists('LogDriver', $data) && null === $data['LogDriver']) {
+            $object->setLogDriver(null);
         }
 
         return $object;
@@ -63,13 +59,8 @@ class SwarmSpecTaskDefaultsNormalizer implements DenormalizerInterface, Normaliz
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('logDriver') && null !== $data->getLogDriver()) {
+        if ($data->isInitialized('logDriver')) {
             $dataArray['LogDriver'] = $this->normalizer->normalize($data->getLogDriver(), 'json', $context);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
-            }
         }
 
         return $dataArray;

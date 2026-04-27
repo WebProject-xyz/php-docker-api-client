@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class RuntimeNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,44 +38,56 @@ class RuntimeNormalizer implements DenormalizerInterface, NormalizerInterface, D
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\Runtime();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\Runtime();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('path', $data)) {
-            $object->setPath($data['path']);
-            unset($data['path']);
+        if (array_key_exists('path', $data) && null !== $data['path']) {
+            $value = $data['path'];
+            if (is_string($data['path'])) {
+                $value = $data['path'];
+            } elseif (null === $data['path']) {
+                $value = $data['path'];
+            }
+            $object->setPath($value);
+        } elseif (array_key_exists('path', $data) && null === $data['path']) {
+            $object->setPath(null);
         }
         if (array_key_exists('runtimeArgs', $data) && null !== $data['runtimeArgs']) {
-            $values = [];
-            foreach ($data['runtimeArgs'] as $value) {
-                $values[] = $value;
+            $value_1 = $data['runtimeArgs'];
+            if (is_array($data['runtimeArgs']) && $this->isOnlyNumericKeys($data['runtimeArgs'])) {
+                $values = [];
+                foreach ($data['runtimeArgs'] as $value_2) {
+                    $values[] = $value_2;
+                }
+                $value_1 = $values;
+            } elseif (null === $data['runtimeArgs']) {
+                $value_1 = $data['runtimeArgs'];
             }
-            $object->setRuntimeArgs($values);
-            unset($data['runtimeArgs']);
+            $object->setRuntimeArgs($value_1);
         } elseif (array_key_exists('runtimeArgs', $data) && null === $data['runtimeArgs']) {
             $object->setRuntimeArgs(null);
         }
         if (array_key_exists('status', $data) && null !== $data['status']) {
-            $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['status'] as $key => $value_1) {
-                $values_1[$key] = $value_1;
+            $value_3 = $data['status'];
+            if (is_array($data['status']) && $this->isOnlyNumericKeys($data['status'])) {
+                $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                foreach ($data['status'] as $key => $value_4) {
+                    $values_1[$key] = $value_4;
+                }
+                $value_3 = $values_1;
+            } elseif (null === $data['status']) {
+                $value_3 = $data['status'];
             }
-            $object->setStatus($values_1);
-            unset($data['status']);
+            $object->setStatus($value_3);
         } elseif (array_key_exists('status', $data) && null === $data['status']) {
             $object->setStatus(null);
-        }
-        foreach ($data as $key_1 => $value_2) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $object[$key_1] = $value_2;
-            }
         }
 
         return $object;
@@ -83,27 +96,40 @@ class RuntimeNormalizer implements DenormalizerInterface, NormalizerInterface, D
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('path') && null !== $data->getPath()) {
-            $dataArray['path'] = $data->getPath();
-        }
-        if ($data->isInitialized('runtimeArgs') && null !== $data->getRuntimeArgs()) {
-            $values = [];
-            foreach ($data->getRuntimeArgs() as $value) {
-                $values[] = $value;
+        if ($data->isInitialized('path')) {
+            $value = $data->getPath();
+            if (is_string($data->getPath())) {
+                $value = $data->getPath();
+            } elseif (null === $data->getPath()) {
+                $value = $data->getPath();
             }
-            $dataArray['runtimeArgs'] = $values;
+            $dataArray['path'] = $value;
         }
-        if ($data->isInitialized('status') && null !== $data->getStatus()) {
-            $values_1 = [];
-            foreach ($data->getStatus() as $key => $value_1) {
-                $values_1[$key] = $value_1;
+        if ($data->isInitialized('runtimeArgs')) {
+            $value_1 = $data->getRuntimeArgs();
+            if (is_array($data->getRuntimeArgs())) {
+                $values = [];
+                foreach ($data->getRuntimeArgs() as $value_2) {
+                    $values[] = $value_2;
+                }
+                $value_1 = $values;
+            } elseif (null === $data->getRuntimeArgs()) {
+                $value_1 = $data->getRuntimeArgs();
             }
-            $dataArray['status'] = $values_1;
+            $dataArray['runtimeArgs'] = $value_1;
         }
-        foreach ($data as $key_1 => $value_2) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $dataArray[$key_1] = $value_2;
+        if ($data->isInitialized('status')) {
+            $value_3 = $data->getStatus();
+            if (is_object($data->getStatus())) {
+                $values_1 = [];
+                foreach ($data->getStatus() as $key => $value_4) {
+                    $values_1[$key] = $value_4;
+                }
+                $value_3 = $values_1;
+            } elseif (null === $data->getStatus()) {
+                $value_3 = $data->getStatus();
             }
+            $dataArray['status'] = $value_3;
         }
 
         return $dataArray;

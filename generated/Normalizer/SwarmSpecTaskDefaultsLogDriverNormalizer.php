@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class SwarmSpecTaskDefaultsLogDriverNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,32 +38,41 @@ class SwarmSpecTaskDefaultsLogDriverNormalizer implements DenormalizerInterface,
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\SwarmSpecTaskDefaultsLogDriver();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\SwarmSpecTaskDefaultsLogDriver();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Name', $data)) {
-            $object->setName($data['Name']);
-            unset($data['Name']);
-        }
-        if (array_key_exists('Options', $data)) {
-            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['Options'] as $key => $value) {
-                $values[$key] = $value;
+        if (array_key_exists('Name', $data) && null !== $data['Name']) {
+            $value = $data['Name'];
+            if (is_string($data['Name'])) {
+                $value = $data['Name'];
+            } elseif (null === $data['Name']) {
+                $value = $data['Name'];
             }
-            $object->setOptions($values);
-            unset($data['Options']);
+            $object->setName($value);
+        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
+            $object->setName(null);
         }
-        foreach ($data as $key_1 => $value_1) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $object[$key_1] = $value_1;
+        if (array_key_exists('Options', $data) && null !== $data['Options']) {
+            $value_1 = $data['Options'];
+            if (is_array($data['Options']) && $this->isOnlyNumericKeys($data['Options'])) {
+                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                foreach ($data['Options'] as $key => $value_2) {
+                    $values[$key] = $value_2;
+                }
+                $value_1 = $values;
+            } elseif (null === $data['Options']) {
+                $value_1 = $data['Options'];
             }
+            $object->setOptions($value_1);
+        } elseif (array_key_exists('Options', $data) && null === $data['Options']) {
+            $object->setOptions(null);
         }
 
         return $object;
@@ -71,20 +81,27 @@ class SwarmSpecTaskDefaultsLogDriverNormalizer implements DenormalizerInterface,
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name') && null !== $data->getName()) {
-            $dataArray['Name'] = $data->getName();
-        }
-        if ($data->isInitialized('options') && null !== $data->getOptions()) {
-            $values = [];
-            foreach ($data->getOptions() as $key => $value) {
-                $values[$key] = $value;
+        if ($data->isInitialized('name')) {
+            $value = $data->getName();
+            if (is_string($data->getName())) {
+                $value = $data->getName();
+            } elseif (null === $data->getName()) {
+                $value = $data->getName();
             }
-            $dataArray['Options'] = $values;
+            $dataArray['Name'] = $value;
         }
-        foreach ($data as $key_1 => $value_1) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $dataArray[$key_1] = $value_1;
+        if ($data->isInitialized('options')) {
+            $value_1 = $data->getOptions();
+            if (is_object($data->getOptions())) {
+                $values = [];
+                foreach ($data->getOptions() as $key => $value_2) {
+                    $values[$key] = $value_2;
+                }
+                $value_1 = $values;
+            } elseif (null === $data->getOptions()) {
+                $value_1 = $data->getOptions();
             }
+            $dataArray['Options'] = $value_1;
         }
 
         return $dataArray;

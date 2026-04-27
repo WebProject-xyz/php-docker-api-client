@@ -14,26 +14,21 @@ class PluginPull extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
      * enabled using the [`POST /plugins/{name}/enable` endpoint](#operation/PostPluginsEnable).
      *
      * @param \WebProject\DockerApi\Library\Generated\Model\PluginPrivilege[]|null $requestBody
-     * @param array                                                                $queryParameters {
-     *
-     * @var string $remote Remote reference for plugin to install.
-     *
-     * The `:latest` tag is optional, and is used as the default if omitted.
-     * @var string $name Local name for the pulled plugin.
+     * @param array{
+     *    "remote": string, //Remote reference for plugin to install.
      *
      * The `:latest` tag is optional, and is used as the default if omitted.
+     *    "name"?: string, //Local name for the pulled plugin.
      *
-     * }
-     *
-     * @param array $headerParameters {
-     *
-     * @var string $X-Registry-Auth A base64url-encoded auth configuration to use when pulling a plugin
-     *             from a registry.
+     * The `:latest` tag is optional, and is used as the default if omitted.
+     * } $queryParameters
+     * @param array{
+     *    "X-Registry-Auth"?: string, //A base64url-encoded auth configuration to use when pulling a plugin
+     * from a registry.
      *
      * Refer to the [authentication section](#section/Authentication) for
      * details.
-     *
-     * }
+     * } $headerParameters
      */
     public function __construct(?array $requestBody = null, array $queryParameters = [], array $headerParameters = [])
     {
@@ -106,7 +101,7 @@ class PluginPull extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
         if (204 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\PluginPullInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

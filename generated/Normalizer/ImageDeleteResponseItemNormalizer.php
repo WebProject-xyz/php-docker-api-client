@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class ImageDeleteResponseItemNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,28 +38,37 @@ class ImageDeleteResponseItemNormalizer implements DenormalizerInterface, Normal
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ImageDeleteResponseItem();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ImageDeleteResponseItem();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Untagged', $data)) {
-            $object->setUntagged($data['Untagged']);
-            unset($data['Untagged']);
-        }
-        if (array_key_exists('Deleted', $data)) {
-            $object->setDeleted($data['Deleted']);
-            unset($data['Deleted']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Untagged', $data) && null !== $data['Untagged']) {
+            $value = $data['Untagged'];
+            if (is_string($data['Untagged'])) {
+                $value = $data['Untagged'];
+            } elseif (null === $data['Untagged']) {
+                $value = $data['Untagged'];
             }
+            $object->setUntagged($value);
+        } elseif (array_key_exists('Untagged', $data) && null === $data['Untagged']) {
+            $object->setUntagged(null);
+        }
+        if (array_key_exists('Deleted', $data) && null !== $data['Deleted']) {
+            $value_1 = $data['Deleted'];
+            if (is_string($data['Deleted'])) {
+                $value_1 = $data['Deleted'];
+            } elseif (null === $data['Deleted']) {
+                $value_1 = $data['Deleted'];
+            }
+            $object->setDeleted($value_1);
+        } elseif (array_key_exists('Deleted', $data) && null === $data['Deleted']) {
+            $object->setDeleted(null);
         }
 
         return $object;
@@ -67,16 +77,23 @@ class ImageDeleteResponseItemNormalizer implements DenormalizerInterface, Normal
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('untagged') && null !== $data->getUntagged()) {
-            $dataArray['Untagged'] = $data->getUntagged();
-        }
-        if ($data->isInitialized('deleted') && null !== $data->getDeleted()) {
-            $dataArray['Deleted'] = $data->getDeleted();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('untagged')) {
+            $value = $data->getUntagged();
+            if (is_string($data->getUntagged())) {
+                $value = $data->getUntagged();
+            } elseif (null === $data->getUntagged()) {
+                $value = $data->getUntagged();
             }
+            $dataArray['Untagged'] = $value;
+        }
+        if ($data->isInitialized('deleted')) {
+            $value_1 = $data->getDeleted();
+            if (is_string($data->getDeleted())) {
+                $value_1 = $data->getDeleted();
+            } elseif (null === $data->getDeleted()) {
+                $value_1 = $data->getDeleted();
+            }
+            $dataArray['Deleted'] = $value_1;
         }
 
         return $dataArray;

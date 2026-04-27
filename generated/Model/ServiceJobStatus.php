@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ServiceJobStatus extends ArrayObject
+class ServiceJobStatus
 {
     /**
      * @var array
@@ -36,7 +35,7 @@ class ServiceJobStatus extends ArrayObject
      * The last time, as observed by the server, that this job was
      * started.
      *
-     * @var string
+     * @var string|null
      */
     protected $lastExecution;
 
@@ -87,9 +86,9 @@ class ServiceJobStatus extends ArrayObject
      * The last time, as observed by the server, that this job was
      * started.
      *
-     * @return string
+     * @return string|null
      */
-    public function getLastExecution(): string
+    public function getLastExecution(): ?string
     {
         return $this->lastExecution;
     }
@@ -98,11 +97,11 @@ class ServiceJobStatus extends ArrayObject
      * The last time, as observed by the server, that this job was
      * started.
      *
-     * @param string $lastExecution
+     * @param string|null $lastExecution
      *
      * @return self
      */
-    public function setLastExecution(string $lastExecution): self
+    public function setLastExecution(?string $lastExecution): self
     {
         $this->initialized['lastExecution'] = true;
         $this->lastExecution                = $lastExecution;

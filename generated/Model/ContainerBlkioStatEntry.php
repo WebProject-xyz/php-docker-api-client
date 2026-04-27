@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ContainerBlkioStatEntry extends ArrayObject
+class ContainerBlkioStatEntry
 {
     /**
      * @var array
@@ -18,36 +17,36 @@ class ContainerBlkioStatEntry extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var int
+     * @var int|null
      */
     protected $major;
     /**
-     * @var int
+     * @var int|null
      */
     protected $minor;
     /**
-     * @var string
+     * @var string|null
      */
     protected $op;
     /**
-     * @var int
+     * @var int|null
      */
     protected $value;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMajor(): int
+    public function getMajor(): ?int
     {
         return $this->major;
     }
 
     /**
-     * @param int $major
+     * @param int|null $major
      *
      * @return self
      */
-    public function setMajor(int $major): self
+    public function setMajor(?int $major): self
     {
         $this->initialized['major'] = true;
         $this->major                = $major;
@@ -56,19 +55,19 @@ class ContainerBlkioStatEntry extends ArrayObject
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMinor(): int
+    public function getMinor(): ?int
     {
         return $this->minor;
     }
 
     /**
-     * @param int $minor
+     * @param int|null $minor
      *
      * @return self
      */
-    public function setMinor(int $minor): self
+    public function setMinor(?int $minor): self
     {
         $this->initialized['minor'] = true;
         $this->minor                = $minor;
@@ -77,19 +76,19 @@ class ContainerBlkioStatEntry extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOp(): string
+    public function getOp(): ?string
     {
         return $this->op;
     }
 
     /**
-     * @param string $op
+     * @param string|null $op
      *
      * @return self
      */
-    public function setOp(string $op): self
+    public function setOp(?string $op): self
     {
         $this->initialized['op'] = true;
         $this->op                = $op;
@@ -98,19 +97,19 @@ class ContainerBlkioStatEntry extends ArrayObject
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getValue(): int
+    public function getValue(): ?int
     {
         return $this->value;
     }
 
     /**
-     * @param int $value
+     * @param int|null $value
      *
      * @return self
      */
-    public function setValue(int $value): self
+    public function setValue(?int $value): self
     {
         $this->initialized['value'] = true;
         $this->value                = $value;

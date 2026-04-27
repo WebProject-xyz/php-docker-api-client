@@ -15,20 +15,17 @@ class ContainerLogs extends \WebProject\DockerApi\Library\Generated\Runtime\Clie
      * Note: This endpoint works only for containers with the `json-file` or
      * `journald` logging driver.
      *
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var bool   $follow keep connection after returning logs
-     * @var bool   $stdout Return logs from `stdout`
-     * @var bool   $stderr Return logs from `stderr`
-     * @var int    $since Only return logs since this time, as a UNIX timestamp
-     * @var int    $until Only return logs before this time, as a UNIX timestamp
-     * @var bool   $timestamps Add timestamps to every log line
-     * @var string $tail Only return this number of log lines from the end of the logs.
-     *             Specify as an integer or `all` to output all log lines.
-     *
-     * }
-     *
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "follow"?: bool, //Keep connection after returning logs.
+     *    "stdout"?: bool, //Return logs from `stdout`
+     *    "stderr"?: bool, //Return logs from `stderr`
+     *    "since"?: int, //Only return logs since this time, as a UNIX timestamp
+     *    "until"?: int, //Only return logs before this time, as a UNIX timestamp
+     *    "timestamps"?: bool, //Add timestamps to every log line
+     *    "tail"?: string, //Only return this number of log lines from the end of the logs.
+     * Specify as an integer or `all` to output all log lines.
+     * } $queryParameters
      * @param array $accept Accept content header application/vnd.docker.raw-stream|application/vnd.docker.multiplexed-stream|application/json
      */
     public function __construct(string $id, array $queryParameters = [], array $accept = [])
@@ -92,7 +89,7 @@ class ContainerLogs extends \WebProject\DockerApi\Library\Generated\Runtime\Clie
         $body   = (string) $response->getBody();
         if (200 === $status) {
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerLogsNotFoundException($response);
         }
         if (500 === $status) {

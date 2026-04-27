@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class PluginConfigInterface extends ArrayObject
+class PluginConfigInterface
 {
     /**
      * @var array
@@ -18,7 +17,7 @@ class PluginConfigInterface extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var list<PluginInterfaceType>
+     * @var list<string>
      */
     protected $types;
     /**
@@ -28,12 +27,12 @@ class PluginConfigInterface extends ArrayObject
     /**
      * Protocol to use for clients connecting to the plugin.
      *
-     * @var string
+     * @var string|null
      */
     protected $protocolScheme;
 
     /**
-     * @return list<PluginInterfaceType>
+     * @return list<string>
      */
     public function getTypes(): array
     {
@@ -41,7 +40,7 @@ class PluginConfigInterface extends ArrayObject
     }
 
     /**
-     * @param list<PluginInterfaceType> $types
+     * @param list<string> $types
      *
      * @return self
      */
@@ -77,9 +76,9 @@ class PluginConfigInterface extends ArrayObject
     /**
      * Protocol to use for clients connecting to the plugin.
      *
-     * @return string
+     * @return string|null
      */
-    public function getProtocolScheme(): string
+    public function getProtocolScheme(): ?string
     {
         return $this->protocolScheme;
     }
@@ -87,11 +86,11 @@ class PluginConfigInterface extends ArrayObject
     /**
      * Protocol to use for clients connecting to the plugin.
      *
-     * @param string $protocolScheme
+     * @param string|null $protocolScheme
      *
      * @return self
      */
-    public function setProtocolScheme(string $protocolScheme): self
+    public function setProtocolScheme(?string $protocolScheme): self
     {
         $this->initialized['protocolScheme'] = true;
         $this->protocolScheme                = $protocolScheme;

@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class EventMessage extends ArrayObject
+class EventMessage
 {
     /**
      * @var array
@@ -20,13 +19,13 @@ class EventMessage extends ArrayObject
     /**
      * The type of object emitting the event.
      *
-     * @var string
+     * @var string|null
      */
     protected $type;
     /**
      * The type of event.
      *
-     * @var string
+     * @var string|null
      */
     protected $action;
     /**
@@ -40,28 +39,28 @@ class EventMessage extends ArrayObject
      * Scope of the event. Engine events are `local` scope. Cluster (Swarm)
      * events are `swarm` scope.
      *
-     * @var string
+     * @var string|null
      */
     protected $scope;
     /**
      * Timestamp of event.
      *
-     * @var int
+     * @var int|null
      */
     protected $time;
     /**
      * Timestamp of event, with nanosecond accuracy.
      *
-     * @var int
+     * @var int|null
      */
     protected $timeNano;
 
     /**
      * The type of object emitting the event.
      *
-     * @return string
+     * @return string|null
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -69,11 +68,11 @@ class EventMessage extends ArrayObject
     /**
      * The type of object emitting the event.
      *
-     * @param string $type
+     * @param string|null $type
      *
      * @return self
      */
-    public function setType(string $type): self
+    public function setType(?string $type): self
     {
         $this->initialized['type'] = true;
         $this->type                = $type;
@@ -84,9 +83,9 @@ class EventMessage extends ArrayObject
     /**
      * The type of event.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAction(): string
+    public function getAction(): ?string
     {
         return $this->action;
     }
@@ -94,11 +93,11 @@ class EventMessage extends ArrayObject
     /**
      * The type of event.
      *
-     * @param string $action
+     * @param string|null $action
      *
      * @return self
      */
-    public function setAction(string $action): self
+    public function setAction(?string $action): self
     {
         $this->initialized['action'] = true;
         $this->action                = $action;
@@ -137,9 +136,9 @@ class EventMessage extends ArrayObject
      * Scope of the event. Engine events are `local` scope. Cluster (Swarm)
      * events are `swarm` scope.
      *
-     * @return string
+     * @return string|null
      */
-    public function getScope(): string
+    public function getScope(): ?string
     {
         return $this->scope;
     }
@@ -148,11 +147,11 @@ class EventMessage extends ArrayObject
      * Scope of the event. Engine events are `local` scope. Cluster (Swarm)
      * events are `swarm` scope.
      *
-     * @param string $scope
+     * @param string|null $scope
      *
      * @return self
      */
-    public function setScope(string $scope): self
+    public function setScope(?string $scope): self
     {
         $this->initialized['scope'] = true;
         $this->scope                = $scope;
@@ -163,9 +162,9 @@ class EventMessage extends ArrayObject
     /**
      * Timestamp of event.
      *
-     * @return int
+     * @return int|null
      */
-    public function getTime(): int
+    public function getTime(): ?int
     {
         return $this->time;
     }
@@ -173,11 +172,11 @@ class EventMessage extends ArrayObject
     /**
      * Timestamp of event.
      *
-     * @param int $time
+     * @param int|null $time
      *
      * @return self
      */
-    public function setTime(int $time): self
+    public function setTime(?int $time): self
     {
         $this->initialized['time'] = true;
         $this->time                = $time;
@@ -188,9 +187,9 @@ class EventMessage extends ArrayObject
     /**
      * Timestamp of event, with nanosecond accuracy.
      *
-     * @return int
+     * @return int|null
      */
-    public function getTimeNano(): int
+    public function getTimeNano(): ?int
     {
         return $this->timeNano;
     }
@@ -198,11 +197,11 @@ class EventMessage extends ArrayObject
     /**
      * Timestamp of event, with nanosecond accuracy.
      *
-     * @param int $timeNano
+     * @param int|null $timeNano
      *
      * @return self
      */
-    public function setTimeNano(int $timeNano): self
+    public function setTimeNano(?int $timeNano): self
     {
         $this->initialized['timeNano'] = true;
         $this->timeNano                = $timeNano;

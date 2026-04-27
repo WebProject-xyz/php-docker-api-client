@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class IPAMConfigNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,40 +38,63 @@ class IPAMConfigNormalizer implements DenormalizerInterface, NormalizerInterface
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\IPAMConfig();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\IPAMConfig();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Subnet', $data)) {
-            $object->setSubnet($data['Subnet']);
-            unset($data['Subnet']);
-        }
-        if (array_key_exists('IPRange', $data)) {
-            $object->setIPRange($data['IPRange']);
-            unset($data['IPRange']);
-        }
-        if (array_key_exists('Gateway', $data)) {
-            $object->setGateway($data['Gateway']);
-            unset($data['Gateway']);
-        }
-        if (array_key_exists('AuxiliaryAddresses', $data)) {
-            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['AuxiliaryAddresses'] as $key => $value) {
-                $values[$key] = $value;
+        if (array_key_exists('Subnet', $data) && null !== $data['Subnet']) {
+            $value = $data['Subnet'];
+            if (is_string($data['Subnet'])) {
+                $value = $data['Subnet'];
+            } elseif (null === $data['Subnet']) {
+                $value = $data['Subnet'];
             }
-            $object->setAuxiliaryAddresses($values);
-            unset($data['AuxiliaryAddresses']);
+            $object->setSubnet($value);
+        } elseif (array_key_exists('Subnet', $data) && null === $data['Subnet']) {
+            $object->setSubnet(null);
         }
-        foreach ($data as $key_1 => $value_1) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $object[$key_1] = $value_1;
+        if (array_key_exists('IPRange', $data) && null !== $data['IPRange']) {
+            $value_1 = $data['IPRange'];
+            if (is_string($data['IPRange'])) {
+                $value_1 = $data['IPRange'];
+            } elseif (null === $data['IPRange']) {
+                $value_1 = $data['IPRange'];
             }
+            $object->setIPRange($value_1);
+        } elseif (array_key_exists('IPRange', $data) && null === $data['IPRange']) {
+            $object->setIPRange(null);
+        }
+        if (array_key_exists('Gateway', $data) && null !== $data['Gateway']) {
+            $value_2 = $data['Gateway'];
+            if (is_string($data['Gateway'])) {
+                $value_2 = $data['Gateway'];
+            } elseif (null === $data['Gateway']) {
+                $value_2 = $data['Gateway'];
+            }
+            $object->setGateway($value_2);
+        } elseif (array_key_exists('Gateway', $data) && null === $data['Gateway']) {
+            $object->setGateway(null);
+        }
+        if (array_key_exists('AuxiliaryAddresses', $data) && null !== $data['AuxiliaryAddresses']) {
+            $value_3 = $data['AuxiliaryAddresses'];
+            if (is_array($data['AuxiliaryAddresses']) && $this->isOnlyNumericKeys($data['AuxiliaryAddresses'])) {
+                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                foreach ($data['AuxiliaryAddresses'] as $key => $value_4) {
+                    $values[$key] = $value_4;
+                }
+                $value_3 = $values;
+            } elseif (null === $data['AuxiliaryAddresses']) {
+                $value_3 = $data['AuxiliaryAddresses'];
+            }
+            $object->setAuxiliaryAddresses($value_3);
+        } elseif (array_key_exists('AuxiliaryAddresses', $data) && null === $data['AuxiliaryAddresses']) {
+            $object->setAuxiliaryAddresses(null);
         }
 
         return $object;
@@ -79,26 +103,45 @@ class IPAMConfigNormalizer implements DenormalizerInterface, NormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('subnet') && null !== $data->getSubnet()) {
-            $dataArray['Subnet'] = $data->getSubnet();
-        }
-        if ($data->isInitialized('iPRange') && null !== $data->getIPRange()) {
-            $dataArray['IPRange'] = $data->getIPRange();
-        }
-        if ($data->isInitialized('gateway') && null !== $data->getGateway()) {
-            $dataArray['Gateway'] = $data->getGateway();
-        }
-        if ($data->isInitialized('auxiliaryAddresses') && null !== $data->getAuxiliaryAddresses()) {
-            $values = [];
-            foreach ($data->getAuxiliaryAddresses() as $key => $value) {
-                $values[$key] = $value;
+        if ($data->isInitialized('subnet')) {
+            $value = $data->getSubnet();
+            if (is_string($data->getSubnet())) {
+                $value = $data->getSubnet();
+            } elseif (null === $data->getSubnet()) {
+                $value = $data->getSubnet();
             }
-            $dataArray['AuxiliaryAddresses'] = $values;
+            $dataArray['Subnet'] = $value;
         }
-        foreach ($data as $key_1 => $value_1) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $dataArray[$key_1] = $value_1;
+        if ($data->isInitialized('iPRange')) {
+            $value_1 = $data->getIPRange();
+            if (is_string($data->getIPRange())) {
+                $value_1 = $data->getIPRange();
+            } elseif (null === $data->getIPRange()) {
+                $value_1 = $data->getIPRange();
             }
+            $dataArray['IPRange'] = $value_1;
+        }
+        if ($data->isInitialized('gateway')) {
+            $value_2 = $data->getGateway();
+            if (is_string($data->getGateway())) {
+                $value_2 = $data->getGateway();
+            } elseif (null === $data->getGateway()) {
+                $value_2 = $data->getGateway();
+            }
+            $dataArray['Gateway'] = $value_2;
+        }
+        if ($data->isInitialized('auxiliaryAddresses')) {
+            $value_3 = $data->getAuxiliaryAddresses();
+            if (is_object($data->getAuxiliaryAddresses())) {
+                $values = [];
+                foreach ($data->getAuxiliaryAddresses() as $key => $value_4) {
+                    $values[$key] = $value_4;
+                }
+                $value_3 = $values;
+            } elseif (null === $data->getAuxiliaryAddresses()) {
+                $value_3 = $data->getAuxiliaryAddresses();
+            }
+            $dataArray['AuxiliaryAddresses'] = $value_3;
         }
 
         return $dataArray;

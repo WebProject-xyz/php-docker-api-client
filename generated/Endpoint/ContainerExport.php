@@ -59,7 +59,7 @@ class ContainerExport extends \WebProject\DockerApi\Library\Generated\Runtime\Cl
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerExportNotFoundException($response);
         }
         if (500 === $status) {

@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class TLSInfoNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,32 +38,48 @@ class TLSInfoNormalizer implements DenormalizerInterface, NormalizerInterface, D
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\TLSInfo();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\TLSInfo();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('TrustRoot', $data)) {
-            $object->setTrustRoot($data['TrustRoot']);
-            unset($data['TrustRoot']);
-        }
-        if (array_key_exists('CertIssuerSubject', $data)) {
-            $object->setCertIssuerSubject($data['CertIssuerSubject']);
-            unset($data['CertIssuerSubject']);
-        }
-        if (array_key_exists('CertIssuerPublicKey', $data)) {
-            $object->setCertIssuerPublicKey($data['CertIssuerPublicKey']);
-            unset($data['CertIssuerPublicKey']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('TrustRoot', $data) && null !== $data['TrustRoot']) {
+            $value = $data['TrustRoot'];
+            if (is_string($data['TrustRoot'])) {
+                $value = $data['TrustRoot'];
+            } elseif (null === $data['TrustRoot']) {
+                $value = $data['TrustRoot'];
             }
+            $object->setTrustRoot($value);
+        } elseif (array_key_exists('TrustRoot', $data) && null === $data['TrustRoot']) {
+            $object->setTrustRoot(null);
+        }
+        if (array_key_exists('CertIssuerSubject', $data) && null !== $data['CertIssuerSubject']) {
+            $value_1 = $data['CertIssuerSubject'];
+            if (is_string($data['CertIssuerSubject'])) {
+                $value_1 = $data['CertIssuerSubject'];
+            } elseif (null === $data['CertIssuerSubject']) {
+                $value_1 = $data['CertIssuerSubject'];
+            }
+            $object->setCertIssuerSubject($value_1);
+        } elseif (array_key_exists('CertIssuerSubject', $data) && null === $data['CertIssuerSubject']) {
+            $object->setCertIssuerSubject(null);
+        }
+        if (array_key_exists('CertIssuerPublicKey', $data) && null !== $data['CertIssuerPublicKey']) {
+            $value_2 = $data['CertIssuerPublicKey'];
+            if (is_string($data['CertIssuerPublicKey'])) {
+                $value_2 = $data['CertIssuerPublicKey'];
+            } elseif (null === $data['CertIssuerPublicKey']) {
+                $value_2 = $data['CertIssuerPublicKey'];
+            }
+            $object->setCertIssuerPublicKey($value_2);
+        } elseif (array_key_exists('CertIssuerPublicKey', $data) && null === $data['CertIssuerPublicKey']) {
+            $object->setCertIssuerPublicKey(null);
         }
 
         return $object;
@@ -71,19 +88,32 @@ class TLSInfoNormalizer implements DenormalizerInterface, NormalizerInterface, D
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('trustRoot') && null !== $data->getTrustRoot()) {
-            $dataArray['TrustRoot'] = $data->getTrustRoot();
-        }
-        if ($data->isInitialized('certIssuerSubject') && null !== $data->getCertIssuerSubject()) {
-            $dataArray['CertIssuerSubject'] = $data->getCertIssuerSubject();
-        }
-        if ($data->isInitialized('certIssuerPublicKey') && null !== $data->getCertIssuerPublicKey()) {
-            $dataArray['CertIssuerPublicKey'] = $data->getCertIssuerPublicKey();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('trustRoot')) {
+            $value = $data->getTrustRoot();
+            if (is_string($data->getTrustRoot())) {
+                $value = $data->getTrustRoot();
+            } elseif (null === $data->getTrustRoot()) {
+                $value = $data->getTrustRoot();
             }
+            $dataArray['TrustRoot'] = $value;
+        }
+        if ($data->isInitialized('certIssuerSubject')) {
+            $value_1 = $data->getCertIssuerSubject();
+            if (is_string($data->getCertIssuerSubject())) {
+                $value_1 = $data->getCertIssuerSubject();
+            } elseif (null === $data->getCertIssuerSubject()) {
+                $value_1 = $data->getCertIssuerSubject();
+            }
+            $dataArray['CertIssuerSubject'] = $value_1;
+        }
+        if ($data->isInitialized('certIssuerPublicKey')) {
+            $value_2 = $data->getCertIssuerPublicKey();
+            if (is_string($data->getCertIssuerPublicKey())) {
+                $value_2 = $data->getCertIssuerPublicKey();
+            } elseif (null === $data->getCertIssuerPublicKey()) {
+                $value_2 = $data->getCertIssuerPublicKey();
+            }
+            $dataArray['CertIssuerPublicKey'] = $value_2;
         }
 
         return $dataArray;

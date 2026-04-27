@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ServiceEndpointVirtualIPsItem extends ArrayObject
+class ServiceEndpointVirtualIPsItem
 {
     /**
      * @var array
@@ -18,28 +17,28 @@ class ServiceEndpointVirtualIPsItem extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $networkID;
     /**
-     * @var string
+     * @var string|null
      */
     protected $addr;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getNetworkID(): string
+    public function getNetworkID(): ?string
     {
         return $this->networkID;
     }
 
     /**
-     * @param string $networkID
+     * @param string|null $networkID
      *
      * @return self
      */
-    public function setNetworkID(string $networkID): self
+    public function setNetworkID(?string $networkID): self
     {
         $this->initialized['networkID'] = true;
         $this->networkID                = $networkID;
@@ -48,19 +47,19 @@ class ServiceEndpointVirtualIPsItem extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAddr(): string
+    public function getAddr(): ?string
     {
         return $this->addr;
     }
 
     /**
-     * @param string $addr
+     * @param string|null $addr
      *
      * @return self
      */
-    public function setAddr(string $addr): self
+    public function setAddr(?string $addr): self
     {
         $this->initialized['addr'] = true;
         $this->addr                = $addr;

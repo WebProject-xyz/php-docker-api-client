@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ResourcesBlkioWeightDeviceItem extends ArrayObject
+class ResourcesBlkioWeightDeviceItem
 {
     /**
      * @var array
@@ -18,28 +17,28 @@ class ResourcesBlkioWeightDeviceItem extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $path;
     /**
-     * @var int
+     * @var int|null
      */
     protected $weight;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPath(): string
+    public function getPath(): ?string
     {
         return $this->path;
     }
 
     /**
-     * @param string $path
+     * @param string|null $path
      *
      * @return self
      */
-    public function setPath(string $path): self
+    public function setPath(?string $path): self
     {
         $this->initialized['path'] = true;
         $this->path                = $path;
@@ -48,19 +47,19 @@ class ResourcesBlkioWeightDeviceItem extends ArrayObject
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getWeight(): int
+    public function getWeight(): ?int
     {
         return $this->weight;
     }
 
     /**
-     * @param int $weight
+     * @param int|null $weight
      *
      * @return self
      */
-    public function setWeight(int $weight): self
+    public function setWeight(?int $weight): self
     {
         $this->initialized['weight'] = true;
         $this->weight                = $weight;

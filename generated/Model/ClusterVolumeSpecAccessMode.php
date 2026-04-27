@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ClusterVolumeSpecAccessMode extends ArrayObject
+class ClusterVolumeSpecAccessMode
 {
     /**
      * @var array
@@ -39,34 +38,34 @@ class ClusterVolumeSpecAccessMode extends ArrayObject
     /**
      * Options for using this volume as a Mount-type volume.
      *
-     * Either MountVolume or BlockVolume, but not both, must be
-     * present.
-     * properties:
-     * FsType:
-     * type: "string"
-     * description: |
-     * Specifies the filesystem type for the mount volume.
-     * Optional.
-     * MountFlags:
-     * type: "array"
-     * description: |
-     * Flags to pass when mounting the volume. Optional.
-     * items:
-     * type: "string"
+     *     Either MountVolume or BlockVolume, but not both, must be
+     *     present.
+     *   properties:
+     *     FsType:
+     *       type: "string"
+     *       description: |
+     *         Specifies the filesystem type for the mount volume.
+     *         Optional.
+     *     MountFlags:
+     *       type: "array"
+     *       description: |
+     *         Flags to pass when mounting the volume. Optional.
+     *       items:
+     *         type: "string"
      * BlockVolume:
-     * type: "object"
-     * description: |
-     * Options for using this volume as a Block-type volume.
-     * Intentionally empty.
+     *   type: "object"
+     *   description: |
+     *     Options for using this volume as a Block-type volume.
+     *     Intentionally empty.
      *
-     * @var array<string, mixed>
+     * @var mixed|null
      */
     protected $mountVolume;
     /**
      * Swarm Secrets that are passed to the CSI storage plugin when
      * operating on this volume.
      *
-     * @var list<ClusterVolumeSpecAccessModeSecretsItem>
+     * @var list<ClusterVolumeSpecAccessModeSecretsItem>|null
      */
     protected $secrets;
     /**
@@ -74,14 +73,14 @@ class ClusterVolumeSpecAccessMode extends ArrayObject
      * fields are optional. For an in-depth description of what these
      * fields mean, see the CSI specification.
      *
-     * @var ClusterVolumeSpecAccessModeAccessibilityRequirements
+     * @var ClusterVolumeSpecAccessModeAccessibilityRequirements|null
      */
     protected $accessibilityRequirements;
     /**
      * The desired capacity that the volume should be created with. If
      * empty, the plugin will decide the capacity.
      *
-     * @var ClusterVolumeSpecAccessModeCapacityRange
+     * @var ClusterVolumeSpecAccessModeCapacityRange|null
      */
     protected $capacityRange;
     /**
@@ -161,29 +160,29 @@ class ClusterVolumeSpecAccessMode extends ArrayObject
     /**
      * Options for using this volume as a Mount-type volume.
      *
-     * Either MountVolume or BlockVolume, but not both, must be
-     * present.
-     * properties:
-     * FsType:
-     * type: "string"
-     * description: |
-     * Specifies the filesystem type for the mount volume.
-     * Optional.
-     * MountFlags:
-     * type: "array"
-     * description: |
-     * Flags to pass when mounting the volume. Optional.
-     * items:
-     * type: "string"
+     *     Either MountVolume or BlockVolume, but not both, must be
+     *     present.
+     *   properties:
+     *     FsType:
+     *       type: "string"
+     *       description: |
+     *         Specifies the filesystem type for the mount volume.
+     *         Optional.
+     *     MountFlags:
+     *       type: "array"
+     *       description: |
+     *         Flags to pass when mounting the volume. Optional.
+     *       items:
+     *         type: "string"
      * BlockVolume:
-     * type: "object"
-     * description: |
-     * Options for using this volume as a Block-type volume.
-     * Intentionally empty.
+     *   type: "object"
+     *   description: |
+     *     Options for using this volume as a Block-type volume.
+     *     Intentionally empty.
      *
-     * @return array<string, mixed>
+     * @return mixed|null
      */
-    public function getMountVolume(): iterable
+    public function getMountVolume()
     {
         return $this->mountVolume;
     }
@@ -211,11 +210,11 @@ class ClusterVolumeSpecAccessMode extends ArrayObject
      * Options for using this volume as a Block-type volume.
      * Intentionally empty.
      *
-     * @param array<string, mixed> $mountVolume
+     * @param mixed|null $mountVolume
      *
      * @return self
      */
-    public function setMountVolume(iterable $mountVolume): self
+    public function setMountVolume($mountVolume): self
     {
         $this->initialized['mountVolume'] = true;
         $this->mountVolume                = $mountVolume;
@@ -227,9 +226,9 @@ class ClusterVolumeSpecAccessMode extends ArrayObject
      * Swarm Secrets that are passed to the CSI storage plugin when
      * operating on this volume.
      *
-     * @return list<ClusterVolumeSpecAccessModeSecretsItem>
+     * @return list<ClusterVolumeSpecAccessModeSecretsItem>|null
      */
-    public function getSecrets(): array
+    public function getSecrets(): ?array
     {
         return $this->secrets;
     }
@@ -238,11 +237,11 @@ class ClusterVolumeSpecAccessMode extends ArrayObject
      * Swarm Secrets that are passed to the CSI storage plugin when
      * operating on this volume.
      *
-     * @param list<ClusterVolumeSpecAccessModeSecretsItem> $secrets
+     * @param list<ClusterVolumeSpecAccessModeSecretsItem>|null $secrets
      *
      * @return self
      */
-    public function setSecrets(array $secrets): self
+    public function setSecrets(?array $secrets): self
     {
         $this->initialized['secrets'] = true;
         $this->secrets                = $secrets;
@@ -255,9 +254,9 @@ class ClusterVolumeSpecAccessMode extends ArrayObject
      * fields are optional. For an in-depth description of what these
      * fields mean, see the CSI specification.
      *
-     * @return ClusterVolumeSpecAccessModeAccessibilityRequirements
+     * @return ClusterVolumeSpecAccessModeAccessibilityRequirements|null
      */
-    public function getAccessibilityRequirements(): ClusterVolumeSpecAccessModeAccessibilityRequirements
+    public function getAccessibilityRequirements(): ?ClusterVolumeSpecAccessModeAccessibilityRequirements
     {
         return $this->accessibilityRequirements;
     }
@@ -267,11 +266,11 @@ class ClusterVolumeSpecAccessMode extends ArrayObject
      * fields are optional. For an in-depth description of what these
      * fields mean, see the CSI specification.
      *
-     * @param ClusterVolumeSpecAccessModeAccessibilityRequirements $accessibilityRequirements
+     * @param ClusterVolumeSpecAccessModeAccessibilityRequirements|null $accessibilityRequirements
      *
      * @return self
      */
-    public function setAccessibilityRequirements(ClusterVolumeSpecAccessModeAccessibilityRequirements $accessibilityRequirements): self
+    public function setAccessibilityRequirements(?ClusterVolumeSpecAccessModeAccessibilityRequirements $accessibilityRequirements): self
     {
         $this->initialized['accessibilityRequirements'] = true;
         $this->accessibilityRequirements                = $accessibilityRequirements;
@@ -283,9 +282,9 @@ class ClusterVolumeSpecAccessMode extends ArrayObject
      * The desired capacity that the volume should be created with. If
      * empty, the plugin will decide the capacity.
      *
-     * @return ClusterVolumeSpecAccessModeCapacityRange
+     * @return ClusterVolumeSpecAccessModeCapacityRange|null
      */
-    public function getCapacityRange(): ClusterVolumeSpecAccessModeCapacityRange
+    public function getCapacityRange(): ?ClusterVolumeSpecAccessModeCapacityRange
     {
         return $this->capacityRange;
     }
@@ -294,11 +293,11 @@ class ClusterVolumeSpecAccessMode extends ArrayObject
      * The desired capacity that the volume should be created with. If
      * empty, the plugin will decide the capacity.
      *
-     * @param ClusterVolumeSpecAccessModeCapacityRange $capacityRange
+     * @param ClusterVolumeSpecAccessModeCapacityRange|null $capacityRange
      *
      * @return self
      */
-    public function setCapacityRange(ClusterVolumeSpecAccessModeCapacityRange $capacityRange): self
+    public function setCapacityRange(?ClusterVolumeSpecAccessModeCapacityRange $capacityRange): self
     {
         $this->initialized['capacityRange'] = true;
         $this->capacityRange                = $capacityRange;

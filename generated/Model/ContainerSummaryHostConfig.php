@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ContainerSummaryHostConfig extends ArrayObject
+class ContainerSummaryHostConfig
 {
     /**
      * @var array
@@ -26,7 +25,7 @@ class ContainerSummaryHostConfig extends ArrayObject
      * found in the `NetworkSettings.Networks` field, which enumerates
      * settings per network.
      *
-     * @var string
+     * @var string|null
      */
     protected $networkMode;
     /**
@@ -45,9 +44,9 @@ class ContainerSummaryHostConfig extends ArrayObject
      * found in the `NetworkSettings.Networks` field, which enumerates
      * settings per network.
      *
-     * @return string
+     * @return string|null
      */
-    public function getNetworkMode(): string
+    public function getNetworkMode(): ?string
     {
         return $this->networkMode;
     }
@@ -61,11 +60,11 @@ class ContainerSummaryHostConfig extends ArrayObject
      * found in the `NetworkSettings.Networks` field, which enumerates
      * settings per network.
      *
-     * @param string $networkMode
+     * @param string|null $networkMode
      *
      * @return self
      */
-    public function setNetworkMode(string $networkMode): self
+    public function setNetworkMode(?string $networkMode): self
     {
         $this->initialized['networkMode'] = true;
         $this->networkMode                = $networkMode;

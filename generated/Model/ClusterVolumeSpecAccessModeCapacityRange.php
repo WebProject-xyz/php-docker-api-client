@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ClusterVolumeSpecAccessModeCapacityRange extends ArrayObject
+class ClusterVolumeSpecAccessModeCapacityRange
 {
     /**
      * @var array
@@ -21,14 +20,14 @@ class ClusterVolumeSpecAccessModeCapacityRange extends ArrayObject
      * The volume must be at least this big. The value of 0
      * indicates an unspecified minimum.
      *
-     * @var int
+     * @var int|null
      */
     protected $requiredBytes;
     /**
      * The volume must not be bigger than this. The value of 0
      * indicates an unspecified maximum.
      *
-     * @var int
+     * @var int|null
      */
     protected $limitBytes;
 
@@ -36,9 +35,9 @@ class ClusterVolumeSpecAccessModeCapacityRange extends ArrayObject
      * The volume must be at least this big. The value of 0
      * indicates an unspecified minimum.
      *
-     * @return int
+     * @return int|null
      */
-    public function getRequiredBytes(): int
+    public function getRequiredBytes(): ?int
     {
         return $this->requiredBytes;
     }
@@ -47,11 +46,11 @@ class ClusterVolumeSpecAccessModeCapacityRange extends ArrayObject
      * The volume must be at least this big. The value of 0
      * indicates an unspecified minimum.
      *
-     * @param int $requiredBytes
+     * @param int|null $requiredBytes
      *
      * @return self
      */
-    public function setRequiredBytes(int $requiredBytes): self
+    public function setRequiredBytes(?int $requiredBytes): self
     {
         $this->initialized['requiredBytes'] = true;
         $this->requiredBytes                = $requiredBytes;
@@ -63,9 +62,9 @@ class ClusterVolumeSpecAccessModeCapacityRange extends ArrayObject
      * The volume must not be bigger than this. The value of 0
      * indicates an unspecified maximum.
      *
-     * @return int
+     * @return int|null
      */
-    public function getLimitBytes(): int
+    public function getLimitBytes(): ?int
     {
         return $this->limitBytes;
     }
@@ -74,11 +73,11 @@ class ClusterVolumeSpecAccessModeCapacityRange extends ArrayObject
      * The volume must not be bigger than this. The value of 0
      * indicates an unspecified maximum.
      *
-     * @param int $limitBytes
+     * @param int|null $limitBytes
      *
      * @return self
      */
-    public function setLimitBytes(int $limitBytes): self
+    public function setLimitBytes(?int $limitBytes): self
     {
         $this->initialized['limitBytes'] = true;
         $this->limitBytes                = $limitBytes;

@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class SwarmSpecCAConfigExternalCAsItem extends ArrayObject
+class SwarmSpecCAConfigExternalCAsItem
 {
     /**
      * @var array
@@ -21,20 +20,20 @@ class SwarmSpecCAConfigExternalCAsItem extends ArrayObject
      * Protocol for communication with the external CA (currently
      * only `cfssl` is supported).
      *
-     * @var string
+     * @var string|null
      */
     protected $protocol = 'cfssl';
     /**
      * URL where certificate signing requests should be sent.
      *
-     * @var string
+     * @var string|null
      */
     protected $uRL;
     /**
      * An object with key/value pairs that are interpreted as
      * protocol-specific options for the external CA driver.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $options;
     /**
@@ -42,7 +41,7 @@ class SwarmSpecCAConfigExternalCAsItem extends ArrayObject
      * to issue TLS certificates (assumed to be to the current swarm
      * root CA certificate if not provided).
      *
-     * @var string
+     * @var string|null
      */
     protected $cACert;
 
@@ -50,9 +49,9 @@ class SwarmSpecCAConfigExternalCAsItem extends ArrayObject
      * Protocol for communication with the external CA (currently
      * only `cfssl` is supported).
      *
-     * @return string
+     * @return string|null
      */
-    public function getProtocol(): string
+    public function getProtocol(): ?string
     {
         return $this->protocol;
     }
@@ -61,11 +60,11 @@ class SwarmSpecCAConfigExternalCAsItem extends ArrayObject
      * Protocol for communication with the external CA (currently
      * only `cfssl` is supported).
      *
-     * @param string $protocol
+     * @param string|null $protocol
      *
      * @return self
      */
-    public function setProtocol(string $protocol): self
+    public function setProtocol(?string $protocol): self
     {
         $this->initialized['protocol'] = true;
         $this->protocol                = $protocol;
@@ -76,9 +75,9 @@ class SwarmSpecCAConfigExternalCAsItem extends ArrayObject
     /**
      * URL where certificate signing requests should be sent.
      *
-     * @return string
+     * @return string|null
      */
-    public function getURL(): string
+    public function getURL(): ?string
     {
         return $this->uRL;
     }
@@ -86,11 +85,11 @@ class SwarmSpecCAConfigExternalCAsItem extends ArrayObject
     /**
      * URL where certificate signing requests should be sent.
      *
-     * @param string $uRL
+     * @param string|null $uRL
      *
      * @return self
      */
-    public function setURL(string $uRL): self
+    public function setURL(?string $uRL): self
     {
         $this->initialized['uRL'] = true;
         $this->uRL                = $uRL;
@@ -102,9 +101,9 @@ class SwarmSpecCAConfigExternalCAsItem extends ArrayObject
      * An object with key/value pairs that are interpreted as
      * protocol-specific options for the external CA driver.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getOptions(): iterable
+    public function getOptions(): ?iterable
     {
         return $this->options;
     }
@@ -113,11 +112,11 @@ class SwarmSpecCAConfigExternalCAsItem extends ArrayObject
      * An object with key/value pairs that are interpreted as
      * protocol-specific options for the external CA driver.
      *
-     * @param array<string, string> $options
+     * @param array<string, string>|null $options
      *
      * @return self
      */
-    public function setOptions(iterable $options): self
+    public function setOptions(?iterable $options): self
     {
         $this->initialized['options'] = true;
         $this->options                = $options;
@@ -130,9 +129,9 @@ class SwarmSpecCAConfigExternalCAsItem extends ArrayObject
      * to issue TLS certificates (assumed to be to the current swarm
      * root CA certificate if not provided).
      *
-     * @return string
+     * @return string|null
      */
-    public function getCACert(): string
+    public function getCACert(): ?string
     {
         return $this->cACert;
     }
@@ -142,11 +141,11 @@ class SwarmSpecCAConfigExternalCAsItem extends ArrayObject
      * to issue TLS certificates (assumed to be to the current swarm
      * root CA certificate if not provided).
      *
-     * @param string $cACert
+     * @param string|null $cACert
      *
      * @return self
      */
-    public function setCACert(string $cACert): self
+    public function setCACert(?string $cACert): self
     {
         $this->initialized['cACert'] = true;
         $this->cACert                = $cACert;

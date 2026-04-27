@@ -10,16 +10,14 @@ class ImageSearch extends \WebProject\DockerApi\Library\Generated\Runtime\Client
     /**
      * Search for an image on Docker Hub.
      *
-     * @param array $queryParameters {
-     *
-     * @var string $term Term to search
-     * @var int    $limit Maximum number of results to return
-     * @var string $filters A JSON encoded value of the filters (a `map[string][]string`) to process on the images list. Available filters:
+     * @param array{
+     *    "term": string, //Term to search
+     *    "limit"?: int, //Maximum number of results to return
+     *    "filters"?: string, //A JSON encoded value of the filters (a `map[string][]string`) to process on the images list. Available filters:
      *
      * - `is-official=(true|false)`
      * - `stars=<number>` Matches images that has at least 'number' stars.
-     *
-     * }
+     * } $queryParameters
      */
     public function __construct(array $queryParameters = [])
     {
@@ -62,7 +60,7 @@ class ImageSearch extends \WebProject\DockerApi\Library\Generated\Runtime\Client
     /**
      * {@inheritdoc}
      *
-     * @return \WebProject\DockerApi\Library\Generated\Model\ImagesSearchGetResponse200Item[]|null
+     * @return null
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ImageSearchInternalServerErrorException
      */
@@ -70,10 +68,10 @@ class ImageSearch extends \WebProject\DockerApi\Library\Generated\Runtime\Client
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
-            return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ImagesSearchGetResponse200Item[]', 'json');
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+            return json_decode($body);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageSearchInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

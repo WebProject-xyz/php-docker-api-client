@@ -9,13 +9,10 @@ class SwarmLeave extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
     protected $accept;
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var bool $force Force leave swarm, even if this is the last manager or that it will
-     *           break the cluster.
-     *
-     * }
-     *
+     * @param array{
+     *    "force"?: bool, //Force leave swarm, even if this is the last manager or that it will
+     * break the cluster.
+     * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
     public function __construct(array $queryParameters = [], array $accept = [])
@@ -74,10 +71,10 @@ class SwarmLeave extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\SwarmLeaveInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (503 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (503 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\SwarmLeaveServiceUnavailableException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }
