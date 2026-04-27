@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class GenericResourcesItemDiscreteResourceSpec extends ArrayObject
+class GenericResourcesItemDiscreteResourceSpec
 {
     /**
      * @var array
@@ -18,28 +17,28 @@ class GenericResourcesItemDiscreteResourceSpec extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $kind;
     /**
-     * @var int
+     * @var int|null
      */
     protected $value;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getKind(): string
+    public function getKind(): ?string
     {
         return $this->kind;
     }
 
     /**
-     * @param string $kind
+     * @param string|null $kind
      *
      * @return self
      */
-    public function setKind(string $kind): self
+    public function setKind(?string $kind): self
     {
         $this->initialized['kind'] = true;
         $this->kind                = $kind;
@@ -48,19 +47,19 @@ class GenericResourcesItemDiscreteResourceSpec extends ArrayObject
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getValue(): int
+    public function getValue(): ?int
     {
         return $this->value;
     }
 
     /**
-     * @param int $value
+     * @param int|null $value
      *
      * @return self
      */
-    public function setValue(int $value): self
+    public function setValue(?int $value): self
     {
         $this->initialized['value'] = true;
         $this->value                = $value;

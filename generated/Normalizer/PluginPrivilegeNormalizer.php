@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class PluginPrivilegeNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,36 +38,52 @@ class PluginPrivilegeNormalizer implements DenormalizerInterface, NormalizerInte
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginPrivilege();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginPrivilege();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Name', $data)) {
-            $object->setName($data['Name']);
-            unset($data['Name']);
-        }
-        if (array_key_exists('Description', $data)) {
-            $object->setDescription($data['Description']);
-            unset($data['Description']);
-        }
-        if (array_key_exists('Value', $data)) {
-            $values = [];
-            foreach ($data['Value'] as $value) {
-                $values[] = $value;
+        if (array_key_exists('Name', $data) && null !== $data['Name']) {
+            $value = $data['Name'];
+            if (is_string($data['Name'])) {
+                $value = $data['Name'];
+            } elseif (null === $data['Name']) {
+                $value = $data['Name'];
             }
-            $object->setValue($values);
-            unset($data['Value']);
+            $object->setName($value);
+        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
+            $object->setName(null);
         }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
+        if (array_key_exists('Description', $data) && null !== $data['Description']) {
+            $value_1 = $data['Description'];
+            if (is_string($data['Description'])) {
+                $value_1 = $data['Description'];
+            } elseif (null === $data['Description']) {
+                $value_1 = $data['Description'];
             }
+            $object->setDescription($value_1);
+        } elseif (array_key_exists('Description', $data) && null === $data['Description']) {
+            $object->setDescription(null);
+        }
+        if (array_key_exists('Value', $data) && null !== $data['Value']) {
+            $value_2 = $data['Value'];
+            if (is_array($data['Value']) && $this->isOnlyNumericKeys($data['Value'])) {
+                $values = [];
+                foreach ($data['Value'] as $value_3) {
+                    $values[] = $value_3;
+                }
+                $value_2 = $values;
+            } elseif (null === $data['Value']) {
+                $value_2 = $data['Value'];
+            }
+            $object->setValue($value_2);
+        } elseif (array_key_exists('Value', $data) && null === $data['Value']) {
+            $object->setValue(null);
         }
 
         return $object;
@@ -75,23 +92,36 @@ class PluginPrivilegeNormalizer implements DenormalizerInterface, NormalizerInte
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name') && null !== $data->getName()) {
-            $dataArray['Name'] = $data->getName();
-        }
-        if ($data->isInitialized('description') && null !== $data->getDescription()) {
-            $dataArray['Description'] = $data->getDescription();
-        }
-        if ($data->isInitialized('value') && null !== $data->getValue()) {
-            $values = [];
-            foreach ($data->getValue() as $value) {
-                $values[] = $value;
+        if ($data->isInitialized('name')) {
+            $value = $data->getName();
+            if (is_string($data->getName())) {
+                $value = $data->getName();
+            } elseif (null === $data->getName()) {
+                $value = $data->getName();
             }
-            $dataArray['Value'] = $values;
+            $dataArray['Name'] = $value;
         }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
+        if ($data->isInitialized('description')) {
+            $value_1 = $data->getDescription();
+            if (is_string($data->getDescription())) {
+                $value_1 = $data->getDescription();
+            } elseif (null === $data->getDescription()) {
+                $value_1 = $data->getDescription();
             }
+            $dataArray['Description'] = $value_1;
+        }
+        if ($data->isInitialized('value')) {
+            $value_2 = $data->getValue();
+            if (is_array($data->getValue())) {
+                $values = [];
+                foreach ($data->getValue() as $value_3) {
+                    $values[] = $value_3;
+                }
+                $value_2 = $values;
+            } elseif (null === $data->getValue()) {
+                $value_2 = $data->getValue();
+            }
+            $dataArray['Value'] = $value_2;
         }
 
         return $dataArray;

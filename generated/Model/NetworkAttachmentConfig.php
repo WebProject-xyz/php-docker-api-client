@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class NetworkAttachmentConfig extends ArrayObject
+class NetworkAttachmentConfig
 {
     /**
      * @var array
@@ -20,7 +19,7 @@ class NetworkAttachmentConfig extends ArrayObject
     /**
      * The target network for attachment. Must be a network name or ID.
      *
-     * @var string
+     * @var string|null
      */
     protected $target;
     /**
@@ -32,16 +31,16 @@ class NetworkAttachmentConfig extends ArrayObject
     /**
      * Driver attachment options for the network target.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $driverOpts;
 
     /**
      * The target network for attachment. Must be a network name or ID.
      *
-     * @return string
+     * @return string|null
      */
-    public function getTarget(): string
+    public function getTarget(): ?string
     {
         return $this->target;
     }
@@ -49,11 +48,11 @@ class NetworkAttachmentConfig extends ArrayObject
     /**
      * The target network for attachment. Must be a network name or ID.
      *
-     * @param string $target
+     * @param string|null $target
      *
      * @return self
      */
-    public function setTarget(string $target): self
+    public function setTarget(?string $target): self
     {
         $this->initialized['target'] = true;
         $this->target                = $target;
@@ -89,9 +88,9 @@ class NetworkAttachmentConfig extends ArrayObject
     /**
      * Driver attachment options for the network target.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getDriverOpts(): iterable
+    public function getDriverOpts(): ?iterable
     {
         return $this->driverOpts;
     }
@@ -99,11 +98,11 @@ class NetworkAttachmentConfig extends ArrayObject
     /**
      * Driver attachment options for the network target.
      *
-     * @param array<string, string> $driverOpts
+     * @param array<string, string>|null $driverOpts
      *
      * @return self
      */
-    public function setDriverOpts(iterable $driverOpts): self
+    public function setDriverOpts(?iterable $driverOpts): self
     {
         $this->initialized['driverOpts'] = true;
         $this->driverOpts                = $driverOpts;

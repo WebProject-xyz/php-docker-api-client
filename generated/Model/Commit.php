@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class Commit extends ArrayObject
+class Commit
 {
     /**
      * @var array
@@ -20,16 +19,16 @@ class Commit extends ArrayObject
     /**
      * Actual commit ID of external tool.
      *
-     * @var string
+     * @var string|null
      */
     protected $iD;
 
     /**
      * Actual commit ID of external tool.
      *
-     * @return string
+     * @return string|null
      */
-    public function getID(): string
+    public function getID(): ?string
     {
         return $this->iD;
     }
@@ -37,11 +36,11 @@ class Commit extends ArrayObject
     /**
      * Actual commit ID of external tool.
      *
-     * @param string $iD
+     * @param string|null $iD
      *
      * @return self
      */
-    public function setID(string $iD): self
+    public function setID(?string $iD): self
     {
         $this->initialized['iD'] = true;
         $this->iD                = $iD;

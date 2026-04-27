@@ -37,21 +37,23 @@ class ImageManifestSummaryImageDataNormalizer implements DenormalizerInterface, 
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ImageManifestSummaryImageData();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ImageManifestSummaryImageData();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('Platform', $data) && null !== $data['Platform']) {
             $object->setPlatform($this->denormalizer->denormalize($data['Platform'], \WebProject\DockerApi\Library\Generated\Model\OCIPlatform::class, 'json', $context));
-            unset($data['Platform']);
         } elseif (array_key_exists('Platform', $data) && null === $data['Platform']) {
             $object->setPlatform(null);
+        }
+        if (array_key_exists('Identity', $data)) {
+            $object->setIdentity($this->denormalizer->denormalize($data['Identity'], \WebProject\DockerApi\Library\Generated\Model\Identity::class, 'json', $context));
         }
         if (array_key_exists('Containers', $data)) {
             $values = [];
@@ -59,16 +61,9 @@ class ImageManifestSummaryImageDataNormalizer implements DenormalizerInterface, 
                 $values[] = $value;
             }
             $object->setContainers($values);
-            unset($data['Containers']);
         }
         if (array_key_exists('Size', $data)) {
             $object->setSize($this->denormalizer->denormalize($data['Size'], \WebProject\DockerApi\Library\Generated\Model\ImageManifestSummaryImageDataSize::class, 'json', $context));
-            unset($data['Size']);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
-            }
         }
 
         return $object;
@@ -78,17 +73,15 @@ class ImageManifestSummaryImageDataNormalizer implements DenormalizerInterface, 
     {
         $dataArray             = [];
         $dataArray['Platform'] = $this->normalizer->normalize($data->getPlatform(), 'json', $context);
-        $values                = [];
+        if ($data->isInitialized('identity') && null !== $data->getIdentity()) {
+            $dataArray['Identity'] = $this->normalizer->normalize($data->getIdentity(), 'json', $context);
+        }
+        $values = [];
         foreach ($data->getContainers() as $value) {
             $values[] = $value;
         }
         $dataArray['Containers'] = $values;
         $dataArray['Size']       = $this->normalizer->normalize($data->getSize(), 'json', $context);
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
-            }
-        }
 
         return $dataArray;
     }

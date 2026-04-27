@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ClusterVolumeSpec extends ArrayObject
+class ClusterVolumeSpec
 {
     /**
      * @var array
@@ -25,13 +24,13 @@ class ClusterVolumeSpec extends ArrayObject
      * Volumes with an empty string for a group technically all belong to
      * the same, emptystring group.
      *
-     * @var string
+     * @var string|null
      */
     protected $group;
     /**
      * Defines how the volume is used by tasks.
      *
-     * @var ClusterVolumeSpecAccessMode
+     * @var ClusterVolumeSpecAccessMode|null
      */
     protected $accessMode;
 
@@ -43,9 +42,9 @@ class ClusterVolumeSpec extends ArrayObject
      * Volumes with an empty string for a group technically all belong to
      * the same, emptystring group.
      *
-     * @return string
+     * @return string|null
      */
-    public function getGroup(): string
+    public function getGroup(): ?string
     {
         return $this->group;
     }
@@ -58,11 +57,11 @@ class ClusterVolumeSpec extends ArrayObject
      * Volumes with an empty string for a group technically all belong to
      * the same, emptystring group.
      *
-     * @param string $group
+     * @param string|null $group
      *
      * @return self
      */
-    public function setGroup(string $group): self
+    public function setGroup(?string $group): self
     {
         $this->initialized['group'] = true;
         $this->group                = $group;
@@ -73,9 +72,9 @@ class ClusterVolumeSpec extends ArrayObject
     /**
      * Defines how the volume is used by tasks.
      *
-     * @return ClusterVolumeSpecAccessMode
+     * @return ClusterVolumeSpecAccessMode|null
      */
-    public function getAccessMode(): ClusterVolumeSpecAccessMode
+    public function getAccessMode(): ?ClusterVolumeSpecAccessMode
     {
         return $this->accessMode;
     }
@@ -83,11 +82,11 @@ class ClusterVolumeSpec extends ArrayObject
     /**
      * Defines how the volume is used by tasks.
      *
-     * @param ClusterVolumeSpecAccessMode $accessMode
+     * @param ClusterVolumeSpecAccessMode|null $accessMode
      *
      * @return self
      */
-    public function setAccessMode(ClusterVolumeSpecAccessMode $accessMode): self
+    public function setAccessMode(?ClusterVolumeSpecAccessMode $accessMode): self
     {
         $this->initialized['accessMode'] = true;
         $this->accessMode                = $accessMode;

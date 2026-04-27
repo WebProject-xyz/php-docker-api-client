@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class NetworkAttachmentConfigNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,42 +38,56 @@ class NetworkAttachmentConfigNormalizer implements DenormalizerInterface, Normal
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\NetworkAttachmentConfig();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\NetworkAttachmentConfig();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Target', $data)) {
-            $object->setTarget($data['Target']);
-            unset($data['Target']);
+        if (array_key_exists('Target', $data) && null !== $data['Target']) {
+            $value = $data['Target'];
+            if (is_string($data['Target'])) {
+                $value = $data['Target'];
+            } elseif (null === $data['Target']) {
+                $value = $data['Target'];
+            }
+            $object->setTarget($value);
+        } elseif (array_key_exists('Target', $data) && null === $data['Target']) {
+            $object->setTarget(null);
         }
         if (array_key_exists('Aliases', $data) && null !== $data['Aliases']) {
-            $values = [];
-            foreach ($data['Aliases'] as $value) {
-                $values[] = $value;
+            $value_1 = $data['Aliases'];
+            if (is_array($data['Aliases']) && $this->isOnlyNumericKeys($data['Aliases'])) {
+                $values = [];
+                foreach ($data['Aliases'] as $value_2) {
+                    $values[] = $value_2;
+                }
+                $value_1 = $values;
+            } elseif (null === $data['Aliases']) {
+                $value_1 = $data['Aliases'];
             }
-            $object->setAliases($values);
-            unset($data['Aliases']);
+            $object->setAliases($value_1);
         } elseif (array_key_exists('Aliases', $data) && null === $data['Aliases']) {
             $object->setAliases(null);
         }
-        if (array_key_exists('DriverOpts', $data)) {
-            $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['DriverOpts'] as $key => $value_1) {
-                $values_1[$key] = $value_1;
+        if (array_key_exists('DriverOpts', $data) && null !== $data['DriverOpts']) {
+            $value_3 = $data['DriverOpts'];
+            if (is_array($data['DriverOpts']) && $this->isOnlyNumericKeys($data['DriverOpts'])) {
+                $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                foreach ($data['DriverOpts'] as $key => $value_4) {
+                    $values_1[$key] = $value_4;
+                }
+                $value_3 = $values_1;
+            } elseif (null === $data['DriverOpts']) {
+                $value_3 = $data['DriverOpts'];
             }
-            $object->setDriverOpts($values_1);
-            unset($data['DriverOpts']);
-        }
-        foreach ($data as $key_1 => $value_2) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $object[$key_1] = $value_2;
-            }
+            $object->setDriverOpts($value_3);
+        } elseif (array_key_exists('DriverOpts', $data) && null === $data['DriverOpts']) {
+            $object->setDriverOpts(null);
         }
 
         return $object;
@@ -81,27 +96,40 @@ class NetworkAttachmentConfigNormalizer implements DenormalizerInterface, Normal
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('target') && null !== $data->getTarget()) {
-            $dataArray['Target'] = $data->getTarget();
-        }
-        if ($data->isInitialized('aliases') && null !== $data->getAliases()) {
-            $values = [];
-            foreach ($data->getAliases() as $value) {
-                $values[] = $value;
+        if ($data->isInitialized('target')) {
+            $value = $data->getTarget();
+            if (is_string($data->getTarget())) {
+                $value = $data->getTarget();
+            } elseif (null === $data->getTarget()) {
+                $value = $data->getTarget();
             }
-            $dataArray['Aliases'] = $values;
+            $dataArray['Target'] = $value;
         }
-        if ($data->isInitialized('driverOpts') && null !== $data->getDriverOpts()) {
-            $values_1 = [];
-            foreach ($data->getDriverOpts() as $key => $value_1) {
-                $values_1[$key] = $value_1;
+        if ($data->isInitialized('aliases')) {
+            $value_1 = $data->getAliases();
+            if (is_array($data->getAliases())) {
+                $values = [];
+                foreach ($data->getAliases() as $value_2) {
+                    $values[] = $value_2;
+                }
+                $value_1 = $values;
+            } elseif (null === $data->getAliases()) {
+                $value_1 = $data->getAliases();
             }
-            $dataArray['DriverOpts'] = $values_1;
+            $dataArray['Aliases'] = $value_1;
         }
-        foreach ($data as $key_1 => $value_2) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $dataArray[$key_1] = $value_2;
+        if ($data->isInitialized('driverOpts')) {
+            $value_3 = $data->getDriverOpts();
+            if (is_object($data->getDriverOpts())) {
+                $values_1 = [];
+                foreach ($data->getDriverOpts() as $key => $value_4) {
+                    $values_1[$key] = $value_4;
+                }
+                $value_3 = $values_1;
+            } elseif (null === $data->getDriverOpts()) {
+                $value_3 = $data->getDriverOpts();
             }
+            $dataArray['DriverOpts'] = $value_3;
         }
 
         return $dataArray;

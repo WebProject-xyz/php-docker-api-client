@@ -12,12 +12,10 @@ class VolumeDelete extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     /**
      * Instruct the driver to remove the volume.
      *
-     * @param string $name            Volume name or ID
-     * @param array  $queryParameters {
-     *
-     * @var bool $force Force the removal of the volume
-     *           }
-     *
+     * @param string $name Volume name or ID
+     * @param array{
+     *    "force"?: bool, //Force the removal of the volume
+     * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
     public function __construct(string $name, array $queryParameters = [], array $accept = [])
@@ -78,13 +76,13 @@ class VolumeDelete extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
         if (204 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\VolumeDeleteNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (409 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (409 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\VolumeDeleteConflictException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\VolumeDeleteInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

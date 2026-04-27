@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class JoinTokens extends ArrayObject
+class JoinTokens
 {
     /**
      * @var array
@@ -20,22 +19,22 @@ class JoinTokens extends ArrayObject
     /**
      * The token workers can use to join the swarm.
      *
-     * @var string
+     * @var string|null
      */
     protected $worker;
     /**
      * The token managers can use to join the swarm.
      *
-     * @var string
+     * @var string|null
      */
     protected $manager;
 
     /**
      * The token workers can use to join the swarm.
      *
-     * @return string
+     * @return string|null
      */
-    public function getWorker(): string
+    public function getWorker(): ?string
     {
         return $this->worker;
     }
@@ -43,11 +42,11 @@ class JoinTokens extends ArrayObject
     /**
      * The token workers can use to join the swarm.
      *
-     * @param string $worker
+     * @param string|null $worker
      *
      * @return self
      */
-    public function setWorker(string $worker): self
+    public function setWorker(?string $worker): self
     {
         $this->initialized['worker'] = true;
         $this->worker                = $worker;
@@ -58,9 +57,9 @@ class JoinTokens extends ArrayObject
     /**
      * The token managers can use to join the swarm.
      *
-     * @return string
+     * @return string|null
      */
-    public function getManager(): string
+    public function getManager(): ?string
     {
         return $this->manager;
     }
@@ -68,11 +67,11 @@ class JoinTokens extends ArrayObject
     /**
      * The token managers can use to join the swarm.
      *
-     * @param string $manager
+     * @param string|null $manager
      *
      * @return self
      */
-    public function setManager(string $manager): self
+    public function setManager(?string $manager): self
     {
         $this->initialized['manager'] = true;
         $this->manager                = $manager;

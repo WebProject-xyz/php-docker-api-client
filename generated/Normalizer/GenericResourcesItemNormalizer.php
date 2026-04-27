@@ -37,28 +37,25 @@ class GenericResourcesItemNormalizer implements DenormalizerInterface, Normalize
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\GenericResourcesItem();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\GenericResourcesItem();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('NamedResourceSpec', $data)) {
+        if (array_key_exists('NamedResourceSpec', $data) && null !== $data['NamedResourceSpec']) {
             $object->setNamedResourceSpec($this->denormalizer->denormalize($data['NamedResourceSpec'], \WebProject\DockerApi\Library\Generated\Model\GenericResourcesItemNamedResourceSpec::class, 'json', $context));
-            unset($data['NamedResourceSpec']);
+        } elseif (array_key_exists('NamedResourceSpec', $data) && null === $data['NamedResourceSpec']) {
+            $object->setNamedResourceSpec(null);
         }
-        if (array_key_exists('DiscreteResourceSpec', $data)) {
+        if (array_key_exists('DiscreteResourceSpec', $data) && null !== $data['DiscreteResourceSpec']) {
             $object->setDiscreteResourceSpec($this->denormalizer->denormalize($data['DiscreteResourceSpec'], \WebProject\DockerApi\Library\Generated\Model\GenericResourcesItemDiscreteResourceSpec::class, 'json', $context));
-            unset($data['DiscreteResourceSpec']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
-            }
+        } elseif (array_key_exists('DiscreteResourceSpec', $data) && null === $data['DiscreteResourceSpec']) {
+            $object->setDiscreteResourceSpec(null);
         }
 
         return $object;
@@ -67,16 +64,11 @@ class GenericResourcesItemNormalizer implements DenormalizerInterface, Normalize
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('namedResourceSpec') && null !== $data->getNamedResourceSpec()) {
+        if ($data->isInitialized('namedResourceSpec')) {
             $dataArray['NamedResourceSpec'] = $this->normalizer->normalize($data->getNamedResourceSpec(), 'json', $context);
         }
-        if ($data->isInitialized('discreteResourceSpec') && null !== $data->getDiscreteResourceSpec()) {
+        if ($data->isInitialized('discreteResourceSpec')) {
             $dataArray['DiscreteResourceSpec'] = $this->normalizer->normalize($data->getDiscreteResourceSpec(), 'json', $context);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
-            }
         }
 
         return $dataArray;

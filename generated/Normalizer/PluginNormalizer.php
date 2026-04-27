@@ -18,6 +18,7 @@ use function get_class;
 use function is_array;
 use function is_int;
 use function is_object;
+use function is_string;
 
 class PluginNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -38,47 +39,44 @@ class PluginNormalizer implements DenormalizerInterface, NormalizerInterface, De
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\Plugin();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\Plugin();
         if (array_key_exists('Enabled', $data) && is_int($data['Enabled'])) {
             $data['Enabled'] = (bool) $data['Enabled'];
         }
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Id', $data)) {
-            $object->setId($data['Id']);
-            unset($data['Id']);
+        if (array_key_exists('Id', $data) && null !== $data['Id']) {
+            $value = $data['Id'];
+            if (is_string($data['Id'])) {
+                $value = $data['Id'];
+            } elseif (null === $data['Id']) {
+                $value = $data['Id'];
+            }
+            $object->setId($value);
+        } elseif (array_key_exists('Id', $data) && null === $data['Id']) {
+            $object->setId(null);
         }
         if (array_key_exists('Name', $data)) {
             $object->setName($data['Name']);
-            unset($data['Name']);
         }
         if (array_key_exists('Enabled', $data)) {
             $object->setEnabled($data['Enabled']);
-            unset($data['Enabled']);
         }
         if (array_key_exists('Settings', $data)) {
             $object->setSettings($this->denormalizer->denormalize($data['Settings'], \WebProject\DockerApi\Library\Generated\Model\PluginSettings::class, 'json', $context));
-            unset($data['Settings']);
         }
         if (array_key_exists('PluginReference', $data)) {
             $object->setPluginReference($data['PluginReference']);
-            unset($data['PluginReference']);
         }
         if (array_key_exists('Config', $data)) {
             $object->setConfig($this->denormalizer->denormalize($data['Config'], \WebProject\DockerApi\Library\Generated\Model\PluginConfig::class, 'json', $context));
-            unset($data['Config']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
-            }
         }
 
         return $object;
@@ -87,8 +85,14 @@ class PluginNormalizer implements DenormalizerInterface, NormalizerInterface, De
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('id') && null !== $data->getId()) {
-            $dataArray['Id'] = $data->getId();
+        if ($data->isInitialized('id')) {
+            $value = $data->getId();
+            if (is_string($data->getId())) {
+                $value = $data->getId();
+            } elseif (null === $data->getId()) {
+                $value = $data->getId();
+            }
+            $dataArray['Id'] = $value;
         }
         $dataArray['Name']     = $data->getName();
         $dataArray['Enabled']  = $data->getEnabled();
@@ -97,11 +101,6 @@ class PluginNormalizer implements DenormalizerInterface, NormalizerInterface, De
             $dataArray['PluginReference'] = $data->getPluginReference();
         }
         $dataArray['Config'] = $this->normalizer->normalize($data->getConfig(), 'json', $context);
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
-            }
-        }
 
         return $dataArray;
     }

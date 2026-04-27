@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ServiceServiceStatus extends ArrayObject
+class ServiceServiceStatus
 {
     /**
      * @var array
@@ -20,7 +19,7 @@ class ServiceServiceStatus extends ArrayObject
     /**
      * The number of tasks for the service currently in the Running state.
      *
-     * @var int
+     * @var int|null
      */
     protected $runningTasks;
     /**
@@ -30,7 +29,7 @@ class ServiceServiceStatus extends ArrayObject
      * count of all tasks for the service with a Desired State other
      * than Shutdown.
      *
-     * @var int
+     * @var int|null
      */
     protected $desiredTasks;
     /**
@@ -39,16 +38,16 @@ class ServiceServiceStatus extends ArrayObject
      * value of 0 may mean the service is not in a job mode, or it may
      * mean the job-mode service has no tasks yet Completed.
      *
-     * @var int
+     * @var int|null
      */
     protected $completedTasks;
 
     /**
      * The number of tasks for the service currently in the Running state.
      *
-     * @return int
+     * @return int|null
      */
-    public function getRunningTasks(): int
+    public function getRunningTasks(): ?int
     {
         return $this->runningTasks;
     }
@@ -56,11 +55,11 @@ class ServiceServiceStatus extends ArrayObject
     /**
      * The number of tasks for the service currently in the Running state.
      *
-     * @param int $runningTasks
+     * @param int|null $runningTasks
      *
      * @return self
      */
-    public function setRunningTasks(int $runningTasks): self
+    public function setRunningTasks(?int $runningTasks): self
     {
         $this->initialized['runningTasks'] = true;
         $this->runningTasks                = $runningTasks;
@@ -75,9 +74,9 @@ class ServiceServiceStatus extends ArrayObject
      * count of all tasks for the service with a Desired State other
      * than Shutdown.
      *
-     * @return int
+     * @return int|null
      */
-    public function getDesiredTasks(): int
+    public function getDesiredTasks(): ?int
     {
         return $this->desiredTasks;
     }
@@ -89,11 +88,11 @@ class ServiceServiceStatus extends ArrayObject
      * count of all tasks for the service with a Desired State other
      * than Shutdown.
      *
-     * @param int $desiredTasks
+     * @param int|null $desiredTasks
      *
      * @return self
      */
-    public function setDesiredTasks(int $desiredTasks): self
+    public function setDesiredTasks(?int $desiredTasks): self
     {
         $this->initialized['desiredTasks'] = true;
         $this->desiredTasks                = $desiredTasks;
@@ -107,9 +106,9 @@ class ServiceServiceStatus extends ArrayObject
      * value of 0 may mean the service is not in a job mode, or it may
      * mean the job-mode service has no tasks yet Completed.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCompletedTasks(): int
+    public function getCompletedTasks(): ?int
     {
         return $this->completedTasks;
     }
@@ -120,11 +119,11 @@ class ServiceServiceStatus extends ArrayObject
      * value of 0 may mean the service is not in a job mode, or it may
      * mean the job-mode service has no tasks yet Completed.
      *
-     * @param int $completedTasks
+     * @param int|null $completedTasks
      *
      * @return self
      */
-    public function setCompletedTasks(int $completedTasks): self
+    public function setCompletedTasks(?int $completedTasks): self
     {
         $this->initialized['completedTasks'] = true;
         $this->completedTasks                = $completedTasks;

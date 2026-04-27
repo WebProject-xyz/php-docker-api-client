@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class RegistryServiceConfig extends ArrayObject
+class RegistryServiceConfig
 {
     /**
      * @var array
@@ -42,7 +41,7 @@ class RegistryServiceConfig extends ArrayObject
      * > security, users should add their CA to their system's list of trusted
      * > CAs instead of enabling this option.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $insecureRegistryCIDRs;
     /**
@@ -53,7 +52,7 @@ class RegistryServiceConfig extends ArrayObject
      * List of registry URLs that act as a mirror for the official
      * (`docker.io`) registry.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $mirrors;
 
@@ -82,9 +81,9 @@ class RegistryServiceConfig extends ArrayObject
      * > security, users should add their CA to their system's list of trusted
      * > CAs instead of enabling this option.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getInsecureRegistryCIDRs(): array
+    public function getInsecureRegistryCIDRs(): ?array
     {
         return $this->insecureRegistryCIDRs;
     }
@@ -114,11 +113,11 @@ class RegistryServiceConfig extends ArrayObject
      * > security, users should add their CA to their system's list of trusted
      * > CAs instead of enabling this option.
      *
-     * @param list<string> $insecureRegistryCIDRs
+     * @param list<string>|null $insecureRegistryCIDRs
      *
      * @return self
      */
-    public function setInsecureRegistryCIDRs(array $insecureRegistryCIDRs): self
+    public function setInsecureRegistryCIDRs(?array $insecureRegistryCIDRs): self
     {
         $this->initialized['insecureRegistryCIDRs'] = true;
         $this->insecureRegistryCIDRs                = $insecureRegistryCIDRs;
@@ -151,9 +150,9 @@ class RegistryServiceConfig extends ArrayObject
      * List of registry URLs that act as a mirror for the official
      * (`docker.io`) registry.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getMirrors(): array
+    public function getMirrors(): ?array
     {
         return $this->mirrors;
     }
@@ -162,11 +161,11 @@ class RegistryServiceConfig extends ArrayObject
      * List of registry URLs that act as a mirror for the official
      * (`docker.io`) registry.
      *
-     * @param list<string> $mirrors
+     * @param list<string>|null $mirrors
      *
      * @return self
      */
-    public function setMirrors(array $mirrors): self
+    public function setMirrors(?array $mirrors): self
     {
         $this->initialized['mirrors'] = true;
         $this->mirrors                = $mirrors;

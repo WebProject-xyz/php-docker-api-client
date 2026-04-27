@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class MountBindOptions extends ArrayObject
+class MountBindOptions
 {
     /**
      * @var array
@@ -20,19 +19,19 @@ class MountBindOptions extends ArrayObject
     /**
      * A propagation mode with the value `[r]private`, `[r]shared`, or `[r]slave`.
      *
-     * @var string
+     * @var string|null
      */
     protected $propagation;
     /**
      * Disable recursive bind mount.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $nonRecursive = false;
     /**
      * Create mount point on host if missing.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $createMountpoint = false;
     /**
@@ -43,22 +42,22 @@ class MountBindOptions extends ArrayObject
      * non-recursive by default. To match the previous behaviour this
      * will default to `true` for clients on versions prior to v1.44.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $readOnlyNonRecursive = false;
     /**
      * Raise an error if the mount cannot be made recursively read-only.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $readOnlyForceRecursive = false;
 
     /**
      * A propagation mode with the value `[r]private`, `[r]shared`, or `[r]slave`.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPropagation(): string
+    public function getPropagation(): ?string
     {
         return $this->propagation;
     }
@@ -66,11 +65,11 @@ class MountBindOptions extends ArrayObject
     /**
      * A propagation mode with the value `[r]private`, `[r]shared`, or `[r]slave`.
      *
-     * @param string $propagation
+     * @param string|null $propagation
      *
      * @return self
      */
-    public function setPropagation(string $propagation): self
+    public function setPropagation(?string $propagation): self
     {
         $this->initialized['propagation'] = true;
         $this->propagation                = $propagation;
@@ -81,9 +80,9 @@ class MountBindOptions extends ArrayObject
     /**
      * Disable recursive bind mount.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getNonRecursive(): bool
+    public function getNonRecursive(): ?bool
     {
         return $this->nonRecursive;
     }
@@ -91,11 +90,11 @@ class MountBindOptions extends ArrayObject
     /**
      * Disable recursive bind mount.
      *
-     * @param bool $nonRecursive
+     * @param bool|null $nonRecursive
      *
      * @return self
      */
-    public function setNonRecursive(bool $nonRecursive): self
+    public function setNonRecursive(?bool $nonRecursive): self
     {
         $this->initialized['nonRecursive'] = true;
         $this->nonRecursive                = $nonRecursive;
@@ -106,9 +105,9 @@ class MountBindOptions extends ArrayObject
     /**
      * Create mount point on host if missing.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getCreateMountpoint(): bool
+    public function getCreateMountpoint(): ?bool
     {
         return $this->createMountpoint;
     }
@@ -116,11 +115,11 @@ class MountBindOptions extends ArrayObject
     /**
      * Create mount point on host if missing.
      *
-     * @param bool $createMountpoint
+     * @param bool|null $createMountpoint
      *
      * @return self
      */
-    public function setCreateMountpoint(bool $createMountpoint): self
+    public function setCreateMountpoint(?bool $createMountpoint): self
     {
         $this->initialized['createMountpoint'] = true;
         $this->createMountpoint                = $createMountpoint;
@@ -136,9 +135,9 @@ class MountBindOptions extends ArrayObject
      * non-recursive by default. To match the previous behaviour this
      * will default to `true` for clients on versions prior to v1.44.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getReadOnlyNonRecursive(): bool
+    public function getReadOnlyNonRecursive(): ?bool
     {
         return $this->readOnlyNonRecursive;
     }
@@ -151,11 +150,11 @@ class MountBindOptions extends ArrayObject
      * non-recursive by default. To match the previous behaviour this
      * will default to `true` for clients on versions prior to v1.44.
      *
-     * @param bool $readOnlyNonRecursive
+     * @param bool|null $readOnlyNonRecursive
      *
      * @return self
      */
-    public function setReadOnlyNonRecursive(bool $readOnlyNonRecursive): self
+    public function setReadOnlyNonRecursive(?bool $readOnlyNonRecursive): self
     {
         $this->initialized['readOnlyNonRecursive'] = true;
         $this->readOnlyNonRecursive                = $readOnlyNonRecursive;
@@ -166,9 +165,9 @@ class MountBindOptions extends ArrayObject
     /**
      * Raise an error if the mount cannot be made recursively read-only.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getReadOnlyForceRecursive(): bool
+    public function getReadOnlyForceRecursive(): ?bool
     {
         return $this->readOnlyForceRecursive;
     }
@@ -176,11 +175,11 @@ class MountBindOptions extends ArrayObject
     /**
      * Raise an error if the mount cannot be made recursively read-only.
      *
-     * @param bool $readOnlyForceRecursive
+     * @param bool|null $readOnlyForceRecursive
      *
      * @return self
      */
-    public function setReadOnlyForceRecursive(bool $readOnlyForceRecursive): self
+    public function setReadOnlyForceRecursive(?bool $readOnlyForceRecursive): self
     {
         $this->initialized['readOnlyForceRecursive'] = true;
         $this->readOnlyForceRecursive                = $readOnlyForceRecursive;

@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecRestartPolicy extends ArrayObject
+class TaskSpecRestartPolicy
 {
     /**
      * @var array
@@ -20,36 +19,36 @@ class TaskSpecRestartPolicy extends ArrayObject
     /**
      * Condition for restart.
      *
-     * @var string
+     * @var string|null
      */
     protected $condition;
     /**
      * Delay between restart attempts.
      *
-     * @var int
+     * @var int|null
      */
     protected $delay;
     /**
      * Maximum attempts to restart a given container before giving up
      * (default value is 0, which is ignored).
      *
-     * @var int
+     * @var int|null
      */
     protected $maxAttempts = 0;
     /**
      * Windows is the time window used to evaluate the restart policy
      * (default value is 0, which is unbounded).
      *
-     * @var int
+     * @var int|null
      */
     protected $window = 0;
 
     /**
      * Condition for restart.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCondition(): string
+    public function getCondition(): ?string
     {
         return $this->condition;
     }
@@ -57,11 +56,11 @@ class TaskSpecRestartPolicy extends ArrayObject
     /**
      * Condition for restart.
      *
-     * @param string $condition
+     * @param string|null $condition
      *
      * @return self
      */
-    public function setCondition(string $condition): self
+    public function setCondition(?string $condition): self
     {
         $this->initialized['condition'] = true;
         $this->condition                = $condition;
@@ -72,9 +71,9 @@ class TaskSpecRestartPolicy extends ArrayObject
     /**
      * Delay between restart attempts.
      *
-     * @return int
+     * @return int|null
      */
-    public function getDelay(): int
+    public function getDelay(): ?int
     {
         return $this->delay;
     }
@@ -82,11 +81,11 @@ class TaskSpecRestartPolicy extends ArrayObject
     /**
      * Delay between restart attempts.
      *
-     * @param int $delay
+     * @param int|null $delay
      *
      * @return self
      */
-    public function setDelay(int $delay): self
+    public function setDelay(?int $delay): self
     {
         $this->initialized['delay'] = true;
         $this->delay                = $delay;
@@ -98,9 +97,9 @@ class TaskSpecRestartPolicy extends ArrayObject
      * Maximum attempts to restart a given container before giving up
      * (default value is 0, which is ignored).
      *
-     * @return int
+     * @return int|null
      */
-    public function getMaxAttempts(): int
+    public function getMaxAttempts(): ?int
     {
         return $this->maxAttempts;
     }
@@ -109,11 +108,11 @@ class TaskSpecRestartPolicy extends ArrayObject
      * Maximum attempts to restart a given container before giving up
      * (default value is 0, which is ignored).
      *
-     * @param int $maxAttempts
+     * @param int|null $maxAttempts
      *
      * @return self
      */
-    public function setMaxAttempts(int $maxAttempts): self
+    public function setMaxAttempts(?int $maxAttempts): self
     {
         $this->initialized['maxAttempts'] = true;
         $this->maxAttempts                = $maxAttempts;
@@ -125,9 +124,9 @@ class TaskSpecRestartPolicy extends ArrayObject
      * Windows is the time window used to evaluate the restart policy
      * (default value is 0, which is unbounded).
      *
-     * @return int
+     * @return int|null
      */
-    public function getWindow(): int
+    public function getWindow(): ?int
     {
         return $this->window;
     }
@@ -136,11 +135,11 @@ class TaskSpecRestartPolicy extends ArrayObject
      * Windows is the time window used to evaluate the restart policy
      * (default value is 0, which is unbounded).
      *
-     * @param int $window
+     * @param int|null $window
      *
      * @return self
      */
-    public function setWindow(int $window): self
+    public function setWindow(?int $window): self
     {
         $this->initialized['window'] = true;
         $this->window                = $window;

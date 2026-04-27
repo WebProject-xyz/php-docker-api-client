@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class MountImageOptions extends ArrayObject
+class MountImageOptions
 {
     /**
      * @var array
@@ -20,16 +19,16 @@ class MountImageOptions extends ArrayObject
     /**
      * Source path inside the image. Must be relative without any back traversals.
      *
-     * @var string
+     * @var string|null
      */
     protected $subpath;
 
     /**
      * Source path inside the image. Must be relative without any back traversals.
      *
-     * @return string
+     * @return string|null
      */
-    public function getSubpath(): string
+    public function getSubpath(): ?string
     {
         return $this->subpath;
     }
@@ -37,11 +36,11 @@ class MountImageOptions extends ArrayObject
     /**
      * Source path inside the image. Must be relative without any back traversals.
      *
-     * @param string $subpath
+     * @param string|null $subpath
      *
      * @return self
      */
-    public function setSubpath(string $subpath): self
+    public function setSubpath(?string $subpath): self
     {
         $this->initialized['subpath'] = true;
         $this->subpath                = $subpath;

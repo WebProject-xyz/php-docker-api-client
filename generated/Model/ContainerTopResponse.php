@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ContainerTopResponse extends ArrayObject
+class ContainerTopResponse
 {
     /**
      * @var array
@@ -20,23 +19,23 @@ class ContainerTopResponse extends ArrayObject
     /**
      * The ps column titles.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $titles;
     /**
      * Each process running in the container, where each process
      * is an array of values corresponding to the titles.
      *
-     * @var list<list<string>>
+     * @var list<list<string>>|null
      */
     protected $processes;
 
     /**
      * The ps column titles.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getTitles(): array
+    public function getTitles(): ?array
     {
         return $this->titles;
     }
@@ -44,11 +43,11 @@ class ContainerTopResponse extends ArrayObject
     /**
      * The ps column titles.
      *
-     * @param list<string> $titles
+     * @param list<string>|null $titles
      *
      * @return self
      */
-    public function setTitles(array $titles): self
+    public function setTitles(?array $titles): self
     {
         $this->initialized['titles'] = true;
         $this->titles                = $titles;
@@ -60,9 +59,9 @@ class ContainerTopResponse extends ArrayObject
      * Each process running in the container, where each process
      * is an array of values corresponding to the titles.
      *
-     * @return list<list<string>>
+     * @return list<list<string>>|null
      */
-    public function getProcesses(): array
+    public function getProcesses(): ?array
     {
         return $this->processes;
     }
@@ -71,11 +70,11 @@ class ContainerTopResponse extends ArrayObject
      * Each process running in the container, where each process
      * is an array of values corresponding to the titles.
      *
-     * @param list<list<string>> $processes
+     * @param list<list<string>>|null $processes
      *
      * @return self
      */
-    public function setProcesses(array $processes): self
+    public function setProcesses(?array $processes): self
     {
         $this->initialized['processes'] = true;
         $this->processes                = $processes;

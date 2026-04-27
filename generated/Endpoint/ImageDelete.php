@@ -15,16 +15,14 @@ class ImageDelete extends \WebProject\DockerApi\Library\Generated\Runtime\Client
      * Images can't be removed if they have descendant images, are being
      * used by a running container or are being used by a build.
      *
-     * @param string $name            Image name or ID
-     * @param array  $queryParameters {
-     *
-     * @var bool  $force Remove the image even if it is being used by stopped containers or has other tags
-     * @var bool  $noprune Do not delete untagged parent images
-     * @var array $platforms Select platform-specific content to delete.
-     *            Multiple values are accepted.
-     *            Each platform is a OCI platform encoded as a JSON string.
-     *
-     * }
+     * @param string $name Image name or ID
+     * @param array{
+     *    "force"?: bool, //Remove the image even if it is being used by stopped containers or has other tags
+     *    "noprune"?: bool, //Do not delete untagged parent images
+     *    "platforms"?: array, //Select platform-specific content to delete.
+     * Multiple values are accepted.
+     * Each platform is a OCI platform encoded as a JSON string.
+     * } $queryParameters
      */
     public function __construct(string $name, array $queryParameters = [])
     {
@@ -78,16 +76,16 @@ class ImageDelete extends \WebProject\DockerApi\Library\Generated\Runtime\Client
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ImageDeleteResponseItem[]', 'json');
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageDeleteNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (409 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (409 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageDeleteConflictException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageDeleteInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

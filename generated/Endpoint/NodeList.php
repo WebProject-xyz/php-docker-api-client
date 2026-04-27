@@ -9,9 +9,8 @@ class NodeList extends \WebProject\DockerApi\Library\Generated\Runtime\Client\Ba
     protected $accept;
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var string $filters Filters to process on the nodes list, encoded as JSON (a `map[string][]string`).
+     * @param array{
+     *    "filters"?: string, //Filters to process on the nodes list, encoded as JSON (a `map[string][]string`).
      *
      * Available filters:
      * - `id=<node id>`
@@ -20,9 +19,7 @@ class NodeList extends \WebProject\DockerApi\Library\Generated\Runtime\Client\Ba
      * - `name=<node name>`
      * - `node.label=<node label>`
      * - `role=`(`manager`|`worker`)`
-     *
-     * }
-     *
+     * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
     public function __construct(array $queryParameters = [], array $accept = [])
@@ -78,13 +75,13 @@ class NodeList extends \WebProject\DockerApi\Library\Generated\Runtime\Client\Ba
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\Node[]', 'json');
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NodeListInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (503 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (503 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NodeListServiceUnavailableException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

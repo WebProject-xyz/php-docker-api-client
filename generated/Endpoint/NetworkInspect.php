@@ -9,12 +9,11 @@ class NetworkInspect extends \WebProject\DockerApi\Library\Generated\Runtime\Cli
     protected $id;
 
     /**
-     * @param string $id              Network ID or name
-     * @param array  $queryParameters {
-     *
-     * @var bool   $verbose Detailed inspect output for troubleshooting
-     * @var string $scope Filter the network by scope (swarm, global, or local)
-     *             }
+     * @param string $id Network ID or name
+     * @param array{
+     *    "verbose"?: bool, //Detailed inspect output for troubleshooting
+     *    "scope"?: string, //Filter the network by scope (swarm, global, or local)
+     * } $queryParameters
      */
     public function __construct(string $id, array $queryParameters = [])
     {
@@ -57,7 +56,7 @@ class NetworkInspect extends \WebProject\DockerApi\Library\Generated\Runtime\Cli
     /**
      * {@inheritdoc}
      *
-     * @return \WebProject\DockerApi\Library\Generated\Model\Network|null
+     * @return \WebProject\DockerApi\Library\Generated\Model\NetworkInspect|null
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\NetworkInspectNotFoundException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\NetworkInspectInternalServerErrorException
@@ -66,13 +65,13 @@ class NetworkInspect extends \WebProject\DockerApi\Library\Generated\Runtime\Cli
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
-            return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\Network', 'json');
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+            return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\NetworkInspect', 'json');
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NetworkInspectNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NetworkInspectInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

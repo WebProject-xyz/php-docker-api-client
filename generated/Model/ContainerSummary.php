@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ContainerSummary extends ArrayObject
+class ContainerSummary
 {
     /**
      * @var array
@@ -20,7 +19,7 @@ class ContainerSummary extends ArrayObject
     /**
      * The ID of this container as a 128-bit (64-character) hexadecimal string (32 bytes).
      *
-     * @var string
+     * @var string|null
      */
     protected $id;
     /**
@@ -30,7 +29,7 @@ class ContainerSummary extends ArrayObject
      *
      * For historic reasons, names are prefixed with a forward-slash (`/`).
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $names;
     /**
@@ -46,13 +45,13 @@ class ContainerSummary extends ArrayObject
      * contain the the image ID (digest) it was resolved to in its canonical,
      * non-truncated form (e.g., `sha256:72297848456d5d37d1262630108ab308d3e9ec7ed1c3286a32fe09856619a782`).
      *
-     * @var string
+     * @var string|null
      */
     protected $image;
     /**
      * The ID (digest) of the image that this container was created from.
      *
-     * @var string
+     * @var string|null
      */
     protected $imageID;
     /**
@@ -65,20 +64,20 @@ class ContainerSummary extends ArrayObject
     /**
      * Command to run when starting the container.
      *
-     * @var string
+     * @var string|null
      */
     protected $command;
     /**
      * Date and time at which the container was created as a Unix timestamp
      * (number of seconds since EPOCH).
      *
-     * @var int
+     * @var int|null
      */
     protected $created;
     /**
      * Port-mappings for the container.
      *
-     * @var list<Port>
+     * @var list<PortSummary>|null
      */
     protected $ports;
     /**
@@ -103,19 +102,19 @@ class ContainerSummary extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $labels;
     /**
      * The state of this container.
      *
-     * @var string
+     * @var string|null
      */
     protected $state;
     /**
      * Additional human-readable status of this container (e.g. `Exit 0`).
      *
-     * @var string
+     * @var string|null
      */
     protected $status;
     /**
@@ -123,28 +122,38 @@ class ContainerSummary extends ArrayObject
      * is a reduced set of information in the container's "HostConfig" as
      * available in the container "inspect" response.
      *
-     * @var ContainerSummaryHostConfig
+     * @var ContainerSummaryHostConfig|null
      */
     protected $hostConfig;
     /**
      * Summary of the container's network settings.
      *
-     * @var ContainerSummaryNetworkSettings
+     * @var ContainerSummaryNetworkSettings|null
      */
     protected $networkSettings;
     /**
      * List of mounts used by the container.
      *
-     * @var list<MountPoint>
+     * @var list<MountPoint>|null
      */
     protected $mounts;
+    /**
+     * Summary of health status.
+     *
+     * Added in v1.52, before that version all container summary not include Health.
+     * After this attribute introduced, it includes containers with no health checks configured,
+     * or containers that are not running with none
+     *
+     * @var ContainerSummaryHealth|null
+     */
+    protected $health;
 
     /**
      * The ID of this container as a 128-bit (64-character) hexadecimal string (32 bytes).
      *
-     * @return string
+     * @return string|null
      */
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -152,11 +161,11 @@ class ContainerSummary extends ArrayObject
     /**
      * The ID of this container as a 128-bit (64-character) hexadecimal string (32 bytes).
      *
-     * @param string $id
+     * @param string|null $id
      *
      * @return self
      */
-    public function setId(string $id): self
+    public function setId(?string $id): self
     {
         $this->initialized['id'] = true;
         $this->id                = $id;
@@ -171,9 +180,9 @@ class ContainerSummary extends ArrayObject
      *
      * For historic reasons, names are prefixed with a forward-slash (`/`).
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getNames(): array
+    public function getNames(): ?array
     {
         return $this->names;
     }
@@ -185,11 +194,11 @@ class ContainerSummary extends ArrayObject
      *
      * For historic reasons, names are prefixed with a forward-slash (`/`).
      *
-     * @param list<string> $names
+     * @param list<string>|null $names
      *
      * @return self
      */
-    public function setNames(array $names): self
+    public function setNames(?array $names): self
     {
         $this->initialized['names'] = true;
         $this->names                = $names;
@@ -210,9 +219,9 @@ class ContainerSummary extends ArrayObject
      * contain the the image ID (digest) it was resolved to in its canonical,
      * non-truncated form (e.g., `sha256:72297848456d5d37d1262630108ab308d3e9ec7ed1c3286a32fe09856619a782`).
      *
-     * @return string
+     * @return string|null
      */
-    public function getImage(): string
+    public function getImage(): ?string
     {
         return $this->image;
     }
@@ -230,11 +239,11 @@ class ContainerSummary extends ArrayObject
      * contain the the image ID (digest) it was resolved to in its canonical,
      * non-truncated form (e.g., `sha256:72297848456d5d37d1262630108ab308d3e9ec7ed1c3286a32fe09856619a782`).
      *
-     * @param string $image
+     * @param string|null $image
      *
      * @return self
      */
-    public function setImage(string $image): self
+    public function setImage(?string $image): self
     {
         $this->initialized['image'] = true;
         $this->image                = $image;
@@ -245,9 +254,9 @@ class ContainerSummary extends ArrayObject
     /**
      * The ID (digest) of the image that this container was created from.
      *
-     * @return string
+     * @return string|null
      */
-    public function getImageID(): string
+    public function getImageID(): ?string
     {
         return $this->imageID;
     }
@@ -255,11 +264,11 @@ class ContainerSummary extends ArrayObject
     /**
      * The ID (digest) of the image that this container was created from.
      *
-     * @param string $imageID
+     * @param string|null $imageID
      *
      * @return self
      */
-    public function setImageID(string $imageID): self
+    public function setImageID(?string $imageID): self
     {
         $this->initialized['imageID'] = true;
         $this->imageID                = $imageID;
@@ -297,9 +306,9 @@ class ContainerSummary extends ArrayObject
     /**
      * Command to run when starting the container.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCommand(): string
+    public function getCommand(): ?string
     {
         return $this->command;
     }
@@ -307,11 +316,11 @@ class ContainerSummary extends ArrayObject
     /**
      * Command to run when starting the container.
      *
-     * @param string $command
+     * @param string|null $command
      *
      * @return self
      */
-    public function setCommand(string $command): self
+    public function setCommand(?string $command): self
     {
         $this->initialized['command'] = true;
         $this->command                = $command;
@@ -323,9 +332,9 @@ class ContainerSummary extends ArrayObject
      * Date and time at which the container was created as a Unix timestamp
      * (number of seconds since EPOCH).
      *
-     * @return int
+     * @return int|null
      */
-    public function getCreated(): int
+    public function getCreated(): ?int
     {
         return $this->created;
     }
@@ -334,11 +343,11 @@ class ContainerSummary extends ArrayObject
      * Date and time at which the container was created as a Unix timestamp
      * (number of seconds since EPOCH).
      *
-     * @param int $created
+     * @param int|null $created
      *
      * @return self
      */
-    public function setCreated(int $created): self
+    public function setCreated(?int $created): self
     {
         $this->initialized['created'] = true;
         $this->created                = $created;
@@ -349,9 +358,9 @@ class ContainerSummary extends ArrayObject
     /**
      * Port-mappings for the container.
      *
-     * @return list<Port>
+     * @return list<PortSummary>|null
      */
-    public function getPorts(): array
+    public function getPorts(): ?array
     {
         return $this->ports;
     }
@@ -359,11 +368,11 @@ class ContainerSummary extends ArrayObject
     /**
      * Port-mappings for the container.
      *
-     * @param list<Port> $ports
+     * @param list<PortSummary>|null $ports
      *
      * @return self
      */
-    public function setPorts(array $ports): self
+    public function setPorts(?array $ports): self
     {
         $this->initialized['ports'] = true;
         $this->ports                = $ports;
@@ -438,9 +447,9 @@ class ContainerSummary extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getLabels(): iterable
+    public function getLabels(): ?iterable
     {
         return $this->labels;
     }
@@ -448,11 +457,11 @@ class ContainerSummary extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @param array<string, string> $labels
+     * @param array<string, string>|null $labels
      *
      * @return self
      */
-    public function setLabels(iterable $labels): self
+    public function setLabels(?iterable $labels): self
     {
         $this->initialized['labels'] = true;
         $this->labels                = $labels;
@@ -463,9 +472,9 @@ class ContainerSummary extends ArrayObject
     /**
      * The state of this container.
      *
-     * @return string
+     * @return string|null
      */
-    public function getState(): string
+    public function getState(): ?string
     {
         return $this->state;
     }
@@ -473,11 +482,11 @@ class ContainerSummary extends ArrayObject
     /**
      * The state of this container.
      *
-     * @param string $state
+     * @param string|null $state
      *
      * @return self
      */
-    public function setState(string $state): self
+    public function setState(?string $state): self
     {
         $this->initialized['state'] = true;
         $this->state                = $state;
@@ -488,9 +497,9 @@ class ContainerSummary extends ArrayObject
     /**
      * Additional human-readable status of this container (e.g. `Exit 0`).
      *
-     * @return string
+     * @return string|null
      */
-    public function getStatus(): string
+    public function getStatus(): ?string
     {
         return $this->status;
     }
@@ -498,11 +507,11 @@ class ContainerSummary extends ArrayObject
     /**
      * Additional human-readable status of this container (e.g. `Exit 0`).
      *
-     * @param string $status
+     * @param string|null $status
      *
      * @return self
      */
-    public function setStatus(string $status): self
+    public function setStatus(?string $status): self
     {
         $this->initialized['status'] = true;
         $this->status                = $status;
@@ -515,9 +524,9 @@ class ContainerSummary extends ArrayObject
      * is a reduced set of information in the container's "HostConfig" as
      * available in the container "inspect" response.
      *
-     * @return ContainerSummaryHostConfig
+     * @return ContainerSummaryHostConfig|null
      */
-    public function getHostConfig(): ContainerSummaryHostConfig
+    public function getHostConfig(): ?ContainerSummaryHostConfig
     {
         return $this->hostConfig;
     }
@@ -527,11 +536,11 @@ class ContainerSummary extends ArrayObject
      * is a reduced set of information in the container's "HostConfig" as
      * available in the container "inspect" response.
      *
-     * @param ContainerSummaryHostConfig $hostConfig
+     * @param ContainerSummaryHostConfig|null $hostConfig
      *
      * @return self
      */
-    public function setHostConfig(ContainerSummaryHostConfig $hostConfig): self
+    public function setHostConfig(?ContainerSummaryHostConfig $hostConfig): self
     {
         $this->initialized['hostConfig'] = true;
         $this->hostConfig                = $hostConfig;
@@ -542,9 +551,9 @@ class ContainerSummary extends ArrayObject
     /**
      * Summary of the container's network settings.
      *
-     * @return ContainerSummaryNetworkSettings
+     * @return ContainerSummaryNetworkSettings|null
      */
-    public function getNetworkSettings(): ContainerSummaryNetworkSettings
+    public function getNetworkSettings(): ?ContainerSummaryNetworkSettings
     {
         return $this->networkSettings;
     }
@@ -552,11 +561,11 @@ class ContainerSummary extends ArrayObject
     /**
      * Summary of the container's network settings.
      *
-     * @param ContainerSummaryNetworkSettings $networkSettings
+     * @param ContainerSummaryNetworkSettings|null $networkSettings
      *
      * @return self
      */
-    public function setNetworkSettings(ContainerSummaryNetworkSettings $networkSettings): self
+    public function setNetworkSettings(?ContainerSummaryNetworkSettings $networkSettings): self
     {
         $this->initialized['networkSettings'] = true;
         $this->networkSettings                = $networkSettings;
@@ -567,9 +576,9 @@ class ContainerSummary extends ArrayObject
     /**
      * List of mounts used by the container.
      *
-     * @return list<MountPoint>
+     * @return list<MountPoint>|null
      */
-    public function getMounts(): array
+    public function getMounts(): ?array
     {
         return $this->mounts;
     }
@@ -577,14 +586,47 @@ class ContainerSummary extends ArrayObject
     /**
      * List of mounts used by the container.
      *
-     * @param list<MountPoint> $mounts
+     * @param list<MountPoint>|null $mounts
      *
      * @return self
      */
-    public function setMounts(array $mounts): self
+    public function setMounts(?array $mounts): self
     {
         $this->initialized['mounts'] = true;
         $this->mounts                = $mounts;
+
+        return $this;
+    }
+
+    /**
+     * Summary of health status.
+     *
+     * Added in v1.52, before that version all container summary not include Health.
+     * After this attribute introduced, it includes containers with no health checks configured,
+     * or containers that are not running with none
+     *
+     * @return ContainerSummaryHealth|null
+     */
+    public function getHealth(): ?ContainerSummaryHealth
+    {
+        return $this->health;
+    }
+
+    /**
+     * Summary of health status.
+     *
+     * Added in v1.52, before that version all container summary not include Health.
+     * After this attribute introduced, it includes containers with no health checks configured,
+     * or containers that are not running with none
+     *
+     * @param ContainerSummaryHealth|null $health
+     *
+     * @return self
+     */
+    public function setHealth(?ContainerSummaryHealth $health): self
+    {
+        $this->initialized['health'] = true;
+        $this->health                = $health;
 
         return $this;
     }

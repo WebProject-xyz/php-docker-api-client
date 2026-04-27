@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class FirewallInfoNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,36 +38,45 @@ class FirewallInfoNormalizer implements DenormalizerInterface, NormalizerInterfa
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\FirewallInfo();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\FirewallInfo();
-        if (null === $data || false === is_array($data)) {
-            return $object;
+        if (array_key_exists('Driver', $data) && null !== $data['Driver']) {
+            $value = $data['Driver'];
+            if (is_string($data['Driver'])) {
+                $value = $data['Driver'];
+            } elseif (null === $data['Driver']) {
+                $value = $data['Driver'];
+            }
+            $object->setDriver($value);
+        } elseif (array_key_exists('Driver', $data) && null === $data['Driver']) {
+            $object->setDriver(null);
         }
-        if (array_key_exists('Driver', $data)) {
-            $object->setDriver($data['Driver']);
-            unset($data['Driver']);
-        }
-        if (array_key_exists('Info', $data)) {
-            $values = [];
-            foreach ($data['Info'] as $value) {
-                $values_1 = [];
-                foreach ($value as $value_1) {
-                    $values_1[] = $value_1;
+        if (array_key_exists('Info', $data) && null !== $data['Info']) {
+            $value_1 = $data['Info'];
+            if (is_array($data['Info']) && $this->isOnlyNumericKeys($data['Info'])) {
+                $values = [];
+                foreach ($data['Info'] as $value_2) {
+                    $values_1 = [];
+                    foreach ($value_2 as $value_3) {
+                        $values_1[] = $value_3;
+                    }
+                    $values[] = $values_1;
                 }
-                $values[] = $values_1;
+                $value_1 = $values;
+            } elseif (null === $data['Info']) {
+                $value_1 = $data['Info'];
             }
-            $object->setInfo($values);
-            unset($data['Info']);
-        }
-        foreach ($data as $key => $value_2) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_2;
-            }
+            $object->setInfo($value_1);
+        } elseif (array_key_exists('Info', $data) && null === $data['Info']) {
+            $object->setInfo(null);
         }
 
         return $object;
@@ -75,24 +85,31 @@ class FirewallInfoNormalizer implements DenormalizerInterface, NormalizerInterfa
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('driver') && null !== $data->getDriver()) {
-            $dataArray['Driver'] = $data->getDriver();
+        if ($data->isInitialized('driver')) {
+            $value = $data->getDriver();
+            if (is_string($data->getDriver())) {
+                $value = $data->getDriver();
+            } elseif (null === $data->getDriver()) {
+                $value = $data->getDriver();
+            }
+            $dataArray['Driver'] = $value;
         }
-        if ($data->isInitialized('info') && null !== $data->getInfo()) {
-            $values = [];
-            foreach ($data->getInfo() as $value) {
-                $values_1 = [];
-                foreach ($value as $value_1) {
-                    $values_1[] = $value_1;
+        if ($data->isInitialized('info')) {
+            $value_1 = $data->getInfo();
+            if (is_array($data->getInfo())) {
+                $values = [];
+                foreach ($data->getInfo() as $value_2) {
+                    $values_1 = [];
+                    foreach ($value_2 as $value_3) {
+                        $values_1[] = $value_3;
+                    }
+                    $values[] = $values_1;
                 }
-                $values[] = $values_1;
+                $value_1 = $values;
+            } elseif (null === $data->getInfo()) {
+                $value_1 = $data->getInfo();
             }
-            $dataArray['Info'] = $values;
-        }
-        foreach ($data as $key => $value_2) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_2;
-            }
+            $dataArray['Info'] = $value_1;
         }
 
         return $dataArray;

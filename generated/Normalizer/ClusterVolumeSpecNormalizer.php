@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class ClusterVolumeSpecNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,28 +38,31 @@ class ClusterVolumeSpecNormalizer implements DenormalizerInterface, NormalizerIn
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Group', $data)) {
-            $object->setGroup($data['Group']);
-            unset($data['Group']);
-        }
-        if (array_key_exists('AccessMode', $data)) {
-            $object->setAccessMode($this->denormalizer->denormalize($data['AccessMode'], \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessMode::class, 'json', $context));
-            unset($data['AccessMode']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Group', $data) && null !== $data['Group']) {
+            $value = $data['Group'];
+            if (is_string($data['Group'])) {
+                $value = $data['Group'];
+            } elseif (null === $data['Group']) {
+                $value = $data['Group'];
             }
+            $object->setGroup($value);
+        } elseif (array_key_exists('Group', $data) && null === $data['Group']) {
+            $object->setGroup(null);
+        }
+        if (array_key_exists('AccessMode', $data) && null !== $data['AccessMode']) {
+            $object->setAccessMode($this->denormalizer->denormalize($data['AccessMode'], \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessMode::class, 'json', $context));
+        } elseif (array_key_exists('AccessMode', $data) && null === $data['AccessMode']) {
+            $object->setAccessMode(null);
         }
 
         return $object;
@@ -67,16 +71,17 @@ class ClusterVolumeSpecNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('group') && null !== $data->getGroup()) {
-            $dataArray['Group'] = $data->getGroup();
-        }
-        if ($data->isInitialized('accessMode') && null !== $data->getAccessMode()) {
-            $dataArray['AccessMode'] = $this->normalizer->normalize($data->getAccessMode(), 'json', $context);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('group')) {
+            $value = $data->getGroup();
+            if (is_string($data->getGroup())) {
+                $value = $data->getGroup();
+            } elseif (null === $data->getGroup()) {
+                $value = $data->getGroup();
             }
+            $dataArray['Group'] = $value;
+        }
+        if ($data->isInitialized('accessMode')) {
+            $dataArray['AccessMode'] = $this->normalizer->normalize($data->getAccessMode(), 'json', $context);
         }
 
         return $dataArray;

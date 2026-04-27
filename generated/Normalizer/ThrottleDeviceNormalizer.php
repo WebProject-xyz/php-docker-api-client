@@ -16,7 +16,9 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
+use function is_string;
 
 class ThrottleDeviceNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,28 +39,37 @@ class ThrottleDeviceNormalizer implements DenormalizerInterface, NormalizerInter
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ThrottleDevice();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ThrottleDevice();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Path', $data)) {
-            $object->setPath($data['Path']);
-            unset($data['Path']);
-        }
-        if (array_key_exists('Rate', $data)) {
-            $object->setRate($data['Rate']);
-            unset($data['Rate']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Path', $data) && null !== $data['Path']) {
+            $value = $data['Path'];
+            if (is_string($data['Path'])) {
+                $value = $data['Path'];
+            } elseif (null === $data['Path']) {
+                $value = $data['Path'];
             }
+            $object->setPath($value);
+        } elseif (array_key_exists('Path', $data) && null === $data['Path']) {
+            $object->setPath(null);
+        }
+        if (array_key_exists('Rate', $data) && null !== $data['Rate']) {
+            $value_1 = $data['Rate'];
+            if (is_int($data['Rate'])) {
+                $value_1 = $data['Rate'];
+            } elseif (null === $data['Rate']) {
+                $value_1 = $data['Rate'];
+            }
+            $object->setRate($value_1);
+        } elseif (array_key_exists('Rate', $data) && null === $data['Rate']) {
+            $object->setRate(null);
         }
 
         return $object;
@@ -67,16 +78,23 @@ class ThrottleDeviceNormalizer implements DenormalizerInterface, NormalizerInter
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('path') && null !== $data->getPath()) {
-            $dataArray['Path'] = $data->getPath();
-        }
-        if ($data->isInitialized('rate') && null !== $data->getRate()) {
-            $dataArray['Rate'] = $data->getRate();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('path')) {
+            $value = $data->getPath();
+            if (is_string($data->getPath())) {
+                $value = $data->getPath();
+            } elseif (null === $data->getPath()) {
+                $value = $data->getPath();
             }
+            $dataArray['Path'] = $value;
+        }
+        if ($data->isInitialized('rate')) {
+            $value_1 = $data->getRate();
+            if (is_int($data->getRate())) {
+                $value_1 = $data->getRate();
+            } elseif (null === $data->getRate()) {
+                $value_1 = $data->getRate();
+            }
+            $dataArray['Rate'] = $value_1;
         }
 
         return $dataArray;

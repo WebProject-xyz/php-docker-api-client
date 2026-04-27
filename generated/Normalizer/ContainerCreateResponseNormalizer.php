@@ -37,19 +37,18 @@ class ContainerCreateResponseNormalizer implements DenormalizerInterface, Normal
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerCreateResponse();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerCreateResponse();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('Id', $data)) {
             $object->setId($data['Id']);
-            unset($data['Id']);
         }
         if (array_key_exists('Warnings', $data)) {
             $values = [];
@@ -57,12 +56,6 @@ class ContainerCreateResponseNormalizer implements DenormalizerInterface, Normal
                 $values[] = $value;
             }
             $object->setWarnings($values);
-            unset($data['Warnings']);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
-            }
         }
 
         return $object;
@@ -77,11 +70,6 @@ class ContainerCreateResponseNormalizer implements DenormalizerInterface, Normal
             $values[] = $value;
         }
         $dataArray['Warnings'] = $values;
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
-            }
-        }
 
         return $dataArray;
     }

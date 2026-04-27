@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class VolumeListResponse extends ArrayObject
+class VolumeListResponse
 {
     /**
      * @var array
@@ -20,22 +19,22 @@ class VolumeListResponse extends ArrayObject
     /**
      * List of volumes.
      *
-     * @var list<Volume>
+     * @var list<Volume>|null
      */
     protected $volumes;
     /**
      * Warnings that occurred when fetching the list of volumes.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $warnings;
 
     /**
      * List of volumes.
      *
-     * @return list<Volume>
+     * @return list<Volume>|null
      */
-    public function getVolumes(): array
+    public function getVolumes(): ?array
     {
         return $this->volumes;
     }
@@ -43,11 +42,11 @@ class VolumeListResponse extends ArrayObject
     /**
      * List of volumes.
      *
-     * @param list<Volume> $volumes
+     * @param list<Volume>|null $volumes
      *
      * @return self
      */
-    public function setVolumes(array $volumes): self
+    public function setVolumes(?array $volumes): self
     {
         $this->initialized['volumes'] = true;
         $this->volumes                = $volumes;
@@ -58,9 +57,9 @@ class VolumeListResponse extends ArrayObject
     /**
      * Warnings that occurred when fetching the list of volumes.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getWarnings(): array
+    public function getWarnings(): ?array
     {
         return $this->warnings;
     }
@@ -68,11 +67,11 @@ class VolumeListResponse extends ArrayObject
     /**
      * Warnings that occurred when fetching the list of volumes.
      *
-     * @param list<string> $warnings
+     * @param list<string>|null $warnings
      *
      * @return self
      */
-    public function setWarnings(array $warnings): self
+    public function setWarnings(?array $warnings): self
     {
         $this->initialized['warnings'] = true;
         $this->warnings                = $warnings;

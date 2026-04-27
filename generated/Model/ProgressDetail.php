@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ProgressDetail extends ArrayObject
+class ProgressDetail
 {
     /**
      * @var array
@@ -18,28 +17,28 @@ class ProgressDetail extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var int
+     * @var int|null
      */
     protected $current;
     /**
-     * @var int
+     * @var int|null
      */
     protected $total;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getCurrent(): int
+    public function getCurrent(): ?int
     {
         return $this->current;
     }
 
     /**
-     * @param int $current
+     * @param int|null $current
      *
      * @return self
      */
-    public function setCurrent(int $current): self
+    public function setCurrent(?int $current): self
     {
         $this->initialized['current'] = true;
         $this->current                = $current;
@@ -48,19 +47,19 @@ class ProgressDetail extends ArrayObject
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getTotal(): int
+    public function getTotal(): ?int
     {
         return $this->total;
     }
 
     /**
-     * @param int $total
+     * @param int|null $total
      *
      * @return self
      */
-    public function setTotal(int $total): self
+    public function setTotal(?int $total): self
     {
         $this->initialized['total'] = true;
         $this->total                = $total;

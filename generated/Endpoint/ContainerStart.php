@@ -10,15 +10,12 @@ class ContainerStart extends \WebProject\DockerApi\Library\Generated\Runtime\Cli
     protected $accept;
 
     /**
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var string $detachKeys Override the key sequence for detaching a container. Format is a
-     *             single character `[a-Z]` or `ctrl-<value>` where `<value>` is one
-     *             of: `a-z`, `@`, `^`, `[`, `,` or `_`.
-     *
-     * }
-     *
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "detachKeys"?: string, //Override the key sequence for detaching a container. Format is a
+     * single character `[a-Z]` or `ctrl-<value>` where `<value>` is one
+     * of: `a-z`, `@`, `^`, `[`, `,` or `_`.
+     * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
     public function __construct(string $id, array $queryParameters = [], array $accept = [])
@@ -81,10 +78,10 @@ class ContainerStart extends \WebProject\DockerApi\Library\Generated\Runtime\Cli
         if (304 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerStartNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerStartInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

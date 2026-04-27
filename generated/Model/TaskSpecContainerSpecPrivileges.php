@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecContainerSpecPrivileges extends ArrayObject
+class TaskSpecContainerSpecPrivileges
 {
     /**
      * @var array
@@ -20,40 +19,40 @@ class TaskSpecContainerSpecPrivileges extends ArrayObject
     /**
      * CredentialSpec for managed service account (Windows only).
      *
-     * @var TaskSpecContainerSpecPrivilegesCredentialSpec
+     * @var TaskSpecContainerSpecPrivilegesCredentialSpec|null
      */
     protected $credentialSpec;
     /**
      * SELinux labels of the container.
      *
-     * @var TaskSpecContainerSpecPrivilegesSELinuxContext
+     * @var TaskSpecContainerSpecPrivilegesSELinuxContext|null
      */
     protected $sELinuxContext;
     /**
      * Options for configuring seccomp on the container.
      *
-     * @var TaskSpecContainerSpecPrivilegesSeccomp
+     * @var TaskSpecContainerSpecPrivilegesSeccomp|null
      */
     protected $seccomp;
     /**
      * Options for configuring AppArmor on the container.
      *
-     * @var TaskSpecContainerSpecPrivilegesAppArmor
+     * @var TaskSpecContainerSpecPrivilegesAppArmor|null
      */
     protected $appArmor;
     /**
      * Configuration of the no_new_privs bit in the container.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $noNewPrivileges;
 
     /**
      * CredentialSpec for managed service account (Windows only).
      *
-     * @return TaskSpecContainerSpecPrivilegesCredentialSpec
+     * @return TaskSpecContainerSpecPrivilegesCredentialSpec|null
      */
-    public function getCredentialSpec(): TaskSpecContainerSpecPrivilegesCredentialSpec
+    public function getCredentialSpec(): ?TaskSpecContainerSpecPrivilegesCredentialSpec
     {
         return $this->credentialSpec;
     }
@@ -61,11 +60,11 @@ class TaskSpecContainerSpecPrivileges extends ArrayObject
     /**
      * CredentialSpec for managed service account (Windows only).
      *
-     * @param TaskSpecContainerSpecPrivilegesCredentialSpec $credentialSpec
+     * @param TaskSpecContainerSpecPrivilegesCredentialSpec|null $credentialSpec
      *
      * @return self
      */
-    public function setCredentialSpec(TaskSpecContainerSpecPrivilegesCredentialSpec $credentialSpec): self
+    public function setCredentialSpec(?TaskSpecContainerSpecPrivilegesCredentialSpec $credentialSpec): self
     {
         $this->initialized['credentialSpec'] = true;
         $this->credentialSpec                = $credentialSpec;
@@ -76,9 +75,9 @@ class TaskSpecContainerSpecPrivileges extends ArrayObject
     /**
      * SELinux labels of the container.
      *
-     * @return TaskSpecContainerSpecPrivilegesSELinuxContext
+     * @return TaskSpecContainerSpecPrivilegesSELinuxContext|null
      */
-    public function getSELinuxContext(): TaskSpecContainerSpecPrivilegesSELinuxContext
+    public function getSELinuxContext(): ?TaskSpecContainerSpecPrivilegesSELinuxContext
     {
         return $this->sELinuxContext;
     }
@@ -86,11 +85,11 @@ class TaskSpecContainerSpecPrivileges extends ArrayObject
     /**
      * SELinux labels of the container.
      *
-     * @param TaskSpecContainerSpecPrivilegesSELinuxContext $sELinuxContext
+     * @param TaskSpecContainerSpecPrivilegesSELinuxContext|null $sELinuxContext
      *
      * @return self
      */
-    public function setSELinuxContext(TaskSpecContainerSpecPrivilegesSELinuxContext $sELinuxContext): self
+    public function setSELinuxContext(?TaskSpecContainerSpecPrivilegesSELinuxContext $sELinuxContext): self
     {
         $this->initialized['sELinuxContext'] = true;
         $this->sELinuxContext                = $sELinuxContext;
@@ -101,9 +100,9 @@ class TaskSpecContainerSpecPrivileges extends ArrayObject
     /**
      * Options for configuring seccomp on the container.
      *
-     * @return TaskSpecContainerSpecPrivilegesSeccomp
+     * @return TaskSpecContainerSpecPrivilegesSeccomp|null
      */
-    public function getSeccomp(): TaskSpecContainerSpecPrivilegesSeccomp
+    public function getSeccomp(): ?TaskSpecContainerSpecPrivilegesSeccomp
     {
         return $this->seccomp;
     }
@@ -111,11 +110,11 @@ class TaskSpecContainerSpecPrivileges extends ArrayObject
     /**
      * Options for configuring seccomp on the container.
      *
-     * @param TaskSpecContainerSpecPrivilegesSeccomp $seccomp
+     * @param TaskSpecContainerSpecPrivilegesSeccomp|null $seccomp
      *
      * @return self
      */
-    public function setSeccomp(TaskSpecContainerSpecPrivilegesSeccomp $seccomp): self
+    public function setSeccomp(?TaskSpecContainerSpecPrivilegesSeccomp $seccomp): self
     {
         $this->initialized['seccomp'] = true;
         $this->seccomp                = $seccomp;
@@ -126,9 +125,9 @@ class TaskSpecContainerSpecPrivileges extends ArrayObject
     /**
      * Options for configuring AppArmor on the container.
      *
-     * @return TaskSpecContainerSpecPrivilegesAppArmor
+     * @return TaskSpecContainerSpecPrivilegesAppArmor|null
      */
-    public function getAppArmor(): TaskSpecContainerSpecPrivilegesAppArmor
+    public function getAppArmor(): ?TaskSpecContainerSpecPrivilegesAppArmor
     {
         return $this->appArmor;
     }
@@ -136,11 +135,11 @@ class TaskSpecContainerSpecPrivileges extends ArrayObject
     /**
      * Options for configuring AppArmor on the container.
      *
-     * @param TaskSpecContainerSpecPrivilegesAppArmor $appArmor
+     * @param TaskSpecContainerSpecPrivilegesAppArmor|null $appArmor
      *
      * @return self
      */
-    public function setAppArmor(TaskSpecContainerSpecPrivilegesAppArmor $appArmor): self
+    public function setAppArmor(?TaskSpecContainerSpecPrivilegesAppArmor $appArmor): self
     {
         $this->initialized['appArmor'] = true;
         $this->appArmor                = $appArmor;
@@ -151,9 +150,9 @@ class TaskSpecContainerSpecPrivileges extends ArrayObject
     /**
      * Configuration of the no_new_privs bit in the container.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getNoNewPrivileges(): bool
+    public function getNoNewPrivileges(): ?bool
     {
         return $this->noNewPrivileges;
     }
@@ -161,11 +160,11 @@ class TaskSpecContainerSpecPrivileges extends ArrayObject
     /**
      * Configuration of the no_new_privs bit in the container.
      *
-     * @param bool $noNewPrivileges
+     * @param bool|null $noNewPrivileges
      *
      * @return self
      */
-    public function setNoNewPrivileges(bool $noNewPrivileges): self
+    public function setNoNewPrivileges(?bool $noNewPrivileges): self
     {
         $this->initialized['noNewPrivileges'] = true;
         $this->noNewPrivileges                = $noNewPrivileges;

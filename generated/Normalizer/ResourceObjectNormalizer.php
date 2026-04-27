@@ -16,6 +16,7 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
 
 class ResourceObjectNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
@@ -37,36 +38,44 @@ class ResourceObjectNormalizer implements DenormalizerInterface, NormalizerInter
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ResourceObject();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ResourceObject();
-        if (null === $data || false === is_array($data)) {
-            return $object;
+        if (array_key_exists('NanoCPUs', $data) && null !== $data['NanoCPUs']) {
+            $value = $data['NanoCPUs'];
+            if (is_int($data['NanoCPUs'])) {
+                $value = $data['NanoCPUs'];
+            } elseif (null === $data['NanoCPUs']) {
+                $value = $data['NanoCPUs'];
+            }
+            $object->setNanoCPUs($value);
+        } elseif (array_key_exists('NanoCPUs', $data) && null === $data['NanoCPUs']) {
+            $object->setNanoCPUs(null);
         }
-        if (array_key_exists('NanoCPUs', $data)) {
-            $object->setNanoCPUs($data['NanoCPUs']);
-            unset($data['NanoCPUs']);
-        }
-        if (array_key_exists('MemoryBytes', $data)) {
-            $object->setMemoryBytes($data['MemoryBytes']);
-            unset($data['MemoryBytes']);
+        if (array_key_exists('MemoryBytes', $data) && null !== $data['MemoryBytes']) {
+            $value_1 = $data['MemoryBytes'];
+            if (is_int($data['MemoryBytes'])) {
+                $value_1 = $data['MemoryBytes'];
+            } elseif (null === $data['MemoryBytes']) {
+                $value_1 = $data['MemoryBytes'];
+            }
+            $object->setMemoryBytes($value_1);
+        } elseif (array_key_exists('MemoryBytes', $data) && null === $data['MemoryBytes']) {
+            $object->setMemoryBytes(null);
         }
         if (array_key_exists('GenericResources', $data)) {
             $values = [];
-            foreach ($data['GenericResources'] as $value) {
-                $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\GenericResourcesItem::class, 'json', $context);
+            foreach ($data['GenericResources'] as $value_2) {
+                $values[] = $this->denormalizer->denormalize($value_2, \WebProject\DockerApi\Library\Generated\Model\GenericResourcesItem::class, 'json', $context);
             }
             $object->setGenericResources($values);
-            unset($data['GenericResources']);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
-            }
         }
 
         return $object;
@@ -75,23 +84,30 @@ class ResourceObjectNormalizer implements DenormalizerInterface, NormalizerInter
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('nanoCPUs') && null !== $data->getNanoCPUs()) {
-            $dataArray['NanoCPUs'] = $data->getNanoCPUs();
+        if ($data->isInitialized('nanoCPUs')) {
+            $value = $data->getNanoCPUs();
+            if (is_int($data->getNanoCPUs())) {
+                $value = $data->getNanoCPUs();
+            } elseif (null === $data->getNanoCPUs()) {
+                $value = $data->getNanoCPUs();
+            }
+            $dataArray['NanoCPUs'] = $value;
         }
-        if ($data->isInitialized('memoryBytes') && null !== $data->getMemoryBytes()) {
-            $dataArray['MemoryBytes'] = $data->getMemoryBytes();
+        if ($data->isInitialized('memoryBytes')) {
+            $value_1 = $data->getMemoryBytes();
+            if (is_int($data->getMemoryBytes())) {
+                $value_1 = $data->getMemoryBytes();
+            } elseif (null === $data->getMemoryBytes()) {
+                $value_1 = $data->getMemoryBytes();
+            }
+            $dataArray['MemoryBytes'] = $value_1;
         }
         if ($data->isInitialized('genericResources') && null !== $data->getGenericResources()) {
             $values = [];
-            foreach ($data->getGenericResources() as $value) {
-                $values[] = $this->normalizer->normalize($value, 'json', $context);
+            foreach ($data->getGenericResources() as $value_2) {
+                $values[] = $this->normalizer->normalize($value_2, 'json', $context);
             }
             $dataArray['GenericResources'] = $values;
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
-            }
         }
 
         return $dataArray;

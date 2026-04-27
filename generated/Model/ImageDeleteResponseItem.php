@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ImageDeleteResponseItem extends ArrayObject
+class ImageDeleteResponseItem
 {
     /**
      * @var array
@@ -20,22 +19,22 @@ class ImageDeleteResponseItem extends ArrayObject
     /**
      * The image ID of an image that was untagged.
      *
-     * @var string
+     * @var string|null
      */
     protected $untagged;
     /**
      * The image ID of an image that was deleted.
      *
-     * @var string
+     * @var string|null
      */
     protected $deleted;
 
     /**
      * The image ID of an image that was untagged.
      *
-     * @return string
+     * @return string|null
      */
-    public function getUntagged(): string
+    public function getUntagged(): ?string
     {
         return $this->untagged;
     }
@@ -43,11 +42,11 @@ class ImageDeleteResponseItem extends ArrayObject
     /**
      * The image ID of an image that was untagged.
      *
-     * @param string $untagged
+     * @param string|null $untagged
      *
      * @return self
      */
-    public function setUntagged(string $untagged): self
+    public function setUntagged(?string $untagged): self
     {
         $this->initialized['untagged'] = true;
         $this->untagged                = $untagged;
@@ -58,9 +57,9 @@ class ImageDeleteResponseItem extends ArrayObject
     /**
      * The image ID of an image that was deleted.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDeleted(): string
+    public function getDeleted(): ?string
     {
         return $this->deleted;
     }
@@ -68,11 +67,11 @@ class ImageDeleteResponseItem extends ArrayObject
     /**
      * The image ID of an image that was deleted.
      *
-     * @param string $deleted
+     * @param string|null $deleted
      *
      * @return self
      */
-    public function setDeleted(string $deleted): self
+    public function setDeleted(?string $deleted): self
     {
         $this->initialized['deleted'] = true;
         $this->deleted                = $deleted;

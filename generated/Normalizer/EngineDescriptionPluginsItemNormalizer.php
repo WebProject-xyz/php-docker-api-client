@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class EngineDescriptionPluginsItemNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,28 +38,37 @@ class EngineDescriptionPluginsItemNormalizer implements DenormalizerInterface, N
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\EngineDescriptionPluginsItem();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\EngineDescriptionPluginsItem();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Type', $data)) {
-            $object->setType($data['Type']);
-            unset($data['Type']);
-        }
-        if (array_key_exists('Name', $data)) {
-            $object->setName($data['Name']);
-            unset($data['Name']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Type', $data) && null !== $data['Type']) {
+            $value = $data['Type'];
+            if (is_string($data['Type'])) {
+                $value = $data['Type'];
+            } elseif (null === $data['Type']) {
+                $value = $data['Type'];
             }
+            $object->setType($value);
+        } elseif (array_key_exists('Type', $data) && null === $data['Type']) {
+            $object->setType(null);
+        }
+        if (array_key_exists('Name', $data) && null !== $data['Name']) {
+            $value_1 = $data['Name'];
+            if (is_string($data['Name'])) {
+                $value_1 = $data['Name'];
+            } elseif (null === $data['Name']) {
+                $value_1 = $data['Name'];
+            }
+            $object->setName($value_1);
+        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
+            $object->setName(null);
         }
 
         return $object;
@@ -67,16 +77,23 @@ class EngineDescriptionPluginsItemNormalizer implements DenormalizerInterface, N
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('type') && null !== $data->getType()) {
-            $dataArray['Type'] = $data->getType();
-        }
-        if ($data->isInitialized('name') && null !== $data->getName()) {
-            $dataArray['Name'] = $data->getName();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('type')) {
+            $value = $data->getType();
+            if (is_string($data->getType())) {
+                $value = $data->getType();
+            } elseif (null === $data->getType()) {
+                $value = $data->getType();
             }
+            $dataArray['Type'] = $value;
+        }
+        if ($data->isInitialized('name')) {
+            $value_1 = $data->getName();
+            if (is_string($data->getName())) {
+                $value_1 = $data->getName();
+            } elseif (null === $data->getName()) {
+                $value_1 = $data->getName();
+            }
+            $dataArray['Name'] = $value_1;
         }
 
         return $dataArray;

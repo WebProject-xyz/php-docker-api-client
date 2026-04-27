@@ -26,13 +26,12 @@ class ImagePush extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
      * considered equivalent to `registry.example.com/myimage`.
      *
      * Use the `tag` parameter to specify the tag to push.
-     * @param array $queryParameters {
-     *
-     * @var string $tag Tag of the image to push. For example, `latest`. If no tag is provided,
-     *             all tags of the given image that are present in the local image store
-     *             are pushed.
-     * @var string $platform JSON-encoded OCI platform to select the platform-variant to push.
-     *             If not provided, all available variants will attempt to be pushed.
+     * @param array{
+     *    "tag"?: string, //Tag of the image to push. For example, `latest`. If no tag is provided,
+     * all tags of the given image that are present in the local image store
+     * are pushed.
+     *    "platform"?: string, //JSON-encoded OCI platform to select the platform-variant to push.
+     * If not provided, all available variants will attempt to be pushed.
      *
      * If the daemon provides a multi-platform image store, this selects
      * the platform-variant to push to the registry. If the image is
@@ -40,18 +39,13 @@ class ImagePush extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
      * provide a variant matching the given platform, an error is returned.
      *
      * Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
-     *
-     * }
-     *
-     * @param array $headerParameters {
-     *
-     * @var string $X-Registry-Auth A base64url-encoded auth configuration.
+     * } $queryParameters
+     * @param array{
+     *    "X-Registry-Auth": string, //A base64url-encoded auth configuration.
      *
      * Refer to the [authentication section](#section/Authentication) for
      * details.
-     *
-     * }
-     *
+     * } $headerParameters
      * @param array $accept Accept content header application/json|text/plain
      */
     public function __construct(string $name, array $queryParameters = [], array $headerParameters = [], array $accept = [])
@@ -124,10 +118,10 @@ class ImagePush extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImagePushNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImagePushInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

@@ -11,11 +11,26 @@ class ImageInspect extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     /**
      * Return low-level information about an image.
      *
-     * @param string $name            Image name or id
-     * @param array  $queryParameters {
+     * @param string $name Image name or id
+     * @param array{
+     *    "manifests"?: bool, //Include Manifests in the image summary.
      *
-     * @var bool $manifests Include Manifests in the image summary.
-     *           }
+     * The `manifests` and `platform` options are mutually exclusive, and
+     * an error is produced if both are set.
+     *    "platform"?: string, //JSON-encoded OCI platform to select the platform-variant.
+     * If omitted, it defaults to any locally available platform,
+     * prioritizing the daemon's host platform.
+     *
+     * If the daemon provides a multi-platform image store, this selects
+     * the platform-variant to show inspect. If the image is
+     * a single-platform image, or if the multi-platform image does not
+     * provide a variant matching the given platform, an error is returned.
+     *
+     * The `platform` and `manifests` options are mutually exclusive, and
+     * an error is produced if both are set.
+     *
+     * Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
+     * } $queryParameters
      */
     public function __construct(string $name, array $queryParameters = [])
     {
@@ -46,10 +61,11 @@ class ImageInspect extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     protected function getQueryOptionsResolver(): \Symfony\Component\OptionsResolver\OptionsResolver
     {
         $optionsResolver = parent::getQueryOptionsResolver();
-        $optionsResolver->setDefined(['manifests']);
+        $optionsResolver->setDefined(['manifests', 'platform']);
         $optionsResolver->setRequired([]);
         $optionsResolver->setDefaults(['manifests' => false]);
         $optionsResolver->addAllowedTypes('manifests', ['bool']);
+        $optionsResolver->addAllowedTypes('platform', ['string']);
 
         return $optionsResolver;
     }
@@ -66,13 +82,13 @@ class ImageInspect extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ImageInspect', 'json');
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageInspectNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageInspectInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

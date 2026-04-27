@@ -16,6 +16,7 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
 
 class ContainerThrottlingDataNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
@@ -37,32 +38,48 @@ class ContainerThrottlingDataNormalizer implements DenormalizerInterface, Normal
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerThrottlingData();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerThrottlingData();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('periods', $data)) {
-            $object->setPeriods($data['periods']);
-            unset($data['periods']);
-        }
-        if (array_key_exists('throttled_periods', $data)) {
-            $object->setThrottledPeriods($data['throttled_periods']);
-            unset($data['throttled_periods']);
-        }
-        if (array_key_exists('throttled_time', $data)) {
-            $object->setThrottledTime($data['throttled_time']);
-            unset($data['throttled_time']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('periods', $data) && null !== $data['periods']) {
+            $value = $data['periods'];
+            if (is_int($data['periods'])) {
+                $value = $data['periods'];
+            } elseif (null === $data['periods']) {
+                $value = $data['periods'];
             }
+            $object->setPeriods($value);
+        } elseif (array_key_exists('periods', $data) && null === $data['periods']) {
+            $object->setPeriods(null);
+        }
+        if (array_key_exists('throttled_periods', $data) && null !== $data['throttled_periods']) {
+            $value_1 = $data['throttled_periods'];
+            if (is_int($data['throttled_periods'])) {
+                $value_1 = $data['throttled_periods'];
+            } elseif (null === $data['throttled_periods']) {
+                $value_1 = $data['throttled_periods'];
+            }
+            $object->setThrottledPeriods($value_1);
+        } elseif (array_key_exists('throttled_periods', $data) && null === $data['throttled_periods']) {
+            $object->setThrottledPeriods(null);
+        }
+        if (array_key_exists('throttled_time', $data) && null !== $data['throttled_time']) {
+            $value_2 = $data['throttled_time'];
+            if (is_int($data['throttled_time'])) {
+                $value_2 = $data['throttled_time'];
+            } elseif (null === $data['throttled_time']) {
+                $value_2 = $data['throttled_time'];
+            }
+            $object->setThrottledTime($value_2);
+        } elseif (array_key_exists('throttled_time', $data) && null === $data['throttled_time']) {
+            $object->setThrottledTime(null);
         }
 
         return $object;
@@ -71,19 +88,32 @@ class ContainerThrottlingDataNormalizer implements DenormalizerInterface, Normal
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('periods') && null !== $data->getPeriods()) {
-            $dataArray['periods'] = $data->getPeriods();
-        }
-        if ($data->isInitialized('throttledPeriods') && null !== $data->getThrottledPeriods()) {
-            $dataArray['throttled_periods'] = $data->getThrottledPeriods();
-        }
-        if ($data->isInitialized('throttledTime') && null !== $data->getThrottledTime()) {
-            $dataArray['throttled_time'] = $data->getThrottledTime();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('periods')) {
+            $value = $data->getPeriods();
+            if (is_int($data->getPeriods())) {
+                $value = $data->getPeriods();
+            } elseif (null === $data->getPeriods()) {
+                $value = $data->getPeriods();
             }
+            $dataArray['periods'] = $value;
+        }
+        if ($data->isInitialized('throttledPeriods')) {
+            $value_1 = $data->getThrottledPeriods();
+            if (is_int($data->getThrottledPeriods())) {
+                $value_1 = $data->getThrottledPeriods();
+            } elseif (null === $data->getThrottledPeriods()) {
+                $value_1 = $data->getThrottledPeriods();
+            }
+            $dataArray['throttled_periods'] = $value_1;
+        }
+        if ($data->isInitialized('throttledTime')) {
+            $value_2 = $data->getThrottledTime();
+            if (is_int($data->getThrottledTime())) {
+                $value_2 = $data->getThrottledTime();
+            } elseif (null === $data->getThrottledTime()) {
+                $value_2 = $data->getThrottledTime();
+            }
+            $dataArray['throttled_time'] = $value_2;
         }
 
         return $dataArray;

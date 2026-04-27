@@ -38,37 +38,30 @@ class PluginConfigNormalizer implements DenormalizerInterface, NormalizerInterfa
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginConfig();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginConfig();
         if (array_key_exists('IpcHost', $data) && is_int($data['IpcHost'])) {
             $data['IpcHost'] = (bool) $data['IpcHost'];
         }
         if (array_key_exists('PidHost', $data) && is_int($data['PidHost'])) {
             $data['PidHost'] = (bool) $data['PidHost'];
         }
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('DockerVersion', $data)) {
-            $object->setDockerVersion($data['DockerVersion']);
-            unset($data['DockerVersion']);
-        }
         if (array_key_exists('Description', $data)) {
             $object->setDescription($data['Description']);
-            unset($data['Description']);
         }
         if (array_key_exists('Documentation', $data)) {
             $object->setDocumentation($data['Documentation']);
-            unset($data['Documentation']);
         }
         if (array_key_exists('Interface', $data)) {
             $object->setInterface($this->denormalizer->denormalize($data['Interface'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigInterface::class, 'json', $context));
-            unset($data['Interface']);
         }
         if (array_key_exists('Entrypoint', $data)) {
             $values = [];
@@ -76,35 +69,27 @@ class PluginConfigNormalizer implements DenormalizerInterface, NormalizerInterfa
                 $values[] = $value;
             }
             $object->setEntrypoint($values);
-            unset($data['Entrypoint']);
         }
         if (array_key_exists('WorkDir', $data)) {
             $object->setWorkDir($data['WorkDir']);
-            unset($data['WorkDir']);
         }
         if (array_key_exists('User', $data)) {
             $object->setUser($this->denormalizer->denormalize($data['User'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigUser::class, 'json', $context));
-            unset($data['User']);
         }
         if (array_key_exists('Network', $data)) {
             $object->setNetwork($this->denormalizer->denormalize($data['Network'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigNetwork::class, 'json', $context));
-            unset($data['Network']);
         }
         if (array_key_exists('Linux', $data)) {
             $object->setLinux($this->denormalizer->denormalize($data['Linux'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigLinux::class, 'json', $context));
-            unset($data['Linux']);
         }
         if (array_key_exists('PropagatedMount', $data)) {
             $object->setPropagatedMount($data['PropagatedMount']);
-            unset($data['PropagatedMount']);
         }
         if (array_key_exists('IpcHost', $data)) {
             $object->setIpcHost($data['IpcHost']);
-            unset($data['IpcHost']);
         }
         if (array_key_exists('PidHost', $data)) {
             $object->setPidHost($data['PidHost']);
-            unset($data['PidHost']);
         }
         if (array_key_exists('Mounts', $data)) {
             $values_1 = [];
@@ -112,7 +97,6 @@ class PluginConfigNormalizer implements DenormalizerInterface, NormalizerInterfa
                 $values_1[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\PluginMount::class, 'json', $context);
             }
             $object->setMounts($values_1);
-            unset($data['Mounts']);
         }
         if (array_key_exists('Env', $data)) {
             $values_2 = [];
@@ -120,20 +104,14 @@ class PluginConfigNormalizer implements DenormalizerInterface, NormalizerInterfa
                 $values_2[] = $this->denormalizer->denormalize($value_2, \WebProject\DockerApi\Library\Generated\Model\PluginEnv::class, 'json', $context);
             }
             $object->setEnv($values_2);
-            unset($data['Env']);
         }
         if (array_key_exists('Args', $data)) {
             $object->setArgs($this->denormalizer->denormalize($data['Args'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigArgs::class, 'json', $context));
-            unset($data['Args']);
         }
-        if (array_key_exists('rootfs', $data)) {
+        if (array_key_exists('rootfs', $data) && null !== $data['rootfs']) {
             $object->setRootfs($this->denormalizer->denormalize($data['rootfs'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigRootfs::class, 'json', $context));
-            unset($data['rootfs']);
-        }
-        foreach ($data as $key => $value_3) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_3;
-            }
+        } elseif (array_key_exists('rootfs', $data) && null === $data['rootfs']) {
+            $object->setRootfs(null);
         }
 
         return $object;
@@ -141,10 +119,7 @@ class PluginConfigNormalizer implements DenormalizerInterface, NormalizerInterfa
 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
-        $dataArray = [];
-        if ($data->isInitialized('dockerVersion') && null !== $data->getDockerVersion()) {
-            $dataArray['DockerVersion'] = $data->getDockerVersion();
-        }
+        $dataArray                  = [];
         $dataArray['Description']   = $data->getDescription();
         $dataArray['Documentation'] = $data->getDocumentation();
         $dataArray['Interface']     = $this->normalizer->normalize($data->getInterface(), 'json', $context);
@@ -173,13 +148,8 @@ class PluginConfigNormalizer implements DenormalizerInterface, NormalizerInterfa
         }
         $dataArray['Env']  = $values_2;
         $dataArray['Args'] = $this->normalizer->normalize($data->getArgs(), 'json', $context);
-        if ($data->isInitialized('rootfs') && null !== $data->getRootfs()) {
+        if ($data->isInitialized('rootfs')) {
             $dataArray['rootfs'] = $this->normalizer->normalize($data->getRootfs(), 'json', $context);
-        }
-        foreach ($data as $key => $value_3) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_3;
-            }
         }
 
         return $dataArray;

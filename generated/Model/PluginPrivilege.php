@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class PluginPrivilege extends ArrayObject
+class PluginPrivilege
 {
     /**
      * @var array
@@ -18,32 +17,32 @@ class PluginPrivilege extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
-     * @var string
+     * @var string|null
      */
     protected $description;
     /**
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $value;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -52,19 +51,19 @@ class PluginPrivilege extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * @param string $description
+     * @param string|null $description
      *
      * @return self
      */
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->initialized['description'] = true;
         $this->description                = $description;
@@ -73,19 +72,19 @@ class PluginPrivilege extends ArrayObject
     }
 
     /**
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getValue(): array
+    public function getValue(): ?array
     {
         return $this->value;
     }
 
     /**
-     * @param list<string> $value
+     * @param list<string>|null $value
      *
      * @return self
      */
-    public function setValue(array $value): self
+    public function setValue(?array $value): self
     {
         $this->initialized['value'] = true;
         $this->value                = $value;

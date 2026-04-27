@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ImageManifestSummaryImageData extends ArrayObject
+class ImageManifestSummaryImageData
 {
     /**
      * @var array
@@ -24,6 +23,14 @@ class ImageManifestSummaryImageData extends ArrayObject
      * @var OCIPlatform|null
      */
     protected $platform;
+    /**
+     * Identity holds information about the identity and origin of the image.
+     * This is trusted information verified by the daemon and cannot be modified
+     * by tagging an image to a different name.
+     *
+     * @var Identity
+     */
+    protected $identity;
     /**
      * The IDs of the containers that are using this image.
      *
@@ -58,6 +65,35 @@ class ImageManifestSummaryImageData extends ArrayObject
     {
         $this->initialized['platform'] = true;
         $this->platform                = $platform;
+
+        return $this;
+    }
+
+    /**
+     * Identity holds information about the identity and origin of the image.
+     * This is trusted information verified by the daemon and cannot be modified
+     * by tagging an image to a different name.
+     *
+     * @return Identity
+     */
+    public function getIdentity(): Identity
+    {
+        return $this->identity;
+    }
+
+    /**
+     * Identity holds information about the identity and origin of the image.
+     * This is trusted information verified by the daemon and cannot be modified
+     * by tagging an image to a different name.
+     *
+     * @param Identity $identity
+     *
+     * @return self
+     */
+    public function setIdentity(Identity $identity): self
+    {
+        $this->initialized['identity'] = true;
+        $this->identity                = $identity;
 
         return $this;
     }

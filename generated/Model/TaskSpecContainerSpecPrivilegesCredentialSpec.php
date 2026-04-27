@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecContainerSpecPrivilegesCredentialSpec extends ArrayObject
+class TaskSpecContainerSpecPrivilegesCredentialSpec
 {
     /**
      * @var array
@@ -28,7 +27,7 @@ class TaskSpecContainerSpecPrivilegesCredentialSpec extends ArrayObject
      * > **Note**: `CredentialSpec.File`, `CredentialSpec.Registry`,
      * > and `CredentialSpec.Config` are mutually exclusive.
      *
-     * @var string
+     * @var string|null
      */
     protected $config;
     /**
@@ -45,7 +44,7 @@ class TaskSpecContainerSpecPrivilegesCredentialSpec extends ArrayObject
      * > **Note**: `CredentialSpec.File`, `CredentialSpec.Registry`,
      * > and `CredentialSpec.Config` are mutually exclusive.
      *
-     * @var string
+     * @var string|null
      */
     protected $file;
     /**
@@ -60,7 +59,7 @@ class TaskSpecContainerSpecPrivilegesCredentialSpec extends ArrayObject
      * > **Note**: `CredentialSpec.File`, `CredentialSpec.Registry`,
      * > and `CredentialSpec.Config` are mutually exclusive.
      *
-     * @var string
+     * @var string|null
      */
     protected $registry;
 
@@ -75,9 +74,9 @@ class TaskSpecContainerSpecPrivilegesCredentialSpec extends ArrayObject
      * > **Note**: `CredentialSpec.File`, `CredentialSpec.Registry`,
      * > and `CredentialSpec.Config` are mutually exclusive.
      *
-     * @return string
+     * @return string|null
      */
-    public function getConfig(): string
+    public function getConfig(): ?string
     {
         return $this->config;
     }
@@ -93,11 +92,11 @@ class TaskSpecContainerSpecPrivilegesCredentialSpec extends ArrayObject
      * > **Note**: `CredentialSpec.File`, `CredentialSpec.Registry`,
      * > and `CredentialSpec.Config` are mutually exclusive.
      *
-     * @param string $config
+     * @param string|null $config
      *
      * @return self
      */
-    public function setConfig(string $config): self
+    public function setConfig(?string $config): self
     {
         $this->initialized['config'] = true;
         $this->config                = $config;
@@ -119,9 +118,9 @@ class TaskSpecContainerSpecPrivilegesCredentialSpec extends ArrayObject
      * > **Note**: `CredentialSpec.File`, `CredentialSpec.Registry`,
      * > and `CredentialSpec.Config` are mutually exclusive.
      *
-     * @return string
+     * @return string|null
      */
-    public function getFile(): string
+    public function getFile(): ?string
     {
         return $this->file;
     }
@@ -140,11 +139,11 @@ class TaskSpecContainerSpecPrivilegesCredentialSpec extends ArrayObject
      * > **Note**: `CredentialSpec.File`, `CredentialSpec.Registry`,
      * > and `CredentialSpec.Config` are mutually exclusive.
      *
-     * @param string $file
+     * @param string|null $file
      *
      * @return self
      */
-    public function setFile(string $file): self
+    public function setFile(?string $file): self
     {
         $this->initialized['file'] = true;
         $this->file                = $file;
@@ -164,9 +163,9 @@ class TaskSpecContainerSpecPrivilegesCredentialSpec extends ArrayObject
      * > **Note**: `CredentialSpec.File`, `CredentialSpec.Registry`,
      * > and `CredentialSpec.Config` are mutually exclusive.
      *
-     * @return string
+     * @return string|null
      */
-    public function getRegistry(): string
+    public function getRegistry(): ?string
     {
         return $this->registry;
     }
@@ -183,11 +182,11 @@ class TaskSpecContainerSpecPrivilegesCredentialSpec extends ArrayObject
      * > **Note**: `CredentialSpec.File`, `CredentialSpec.Registry`,
      * > and `CredentialSpec.Config` are mutually exclusive.
      *
-     * @param string $registry
+     * @param string|null $registry
      *
      * @return self
      */
-    public function setRegistry(string $registry): self
+    public function setRegistry(?string $registry): self
     {
         $this->initialized['registry'] = true;
         $this->registry                = $registry;

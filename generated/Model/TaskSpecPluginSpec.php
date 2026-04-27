@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecPluginSpec extends ArrayObject
+class TaskSpecPluginSpec
 {
     /**
      * @var array
@@ -20,32 +19,32 @@ class TaskSpecPluginSpec extends ArrayObject
     /**
      * The name or 'alias' to use for the plugin.
      *
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
      * The plugin image reference to use.
      *
-     * @var string
+     * @var string|null
      */
     protected $remote;
     /**
      * Disable the plugin once scheduled.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $disabled;
     /**
-     * @var list<PluginPrivilege>
+     * @var list<PluginPrivilege>|null
      */
     protected $pluginPrivilege;
 
     /**
      * The name or 'alias' to use for the plugin.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -53,11 +52,11 @@ class TaskSpecPluginSpec extends ArrayObject
     /**
      * The name or 'alias' to use for the plugin.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -68,9 +67,9 @@ class TaskSpecPluginSpec extends ArrayObject
     /**
      * The plugin image reference to use.
      *
-     * @return string
+     * @return string|null
      */
-    public function getRemote(): string
+    public function getRemote(): ?string
     {
         return $this->remote;
     }
@@ -78,11 +77,11 @@ class TaskSpecPluginSpec extends ArrayObject
     /**
      * The plugin image reference to use.
      *
-     * @param string $remote
+     * @param string|null $remote
      *
      * @return self
      */
-    public function setRemote(string $remote): self
+    public function setRemote(?string $remote): self
     {
         $this->initialized['remote'] = true;
         $this->remote                = $remote;
@@ -93,9 +92,9 @@ class TaskSpecPluginSpec extends ArrayObject
     /**
      * Disable the plugin once scheduled.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getDisabled(): bool
+    public function getDisabled(): ?bool
     {
         return $this->disabled;
     }
@@ -103,11 +102,11 @@ class TaskSpecPluginSpec extends ArrayObject
     /**
      * Disable the plugin once scheduled.
      *
-     * @param bool $disabled
+     * @param bool|null $disabled
      *
      * @return self
      */
-    public function setDisabled(bool $disabled): self
+    public function setDisabled(?bool $disabled): self
     {
         $this->initialized['disabled'] = true;
         $this->disabled                = $disabled;
@@ -116,19 +115,19 @@ class TaskSpecPluginSpec extends ArrayObject
     }
 
     /**
-     * @return list<PluginPrivilege>
+     * @return list<PluginPrivilege>|null
      */
-    public function getPluginPrivilege(): array
+    public function getPluginPrivilege(): ?array
     {
         return $this->pluginPrivilege;
     }
 
     /**
-     * @param list<PluginPrivilege> $pluginPrivilege
+     * @param list<PluginPrivilege>|null $pluginPrivilege
      *
      * @return self
      */
-    public function setPluginPrivilege(array $pluginPrivilege): self
+    public function setPluginPrivilege(?array $pluginPrivilege): self
     {
         $this->initialized['pluginPrivilege'] = true;
         $this->pluginPrivilege                = $pluginPrivilege;

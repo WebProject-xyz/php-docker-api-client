@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ContainersIdUpdatePostBody extends ArrayObject
+class ContainersIdUpdatePostBody
 {
     /**
      * @var array
@@ -21,13 +20,13 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * An integer value representing this container's relative CPU weight
      * versus other containers.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuShares;
     /**
      * Memory limit in bytes.
      *
-     * @var int
+     * @var int|null
      */
     protected $memory = 0;
     /**
@@ -36,13 +35,13 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * `cgroups` path of the init process. Cgroups are created if they do not
      * already exist.
      *
-     * @var string
+     * @var string|null
      */
     protected $cgroupParent;
     /**
      * Block IO weight (relative weight).
      *
-     * @var int
+     * @var int|null
      */
     protected $blkioWeight;
     /**
@@ -98,40 +97,40 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * The length of a CPU period in microseconds.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuPeriod;
     /**
      * Microseconds of CPU time that the container can get in a CPU period.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuQuota;
     /**
      * The length of a CPU real-time period in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuRealtimePeriod;
     /**
      * The length of a CPU real-time runtime in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @var int
+     * @var int|null
      */
     protected $cpuRealtimeRuntime;
     /**
      * CPUs in which to allow execution (e.g., `0-3`, `0,1`).
      *
-     * @var string
+     * @var string|null
      */
     protected $cpusetCpus;
     /**
      * Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only
      * effective on NUMA systems.
      *
-     * @var string
+     * @var string|null
      */
     protected $cpusetMems;
     /**
@@ -153,29 +152,16 @@ class ContainersIdUpdatePostBody extends ArrayObject
      */
     protected $deviceRequests;
     /**
-     * Hard limit for kernel TCP buffer memory (in bytes). Depending on the
-     * OCI runtime in use, this option may be ignored. It is no longer supported
-     * by the default (runc) runtime.
-     *
-     * This field is omitted when empty.
-     *
-     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated `memory.kmem.tcp.limit_in_bytes` field
-     * for cgroups v1. This field will be removed in a future release.
-     *
-     * @var int
-     */
-    protected $kernelMemoryTCP;
-    /**
      * Memory soft limit in bytes.
      *
-     * @var int
+     * @var int|null
      */
     protected $memoryReservation;
     /**
      * Total memory limit (memory + swap). Set as `-1` to enable unlimited
      * swap.
      *
-     * @var int
+     * @var int|null
      */
     protected $memorySwap;
     /**
@@ -270,9 +256,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * An integer value representing this container's relative CPU weight
      * versus other containers.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuShares(): int
+    public function getCpuShares(): ?int
     {
         return $this->cpuShares;
     }
@@ -281,11 +267,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * An integer value representing this container's relative CPU weight
      * versus other containers.
      *
-     * @param int $cpuShares
+     * @param int|null $cpuShares
      *
      * @return self
      */
-    public function setCpuShares(int $cpuShares): self
+    public function setCpuShares(?int $cpuShares): self
     {
         $this->initialized['cpuShares'] = true;
         $this->cpuShares                = $cpuShares;
@@ -296,9 +282,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * Memory limit in bytes.
      *
-     * @return int
+     * @return int|null
      */
-    public function getMemory(): int
+    public function getMemory(): ?int
     {
         return $this->memory;
     }
@@ -306,11 +292,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * Memory limit in bytes.
      *
-     * @param int $memory
+     * @param int|null $memory
      *
      * @return self
      */
-    public function setMemory(int $memory): self
+    public function setMemory(?int $memory): self
     {
         $this->initialized['memory'] = true;
         $this->memory                = $memory;
@@ -324,9 +310,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * `cgroups` path of the init process. Cgroups are created if they do not
      * already exist.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCgroupParent(): string
+    public function getCgroupParent(): ?string
     {
         return $this->cgroupParent;
     }
@@ -337,11 +323,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * `cgroups` path of the init process. Cgroups are created if they do not
      * already exist.
      *
-     * @param string $cgroupParent
+     * @param string|null $cgroupParent
      *
      * @return self
      */
-    public function setCgroupParent(string $cgroupParent): self
+    public function setCgroupParent(?string $cgroupParent): self
     {
         $this->initialized['cgroupParent'] = true;
         $this->cgroupParent                = $cgroupParent;
@@ -352,9 +338,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * Block IO weight (relative weight).
      *
-     * @return int
+     * @return int|null
      */
-    public function getBlkioWeight(): int
+    public function getBlkioWeight(): ?int
     {
         return $this->blkioWeight;
     }
@@ -362,11 +348,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * Block IO weight (relative weight).
      *
-     * @param int $blkioWeight
+     * @param int|null $blkioWeight
      *
      * @return self
      */
-    public function setBlkioWeight(int $blkioWeight): self
+    public function setBlkioWeight(?int $blkioWeight): self
     {
         $this->initialized['blkioWeight'] = true;
         $this->blkioWeight                = $blkioWeight;
@@ -542,9 +528,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * The length of a CPU period in microseconds.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuPeriod(): int
+    public function getCpuPeriod(): ?int
     {
         return $this->cpuPeriod;
     }
@@ -552,11 +538,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * The length of a CPU period in microseconds.
      *
-     * @param int $cpuPeriod
+     * @param int|null $cpuPeriod
      *
      * @return self
      */
-    public function setCpuPeriod(int $cpuPeriod): self
+    public function setCpuPeriod(?int $cpuPeriod): self
     {
         $this->initialized['cpuPeriod'] = true;
         $this->cpuPeriod                = $cpuPeriod;
@@ -567,9 +553,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * Microseconds of CPU time that the container can get in a CPU period.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuQuota(): int
+    public function getCpuQuota(): ?int
     {
         return $this->cpuQuota;
     }
@@ -577,11 +563,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * Microseconds of CPU time that the container can get in a CPU period.
      *
-     * @param int $cpuQuota
+     * @param int|null $cpuQuota
      *
      * @return self
      */
-    public function setCpuQuota(int $cpuQuota): self
+    public function setCpuQuota(?int $cpuQuota): self
     {
         $this->initialized['cpuQuota'] = true;
         $this->cpuQuota                = $cpuQuota;
@@ -593,9 +579,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * The length of a CPU real-time period in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuRealtimePeriod(): int
+    public function getCpuRealtimePeriod(): ?int
     {
         return $this->cpuRealtimePeriod;
     }
@@ -604,11 +590,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * The length of a CPU real-time period in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @param int $cpuRealtimePeriod
+     * @param int|null $cpuRealtimePeriod
      *
      * @return self
      */
-    public function setCpuRealtimePeriod(int $cpuRealtimePeriod): self
+    public function setCpuRealtimePeriod(?int $cpuRealtimePeriod): self
     {
         $this->initialized['cpuRealtimePeriod'] = true;
         $this->cpuRealtimePeriod                = $cpuRealtimePeriod;
@@ -620,9 +606,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * The length of a CPU real-time runtime in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCpuRealtimeRuntime(): int
+    public function getCpuRealtimeRuntime(): ?int
     {
         return $this->cpuRealtimeRuntime;
     }
@@ -631,11 +617,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * The length of a CPU real-time runtime in microseconds. Set to 0 to
      * allocate no time allocated to real-time tasks.
      *
-     * @param int $cpuRealtimeRuntime
+     * @param int|null $cpuRealtimeRuntime
      *
      * @return self
      */
-    public function setCpuRealtimeRuntime(int $cpuRealtimeRuntime): self
+    public function setCpuRealtimeRuntime(?int $cpuRealtimeRuntime): self
     {
         $this->initialized['cpuRealtimeRuntime'] = true;
         $this->cpuRealtimeRuntime                = $cpuRealtimeRuntime;
@@ -646,9 +632,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * CPUs in which to allow execution (e.g., `0-3`, `0,1`).
      *
-     * @return string
+     * @return string|null
      */
-    public function getCpusetCpus(): string
+    public function getCpusetCpus(): ?string
     {
         return $this->cpusetCpus;
     }
@@ -656,11 +642,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * CPUs in which to allow execution (e.g., `0-3`, `0,1`).
      *
-     * @param string $cpusetCpus
+     * @param string|null $cpusetCpus
      *
      * @return self
      */
-    public function setCpusetCpus(string $cpusetCpus): self
+    public function setCpusetCpus(?string $cpusetCpus): self
     {
         $this->initialized['cpusetCpus'] = true;
         $this->cpusetCpus                = $cpusetCpus;
@@ -672,9 +658,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only
      * effective on NUMA systems.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCpusetMems(): string
+    public function getCpusetMems(): ?string
     {
         return $this->cpusetMems;
     }
@@ -683,11 +669,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only
      * effective on NUMA systems.
      *
-     * @param string $cpusetMems
+     * @param string|null $cpusetMems
      *
      * @return self
      */
-    public function setCpusetMems(string $cpusetMems): self
+    public function setCpusetMems(?string $cpusetMems): self
     {
         $this->initialized['cpusetMems'] = true;
         $this->cpusetMems                = $cpusetMems;
@@ -771,50 +757,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
     }
 
     /**
-     * Hard limit for kernel TCP buffer memory (in bytes). Depending on the
-     * OCI runtime in use, this option may be ignored. It is no longer supported
-     * by the default (runc) runtime.
-     *
-     * This field is omitted when empty.
-     *
-     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated `memory.kmem.tcp.limit_in_bytes` field
-     * for cgroups v1. This field will be removed in a future release.
-     *
-     * @return int
-     */
-    public function getKernelMemoryTCP(): int
-    {
-        return $this->kernelMemoryTCP;
-    }
-
-    /**
-     * Hard limit for kernel TCP buffer memory (in bytes). Depending on the
-     * OCI runtime in use, this option may be ignored. It is no longer supported
-     * by the default (runc) runtime.
-     *
-     * This field is omitted when empty.
-     *
-     **Deprecated**: This field is deprecated as kernel 6.12 has deprecated `memory.kmem.tcp.limit_in_bytes` field
-     * for cgroups v1. This field will be removed in a future release.
-     *
-     * @param int $kernelMemoryTCP
-     *
-     * @return self
-     */
-    public function setKernelMemoryTCP(int $kernelMemoryTCP): self
-    {
-        $this->initialized['kernelMemoryTCP'] = true;
-        $this->kernelMemoryTCP                = $kernelMemoryTCP;
-
-        return $this;
-    }
-
-    /**
      * Memory soft limit in bytes.
      *
-     * @return int
+     * @return int|null
      */
-    public function getMemoryReservation(): int
+    public function getMemoryReservation(): ?int
     {
         return $this->memoryReservation;
     }
@@ -822,11 +769,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
     /**
      * Memory soft limit in bytes.
      *
-     * @param int $memoryReservation
+     * @param int|null $memoryReservation
      *
      * @return self
      */
-    public function setMemoryReservation(int $memoryReservation): self
+    public function setMemoryReservation(?int $memoryReservation): self
     {
         $this->initialized['memoryReservation'] = true;
         $this->memoryReservation                = $memoryReservation;
@@ -838,9 +785,9 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * Total memory limit (memory + swap). Set as `-1` to enable unlimited
      * swap.
      *
-     * @return int
+     * @return int|null
      */
-    public function getMemorySwap(): int
+    public function getMemorySwap(): ?int
     {
         return $this->memorySwap;
     }
@@ -849,11 +796,11 @@ class ContainersIdUpdatePostBody extends ArrayObject
      * Total memory limit (memory + swap). Set as `-1` to enable unlimited
      * swap.
      *
-     * @param int $memorySwap
+     * @param int|null $memorySwap
      *
      * @return self
      */
-    public function setMemorySwap(int $memorySwap): self
+    public function setMemorySwap(?int $memorySwap): self
     {
         $this->initialized['memorySwap'] = true;
         $this->memorySwap                = $memorySwap;

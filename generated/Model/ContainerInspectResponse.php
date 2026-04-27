@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ContainerInspectResponse extends ArrayObject
+class ContainerInspectResponse
 {
     /**
      * @var array
@@ -20,7 +19,7 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * The ID of this container as a 128-bit (64-character) hexadecimal string (32 bytes).
      *
-     * @var string
+     * @var string|null
      */
     protected $id;
     /**
@@ -33,13 +32,13 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * The path to the command being run.
      *
-     * @var string
+     * @var string|null
      */
     protected $path;
     /**
      * The arguments to the command being run.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $args;
     /**
@@ -52,7 +51,7 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * The ID (digest) of the image that this container was created from.
      *
-     * @var string
+     * @var string|null
      */
     protected $image;
     /**
@@ -62,7 +61,7 @@ class ContainerInspectResponse extends ArrayObject
      * This file is managed through the docker daemon, and should not be
      * accessed or modified by other tools.
      *
-     * @var string
+     * @var string|null
      */
     protected $resolvConfPath;
     /**
@@ -72,7 +71,7 @@ class ContainerInspectResponse extends ArrayObject
      * This file is managed through the docker daemon, and should not be
      * accessed or modified by other tools.
      *
-     * @var string
+     * @var string|null
      */
     protected $hostnamePath;
     /**
@@ -82,7 +81,7 @@ class ContainerInspectResponse extends ArrayObject
      * This file is managed through the docker daemon, and should not be
      * accessed or modified by other tools.
      *
-     * @var string
+     * @var string|null
      */
     protected $hostsPath;
     /**
@@ -100,21 +99,21 @@ class ContainerInspectResponse extends ArrayObject
      *
      * For historic reasons, the name may be prefixed with a forward-slash (`/`).
      *
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
      * Number of times the container was restarted since it was created,
      * or since daemon was started.
      *
-     * @var int
+     * @var int|null
      */
     protected $restartCount;
     /**
      * The storage-driver used for the container's filesystem (graph-driver
      * or snapshotter).
      *
-     * @var string
+     * @var string|null
      */
     protected $driver;
     /**
@@ -124,7 +123,7 @@ class ContainerInspectResponse extends ArrayObject
      * On Windows) features, which has been removed. In most cases, this field
      * is equal to the host's operating system (`linux` or `windows`).
      *
-     * @var string
+     * @var string|null
      */
     protected $platform;
     /**
@@ -137,19 +136,19 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * SELinux mount label set for the container.
      *
-     * @var string
+     * @var string|null
      */
     protected $mountLabel;
     /**
      * SELinux process label set for the container.
      *
-     * @var string
+     * @var string|null
      */
     protected $processLabel;
     /**
      * The AppArmor profile set for the container.
      *
-     * @var string
+     * @var string|null
      */
     protected $appArmorProfile;
     /**
@@ -161,7 +160,7 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * Container configuration that depends on the host we are running on.
      *
-     * @var HostConfig|null
+     * @var HostConfig
      */
     protected $hostConfig;
     /**
@@ -171,6 +170,12 @@ class ContainerInspectResponse extends ArrayObject
      * @var DriverData
      */
     protected $graphDriver;
+    /**
+     * Information about the storage used by the container.
+     *
+     * @var Storage
+     */
+    protected $storage;
     /**
      * The size of files that have been created or changed by this container.
      *
@@ -193,7 +198,7 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * List of mounts used by the container.
      *
-     * @var list<MountPoint>
+     * @var list<MountPoint>|null
      */
     protected $mounts;
     /**
@@ -212,9 +217,9 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * The ID of this container as a 128-bit (64-character) hexadecimal string (32 bytes).
      *
-     * @return string
+     * @return string|null
      */
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -222,11 +227,11 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * The ID of this container as a 128-bit (64-character) hexadecimal string (32 bytes).
      *
-     * @param string $id
+     * @param string|null $id
      *
      * @return self
      */
-    public function setId(string $id): self
+    public function setId(?string $id): self
     {
         $this->initialized['id'] = true;
         $this->id                = $id;
@@ -264,9 +269,9 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * The path to the command being run.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPath(): string
+    public function getPath(): ?string
     {
         return $this->path;
     }
@@ -274,11 +279,11 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * The path to the command being run.
      *
-     * @param string $path
+     * @param string|null $path
      *
      * @return self
      */
-    public function setPath(string $path): self
+    public function setPath(?string $path): self
     {
         $this->initialized['path'] = true;
         $this->path                = $path;
@@ -289,9 +294,9 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * The arguments to the command being run.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getArgs(): array
+    public function getArgs(): ?array
     {
         return $this->args;
     }
@@ -299,11 +304,11 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * The arguments to the command being run.
      *
-     * @param list<string> $args
+     * @param list<string>|null $args
      *
      * @return self
      */
-    public function setArgs(array $args): self
+    public function setArgs(?array $args): self
     {
         $this->initialized['args'] = true;
         $this->args                = $args;
@@ -341,9 +346,9 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * The ID (digest) of the image that this container was created from.
      *
-     * @return string
+     * @return string|null
      */
-    public function getImage(): string
+    public function getImage(): ?string
     {
         return $this->image;
     }
@@ -351,11 +356,11 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * The ID (digest) of the image that this container was created from.
      *
-     * @param string $image
+     * @param string|null $image
      *
      * @return self
      */
-    public function setImage(string $image): self
+    public function setImage(?string $image): self
     {
         $this->initialized['image'] = true;
         $this->image                = $image;
@@ -370,9 +375,9 @@ class ContainerInspectResponse extends ArrayObject
      * This file is managed through the docker daemon, and should not be
      * accessed or modified by other tools.
      *
-     * @return string
+     * @return string|null
      */
-    public function getResolvConfPath(): string
+    public function getResolvConfPath(): ?string
     {
         return $this->resolvConfPath;
     }
@@ -384,11 +389,11 @@ class ContainerInspectResponse extends ArrayObject
      * This file is managed through the docker daemon, and should not be
      * accessed or modified by other tools.
      *
-     * @param string $resolvConfPath
+     * @param string|null $resolvConfPath
      *
      * @return self
      */
-    public function setResolvConfPath(string $resolvConfPath): self
+    public function setResolvConfPath(?string $resolvConfPath): self
     {
         $this->initialized['resolvConfPath'] = true;
         $this->resolvConfPath                = $resolvConfPath;
@@ -403,9 +408,9 @@ class ContainerInspectResponse extends ArrayObject
      * This file is managed through the docker daemon, and should not be
      * accessed or modified by other tools.
      *
-     * @return string
+     * @return string|null
      */
-    public function getHostnamePath(): string
+    public function getHostnamePath(): ?string
     {
         return $this->hostnamePath;
     }
@@ -417,11 +422,11 @@ class ContainerInspectResponse extends ArrayObject
      * This file is managed through the docker daemon, and should not be
      * accessed or modified by other tools.
      *
-     * @param string $hostnamePath
+     * @param string|null $hostnamePath
      *
      * @return self
      */
-    public function setHostnamePath(string $hostnamePath): self
+    public function setHostnamePath(?string $hostnamePath): self
     {
         $this->initialized['hostnamePath'] = true;
         $this->hostnamePath                = $hostnamePath;
@@ -436,9 +441,9 @@ class ContainerInspectResponse extends ArrayObject
      * This file is managed through the docker daemon, and should not be
      * accessed or modified by other tools.
      *
-     * @return string
+     * @return string|null
      */
-    public function getHostsPath(): string
+    public function getHostsPath(): ?string
     {
         return $this->hostsPath;
     }
@@ -450,11 +455,11 @@ class ContainerInspectResponse extends ArrayObject
      * This file is managed through the docker daemon, and should not be
      * accessed or modified by other tools.
      *
-     * @param string $hostsPath
+     * @param string|null $hostsPath
      *
      * @return self
      */
-    public function setHostsPath(string $hostsPath): self
+    public function setHostsPath(?string $hostsPath): self
     {
         $this->initialized['hostsPath'] = true;
         $this->hostsPath                = $hostsPath;
@@ -500,9 +505,9 @@ class ContainerInspectResponse extends ArrayObject
      *
      * For historic reasons, the name may be prefixed with a forward-slash (`/`).
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -512,11 +517,11 @@ class ContainerInspectResponse extends ArrayObject
      *
      * For historic reasons, the name may be prefixed with a forward-slash (`/`).
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -528,9 +533,9 @@ class ContainerInspectResponse extends ArrayObject
      * Number of times the container was restarted since it was created,
      * or since daemon was started.
      *
-     * @return int
+     * @return int|null
      */
-    public function getRestartCount(): int
+    public function getRestartCount(): ?int
     {
         return $this->restartCount;
     }
@@ -539,11 +544,11 @@ class ContainerInspectResponse extends ArrayObject
      * Number of times the container was restarted since it was created,
      * or since daemon was started.
      *
-     * @param int $restartCount
+     * @param int|null $restartCount
      *
      * @return self
      */
-    public function setRestartCount(int $restartCount): self
+    public function setRestartCount(?int $restartCount): self
     {
         $this->initialized['restartCount'] = true;
         $this->restartCount                = $restartCount;
@@ -555,9 +560,9 @@ class ContainerInspectResponse extends ArrayObject
      * The storage-driver used for the container's filesystem (graph-driver
      * or snapshotter).
      *
-     * @return string
+     * @return string|null
      */
-    public function getDriver(): string
+    public function getDriver(): ?string
     {
         return $this->driver;
     }
@@ -566,11 +571,11 @@ class ContainerInspectResponse extends ArrayObject
      * The storage-driver used for the container's filesystem (graph-driver
      * or snapshotter).
      *
-     * @param string $driver
+     * @param string|null $driver
      *
      * @return self
      */
-    public function setDriver(string $driver): self
+    public function setDriver(?string $driver): self
     {
         $this->initialized['driver'] = true;
         $this->driver                = $driver;
@@ -585,9 +590,9 @@ class ContainerInspectResponse extends ArrayObject
      * On Windows) features, which has been removed. In most cases, this field
      * is equal to the host's operating system (`linux` or `windows`).
      *
-     * @return string
+     * @return string|null
      */
-    public function getPlatform(): string
+    public function getPlatform(): ?string
     {
         return $this->platform;
     }
@@ -599,11 +604,11 @@ class ContainerInspectResponse extends ArrayObject
      * On Windows) features, which has been removed. In most cases, this field
      * is equal to the host's operating system (`linux` or `windows`).
      *
-     * @param string $platform
+     * @param string|null $platform
      *
      * @return self
      */
-    public function setPlatform(string $platform): self
+    public function setPlatform(?string $platform): self
     {
         $this->initialized['platform'] = true;
         $this->platform                = $platform;
@@ -641,9 +646,9 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * SELinux mount label set for the container.
      *
-     * @return string
+     * @return string|null
      */
-    public function getMountLabel(): string
+    public function getMountLabel(): ?string
     {
         return $this->mountLabel;
     }
@@ -651,11 +656,11 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * SELinux mount label set for the container.
      *
-     * @param string $mountLabel
+     * @param string|null $mountLabel
      *
      * @return self
      */
-    public function setMountLabel(string $mountLabel): self
+    public function setMountLabel(?string $mountLabel): self
     {
         $this->initialized['mountLabel'] = true;
         $this->mountLabel                = $mountLabel;
@@ -666,9 +671,9 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * SELinux process label set for the container.
      *
-     * @return string
+     * @return string|null
      */
-    public function getProcessLabel(): string
+    public function getProcessLabel(): ?string
     {
         return $this->processLabel;
     }
@@ -676,11 +681,11 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * SELinux process label set for the container.
      *
-     * @param string $processLabel
+     * @param string|null $processLabel
      *
      * @return self
      */
-    public function setProcessLabel(string $processLabel): self
+    public function setProcessLabel(?string $processLabel): self
     {
         $this->initialized['processLabel'] = true;
         $this->processLabel                = $processLabel;
@@ -691,9 +696,9 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * The AppArmor profile set for the container.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAppArmorProfile(): string
+    public function getAppArmorProfile(): ?string
     {
         return $this->appArmorProfile;
     }
@@ -701,11 +706,11 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * The AppArmor profile set for the container.
      *
-     * @param string $appArmorProfile
+     * @param string|null $appArmorProfile
      *
      * @return self
      */
-    public function setAppArmorProfile(string $appArmorProfile): self
+    public function setAppArmorProfile(?string $appArmorProfile): self
     {
         $this->initialized['appArmorProfile'] = true;
         $this->appArmorProfile                = $appArmorProfile;
@@ -741,9 +746,9 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * Container configuration that depends on the host we are running on.
      *
-     * @return HostConfig|null
+     * @return HostConfig
      */
-    public function getHostConfig(): ?HostConfig
+    public function getHostConfig(): HostConfig
     {
         return $this->hostConfig;
     }
@@ -751,11 +756,11 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * Container configuration that depends on the host we are running on.
      *
-     * @param HostConfig|null $hostConfig
+     * @param HostConfig $hostConfig
      *
      * @return self
      */
-    public function setHostConfig(?HostConfig $hostConfig): self
+    public function setHostConfig(HostConfig $hostConfig): self
     {
         $this->initialized['hostConfig'] = true;
         $this->hostConfig                = $hostConfig;
@@ -786,6 +791,31 @@ class ContainerInspectResponse extends ArrayObject
     {
         $this->initialized['graphDriver'] = true;
         $this->graphDriver                = $graphDriver;
+
+        return $this;
+    }
+
+    /**
+     * Information about the storage used by the container.
+     *
+     * @return Storage
+     */
+    public function getStorage(): Storage
+    {
+        return $this->storage;
+    }
+
+    /**
+     * Information about the storage used by the container.
+     *
+     * @param Storage $storage
+     *
+     * @return self
+     */
+    public function setStorage(Storage $storage): self
+    {
+        $this->initialized['storage'] = true;
+        $this->storage                = $storage;
 
         return $this;
     }
@@ -857,9 +887,9 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * List of mounts used by the container.
      *
-     * @return list<MountPoint>
+     * @return list<MountPoint>|null
      */
-    public function getMounts(): array
+    public function getMounts(): ?array
     {
         return $this->mounts;
     }
@@ -867,11 +897,11 @@ class ContainerInspectResponse extends ArrayObject
     /**
      * List of mounts used by the container.
      *
-     * @param list<MountPoint> $mounts
+     * @param list<MountPoint>|null $mounts
      *
      * @return self
      */
-    public function setMounts(array $mounts): self
+    public function setMounts(?array $mounts): self
     {
         $this->initialized['mounts'] = true;
         $this->mounts                = $mounts;

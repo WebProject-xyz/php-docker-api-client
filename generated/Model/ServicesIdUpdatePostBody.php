@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ServicesIdUpdatePostBody extends ArrayObject
+class ServicesIdUpdatePostBody
 {
     /**
      * @var array
@@ -20,13 +19,13 @@ class ServicesIdUpdatePostBody extends ArrayObject
     /**
      * Name of the service.
      *
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
      * User-defined key/value metadata.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $labels;
     /**
@@ -38,19 +37,19 @@ class ServicesIdUpdatePostBody extends ArrayObject
     /**
      * Scheduling mode for the service.
      *
-     * @var ServiceSpecMode
+     * @var ServiceSpecMode|null
      */
     protected $mode;
     /**
      * Specification for the update strategy of the service.
      *
-     * @var ServiceSpecUpdateConfig
+     * @var ServiceSpecUpdateConfig|null
      */
     protected $updateConfig;
     /**
      * Specification for the rollback strategy of the service.
      *
-     * @var ServiceSpecRollbackConfig
+     * @var ServiceSpecRollbackConfig|null
      */
     protected $rollbackConfig;
     /**
@@ -71,9 +70,9 @@ class ServicesIdUpdatePostBody extends ArrayObject
     /**
      * Name of the service.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -81,11 +80,11 @@ class ServicesIdUpdatePostBody extends ArrayObject
     /**
      * Name of the service.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -96,9 +95,9 @@ class ServicesIdUpdatePostBody extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getLabels(): iterable
+    public function getLabels(): ?iterable
     {
         return $this->labels;
     }
@@ -106,11 +105,11 @@ class ServicesIdUpdatePostBody extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @param array<string, string> $labels
+     * @param array<string, string>|null $labels
      *
      * @return self
      */
-    public function setLabels(iterable $labels): self
+    public function setLabels(?iterable $labels): self
     {
         $this->initialized['labels'] = true;
         $this->labels                = $labels;
@@ -146,9 +145,9 @@ class ServicesIdUpdatePostBody extends ArrayObject
     /**
      * Scheduling mode for the service.
      *
-     * @return ServiceSpecMode
+     * @return ServiceSpecMode|null
      */
-    public function getMode(): ServiceSpecMode
+    public function getMode(): ?ServiceSpecMode
     {
         return $this->mode;
     }
@@ -156,11 +155,11 @@ class ServicesIdUpdatePostBody extends ArrayObject
     /**
      * Scheduling mode for the service.
      *
-     * @param ServiceSpecMode $mode
+     * @param ServiceSpecMode|null $mode
      *
      * @return self
      */
-    public function setMode(ServiceSpecMode $mode): self
+    public function setMode(?ServiceSpecMode $mode): self
     {
         $this->initialized['mode'] = true;
         $this->mode                = $mode;
@@ -171,9 +170,9 @@ class ServicesIdUpdatePostBody extends ArrayObject
     /**
      * Specification for the update strategy of the service.
      *
-     * @return ServiceSpecUpdateConfig
+     * @return ServiceSpecUpdateConfig|null
      */
-    public function getUpdateConfig(): ServiceSpecUpdateConfig
+    public function getUpdateConfig(): ?ServiceSpecUpdateConfig
     {
         return $this->updateConfig;
     }
@@ -181,11 +180,11 @@ class ServicesIdUpdatePostBody extends ArrayObject
     /**
      * Specification for the update strategy of the service.
      *
-     * @param ServiceSpecUpdateConfig $updateConfig
+     * @param ServiceSpecUpdateConfig|null $updateConfig
      *
      * @return self
      */
-    public function setUpdateConfig(ServiceSpecUpdateConfig $updateConfig): self
+    public function setUpdateConfig(?ServiceSpecUpdateConfig $updateConfig): self
     {
         $this->initialized['updateConfig'] = true;
         $this->updateConfig                = $updateConfig;
@@ -196,9 +195,9 @@ class ServicesIdUpdatePostBody extends ArrayObject
     /**
      * Specification for the rollback strategy of the service.
      *
-     * @return ServiceSpecRollbackConfig
+     * @return ServiceSpecRollbackConfig|null
      */
-    public function getRollbackConfig(): ServiceSpecRollbackConfig
+    public function getRollbackConfig(): ?ServiceSpecRollbackConfig
     {
         return $this->rollbackConfig;
     }
@@ -206,11 +205,11 @@ class ServicesIdUpdatePostBody extends ArrayObject
     /**
      * Specification for the rollback strategy of the service.
      *
-     * @param ServiceSpecRollbackConfig $rollbackConfig
+     * @param ServiceSpecRollbackConfig|null $rollbackConfig
      *
      * @return self
      */
-    public function setRollbackConfig(ServiceSpecRollbackConfig $rollbackConfig): self
+    public function setRollbackConfig(?ServiceSpecRollbackConfig $rollbackConfig): self
     {
         $this->initialized['rollbackConfig'] = true;
         $this->rollbackConfig                = $rollbackConfig;

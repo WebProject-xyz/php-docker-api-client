@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class CommitNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,24 +38,26 @@ class CommitNormalizer implements DenormalizerInterface, NormalizerInterface, De
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\Commit();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\Commit();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('ID', $data)) {
-            $object->setID($data['ID']);
-            unset($data['ID']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('ID', $data) && null !== $data['ID']) {
+            $value = $data['ID'];
+            if (is_string($data['ID'])) {
+                $value = $data['ID'];
+            } elseif (null === $data['ID']) {
+                $value = $data['ID'];
             }
+            $object->setID($value);
+        } elseif (array_key_exists('ID', $data) && null === $data['ID']) {
+            $object->setID(null);
         }
 
         return $object;
@@ -63,13 +66,14 @@ class CommitNormalizer implements DenormalizerInterface, NormalizerInterface, De
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('iD') && null !== $data->getID()) {
-            $dataArray['ID'] = $data->getID();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('iD')) {
+            $value = $data->getID();
+            if (is_string($data->getID())) {
+                $value = $data->getID();
+            } elseif (null === $data->getID()) {
+                $value = $data->getID();
             }
+            $dataArray['ID'] = $value;
         }
 
         return $dataArray;

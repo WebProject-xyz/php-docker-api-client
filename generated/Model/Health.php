@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class Health extends ArrayObject
+class Health
 {
     /**
      * @var array
@@ -25,13 +24,13 @@ class Health extends ArrayObject
      * - "healthy"   Healthy indicates that the container is running correctly
      * - "unhealthy" Unhealthy indicates that the container has a problem
      *
-     * @var string
+     * @var string|null
      */
     protected $status;
     /**
      * FailingStreak is the number of consecutive failures.
      *
-     * @var int
+     * @var int|null
      */
     protected $failingStreak;
     /**
@@ -49,9 +48,9 @@ class Health extends ArrayObject
      * - "healthy"   Healthy indicates that the container is running correctly
      * - "unhealthy" Unhealthy indicates that the container has a problem
      *
-     * @return string
+     * @return string|null
      */
-    public function getStatus(): string
+    public function getStatus(): ?string
     {
         return $this->status;
     }
@@ -64,11 +63,11 @@ class Health extends ArrayObject
      * - "healthy"   Healthy indicates that the container is running correctly
      * - "unhealthy" Unhealthy indicates that the container has a problem
      *
-     * @param string $status
+     * @param string|null $status
      *
      * @return self
      */
-    public function setStatus(string $status): self
+    public function setStatus(?string $status): self
     {
         $this->initialized['status'] = true;
         $this->status                = $status;
@@ -79,9 +78,9 @@ class Health extends ArrayObject
     /**
      * FailingStreak is the number of consecutive failures.
      *
-     * @return int
+     * @return int|null
      */
-    public function getFailingStreak(): int
+    public function getFailingStreak(): ?int
     {
         return $this->failingStreak;
     }
@@ -89,11 +88,11 @@ class Health extends ArrayObject
     /**
      * FailingStreak is the number of consecutive failures.
      *
-     * @param int $failingStreak
+     * @param int|null $failingStreak
      *
      * @return self
      */
-    public function setFailingStreak(int $failingStreak): self
+    public function setFailingStreak(?int $failingStreak): self
     {
         $this->initialized['failingStreak'] = true;
         $this->failingStreak                = $failingStreak;

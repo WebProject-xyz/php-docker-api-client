@@ -17,19 +17,16 @@ class PutContainerArchive extends \WebProject\DockerApi\Library\Generated\Runtim
      * `path` parameter is asserted to be a directory. If it exists as a file, 400 error
      * will be returned with message "not a directory".
      *
-     * @param string                                            $id              ID or name of the container
+     * @param string                                            $id          ID or name of the container
      * @param string|resource|\Psr\Http\Message\StreamInterface $requestBody
-     * @param array                                             $queryParameters {
-     *
-     * @var string $path path to a directory in the container to extract the archive’s contents into
-     * @var string $noOverwriteDirNonDir if `1`, `true`, or `True` then it will be an error if unpacking the
-     *             given content would cause an existing directory to be replaced with
-     *             a non-directory and vice versa
-     * @var string $copyUIDGID If `1`, `true`, then it will copy UID/GID maps to the dest file or
-     *             dir
-     *
-     * }
-     *
+     * @param array{
+     *    "path": string, //Path to a directory in the container to extract the archive’s contents into.
+     *    "noOverwriteDirNonDir"?: string, //If `1`, `true`, or `True` then it will be an error if unpacking the
+     * given content would cause an existing directory to be replaced with
+     * a non-directory and vice versa.
+     *    "copyUIDGID"?: string, //If `1`, `true`, then it will copy UID/GID maps to the dest file or
+     * dir
+     * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
     public function __construct(string $id, $requestBody, array $queryParameters = [], array $accept = [])
@@ -101,16 +98,16 @@ class PutContainerArchive extends \WebProject\DockerApi\Library\Generated\Runtim
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\PutContainerArchiveBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (403 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (403 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\PutContainerArchiveForbiddenException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\PutContainerArchiveNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\PutContainerArchiveInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

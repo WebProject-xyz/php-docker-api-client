@@ -9,32 +9,27 @@ class ServiceUpdate extends \WebProject\DockerApi\Library\Generated\Runtime\Clie
     protected $id;
 
     /**
-     * @param string                                                                 $id              ID or name of service
+     * @param string                                                                 $id          ID or name of service
      * @param \WebProject\DockerApi\Library\Generated\Model\ServicesIdUpdatePostBody $requestBody
-     * @param array                                                                  $queryParameters {
-     *
-     * @var int    $version The version number of the service object being updated. This is
-     *             required to avoid conflicting writes.
-     *             This version number should be the value as currently set on the
-     *             service *before* the update. You can find the current version by
-     *             calling `GET /services/{id}`
-     * @var string $registryAuthFrom if the `X-Registry-Auth` header is not specified, this parameter
-     *             indicates where to find registry authorization credentials
-     * @var string $rollback Set to this parameter to `previous` to cause a server-side rollback
-     *             to the previous service spec. The supplied spec will be ignored in
-     *             this case.
-     *
-     * }
-     *
-     * @param array $headerParameters {
-     *
-     * @var string $X-Registry-Auth A base64url-encoded auth configuration for pulling from private
-     *             registries.
+     * @param array{
+     *    "version": int, //The version number of the service object being updated. This is
+     * required to avoid conflicting writes.
+     * This version number should be the value as currently set on the
+     * service *before* the update. You can find the current version by
+     * calling `GET /services/{id}`
+     *    "registryAuthFrom"?: string, //If the `X-Registry-Auth` header is not specified, this parameter
+     * indicates where to find registry authorization credentials.
+     *    "rollback"?: string, //Set to this parameter to `previous` to cause a server-side rollback
+     * to the previous service spec. The supplied spec will be ignored in
+     * this case.
+     * } $queryParameters
+     * @param array{
+     *    "X-Registry-Auth"?: string, //A base64url-encoded auth configuration for pulling from private
+     * registries.
      *
      * Refer to the [authentication section](#section/Authentication) for
      * details.
-     *
-     * }
+     * } $headerParameters
      */
     public function __construct(string $id, \WebProject\DockerApi\Library\Generated\Model\ServicesIdUpdatePostBody $requestBody, array $queryParameters = [], array $headerParameters = [])
     {
@@ -106,19 +101,19 @@ class ServiceUpdate extends \WebProject\DockerApi\Library\Generated\Runtime\Clie
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ServiceUpdateResponse', 'json');
         }
-        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ServiceUpdateBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ServiceUpdateNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ServiceUpdateInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (503 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (503 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ServiceUpdateServiceUnavailableException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

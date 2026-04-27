@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class EndpointSpec extends ArrayObject
+class EndpointSpec
 {
     /**
      * @var array
@@ -20,23 +19,23 @@ class EndpointSpec extends ArrayObject
     /**
      * The mode of resolution to use for internal load balancing between tasks.
      *
-     * @var string
+     * @var string|null
      */
     protected $mode = 'vip';
     /**
      * List of exposed ports that this service is accessible on from the
      * outside. Ports can only be provided if `vip` resolution mode is used.
      *
-     * @var list<EndpointPortConfig>
+     * @var list<EndpointPortConfig>|null
      */
     protected $ports;
 
     /**
      * The mode of resolution to use for internal load balancing between tasks.
      *
-     * @return string
+     * @return string|null
      */
-    public function getMode(): string
+    public function getMode(): ?string
     {
         return $this->mode;
     }
@@ -44,11 +43,11 @@ class EndpointSpec extends ArrayObject
     /**
      * The mode of resolution to use for internal load balancing between tasks.
      *
-     * @param string $mode
+     * @param string|null $mode
      *
      * @return self
      */
-    public function setMode(string $mode): self
+    public function setMode(?string $mode): self
     {
         $this->initialized['mode'] = true;
         $this->mode                = $mode;
@@ -60,9 +59,9 @@ class EndpointSpec extends ArrayObject
      * List of exposed ports that this service is accessible on from the
      * outside. Ports can only be provided if `vip` resolution mode is used.
      *
-     * @return list<EndpointPortConfig>
+     * @return list<EndpointPortConfig>|null
      */
-    public function getPorts(): array
+    public function getPorts(): ?array
     {
         return $this->ports;
     }
@@ -71,11 +70,11 @@ class EndpointSpec extends ArrayObject
      * List of exposed ports that this service is accessible on from the
      * outside. Ports can only be provided if `vip` resolution mode is used.
      *
-     * @param list<EndpointPortConfig> $ports
+     * @param list<EndpointPortConfig>|null $ports
      *
      * @return self
      */
-    public function setPorts(array $ports): self
+    public function setPorts(?array $ports): self
     {
         $this->initialized['ports'] = true;
         $this->ports                = $ports;

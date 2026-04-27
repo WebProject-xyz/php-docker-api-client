@@ -16,8 +16,8 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
-use function is_int;
 use function is_object;
+use function is_string;
 
 class NetworkSettingsNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -38,123 +38,69 @@ class NetworkSettingsNormalizer implements DenormalizerInterface, NormalizerInte
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\NetworkSettings();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\NetworkSettings();
-        if (array_key_exists('HairpinMode', $data) && is_int($data['HairpinMode'])) {
-            $data['HairpinMode'] = (bool) $data['HairpinMode'];
+        if (array_key_exists('SandboxID', $data) && null !== $data['SandboxID']) {
+            $value = $data['SandboxID'];
+            if (is_string($data['SandboxID'])) {
+                $value = $data['SandboxID'];
+            } elseif (null === $data['SandboxID']) {
+                $value = $data['SandboxID'];
+            }
+            $object->setSandboxID($value);
+        } elseif (array_key_exists('SandboxID', $data) && null === $data['SandboxID']) {
+            $object->setSandboxID(null);
         }
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Bridge', $data) && null !== $data['Bridge']) {
-            $object->setBridge($data['Bridge']);
-            unset($data['Bridge']);
-        } elseif (array_key_exists('Bridge', $data) && null === $data['Bridge']) {
-            $object->setBridge(null);
-        }
-        if (array_key_exists('SandboxID', $data)) {
-            $object->setSandboxID($data['SandboxID']);
-            unset($data['SandboxID']);
-        }
-        if (array_key_exists('HairpinMode', $data)) {
-            $object->setHairpinMode($data['HairpinMode']);
-            unset($data['HairpinMode']);
-        }
-        if (array_key_exists('LinkLocalIPv6Address', $data)) {
-            $object->setLinkLocalIPv6Address($data['LinkLocalIPv6Address']);
-            unset($data['LinkLocalIPv6Address']);
-        }
-        if (array_key_exists('LinkLocalIPv6PrefixLen', $data)) {
-            $object->setLinkLocalIPv6PrefixLen($data['LinkLocalIPv6PrefixLen']);
-            unset($data['LinkLocalIPv6PrefixLen']);
+        if (array_key_exists('SandboxKey', $data) && null !== $data['SandboxKey']) {
+            $value_1 = $data['SandboxKey'];
+            if (is_string($data['SandboxKey'])) {
+                $value_1 = $data['SandboxKey'];
+            } elseif (null === $data['SandboxKey']) {
+                $value_1 = $data['SandboxKey'];
+            }
+            $object->setSandboxKey($value_1);
+        } elseif (array_key_exists('SandboxKey', $data) && null === $data['SandboxKey']) {
+            $object->setSandboxKey(null);
         }
         if (array_key_exists('Ports', $data) && null !== $data['Ports']) {
-            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['Ports'] as $key => $value) {
-                $value_1 = $value;
-                if (is_array($value)) {
-                    $value_1 = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\PortBinding::class, 'json', $context);
+            $value_2 = $data['Ports'];
+            if (is_array($data['Ports']) && $this->isOnlyNumericKeys($data['Ports'])) {
+                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                foreach ($data['Ports'] as $key => $value_3) {
+                    $value_4 = $value_3;
+                    if (is_array($value_3) && $this->isOnlyNumericKeys($value_3)) {
+                        $values_1 = [];
+                        foreach ($value_3 as $value_5) {
+                            $values_1[] = $this->denormalizer->denormalize($value_5, \WebProject\DockerApi\Library\Generated\Model\PortBinding::class, 'json', $context);
+                        }
+                        $value_4 = $values_1;
+                    } elseif (null === $value_3) {
+                        $value_4 = $value_3;
+                    }
+                    $values[$key] = $value_4;
                 }
-                $values[$key] = $value_1;
+                $value_2 = $values;
+            } elseif (null === $data['Ports']) {
+                $value_2 = $data['Ports'];
             }
-            $object->setPorts($values);
-            unset($data['Ports']);
+            $object->setPorts($value_2);
         } elseif (array_key_exists('Ports', $data) && null === $data['Ports']) {
             $object->setPorts(null);
         }
-        if (array_key_exists('SandboxKey', $data)) {
-            $object->setSandboxKey($data['SandboxKey']);
-            unset($data['SandboxKey']);
-        }
-        if (array_key_exists('SecondaryIPAddresses', $data) && null !== $data['SecondaryIPAddresses']) {
-            $values_1 = [];
-            foreach ($data['SecondaryIPAddresses'] as $value_2) {
-                $values_1[] = $this->denormalizer->denormalize($value_2, \WebProject\DockerApi\Library\Generated\Model\Address::class, 'json', $context);
-            }
-            $object->setSecondaryIPAddresses($values_1);
-            unset($data['SecondaryIPAddresses']);
-        } elseif (array_key_exists('SecondaryIPAddresses', $data) && null === $data['SecondaryIPAddresses']) {
-            $object->setSecondaryIPAddresses(null);
-        }
-        if (array_key_exists('SecondaryIPv6Addresses', $data) && null !== $data['SecondaryIPv6Addresses']) {
-            $values_2 = [];
-            foreach ($data['SecondaryIPv6Addresses'] as $value_3) {
-                $values_2[] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\Address::class, 'json', $context);
-            }
-            $object->setSecondaryIPv6Addresses($values_2);
-            unset($data['SecondaryIPv6Addresses']);
-        } elseif (array_key_exists('SecondaryIPv6Addresses', $data) && null === $data['SecondaryIPv6Addresses']) {
-            $object->setSecondaryIPv6Addresses(null);
-        }
-        if (array_key_exists('EndpointID', $data)) {
-            $object->setEndpointID($data['EndpointID']);
-            unset($data['EndpointID']);
-        }
-        if (array_key_exists('Gateway', $data)) {
-            $object->setGateway($data['Gateway']);
-            unset($data['Gateway']);
-        }
-        if (array_key_exists('GlobalIPv6Address', $data)) {
-            $object->setGlobalIPv6Address($data['GlobalIPv6Address']);
-            unset($data['GlobalIPv6Address']);
-        }
-        if (array_key_exists('GlobalIPv6PrefixLen', $data)) {
-            $object->setGlobalIPv6PrefixLen($data['GlobalIPv6PrefixLen']);
-            unset($data['GlobalIPv6PrefixLen']);
-        }
-        if (array_key_exists('IPAddress', $data)) {
-            $object->setIPAddress($data['IPAddress']);
-            unset($data['IPAddress']);
-        }
-        if (array_key_exists('IPPrefixLen', $data)) {
-            $object->setIPPrefixLen($data['IPPrefixLen']);
-            unset($data['IPPrefixLen']);
-        }
-        if (array_key_exists('IPv6Gateway', $data)) {
-            $object->setIPv6Gateway($data['IPv6Gateway']);
-            unset($data['IPv6Gateway']);
-        }
-        if (array_key_exists('MacAddress', $data)) {
-            $object->setMacAddress($data['MacAddress']);
-            unset($data['MacAddress']);
-        }
         if (array_key_exists('Networks', $data)) {
-            $values_3 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['Networks'] as $key_1 => $value_4) {
-                $values_3[$key_1] = $this->denormalizer->denormalize($value_4, \WebProject\DockerApi\Library\Generated\Model\EndpointSettings::class, 'json', $context);
+            $values_2 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+            foreach ($data['Networks'] as $key_1 => $value_6) {
+                $values_2[$key_1] = $this->denormalizer->denormalize($value_6, \WebProject\DockerApi\Library\Generated\Model\EndpointSettings::class, 'json', $context);
             }
-            $object->setNetworks($values_3);
-            unset($data['Networks']);
-        }
-        foreach ($data as $key_2 => $value_5) {
-            if (preg_match('/.*/', (string) $key_2)) {
-                $object[$key_2] = $value_5;
-            }
+            $object->setNetworks($values_2);
         }
 
         return $object;
@@ -163,84 +109,53 @@ class NetworkSettingsNormalizer implements DenormalizerInterface, NormalizerInte
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('bridge') && null !== $data->getBridge()) {
-            $dataArray['Bridge'] = $data->getBridge();
+        if ($data->isInitialized('sandboxID')) {
+            $value = $data->getSandboxID();
+            if (is_string($data->getSandboxID())) {
+                $value = $data->getSandboxID();
+            } elseif (null === $data->getSandboxID()) {
+                $value = $data->getSandboxID();
+            }
+            $dataArray['SandboxID'] = $value;
         }
-        if ($data->isInitialized('sandboxID') && null !== $data->getSandboxID()) {
-            $dataArray['SandboxID'] = $data->getSandboxID();
+        if ($data->isInitialized('sandboxKey')) {
+            $value_1 = $data->getSandboxKey();
+            if (is_string($data->getSandboxKey())) {
+                $value_1 = $data->getSandboxKey();
+            } elseif (null === $data->getSandboxKey()) {
+                $value_1 = $data->getSandboxKey();
+            }
+            $dataArray['SandboxKey'] = $value_1;
         }
-        if ($data->isInitialized('hairpinMode') && null !== $data->getHairpinMode()) {
-            $dataArray['HairpinMode'] = $data->getHairpinMode();
-        }
-        if ($data->isInitialized('linkLocalIPv6Address') && null !== $data->getLinkLocalIPv6Address()) {
-            $dataArray['LinkLocalIPv6Address'] = $data->getLinkLocalIPv6Address();
-        }
-        if ($data->isInitialized('linkLocalIPv6PrefixLen') && null !== $data->getLinkLocalIPv6PrefixLen()) {
-            $dataArray['LinkLocalIPv6PrefixLen'] = $data->getLinkLocalIPv6PrefixLen();
-        }
-        if ($data->isInitialized('ports') && null !== $data->getPorts()) {
-            $values = [];
-            foreach ($data->getPorts() as $key => $value) {
-                $value_1 = $value;
-                if (is_object($value)) {
-                    $value_1 = $this->normalizer->normalize($value, 'json', $context);
+        if ($data->isInitialized('ports')) {
+            $value_2 = $data->getPorts();
+            if (is_object($data->getPorts())) {
+                $values = [];
+                foreach ($data->getPorts() as $key => $value_3) {
+                    $value_4 = $value_3;
+                    if (is_array($value_3)) {
+                        $values_1 = [];
+                        foreach ($value_3 as $value_5) {
+                            $values_1[] = $this->normalizer->normalize($value_5, 'json', $context);
+                        }
+                        $value_4 = $values_1;
+                    } elseif (null === $value_3) {
+                        $value_4 = $value_3;
+                    }
+                    $values[$key] = $value_4;
                 }
-                $values[$key] = $value_1;
+                $value_2 = $values;
+            } elseif (null === $data->getPorts()) {
+                $value_2 = $data->getPorts();
             }
-            $dataArray['Ports'] = $values;
-        }
-        if ($data->isInitialized('sandboxKey') && null !== $data->getSandboxKey()) {
-            $dataArray['SandboxKey'] = $data->getSandboxKey();
-        }
-        if ($data->isInitialized('secondaryIPAddresses') && null !== $data->getSecondaryIPAddresses()) {
-            $values_1 = [];
-            foreach ($data->getSecondaryIPAddresses() as $value_2) {
-                $values_1[] = $this->normalizer->normalize($value_2, 'json', $context);
-            }
-            $dataArray['SecondaryIPAddresses'] = $values_1;
-        }
-        if ($data->isInitialized('secondaryIPv6Addresses') && null !== $data->getSecondaryIPv6Addresses()) {
-            $values_2 = [];
-            foreach ($data->getSecondaryIPv6Addresses() as $value_3) {
-                $values_2[] = $this->normalizer->normalize($value_3, 'json', $context);
-            }
-            $dataArray['SecondaryIPv6Addresses'] = $values_2;
-        }
-        if ($data->isInitialized('endpointID') && null !== $data->getEndpointID()) {
-            $dataArray['EndpointID'] = $data->getEndpointID();
-        }
-        if ($data->isInitialized('gateway') && null !== $data->getGateway()) {
-            $dataArray['Gateway'] = $data->getGateway();
-        }
-        if ($data->isInitialized('globalIPv6Address') && null !== $data->getGlobalIPv6Address()) {
-            $dataArray['GlobalIPv6Address'] = $data->getGlobalIPv6Address();
-        }
-        if ($data->isInitialized('globalIPv6PrefixLen') && null !== $data->getGlobalIPv6PrefixLen()) {
-            $dataArray['GlobalIPv6PrefixLen'] = $data->getGlobalIPv6PrefixLen();
-        }
-        if ($data->isInitialized('iPAddress') && null !== $data->getIPAddress()) {
-            $dataArray['IPAddress'] = $data->getIPAddress();
-        }
-        if ($data->isInitialized('iPPrefixLen') && null !== $data->getIPPrefixLen()) {
-            $dataArray['IPPrefixLen'] = $data->getIPPrefixLen();
-        }
-        if ($data->isInitialized('iPv6Gateway') && null !== $data->getIPv6Gateway()) {
-            $dataArray['IPv6Gateway'] = $data->getIPv6Gateway();
-        }
-        if ($data->isInitialized('macAddress') && null !== $data->getMacAddress()) {
-            $dataArray['MacAddress'] = $data->getMacAddress();
+            $dataArray['Ports'] = $value_2;
         }
         if ($data->isInitialized('networks') && null !== $data->getNetworks()) {
-            $values_3 = [];
-            foreach ($data->getNetworks() as $key_1 => $value_4) {
-                $values_3[$key_1] = $this->normalizer->normalize($value_4, 'json', $context);
+            $values_2 = [];
+            foreach ($data->getNetworks() as $key_1 => $value_6) {
+                $values_2[$key_1] = $this->normalizer->normalize($value_6, 'json', $context);
             }
-            $dataArray['Networks'] = $values_3;
-        }
-        foreach ($data as $key_2 => $value_5) {
-            if (preg_match('/.*/', (string) $key_2)) {
-                $dataArray[$key_2] = $value_5;
-            }
+            $dataArray['Networks'] = $values_2;
         }
 
         return $dataArray;

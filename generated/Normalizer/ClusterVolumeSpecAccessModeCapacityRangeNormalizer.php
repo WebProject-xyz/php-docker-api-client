@@ -16,6 +16,7 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
 
 class ClusterVolumeSpecAccessModeCapacityRangeNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
@@ -37,28 +38,37 @@ class ClusterVolumeSpecAccessModeCapacityRangeNormalizer implements Denormalizer
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeCapacityRange();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeCapacityRange();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('RequiredBytes', $data)) {
-            $object->setRequiredBytes($data['RequiredBytes']);
-            unset($data['RequiredBytes']);
-        }
-        if (array_key_exists('LimitBytes', $data)) {
-            $object->setLimitBytes($data['LimitBytes']);
-            unset($data['LimitBytes']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('RequiredBytes', $data) && null !== $data['RequiredBytes']) {
+            $value = $data['RequiredBytes'];
+            if (is_int($data['RequiredBytes'])) {
+                $value = $data['RequiredBytes'];
+            } elseif (null === $data['RequiredBytes']) {
+                $value = $data['RequiredBytes'];
             }
+            $object->setRequiredBytes($value);
+        } elseif (array_key_exists('RequiredBytes', $data) && null === $data['RequiredBytes']) {
+            $object->setRequiredBytes(null);
+        }
+        if (array_key_exists('LimitBytes', $data) && null !== $data['LimitBytes']) {
+            $value_1 = $data['LimitBytes'];
+            if (is_int($data['LimitBytes'])) {
+                $value_1 = $data['LimitBytes'];
+            } elseif (null === $data['LimitBytes']) {
+                $value_1 = $data['LimitBytes'];
+            }
+            $object->setLimitBytes($value_1);
+        } elseif (array_key_exists('LimitBytes', $data) && null === $data['LimitBytes']) {
+            $object->setLimitBytes(null);
         }
 
         return $object;
@@ -67,16 +77,23 @@ class ClusterVolumeSpecAccessModeCapacityRangeNormalizer implements Denormalizer
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('requiredBytes') && null !== $data->getRequiredBytes()) {
-            $dataArray['RequiredBytes'] = $data->getRequiredBytes();
-        }
-        if ($data->isInitialized('limitBytes') && null !== $data->getLimitBytes()) {
-            $dataArray['LimitBytes'] = $data->getLimitBytes();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('requiredBytes')) {
+            $value = $data->getRequiredBytes();
+            if (is_int($data->getRequiredBytes())) {
+                $value = $data->getRequiredBytes();
+            } elseif (null === $data->getRequiredBytes()) {
+                $value = $data->getRequiredBytes();
             }
+            $dataArray['RequiredBytes'] = $value;
+        }
+        if ($data->isInitialized('limitBytes')) {
+            $value_1 = $data->getLimitBytes();
+            if (is_int($data->getLimitBytes())) {
+                $value_1 = $data->getLimitBytes();
+            } elseif (null === $data->getLimitBytes()) {
+                $value_1 = $data->getLimitBytes();
+            }
+            $dataArray['LimitBytes'] = $value_1;
         }
 
         return $dataArray;

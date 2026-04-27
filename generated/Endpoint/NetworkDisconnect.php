@@ -10,11 +10,11 @@ class NetworkDisconnect extends \WebProject\DockerApi\Library\Generated\Runtime\
     protected $accept;
 
     /**
-     * @param string                                                                     $id          Network ID or name
-     * @param \WebProject\DockerApi\Library\Generated\Model\NetworksIdDisconnectPostBody $requestBody
-     * @param array                                                                      $accept      Accept content header application/json|text/plain
+     * @param string                                                                 $id          Network ID or name
+     * @param \WebProject\DockerApi\Library\Generated\Model\NetworkDisconnectRequest $requestBody
+     * @param array                                                                  $accept      Accept content header application/json|text/plain
      */
-    public function __construct(string $id, \WebProject\DockerApi\Library\Generated\Model\NetworksIdDisconnectPostBody $requestBody, array $accept = [])
+    public function __construct(string $id, \WebProject\DockerApi\Library\Generated\Model\NetworkDisconnectRequest $requestBody, array $accept = [])
     {
         $this->id     = $id;
         $this->body   = $requestBody;
@@ -33,7 +33,7 @@ class NetworkDisconnect extends \WebProject\DockerApi\Library\Generated\Runtime\
 
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
     {
-        if ($this->body instanceof \WebProject\DockerApi\Library\Generated\Model\NetworksIdDisconnectPostBody) {
+        if ($this->body instanceof \WebProject\DockerApi\Library\Generated\Model\NetworkDisconnectRequest) {
             return [['Content-Type' => ['application/json']], $serializer->serialize($this->body, 'json')];
         }
 
@@ -65,13 +65,13 @@ class NetworkDisconnect extends \WebProject\DockerApi\Library\Generated\Runtime\
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (403 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (403 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NetworkDisconnectForbiddenException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NetworkDisconnectNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NetworkDisconnectInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

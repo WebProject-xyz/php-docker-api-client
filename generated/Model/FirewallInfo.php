@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class FirewallInfo extends ArrayObject
+class FirewallInfo
 {
     /**
      * @var array
@@ -20,7 +19,7 @@ class FirewallInfo extends ArrayObject
     /**
      * The name of the firewall backend driver.
      *
-     * @var string
+     * @var string|null
      */
     protected $driver;
     /**
@@ -33,16 +32,16 @@ class FirewallInfo extends ArrayObject
      * > formatting of values and labels, should not be considered stable,
      * > and may change without notice.
      *
-     * @var list<list<string>>
+     * @var list<list<string>>|null
      */
     protected $info;
 
     /**
      * The name of the firewall backend driver.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDriver(): string
+    public function getDriver(): ?string
     {
         return $this->driver;
     }
@@ -50,11 +49,11 @@ class FirewallInfo extends ArrayObject
     /**
      * The name of the firewall backend driver.
      *
-     * @param string $driver
+     * @param string|null $driver
      *
      * @return self
      */
-    public function setDriver(string $driver): self
+    public function setDriver(?string $driver): self
     {
         $this->initialized['driver'] = true;
         $this->driver                = $driver;
@@ -72,9 +71,9 @@ class FirewallInfo extends ArrayObject
      * > formatting of values and labels, should not be considered stable,
      * > and may change without notice.
      *
-     * @return list<list<string>>
+     * @return list<list<string>>|null
      */
-    public function getInfo(): array
+    public function getInfo(): ?array
     {
         return $this->info;
     }
@@ -89,11 +88,11 @@ class FirewallInfo extends ArrayObject
      * > formatting of values and labels, should not be considered stable,
      * > and may change without notice.
      *
-     * @param list<list<string>> $info
+     * @param list<list<string>>|null $info
      *
      * @return self
      */
-    public function setInfo(array $info): self
+    public function setInfo(?array $info): self
     {
         $this->initialized['info'] = true;
         $this->info                = $info;

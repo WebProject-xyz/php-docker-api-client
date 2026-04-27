@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class ServiceJobStatusNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,28 +38,29 @@ class ServiceJobStatusNormalizer implements DenormalizerInterface, NormalizerInt
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ServiceJobStatus();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ServiceJobStatus();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('JobIteration', $data)) {
             $object->setJobIteration($this->denormalizer->denormalize($data['JobIteration'], \WebProject\DockerApi\Library\Generated\Model\ObjectVersion::class, 'json', $context));
-            unset($data['JobIteration']);
         }
-        if (array_key_exists('LastExecution', $data)) {
-            $object->setLastExecution($data['LastExecution']);
-            unset($data['LastExecution']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('LastExecution', $data) && null !== $data['LastExecution']) {
+            $value = $data['LastExecution'];
+            if (is_string($data['LastExecution'])) {
+                $value = $data['LastExecution'];
+            } elseif (null === $data['LastExecution']) {
+                $value = $data['LastExecution'];
             }
+            $object->setLastExecution($value);
+        } elseif (array_key_exists('LastExecution', $data) && null === $data['LastExecution']) {
+            $object->setLastExecution(null);
         }
 
         return $object;
@@ -70,13 +72,14 @@ class ServiceJobStatusNormalizer implements DenormalizerInterface, NormalizerInt
         if ($data->isInitialized('jobIteration') && null !== $data->getJobIteration()) {
             $dataArray['JobIteration'] = $this->normalizer->normalize($data->getJobIteration(), 'json', $context);
         }
-        if ($data->isInitialized('lastExecution') && null !== $data->getLastExecution()) {
-            $dataArray['LastExecution'] = $data->getLastExecution();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('lastExecution')) {
+            $value = $data->getLastExecution();
+            if (is_string($data->getLastExecution())) {
+                $value = $data->getLastExecution();
+            } elseif (null === $data->getLastExecution()) {
+                $value = $data->getLastExecution();
             }
+            $dataArray['LastExecution'] = $value;
         }
 
         return $dataArray;

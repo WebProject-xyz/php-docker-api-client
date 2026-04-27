@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class PushImageInfo extends ArrayObject
+class PushImageInfo
 {
     /**
      * @var array
@@ -18,62 +17,17 @@ class PushImageInfo extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * errors encountered during the operation.
-     *
-     * > **Deprecated**: This field is deprecated since API v1.4, and will be omitted in a future API version. Use the information in errorDetail instead.
-     *
-     * @var string|null
-     */
-    protected $error;
-    /**
      * @var ErrorDetail
      */
     protected $errorDetail;
     /**
-     * @var string
-     */
-    protected $status;
-    /**
-     * Progress is a pre-formatted presentation of progressDetail.
-     *
-     * > **Deprecated**: This field is deprecated since API v1.8, and will be omitted in a future API version. Use the information in progressDetail instead.
-     *
      * @var string|null
      */
-    protected $progress;
+    protected $status;
     /**
      * @var ProgressDetail
      */
     protected $progressDetail;
-
-    /**
-     * errors encountered during the operation.
-     *
-     * > **Deprecated**: This field is deprecated since API v1.4, and will be omitted in a future API version. Use the information in errorDetail instead.
-     *
-     * @return string|null
-     */
-    public function getError(): ?string
-    {
-        return $this->error;
-    }
-
-    /**
-     * errors encountered during the operation.
-     *
-     * > **Deprecated**: This field is deprecated since API v1.4, and will be omitted in a future API version. Use the information in errorDetail instead.
-     *
-     * @param string|null $error
-     *
-     * @return self
-     */
-    public function setError(?string $error): self
-    {
-        $this->initialized['error'] = true;
-        $this->error                = $error;
-
-        return $this;
-    }
 
     /**
      * @return ErrorDetail
@@ -97,51 +51,22 @@ class PushImageInfo extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getStatus(): string
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
     /**
-     * @param string $status
+     * @param string|null $status
      *
      * @return self
      */
-    public function setStatus(string $status): self
+    public function setStatus(?string $status): self
     {
         $this->initialized['status'] = true;
         $this->status                = $status;
-
-        return $this;
-    }
-
-    /**
-     * Progress is a pre-formatted presentation of progressDetail.
-     *
-     * > **Deprecated**: This field is deprecated since API v1.8, and will be omitted in a future API version. Use the information in progressDetail instead.
-     *
-     * @return string|null
-     */
-    public function getProgress(): ?string
-    {
-        return $this->progress;
-    }
-
-    /**
-     * Progress is a pre-formatted presentation of progressDetail.
-     *
-     * > **Deprecated**: This field is deprecated since API v1.8, and will be omitted in a future API version. Use the information in progressDetail instead.
-     *
-     * @param string|null $progress
-     *
-     * @return self
-     */
-    public function setProgress(?string $progress): self
-    {
-        $this->initialized['progress'] = true;
-        $this->progress                = $progress;
 
         return $this;
     }

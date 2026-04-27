@@ -16,6 +16,7 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
 
 class ObjectVersionNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
@@ -37,24 +38,26 @@ class ObjectVersionNormalizer implements DenormalizerInterface, NormalizerInterf
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ObjectVersion();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ObjectVersion();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Index', $data)) {
-            $object->setIndex($data['Index']);
-            unset($data['Index']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Index', $data) && null !== $data['Index']) {
+            $value = $data['Index'];
+            if (is_int($data['Index'])) {
+                $value = $data['Index'];
+            } elseif (null === $data['Index']) {
+                $value = $data['Index'];
             }
+            $object->setIndex($value);
+        } elseif (array_key_exists('Index', $data) && null === $data['Index']) {
+            $object->setIndex(null);
         }
 
         return $object;
@@ -63,13 +66,14 @@ class ObjectVersionNormalizer implements DenormalizerInterface, NormalizerInterf
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('index') && null !== $data->getIndex()) {
-            $dataArray['Index'] = $data->getIndex();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('index')) {
+            $value = $data->getIndex();
+            if (is_int($data->getIndex())) {
+                $value = $data->getIndex();
+            } elseif (null === $data->getIndex()) {
+                $value = $data->getIndex();
             }
+            $dataArray['Index'] = $value;
         }
 
         return $dataArray;

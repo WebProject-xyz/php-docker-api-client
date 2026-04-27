@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class PeerInfo extends ArrayObject
+class PeerInfo
 {
     /**
      * @var array
@@ -20,22 +19,22 @@ class PeerInfo extends ArrayObject
     /**
      * ID of the peer-node in the Swarm cluster.
      *
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
      * IP-address of the peer-node in the Swarm cluster.
      *
-     * @var string
+     * @var string|null
      */
     protected $iP;
 
     /**
      * ID of the peer-node in the Swarm cluster.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -43,11 +42,11 @@ class PeerInfo extends ArrayObject
     /**
      * ID of the peer-node in the Swarm cluster.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -58,9 +57,9 @@ class PeerInfo extends ArrayObject
     /**
      * IP-address of the peer-node in the Swarm cluster.
      *
-     * @return string
+     * @return string|null
      */
-    public function getIP(): string
+    public function getIP(): ?string
     {
         return $this->iP;
     }
@@ -68,11 +67,11 @@ class PeerInfo extends ArrayObject
     /**
      * IP-address of the peer-node in the Swarm cluster.
      *
-     * @param string $iP
+     * @param string|null $iP
      *
      * @return self
      */
-    public function setIP(string $iP): self
+    public function setIP(?string $iP): self
     {
         $this->initialized['iP'] = true;
         $this->iP                = $iP;

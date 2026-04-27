@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ClusterVolumeInfo extends ArrayObject
+class ClusterVolumeInfo
 {
     /**
      * @var array
@@ -21,14 +20,14 @@ class ClusterVolumeInfo extends ArrayObject
      * The capacity of the volume in bytes. A value of 0 indicates that
      * the capacity is unknown.
      *
-     * @var int
+     * @var int|null
      */
     protected $capacityBytes;
     /**
      * A map of strings to strings returned from the storage plugin when
      * the volume is created.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $volumeContext;
     /**
@@ -38,13 +37,13 @@ class ClusterVolumeInfo extends ArrayObject
      * to this volume. If the ID is blank, then the Volume has not been
      * successfully created in the plugin yet.
      *
-     * @var string
+     * @var string|null
      */
     protected $volumeID;
     /**
      * The topology this volume is actually accessible from.
      *
-     * @var list<array<string, string>>
+     * @var list<array<string, string>>|null
      */
     protected $accessibleTopology;
 
@@ -52,9 +51,9 @@ class ClusterVolumeInfo extends ArrayObject
      * The capacity of the volume in bytes. A value of 0 indicates that
      * the capacity is unknown.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCapacityBytes(): int
+    public function getCapacityBytes(): ?int
     {
         return $this->capacityBytes;
     }
@@ -63,11 +62,11 @@ class ClusterVolumeInfo extends ArrayObject
      * The capacity of the volume in bytes. A value of 0 indicates that
      * the capacity is unknown.
      *
-     * @param int $capacityBytes
+     * @param int|null $capacityBytes
      *
      * @return self
      */
-    public function setCapacityBytes(int $capacityBytes): self
+    public function setCapacityBytes(?int $capacityBytes): self
     {
         $this->initialized['capacityBytes'] = true;
         $this->capacityBytes                = $capacityBytes;
@@ -79,9 +78,9 @@ class ClusterVolumeInfo extends ArrayObject
      * A map of strings to strings returned from the storage plugin when
      * the volume is created.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getVolumeContext(): iterable
+    public function getVolumeContext(): ?iterable
     {
         return $this->volumeContext;
     }
@@ -90,11 +89,11 @@ class ClusterVolumeInfo extends ArrayObject
      * A map of strings to strings returned from the storage plugin when
      * the volume is created.
      *
-     * @param array<string, string> $volumeContext
+     * @param array<string, string>|null $volumeContext
      *
      * @return self
      */
-    public function setVolumeContext(iterable $volumeContext): self
+    public function setVolumeContext(?iterable $volumeContext): self
     {
         $this->initialized['volumeContext'] = true;
         $this->volumeContext                = $volumeContext;
@@ -109,9 +108,9 @@ class ClusterVolumeInfo extends ArrayObject
      * to this volume. If the ID is blank, then the Volume has not been
      * successfully created in the plugin yet.
      *
-     * @return string
+     * @return string|null
      */
-    public function getVolumeID(): string
+    public function getVolumeID(): ?string
     {
         return $this->volumeID;
     }
@@ -123,11 +122,11 @@ class ClusterVolumeInfo extends ArrayObject
      * to this volume. If the ID is blank, then the Volume has not been
      * successfully created in the plugin yet.
      *
-     * @param string $volumeID
+     * @param string|null $volumeID
      *
      * @return self
      */
-    public function setVolumeID(string $volumeID): self
+    public function setVolumeID(?string $volumeID): self
     {
         $this->initialized['volumeID'] = true;
         $this->volumeID                = $volumeID;
@@ -138,9 +137,9 @@ class ClusterVolumeInfo extends ArrayObject
     /**
      * The topology this volume is actually accessible from.
      *
-     * @return list<array<string, string>>
+     * @return list<array<string, string>>|null
      */
-    public function getAccessibleTopology(): array
+    public function getAccessibleTopology(): ?array
     {
         return $this->accessibleTopology;
     }
@@ -148,11 +147,11 @@ class ClusterVolumeInfo extends ArrayObject
     /**
      * The topology this volume is actually accessible from.
      *
-     * @param list<array<string, string>> $accessibleTopology
+     * @param list<array<string, string>>|null $accessibleTopology
      *
      * @return self
      */
-    public function setAccessibleTopology(array $accessibleTopology): self
+    public function setAccessibleTopology(?array $accessibleTopology): self
     {
         $this->initialized['accessibleTopology'] = true;
         $this->accessibleTopology                = $accessibleTopology;

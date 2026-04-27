@@ -12,11 +12,11 @@ class NetworkConnect extends \WebProject\DockerApi\Library\Generated\Runtime\Cli
     /**
      * The network must be either a local-scoped network or a swarm-scoped network with the `attachable` option set. A network cannot be re-attached to a running container.
      *
-     * @param string                                                                  $id          Network ID or name
-     * @param \WebProject\DockerApi\Library\Generated\Model\NetworksIdConnectPostBody $requestBody
-     * @param array                                                                   $accept      Accept content header application/json|text/plain
+     * @param string                                                              $id          Network ID or name
+     * @param \WebProject\DockerApi\Library\Generated\Model\NetworkConnectRequest $requestBody
+     * @param array                                                               $accept      Accept content header application/json|text/plain
      */
-    public function __construct(string $id, \WebProject\DockerApi\Library\Generated\Model\NetworksIdConnectPostBody $requestBody, array $accept = [])
+    public function __construct(string $id, \WebProject\DockerApi\Library\Generated\Model\NetworkConnectRequest $requestBody, array $accept = [])
     {
         $this->id     = $id;
         $this->body   = $requestBody;
@@ -35,7 +35,7 @@ class NetworkConnect extends \WebProject\DockerApi\Library\Generated\Runtime\Cli
 
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
     {
-        if ($this->body instanceof \WebProject\DockerApi\Library\Generated\Model\NetworksIdConnectPostBody) {
+        if ($this->body instanceof \WebProject\DockerApi\Library\Generated\Model\NetworkConnectRequest) {
             return [['Content-Type' => ['application/json']], $serializer->serialize($this->body, 'json')];
         }
 
@@ -68,16 +68,16 @@ class NetworkConnect extends \WebProject\DockerApi\Library\Generated\Runtime\Cli
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NetworkConnectBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (403 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (403 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NetworkConnectForbiddenException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NetworkConnectNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NetworkConnectInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

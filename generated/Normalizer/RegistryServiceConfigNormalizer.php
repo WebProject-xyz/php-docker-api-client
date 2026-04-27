@@ -37,44 +37,52 @@ class RegistryServiceConfigNormalizer implements DenormalizerInterface, Normaliz
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\RegistryServiceConfig();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\RegistryServiceConfig();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('InsecureRegistryCIDRs', $data)) {
-            $values = [];
-            foreach ($data['InsecureRegistryCIDRs'] as $value) {
-                $values[] = $value;
+        if (array_key_exists('InsecureRegistryCIDRs', $data) && null !== $data['InsecureRegistryCIDRs']) {
+            $value = $data['InsecureRegistryCIDRs'];
+            if (is_array($data['InsecureRegistryCIDRs']) && $this->isOnlyNumericKeys($data['InsecureRegistryCIDRs'])) {
+                $values = [];
+                foreach ($data['InsecureRegistryCIDRs'] as $value_1) {
+                    $values[] = $value_1;
+                }
+                $value = $values;
+            } elseif (null === $data['InsecureRegistryCIDRs']) {
+                $value = $data['InsecureRegistryCIDRs'];
             }
-            $object->setInsecureRegistryCIDRs($values);
-            unset($data['InsecureRegistryCIDRs']);
+            $object->setInsecureRegistryCIDRs($value);
+        } elseif (array_key_exists('InsecureRegistryCIDRs', $data) && null === $data['InsecureRegistryCIDRs']) {
+            $object->setInsecureRegistryCIDRs(null);
         }
         if (array_key_exists('IndexConfigs', $data)) {
             $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['IndexConfigs'] as $key => $value_1) {
-                $values_1[$key] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\IndexInfo::class, 'json', $context);
+            foreach ($data['IndexConfigs'] as $key => $value_2) {
+                $values_1[$key] = $this->denormalizer->denormalize($value_2, \WebProject\DockerApi\Library\Generated\Model\IndexInfo::class, 'json', $context);
             }
             $object->setIndexConfigs($values_1);
-            unset($data['IndexConfigs']);
         }
-        if (array_key_exists('Mirrors', $data)) {
-            $values_2 = [];
-            foreach ($data['Mirrors'] as $value_2) {
-                $values_2[] = $value_2;
+        if (array_key_exists('Mirrors', $data) && null !== $data['Mirrors']) {
+            $value_3 = $data['Mirrors'];
+            if (is_array($data['Mirrors']) && $this->isOnlyNumericKeys($data['Mirrors'])) {
+                $values_2 = [];
+                foreach ($data['Mirrors'] as $value_4) {
+                    $values_2[] = $value_4;
+                }
+                $value_3 = $values_2;
+            } elseif (null === $data['Mirrors']) {
+                $value_3 = $data['Mirrors'];
             }
-            $object->setMirrors($values_2);
-            unset($data['Mirrors']);
-        }
-        foreach ($data as $key_1 => $value_3) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $object[$key_1] = $value_3;
-            }
+            $object->setMirrors($value_3);
+        } elseif (array_key_exists('Mirrors', $data) && null === $data['Mirrors']) {
+            $object->setMirrors(null);
         }
 
         return $object;
@@ -83,31 +91,38 @@ class RegistryServiceConfigNormalizer implements DenormalizerInterface, Normaliz
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('insecureRegistryCIDRs') && null !== $data->getInsecureRegistryCIDRs()) {
-            $values = [];
-            foreach ($data->getInsecureRegistryCIDRs() as $value) {
-                $values[] = $value;
+        if ($data->isInitialized('insecureRegistryCIDRs')) {
+            $value = $data->getInsecureRegistryCIDRs();
+            if (is_array($data->getInsecureRegistryCIDRs())) {
+                $values = [];
+                foreach ($data->getInsecureRegistryCIDRs() as $value_1) {
+                    $values[] = $value_1;
+                }
+                $value = $values;
+            } elseif (null === $data->getInsecureRegistryCIDRs()) {
+                $value = $data->getInsecureRegistryCIDRs();
             }
-            $dataArray['InsecureRegistryCIDRs'] = $values;
+            $dataArray['InsecureRegistryCIDRs'] = $value;
         }
         if ($data->isInitialized('indexConfigs') && null !== $data->getIndexConfigs()) {
             $values_1 = [];
-            foreach ($data->getIndexConfigs() as $key => $value_1) {
-                $values_1[$key] = $this->normalizer->normalize($value_1, 'json', $context);
+            foreach ($data->getIndexConfigs() as $key => $value_2) {
+                $values_1[$key] = $this->normalizer->normalize($value_2, 'json', $context);
             }
             $dataArray['IndexConfigs'] = $values_1;
         }
-        if ($data->isInitialized('mirrors') && null !== $data->getMirrors()) {
-            $values_2 = [];
-            foreach ($data->getMirrors() as $value_2) {
-                $values_2[] = $value_2;
+        if ($data->isInitialized('mirrors')) {
+            $value_3 = $data->getMirrors();
+            if (is_array($data->getMirrors())) {
+                $values_2 = [];
+                foreach ($data->getMirrors() as $value_4) {
+                    $values_2[] = $value_4;
+                }
+                $value_3 = $values_2;
+            } elseif (null === $data->getMirrors()) {
+                $value_3 = $data->getMirrors();
             }
-            $dataArray['Mirrors'] = $values_2;
-        }
-        foreach ($data as $key_1 => $value_3) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $dataArray[$key_1] = $value_3;
-            }
+            $dataArray['Mirrors'] = $value_3;
         }
 
         return $dataArray;

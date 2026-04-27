@@ -37,32 +37,33 @@ class ImageInspectRootFSNormalizer implements DenormalizerInterface, NormalizerI
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ImageInspectRootFS();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ImageInspectRootFS();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('Type', $data)) {
             $object->setType($data['Type']);
-            unset($data['Type']);
         }
-        if (array_key_exists('Layers', $data)) {
-            $values = [];
-            foreach ($data['Layers'] as $value) {
-                $values[] = $value;
+        if (array_key_exists('Layers', $data) && null !== $data['Layers']) {
+            $value = $data['Layers'];
+            if (is_array($data['Layers']) && $this->isOnlyNumericKeys($data['Layers'])) {
+                $values = [];
+                foreach ($data['Layers'] as $value_1) {
+                    $values[] = $value_1;
+                }
+                $value = $values;
+            } elseif (null === $data['Layers']) {
+                $value = $data['Layers'];
             }
-            $object->setLayers($values);
-            unset($data['Layers']);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
-            }
+            $object->setLayers($value);
+        } elseif (array_key_exists('Layers', $data) && null === $data['Layers']) {
+            $object->setLayers(null);
         }
 
         return $object;
@@ -72,17 +73,18 @@ class ImageInspectRootFSNormalizer implements DenormalizerInterface, NormalizerI
     {
         $dataArray         = [];
         $dataArray['Type'] = $data->getType();
-        if ($data->isInitialized('layers') && null !== $data->getLayers()) {
-            $values = [];
-            foreach ($data->getLayers() as $value) {
-                $values[] = $value;
+        if ($data->isInitialized('layers')) {
+            $value = $data->getLayers();
+            if (is_array($data->getLayers())) {
+                $values = [];
+                foreach ($data->getLayers() as $value_1) {
+                    $values[] = $value_1;
+                }
+                $value = $values;
+            } elseif (null === $data->getLayers()) {
+                $value = $data->getLayers();
             }
-            $dataArray['Layers'] = $values;
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
-            }
+            $dataArray['Layers'] = $value;
         }
 
         return $dataArray;

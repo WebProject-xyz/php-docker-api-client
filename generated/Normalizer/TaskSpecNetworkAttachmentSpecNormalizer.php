@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class TaskSpecNetworkAttachmentSpecNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,24 +38,26 @@ class TaskSpecNetworkAttachmentSpecNormalizer implements DenormalizerInterface, 
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpecNetworkAttachmentSpec();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpecNetworkAttachmentSpec();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('ContainerID', $data)) {
-            $object->setContainerID($data['ContainerID']);
-            unset($data['ContainerID']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('ContainerID', $data) && null !== $data['ContainerID']) {
+            $value = $data['ContainerID'];
+            if (is_string($data['ContainerID'])) {
+                $value = $data['ContainerID'];
+            } elseif (null === $data['ContainerID']) {
+                $value = $data['ContainerID'];
             }
+            $object->setContainerID($value);
+        } elseif (array_key_exists('ContainerID', $data) && null === $data['ContainerID']) {
+            $object->setContainerID(null);
         }
 
         return $object;
@@ -63,13 +66,14 @@ class TaskSpecNetworkAttachmentSpecNormalizer implements DenormalizerInterface, 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('containerID') && null !== $data->getContainerID()) {
-            $dataArray['ContainerID'] = $data->getContainerID();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('containerID')) {
+            $value = $data->getContainerID();
+            if (is_string($data->getContainerID())) {
+                $value = $data->getContainerID();
+            } elseif (null === $data->getContainerID()) {
+                $value = $data->getContainerID();
             }
+            $dataArray['ContainerID'] = $value;
         }
 
         return $dataArray;

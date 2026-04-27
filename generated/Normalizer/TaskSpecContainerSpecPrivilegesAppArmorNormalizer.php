@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class TaskSpecContainerSpecPrivilegesAppArmorNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,24 +38,26 @@ class TaskSpecContainerSpecPrivilegesAppArmorNormalizer implements DenormalizerI
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecPrivilegesAppArmor();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecPrivilegesAppArmor();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Mode', $data)) {
-            $object->setMode($data['Mode']);
-            unset($data['Mode']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Mode', $data) && null !== $data['Mode']) {
+            $value = $data['Mode'];
+            if (is_string($data['Mode'])) {
+                $value = $data['Mode'];
+            } elseif (null === $data['Mode']) {
+                $value = $data['Mode'];
             }
+            $object->setMode($value);
+        } elseif (array_key_exists('Mode', $data) && null === $data['Mode']) {
+            $object->setMode(null);
         }
 
         return $object;
@@ -63,13 +66,14 @@ class TaskSpecContainerSpecPrivilegesAppArmorNormalizer implements DenormalizerI
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('mode') && null !== $data->getMode()) {
-            $dataArray['Mode'] = $data->getMode();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('mode')) {
+            $value = $data->getMode();
+            if (is_string($data->getMode())) {
+                $value = $data->getMode();
+            } elseif (null === $data->getMode()) {
+                $value = $data->getMode();
             }
+            $dataArray['Mode'] = $value;
         }
 
         return $dataArray;

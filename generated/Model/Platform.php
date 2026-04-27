@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class Platform extends ArrayObject
+class Platform
 {
     /**
      * @var array
@@ -21,13 +20,13 @@ class Platform extends ArrayObject
      * Architecture represents the hardware architecture (for example,
      * `x86_64`).
      *
-     * @var string
+     * @var string|null
      */
     protected $architecture;
     /**
      * OS represents the Operating System (for example, `linux` or `windows`).
      *
-     * @var string
+     * @var string|null
      */
     protected $oS;
 
@@ -35,9 +34,9 @@ class Platform extends ArrayObject
      * Architecture represents the hardware architecture (for example,
      * `x86_64`).
      *
-     * @return string
+     * @return string|null
      */
-    public function getArchitecture(): string
+    public function getArchitecture(): ?string
     {
         return $this->architecture;
     }
@@ -46,11 +45,11 @@ class Platform extends ArrayObject
      * Architecture represents the hardware architecture (for example,
      * `x86_64`).
      *
-     * @param string $architecture
+     * @param string|null $architecture
      *
      * @return self
      */
-    public function setArchitecture(string $architecture): self
+    public function setArchitecture(?string $architecture): self
     {
         $this->initialized['architecture'] = true;
         $this->architecture                = $architecture;
@@ -61,9 +60,9 @@ class Platform extends ArrayObject
     /**
      * OS represents the Operating System (for example, `linux` or `windows`).
      *
-     * @return string
+     * @return string|null
      */
-    public function getOS(): string
+    public function getOS(): ?string
     {
         return $this->oS;
     }
@@ -71,11 +70,11 @@ class Platform extends ArrayObject
     /**
      * OS represents the Operating System (for example, `linux` or `windows`).
      *
-     * @param string $oS
+     * @param string|null $oS
      *
      * @return self
      */
-    public function setOS(string $oS): self
+    public function setOS(?string $oS): self
     {
         $this->initialized['oS'] = true;
         $this->oS                = $oS;

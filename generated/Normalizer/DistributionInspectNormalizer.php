@@ -37,19 +37,18 @@ class DistributionInspectNormalizer implements DenormalizerInterface, Normalizer
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\DistributionInspect();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\DistributionInspect();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('Descriptor', $data)) {
             $object->setDescriptor($this->denormalizer->denormalize($data['Descriptor'], \WebProject\DockerApi\Library\Generated\Model\OCIDescriptor::class, 'json', $context));
-            unset($data['Descriptor']);
         }
         if (array_key_exists('Platforms', $data)) {
             $values = [];
@@ -57,12 +56,6 @@ class DistributionInspectNormalizer implements DenormalizerInterface, Normalizer
                 $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\OCIPlatform::class, 'json', $context);
             }
             $object->setPlatforms($values);
-            unset($data['Platforms']);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
-            }
         }
 
         return $object;
@@ -77,11 +70,6 @@ class DistributionInspectNormalizer implements DenormalizerInterface, Normalizer
             $values[] = $this->normalizer->normalize($value, 'json', $context);
         }
         $dataArray['Platforms'] = $values;
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
-            }
-        }
 
         return $dataArray;
     }

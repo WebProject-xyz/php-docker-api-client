@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class MountVolumeOptionsDriverConfig extends ArrayObject
+class MountVolumeOptionsDriverConfig
 {
     /**
      * @var array
@@ -20,22 +19,22 @@ class MountVolumeOptionsDriverConfig extends ArrayObject
     /**
      * Name of the driver to use to create the volume.
      *
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
      * key/value map of driver specific options.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $options;
 
     /**
      * Name of the driver to use to create the volume.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -43,11 +42,11 @@ class MountVolumeOptionsDriverConfig extends ArrayObject
     /**
      * Name of the driver to use to create the volume.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -58,9 +57,9 @@ class MountVolumeOptionsDriverConfig extends ArrayObject
     /**
      * key/value map of driver specific options.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getOptions(): iterable
+    public function getOptions(): ?iterable
     {
         return $this->options;
     }
@@ -68,11 +67,11 @@ class MountVolumeOptionsDriverConfig extends ArrayObject
     /**
      * key/value map of driver specific options.
      *
-     * @param array<string, string> $options
+     * @param array<string, string>|null $options
      *
      * @return self
      */
-    public function setOptions(iterable $options): self
+    public function setOptions(?iterable $options): self
     {
         $this->initialized['options'] = true;
         $this->options                = $options;

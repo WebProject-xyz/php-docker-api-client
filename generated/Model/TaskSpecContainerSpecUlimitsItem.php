@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecContainerSpecUlimitsItem extends ArrayObject
+class TaskSpecContainerSpecUlimitsItem
 {
     /**
      * @var array
@@ -20,28 +19,28 @@ class TaskSpecContainerSpecUlimitsItem extends ArrayObject
     /**
      * Name of ulimit.
      *
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
      * Soft limit.
      *
-     * @var int
+     * @var int|null
      */
     protected $soft;
     /**
      * Hard limit.
      *
-     * @var int
+     * @var int|null
      */
     protected $hard;
 
     /**
      * Name of ulimit.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -49,11 +48,11 @@ class TaskSpecContainerSpecUlimitsItem extends ArrayObject
     /**
      * Name of ulimit.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -64,9 +63,9 @@ class TaskSpecContainerSpecUlimitsItem extends ArrayObject
     /**
      * Soft limit.
      *
-     * @return int
+     * @return int|null
      */
-    public function getSoft(): int
+    public function getSoft(): ?int
     {
         return $this->soft;
     }
@@ -74,11 +73,11 @@ class TaskSpecContainerSpecUlimitsItem extends ArrayObject
     /**
      * Soft limit.
      *
-     * @param int $soft
+     * @param int|null $soft
      *
      * @return self
      */
-    public function setSoft(int $soft): self
+    public function setSoft(?int $soft): self
     {
         $this->initialized['soft'] = true;
         $this->soft                = $soft;
@@ -89,9 +88,9 @@ class TaskSpecContainerSpecUlimitsItem extends ArrayObject
     /**
      * Hard limit.
      *
-     * @return int
+     * @return int|null
      */
-    public function getHard(): int
+    public function getHard(): ?int
     {
         return $this->hard;
     }
@@ -99,11 +98,11 @@ class TaskSpecContainerSpecUlimitsItem extends ArrayObject
     /**
      * Hard limit.
      *
-     * @param int $hard
+     * @param int|null $hard
      *
      * @return self
      */
-    public function setHard(int $hard): self
+    public function setHard(?int $hard): self
     {
         $this->initialized['hard'] = true;
         $this->hard                = $hard;

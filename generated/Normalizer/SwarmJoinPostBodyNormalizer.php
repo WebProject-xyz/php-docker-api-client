@@ -37,27 +37,24 @@ class SwarmJoinPostBodyNormalizer implements DenormalizerInterface, NormalizerIn
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\SwarmJoinPostBody();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\SwarmJoinPostBody();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('ListenAddr', $data)) {
             $object->setListenAddr($data['ListenAddr']);
-            unset($data['ListenAddr']);
         }
         if (array_key_exists('AdvertiseAddr', $data)) {
             $object->setAdvertiseAddr($data['AdvertiseAddr']);
-            unset($data['AdvertiseAddr']);
         }
         if (array_key_exists('DataPathAddr', $data)) {
             $object->setDataPathAddr($data['DataPathAddr']);
-            unset($data['DataPathAddr']);
         }
         if (array_key_exists('RemoteAddrs', $data)) {
             $values = [];
@@ -65,16 +62,9 @@ class SwarmJoinPostBodyNormalizer implements DenormalizerInterface, NormalizerIn
                 $values[] = $value;
             }
             $object->setRemoteAddrs($values);
-            unset($data['RemoteAddrs']);
         }
         if (array_key_exists('JoinToken', $data)) {
             $object->setJoinToken($data['JoinToken']);
-            unset($data['JoinToken']);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
-            }
         }
 
         return $object;
@@ -101,11 +91,6 @@ class SwarmJoinPostBodyNormalizer implements DenormalizerInterface, NormalizerIn
         }
         if ($data->isInitialized('joinToken') && null !== $data->getJoinToken()) {
             $dataArray['JoinToken'] = $data->getJoinToken();
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
-            }
         }
 
         return $dataArray;

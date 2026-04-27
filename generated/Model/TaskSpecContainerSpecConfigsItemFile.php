@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecContainerSpecConfigsItemFile extends ArrayObject
+class TaskSpecContainerSpecConfigsItemFile
 {
     /**
      * @var array
@@ -20,34 +19,34 @@ class TaskSpecContainerSpecConfigsItemFile extends ArrayObject
     /**
      * Name represents the final filename in the filesystem.
      *
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
      * UID represents the file UID.
      *
-     * @var string
+     * @var string|null
      */
     protected $uID;
     /**
      * GID represents the file GID.
      *
-     * @var string
+     * @var string|null
      */
     protected $gID;
     /**
      * Mode represents the FileMode of the file.
      *
-     * @var int
+     * @var int|null
      */
     protected $mode;
 
     /**
      * Name represents the final filename in the filesystem.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -55,11 +54,11 @@ class TaskSpecContainerSpecConfigsItemFile extends ArrayObject
     /**
      * Name represents the final filename in the filesystem.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -70,9 +69,9 @@ class TaskSpecContainerSpecConfigsItemFile extends ArrayObject
     /**
      * UID represents the file UID.
      *
-     * @return string
+     * @return string|null
      */
-    public function getUID(): string
+    public function getUID(): ?string
     {
         return $this->uID;
     }
@@ -80,11 +79,11 @@ class TaskSpecContainerSpecConfigsItemFile extends ArrayObject
     /**
      * UID represents the file UID.
      *
-     * @param string $uID
+     * @param string|null $uID
      *
      * @return self
      */
-    public function setUID(string $uID): self
+    public function setUID(?string $uID): self
     {
         $this->initialized['uID'] = true;
         $this->uID                = $uID;
@@ -95,9 +94,9 @@ class TaskSpecContainerSpecConfigsItemFile extends ArrayObject
     /**
      * GID represents the file GID.
      *
-     * @return string
+     * @return string|null
      */
-    public function getGID(): string
+    public function getGID(): ?string
     {
         return $this->gID;
     }
@@ -105,11 +104,11 @@ class TaskSpecContainerSpecConfigsItemFile extends ArrayObject
     /**
      * GID represents the file GID.
      *
-     * @param string $gID
+     * @param string|null $gID
      *
      * @return self
      */
-    public function setGID(string $gID): self
+    public function setGID(?string $gID): self
     {
         $this->initialized['gID'] = true;
         $this->gID                = $gID;
@@ -120,9 +119,9 @@ class TaskSpecContainerSpecConfigsItemFile extends ArrayObject
     /**
      * Mode represents the FileMode of the file.
      *
-     * @return int
+     * @return int|null
      */
-    public function getMode(): int
+    public function getMode(): ?int
     {
         return $this->mode;
     }
@@ -130,11 +129,11 @@ class TaskSpecContainerSpecConfigsItemFile extends ArrayObject
     /**
      * Mode represents the FileMode of the file.
      *
-     * @param int $mode
+     * @param int|null $mode
      *
      * @return self
      */
-    public function setMode(int $mode): self
+    public function setMode(?int $mode): self
     {
         $this->initialized['mode'] = true;
         $this->mode                = $mode;

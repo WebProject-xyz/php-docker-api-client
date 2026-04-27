@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class SystemVersionComponentsItem extends ArrayObject
+class SystemVersionComponentsItem
 {
     /**
      * @var array
@@ -37,7 +36,7 @@ class SystemVersionComponentsItem extends ArrayObject
      *
      * These messages can be printed by the client as information to the user.
      *
-     * @var array<string, mixed>|null
+     * @var mixed|null
      */
     protected $details;
 
@@ -99,9 +98,9 @@ class SystemVersionComponentsItem extends ArrayObject
      *
      * These messages can be printed by the client as information to the user.
      *
-     * @return array<string, mixed>|null
+     * @return mixed|null
      */
-    public function getDetails(): ?iterable
+    public function getDetails()
     {
         return $this->details;
     }
@@ -114,11 +113,11 @@ class SystemVersionComponentsItem extends ArrayObject
      *
      * These messages can be printed by the client as information to the user.
      *
-     * @param array<string, mixed>|null $details
+     * @param mixed|null $details
      *
      * @return self
      */
-    public function setDetails(?iterable $details): self
+    public function setDetails($details): self
     {
         $this->initialized['details'] = true;
         $this->details                = $details;

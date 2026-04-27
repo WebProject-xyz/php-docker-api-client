@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class ConfigReferenceNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,24 +38,26 @@ class ConfigReferenceNormalizer implements DenormalizerInterface, NormalizerInte
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ConfigReference();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ConfigReference();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Network', $data)) {
-            $object->setNetwork($data['Network']);
-            unset($data['Network']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Network', $data) && null !== $data['Network']) {
+            $value = $data['Network'];
+            if (is_string($data['Network'])) {
+                $value = $data['Network'];
+            } elseif (null === $data['Network']) {
+                $value = $data['Network'];
             }
+            $object->setNetwork($value);
+        } elseif (array_key_exists('Network', $data) && null === $data['Network']) {
+            $object->setNetwork(null);
         }
 
         return $object;
@@ -63,13 +66,14 @@ class ConfigReferenceNormalizer implements DenormalizerInterface, NormalizerInte
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('network') && null !== $data->getNetwork()) {
-            $dataArray['Network'] = $data->getNetwork();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('network')) {
+            $value = $data->getNetwork();
+            if (is_string($data->getNetwork())) {
+                $value = $data->getNetwork();
+            } elseif (null === $data->getNetwork()) {
+                $value = $data->getNetwork();
             }
+            $dataArray['Network'] = $value;
         }
 
         return $dataArray;

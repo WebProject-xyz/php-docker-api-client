@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class OCIPlatformNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,44 +38,74 @@ class OCIPlatformNormalizer implements DenormalizerInterface, NormalizerInterfac
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\OCIPlatform();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\OCIPlatform();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('architecture', $data)) {
-            $object->setArchitecture($data['architecture']);
-            unset($data['architecture']);
-        }
-        if (array_key_exists('os', $data)) {
-            $object->setOs($data['os']);
-            unset($data['os']);
-        }
-        if (array_key_exists('os.version', $data)) {
-            $object->setOsVersion($data['os.version']);
-            unset($data['os.version']);
-        }
-        if (array_key_exists('os.features', $data)) {
-            $values = [];
-            foreach ($data['os.features'] as $value) {
-                $values[] = $value;
+        if (array_key_exists('architecture', $data) && null !== $data['architecture']) {
+            $value = $data['architecture'];
+            if (is_string($data['architecture'])) {
+                $value = $data['architecture'];
+            } elseif (null === $data['architecture']) {
+                $value = $data['architecture'];
             }
-            $object->setOsFeatures($values);
-            unset($data['os.features']);
+            $object->setArchitecture($value);
+        } elseif (array_key_exists('architecture', $data) && null === $data['architecture']) {
+            $object->setArchitecture(null);
         }
-        if (array_key_exists('variant', $data)) {
-            $object->setVariant($data['variant']);
-            unset($data['variant']);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
+        if (array_key_exists('os', $data) && null !== $data['os']) {
+            $value_1 = $data['os'];
+            if (is_string($data['os'])) {
+                $value_1 = $data['os'];
+            } elseif (null === $data['os']) {
+                $value_1 = $data['os'];
             }
+            $object->setOs($value_1);
+        } elseif (array_key_exists('os', $data) && null === $data['os']) {
+            $object->setOs(null);
+        }
+        if (array_key_exists('os.version', $data) && null !== $data['os.version']) {
+            $value_2 = $data['os.version'];
+            if (is_string($data['os.version'])) {
+                $value_2 = $data['os.version'];
+            } elseif (null === $data['os.version']) {
+                $value_2 = $data['os.version'];
+            }
+            $object->setOsVersion($value_2);
+        } elseif (array_key_exists('os.version', $data) && null === $data['os.version']) {
+            $object->setOsVersion(null);
+        }
+        if (array_key_exists('os.features', $data) && null !== $data['os.features']) {
+            $value_3 = $data['os.features'];
+            if (is_array($data['os.features']) && $this->isOnlyNumericKeys($data['os.features'])) {
+                $values = [];
+                foreach ($data['os.features'] as $value_4) {
+                    $values[] = $value_4;
+                }
+                $value_3 = $values;
+            } elseif (null === $data['os.features']) {
+                $value_3 = $data['os.features'];
+            }
+            $object->setOsFeatures($value_3);
+        } elseif (array_key_exists('os.features', $data) && null === $data['os.features']) {
+            $object->setOsFeatures(null);
+        }
+        if (array_key_exists('variant', $data) && null !== $data['variant']) {
+            $value_5 = $data['variant'];
+            if (is_string($data['variant'])) {
+                $value_5 = $data['variant'];
+            } elseif (null === $data['variant']) {
+                $value_5 = $data['variant'];
+            }
+            $object->setVariant($value_5);
+        } elseif (array_key_exists('variant', $data) && null === $data['variant']) {
+            $object->setVariant(null);
         }
 
         return $object;
@@ -83,29 +114,54 @@ class OCIPlatformNormalizer implements DenormalizerInterface, NormalizerInterfac
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('architecture') && null !== $data->getArchitecture()) {
-            $dataArray['architecture'] = $data->getArchitecture();
-        }
-        if ($data->isInitialized('os') && null !== $data->getOs()) {
-            $dataArray['os'] = $data->getOs();
-        }
-        if ($data->isInitialized('osVersion') && null !== $data->getOsVersion()) {
-            $dataArray['os.version'] = $data->getOsVersion();
-        }
-        if ($data->isInitialized('osFeatures') && null !== $data->getOsFeatures()) {
-            $values = [];
-            foreach ($data->getOsFeatures() as $value) {
-                $values[] = $value;
+        if ($data->isInitialized('architecture')) {
+            $value = $data->getArchitecture();
+            if (is_string($data->getArchitecture())) {
+                $value = $data->getArchitecture();
+            } elseif (null === $data->getArchitecture()) {
+                $value = $data->getArchitecture();
             }
-            $dataArray['os.features'] = $values;
+            $dataArray['architecture'] = $value;
         }
-        if ($data->isInitialized('variant') && null !== $data->getVariant()) {
-            $dataArray['variant'] = $data->getVariant();
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
+        if ($data->isInitialized('os')) {
+            $value_1 = $data->getOs();
+            if (is_string($data->getOs())) {
+                $value_1 = $data->getOs();
+            } elseif (null === $data->getOs()) {
+                $value_1 = $data->getOs();
             }
+            $dataArray['os'] = $value_1;
+        }
+        if ($data->isInitialized('osVersion')) {
+            $value_2 = $data->getOsVersion();
+            if (is_string($data->getOsVersion())) {
+                $value_2 = $data->getOsVersion();
+            } elseif (null === $data->getOsVersion()) {
+                $value_2 = $data->getOsVersion();
+            }
+            $dataArray['os.version'] = $value_2;
+        }
+        if ($data->isInitialized('osFeatures')) {
+            $value_3 = $data->getOsFeatures();
+            if (is_array($data->getOsFeatures())) {
+                $values = [];
+                foreach ($data->getOsFeatures() as $value_4) {
+                    $values[] = $value_4;
+                }
+                $value_3 = $values;
+            } elseif (null === $data->getOsFeatures()) {
+                $value_3 = $data->getOsFeatures();
+            }
+            $dataArray['os.features'] = $value_3;
+        }
+        if ($data->isInitialized('variant')) {
+            $value_5 = $data->getVariant();
+            if (is_string($data->getVariant())) {
+                $value_5 = $data->getVariant();
+            } elseif (null === $data->getVariant()) {
+                $value_5 = $data->getVariant();
+            }
+            $dataArray['variant'] = $value_5;
         }
 
         return $dataArray;

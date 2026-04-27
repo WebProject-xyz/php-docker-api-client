@@ -37,23 +37,21 @@ class PluginDeviceNormalizer implements DenormalizerInterface, NormalizerInterfa
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginDevice();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\PluginDevice();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('Name', $data)) {
             $object->setName($data['Name']);
-            unset($data['Name']);
         }
         if (array_key_exists('Description', $data)) {
             $object->setDescription($data['Description']);
-            unset($data['Description']);
         }
         if (array_key_exists('Settable', $data)) {
             $values = [];
@@ -61,16 +59,9 @@ class PluginDeviceNormalizer implements DenormalizerInterface, NormalizerInterfa
                 $values[] = $value;
             }
             $object->setSettable($values);
-            unset($data['Settable']);
         }
         if (array_key_exists('Path', $data)) {
             $object->setPath($data['Path']);
-            unset($data['Path']);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
-            }
         }
 
         return $object;
@@ -87,11 +78,6 @@ class PluginDeviceNormalizer implements DenormalizerInterface, NormalizerInterfa
         }
         $dataArray['Settable'] = $values;
         $dataArray['Path']     = $data->getPath();
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
-            }
-        }
 
         return $dataArray;
     }

@@ -43,7 +43,7 @@ class SwarmUnlockkey extends \WebProject\DockerApi\Library\Generated\Runtime\Cli
     /**
      * {@inheritdoc}
      *
-     * @return \WebProject\DockerApi\Library\Generated\Model\SwarmUnlockkeyGetJsonResponse200|null
+     * @return null
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\SwarmUnlockkeyInternalServerErrorException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\SwarmUnlockkeyServiceUnavailableException
@@ -52,13 +52,13 @@ class SwarmUnlockkey extends \WebProject\DockerApi\Library\Generated\Runtime\Cli
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
-            return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\SwarmUnlockkeyGetJsonResponse200', 'json');
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+            return json_decode($body);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\SwarmUnlockkeyInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (503 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (503 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\SwarmUnlockkeyServiceUnavailableException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

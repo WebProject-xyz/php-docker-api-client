@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ConfigSpec extends ArrayObject
+class ConfigSpec
 {
     /**
      * @var array
@@ -20,21 +19,21 @@ class ConfigSpec extends ArrayObject
     /**
      * User-defined name of the config.
      *
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
      * User-defined key/value metadata.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $labels;
     /**
-     * Data is the data to store as a config, formatted as a Base64-url-safe-encoded
-     * ([RFC 4648](https://tools.ietf.org/html/rfc4648#section-5)) string.
+     * Data is the data to store as a config, formatted as a standard base64-encoded
+     * ([RFC 4648](https://tools.ietf.org/html/rfc4648#section-4)) string.
      * The maximum allowed size is 1000KB, as defined in [MaxConfigSize](https://pkg.go.dev/github.com/moby/swarmkit/v2@v2.0.0-20250103191802-8c1959736554/manager/controlapi#MaxConfigSize).
      *
-     * @var string
+     * @var string|null
      */
     protected $data;
     /**
@@ -47,9 +46,9 @@ class ConfigSpec extends ArrayObject
     /**
      * User-defined name of the config.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -57,11 +56,11 @@ class ConfigSpec extends ArrayObject
     /**
      * User-defined name of the config.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -72,9 +71,9 @@ class ConfigSpec extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getLabels(): iterable
+    public function getLabels(): ?iterable
     {
         return $this->labels;
     }
@@ -82,11 +81,11 @@ class ConfigSpec extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @param array<string, string> $labels
+     * @param array<string, string>|null $labels
      *
      * @return self
      */
-    public function setLabels(iterable $labels): self
+    public function setLabels(?iterable $labels): self
     {
         $this->initialized['labels'] = true;
         $this->labels                = $labels;
@@ -95,27 +94,27 @@ class ConfigSpec extends ArrayObject
     }
 
     /**
-     * Data is the data to store as a config, formatted as a Base64-url-safe-encoded
-     * ([RFC 4648](https://tools.ietf.org/html/rfc4648#section-5)) string.
+     * Data is the data to store as a config, formatted as a standard base64-encoded
+     * ([RFC 4648](https://tools.ietf.org/html/rfc4648#section-4)) string.
      * The maximum allowed size is 1000KB, as defined in [MaxConfigSize](https://pkg.go.dev/github.com/moby/swarmkit/v2@v2.0.0-20250103191802-8c1959736554/manager/controlapi#MaxConfigSize).
      *
-     * @return string
+     * @return string|null
      */
-    public function getData(): string
+    public function getData(): ?string
     {
         return $this->data;
     }
 
     /**
-     * Data is the data to store as a config, formatted as a Base64-url-safe-encoded
-     * ([RFC 4648](https://tools.ietf.org/html/rfc4648#section-5)) string.
+     * Data is the data to store as a config, formatted as a standard base64-encoded
+     * ([RFC 4648](https://tools.ietf.org/html/rfc4648#section-4)) string.
      * The maximum allowed size is 1000KB, as defined in [MaxConfigSize](https://pkg.go.dev/github.com/moby/swarmkit/v2@v2.0.0-20250103191802-8c1959736554/manager/controlapi#MaxConfigSize).
      *
-     * @param string $data
+     * @param string|null $data
      *
      * @return self
      */
-    public function setData(string $data): self
+    public function setData(?string $data): self
     {
         $this->initialized['data'] = true;
         $this->data                = $data;

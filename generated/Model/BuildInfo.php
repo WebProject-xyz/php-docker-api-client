@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class BuildInfo extends ArrayObject
+class BuildInfo
 {
     /**
      * @var array
@@ -18,37 +17,21 @@ class BuildInfo extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $id;
     /**
-     * @var string
-     */
-    protected $stream;
-    /**
-     * errors encountered during the operation.
-     *
-     * > **Deprecated**: This field is deprecated since API v1.4, and will be omitted in a future API version. Use the information in errorDetail instead.
-     *
      * @var string|null
      */
-    protected $error;
+    protected $stream;
     /**
      * @var ErrorDetail
      */
     protected $errorDetail;
     /**
-     * @var string
-     */
-    protected $status;
-    /**
-     * Progress is a pre-formatted presentation of progressDetail.
-     *
-     * > **Deprecated**: This field is deprecated since API v1.8, and will be omitted in a future API version. Use the information in progressDetail instead.
-     *
      * @var string|null
      */
-    protected $progress;
+    protected $status;
     /**
      * @var ProgressDetail
      */
@@ -61,19 +44,19 @@ class BuildInfo extends ArrayObject
     protected $aux;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
     /**
-     * @param string $id
+     * @param string|null $id
      *
      * @return self
      */
-    public function setId(string $id): self
+    public function setId(?string $id): self
     {
         $this->initialized['id'] = true;
         $this->id                = $id;
@@ -82,51 +65,22 @@ class BuildInfo extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getStream(): string
+    public function getStream(): ?string
     {
         return $this->stream;
     }
 
     /**
-     * @param string $stream
+     * @param string|null $stream
      *
      * @return self
      */
-    public function setStream(string $stream): self
+    public function setStream(?string $stream): self
     {
         $this->initialized['stream'] = true;
         $this->stream                = $stream;
-
-        return $this;
-    }
-
-    /**
-     * errors encountered during the operation.
-     *
-     * > **Deprecated**: This field is deprecated since API v1.4, and will be omitted in a future API version. Use the information in errorDetail instead.
-     *
-     * @return string|null
-     */
-    public function getError(): ?string
-    {
-        return $this->error;
-    }
-
-    /**
-     * errors encountered during the operation.
-     *
-     * > **Deprecated**: This field is deprecated since API v1.4, and will be omitted in a future API version. Use the information in errorDetail instead.
-     *
-     * @param string|null $error
-     *
-     * @return self
-     */
-    public function setError(?string $error): self
-    {
-        $this->initialized['error'] = true;
-        $this->error                = $error;
 
         return $this;
     }
@@ -153,51 +107,22 @@ class BuildInfo extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getStatus(): string
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
     /**
-     * @param string $status
+     * @param string|null $status
      *
      * @return self
      */
-    public function setStatus(string $status): self
+    public function setStatus(?string $status): self
     {
         $this->initialized['status'] = true;
         $this->status                = $status;
-
-        return $this;
-    }
-
-    /**
-     * Progress is a pre-formatted presentation of progressDetail.
-     *
-     * > **Deprecated**: This field is deprecated since API v1.8, and will be omitted in a future API version. Use the information in progressDetail instead.
-     *
-     * @return string|null
-     */
-    public function getProgress(): ?string
-    {
-        return $this->progress;
-    }
-
-    /**
-     * Progress is a pre-formatted presentation of progressDetail.
-     *
-     * > **Deprecated**: This field is deprecated since API v1.8, and will be omitted in a future API version. Use the information in progressDetail instead.
-     *
-     * @param string|null $progress
-     *
-     * @return self
-     */
-    public function setProgress(?string $progress): self
-    {
-        $this->initialized['progress'] = true;
-        $this->progress                = $progress;
 
         return $this;
     }

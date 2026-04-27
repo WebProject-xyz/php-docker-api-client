@@ -9,11 +9,10 @@ class SystemDataUsage extends \WebProject\DockerApi\Library\Generated\Runtime\Cl
     protected $accept;
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var array $type Object types, for which to compute and return data.
-     *            }
-     *
+     * @param array{
+     *    "type"?: array, //Object types, for which to compute and return data.
+     *    "verbose"?: bool, //Show detailed information on space usage.
+     * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
     public function __construct(array $queryParameters = [], array $accept = [])
@@ -49,10 +48,11 @@ class SystemDataUsage extends \WebProject\DockerApi\Library\Generated\Runtime\Cl
     protected function getQueryOptionsResolver(): \Symfony\Component\OptionsResolver\OptionsResolver
     {
         $optionsResolver = parent::getQueryOptionsResolver();
-        $optionsResolver->setDefined(['type']);
+        $optionsResolver->setDefined(['type', 'verbose']);
         $optionsResolver->setRequired([]);
-        $optionsResolver->setDefaults([]);
+        $optionsResolver->setDefaults(['verbose' => false]);
         $optionsResolver->addAllowedTypes('type', ['array']);
+        $optionsResolver->addAllowedTypes('verbose', ['bool']);
 
         return $optionsResolver;
     }
@@ -60,7 +60,7 @@ class SystemDataUsage extends \WebProject\DockerApi\Library\Generated\Runtime\Cl
     /**
      * {@inheritdoc}
      *
-     * @return \WebProject\DockerApi\Library\Generated\Model\SystemDfGetJsonResponse200|null
+     * @return null
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\SystemDataUsageInternalServerErrorException
      */
@@ -68,10 +68,10 @@ class SystemDataUsage extends \WebProject\DockerApi\Library\Generated\Runtime\Cl
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
-            return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\SystemDfGetJsonResponse200', 'json');
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+            return json_decode($body);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\SystemDataUsageInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

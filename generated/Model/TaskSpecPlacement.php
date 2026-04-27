@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecPlacement extends ArrayObject
+class TaskSpecPlacement
 {
     /**
      * @var array
@@ -38,7 +37,7 @@ class TaskSpecPlacement extends ArrayObject
      * drivers, etc. Swarm administrators add `node.labels` for operational
      * purposes by using the [`node update endpoint`](#operation/NodeUpdate).
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $constraints;
     /**
@@ -46,14 +45,14 @@ class TaskSpecPlacement extends ArrayObject
      * such as topology. They are provided in order from highest to
      * lowest precedence.
      *
-     * @var list<TaskSpecPlacementPreferencesItem>
+     * @var list<TaskSpecPlacementPreferencesItem>|null
      */
     protected $preferences;
     /**
      * Maximum number of replicas for per node (default value is 0, which
      * is unlimited).
      *
-     * @var int
+     * @var int|null
      */
     protected $maxReplicas = 0;
     /**
@@ -62,7 +61,7 @@ class TaskSpecPlacement extends ArrayObject
      * If empty, then the platform filter is off, meaning there are no
      * scheduling restrictions.
      *
-     * @var list<Platform>
+     * @var list<Platform>|null
      */
     protected $platforms;
 
@@ -87,9 +86,9 @@ class TaskSpecPlacement extends ArrayObject
      * drivers, etc. Swarm administrators add `node.labels` for operational
      * purposes by using the [`node update endpoint`](#operation/NodeUpdate).
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getConstraints(): array
+    public function getConstraints(): ?array
     {
         return $this->constraints;
     }
@@ -115,11 +114,11 @@ class TaskSpecPlacement extends ArrayObject
      * drivers, etc. Swarm administrators add `node.labels` for operational
      * purposes by using the [`node update endpoint`](#operation/NodeUpdate).
      *
-     * @param list<string> $constraints
+     * @param list<string>|null $constraints
      *
      * @return self
      */
-    public function setConstraints(array $constraints): self
+    public function setConstraints(?array $constraints): self
     {
         $this->initialized['constraints'] = true;
         $this->constraints                = $constraints;
@@ -132,9 +131,9 @@ class TaskSpecPlacement extends ArrayObject
      * such as topology. They are provided in order from highest to
      * lowest precedence.
      *
-     * @return list<TaskSpecPlacementPreferencesItem>
+     * @return list<TaskSpecPlacementPreferencesItem>|null
      */
-    public function getPreferences(): array
+    public function getPreferences(): ?array
     {
         return $this->preferences;
     }
@@ -144,11 +143,11 @@ class TaskSpecPlacement extends ArrayObject
      * such as topology. They are provided in order from highest to
      * lowest precedence.
      *
-     * @param list<TaskSpecPlacementPreferencesItem> $preferences
+     * @param list<TaskSpecPlacementPreferencesItem>|null $preferences
      *
      * @return self
      */
-    public function setPreferences(array $preferences): self
+    public function setPreferences(?array $preferences): self
     {
         $this->initialized['preferences'] = true;
         $this->preferences                = $preferences;
@@ -160,9 +159,9 @@ class TaskSpecPlacement extends ArrayObject
      * Maximum number of replicas for per node (default value is 0, which
      * is unlimited).
      *
-     * @return int
+     * @return int|null
      */
-    public function getMaxReplicas(): int
+    public function getMaxReplicas(): ?int
     {
         return $this->maxReplicas;
     }
@@ -171,11 +170,11 @@ class TaskSpecPlacement extends ArrayObject
      * Maximum number of replicas for per node (default value is 0, which
      * is unlimited).
      *
-     * @param int $maxReplicas
+     * @param int|null $maxReplicas
      *
      * @return self
      */
-    public function setMaxReplicas(int $maxReplicas): self
+    public function setMaxReplicas(?int $maxReplicas): self
     {
         $this->initialized['maxReplicas'] = true;
         $this->maxReplicas                = $maxReplicas;
@@ -189,9 +188,9 @@ class TaskSpecPlacement extends ArrayObject
      * If empty, then the platform filter is off, meaning there are no
      * scheduling restrictions.
      *
-     * @return list<Platform>
+     * @return list<Platform>|null
      */
-    public function getPlatforms(): array
+    public function getPlatforms(): ?array
     {
         return $this->platforms;
     }
@@ -202,11 +201,11 @@ class TaskSpecPlacement extends ArrayObject
      * If empty, then the platform filter is off, meaning there are no
      * scheduling restrictions.
      *
-     * @param list<Platform> $platforms
+     * @param list<Platform>|null $platforms
      *
      * @return self
      */
-    public function setPlatforms(array $platforms): self
+    public function setPlatforms(?array $platforms): self
     {
         $this->initialized['platforms'] = true;
         $this->platforms                = $platforms;

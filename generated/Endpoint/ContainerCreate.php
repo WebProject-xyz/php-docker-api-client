@@ -9,11 +9,10 @@ class ContainerCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Cl
 
     /**
      * @param \WebProject\DockerApi\Library\Generated\Model\ContainersCreatePostBody $requestBody
-     * @param array                                                                  $queryParameters {
-     *
-     * @var string $name Assign the specified name to the container. Must match
-     *             `/?[a-zA-Z0-9][a-zA-Z0-9_.-]+`.
-     * @var string $platform Platform in the format `os[/arch[/variant]]` used for image lookup.
+     * @param array{
+     *    "name"?: string, //Assign the specified name to the container. Must match
+     * `/?[a-zA-Z0-9][a-zA-Z0-9_.-]+`.
+     *    "platform"?: string, //Platform in the format `os[/arch[/variant]]` used for image lookup.
      *
      * When specified, the daemon checks if the requested image is present
      * in the local image cache with the given OS and Architecture, and
@@ -29,8 +28,7 @@ class ContainerCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Cl
      * WARNING: The requested image's platform (linux/arm64/v8) does not
      * match the detected host platform (linux/amd64) and no
      * specific platform was requested
-     *
-     * }
+     * } $queryParameters
      */
     public function __construct(\WebProject\DockerApi\Library\Generated\Model\ContainersCreatePostBody $requestBody, array $queryParameters = [])
     {
@@ -91,19 +89,19 @@ class ContainerCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Cl
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (201 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (201 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ContainerCreateResponse', 'json');
         }
-        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerCreateBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerCreateNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (409 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (409 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerCreateConflictException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerCreateInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecContainerSpecPrivilegesSeccomp extends ArrayObject
+class TaskSpecContainerSpecPrivilegesSeccomp
 {
     /**
      * @var array
@@ -18,30 +17,30 @@ class TaskSpecContainerSpecPrivilegesSeccomp extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $mode;
     /**
      * The custom seccomp profile as a json object.
      *
-     * @var string
+     * @var string|null
      */
     protected $profile;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMode(): string
+    public function getMode(): ?string
     {
         return $this->mode;
     }
 
     /**
-     * @param string $mode
+     * @param string|null $mode
      *
      * @return self
      */
-    public function setMode(string $mode): self
+    public function setMode(?string $mode): self
     {
         $this->initialized['mode'] = true;
         $this->mode                = $mode;
@@ -52,9 +51,9 @@ class TaskSpecContainerSpecPrivilegesSeccomp extends ArrayObject
     /**
      * The custom seccomp profile as a json object.
      *
-     * @return string
+     * @return string|null
      */
-    public function getProfile(): string
+    public function getProfile(): ?string
     {
         return $this->profile;
     }
@@ -62,11 +61,11 @@ class TaskSpecContainerSpecPrivilegesSeccomp extends ArrayObject
     /**
      * The custom seccomp profile as a json object.
      *
-     * @param string $profile
+     * @param string|null $profile
      *
      * @return self
      */
-    public function setProfile(string $profile): self
+    public function setProfile(?string $profile): self
     {
         $this->initialized['profile'] = true;
         $this->profile                = $profile;

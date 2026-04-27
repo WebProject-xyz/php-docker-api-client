@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ImageManifestSummaryAttestationData extends ArrayObject
+class ImageManifestSummaryAttestationData
 {
     /**
      * @var array

@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ServiceSpecModeReplicated extends ArrayObject
+class ServiceSpecModeReplicated
 {
     /**
      * @var array
@@ -18,24 +17,24 @@ class ServiceSpecModeReplicated extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var int
+     * @var int|null
      */
     protected $replicas;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getReplicas(): int
+    public function getReplicas(): ?int
     {
         return $this->replicas;
     }
 
     /**
-     * @param int $replicas
+     * @param int|null $replicas
      *
      * @return self
      */
-    public function setReplicas(int $replicas): self
+    public function setReplicas(?int $replicas): self
     {
         $this->initialized['replicas'] = true;
         $this->replicas                = $replicas;

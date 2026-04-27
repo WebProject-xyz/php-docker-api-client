@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class EndpointSpecNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,32 +38,41 @@ class EndpointSpecNormalizer implements DenormalizerInterface, NormalizerInterfa
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\EndpointSpec();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\EndpointSpec();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Mode', $data)) {
-            $object->setMode($data['Mode']);
-            unset($data['Mode']);
-        }
-        if (array_key_exists('Ports', $data)) {
-            $values = [];
-            foreach ($data['Ports'] as $value) {
-                $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\EndpointPortConfig::class, 'json', $context);
+        if (array_key_exists('Mode', $data) && null !== $data['Mode']) {
+            $value = $data['Mode'];
+            if (is_string($data['Mode'])) {
+                $value = $data['Mode'];
+            } elseif (null === $data['Mode']) {
+                $value = $data['Mode'];
             }
-            $object->setPorts($values);
-            unset($data['Ports']);
+            $object->setMode($value);
+        } elseif (array_key_exists('Mode', $data) && null === $data['Mode']) {
+            $object->setMode(null);
         }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
+        if (array_key_exists('Ports', $data) && null !== $data['Ports']) {
+            $value_1 = $data['Ports'];
+            if (is_array($data['Ports']) && $this->isOnlyNumericKeys($data['Ports'])) {
+                $values = [];
+                foreach ($data['Ports'] as $value_2) {
+                    $values[] = $this->denormalizer->denormalize($value_2, \WebProject\DockerApi\Library\Generated\Model\EndpointPortConfig::class, 'json', $context);
+                }
+                $value_1 = $values;
+            } elseif (null === $data['Ports']) {
+                $value_1 = $data['Ports'];
             }
+            $object->setPorts($value_1);
+        } elseif (array_key_exists('Ports', $data) && null === $data['Ports']) {
+            $object->setPorts(null);
         }
 
         return $object;
@@ -71,20 +81,27 @@ class EndpointSpecNormalizer implements DenormalizerInterface, NormalizerInterfa
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('mode') && null !== $data->getMode()) {
-            $dataArray['Mode'] = $data->getMode();
-        }
-        if ($data->isInitialized('ports') && null !== $data->getPorts()) {
-            $values = [];
-            foreach ($data->getPorts() as $value) {
-                $values[] = $this->normalizer->normalize($value, 'json', $context);
+        if ($data->isInitialized('mode')) {
+            $value = $data->getMode();
+            if (is_string($data->getMode())) {
+                $value = $data->getMode();
+            } elseif (null === $data->getMode()) {
+                $value = $data->getMode();
             }
-            $dataArray['Ports'] = $values;
+            $dataArray['Mode'] = $value;
         }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
+        if ($data->isInitialized('ports')) {
+            $value_1 = $data->getPorts();
+            if (is_array($data->getPorts())) {
+                $values = [];
+                foreach ($data->getPorts() as $value_2) {
+                    $values[] = $this->normalizer->normalize($value_2, 'json', $context);
+                }
+                $value_1 = $values;
+            } elseif (null === $data->getPorts()) {
+                $value_1 = $data->getPorts();
             }
+            $dataArray['Ports'] = $value_1;
         }
 
         return $dataArray;

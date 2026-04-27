@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class EndpointSettings extends ArrayObject
+class EndpointSettings
 {
     /**
      * @var array
@@ -30,7 +29,7 @@ class EndpointSettings extends ArrayObject
     /**
      * MAC address for the endpoint on this network. The network driver might ignore this parameter.
      *
-     * @var string
+     * @var string|null
      */
     protected $macAddress;
     /**
@@ -51,55 +50,55 @@ class EndpointSettings extends ArrayObject
      * lexicographically sorted based on their network name, and the one
      * that sorts first is picked.
      *
-     * @var int
+     * @var int|null
      */
     protected $gwPriority;
     /**
      * Unique ID of the network.
      *
-     * @var string
+     * @var string|null
      */
     protected $networkID;
     /**
      * Unique ID for the service endpoint in a Sandbox.
      *
-     * @var string
+     * @var string|null
      */
     protected $endpointID;
     /**
      * Gateway address for this network.
      *
-     * @var string
+     * @var string|null
      */
     protected $gateway;
     /**
      * IPv4 address.
      *
-     * @var string
+     * @var string|null
      */
     protected $iPAddress;
     /**
      * Mask length of the IPv4 address.
      *
-     * @var int
+     * @var int|null
      */
     protected $iPPrefixLen;
     /**
      * IPv6 gateway address.
      *
-     * @var string
+     * @var string|null
      */
     protected $iPv6Gateway;
     /**
      * Global IPv6 address.
      *
-     * @var string
+     * @var string|null
      */
     protected $globalIPv6Address;
     /**
      * Mask length of the global IPv6 address.
      *
-     * @var int
+     * @var int|null
      */
     protected $globalIPv6PrefixLen;
     /**
@@ -166,9 +165,9 @@ class EndpointSettings extends ArrayObject
     /**
      * MAC address for the endpoint on this network. The network driver might ignore this parameter.
      *
-     * @return string
+     * @return string|null
      */
-    public function getMacAddress(): string
+    public function getMacAddress(): ?string
     {
         return $this->macAddress;
     }
@@ -176,11 +175,11 @@ class EndpointSettings extends ArrayObject
     /**
      * MAC address for the endpoint on this network. The network driver might ignore this parameter.
      *
-     * @param string $macAddress
+     * @param string|null $macAddress
      *
      * @return self
      */
-    public function setMacAddress(string $macAddress): self
+    public function setMacAddress(?string $macAddress): self
     {
         $this->initialized['macAddress'] = true;
         $this->macAddress                = $macAddress;
@@ -243,9 +242,9 @@ class EndpointSettings extends ArrayObject
      * lexicographically sorted based on their network name, and the one
      * that sorts first is picked.
      *
-     * @return int
+     * @return int|null
      */
-    public function getGwPriority(): int
+    public function getGwPriority(): ?int
     {
         return $this->gwPriority;
     }
@@ -257,11 +256,11 @@ class EndpointSettings extends ArrayObject
      * lexicographically sorted based on their network name, and the one
      * that sorts first is picked.
      *
-     * @param int $gwPriority
+     * @param int|null $gwPriority
      *
      * @return self
      */
-    public function setGwPriority(int $gwPriority): self
+    public function setGwPriority(?int $gwPriority): self
     {
         $this->initialized['gwPriority'] = true;
         $this->gwPriority                = $gwPriority;
@@ -272,9 +271,9 @@ class EndpointSettings extends ArrayObject
     /**
      * Unique ID of the network.
      *
-     * @return string
+     * @return string|null
      */
-    public function getNetworkID(): string
+    public function getNetworkID(): ?string
     {
         return $this->networkID;
     }
@@ -282,11 +281,11 @@ class EndpointSettings extends ArrayObject
     /**
      * Unique ID of the network.
      *
-     * @param string $networkID
+     * @param string|null $networkID
      *
      * @return self
      */
-    public function setNetworkID(string $networkID): self
+    public function setNetworkID(?string $networkID): self
     {
         $this->initialized['networkID'] = true;
         $this->networkID                = $networkID;
@@ -297,9 +296,9 @@ class EndpointSettings extends ArrayObject
     /**
      * Unique ID for the service endpoint in a Sandbox.
      *
-     * @return string
+     * @return string|null
      */
-    public function getEndpointID(): string
+    public function getEndpointID(): ?string
     {
         return $this->endpointID;
     }
@@ -307,11 +306,11 @@ class EndpointSettings extends ArrayObject
     /**
      * Unique ID for the service endpoint in a Sandbox.
      *
-     * @param string $endpointID
+     * @param string|null $endpointID
      *
      * @return self
      */
-    public function setEndpointID(string $endpointID): self
+    public function setEndpointID(?string $endpointID): self
     {
         $this->initialized['endpointID'] = true;
         $this->endpointID                = $endpointID;
@@ -322,9 +321,9 @@ class EndpointSettings extends ArrayObject
     /**
      * Gateway address for this network.
      *
-     * @return string
+     * @return string|null
      */
-    public function getGateway(): string
+    public function getGateway(): ?string
     {
         return $this->gateway;
     }
@@ -332,11 +331,11 @@ class EndpointSettings extends ArrayObject
     /**
      * Gateway address for this network.
      *
-     * @param string $gateway
+     * @param string|null $gateway
      *
      * @return self
      */
-    public function setGateway(string $gateway): self
+    public function setGateway(?string $gateway): self
     {
         $this->initialized['gateway'] = true;
         $this->gateway                = $gateway;
@@ -347,9 +346,9 @@ class EndpointSettings extends ArrayObject
     /**
      * IPv4 address.
      *
-     * @return string
+     * @return string|null
      */
-    public function getIPAddress(): string
+    public function getIPAddress(): ?string
     {
         return $this->iPAddress;
     }
@@ -357,11 +356,11 @@ class EndpointSettings extends ArrayObject
     /**
      * IPv4 address.
      *
-     * @param string $iPAddress
+     * @param string|null $iPAddress
      *
      * @return self
      */
-    public function setIPAddress(string $iPAddress): self
+    public function setIPAddress(?string $iPAddress): self
     {
         $this->initialized['iPAddress'] = true;
         $this->iPAddress                = $iPAddress;
@@ -372,9 +371,9 @@ class EndpointSettings extends ArrayObject
     /**
      * Mask length of the IPv4 address.
      *
-     * @return int
+     * @return int|null
      */
-    public function getIPPrefixLen(): int
+    public function getIPPrefixLen(): ?int
     {
         return $this->iPPrefixLen;
     }
@@ -382,11 +381,11 @@ class EndpointSettings extends ArrayObject
     /**
      * Mask length of the IPv4 address.
      *
-     * @param int $iPPrefixLen
+     * @param int|null $iPPrefixLen
      *
      * @return self
      */
-    public function setIPPrefixLen(int $iPPrefixLen): self
+    public function setIPPrefixLen(?int $iPPrefixLen): self
     {
         $this->initialized['iPPrefixLen'] = true;
         $this->iPPrefixLen                = $iPPrefixLen;
@@ -397,9 +396,9 @@ class EndpointSettings extends ArrayObject
     /**
      * IPv6 gateway address.
      *
-     * @return string
+     * @return string|null
      */
-    public function getIPv6Gateway(): string
+    public function getIPv6Gateway(): ?string
     {
         return $this->iPv6Gateway;
     }
@@ -407,11 +406,11 @@ class EndpointSettings extends ArrayObject
     /**
      * IPv6 gateway address.
      *
-     * @param string $iPv6Gateway
+     * @param string|null $iPv6Gateway
      *
      * @return self
      */
-    public function setIPv6Gateway(string $iPv6Gateway): self
+    public function setIPv6Gateway(?string $iPv6Gateway): self
     {
         $this->initialized['iPv6Gateway'] = true;
         $this->iPv6Gateway                = $iPv6Gateway;
@@ -422,9 +421,9 @@ class EndpointSettings extends ArrayObject
     /**
      * Global IPv6 address.
      *
-     * @return string
+     * @return string|null
      */
-    public function getGlobalIPv6Address(): string
+    public function getGlobalIPv6Address(): ?string
     {
         return $this->globalIPv6Address;
     }
@@ -432,11 +431,11 @@ class EndpointSettings extends ArrayObject
     /**
      * Global IPv6 address.
      *
-     * @param string $globalIPv6Address
+     * @param string|null $globalIPv6Address
      *
      * @return self
      */
-    public function setGlobalIPv6Address(string $globalIPv6Address): self
+    public function setGlobalIPv6Address(?string $globalIPv6Address): self
     {
         $this->initialized['globalIPv6Address'] = true;
         $this->globalIPv6Address                = $globalIPv6Address;
@@ -447,9 +446,9 @@ class EndpointSettings extends ArrayObject
     /**
      * Mask length of the global IPv6 address.
      *
-     * @return int
+     * @return int|null
      */
-    public function getGlobalIPv6PrefixLen(): int
+    public function getGlobalIPv6PrefixLen(): ?int
     {
         return $this->globalIPv6PrefixLen;
     }
@@ -457,11 +456,11 @@ class EndpointSettings extends ArrayObject
     /**
      * Mask length of the global IPv6 address.
      *
-     * @param int $globalIPv6PrefixLen
+     * @param int|null $globalIPv6PrefixLen
      *
      * @return self
      */
-    public function setGlobalIPv6PrefixLen(int $globalIPv6PrefixLen): self
+    public function setGlobalIPv6PrefixLen(?int $globalIPv6PrefixLen): self
     {
         $this->initialized['globalIPv6PrefixLen'] = true;
         $this->globalIPv6PrefixLen                = $globalIPv6PrefixLen;

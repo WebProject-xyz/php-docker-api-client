@@ -16,7 +16,9 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
+use function is_string;
 
 class GenericResourcesItemDiscreteResourceSpecNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,28 +39,37 @@ class GenericResourcesItemDiscreteResourceSpecNormalizer implements Denormalizer
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\GenericResourcesItemDiscreteResourceSpec();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\GenericResourcesItemDiscreteResourceSpec();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Kind', $data)) {
-            $object->setKind($data['Kind']);
-            unset($data['Kind']);
-        }
-        if (array_key_exists('Value', $data)) {
-            $object->setValue($data['Value']);
-            unset($data['Value']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Kind', $data) && null !== $data['Kind']) {
+            $value = $data['Kind'];
+            if (is_string($data['Kind'])) {
+                $value = $data['Kind'];
+            } elseif (null === $data['Kind']) {
+                $value = $data['Kind'];
             }
+            $object->setKind($value);
+        } elseif (array_key_exists('Kind', $data) && null === $data['Kind']) {
+            $object->setKind(null);
+        }
+        if (array_key_exists('Value', $data) && null !== $data['Value']) {
+            $value_1 = $data['Value'];
+            if (is_int($data['Value'])) {
+                $value_1 = $data['Value'];
+            } elseif (null === $data['Value']) {
+                $value_1 = $data['Value'];
+            }
+            $object->setValue($value_1);
+        } elseif (array_key_exists('Value', $data) && null === $data['Value']) {
+            $object->setValue(null);
         }
 
         return $object;
@@ -67,16 +78,23 @@ class GenericResourcesItemDiscreteResourceSpecNormalizer implements Denormalizer
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('kind') && null !== $data->getKind()) {
-            $dataArray['Kind'] = $data->getKind();
-        }
-        if ($data->isInitialized('value') && null !== $data->getValue()) {
-            $dataArray['Value'] = $data->getValue();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('kind')) {
+            $value = $data->getKind();
+            if (is_string($data->getKind())) {
+                $value = $data->getKind();
+            } elseif (null === $data->getKind()) {
+                $value = $data->getKind();
             }
+            $dataArray['Kind'] = $value;
+        }
+        if ($data->isInitialized('value')) {
+            $value_1 = $data->getValue();
+            if (is_int($data->getValue())) {
+                $value_1 = $data->getValue();
+            } elseif (null === $data->getValue()) {
+                $value_1 = $data->getValue();
+            }
+            $dataArray['Value'] = $value_1;
         }
 
         return $dataArray;

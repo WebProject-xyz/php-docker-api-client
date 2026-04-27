@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class SystemInfoDefaultAddressPoolsItem extends ArrayObject
+class SystemInfoDefaultAddressPoolsItem
 {
     /**
      * @var array
@@ -20,22 +19,22 @@ class SystemInfoDefaultAddressPoolsItem extends ArrayObject
     /**
      * The network address in CIDR format.
      *
-     * @var string
+     * @var string|null
      */
     protected $base;
     /**
      * The network pool size.
      *
-     * @var int
+     * @var int|null
      */
     protected $size;
 
     /**
      * The network address in CIDR format.
      *
-     * @return string
+     * @return string|null
      */
-    public function getBase(): string
+    public function getBase(): ?string
     {
         return $this->base;
     }
@@ -43,11 +42,11 @@ class SystemInfoDefaultAddressPoolsItem extends ArrayObject
     /**
      * The network address in CIDR format.
      *
-     * @param string $base
+     * @param string|null $base
      *
      * @return self
      */
-    public function setBase(string $base): self
+    public function setBase(?string $base): self
     {
         $this->initialized['base'] = true;
         $this->base                = $base;
@@ -58,9 +57,9 @@ class SystemInfoDefaultAddressPoolsItem extends ArrayObject
     /**
      * The network pool size.
      *
-     * @return int
+     * @return int|null
      */
-    public function getSize(): int
+    public function getSize(): ?int
     {
         return $this->size;
     }
@@ -68,11 +67,11 @@ class SystemInfoDefaultAddressPoolsItem extends ArrayObject
     /**
      * The network pool size.
      *
-     * @param int $size
+     * @param int|null $size
      *
      * @return self
      */
-    public function setSize(int $size): self
+    public function setSize(?int $size): self
     {
         $this->initialized['size'] = true;
         $this->size                = $size;

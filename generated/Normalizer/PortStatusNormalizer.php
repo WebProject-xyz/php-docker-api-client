@@ -37,28 +37,30 @@ class PortStatusNormalizer implements DenormalizerInterface, NormalizerInterface
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\PortStatus();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\PortStatus();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Ports', $data)) {
-            $values = [];
-            foreach ($data['Ports'] as $value) {
-                $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\EndpointPortConfig::class, 'json', $context);
+        if (array_key_exists('Ports', $data) && null !== $data['Ports']) {
+            $value = $data['Ports'];
+            if (is_array($data['Ports']) && $this->isOnlyNumericKeys($data['Ports'])) {
+                $values = [];
+                foreach ($data['Ports'] as $value_1) {
+                    $values[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\EndpointPortConfig::class, 'json', $context);
+                }
+                $value = $values;
+            } elseif (null === $data['Ports']) {
+                $value = $data['Ports'];
             }
-            $object->setPorts($values);
-            unset($data['Ports']);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
-            }
+            $object->setPorts($value);
+        } elseif (array_key_exists('Ports', $data) && null === $data['Ports']) {
+            $object->setPorts(null);
         }
 
         return $object;
@@ -67,17 +69,18 @@ class PortStatusNormalizer implements DenormalizerInterface, NormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('ports') && null !== $data->getPorts()) {
-            $values = [];
-            foreach ($data->getPorts() as $value) {
-                $values[] = $this->normalizer->normalize($value, 'json', $context);
+        if ($data->isInitialized('ports')) {
+            $value = $data->getPorts();
+            if (is_array($data->getPorts())) {
+                $values = [];
+                foreach ($data->getPorts() as $value_1) {
+                    $values[] = $this->normalizer->normalize($value_1, 'json', $context);
+                }
+                $value = $values;
+            } elseif (null === $data->getPorts()) {
+                $value = $data->getPorts();
             }
-            $dataArray['Ports'] = $values;
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
-            }
+            $dataArray['Ports'] = $value;
         }
 
         return $dataArray;

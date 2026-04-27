@@ -16,6 +16,7 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
 
 class SwarmSpecOrchestrationNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
@@ -37,24 +38,26 @@ class SwarmSpecOrchestrationNormalizer implements DenormalizerInterface, Normali
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\SwarmSpecOrchestration();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\SwarmSpecOrchestration();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('TaskHistoryRetentionLimit', $data)) {
-            $object->setTaskHistoryRetentionLimit($data['TaskHistoryRetentionLimit']);
-            unset($data['TaskHistoryRetentionLimit']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('TaskHistoryRetentionLimit', $data) && null !== $data['TaskHistoryRetentionLimit']) {
+            $value = $data['TaskHistoryRetentionLimit'];
+            if (is_int($data['TaskHistoryRetentionLimit'])) {
+                $value = $data['TaskHistoryRetentionLimit'];
+            } elseif (null === $data['TaskHistoryRetentionLimit']) {
+                $value = $data['TaskHistoryRetentionLimit'];
             }
+            $object->setTaskHistoryRetentionLimit($value);
+        } elseif (array_key_exists('TaskHistoryRetentionLimit', $data) && null === $data['TaskHistoryRetentionLimit']) {
+            $object->setTaskHistoryRetentionLimit(null);
         }
 
         return $object;
@@ -63,13 +66,14 @@ class SwarmSpecOrchestrationNormalizer implements DenormalizerInterface, Normali
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('taskHistoryRetentionLimit') && null !== $data->getTaskHistoryRetentionLimit()) {
-            $dataArray['TaskHistoryRetentionLimit'] = $data->getTaskHistoryRetentionLimit();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('taskHistoryRetentionLimit')) {
+            $value = $data->getTaskHistoryRetentionLimit();
+            if (is_int($data->getTaskHistoryRetentionLimit())) {
+                $value = $data->getTaskHistoryRetentionLimit();
+            } elseif (null === $data->getTaskHistoryRetentionLimit()) {
+                $value = $data->getTaskHistoryRetentionLimit();
             }
+            $dataArray['TaskHistoryRetentionLimit'] = $value;
         }
 
         return $dataArray;

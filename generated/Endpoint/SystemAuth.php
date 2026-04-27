@@ -45,7 +45,7 @@ class SystemAuth extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
     /**
      * {@inheritdoc}
      *
-     * @return \WebProject\DockerApi\Library\Generated\Model\AuthPostResponse200|null
+     * @return \WebProject\DockerApi\Library\Generated\Model\AuthResponse|null
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\SystemAuthUnauthorizedException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\SystemAuthInternalServerErrorException
@@ -54,16 +54,16 @@ class SystemAuth extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
-            return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\AuthPostResponse200', 'json');
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+            return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\AuthResponse', 'json');
         }
         if (204 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (401 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (401 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\SystemAuthUnauthorizedException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\SystemAuthInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

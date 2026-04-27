@@ -37,44 +37,60 @@ class TaskSpecContainerSpecDNSConfigNormalizer implements DenormalizerInterface,
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecDNSConfig();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecDNSConfig();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Nameservers', $data)) {
-            $values = [];
-            foreach ($data['Nameservers'] as $value) {
-                $values[] = $value;
+        if (array_key_exists('Nameservers', $data) && null !== $data['Nameservers']) {
+            $value = $data['Nameservers'];
+            if (is_array($data['Nameservers']) && $this->isOnlyNumericKeys($data['Nameservers'])) {
+                $values = [];
+                foreach ($data['Nameservers'] as $value_1) {
+                    $values[] = $value_1;
+                }
+                $value = $values;
+            } elseif (null === $data['Nameservers']) {
+                $value = $data['Nameservers'];
             }
-            $object->setNameservers($values);
-            unset($data['Nameservers']);
+            $object->setNameservers($value);
+        } elseif (array_key_exists('Nameservers', $data) && null === $data['Nameservers']) {
+            $object->setNameservers(null);
         }
-        if (array_key_exists('Search', $data)) {
-            $values_1 = [];
-            foreach ($data['Search'] as $value_1) {
-                $values_1[] = $value_1;
+        if (array_key_exists('Search', $data) && null !== $data['Search']) {
+            $value_2 = $data['Search'];
+            if (is_array($data['Search']) && $this->isOnlyNumericKeys($data['Search'])) {
+                $values_1 = [];
+                foreach ($data['Search'] as $value_3) {
+                    $values_1[] = $value_3;
+                }
+                $value_2 = $values_1;
+            } elseif (null === $data['Search']) {
+                $value_2 = $data['Search'];
             }
-            $object->setSearch($values_1);
-            unset($data['Search']);
+            $object->setSearch($value_2);
+        } elseif (array_key_exists('Search', $data) && null === $data['Search']) {
+            $object->setSearch(null);
         }
-        if (array_key_exists('Options', $data)) {
-            $values_2 = [];
-            foreach ($data['Options'] as $value_2) {
-                $values_2[] = $value_2;
+        if (array_key_exists('Options', $data) && null !== $data['Options']) {
+            $value_4 = $data['Options'];
+            if (is_array($data['Options']) && $this->isOnlyNumericKeys($data['Options'])) {
+                $values_2 = [];
+                foreach ($data['Options'] as $value_5) {
+                    $values_2[] = $value_5;
+                }
+                $value_4 = $values_2;
+            } elseif (null === $data['Options']) {
+                $value_4 = $data['Options'];
             }
-            $object->setOptions($values_2);
-            unset($data['Options']);
-        }
-        foreach ($data as $key => $value_3) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_3;
-            }
+            $object->setOptions($value_4);
+        } elseif (array_key_exists('Options', $data) && null === $data['Options']) {
+            $object->setOptions(null);
         }
 
         return $object;
@@ -83,31 +99,44 @@ class TaskSpecContainerSpecDNSConfigNormalizer implements DenormalizerInterface,
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('nameservers') && null !== $data->getNameservers()) {
-            $values = [];
-            foreach ($data->getNameservers() as $value) {
-                $values[] = $value;
+        if ($data->isInitialized('nameservers')) {
+            $value = $data->getNameservers();
+            if (is_array($data->getNameservers())) {
+                $values = [];
+                foreach ($data->getNameservers() as $value_1) {
+                    $values[] = $value_1;
+                }
+                $value = $values;
+            } elseif (null === $data->getNameservers()) {
+                $value = $data->getNameservers();
             }
-            $dataArray['Nameservers'] = $values;
+            $dataArray['Nameservers'] = $value;
         }
-        if ($data->isInitialized('search') && null !== $data->getSearch()) {
-            $values_1 = [];
-            foreach ($data->getSearch() as $value_1) {
-                $values_1[] = $value_1;
+        if ($data->isInitialized('search')) {
+            $value_2 = $data->getSearch();
+            if (is_array($data->getSearch())) {
+                $values_1 = [];
+                foreach ($data->getSearch() as $value_3) {
+                    $values_1[] = $value_3;
+                }
+                $value_2 = $values_1;
+            } elseif (null === $data->getSearch()) {
+                $value_2 = $data->getSearch();
             }
-            $dataArray['Search'] = $values_1;
+            $dataArray['Search'] = $value_2;
         }
-        if ($data->isInitialized('options') && null !== $data->getOptions()) {
-            $values_2 = [];
-            foreach ($data->getOptions() as $value_2) {
-                $values_2[] = $value_2;
+        if ($data->isInitialized('options')) {
+            $value_4 = $data->getOptions();
+            if (is_array($data->getOptions())) {
+                $values_2 = [];
+                foreach ($data->getOptions() as $value_5) {
+                    $values_2[] = $value_5;
+                }
+                $value_4 = $values_2;
+            } elseif (null === $data->getOptions()) {
+                $value_4 = $data->getOptions();
             }
-            $dataArray['Options'] = $values_2;
-        }
-        foreach ($data as $key => $value_3) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_3;
-            }
+            $dataArray['Options'] = $value_4;
         }
 
         return $dataArray;

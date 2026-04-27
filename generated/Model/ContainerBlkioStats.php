@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ContainerBlkioStats extends ArrayObject
+class ContainerBlkioStats
 {
     /**
      * @var array
@@ -18,7 +17,7 @@ class ContainerBlkioStats extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var list<ContainerBlkioStatEntry>
+     * @var list<ContainerBlkioStatEntry>|null
      */
     protected $ioServiceBytesRecursive;
     /**
@@ -72,19 +71,19 @@ class ContainerBlkioStats extends ArrayObject
     protected $sectorsRecursive;
 
     /**
-     * @return list<ContainerBlkioStatEntry>
+     * @return list<ContainerBlkioStatEntry>|null
      */
-    public function getIoServiceBytesRecursive(): array
+    public function getIoServiceBytesRecursive(): ?array
     {
         return $this->ioServiceBytesRecursive;
     }
 
     /**
-     * @param list<ContainerBlkioStatEntry> $ioServiceBytesRecursive
+     * @param list<ContainerBlkioStatEntry>|null $ioServiceBytesRecursive
      *
      * @return self
      */
-    public function setIoServiceBytesRecursive(array $ioServiceBytesRecursive): self
+    public function setIoServiceBytesRecursive(?array $ioServiceBytesRecursive): self
     {
         $this->initialized['ioServiceBytesRecursive'] = true;
         $this->ioServiceBytesRecursive                = $ioServiceBytesRecursive;

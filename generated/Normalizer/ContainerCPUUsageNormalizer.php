@@ -16,6 +16,7 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
 
 class ContainerCPUUsageNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
@@ -37,42 +38,63 @@ class ContainerCPUUsageNormalizer implements DenormalizerInterface, NormalizerIn
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerCPUUsage();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerCPUUsage();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('total_usage', $data)) {
-            $object->setTotalUsage($data['total_usage']);
-            unset($data['total_usage']);
+        if (array_key_exists('total_usage', $data) && null !== $data['total_usage']) {
+            $value = $data['total_usage'];
+            if (is_int($data['total_usage'])) {
+                $value = $data['total_usage'];
+            } elseif (null === $data['total_usage']) {
+                $value = $data['total_usage'];
+            }
+            $object->setTotalUsage($value);
+        } elseif (array_key_exists('total_usage', $data) && null === $data['total_usage']) {
+            $object->setTotalUsage(null);
         }
         if (array_key_exists('percpu_usage', $data) && null !== $data['percpu_usage']) {
-            $values = [];
-            foreach ($data['percpu_usage'] as $value) {
-                $values[] = $value;
+            $value_1 = $data['percpu_usage'];
+            if (is_array($data['percpu_usage']) && $this->isOnlyNumericKeys($data['percpu_usage'])) {
+                $values = [];
+                foreach ($data['percpu_usage'] as $value_2) {
+                    $values[] = $value_2;
+                }
+                $value_1 = $values;
+            } elseif (null === $data['percpu_usage']) {
+                $value_1 = $data['percpu_usage'];
             }
-            $object->setPercpuUsage($values);
-            unset($data['percpu_usage']);
+            $object->setPercpuUsage($value_1);
         } elseif (array_key_exists('percpu_usage', $data) && null === $data['percpu_usage']) {
             $object->setPercpuUsage(null);
         }
-        if (array_key_exists('usage_in_kernelmode', $data)) {
-            $object->setUsageInKernelmode($data['usage_in_kernelmode']);
-            unset($data['usage_in_kernelmode']);
-        }
-        if (array_key_exists('usage_in_usermode', $data)) {
-            $object->setUsageInUsermode($data['usage_in_usermode']);
-            unset($data['usage_in_usermode']);
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value_1;
+        if (array_key_exists('usage_in_kernelmode', $data) && null !== $data['usage_in_kernelmode']) {
+            $value_3 = $data['usage_in_kernelmode'];
+            if (is_int($data['usage_in_kernelmode'])) {
+                $value_3 = $data['usage_in_kernelmode'];
+            } elseif (null === $data['usage_in_kernelmode']) {
+                $value_3 = $data['usage_in_kernelmode'];
             }
+            $object->setUsageInKernelmode($value_3);
+        } elseif (array_key_exists('usage_in_kernelmode', $data) && null === $data['usage_in_kernelmode']) {
+            $object->setUsageInKernelmode(null);
+        }
+        if (array_key_exists('usage_in_usermode', $data) && null !== $data['usage_in_usermode']) {
+            $value_4 = $data['usage_in_usermode'];
+            if (is_int($data['usage_in_usermode'])) {
+                $value_4 = $data['usage_in_usermode'];
+            } elseif (null === $data['usage_in_usermode']) {
+                $value_4 = $data['usage_in_usermode'];
+            }
+            $object->setUsageInUsermode($value_4);
+        } elseif (array_key_exists('usage_in_usermode', $data) && null === $data['usage_in_usermode']) {
+            $object->setUsageInUsermode(null);
         }
 
         return $object;
@@ -81,26 +103,45 @@ class ContainerCPUUsageNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('totalUsage') && null !== $data->getTotalUsage()) {
-            $dataArray['total_usage'] = $data->getTotalUsage();
-        }
-        if ($data->isInitialized('percpuUsage') && null !== $data->getPercpuUsage()) {
-            $values = [];
-            foreach ($data->getPercpuUsage() as $value) {
-                $values[] = $value;
+        if ($data->isInitialized('totalUsage')) {
+            $value = $data->getTotalUsage();
+            if (is_int($data->getTotalUsage())) {
+                $value = $data->getTotalUsage();
+            } elseif (null === $data->getTotalUsage()) {
+                $value = $data->getTotalUsage();
             }
-            $dataArray['percpu_usage'] = $values;
+            $dataArray['total_usage'] = $value;
         }
-        if ($data->isInitialized('usageInKernelmode') && null !== $data->getUsageInKernelmode()) {
-            $dataArray['usage_in_kernelmode'] = $data->getUsageInKernelmode();
-        }
-        if ($data->isInitialized('usageInUsermode') && null !== $data->getUsageInUsermode()) {
-            $dataArray['usage_in_usermode'] = $data->getUsageInUsermode();
-        }
-        foreach ($data as $key => $value_1) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value_1;
+        if ($data->isInitialized('percpuUsage')) {
+            $value_1 = $data->getPercpuUsage();
+            if (is_array($data->getPercpuUsage())) {
+                $values = [];
+                foreach ($data->getPercpuUsage() as $value_2) {
+                    $values[] = $value_2;
+                }
+                $value_1 = $values;
+            } elseif (null === $data->getPercpuUsage()) {
+                $value_1 = $data->getPercpuUsage();
             }
+            $dataArray['percpu_usage'] = $value_1;
+        }
+        if ($data->isInitialized('usageInKernelmode')) {
+            $value_3 = $data->getUsageInKernelmode();
+            if (is_int($data->getUsageInKernelmode())) {
+                $value_3 = $data->getUsageInKernelmode();
+            } elseif (null === $data->getUsageInKernelmode()) {
+                $value_3 = $data->getUsageInKernelmode();
+            }
+            $dataArray['usage_in_kernelmode'] = $value_3;
+        }
+        if ($data->isInitialized('usageInUsermode')) {
+            $value_4 = $data->getUsageInUsermode();
+            if (is_int($data->getUsageInUsermode())) {
+                $value_4 = $data->getUsageInUsermode();
+            } elseif (null === $data->getUsageInUsermode()) {
+                $value_4 = $data->getUsageInUsermode();
+            }
+            $dataArray['usage_in_usermode'] = $value_4;
         }
 
         return $dataArray;

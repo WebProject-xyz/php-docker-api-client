@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ContainerdInfoNamespaces extends ArrayObject
+class ContainerdInfoNamespaces
 {
     /**
      * @var array
@@ -26,7 +25,7 @@ class ContainerdInfoNamespaces extends ArrayObject
      * user-namespaces are enabled and the containerd image-store
      * is used.
      *
-     * @var string
+     * @var string|null
      */
     protected $containers = 'moby';
     /**
@@ -38,7 +37,7 @@ class ContainerdInfoNamespaces extends ArrayObject
      * user-namespaces are enabled and the containerd image-store
      * is used.
      *
-     * @var string
+     * @var string|null
      */
     protected $plugins = 'plugins.moby';
 
@@ -51,9 +50,9 @@ class ContainerdInfoNamespaces extends ArrayObject
      * user-namespaces are enabled and the containerd image-store
      * is used.
      *
-     * @return string
+     * @return string|null
      */
-    public function getContainers(): string
+    public function getContainers(): ?string
     {
         return $this->containers;
     }
@@ -67,11 +66,11 @@ class ContainerdInfoNamespaces extends ArrayObject
      * user-namespaces are enabled and the containerd image-store
      * is used.
      *
-     * @param string $containers
+     * @param string|null $containers
      *
      * @return self
      */
-    public function setContainers(string $containers): self
+    public function setContainers(?string $containers): self
     {
         $this->initialized['containers'] = true;
         $this->containers                = $containers;
@@ -88,9 +87,9 @@ class ContainerdInfoNamespaces extends ArrayObject
      * user-namespaces are enabled and the containerd image-store
      * is used.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPlugins(): string
+    public function getPlugins(): ?string
     {
         return $this->plugins;
     }
@@ -104,11 +103,11 @@ class ContainerdInfoNamespaces extends ArrayObject
      * user-namespaces are enabled and the containerd image-store
      * is used.
      *
-     * @param string $plugins
+     * @param string|null $plugins
      *
      * @return self
      */
-    public function setPlugins(string $plugins): self
+    public function setPlugins(?string $plugins): self
     {
         $this->initialized['plugins'] = true;
         $this->plugins                = $plugins;

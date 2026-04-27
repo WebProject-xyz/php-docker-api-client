@@ -10,15 +10,12 @@ class NodeUpdate extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
     protected $accept;
 
     /**
-     * @param string                                                      $id              The ID of the node
+     * @param string                                                      $id          The ID of the node
      * @param \WebProject\DockerApi\Library\Generated\Model\NodeSpec|null $requestBody
-     * @param array                                                       $queryParameters {
-     *
-     * @var int $version The version number of the node object being updated. This is required
-     *          to avoid conflicting writes.
-     *
-     * }
-     *
+     * @param array{
+     *    "version": int, //The version number of the node object being updated. This is required
+     * to avoid conflicting writes.
+     * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
     public function __construct(string $id, ?\WebProject\DockerApi\Library\Generated\Model\NodeSpec $requestBody = null, array $queryParameters = [], array $accept = [])
@@ -88,16 +85,16 @@ class NodeUpdate extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NodeUpdateBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NodeUpdateNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NodeUpdateInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (503 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (503 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NodeUpdateServiceUnavailableException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

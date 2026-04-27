@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ContainerThrottlingData extends ArrayObject
+class ContainerThrottlingData
 {
     /**
      * @var array
@@ -20,28 +19,28 @@ class ContainerThrottlingData extends ArrayObject
     /**
      * Number of periods with throttling active.
      *
-     * @var int
+     * @var int|null
      */
     protected $periods;
     /**
      * Number of periods when the container hit its throttling limit.
      *
-     * @var int
+     * @var int|null
      */
     protected $throttledPeriods;
     /**
      * Aggregated time (in nanoseconds) the container was throttled for.
      *
-     * @var int
+     * @var int|null
      */
     protected $throttledTime;
 
     /**
      * Number of periods with throttling active.
      *
-     * @return int
+     * @return int|null
      */
-    public function getPeriods(): int
+    public function getPeriods(): ?int
     {
         return $this->periods;
     }
@@ -49,11 +48,11 @@ class ContainerThrottlingData extends ArrayObject
     /**
      * Number of periods with throttling active.
      *
-     * @param int $periods
+     * @param int|null $periods
      *
      * @return self
      */
-    public function setPeriods(int $periods): self
+    public function setPeriods(?int $periods): self
     {
         $this->initialized['periods'] = true;
         $this->periods                = $periods;
@@ -64,9 +63,9 @@ class ContainerThrottlingData extends ArrayObject
     /**
      * Number of periods when the container hit its throttling limit.
      *
-     * @return int
+     * @return int|null
      */
-    public function getThrottledPeriods(): int
+    public function getThrottledPeriods(): ?int
     {
         return $this->throttledPeriods;
     }
@@ -74,11 +73,11 @@ class ContainerThrottlingData extends ArrayObject
     /**
      * Number of periods when the container hit its throttling limit.
      *
-     * @param int $throttledPeriods
+     * @param int|null $throttledPeriods
      *
      * @return self
      */
-    public function setThrottledPeriods(int $throttledPeriods): self
+    public function setThrottledPeriods(?int $throttledPeriods): self
     {
         $this->initialized['throttledPeriods'] = true;
         $this->throttledPeriods                = $throttledPeriods;
@@ -89,9 +88,9 @@ class ContainerThrottlingData extends ArrayObject
     /**
      * Aggregated time (in nanoseconds) the container was throttled for.
      *
-     * @return int
+     * @return int|null
      */
-    public function getThrottledTime(): int
+    public function getThrottledTime(): ?int
     {
         return $this->throttledTime;
     }
@@ -99,11 +98,11 @@ class ContainerThrottlingData extends ArrayObject
     /**
      * Aggregated time (in nanoseconds) the container was throttled for.
      *
-     * @param int $throttledTime
+     * @param int|null $throttledTime
      *
      * @return self
      */
-    public function setThrottledTime(int $throttledTime): self
+    public function setThrottledTime(?int $throttledTime): self
     {
         $this->initialized['throttledTime'] = true;
         $this->throttledTime                = $throttledTime;

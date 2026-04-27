@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class SwarmSpecCAConfig extends ArrayObject
+class SwarmSpecCAConfig
 {
     /**
      * @var array
@@ -20,28 +19,28 @@ class SwarmSpecCAConfig extends ArrayObject
     /**
      * The duration node certificates are issued for.
      *
-     * @var int
+     * @var int|null
      */
     protected $nodeCertExpiry;
     /**
      * Configuration for forwarding signing requests to an external
      * certificate authority.
      *
-     * @var list<SwarmSpecCAConfigExternalCAsItem>
+     * @var list<SwarmSpecCAConfigExternalCAsItem>|null
      */
     protected $externalCAs;
     /**
      * The desired signing CA certificate for all swarm node TLS leaf
      * certificates, in PEM format.
      *
-     * @var string
+     * @var string|null
      */
     protected $signingCACert;
     /**
      * The desired signing CA key for all swarm node TLS leaf certificates,
      * in PEM format.
      *
-     * @var string
+     * @var string|null
      */
     protected $signingCAKey;
     /**
@@ -49,16 +48,16 @@ class SwarmSpecCAConfig extends ArrayObject
      * signing CA certificate and key, if none have been specified in
      * `SigningCACert` and `SigningCAKey`.
      *
-     * @var int
+     * @var int|null
      */
     protected $forceRotate;
 
     /**
      * The duration node certificates are issued for.
      *
-     * @return int
+     * @return int|null
      */
-    public function getNodeCertExpiry(): int
+    public function getNodeCertExpiry(): ?int
     {
         return $this->nodeCertExpiry;
     }
@@ -66,11 +65,11 @@ class SwarmSpecCAConfig extends ArrayObject
     /**
      * The duration node certificates are issued for.
      *
-     * @param int $nodeCertExpiry
+     * @param int|null $nodeCertExpiry
      *
      * @return self
      */
-    public function setNodeCertExpiry(int $nodeCertExpiry): self
+    public function setNodeCertExpiry(?int $nodeCertExpiry): self
     {
         $this->initialized['nodeCertExpiry'] = true;
         $this->nodeCertExpiry                = $nodeCertExpiry;
@@ -82,9 +81,9 @@ class SwarmSpecCAConfig extends ArrayObject
      * Configuration for forwarding signing requests to an external
      * certificate authority.
      *
-     * @return list<SwarmSpecCAConfigExternalCAsItem>
+     * @return list<SwarmSpecCAConfigExternalCAsItem>|null
      */
-    public function getExternalCAs(): array
+    public function getExternalCAs(): ?array
     {
         return $this->externalCAs;
     }
@@ -93,11 +92,11 @@ class SwarmSpecCAConfig extends ArrayObject
      * Configuration for forwarding signing requests to an external
      * certificate authority.
      *
-     * @param list<SwarmSpecCAConfigExternalCAsItem> $externalCAs
+     * @param list<SwarmSpecCAConfigExternalCAsItem>|null $externalCAs
      *
      * @return self
      */
-    public function setExternalCAs(array $externalCAs): self
+    public function setExternalCAs(?array $externalCAs): self
     {
         $this->initialized['externalCAs'] = true;
         $this->externalCAs                = $externalCAs;
@@ -109,9 +108,9 @@ class SwarmSpecCAConfig extends ArrayObject
      * The desired signing CA certificate for all swarm node TLS leaf
      * certificates, in PEM format.
      *
-     * @return string
+     * @return string|null
      */
-    public function getSigningCACert(): string
+    public function getSigningCACert(): ?string
     {
         return $this->signingCACert;
     }
@@ -120,11 +119,11 @@ class SwarmSpecCAConfig extends ArrayObject
      * The desired signing CA certificate for all swarm node TLS leaf
      * certificates, in PEM format.
      *
-     * @param string $signingCACert
+     * @param string|null $signingCACert
      *
      * @return self
      */
-    public function setSigningCACert(string $signingCACert): self
+    public function setSigningCACert(?string $signingCACert): self
     {
         $this->initialized['signingCACert'] = true;
         $this->signingCACert                = $signingCACert;
@@ -136,9 +135,9 @@ class SwarmSpecCAConfig extends ArrayObject
      * The desired signing CA key for all swarm node TLS leaf certificates,
      * in PEM format.
      *
-     * @return string
+     * @return string|null
      */
-    public function getSigningCAKey(): string
+    public function getSigningCAKey(): ?string
     {
         return $this->signingCAKey;
     }
@@ -147,11 +146,11 @@ class SwarmSpecCAConfig extends ArrayObject
      * The desired signing CA key for all swarm node TLS leaf certificates,
      * in PEM format.
      *
-     * @param string $signingCAKey
+     * @param string|null $signingCAKey
      *
      * @return self
      */
-    public function setSigningCAKey(string $signingCAKey): self
+    public function setSigningCAKey(?string $signingCAKey): self
     {
         $this->initialized['signingCAKey'] = true;
         $this->signingCAKey                = $signingCAKey;
@@ -164,9 +163,9 @@ class SwarmSpecCAConfig extends ArrayObject
      * signing CA certificate and key, if none have been specified in
      * `SigningCACert` and `SigningCAKey`.
      *
-     * @return int
+     * @return int|null
      */
-    public function getForceRotate(): int
+    public function getForceRotate(): ?int
     {
         return $this->forceRotate;
     }
@@ -176,11 +175,11 @@ class SwarmSpecCAConfig extends ArrayObject
      * signing CA certificate and key, if none have been specified in
      * `SigningCACert` and `SigningCAKey`.
      *
-     * @param int $forceRotate
+     * @param int|null $forceRotate
      *
      * @return self
      */
-    public function setForceRotate(int $forceRotate): self
+    public function setForceRotate(?int $forceRotate): self
     {
         $this->initialized['forceRotate'] = true;
         $this->forceRotate                = $forceRotate;

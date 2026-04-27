@@ -37,38 +37,32 @@ class SystemVersionComponentsItemNormalizer implements DenormalizerInterface, No
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\SystemVersionComponentsItem();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\SystemVersionComponentsItem();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('Name', $data)) {
             $object->setName($data['Name']);
-            unset($data['Name']);
         }
         if (array_key_exists('Version', $data)) {
             $object->setVersion($data['Version']);
-            unset($data['Version']);
         }
         if (array_key_exists('Details', $data) && null !== $data['Details']) {
-            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['Details'] as $key => $value) {
-                $values[$key] = $value;
+            $value = $data['Details'];
+            if (null === $data['Details']) {
+                $value = $data['Details'];
+            } elseif (isset($data['Details'])) {
+                $value = $data['Details'];
             }
-            $object->setDetails($values);
-            unset($data['Details']);
+            $object->setDetails($value);
         } elseif (array_key_exists('Details', $data) && null === $data['Details']) {
             $object->setDetails(null);
-        }
-        foreach ($data as $key_1 => $value_1) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $object[$key_1] = $value_1;
-            }
         }
 
         return $object;
@@ -79,17 +73,14 @@ class SystemVersionComponentsItemNormalizer implements DenormalizerInterface, No
         $dataArray            = [];
         $dataArray['Name']    = $data->getName();
         $dataArray['Version'] = $data->getVersion();
-        if ($data->isInitialized('details') && null !== $data->getDetails()) {
-            $values = [];
-            foreach ($data->getDetails() as $key => $value) {
-                $values[$key] = $value;
+        if ($data->isInitialized('details')) {
+            $value = $data->getDetails();
+            if (null === $data->getDetails()) {
+                $value = $data->getDetails();
+            } elseif (null !== $data->getDetails()) {
+                $value = $data->getDetails();
             }
-            $dataArray['Details'] = $values;
-        }
-        foreach ($data as $key_1 => $value_1) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $dataArray[$key_1] = $value_1;
-            }
+            $dataArray['Details'] = $value;
         }
 
         return $dataArray;

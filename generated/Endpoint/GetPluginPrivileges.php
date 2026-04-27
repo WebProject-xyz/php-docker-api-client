@@ -9,13 +9,10 @@ class GetPluginPrivileges extends \WebProject\DockerApi\Library\Generated\Runtim
     protected $accept;
 
     /**
-     * @param array $queryParameters {
-     *
-     * @var string $remote The name of the plugin. The `:latest` tag is optional, and is the
-     *             default if omitted.
-     *
-     * }
-     *
+     * @param array{
+     *    "remote": string, //The name of the plugin. The `:latest` tag is optional, and is the
+     * default if omitted.
+     * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
     public function __construct(array $queryParameters = [], array $accept = [])
@@ -70,10 +67,10 @@ class GetPluginPrivileges extends \WebProject\DockerApi\Library\Generated\Runtim
     {
         $status = $response->getStatusCode();
         $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\PluginPrivilege[]', 'json');
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\GetPluginPrivilegesInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

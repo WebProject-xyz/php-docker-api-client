@@ -37,44 +37,53 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirementsNormalizer implements 
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeAccessibilityRequirements();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeAccessibilityRequirements();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Requisite', $data)) {
-            $values = [];
-            foreach ($data['Requisite'] as $value) {
-                $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-                foreach ($value as $key => $value_1) {
-                    $values_1[$key] = $value_1;
+        if (array_key_exists('Requisite', $data) && null !== $data['Requisite']) {
+            $value = $data['Requisite'];
+            if (is_array($data['Requisite']) && $this->isOnlyNumericKeys($data['Requisite'])) {
+                $values = [];
+                foreach ($data['Requisite'] as $value_1) {
+                    $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                    foreach ($value_1 as $key => $value_2) {
+                        $values_1[$key] = $value_2;
+                    }
+                    $values[] = $values_1;
                 }
-                $values[] = $values_1;
+                $value = $values;
+            } elseif (null === $data['Requisite']) {
+                $value = $data['Requisite'];
             }
-            $object->setRequisite($values);
-            unset($data['Requisite']);
+            $object->setRequisite($value);
+        } elseif (array_key_exists('Requisite', $data) && null === $data['Requisite']) {
+            $object->setRequisite(null);
         }
-        if (array_key_exists('Preferred', $data)) {
-            $values_2 = [];
-            foreach ($data['Preferred'] as $value_2) {
-                $values_3 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-                foreach ($value_2 as $key_1 => $value_3) {
-                    $values_3[$key_1] = $value_3;
+        if (array_key_exists('Preferred', $data) && null !== $data['Preferred']) {
+            $value_3 = $data['Preferred'];
+            if (is_array($data['Preferred']) && $this->isOnlyNumericKeys($data['Preferred'])) {
+                $values_2 = [];
+                foreach ($data['Preferred'] as $value_4) {
+                    $values_3 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                    foreach ($value_4 as $key_1 => $value_5) {
+                        $values_3[$key_1] = $value_5;
+                    }
+                    $values_2[] = $values_3;
                 }
-                $values_2[] = $values_3;
+                $value_3 = $values_2;
+            } elseif (null === $data['Preferred']) {
+                $value_3 = $data['Preferred'];
             }
-            $object->setPreferred($values_2);
-            unset($data['Preferred']);
-        }
-        foreach ($data as $key_2 => $value_4) {
-            if (preg_match('/.*/', (string) $key_2)) {
-                $object[$key_2] = $value_4;
-            }
+            $object->setPreferred($value_3);
+        } elseif (array_key_exists('Preferred', $data) && null === $data['Preferred']) {
+            $object->setPreferred(null);
         }
 
         return $object;
@@ -83,32 +92,39 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirementsNormalizer implements 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('requisite') && null !== $data->getRequisite()) {
-            $values = [];
-            foreach ($data->getRequisite() as $value) {
-                $values_1 = [];
-                foreach ($value as $key => $value_1) {
-                    $values_1[$key] = $value_1;
+        if ($data->isInitialized('requisite')) {
+            $value = $data->getRequisite();
+            if (is_array($data->getRequisite())) {
+                $values = [];
+                foreach ($data->getRequisite() as $value_1) {
+                    $values_1 = [];
+                    foreach ($value_1 as $key => $value_2) {
+                        $values_1[$key] = $value_2;
+                    }
+                    $values[] = $values_1;
                 }
-                $values[] = $values_1;
+                $value = $values;
+            } elseif (null === $data->getRequisite()) {
+                $value = $data->getRequisite();
             }
-            $dataArray['Requisite'] = $values;
+            $dataArray['Requisite'] = $value;
         }
-        if ($data->isInitialized('preferred') && null !== $data->getPreferred()) {
-            $values_2 = [];
-            foreach ($data->getPreferred() as $value_2) {
-                $values_3 = [];
-                foreach ($value_2 as $key_1 => $value_3) {
-                    $values_3[$key_1] = $value_3;
+        if ($data->isInitialized('preferred')) {
+            $value_3 = $data->getPreferred();
+            if (is_array($data->getPreferred())) {
+                $values_2 = [];
+                foreach ($data->getPreferred() as $value_4) {
+                    $values_3 = [];
+                    foreach ($value_4 as $key_1 => $value_5) {
+                        $values_3[$key_1] = $value_5;
+                    }
+                    $values_2[] = $values_3;
                 }
-                $values_2[] = $values_3;
+                $value_3 = $values_2;
+            } elseif (null === $data->getPreferred()) {
+                $value_3 = $data->getPreferred();
             }
-            $dataArray['Preferred'] = $values_2;
-        }
-        foreach ($data as $key_2 => $value_4) {
-            if (preg_match('/.*/', (string) $key_2)) {
-                $dataArray[$key_2] = $value_4;
-            }
+            $dataArray['Preferred'] = $value_3;
         }
 
         return $dataArray;

@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class Task extends ArrayObject
+class Task
 {
     /**
      * @var array
@@ -20,7 +19,7 @@ class Task extends ArrayObject
     /**
      * The ID of the task.
      *
-     * @var string
+     * @var string|null
      */
     protected $iD;
     /**
@@ -39,23 +38,23 @@ class Task extends ArrayObject
      */
     protected $version;
     /**
-     * @var string
+     * @var string|null
      */
     protected $createdAt;
     /**
-     * @var string
+     * @var string|null
      */
     protected $updatedAt;
     /**
      * Name of the task.
      *
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
      * User-defined key/value metadata.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $labels;
     /**
@@ -67,17 +66,17 @@ class Task extends ArrayObject
     /**
      * The ID of the service this task is part of.
      *
-     * @var string
+     * @var string|null
      */
     protected $serviceID;
     /**
-     * @var int
+     * @var int|null
      */
     protected $slot;
     /**
      * The ID of the node that this task is on.
      *
-     * @var string
+     * @var string|null
      */
     protected $nodeID;
     /**
@@ -116,9 +115,9 @@ class Task extends ArrayObject
     /**
      * The ID of the task.
      *
-     * @return string
+     * @return string|null
      */
-    public function getID(): string
+    public function getID(): ?string
     {
         return $this->iD;
     }
@@ -126,11 +125,11 @@ class Task extends ArrayObject
     /**
      * The ID of the task.
      *
-     * @param string $iD
+     * @param string|null $iD
      *
      * @return self
      */
-    public function setID(string $iD): self
+    public function setID(?string $iD): self
     {
         $this->initialized['iD'] = true;
         $this->iD                = $iD;
@@ -182,19 +181,19 @@ class Task extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?string
     {
         return $this->createdAt;
     }
 
     /**
-     * @param string $createdAt
+     * @param string|null $createdAt
      *
      * @return self
      */
-    public function setCreatedAt(string $createdAt): self
+    public function setCreatedAt(?string $createdAt): self
     {
         $this->initialized['createdAt'] = true;
         $this->createdAt                = $createdAt;
@@ -203,19 +202,19 @@ class Task extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): ?string
     {
         return $this->updatedAt;
     }
 
     /**
-     * @param string $updatedAt
+     * @param string|null $updatedAt
      *
      * @return self
      */
-    public function setUpdatedAt(string $updatedAt): self
+    public function setUpdatedAt(?string $updatedAt): self
     {
         $this->initialized['updatedAt'] = true;
         $this->updatedAt                = $updatedAt;
@@ -226,9 +225,9 @@ class Task extends ArrayObject
     /**
      * Name of the task.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -236,11 +235,11 @@ class Task extends ArrayObject
     /**
      * Name of the task.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -251,9 +250,9 @@ class Task extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getLabels(): iterable
+    public function getLabels(): ?iterable
     {
         return $this->labels;
     }
@@ -261,11 +260,11 @@ class Task extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @param array<string, string> $labels
+     * @param array<string, string>|null $labels
      *
      * @return self
      */
-    public function setLabels(iterable $labels): self
+    public function setLabels(?iterable $labels): self
     {
         $this->initialized['labels'] = true;
         $this->labels                = $labels;
@@ -301,9 +300,9 @@ class Task extends ArrayObject
     /**
      * The ID of the service this task is part of.
      *
-     * @return string
+     * @return string|null
      */
-    public function getServiceID(): string
+    public function getServiceID(): ?string
     {
         return $this->serviceID;
     }
@@ -311,11 +310,11 @@ class Task extends ArrayObject
     /**
      * The ID of the service this task is part of.
      *
-     * @param string $serviceID
+     * @param string|null $serviceID
      *
      * @return self
      */
-    public function setServiceID(string $serviceID): self
+    public function setServiceID(?string $serviceID): self
     {
         $this->initialized['serviceID'] = true;
         $this->serviceID                = $serviceID;
@@ -324,19 +323,19 @@ class Task extends ArrayObject
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getSlot(): int
+    public function getSlot(): ?int
     {
         return $this->slot;
     }
 
     /**
-     * @param int $slot
+     * @param int|null $slot
      *
      * @return self
      */
-    public function setSlot(int $slot): self
+    public function setSlot(?int $slot): self
     {
         $this->initialized['slot'] = true;
         $this->slot                = $slot;
@@ -347,9 +346,9 @@ class Task extends ArrayObject
     /**
      * The ID of the node that this task is on.
      *
-     * @return string
+     * @return string|null
      */
-    public function getNodeID(): string
+    public function getNodeID(): ?string
     {
         return $this->nodeID;
     }
@@ -357,11 +356,11 @@ class Task extends ArrayObject
     /**
      * The ID of the node that this task is on.
      *
-     * @param string $nodeID
+     * @param string|null $nodeID
      *
      * @return self
      */
-    public function setNodeID(string $nodeID): self
+    public function setNodeID(?string $nodeID): self
     {
         $this->initialized['nodeID'] = true;
         $this->nodeID                = $nodeID;

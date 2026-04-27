@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ObjectVersion extends ArrayObject
+class ObjectVersion
 {
     /**
      * @var array
@@ -18,24 +17,24 @@ class ObjectVersion extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var int
+     * @var int|null
      */
     protected $index;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getIndex(): int
+    public function getIndex(): ?int
     {
         return $this->index;
     }
 
     /**
-     * @param int $index
+     * @param int|null $index
      *
      * @return self
      */
-    public function setIndex(int $index): self
+    public function setIndex(?int $index): self
     {
         $this->initialized['index'] = true;
         $this->index                = $index;

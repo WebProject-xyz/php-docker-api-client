@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ClusterInfo extends ArrayObject
+class ClusterInfo
 {
     /**
      * @var array
@@ -20,7 +19,7 @@ class ClusterInfo extends ArrayObject
     /**
      * The ID of the swarm.
      *
-     * @var string
+     * @var string|null
      */
     protected $iD;
     /**
@@ -42,14 +41,14 @@ class ClusterInfo extends ArrayObject
      * Date and time at which the swarm was initialised in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @var string
+     * @var string|null
      */
     protected $createdAt;
     /**
      * Date and time at which the swarm was last updated in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @var string
+     * @var string|null
      */
     protected $updatedAt;
     /**
@@ -68,7 +67,7 @@ class ClusterInfo extends ArrayObject
     /**
      * Whether there is currently a root CA rotation in progress for the swarm.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $rootRotationInProgress;
     /**
@@ -76,30 +75,30 @@ class ClusterInfo extends ArrayObject
      * Acceptable port range is 1024 to 49151.
      * If no port is set or is set to 0, the default port (4789) is used.
      *
-     * @var int
+     * @var int|null
      */
     protected $dataPathPort = 4789;
     /**
      * Default Address Pool specifies default subnet pools for global scope
      * networks.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $defaultAddrPool;
     /**
      * SubnetSize specifies the subnet size of the networks created from the
      * default subnet pool.
      *
-     * @var int
+     * @var int|null
      */
     protected $subnetSize = 24;
 
     /**
      * The ID of the swarm.
      *
-     * @return string
+     * @return string|null
      */
-    public function getID(): string
+    public function getID(): ?string
     {
         return $this->iD;
     }
@@ -107,11 +106,11 @@ class ClusterInfo extends ArrayObject
     /**
      * The ID of the swarm.
      *
-     * @param string $iD
+     * @param string|null $iD
      *
      * @return self
      */
-    public function setID(string $iD): self
+    public function setID(?string $iD): self
     {
         $this->initialized['iD'] = true;
         $this->iD                = $iD;
@@ -166,9 +165,9 @@ class ClusterInfo extends ArrayObject
      * Date and time at which the swarm was initialised in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?string
     {
         return $this->createdAt;
     }
@@ -177,11 +176,11 @@ class ClusterInfo extends ArrayObject
      * Date and time at which the swarm was initialised in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @param string $createdAt
+     * @param string|null $createdAt
      *
      * @return self
      */
-    public function setCreatedAt(string $createdAt): self
+    public function setCreatedAt(?string $createdAt): self
     {
         $this->initialized['createdAt'] = true;
         $this->createdAt                = $createdAt;
@@ -193,9 +192,9 @@ class ClusterInfo extends ArrayObject
      * Date and time at which the swarm was last updated in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @return string
+     * @return string|null
      */
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): ?string
     {
         return $this->updatedAt;
     }
@@ -204,11 +203,11 @@ class ClusterInfo extends ArrayObject
      * Date and time at which the swarm was last updated in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @param string $updatedAt
+     * @param string|null $updatedAt
      *
      * @return self
      */
-    public function setUpdatedAt(string $updatedAt): self
+    public function setUpdatedAt(?string $updatedAt): self
     {
         $this->initialized['updatedAt'] = true;
         $this->updatedAt                = $updatedAt;
@@ -271,9 +270,9 @@ class ClusterInfo extends ArrayObject
     /**
      * Whether there is currently a root CA rotation in progress for the swarm.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getRootRotationInProgress(): bool
+    public function getRootRotationInProgress(): ?bool
     {
         return $this->rootRotationInProgress;
     }
@@ -281,11 +280,11 @@ class ClusterInfo extends ArrayObject
     /**
      * Whether there is currently a root CA rotation in progress for the swarm.
      *
-     * @param bool $rootRotationInProgress
+     * @param bool|null $rootRotationInProgress
      *
      * @return self
      */
-    public function setRootRotationInProgress(bool $rootRotationInProgress): self
+    public function setRootRotationInProgress(?bool $rootRotationInProgress): self
     {
         $this->initialized['rootRotationInProgress'] = true;
         $this->rootRotationInProgress                = $rootRotationInProgress;
@@ -298,9 +297,9 @@ class ClusterInfo extends ArrayObject
      * Acceptable port range is 1024 to 49151.
      * If no port is set or is set to 0, the default port (4789) is used.
      *
-     * @return int
+     * @return int|null
      */
-    public function getDataPathPort(): int
+    public function getDataPathPort(): ?int
     {
         return $this->dataPathPort;
     }
@@ -310,11 +309,11 @@ class ClusterInfo extends ArrayObject
      * Acceptable port range is 1024 to 49151.
      * If no port is set or is set to 0, the default port (4789) is used.
      *
-     * @param int $dataPathPort
+     * @param int|null $dataPathPort
      *
      * @return self
      */
-    public function setDataPathPort(int $dataPathPort): self
+    public function setDataPathPort(?int $dataPathPort): self
     {
         $this->initialized['dataPathPort'] = true;
         $this->dataPathPort                = $dataPathPort;
@@ -326,9 +325,9 @@ class ClusterInfo extends ArrayObject
      * Default Address Pool specifies default subnet pools for global scope
      * networks.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getDefaultAddrPool(): array
+    public function getDefaultAddrPool(): ?array
     {
         return $this->defaultAddrPool;
     }
@@ -337,11 +336,11 @@ class ClusterInfo extends ArrayObject
      * Default Address Pool specifies default subnet pools for global scope
      * networks.
      *
-     * @param list<string> $defaultAddrPool
+     * @param list<string>|null $defaultAddrPool
      *
      * @return self
      */
-    public function setDefaultAddrPool(array $defaultAddrPool): self
+    public function setDefaultAddrPool(?array $defaultAddrPool): self
     {
         $this->initialized['defaultAddrPool'] = true;
         $this->defaultAddrPool                = $defaultAddrPool;
@@ -353,9 +352,9 @@ class ClusterInfo extends ArrayObject
      * SubnetSize specifies the subnet size of the networks created from the
      * default subnet pool.
      *
-     * @return int
+     * @return int|null
      */
-    public function getSubnetSize(): int
+    public function getSubnetSize(): ?int
     {
         return $this->subnetSize;
     }
@@ -364,11 +363,11 @@ class ClusterInfo extends ArrayObject
      * SubnetSize specifies the subnet size of the networks created from the
      * default subnet pool.
      *
-     * @param int $subnetSize
+     * @param int|null $subnetSize
      *
      * @return self
      */
-    public function setSubnetSize(int $subnetSize): self
+    public function setSubnetSize(?int $subnetSize): self
     {
         $this->initialized['subnetSize'] = true;
         $this->subnetSize                = $subnetSize;

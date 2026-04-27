@@ -23,23 +23,21 @@ class ImageGet extends \WebProject\DockerApi\Library\Generated\Runtime\Client\Ba
      *
      * ```json
      * {
-     * "hello-world": {
-     * "latest": "565a9d68a73f6706862bfe8409a7f659776d4d60a8d096eb4a3cbce6999cc2a1"
-     * }
+     *   "hello-world": {
+     *     "latest": "565a9d68a73f6706862bfe8409a7f659776d4d60a8d096eb4a3cbce6999cc2a1"
+     *   }
      * }
      * ```
      *
-     * @param string $name            Image name or ID
-     * @param array  $queryParameters {
-     *
-     * @var string $platform JSON encoded OCI platform describing a platform which will be used
-     *             to select a platform-specific image to be saved if the image is
-     *             multi-platform.
-     *             If not provided, the full multi-platform image will be saved.
+     * @param string $name Image name or ID
+     * @param array{
+     *    "platform"?: array, //JSON encoded OCI platform describing a platform which will be used
+     * to select a platform-specific image to be saved if the image is
+     * multi-platform.
+     * If not provided, the full multi-platform image will be saved.
      *
      * Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
-     *
-     * }
+     * } $queryParameters
      */
     public function __construct(string $name, array $queryParameters = [])
     {
@@ -73,7 +71,7 @@ class ImageGet extends \WebProject\DockerApi\Library\Generated\Runtime\Client\Ba
         $optionsResolver->setDefined(['platform']);
         $optionsResolver->setRequired([]);
         $optionsResolver->setDefaults([]);
-        $optionsResolver->addAllowedTypes('platform', ['string']);
+        $optionsResolver->addAllowedTypes('platform', ['array']);
 
         return $optionsResolver;
     }

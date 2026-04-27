@@ -10,13 +10,11 @@ class ContainerRestart extends \WebProject\DockerApi\Library\Generated\Runtime\C
     protected $accept;
 
     /**
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var string $signal Signal to send to the container as an integer or string (e.g. `SIGINT`).
-     * @var int    $t Number of seconds to wait before killing the container
-     *             }
-     *
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "signal"?: string, //Signal to send to the container as an integer or string (e.g. `SIGINT`).
+     *    "t"?: int, //Number of seconds to wait before killing the container
+     * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
     public function __construct(string $id, array $queryParameters = [], array $accept = [])
@@ -77,10 +75,10 @@ class ContainerRestart extends \WebProject\DockerApi\Library\Generated\Runtime\C
         if (204 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerRestartNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerRestartInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

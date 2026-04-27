@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ImageInspectRootFS extends ArrayObject
+class ImageInspectRootFS
 {
     /**
      * @var array
@@ -22,7 +21,7 @@ class ImageInspectRootFS extends ArrayObject
      */
     protected $type;
     /**
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $layers;
 
@@ -48,19 +47,19 @@ class ImageInspectRootFS extends ArrayObject
     }
 
     /**
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getLayers(): array
+    public function getLayers(): ?array
     {
         return $this->layers;
     }
 
     /**
-     * @param list<string> $layers
+     * @param list<string>|null $layers
      *
      * @return self
      */
-    public function setLayers(array $layers): self
+    public function setLayers(?array $layers): self
     {
         $this->initialized['layers'] = true;
         $this->layers                = $layers;

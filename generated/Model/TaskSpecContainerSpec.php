@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecContainerSpec extends ArrayObject
+class TaskSpecContainerSpec
 {
     /**
      * @var array
@@ -20,104 +19,105 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * The image name to use for the container.
      *
-     * @var string
+     * @var string|null
      */
     protected $image;
     /**
      * User-defined key/value data.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $labels;
     /**
      * The command to be run in the image.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $command;
     /**
      * Arguments to the command.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $args;
     /**
      * The hostname to use for the container, as a valid
      * [RFC 1123](https://tools.ietf.org/html/rfc1123) hostname.
      *
-     * @var string
+     * @var string|null
      */
     protected $hostname;
     /**
      * A list of environment variables in the form `VAR=value`.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $env;
     /**
      * The working directory for commands to run in.
      *
-     * @var string
+     * @var string|null
      */
     protected $dir;
     /**
      * The user inside the container.
      *
-     * @var string
+     * @var string|null
      */
     protected $user;
     /**
      * A list of additional groups that the container process will run as.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $groups;
     /**
      * Security options for the container.
      *
-     * @var TaskSpecContainerSpecPrivileges
+     * @var TaskSpecContainerSpecPrivileges|null
      */
     protected $privileges;
     /**
      * Whether a pseudo-TTY should be allocated.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $tTY;
     /**
      * Open `stdin`.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $openStdin;
     /**
      * Mount the container's root filesystem as read only.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $readOnly;
     /**
      * Specification for mounts to be added to containers created as part
      * of the service.
      *
-     * @var list<Mount>
+     * @var list<Mount>|null
      */
     protected $mounts;
     /**
      * Signal to stop the container.
      *
-     * @var string
+     * @var string|null
      */
     protected $stopSignal;
     /**
      * Amount of time to wait for the container to terminate before
      * forcefully killing it.
      *
-     * @var int
+     * @var int|null
      */
     protected $stopGracePeriod;
     /**
      * A test to perform to check that the container is healthy.
+     * Healthcheck commands should be side-effect free.
      *
      * @var HealthConfig
      */
@@ -128,44 +128,44 @@ class TaskSpecContainerSpec extends ArrayObject
      * [hosts(5)](http://man7.org/linux/man-pages/man5/hosts.5.html)
      * man page:
      *
-     * IP_address canonical_hostname [aliases...]
+     *     IP_address canonical_hostname [aliases...]
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $hosts;
     /**
      * Specification for DNS related configurations in resolver configuration
      * file (`resolv.conf`).
      *
-     * @var TaskSpecContainerSpecDNSConfig
+     * @var TaskSpecContainerSpecDNSConfig|null
      */
     protected $dNSConfig;
     /**
      * Secrets contains references to zero or more secrets that will be
      * exposed to the service.
      *
-     * @var list<TaskSpecContainerSpecSecretsItem>
+     * @var list<TaskSpecContainerSpecSecretsItem>|null
      */
     protected $secrets;
     /**
      * An integer value containing the score given to the container in
      * order to tune OOM killer preferences.
      *
-     * @var int
+     * @var int|null
      */
     protected $oomScoreAdj;
     /**
      * Configs contains references to zero or more configs that will be
      * exposed to the service.
      *
-     * @var list<TaskSpecContainerSpecConfigsItem>
+     * @var list<TaskSpecContainerSpecConfigsItem>|null
      */
     protected $configs;
     /**
      * Isolation technology of the containers running the service.
      * (Windows only).
      *
-     * @var string
+     * @var string|null
      */
     protected $isolation;
     /**
@@ -185,36 +185,36 @@ class TaskSpecContainerSpec extends ArrayObject
      * to determine whether a given sysctl will work properly in a
      * Service.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $sysctls;
     /**
      * A list of kernel capabilities to add to the default set
      * for the container.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $capabilityAdd;
     /**
      * A list of kernel capabilities to drop from the default set
      * for the container.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $capabilityDrop;
     /**
      * A list of resource limits to set in the container. For example: `{"Name": "nofile", "Soft": 1024, "Hard": 2048}`".
      *
-     * @var list<TaskSpecContainerSpecUlimitsItem>
+     * @var list<TaskSpecContainerSpecUlimitsItem>|null
      */
     protected $ulimits;
 
     /**
      * The image name to use for the container.
      *
-     * @return string
+     * @return string|null
      */
-    public function getImage(): string
+    public function getImage(): ?string
     {
         return $this->image;
     }
@@ -222,11 +222,11 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * The image name to use for the container.
      *
-     * @param string $image
+     * @param string|null $image
      *
      * @return self
      */
-    public function setImage(string $image): self
+    public function setImage(?string $image): self
     {
         $this->initialized['image'] = true;
         $this->image                = $image;
@@ -237,9 +237,9 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * User-defined key/value data.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getLabels(): iterable
+    public function getLabels(): ?iterable
     {
         return $this->labels;
     }
@@ -247,11 +247,11 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * User-defined key/value data.
      *
-     * @param array<string, string> $labels
+     * @param array<string, string>|null $labels
      *
      * @return self
      */
-    public function setLabels(iterable $labels): self
+    public function setLabels(?iterable $labels): self
     {
         $this->initialized['labels'] = true;
         $this->labels                = $labels;
@@ -262,9 +262,9 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * The command to be run in the image.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getCommand(): array
+    public function getCommand(): ?array
     {
         return $this->command;
     }
@@ -272,11 +272,11 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * The command to be run in the image.
      *
-     * @param list<string> $command
+     * @param list<string>|null $command
      *
      * @return self
      */
-    public function setCommand(array $command): self
+    public function setCommand(?array $command): self
     {
         $this->initialized['command'] = true;
         $this->command                = $command;
@@ -287,9 +287,9 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * Arguments to the command.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getArgs(): array
+    public function getArgs(): ?array
     {
         return $this->args;
     }
@@ -297,11 +297,11 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * Arguments to the command.
      *
-     * @param list<string> $args
+     * @param list<string>|null $args
      *
      * @return self
      */
-    public function setArgs(array $args): self
+    public function setArgs(?array $args): self
     {
         $this->initialized['args'] = true;
         $this->args                = $args;
@@ -313,9 +313,9 @@ class TaskSpecContainerSpec extends ArrayObject
      * The hostname to use for the container, as a valid
      * [RFC 1123](https://tools.ietf.org/html/rfc1123) hostname.
      *
-     * @return string
+     * @return string|null
      */
-    public function getHostname(): string
+    public function getHostname(): ?string
     {
         return $this->hostname;
     }
@@ -324,11 +324,11 @@ class TaskSpecContainerSpec extends ArrayObject
      * The hostname to use for the container, as a valid
      * [RFC 1123](https://tools.ietf.org/html/rfc1123) hostname.
      *
-     * @param string $hostname
+     * @param string|null $hostname
      *
      * @return self
      */
-    public function setHostname(string $hostname): self
+    public function setHostname(?string $hostname): self
     {
         $this->initialized['hostname'] = true;
         $this->hostname                = $hostname;
@@ -339,9 +339,9 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * A list of environment variables in the form `VAR=value`.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getEnv(): array
+    public function getEnv(): ?array
     {
         return $this->env;
     }
@@ -349,11 +349,11 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * A list of environment variables in the form `VAR=value`.
      *
-     * @param list<string> $env
+     * @param list<string>|null $env
      *
      * @return self
      */
-    public function setEnv(array $env): self
+    public function setEnv(?array $env): self
     {
         $this->initialized['env'] = true;
         $this->env                = $env;
@@ -364,9 +364,9 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * The working directory for commands to run in.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDir(): string
+    public function getDir(): ?string
     {
         return $this->dir;
     }
@@ -374,11 +374,11 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * The working directory for commands to run in.
      *
-     * @param string $dir
+     * @param string|null $dir
      *
      * @return self
      */
-    public function setDir(string $dir): self
+    public function setDir(?string $dir): self
     {
         $this->initialized['dir'] = true;
         $this->dir                = $dir;
@@ -389,9 +389,9 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * The user inside the container.
      *
-     * @return string
+     * @return string|null
      */
-    public function getUser(): string
+    public function getUser(): ?string
     {
         return $this->user;
     }
@@ -399,11 +399,11 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * The user inside the container.
      *
-     * @param string $user
+     * @param string|null $user
      *
      * @return self
      */
-    public function setUser(string $user): self
+    public function setUser(?string $user): self
     {
         $this->initialized['user'] = true;
         $this->user                = $user;
@@ -414,9 +414,9 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * A list of additional groups that the container process will run as.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getGroups(): array
+    public function getGroups(): ?array
     {
         return $this->groups;
     }
@@ -424,11 +424,11 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * A list of additional groups that the container process will run as.
      *
-     * @param list<string> $groups
+     * @param list<string>|null $groups
      *
      * @return self
      */
-    public function setGroups(array $groups): self
+    public function setGroups(?array $groups): self
     {
         $this->initialized['groups'] = true;
         $this->groups                = $groups;
@@ -439,9 +439,9 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * Security options for the container.
      *
-     * @return TaskSpecContainerSpecPrivileges
+     * @return TaskSpecContainerSpecPrivileges|null
      */
-    public function getPrivileges(): TaskSpecContainerSpecPrivileges
+    public function getPrivileges(): ?TaskSpecContainerSpecPrivileges
     {
         return $this->privileges;
     }
@@ -449,11 +449,11 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * Security options for the container.
      *
-     * @param TaskSpecContainerSpecPrivileges $privileges
+     * @param TaskSpecContainerSpecPrivileges|null $privileges
      *
      * @return self
      */
-    public function setPrivileges(TaskSpecContainerSpecPrivileges $privileges): self
+    public function setPrivileges(?TaskSpecContainerSpecPrivileges $privileges): self
     {
         $this->initialized['privileges'] = true;
         $this->privileges                = $privileges;
@@ -464,9 +464,9 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * Whether a pseudo-TTY should be allocated.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getTTY(): bool
+    public function getTTY(): ?bool
     {
         return $this->tTY;
     }
@@ -474,11 +474,11 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * Whether a pseudo-TTY should be allocated.
      *
-     * @param bool $tTY
+     * @param bool|null $tTY
      *
      * @return self
      */
-    public function setTTY(bool $tTY): self
+    public function setTTY(?bool $tTY): self
     {
         $this->initialized['tTY'] = true;
         $this->tTY                = $tTY;
@@ -489,9 +489,9 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * Open `stdin`.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getOpenStdin(): bool
+    public function getOpenStdin(): ?bool
     {
         return $this->openStdin;
     }
@@ -499,11 +499,11 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * Open `stdin`.
      *
-     * @param bool $openStdin
+     * @param bool|null $openStdin
      *
      * @return self
      */
-    public function setOpenStdin(bool $openStdin): self
+    public function setOpenStdin(?bool $openStdin): self
     {
         $this->initialized['openStdin'] = true;
         $this->openStdin                = $openStdin;
@@ -514,9 +514,9 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * Mount the container's root filesystem as read only.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getReadOnly(): bool
+    public function getReadOnly(): ?bool
     {
         return $this->readOnly;
     }
@@ -524,11 +524,11 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * Mount the container's root filesystem as read only.
      *
-     * @param bool $readOnly
+     * @param bool|null $readOnly
      *
      * @return self
      */
-    public function setReadOnly(bool $readOnly): self
+    public function setReadOnly(?bool $readOnly): self
     {
         $this->initialized['readOnly'] = true;
         $this->readOnly                = $readOnly;
@@ -540,9 +540,9 @@ class TaskSpecContainerSpec extends ArrayObject
      * Specification for mounts to be added to containers created as part
      * of the service.
      *
-     * @return list<Mount>
+     * @return list<Mount>|null
      */
-    public function getMounts(): array
+    public function getMounts(): ?array
     {
         return $this->mounts;
     }
@@ -551,11 +551,11 @@ class TaskSpecContainerSpec extends ArrayObject
      * Specification for mounts to be added to containers created as part
      * of the service.
      *
-     * @param list<Mount> $mounts
+     * @param list<Mount>|null $mounts
      *
      * @return self
      */
-    public function setMounts(array $mounts): self
+    public function setMounts(?array $mounts): self
     {
         $this->initialized['mounts'] = true;
         $this->mounts                = $mounts;
@@ -566,9 +566,9 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * Signal to stop the container.
      *
-     * @return string
+     * @return string|null
      */
-    public function getStopSignal(): string
+    public function getStopSignal(): ?string
     {
         return $this->stopSignal;
     }
@@ -576,11 +576,11 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * Signal to stop the container.
      *
-     * @param string $stopSignal
+     * @param string|null $stopSignal
      *
      * @return self
      */
-    public function setStopSignal(string $stopSignal): self
+    public function setStopSignal(?string $stopSignal): self
     {
         $this->initialized['stopSignal'] = true;
         $this->stopSignal                = $stopSignal;
@@ -592,9 +592,9 @@ class TaskSpecContainerSpec extends ArrayObject
      * Amount of time to wait for the container to terminate before
      * forcefully killing it.
      *
-     * @return int
+     * @return int|null
      */
-    public function getStopGracePeriod(): int
+    public function getStopGracePeriod(): ?int
     {
         return $this->stopGracePeriod;
     }
@@ -603,11 +603,11 @@ class TaskSpecContainerSpec extends ArrayObject
      * Amount of time to wait for the container to terminate before
      * forcefully killing it.
      *
-     * @param int $stopGracePeriod
+     * @param int|null $stopGracePeriod
      *
      * @return self
      */
-    public function setStopGracePeriod(int $stopGracePeriod): self
+    public function setStopGracePeriod(?int $stopGracePeriod): self
     {
         $this->initialized['stopGracePeriod'] = true;
         $this->stopGracePeriod                = $stopGracePeriod;
@@ -617,6 +617,7 @@ class TaskSpecContainerSpec extends ArrayObject
 
     /**
      * A test to perform to check that the container is healthy.
+     * Healthcheck commands should be side-effect free.
      *
      * @return HealthConfig
      */
@@ -627,6 +628,7 @@ class TaskSpecContainerSpec extends ArrayObject
 
     /**
      * A test to perform to check that the container is healthy.
+     * Healthcheck commands should be side-effect free.
      *
      * @param HealthConfig $healthCheck
      *
@@ -646,11 +648,11 @@ class TaskSpecContainerSpec extends ArrayObject
      * [hosts(5)](http://man7.org/linux/man-pages/man5/hosts.5.html)
      * man page:
      *
-     * IP_address canonical_hostname [aliases...]
+     *     IP_address canonical_hostname [aliases...]
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getHosts(): array
+    public function getHosts(): ?array
     {
         return $this->hosts;
     }
@@ -663,11 +665,11 @@ class TaskSpecContainerSpec extends ArrayObject
      *
      * IP_address canonical_hostname [aliases...]
      *
-     * @param list<string> $hosts
+     * @param list<string>|null $hosts
      *
      * @return self
      */
-    public function setHosts(array $hosts): self
+    public function setHosts(?array $hosts): self
     {
         $this->initialized['hosts'] = true;
         $this->hosts                = $hosts;
@@ -679,9 +681,9 @@ class TaskSpecContainerSpec extends ArrayObject
      * Specification for DNS related configurations in resolver configuration
      * file (`resolv.conf`).
      *
-     * @return TaskSpecContainerSpecDNSConfig
+     * @return TaskSpecContainerSpecDNSConfig|null
      */
-    public function getDNSConfig(): TaskSpecContainerSpecDNSConfig
+    public function getDNSConfig(): ?TaskSpecContainerSpecDNSConfig
     {
         return $this->dNSConfig;
     }
@@ -690,11 +692,11 @@ class TaskSpecContainerSpec extends ArrayObject
      * Specification for DNS related configurations in resolver configuration
      * file (`resolv.conf`).
      *
-     * @param TaskSpecContainerSpecDNSConfig $dNSConfig
+     * @param TaskSpecContainerSpecDNSConfig|null $dNSConfig
      *
      * @return self
      */
-    public function setDNSConfig(TaskSpecContainerSpecDNSConfig $dNSConfig): self
+    public function setDNSConfig(?TaskSpecContainerSpecDNSConfig $dNSConfig): self
     {
         $this->initialized['dNSConfig'] = true;
         $this->dNSConfig                = $dNSConfig;
@@ -706,9 +708,9 @@ class TaskSpecContainerSpec extends ArrayObject
      * Secrets contains references to zero or more secrets that will be
      * exposed to the service.
      *
-     * @return list<TaskSpecContainerSpecSecretsItem>
+     * @return list<TaskSpecContainerSpecSecretsItem>|null
      */
-    public function getSecrets(): array
+    public function getSecrets(): ?array
     {
         return $this->secrets;
     }
@@ -717,11 +719,11 @@ class TaskSpecContainerSpec extends ArrayObject
      * Secrets contains references to zero or more secrets that will be
      * exposed to the service.
      *
-     * @param list<TaskSpecContainerSpecSecretsItem> $secrets
+     * @param list<TaskSpecContainerSpecSecretsItem>|null $secrets
      *
      * @return self
      */
-    public function setSecrets(array $secrets): self
+    public function setSecrets(?array $secrets): self
     {
         $this->initialized['secrets'] = true;
         $this->secrets                = $secrets;
@@ -733,9 +735,9 @@ class TaskSpecContainerSpec extends ArrayObject
      * An integer value containing the score given to the container in
      * order to tune OOM killer preferences.
      *
-     * @return int
+     * @return int|null
      */
-    public function getOomScoreAdj(): int
+    public function getOomScoreAdj(): ?int
     {
         return $this->oomScoreAdj;
     }
@@ -744,11 +746,11 @@ class TaskSpecContainerSpec extends ArrayObject
      * An integer value containing the score given to the container in
      * order to tune OOM killer preferences.
      *
-     * @param int $oomScoreAdj
+     * @param int|null $oomScoreAdj
      *
      * @return self
      */
-    public function setOomScoreAdj(int $oomScoreAdj): self
+    public function setOomScoreAdj(?int $oomScoreAdj): self
     {
         $this->initialized['oomScoreAdj'] = true;
         $this->oomScoreAdj                = $oomScoreAdj;
@@ -760,9 +762,9 @@ class TaskSpecContainerSpec extends ArrayObject
      * Configs contains references to zero or more configs that will be
      * exposed to the service.
      *
-     * @return list<TaskSpecContainerSpecConfigsItem>
+     * @return list<TaskSpecContainerSpecConfigsItem>|null
      */
-    public function getConfigs(): array
+    public function getConfigs(): ?array
     {
         return $this->configs;
     }
@@ -771,11 +773,11 @@ class TaskSpecContainerSpec extends ArrayObject
      * Configs contains references to zero or more configs that will be
      * exposed to the service.
      *
-     * @param list<TaskSpecContainerSpecConfigsItem> $configs
+     * @param list<TaskSpecContainerSpecConfigsItem>|null $configs
      *
      * @return self
      */
-    public function setConfigs(array $configs): self
+    public function setConfigs(?array $configs): self
     {
         $this->initialized['configs'] = true;
         $this->configs                = $configs;
@@ -787,9 +789,9 @@ class TaskSpecContainerSpec extends ArrayObject
      * Isolation technology of the containers running the service.
      * (Windows only).
      *
-     * @return string
+     * @return string|null
      */
-    public function getIsolation(): string
+    public function getIsolation(): ?string
     {
         return $this->isolation;
     }
@@ -798,11 +800,11 @@ class TaskSpecContainerSpec extends ArrayObject
      * Isolation technology of the containers running the service.
      * (Windows only).
      *
-     * @param string $isolation
+     * @param string|null $isolation
      *
      * @return self
      */
-    public function setIsolation(string $isolation): self
+    public function setIsolation(?string $isolation): self
     {
         $this->initialized['isolation'] = true;
         $this->isolation                = $isolation;
@@ -848,9 +850,9 @@ class TaskSpecContainerSpec extends ArrayObject
      * to determine whether a given sysctl will work properly in a
      * Service.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getSysctls(): iterable
+    public function getSysctls(): ?iterable
     {
         return $this->sysctls;
     }
@@ -864,11 +866,11 @@ class TaskSpecContainerSpec extends ArrayObject
      * to determine whether a given sysctl will work properly in a
      * Service.
      *
-     * @param array<string, string> $sysctls
+     * @param array<string, string>|null $sysctls
      *
      * @return self
      */
-    public function setSysctls(iterable $sysctls): self
+    public function setSysctls(?iterable $sysctls): self
     {
         $this->initialized['sysctls'] = true;
         $this->sysctls                = $sysctls;
@@ -880,9 +882,9 @@ class TaskSpecContainerSpec extends ArrayObject
      * A list of kernel capabilities to add to the default set
      * for the container.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getCapabilityAdd(): array
+    public function getCapabilityAdd(): ?array
     {
         return $this->capabilityAdd;
     }
@@ -891,11 +893,11 @@ class TaskSpecContainerSpec extends ArrayObject
      * A list of kernel capabilities to add to the default set
      * for the container.
      *
-     * @param list<string> $capabilityAdd
+     * @param list<string>|null $capabilityAdd
      *
      * @return self
      */
-    public function setCapabilityAdd(array $capabilityAdd): self
+    public function setCapabilityAdd(?array $capabilityAdd): self
     {
         $this->initialized['capabilityAdd'] = true;
         $this->capabilityAdd                = $capabilityAdd;
@@ -907,9 +909,9 @@ class TaskSpecContainerSpec extends ArrayObject
      * A list of kernel capabilities to drop from the default set
      * for the container.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getCapabilityDrop(): array
+    public function getCapabilityDrop(): ?array
     {
         return $this->capabilityDrop;
     }
@@ -918,11 +920,11 @@ class TaskSpecContainerSpec extends ArrayObject
      * A list of kernel capabilities to drop from the default set
      * for the container.
      *
-     * @param list<string> $capabilityDrop
+     * @param list<string>|null $capabilityDrop
      *
      * @return self
      */
-    public function setCapabilityDrop(array $capabilityDrop): self
+    public function setCapabilityDrop(?array $capabilityDrop): self
     {
         $this->initialized['capabilityDrop'] = true;
         $this->capabilityDrop                = $capabilityDrop;
@@ -933,9 +935,9 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * A list of resource limits to set in the container. For example: `{"Name": "nofile", "Soft": 1024, "Hard": 2048}`".
      *
-     * @return list<TaskSpecContainerSpecUlimitsItem>
+     * @return list<TaskSpecContainerSpecUlimitsItem>|null
      */
-    public function getUlimits(): array
+    public function getUlimits(): ?array
     {
         return $this->ulimits;
     }
@@ -943,11 +945,11 @@ class TaskSpecContainerSpec extends ArrayObject
     /**
      * A list of resource limits to set in the container. For example: `{"Name": "nofile", "Soft": 1024, "Hard": 2048}`".
      *
-     * @param list<TaskSpecContainerSpecUlimitsItem> $ulimits
+     * @param list<TaskSpecContainerSpecUlimitsItem>|null $ulimits
      *
      * @return self
      */
-    public function setUlimits(array $ulimits): self
+    public function setUlimits(?array $ulimits): self
     {
         $this->initialized['ulimits'] = true;
         $this->ulimits                = $ulimits;

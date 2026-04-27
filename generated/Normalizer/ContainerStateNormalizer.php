@@ -16,8 +16,10 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_bool;
 use function is_int;
 use function is_object;
+use function is_string;
 
 class ContainerStateNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -38,85 +40,141 @@ class ContainerStateNormalizer implements DenormalizerInterface, NormalizerInter
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerState();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ContainerState();
-        if (array_key_exists('Running', $data) && is_int($data['Running'])) {
-            $data['Running'] = (bool) $data['Running'];
+        if (array_key_exists('Status', $data) && null !== $data['Status']) {
+            $value = $data['Status'];
+            if (is_string($data['Status'])) {
+                $value = $data['Status'];
+            } elseif (null === $data['Status']) {
+                $value = $data['Status'];
+            }
+            $object->setStatus($value);
+        } elseif (array_key_exists('Status', $data) && null === $data['Status']) {
+            $object->setStatus(null);
         }
-        if (array_key_exists('Paused', $data) && is_int($data['Paused'])) {
-            $data['Paused'] = (bool) $data['Paused'];
+        if (array_key_exists('Running', $data) && null !== $data['Running']) {
+            $value_1 = $data['Running'];
+            if (is_bool($data['Running'])) {
+                $value_1 = $data['Running'];
+            } elseif (null === $data['Running']) {
+                $value_1 = $data['Running'];
+            }
+            $object->setRunning($value_1);
+        } elseif (array_key_exists('Running', $data) && null === $data['Running']) {
+            $object->setRunning(null);
         }
-        if (array_key_exists('Restarting', $data) && is_int($data['Restarting'])) {
-            $data['Restarting'] = (bool) $data['Restarting'];
+        if (array_key_exists('Paused', $data) && null !== $data['Paused']) {
+            $value_2 = $data['Paused'];
+            if (is_bool($data['Paused'])) {
+                $value_2 = $data['Paused'];
+            } elseif (null === $data['Paused']) {
+                $value_2 = $data['Paused'];
+            }
+            $object->setPaused($value_2);
+        } elseif (array_key_exists('Paused', $data) && null === $data['Paused']) {
+            $object->setPaused(null);
         }
-        if (array_key_exists('OOMKilled', $data) && is_int($data['OOMKilled'])) {
-            $data['OOMKilled'] = (bool) $data['OOMKilled'];
+        if (array_key_exists('Restarting', $data) && null !== $data['Restarting']) {
+            $value_3 = $data['Restarting'];
+            if (is_bool($data['Restarting'])) {
+                $value_3 = $data['Restarting'];
+            } elseif (null === $data['Restarting']) {
+                $value_3 = $data['Restarting'];
+            }
+            $object->setRestarting($value_3);
+        } elseif (array_key_exists('Restarting', $data) && null === $data['Restarting']) {
+            $object->setRestarting(null);
         }
-        if (array_key_exists('Dead', $data) && is_int($data['Dead'])) {
-            $data['Dead'] = (bool) $data['Dead'];
+        if (array_key_exists('OOMKilled', $data) && null !== $data['OOMKilled']) {
+            $value_4 = $data['OOMKilled'];
+            if (is_bool($data['OOMKilled'])) {
+                $value_4 = $data['OOMKilled'];
+            } elseif (null === $data['OOMKilled']) {
+                $value_4 = $data['OOMKilled'];
+            }
+            $object->setOOMKilled($value_4);
+        } elseif (array_key_exists('OOMKilled', $data) && null === $data['OOMKilled']) {
+            $object->setOOMKilled(null);
         }
-        if (null === $data || false === is_array($data)) {
-            return $object;
+        if (array_key_exists('Dead', $data) && null !== $data['Dead']) {
+            $value_5 = $data['Dead'];
+            if (is_bool($data['Dead'])) {
+                $value_5 = $data['Dead'];
+            } elseif (null === $data['Dead']) {
+                $value_5 = $data['Dead'];
+            }
+            $object->setDead($value_5);
+        } elseif (array_key_exists('Dead', $data) && null === $data['Dead']) {
+            $object->setDead(null);
         }
-        if (array_key_exists('Status', $data)) {
-            $object->setStatus($data['Status']);
-            unset($data['Status']);
+        if (array_key_exists('Pid', $data) && null !== $data['Pid']) {
+            $value_6 = $data['Pid'];
+            if (is_int($data['Pid'])) {
+                $value_6 = $data['Pid'];
+            } elseif (null === $data['Pid']) {
+                $value_6 = $data['Pid'];
+            }
+            $object->setPid($value_6);
+        } elseif (array_key_exists('Pid', $data) && null === $data['Pid']) {
+            $object->setPid(null);
         }
-        if (array_key_exists('Running', $data)) {
-            $object->setRunning($data['Running']);
-            unset($data['Running']);
+        if (array_key_exists('ExitCode', $data) && null !== $data['ExitCode']) {
+            $value_7 = $data['ExitCode'];
+            if (is_int($data['ExitCode'])) {
+                $value_7 = $data['ExitCode'];
+            } elseif (null === $data['ExitCode']) {
+                $value_7 = $data['ExitCode'];
+            }
+            $object->setExitCode($value_7);
+        } elseif (array_key_exists('ExitCode', $data) && null === $data['ExitCode']) {
+            $object->setExitCode(null);
         }
-        if (array_key_exists('Paused', $data)) {
-            $object->setPaused($data['Paused']);
-            unset($data['Paused']);
+        if (array_key_exists('Error', $data) && null !== $data['Error']) {
+            $value_8 = $data['Error'];
+            if (is_string($data['Error'])) {
+                $value_8 = $data['Error'];
+            } elseif (null === $data['Error']) {
+                $value_8 = $data['Error'];
+            }
+            $object->setError($value_8);
+        } elseif (array_key_exists('Error', $data) && null === $data['Error']) {
+            $object->setError(null);
         }
-        if (array_key_exists('Restarting', $data)) {
-            $object->setRestarting($data['Restarting']);
-            unset($data['Restarting']);
+        if (array_key_exists('StartedAt', $data) && null !== $data['StartedAt']) {
+            $value_9 = $data['StartedAt'];
+            if (is_string($data['StartedAt'])) {
+                $value_9 = $data['StartedAt'];
+            } elseif (null === $data['StartedAt']) {
+                $value_9 = $data['StartedAt'];
+            }
+            $object->setStartedAt($value_9);
+        } elseif (array_key_exists('StartedAt', $data) && null === $data['StartedAt']) {
+            $object->setStartedAt(null);
         }
-        if (array_key_exists('OOMKilled', $data)) {
-            $object->setOOMKilled($data['OOMKilled']);
-            unset($data['OOMKilled']);
-        }
-        if (array_key_exists('Dead', $data)) {
-            $object->setDead($data['Dead']);
-            unset($data['Dead']);
-        }
-        if (array_key_exists('Pid', $data)) {
-            $object->setPid($data['Pid']);
-            unset($data['Pid']);
-        }
-        if (array_key_exists('ExitCode', $data)) {
-            $object->setExitCode($data['ExitCode']);
-            unset($data['ExitCode']);
-        }
-        if (array_key_exists('Error', $data)) {
-            $object->setError($data['Error']);
-            unset($data['Error']);
-        }
-        if (array_key_exists('StartedAt', $data)) {
-            $object->setStartedAt($data['StartedAt']);
-            unset($data['StartedAt']);
-        }
-        if (array_key_exists('FinishedAt', $data)) {
-            $object->setFinishedAt($data['FinishedAt']);
-            unset($data['FinishedAt']);
+        if (array_key_exists('FinishedAt', $data) && null !== $data['FinishedAt']) {
+            $value_10 = $data['FinishedAt'];
+            if (is_string($data['FinishedAt'])) {
+                $value_10 = $data['FinishedAt'];
+            } elseif (null === $data['FinishedAt']) {
+                $value_10 = $data['FinishedAt'];
+            }
+            $object->setFinishedAt($value_10);
+        } elseif (array_key_exists('FinishedAt', $data) && null === $data['FinishedAt']) {
+            $object->setFinishedAt(null);
         }
         if (array_key_exists('Health', $data) && null !== $data['Health']) {
             $object->setHealth($this->denormalizer->denormalize($data['Health'], \WebProject\DockerApi\Library\Generated\Model\Health::class, 'json', $context));
-            unset($data['Health']);
         } elseif (array_key_exists('Health', $data) && null === $data['Health']) {
             $object->setHealth(null);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
-            }
         }
 
         return $object;
@@ -125,46 +183,107 @@ class ContainerStateNormalizer implements DenormalizerInterface, NormalizerInter
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('status') && null !== $data->getStatus()) {
-            $dataArray['Status'] = $data->getStatus();
-        }
-        if ($data->isInitialized('running') && null !== $data->getRunning()) {
-            $dataArray['Running'] = $data->getRunning();
-        }
-        if ($data->isInitialized('paused') && null !== $data->getPaused()) {
-            $dataArray['Paused'] = $data->getPaused();
-        }
-        if ($data->isInitialized('restarting') && null !== $data->getRestarting()) {
-            $dataArray['Restarting'] = $data->getRestarting();
-        }
-        if ($data->isInitialized('oOMKilled') && null !== $data->getOOMKilled()) {
-            $dataArray['OOMKilled'] = $data->getOOMKilled();
-        }
-        if ($data->isInitialized('dead') && null !== $data->getDead()) {
-            $dataArray['Dead'] = $data->getDead();
-        }
-        if ($data->isInitialized('pid') && null !== $data->getPid()) {
-            $dataArray['Pid'] = $data->getPid();
-        }
-        if ($data->isInitialized('exitCode') && null !== $data->getExitCode()) {
-            $dataArray['ExitCode'] = $data->getExitCode();
-        }
-        if ($data->isInitialized('error') && null !== $data->getError()) {
-            $dataArray['Error'] = $data->getError();
-        }
-        if ($data->isInitialized('startedAt') && null !== $data->getStartedAt()) {
-            $dataArray['StartedAt'] = $data->getStartedAt();
-        }
-        if ($data->isInitialized('finishedAt') && null !== $data->getFinishedAt()) {
-            $dataArray['FinishedAt'] = $data->getFinishedAt();
-        }
-        if ($data->isInitialized('health') && null !== $data->getHealth()) {
-            $dataArray['Health'] = $this->normalizer->normalize($data->getHealth(), 'json', $context);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('status')) {
+            $value = $data->getStatus();
+            if (is_string($data->getStatus())) {
+                $value = $data->getStatus();
+            } elseif (null === $data->getStatus()) {
+                $value = $data->getStatus();
             }
+            $dataArray['Status'] = $value;
+        }
+        if ($data->isInitialized('running')) {
+            $value_1 = $data->getRunning();
+            if (is_bool($data->getRunning())) {
+                $value_1 = $data->getRunning();
+            } elseif (null === $data->getRunning()) {
+                $value_1 = $data->getRunning();
+            }
+            $dataArray['Running'] = $value_1;
+        }
+        if ($data->isInitialized('paused')) {
+            $value_2 = $data->getPaused();
+            if (is_bool($data->getPaused())) {
+                $value_2 = $data->getPaused();
+            } elseif (null === $data->getPaused()) {
+                $value_2 = $data->getPaused();
+            }
+            $dataArray['Paused'] = $value_2;
+        }
+        if ($data->isInitialized('restarting')) {
+            $value_3 = $data->getRestarting();
+            if (is_bool($data->getRestarting())) {
+                $value_3 = $data->getRestarting();
+            } elseif (null === $data->getRestarting()) {
+                $value_3 = $data->getRestarting();
+            }
+            $dataArray['Restarting'] = $value_3;
+        }
+        if ($data->isInitialized('oOMKilled')) {
+            $value_4 = $data->getOOMKilled();
+            if (is_bool($data->getOOMKilled())) {
+                $value_4 = $data->getOOMKilled();
+            } elseif (null === $data->getOOMKilled()) {
+                $value_4 = $data->getOOMKilled();
+            }
+            $dataArray['OOMKilled'] = $value_4;
+        }
+        if ($data->isInitialized('dead')) {
+            $value_5 = $data->getDead();
+            if (is_bool($data->getDead())) {
+                $value_5 = $data->getDead();
+            } elseif (null === $data->getDead()) {
+                $value_5 = $data->getDead();
+            }
+            $dataArray['Dead'] = $value_5;
+        }
+        if ($data->isInitialized('pid')) {
+            $value_6 = $data->getPid();
+            if (is_int($data->getPid())) {
+                $value_6 = $data->getPid();
+            } elseif (null === $data->getPid()) {
+                $value_6 = $data->getPid();
+            }
+            $dataArray['Pid'] = $value_6;
+        }
+        if ($data->isInitialized('exitCode')) {
+            $value_7 = $data->getExitCode();
+            if (is_int($data->getExitCode())) {
+                $value_7 = $data->getExitCode();
+            } elseif (null === $data->getExitCode()) {
+                $value_7 = $data->getExitCode();
+            }
+            $dataArray['ExitCode'] = $value_7;
+        }
+        if ($data->isInitialized('error')) {
+            $value_8 = $data->getError();
+            if (is_string($data->getError())) {
+                $value_8 = $data->getError();
+            } elseif (null === $data->getError()) {
+                $value_8 = $data->getError();
+            }
+            $dataArray['Error'] = $value_8;
+        }
+        if ($data->isInitialized('startedAt')) {
+            $value_9 = $data->getStartedAt();
+            if (is_string($data->getStartedAt())) {
+                $value_9 = $data->getStartedAt();
+            } elseif (null === $data->getStartedAt()) {
+                $value_9 = $data->getStartedAt();
+            }
+            $dataArray['StartedAt'] = $value_9;
+        }
+        if ($data->isInitialized('finishedAt')) {
+            $value_10 = $data->getFinishedAt();
+            if (is_string($data->getFinishedAt())) {
+                $value_10 = $data->getFinishedAt();
+            } elseif (null === $data->getFinishedAt()) {
+                $value_10 = $data->getFinishedAt();
+            }
+            $dataArray['FinishedAt'] = $value_10;
+        }
+        if ($data->isInitialized('health')) {
+            $dataArray['Health'] = $this->normalizer->normalize($data->getHealth(), 'json', $context);
         }
 
         return $dataArray;

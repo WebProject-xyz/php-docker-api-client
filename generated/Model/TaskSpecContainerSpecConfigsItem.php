@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecContainerSpecConfigsItem extends ArrayObject
+class TaskSpecContainerSpecConfigsItem
 {
     /**
      * @var array
@@ -24,7 +23,7 @@ class TaskSpecContainerSpecConfigsItem extends ArrayObject
      *
      * > **Note**: `Configs.File` and `Configs.Runtime` are mutually exclusive
      *
-     * @var TaskSpecContainerSpecConfigsItemFile
+     * @var TaskSpecContainerSpecConfigsItemFile|null
      */
     protected $file;
     /**
@@ -36,14 +35,14 @@ class TaskSpecContainerSpecConfigsItem extends ArrayObject
      * > **Note**: `Configs.File` and `Configs.Runtime` are mutually
      * > exclusive
      *
-     * @var array<string, mixed>
+     * @var mixed|null
      */
     protected $runtime;
     /**
      * ConfigID represents the ID of the specific config that we're
      * referencing.
      *
-     * @var string
+     * @var string|null
      */
     protected $configID;
     /**
@@ -51,7 +50,7 @@ class TaskSpecContainerSpecConfigsItem extends ArrayObject
      * but this is just provided for lookup/display purposes. The
      * config in the reference will be identified by its ID.
      *
-     * @var string
+     * @var string|null
      */
     protected $configName;
 
@@ -62,9 +61,9 @@ class TaskSpecContainerSpecConfigsItem extends ArrayObject
      *
      * > **Note**: `Configs.File` and `Configs.Runtime` are mutually exclusive
      *
-     * @return TaskSpecContainerSpecConfigsItemFile
+     * @return TaskSpecContainerSpecConfigsItemFile|null
      */
-    public function getFile(): TaskSpecContainerSpecConfigsItemFile
+    public function getFile(): ?TaskSpecContainerSpecConfigsItemFile
     {
         return $this->file;
     }
@@ -76,11 +75,11 @@ class TaskSpecContainerSpecConfigsItem extends ArrayObject
      *
      * > **Note**: `Configs.File` and `Configs.Runtime` are mutually exclusive
      *
-     * @param TaskSpecContainerSpecConfigsItemFile $file
+     * @param TaskSpecContainerSpecConfigsItemFile|null $file
      *
      * @return self
      */
-    public function setFile(TaskSpecContainerSpecConfigsItemFile $file): self
+    public function setFile(?TaskSpecContainerSpecConfigsItemFile $file): self
     {
         $this->initialized['file'] = true;
         $this->file                = $file;
@@ -97,9 +96,9 @@ class TaskSpecContainerSpecConfigsItem extends ArrayObject
      * > **Note**: `Configs.File` and `Configs.Runtime` are mutually
      * > exclusive
      *
-     * @return array<string, mixed>
+     * @return mixed|null
      */
-    public function getRuntime(): iterable
+    public function getRuntime()
     {
         return $this->runtime;
     }
@@ -113,11 +112,11 @@ class TaskSpecContainerSpecConfigsItem extends ArrayObject
      * > **Note**: `Configs.File` and `Configs.Runtime` are mutually
      * > exclusive
      *
-     * @param array<string, mixed> $runtime
+     * @param mixed|null $runtime
      *
      * @return self
      */
-    public function setRuntime(iterable $runtime): self
+    public function setRuntime($runtime): self
     {
         $this->initialized['runtime'] = true;
         $this->runtime                = $runtime;
@@ -129,9 +128,9 @@ class TaskSpecContainerSpecConfigsItem extends ArrayObject
      * ConfigID represents the ID of the specific config that we're
      * referencing.
      *
-     * @return string
+     * @return string|null
      */
-    public function getConfigID(): string
+    public function getConfigID(): ?string
     {
         return $this->configID;
     }
@@ -140,11 +139,11 @@ class TaskSpecContainerSpecConfigsItem extends ArrayObject
      * ConfigID represents the ID of the specific config that we're
      * referencing.
      *
-     * @param string $configID
+     * @param string|null $configID
      *
      * @return self
      */
-    public function setConfigID(string $configID): self
+    public function setConfigID(?string $configID): self
     {
         $this->initialized['configID'] = true;
         $this->configID                = $configID;
@@ -157,9 +156,9 @@ class TaskSpecContainerSpecConfigsItem extends ArrayObject
      * but this is just provided for lookup/display purposes. The
      * config in the reference will be identified by its ID.
      *
-     * @return string
+     * @return string|null
      */
-    public function getConfigName(): string
+    public function getConfigName(): ?string
     {
         return $this->configName;
     }
@@ -169,11 +168,11 @@ class TaskSpecContainerSpecConfigsItem extends ArrayObject
      * but this is just provided for lookup/display purposes. The
      * config in the reference will be identified by its ID.
      *
-     * @param string $configName
+     * @param string|null $configName
      *
      * @return self
      */
-    public function setConfigName(string $configName): self
+    public function setConfigName(?string $configName): self
     {
         $this->initialized['configName'] = true;
         $this->configName                = $configName;

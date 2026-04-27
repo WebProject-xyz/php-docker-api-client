@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class Limit extends ArrayObject
+class Limit
 {
     /**
      * @var array
@@ -18,34 +17,34 @@ class Limit extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var int
+     * @var int|null
      */
     protected $nanoCPUs;
     /**
-     * @var int
+     * @var int|null
      */
     protected $memoryBytes;
     /**
      * Limits the maximum number of PIDs in the container. Set `0` for unlimited.
      *
-     * @var int
+     * @var int|null
      */
     protected $pids = 0;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getNanoCPUs(): int
+    public function getNanoCPUs(): ?int
     {
         return $this->nanoCPUs;
     }
 
     /**
-     * @param int $nanoCPUs
+     * @param int|null $nanoCPUs
      *
      * @return self
      */
-    public function setNanoCPUs(int $nanoCPUs): self
+    public function setNanoCPUs(?int $nanoCPUs): self
     {
         $this->initialized['nanoCPUs'] = true;
         $this->nanoCPUs                = $nanoCPUs;
@@ -54,19 +53,19 @@ class Limit extends ArrayObject
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMemoryBytes(): int
+    public function getMemoryBytes(): ?int
     {
         return $this->memoryBytes;
     }
 
     /**
-     * @param int $memoryBytes
+     * @param int|null $memoryBytes
      *
      * @return self
      */
-    public function setMemoryBytes(int $memoryBytes): self
+    public function setMemoryBytes(?int $memoryBytes): self
     {
         $this->initialized['memoryBytes'] = true;
         $this->memoryBytes                = $memoryBytes;
@@ -77,9 +76,9 @@ class Limit extends ArrayObject
     /**
      * Limits the maximum number of PIDs in the container. Set `0` for unlimited.
      *
-     * @return int
+     * @return int|null
      */
-    public function getPids(): int
+    public function getPids(): ?int
     {
         return $this->pids;
     }
@@ -87,11 +86,11 @@ class Limit extends ArrayObject
     /**
      * Limits the maximum number of PIDs in the container. Set `0` for unlimited.
      *
-     * @param int $pids
+     * @param int|null $pids
      *
      * @return self
      */
-    public function setPids(int $pids): self
+    public function setPids(?int $pids): self
     {
         $this->initialized['pids'] = true;
         $this->pids                = $pids;

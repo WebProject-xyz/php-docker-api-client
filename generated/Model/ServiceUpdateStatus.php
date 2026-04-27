@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ServiceUpdateStatus extends ArrayObject
+class ServiceUpdateStatus
 {
     /**
      * @var array
@@ -18,36 +17,36 @@ class ServiceUpdateStatus extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $state;
     /**
-     * @var string
+     * @var string|null
      */
     protected $startedAt;
     /**
-     * @var string
+     * @var string|null
      */
     protected $completedAt;
     /**
-     * @var string
+     * @var string|null
      */
     protected $message;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getState(): string
+    public function getState(): ?string
     {
         return $this->state;
     }
 
     /**
-     * @param string $state
+     * @param string|null $state
      *
      * @return self
      */
-    public function setState(string $state): self
+    public function setState(?string $state): self
     {
         $this->initialized['state'] = true;
         $this->state                = $state;
@@ -56,19 +55,19 @@ class ServiceUpdateStatus extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getStartedAt(): string
+    public function getStartedAt(): ?string
     {
         return $this->startedAt;
     }
 
     /**
-     * @param string $startedAt
+     * @param string|null $startedAt
      *
      * @return self
      */
-    public function setStartedAt(string $startedAt): self
+    public function setStartedAt(?string $startedAt): self
     {
         $this->initialized['startedAt'] = true;
         $this->startedAt                = $startedAt;
@@ -77,19 +76,19 @@ class ServiceUpdateStatus extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCompletedAt(): string
+    public function getCompletedAt(): ?string
     {
         return $this->completedAt;
     }
 
     /**
-     * @param string $completedAt
+     * @param string|null $completedAt
      *
      * @return self
      */
-    public function setCompletedAt(string $completedAt): self
+    public function setCompletedAt(?string $completedAt): self
     {
         $this->initialized['completedAt'] = true;
         $this->completedAt                = $completedAt;
@@ -98,19 +97,19 @@ class ServiceUpdateStatus extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return $this->message;
     }
 
     /**
-     * @param string $message
+     * @param string|null $message
      *
      * @return self
      */
-    public function setMessage(string $message): self
+    public function setMessage(?string $message): self
     {
         $this->initialized['message'] = true;
         $this->message                = $message;

@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class ClusterVolumeSpecAccessModeSecretsItemNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,28 +38,37 @@ class ClusterVolumeSpecAccessModeSecretsItemNormalizer implements DenormalizerIn
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeSecretsItem();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeSecretsItem();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('Key', $data)) {
-            $object->setKey($data['Key']);
-            unset($data['Key']);
-        }
-        if (array_key_exists('Secret', $data)) {
-            $object->setSecret($data['Secret']);
-            unset($data['Secret']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('Key', $data) && null !== $data['Key']) {
+            $value = $data['Key'];
+            if (is_string($data['Key'])) {
+                $value = $data['Key'];
+            } elseif (null === $data['Key']) {
+                $value = $data['Key'];
             }
+            $object->setKey($value);
+        } elseif (array_key_exists('Key', $data) && null === $data['Key']) {
+            $object->setKey(null);
+        }
+        if (array_key_exists('Secret', $data) && null !== $data['Secret']) {
+            $value_1 = $data['Secret'];
+            if (is_string($data['Secret'])) {
+                $value_1 = $data['Secret'];
+            } elseif (null === $data['Secret']) {
+                $value_1 = $data['Secret'];
+            }
+            $object->setSecret($value_1);
+        } elseif (array_key_exists('Secret', $data) && null === $data['Secret']) {
+            $object->setSecret(null);
         }
 
         return $object;
@@ -67,16 +77,23 @@ class ClusterVolumeSpecAccessModeSecretsItemNormalizer implements DenormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('key') && null !== $data->getKey()) {
-            $dataArray['Key'] = $data->getKey();
-        }
-        if ($data->isInitialized('secret') && null !== $data->getSecret()) {
-            $dataArray['Secret'] = $data->getSecret();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('key')) {
+            $value = $data->getKey();
+            if (is_string($data->getKey())) {
+                $value = $data->getKey();
+            } elseif (null === $data->getKey()) {
+                $value = $data->getKey();
             }
+            $dataArray['Key'] = $value;
+        }
+        if ($data->isInitialized('secret')) {
+            $value_1 = $data->getSecret();
+            if (is_string($data->getSecret())) {
+                $value_1 = $data->getSecret();
+            } elseif (null === $data->getSecret()) {
+                $value_1 = $data->getSecret();
+            }
+            $dataArray['Secret'] = $value_1;
         }
 
         return $dataArray;

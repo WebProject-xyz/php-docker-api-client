@@ -12,12 +12,10 @@ class ContainerArchive extends \WebProject\DockerApi\Library\Generated\Runtime\C
     /**
      * Get a tar archive of a resource in the filesystem of container id.
      *
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var string $path Resource in the container’s filesystem to archive.
-     *             }
-     *
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "path": string, //Resource in the container’s filesystem to archive.
+     * } $queryParameters
      * @param array $accept Accept content header application/x-tar|application/json
      */
     public function __construct(string $id, array $queryParameters = [], array $accept = [])
@@ -78,7 +76,7 @@ class ContainerArchive extends \WebProject\DockerApi\Library\Generated\Runtime\C
         }
         if (400 === $status) {
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerArchiveNotFoundException($response);
         }
         if (500 === $status) {

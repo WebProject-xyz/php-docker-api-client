@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class TaskSpecContainerSpecSecretsItemNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,32 +38,42 @@ class TaskSpecContainerSpecSecretsItemNormalizer implements DenormalizerInterfac
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecSecretsItem();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecSecretsItem();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('File', $data)) {
+        if (array_key_exists('File', $data) && null !== $data['File']) {
             $object->setFile($this->denormalizer->denormalize($data['File'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecSecretsItemFile::class, 'json', $context));
-            unset($data['File']);
+        } elseif (array_key_exists('File', $data) && null === $data['File']) {
+            $object->setFile(null);
         }
-        if (array_key_exists('SecretID', $data)) {
-            $object->setSecretID($data['SecretID']);
-            unset($data['SecretID']);
-        }
-        if (array_key_exists('SecretName', $data)) {
-            $object->setSecretName($data['SecretName']);
-            unset($data['SecretName']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('SecretID', $data) && null !== $data['SecretID']) {
+            $value = $data['SecretID'];
+            if (is_string($data['SecretID'])) {
+                $value = $data['SecretID'];
+            } elseif (null === $data['SecretID']) {
+                $value = $data['SecretID'];
             }
+            $object->setSecretID($value);
+        } elseif (array_key_exists('SecretID', $data) && null === $data['SecretID']) {
+            $object->setSecretID(null);
+        }
+        if (array_key_exists('SecretName', $data) && null !== $data['SecretName']) {
+            $value_1 = $data['SecretName'];
+            if (is_string($data['SecretName'])) {
+                $value_1 = $data['SecretName'];
+            } elseif (null === $data['SecretName']) {
+                $value_1 = $data['SecretName'];
+            }
+            $object->setSecretName($value_1);
+        } elseif (array_key_exists('SecretName', $data) && null === $data['SecretName']) {
+            $object->setSecretName(null);
         }
 
         return $object;
@@ -71,19 +82,26 @@ class TaskSpecContainerSpecSecretsItemNormalizer implements DenormalizerInterfac
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('file') && null !== $data->getFile()) {
+        if ($data->isInitialized('file')) {
             $dataArray['File'] = $this->normalizer->normalize($data->getFile(), 'json', $context);
         }
-        if ($data->isInitialized('secretID') && null !== $data->getSecretID()) {
-            $dataArray['SecretID'] = $data->getSecretID();
-        }
-        if ($data->isInitialized('secretName') && null !== $data->getSecretName()) {
-            $dataArray['SecretName'] = $data->getSecretName();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('secretID')) {
+            $value = $data->getSecretID();
+            if (is_string($data->getSecretID())) {
+                $value = $data->getSecretID();
+            } elseif (null === $data->getSecretID()) {
+                $value = $data->getSecretID();
             }
+            $dataArray['SecretID'] = $value;
+        }
+        if ($data->isInitialized('secretName')) {
+            $value_1 = $data->getSecretName();
+            if (is_string($data->getSecretName())) {
+                $value_1 = $data->getSecretName();
+            } elseif (null === $data->getSecretName()) {
+                $value_1 = $data->getSecretName();
+            }
+            $dataArray['SecretName'] = $value_1;
         }
 
         return $dataArray;

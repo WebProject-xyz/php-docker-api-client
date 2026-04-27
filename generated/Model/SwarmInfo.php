@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class SwarmInfo extends ArrayObject
+class SwarmInfo
 {
     /**
      * @var array
@@ -20,14 +19,14 @@ class SwarmInfo extends ArrayObject
     /**
      * Unique identifier of for this node in the swarm.
      *
-     * @var string
+     * @var string|null
      */
     protected $nodeID = '';
     /**
      * IP address at which this node can be reached by other nodes in the
      * swarm.
      *
-     * @var string
+     * @var string|null
      */
     protected $nodeAddr = '';
     /**
@@ -37,11 +36,11 @@ class SwarmInfo extends ArrayObject
      */
     protected $localNodeState = '';
     /**
-     * @var bool
+     * @var bool|null
      */
     protected $controlAvailable = false;
     /**
-     * @var string
+     * @var string|null
      */
     protected $error = '';
     /**
@@ -73,9 +72,9 @@ class SwarmInfo extends ArrayObject
     /**
      * Unique identifier of for this node in the swarm.
      *
-     * @return string
+     * @return string|null
      */
-    public function getNodeID(): string
+    public function getNodeID(): ?string
     {
         return $this->nodeID;
     }
@@ -83,11 +82,11 @@ class SwarmInfo extends ArrayObject
     /**
      * Unique identifier of for this node in the swarm.
      *
-     * @param string $nodeID
+     * @param string|null $nodeID
      *
      * @return self
      */
-    public function setNodeID(string $nodeID): self
+    public function setNodeID(?string $nodeID): self
     {
         $this->initialized['nodeID'] = true;
         $this->nodeID                = $nodeID;
@@ -99,9 +98,9 @@ class SwarmInfo extends ArrayObject
      * IP address at which this node can be reached by other nodes in the
      * swarm.
      *
-     * @return string
+     * @return string|null
      */
-    public function getNodeAddr(): string
+    public function getNodeAddr(): ?string
     {
         return $this->nodeAddr;
     }
@@ -110,11 +109,11 @@ class SwarmInfo extends ArrayObject
      * IP address at which this node can be reached by other nodes in the
      * swarm.
      *
-     * @param string $nodeAddr
+     * @param string|null $nodeAddr
      *
      * @return self
      */
-    public function setNodeAddr(string $nodeAddr): self
+    public function setNodeAddr(?string $nodeAddr): self
     {
         $this->initialized['nodeAddr'] = true;
         $this->nodeAddr                = $nodeAddr;
@@ -148,19 +147,19 @@ class SwarmInfo extends ArrayObject
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function getControlAvailable(): bool
+    public function getControlAvailable(): ?bool
     {
         return $this->controlAvailable;
     }
 
     /**
-     * @param bool $controlAvailable
+     * @param bool|null $controlAvailable
      *
      * @return self
      */
-    public function setControlAvailable(bool $controlAvailable): self
+    public function setControlAvailable(?bool $controlAvailable): self
     {
         $this->initialized['controlAvailable'] = true;
         $this->controlAvailable                = $controlAvailable;
@@ -169,19 +168,19 @@ class SwarmInfo extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getError(): string
+    public function getError(): ?string
     {
         return $this->error;
     }
 
     /**
-     * @param string $error
+     * @param string|null $error
      *
      * @return self
      */
-    public function setError(string $error): self
+    public function setError(?string $error): self
     {
         $this->initialized['error'] = true;
         $this->error                = $error;

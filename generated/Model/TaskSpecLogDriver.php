@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskSpecLogDriver extends ArrayObject
+class TaskSpecLogDriver
 {
     /**
      * @var array
@@ -18,28 +17,28 @@ class TaskSpecLogDriver extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $options;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -48,19 +47,19 @@ class TaskSpecLogDriver extends ArrayObject
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getOptions(): iterable
+    public function getOptions(): ?iterable
     {
         return $this->options;
     }
 
     /**
-     * @param array<string, string> $options
+     * @param array<string, string>|null $options
      *
      * @return self
      */
-    public function setOptions(iterable $options): self
+    public function setOptions(?iterable $options): self
     {
         $this->initialized['options'] = true;
         $this->options                = $options;

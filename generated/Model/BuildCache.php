@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class BuildCache extends ArrayObject
+class BuildCache
 {
     /**
      * @var array
@@ -20,17 +19,9 @@ class BuildCache extends ArrayObject
     /**
      * Unique ID of the build cache record.
      *
-     * @var string
-     */
-    protected $iD;
-    /**
-     * ID of the parent build cache record.
-     *
-     * > **Deprecated**: This field is deprecated, and omitted if empty.
-     *
      * @var string|null
      */
-    protected $parent;
+    protected $iD;
     /**
      * List of parent build cache record IDs.
      *
@@ -40,38 +31,38 @@ class BuildCache extends ArrayObject
     /**
      * Cache record type.
      *
-     * @var string
+     * @var string|null
      */
     protected $type;
     /**
      * Description of the build-step that produced the build cache.
      *
-     * @var string
+     * @var string|null
      */
     protected $description;
     /**
      * Indicates if the build cache is in use.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $inUse;
     /**
      * Indicates if the build cache is shared.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $shared;
     /**
      * Amount of disk space used by the build cache (in bytes).
      *
-     * @var int
+     * @var int|null
      */
     protected $size;
     /**
      * Date and time at which the build cache was created in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @var string
+     * @var string|null
      */
     protected $createdAt;
     /**
@@ -82,16 +73,16 @@ class BuildCache extends ArrayObject
      */
     protected $lastUsedAt;
     /**
-     * @var int
+     * @var int|null
      */
     protected $usageCount;
 
     /**
      * Unique ID of the build cache record.
      *
-     * @return string
+     * @return string|null
      */
-    public function getID(): string
+    public function getID(): ?string
     {
         return $this->iD;
     }
@@ -99,43 +90,14 @@ class BuildCache extends ArrayObject
     /**
      * Unique ID of the build cache record.
      *
-     * @param string $iD
+     * @param string|null $iD
      *
      * @return self
      */
-    public function setID(string $iD): self
+    public function setID(?string $iD): self
     {
         $this->initialized['iD'] = true;
         $this->iD                = $iD;
-
-        return $this;
-    }
-
-    /**
-     * ID of the parent build cache record.
-     *
-     * > **Deprecated**: This field is deprecated, and omitted if empty.
-     *
-     * @return string|null
-     */
-    public function getParent(): ?string
-    {
-        return $this->parent;
-    }
-
-    /**
-     * ID of the parent build cache record.
-     *
-     * > **Deprecated**: This field is deprecated, and omitted if empty.
-     *
-     * @param string|null $parent
-     *
-     * @return self
-     */
-    public function setParent(?string $parent): self
-    {
-        $this->initialized['parent'] = true;
-        $this->parent                = $parent;
 
         return $this;
     }
@@ -168,9 +130,9 @@ class BuildCache extends ArrayObject
     /**
      * Cache record type.
      *
-     * @return string
+     * @return string|null
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -178,11 +140,11 @@ class BuildCache extends ArrayObject
     /**
      * Cache record type.
      *
-     * @param string $type
+     * @param string|null $type
      *
      * @return self
      */
-    public function setType(string $type): self
+    public function setType(?string $type): self
     {
         $this->initialized['type'] = true;
         $this->type                = $type;
@@ -193,9 +155,9 @@ class BuildCache extends ArrayObject
     /**
      * Description of the build-step that produced the build cache.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -203,11 +165,11 @@ class BuildCache extends ArrayObject
     /**
      * Description of the build-step that produced the build cache.
      *
-     * @param string $description
+     * @param string|null $description
      *
      * @return self
      */
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->initialized['description'] = true;
         $this->description                = $description;
@@ -218,9 +180,9 @@ class BuildCache extends ArrayObject
     /**
      * Indicates if the build cache is in use.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getInUse(): bool
+    public function getInUse(): ?bool
     {
         return $this->inUse;
     }
@@ -228,11 +190,11 @@ class BuildCache extends ArrayObject
     /**
      * Indicates if the build cache is in use.
      *
-     * @param bool $inUse
+     * @param bool|null $inUse
      *
      * @return self
      */
-    public function setInUse(bool $inUse): self
+    public function setInUse(?bool $inUse): self
     {
         $this->initialized['inUse'] = true;
         $this->inUse                = $inUse;
@@ -243,9 +205,9 @@ class BuildCache extends ArrayObject
     /**
      * Indicates if the build cache is shared.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getShared(): bool
+    public function getShared(): ?bool
     {
         return $this->shared;
     }
@@ -253,11 +215,11 @@ class BuildCache extends ArrayObject
     /**
      * Indicates if the build cache is shared.
      *
-     * @param bool $shared
+     * @param bool|null $shared
      *
      * @return self
      */
-    public function setShared(bool $shared): self
+    public function setShared(?bool $shared): self
     {
         $this->initialized['shared'] = true;
         $this->shared                = $shared;
@@ -268,9 +230,9 @@ class BuildCache extends ArrayObject
     /**
      * Amount of disk space used by the build cache (in bytes).
      *
-     * @return int
+     * @return int|null
      */
-    public function getSize(): int
+    public function getSize(): ?int
     {
         return $this->size;
     }
@@ -278,11 +240,11 @@ class BuildCache extends ArrayObject
     /**
      * Amount of disk space used by the build cache (in bytes).
      *
-     * @param int $size
+     * @param int|null $size
      *
      * @return self
      */
-    public function setSize(int $size): self
+    public function setSize(?int $size): self
     {
         $this->initialized['size'] = true;
         $this->size                = $size;
@@ -294,9 +256,9 @@ class BuildCache extends ArrayObject
      * Date and time at which the build cache was created in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?string
     {
         return $this->createdAt;
     }
@@ -305,11 +267,11 @@ class BuildCache extends ArrayObject
      * Date and time at which the build cache was created in
      * [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
      *
-     * @param string $createdAt
+     * @param string|null $createdAt
      *
      * @return self
      */
-    public function setCreatedAt(string $createdAt): self
+    public function setCreatedAt(?string $createdAt): self
     {
         $this->initialized['createdAt'] = true;
         $this->createdAt                = $createdAt;
@@ -345,19 +307,19 @@ class BuildCache extends ArrayObject
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getUsageCount(): int
+    public function getUsageCount(): ?int
     {
         return $this->usageCount;
     }
 
     /**
-     * @param int $usageCount
+     * @param int|null $usageCount
      *
      * @return self
      */
-    public function setUsageCount(int $usageCount): self
+    public function setUsageCount(?int $usageCount): self
     {
         $this->initialized['usageCount'] = true;
         $this->usageCount                = $usageCount;

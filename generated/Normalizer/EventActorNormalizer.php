@@ -17,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function is_array;
 use function is_object;
+use function is_string;
 
 class EventActorNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,32 +38,41 @@ class EventActorNormalizer implements DenormalizerInterface, NormalizerInterface
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\EventActor();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\EventActor();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('ID', $data)) {
-            $object->setID($data['ID']);
-            unset($data['ID']);
-        }
-        if (array_key_exists('Attributes', $data)) {
-            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['Attributes'] as $key => $value) {
-                $values[$key] = $value;
+        if (array_key_exists('ID', $data) && null !== $data['ID']) {
+            $value = $data['ID'];
+            if (is_string($data['ID'])) {
+                $value = $data['ID'];
+            } elseif (null === $data['ID']) {
+                $value = $data['ID'];
             }
-            $object->setAttributes($values);
-            unset($data['Attributes']);
+            $object->setID($value);
+        } elseif (array_key_exists('ID', $data) && null === $data['ID']) {
+            $object->setID(null);
         }
-        foreach ($data as $key_1 => $value_1) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $object[$key_1] = $value_1;
+        if (array_key_exists('Attributes', $data) && null !== $data['Attributes']) {
+            $value_1 = $data['Attributes'];
+            if (is_array($data['Attributes']) && $this->isOnlyNumericKeys($data['Attributes'])) {
+                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                foreach ($data['Attributes'] as $key => $value_2) {
+                    $values[$key] = $value_2;
+                }
+                $value_1 = $values;
+            } elseif (null === $data['Attributes']) {
+                $value_1 = $data['Attributes'];
             }
+            $object->setAttributes($value_1);
+        } elseif (array_key_exists('Attributes', $data) && null === $data['Attributes']) {
+            $object->setAttributes(null);
         }
 
         return $object;
@@ -71,20 +81,27 @@ class EventActorNormalizer implements DenormalizerInterface, NormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('iD') && null !== $data->getID()) {
-            $dataArray['ID'] = $data->getID();
-        }
-        if ($data->isInitialized('attributes') && null !== $data->getAttributes()) {
-            $values = [];
-            foreach ($data->getAttributes() as $key => $value) {
-                $values[$key] = $value;
+        if ($data->isInitialized('iD')) {
+            $value = $data->getID();
+            if (is_string($data->getID())) {
+                $value = $data->getID();
+            } elseif (null === $data->getID()) {
+                $value = $data->getID();
             }
-            $dataArray['Attributes'] = $values;
+            $dataArray['ID'] = $value;
         }
-        foreach ($data as $key_1 => $value_1) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $dataArray[$key_1] = $value_1;
+        if ($data->isInitialized('attributes')) {
+            $value_1 = $data->getAttributes();
+            if (is_object($data->getAttributes())) {
+                $values = [];
+                foreach ($data->getAttributes() as $key => $value_2) {
+                    $values[$key] = $value_2;
+                }
+                $value_1 = $values;
+            } elseif (null === $data->getAttributes()) {
+                $value_1 = $data->getAttributes();
             }
+            $dataArray['Attributes'] = $value_1;
         }
 
         return $dataArray;

@@ -37,28 +37,21 @@ class ImageManifestSummarySizeNormalizer implements DenormalizerInterface, Norma
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\ImageManifestSummarySize();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\ImageManifestSummarySize();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('Total', $data)) {
             $object->setTotal($data['Total']);
-            unset($data['Total']);
         }
         if (array_key_exists('Content', $data)) {
             $object->setContent($data['Content']);
-            unset($data['Content']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
-            }
         }
 
         return $object;
@@ -69,11 +62,6 @@ class ImageManifestSummarySizeNormalizer implements DenormalizerInterface, Norma
         $dataArray            = [];
         $dataArray['Total']   = $data->getTotal();
         $dataArray['Content'] = $data->getContent();
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
-            }
-        }
 
         return $dataArray;
     }

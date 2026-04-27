@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ManagerStatus extends ArrayObject
+class ManagerStatus
 {
     /**
      * @var array
@@ -18,7 +17,7 @@ class ManagerStatus extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var bool
+     * @var bool|null
      */
     protected $leader = false;
     /**
@@ -30,24 +29,24 @@ class ManagerStatus extends ArrayObject
     /**
      * The IP address and port at which the manager is reachable.
      *
-     * @var string
+     * @var string|null
      */
     protected $addr;
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function getLeader(): bool
+    public function getLeader(): ?bool
     {
         return $this->leader;
     }
 
     /**
-     * @param bool $leader
+     * @param bool|null $leader
      *
      * @return self
      */
-    public function setLeader(bool $leader): self
+    public function setLeader(?bool $leader): self
     {
         $this->initialized['leader'] = true;
         $this->leader                = $leader;
@@ -83,9 +82,9 @@ class ManagerStatus extends ArrayObject
     /**
      * The IP address and port at which the manager is reachable.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAddr(): string
+    public function getAddr(): ?string
     {
         return $this->addr;
     }
@@ -93,11 +92,11 @@ class ManagerStatus extends ArrayObject
     /**
      * The IP address and port at which the manager is reachable.
      *
-     * @param string $addr
+     * @param string|null $addr
      *
      * @return self
      */
-    public function setAddr(string $addr): self
+    public function setAddr(?string $addr): self
     {
         $this->initialized['addr'] = true;
         $this->addr                = $addr;

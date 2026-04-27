@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class IPAM extends ArrayObject
+class IPAM
 {
     /**
      * @var array
@@ -20,7 +19,7 @@ class IPAM extends ArrayObject
     /**
      * Name of the IPAM driver to use.
      *
-     * @var string
+     * @var string|null
      */
     protected $driver = 'default';
     /**
@@ -30,22 +29,22 @@ class IPAM extends ArrayObject
      * {"Subnet": <CIDR>, "IPRange": <CIDR>, "Gateway": <IP address>, "AuxAddress": <device_name:IP address>}
      * ```
      *
-     * @var list<IPAMConfig>
+     * @var list<IPAMConfig>|null
      */
     protected $config;
     /**
      * Driver-specific options, specified as a map.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $options;
 
     /**
      * Name of the IPAM driver to use.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDriver(): string
+    public function getDriver(): ?string
     {
         return $this->driver;
     }
@@ -53,11 +52,11 @@ class IPAM extends ArrayObject
     /**
      * Name of the IPAM driver to use.
      *
-     * @param string $driver
+     * @param string|null $driver
      *
      * @return self
      */
-    public function setDriver(string $driver): self
+    public function setDriver(?string $driver): self
     {
         $this->initialized['driver'] = true;
         $this->driver                = $driver;
@@ -72,9 +71,9 @@ class IPAM extends ArrayObject
      * {"Subnet": <CIDR>, "IPRange": <CIDR>, "Gateway": <IP address>, "AuxAddress": <device_name:IP address>}
      * ```
      *
-     * @return list<IPAMConfig>
+     * @return list<IPAMConfig>|null
      */
-    public function getConfig(): array
+    public function getConfig(): ?array
     {
         return $this->config;
     }
@@ -86,11 +85,11 @@ class IPAM extends ArrayObject
      * {"Subnet": <CIDR>, "IPRange": <CIDR>, "Gateway": <IP address>, "AuxAddress": <device_name:IP address>}
      * ```
      *
-     * @param list<IPAMConfig> $config
+     * @param list<IPAMConfig>|null $config
      *
      * @return self
      */
-    public function setConfig(array $config): self
+    public function setConfig(?array $config): self
     {
         $this->initialized['config'] = true;
         $this->config                = $config;
@@ -101,9 +100,9 @@ class IPAM extends ArrayObject
     /**
      * Driver-specific options, specified as a map.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getOptions(): iterable
+    public function getOptions(): ?iterable
     {
         return $this->options;
     }
@@ -111,11 +110,11 @@ class IPAM extends ArrayObject
     /**
      * Driver-specific options, specified as a map.
      *
-     * @param array<string, string> $options
+     * @param array<string, string>|null $options
      *
      * @return self
      */
-    public function setOptions(iterable $options): self
+    public function setOptions(?iterable $options): self
     {
         $this->initialized['options'] = true;
         $this->options                = $options;

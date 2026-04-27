@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TaskStatus extends ArrayObject
+class TaskStatus
 {
     /**
      * @var array
@@ -18,7 +17,7 @@ class TaskStatus extends ArrayObject
         return array_key_exists($property, $this->initialized);
     }
     /**
-     * @var string
+     * @var string|null
      */
     protected $timestamp;
     /**
@@ -26,11 +25,11 @@ class TaskStatus extends ArrayObject
      */
     protected $state;
     /**
-     * @var string
+     * @var string|null
      */
     protected $message;
     /**
-     * @var string
+     * @var string|null
      */
     protected $err;
     /**
@@ -47,19 +46,19 @@ class TaskStatus extends ArrayObject
     protected $portStatus;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTimestamp(): string
+    public function getTimestamp(): ?string
     {
         return $this->timestamp;
     }
 
     /**
-     * @param string $timestamp
+     * @param string|null $timestamp
      *
      * @return self
      */
-    public function setTimestamp(string $timestamp): self
+    public function setTimestamp(?string $timestamp): self
     {
         $this->initialized['timestamp'] = true;
         $this->timestamp                = $timestamp;
@@ -89,19 +88,19 @@ class TaskStatus extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return $this->message;
     }
 
     /**
-     * @param string $message
+     * @param string|null $message
      *
      * @return self
      */
-    public function setMessage(string $message): self
+    public function setMessage(?string $message): self
     {
         $this->initialized['message'] = true;
         $this->message                = $message;
@@ -110,19 +109,19 @@ class TaskStatus extends ArrayObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getErr(): string
+    public function getErr(): ?string
     {
         return $this->err;
     }
 
     /**
-     * @param string $err
+     * @param string|null $err
      *
      * @return self
      */
-    public function setErr(string $err): self
+    public function setErr(?string $err): self
     {
         $this->initialized['err'] = true;
         $this->err                = $err;

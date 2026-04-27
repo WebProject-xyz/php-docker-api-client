@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ClusterVolumeSpecAccessModeAccessibilityRequirements extends ArrayObject
+class ClusterVolumeSpecAccessModeAccessibilityRequirements
 {
     /**
      * @var array
@@ -21,14 +20,14 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirements extends ArrayObject
      * A list of required topologies, at least one of which the
      * volume must be accessible from.
      *
-     * @var list<array<string, string>>
+     * @var list<array<string, string>>|null
      */
     protected $requisite;
     /**
      * A list of topologies that the volume should attempt to be
      * provisioned in.
      *
-     * @var list<array<string, string>>
+     * @var list<array<string, string>>|null
      */
     protected $preferred;
 
@@ -36,9 +35,9 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirements extends ArrayObject
      * A list of required topologies, at least one of which the
      * volume must be accessible from.
      *
-     * @return list<array<string, string>>
+     * @return list<array<string, string>>|null
      */
-    public function getRequisite(): array
+    public function getRequisite(): ?array
     {
         return $this->requisite;
     }
@@ -47,11 +46,11 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirements extends ArrayObject
      * A list of required topologies, at least one of which the
      * volume must be accessible from.
      *
-     * @param list<array<string, string>> $requisite
+     * @param list<array<string, string>>|null $requisite
      *
      * @return self
      */
-    public function setRequisite(array $requisite): self
+    public function setRequisite(?array $requisite): self
     {
         $this->initialized['requisite'] = true;
         $this->requisite                = $requisite;
@@ -63,9 +62,9 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirements extends ArrayObject
      * A list of topologies that the volume should attempt to be
      * provisioned in.
      *
-     * @return list<array<string, string>>
+     * @return list<array<string, string>>|null
      */
-    public function getPreferred(): array
+    public function getPreferred(): ?array
     {
         return $this->preferred;
     }
@@ -74,11 +73,11 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirements extends ArrayObject
      * A list of topologies that the volume should attempt to be
      * provisioned in.
      *
-     * @param list<array<string, string>> $preferred
+     * @param list<array<string, string>>|null $preferred
      *
      * @return self
      */
-    public function setPreferred(array $preferred): self
+    public function setPreferred(?array $preferred): self
     {
         $this->initialized['preferred'] = true;
         $this->preferred                = $preferred;

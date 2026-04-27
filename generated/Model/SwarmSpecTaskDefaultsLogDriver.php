@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class SwarmSpecTaskDefaultsLogDriver extends ArrayObject
+class SwarmSpecTaskDefaultsLogDriver
 {
     /**
      * @var array
@@ -20,23 +19,23 @@ class SwarmSpecTaskDefaultsLogDriver extends ArrayObject
     /**
      * The log driver to use as a default for new tasks.
      *
-     * @var string
+     * @var string|null
      */
     protected $name;
     /**
      * Driver-specific options for the selected log driver, specified
      * as key/value pairs.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $options;
 
     /**
      * The log driver to use as a default for new tasks.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -44,11 +43,11 @@ class SwarmSpecTaskDefaultsLogDriver extends ArrayObject
     /**
      * The log driver to use as a default for new tasks.
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->initialized['name'] = true;
         $this->name                = $name;
@@ -60,9 +59,9 @@ class SwarmSpecTaskDefaultsLogDriver extends ArrayObject
      * Driver-specific options for the selected log driver, specified
      * as key/value pairs.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getOptions(): iterable
+    public function getOptions(): ?iterable
     {
         return $this->options;
     }
@@ -71,11 +70,11 @@ class SwarmSpecTaskDefaultsLogDriver extends ArrayObject
      * Driver-specific options for the selected log driver, specified
      * as key/value pairs.
      *
-     * @param array<string, string> $options
+     * @param array<string, string>|null $options
      *
      * @return self
      */
-    public function setOptions(iterable $options): self
+    public function setOptions(?iterable $options): self
     {
         $this->initialized['options'] = true;
         $this->options                = $options;

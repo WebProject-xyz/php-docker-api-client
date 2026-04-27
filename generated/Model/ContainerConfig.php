@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ContainerConfig extends ArrayObject
+class ContainerConfig
 {
     /**
      * @var array
@@ -20,13 +19,13 @@ class ContainerConfig extends ArrayObject
     /**
      * The hostname to use for the container, as a valid RFC 1123 hostname.
      *
-     * @var string
+     * @var string|null
      */
     protected $hostname;
     /**
      * The domain name to use for the container.
      *
-     * @var string
+     * @var string|null
      */
     protected $domainname;
     /**
@@ -36,25 +35,25 @@ class ContainerConfig extends ArrayObject
      * Can be either user-name or UID, and optional group-name or GID,
      * separated by a colon (`<user-name|UID>[<:group-name|GID>]`).
      *
-     * @var string
+     * @var string|null
      */
     protected $user;
     /**
      * Whether to attach to `stdin`.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $attachStdin = false;
     /**
      * Whether to attach to `stdout`.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $attachStdout = true;
     /**
      * Whether to attach to `stderr`.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $attachStderr = true;
     /**
@@ -62,25 +61,25 @@ class ContainerConfig extends ArrayObject
      *
      * `{"<port>/<tcp|udp|sctp>": {}}`
      *
-     * @var array<string, array<string, mixed>>|null
+     * @var array<string, mixed>|null
      */
     protected $exposedPorts;
     /**
      * Attach standard streams to a TTY, including `stdin` if it is not closed.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $tty = false;
     /**
      * Open `stdin`.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $openStdin = false;
     /**
      * Close `stdin` after one attached client disconnects.
      *
-     * @var bool
+     * @var bool|null
      */
     protected $stdinOnce = false;
     /**
@@ -88,7 +87,7 @@ class ContainerConfig extends ArrayObject
      * form `["VAR=value", ...]`. A variable without `=` is removed from the
      * environment, rather than to have an empty value.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $env;
     /**
@@ -99,6 +98,7 @@ class ContainerConfig extends ArrayObject
     protected $cmd;
     /**
      * A test to perform to check that the container is healthy.
+     * Healthcheck commands should be side-effect free.
      *
      * @var HealthConfig
      */
@@ -113,20 +113,20 @@ class ContainerConfig extends ArrayObject
      * The name (or reference) of the image to use when creating the container,
      * or which was used when the container was created.
      *
-     * @var string
+     * @var string|null
      */
     protected $image;
     /**
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @var array<string, array<string, mixed>>|null
+     * @var array<string, mixed>|null
      */
     protected $volumes;
     /**
      * The working directory for commands to run in.
      *
-     * @var string
+     * @var string|null
      */
     protected $workingDir;
     /**
@@ -146,14 +146,6 @@ class ContainerConfig extends ArrayObject
      */
     protected $networkDisabled;
     /**
-     * MAC address of the container.
-     *
-     * Deprecated: this field is deprecated in API v1.44 and up. Use EndpointSettings.MacAddress instead.
-     *
-     * @var string|null
-     */
-    protected $macAddress;
-    /**
      * `ONBUILD` metadata that were defined in the image's `Dockerfile`.
      *
      * @var list<string>|null
@@ -162,7 +154,7 @@ class ContainerConfig extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     protected $labels;
     /**
@@ -187,9 +179,9 @@ class ContainerConfig extends ArrayObject
     /**
      * The hostname to use for the container, as a valid RFC 1123 hostname.
      *
-     * @return string
+     * @return string|null
      */
-    public function getHostname(): string
+    public function getHostname(): ?string
     {
         return $this->hostname;
     }
@@ -197,11 +189,11 @@ class ContainerConfig extends ArrayObject
     /**
      * The hostname to use for the container, as a valid RFC 1123 hostname.
      *
-     * @param string $hostname
+     * @param string|null $hostname
      *
      * @return self
      */
-    public function setHostname(string $hostname): self
+    public function setHostname(?string $hostname): self
     {
         $this->initialized['hostname'] = true;
         $this->hostname                = $hostname;
@@ -212,9 +204,9 @@ class ContainerConfig extends ArrayObject
     /**
      * The domain name to use for the container.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDomainname(): string
+    public function getDomainname(): ?string
     {
         return $this->domainname;
     }
@@ -222,11 +214,11 @@ class ContainerConfig extends ArrayObject
     /**
      * The domain name to use for the container.
      *
-     * @param string $domainname
+     * @param string|null $domainname
      *
      * @return self
      */
-    public function setDomainname(string $domainname): self
+    public function setDomainname(?string $domainname): self
     {
         $this->initialized['domainname'] = true;
         $this->domainname                = $domainname;
@@ -241,9 +233,9 @@ class ContainerConfig extends ArrayObject
      * Can be either user-name or UID, and optional group-name or GID,
      * separated by a colon (`<user-name|UID>[<:group-name|GID>]`).
      *
-     * @return string
+     * @return string|null
      */
-    public function getUser(): string
+    public function getUser(): ?string
     {
         return $this->user;
     }
@@ -255,11 +247,11 @@ class ContainerConfig extends ArrayObject
      * Can be either user-name or UID, and optional group-name or GID,
      * separated by a colon (`<user-name|UID>[<:group-name|GID>]`).
      *
-     * @param string $user
+     * @param string|null $user
      *
      * @return self
      */
-    public function setUser(string $user): self
+    public function setUser(?string $user): self
     {
         $this->initialized['user'] = true;
         $this->user                = $user;
@@ -270,9 +262,9 @@ class ContainerConfig extends ArrayObject
     /**
      * Whether to attach to `stdin`.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getAttachStdin(): bool
+    public function getAttachStdin(): ?bool
     {
         return $this->attachStdin;
     }
@@ -280,11 +272,11 @@ class ContainerConfig extends ArrayObject
     /**
      * Whether to attach to `stdin`.
      *
-     * @param bool $attachStdin
+     * @param bool|null $attachStdin
      *
      * @return self
      */
-    public function setAttachStdin(bool $attachStdin): self
+    public function setAttachStdin(?bool $attachStdin): self
     {
         $this->initialized['attachStdin'] = true;
         $this->attachStdin                = $attachStdin;
@@ -295,9 +287,9 @@ class ContainerConfig extends ArrayObject
     /**
      * Whether to attach to `stdout`.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getAttachStdout(): bool
+    public function getAttachStdout(): ?bool
     {
         return $this->attachStdout;
     }
@@ -305,11 +297,11 @@ class ContainerConfig extends ArrayObject
     /**
      * Whether to attach to `stdout`.
      *
-     * @param bool $attachStdout
+     * @param bool|null $attachStdout
      *
      * @return self
      */
-    public function setAttachStdout(bool $attachStdout): self
+    public function setAttachStdout(?bool $attachStdout): self
     {
         $this->initialized['attachStdout'] = true;
         $this->attachStdout                = $attachStdout;
@@ -320,9 +312,9 @@ class ContainerConfig extends ArrayObject
     /**
      * Whether to attach to `stderr`.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getAttachStderr(): bool
+    public function getAttachStderr(): ?bool
     {
         return $this->attachStderr;
     }
@@ -330,11 +322,11 @@ class ContainerConfig extends ArrayObject
     /**
      * Whether to attach to `stderr`.
      *
-     * @param bool $attachStderr
+     * @param bool|null $attachStderr
      *
      * @return self
      */
-    public function setAttachStderr(bool $attachStderr): self
+    public function setAttachStderr(?bool $attachStderr): self
     {
         $this->initialized['attachStderr'] = true;
         $this->attachStderr                = $attachStderr;
@@ -347,7 +339,7 @@ class ContainerConfig extends ArrayObject
      *
      * `{"<port>/<tcp|udp|sctp>": {}}`
      *
-     * @return array<string, array<string, mixed>>|null
+     * @return array<string, mixed>|null
      */
     public function getExposedPorts(): ?iterable
     {
@@ -359,7 +351,7 @@ class ContainerConfig extends ArrayObject
      *
      * `{"<port>/<tcp|udp|sctp>": {}}`
      *
-     * @param array<string, array<string, mixed>>|null $exposedPorts
+     * @param array<string, mixed>|null $exposedPorts
      *
      * @return self
      */
@@ -374,9 +366,9 @@ class ContainerConfig extends ArrayObject
     /**
      * Attach standard streams to a TTY, including `stdin` if it is not closed.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getTty(): bool
+    public function getTty(): ?bool
     {
         return $this->tty;
     }
@@ -384,11 +376,11 @@ class ContainerConfig extends ArrayObject
     /**
      * Attach standard streams to a TTY, including `stdin` if it is not closed.
      *
-     * @param bool $tty
+     * @param bool|null $tty
      *
      * @return self
      */
-    public function setTty(bool $tty): self
+    public function setTty(?bool $tty): self
     {
         $this->initialized['tty'] = true;
         $this->tty                = $tty;
@@ -399,9 +391,9 @@ class ContainerConfig extends ArrayObject
     /**
      * Open `stdin`.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getOpenStdin(): bool
+    public function getOpenStdin(): ?bool
     {
         return $this->openStdin;
     }
@@ -409,11 +401,11 @@ class ContainerConfig extends ArrayObject
     /**
      * Open `stdin`.
      *
-     * @param bool $openStdin
+     * @param bool|null $openStdin
      *
      * @return self
      */
-    public function setOpenStdin(bool $openStdin): self
+    public function setOpenStdin(?bool $openStdin): self
     {
         $this->initialized['openStdin'] = true;
         $this->openStdin                = $openStdin;
@@ -424,9 +416,9 @@ class ContainerConfig extends ArrayObject
     /**
      * Close `stdin` after one attached client disconnects.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getStdinOnce(): bool
+    public function getStdinOnce(): ?bool
     {
         return $this->stdinOnce;
     }
@@ -434,11 +426,11 @@ class ContainerConfig extends ArrayObject
     /**
      * Close `stdin` after one attached client disconnects.
      *
-     * @param bool $stdinOnce
+     * @param bool|null $stdinOnce
      *
      * @return self
      */
-    public function setStdinOnce(bool $stdinOnce): self
+    public function setStdinOnce(?bool $stdinOnce): self
     {
         $this->initialized['stdinOnce'] = true;
         $this->stdinOnce                = $stdinOnce;
@@ -451,9 +443,9 @@ class ContainerConfig extends ArrayObject
      * form `["VAR=value", ...]`. A variable without `=` is removed from the
      * environment, rather than to have an empty value.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getEnv(): array
+    public function getEnv(): ?array
     {
         return $this->env;
     }
@@ -463,11 +455,11 @@ class ContainerConfig extends ArrayObject
      * form `["VAR=value", ...]`. A variable without `=` is removed from the
      * environment, rather than to have an empty value.
      *
-     * @param list<string> $env
+     * @param list<string>|null $env
      *
      * @return self
      */
-    public function setEnv(array $env): self
+    public function setEnv(?array $env): self
     {
         $this->initialized['env'] = true;
         $this->env                = $env;
@@ -502,6 +494,7 @@ class ContainerConfig extends ArrayObject
 
     /**
      * A test to perform to check that the container is healthy.
+     * Healthcheck commands should be side-effect free.
      *
      * @return HealthConfig
      */
@@ -512,6 +505,7 @@ class ContainerConfig extends ArrayObject
 
     /**
      * A test to perform to check that the container is healthy.
+     * Healthcheck commands should be side-effect free.
      *
      * @param HealthConfig $healthcheck
      *
@@ -554,9 +548,9 @@ class ContainerConfig extends ArrayObject
      * The name (or reference) of the image to use when creating the container,
      * or which was used when the container was created.
      *
-     * @return string
+     * @return string|null
      */
-    public function getImage(): string
+    public function getImage(): ?string
     {
         return $this->image;
     }
@@ -565,11 +559,11 @@ class ContainerConfig extends ArrayObject
      * The name (or reference) of the image to use when creating the container,
      * or which was used when the container was created.
      *
-     * @param string $image
+     * @param string|null $image
      *
      * @return self
      */
-    public function setImage(string $image): self
+    public function setImage(?string $image): self
     {
         $this->initialized['image'] = true;
         $this->image                = $image;
@@ -581,7 +575,7 @@ class ContainerConfig extends ArrayObject
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @return array<string, array<string, mixed>>|null
+     * @return array<string, mixed>|null
      */
     public function getVolumes(): ?iterable
     {
@@ -592,7 +586,7 @@ class ContainerConfig extends ArrayObject
      * An object mapping mount point paths inside the container to empty
      * objects.
      *
-     * @param array<string, array<string, mixed>>|null $volumes
+     * @param array<string, mixed>|null $volumes
      *
      * @return self
      */
@@ -607,9 +601,9 @@ class ContainerConfig extends ArrayObject
     /**
      * The working directory for commands to run in.
      *
-     * @return string
+     * @return string|null
      */
-    public function getWorkingDir(): string
+    public function getWorkingDir(): ?string
     {
         return $this->workingDir;
     }
@@ -617,11 +611,11 @@ class ContainerConfig extends ArrayObject
     /**
      * The working directory for commands to run in.
      *
-     * @param string $workingDir
+     * @param string|null $workingDir
      *
      * @return self
      */
-    public function setWorkingDir(string $workingDir): self
+    public function setWorkingDir(?string $workingDir): self
     {
         $this->initialized['workingDir'] = true;
         $this->workingDir                = $workingDir;
@@ -688,35 +682,6 @@ class ContainerConfig extends ArrayObject
     }
 
     /**
-     * MAC address of the container.
-     *
-     * Deprecated: this field is deprecated in API v1.44 and up. Use EndpointSettings.MacAddress instead.
-     *
-     * @return string|null
-     */
-    public function getMacAddress(): ?string
-    {
-        return $this->macAddress;
-    }
-
-    /**
-     * MAC address of the container.
-     *
-     * Deprecated: this field is deprecated in API v1.44 and up. Use EndpointSettings.MacAddress instead.
-     *
-     * @param string|null $macAddress
-     *
-     * @return self
-     */
-    public function setMacAddress(?string $macAddress): self
-    {
-        $this->initialized['macAddress'] = true;
-        $this->macAddress                = $macAddress;
-
-        return $this;
-    }
-
-    /**
      * `ONBUILD` metadata that were defined in the image's `Dockerfile`.
      *
      * @return list<string>|null
@@ -744,9 +709,9 @@ class ContainerConfig extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @return array<string, string>
+     * @return array<string, string>|null
      */
-    public function getLabels(): iterable
+    public function getLabels(): ?iterable
     {
         return $this->labels;
     }
@@ -754,11 +719,11 @@ class ContainerConfig extends ArrayObject
     /**
      * User-defined key/value metadata.
      *
-     * @param array<string, string> $labels
+     * @param array<string, string>|null $labels
      *
      * @return self
      */
-    public function setLabels(iterable $labels): self
+    public function setLabels(?iterable $labels): self
     {
         $this->initialized['labels'] = true;
         $this->labels                = $labels;

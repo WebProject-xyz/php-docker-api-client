@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ImageInspect extends ArrayObject
+class ImageInspect
 {
     /**
      * @var array
@@ -38,6 +37,14 @@ class ImageInspect extends ArrayObject
      */
     protected $descriptor;
     /**
+     * Identity holds information about the identity and origin of the image.
+     * This is trusted information verified by the daemon and cannot be modified
+     * by tagging an image to a different name.
+     *
+     * @var Identity
+     */
+    protected $identity;
+    /**
      * Manifests is a list of image manifests available in this image. It
      * provides a more detailed view of the platform-specific image manifests or
      * other image-attached data like build attestations.
@@ -59,7 +66,7 @@ class ImageInspect extends ArrayObject
      * empty if no tags reference the image, in which case the image is
      * "untagged", in which case it can still be referenced by its ID.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $repoTags;
     /**
@@ -71,28 +78,13 @@ class ImageInspect extends ArrayObject
      * from a registry, or if the image was pushed to a registry, which is when
      * the manifest is generated and its digest calculated.
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $repoDigests;
     /**
-     * ID of the parent image.
-     *
-     * Depending on how the image was created, this field may be empty and
-     * is only set for images that were built/created locally. This field
-     * is empty if the image was pulled from an image registry.
-     *
-     * > **Deprecated**: This field is only set when using the deprecated
-     * > legacy builder. It is included in API responses for informational
-     * > purposes, but should not be depended on as it will be omitted
-     * > once the legacy builder is removed.
-     *
-     * @var string
-     */
-    protected $parent;
-    /**
      * Optional message that was set when committing or importing the image.
      *
-     * @var string
+     * @var string|null
      */
     protected $comment;
     /**
@@ -106,23 +98,10 @@ class ImageInspect extends ArrayObject
      */
     protected $created;
     /**
-     * The version of Docker that was used to build the image.
-     *
-     * Depending on how the image was created, this field may be empty.
-     *
-     * > **Deprecated**: This field is only set when using the deprecated
-     * > legacy builder. It is included in API responses for informational
-     * > purposes, but should not be depended on as it will be omitted
-     * > once the legacy builder is removed.
-     *
-     * @var string
-     */
-    protected $dockerVersion;
-    /**
      * Name of the author that was specified when committing the image, or as
      * specified through MAINTAINER (deprecated) in the Dockerfile.
      *
-     * @var string
+     * @var string|null
      */
     protected $author;
     /**
@@ -173,14 +152,14 @@ class ImageInspect extends ArrayObject
     /**
      * Information about the image's RootFS, including the layer IDs.
      *
-     * @var ImageInspectRootFS
+     * @var ImageInspectRootFS|null
      */
     protected $rootFS;
     /**
      * Additional metadata of the image in the local cache. This information
      * is local to the daemon, and not part of the image itself.
      *
-     * @var ImageInspectMetadata
+     * @var ImageInspectMetadata|null
      */
     protected $metadata;
 
@@ -251,6 +230,35 @@ class ImageInspect extends ArrayObject
     }
 
     /**
+     * Identity holds information about the identity and origin of the image.
+     * This is trusted information verified by the daemon and cannot be modified
+     * by tagging an image to a different name.
+     *
+     * @return Identity
+     */
+    public function getIdentity(): Identity
+    {
+        return $this->identity;
+    }
+
+    /**
+     * Identity holds information about the identity and origin of the image.
+     * This is trusted information verified by the daemon and cannot be modified
+     * by tagging an image to a different name.
+     *
+     * @param Identity $identity
+     *
+     * @return self
+     */
+    public function setIdentity(Identity $identity): self
+    {
+        $this->initialized['identity'] = true;
+        $this->identity                = $identity;
+
+        return $this;
+    }
+
+    /**
      * Manifests is a list of image manifests available in this image. It
      * provides a more detailed view of the platform-specific image manifests or
      * other image-attached data like build attestations.
@@ -299,9 +307,9 @@ class ImageInspect extends ArrayObject
      * empty if no tags reference the image, in which case the image is
      * "untagged", in which case it can still be referenced by its ID.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getRepoTags(): array
+    public function getRepoTags(): ?array
     {
         return $this->repoTags;
     }
@@ -314,11 +322,11 @@ class ImageInspect extends ArrayObject
      * empty if no tags reference the image, in which case the image is
      * "untagged", in which case it can still be referenced by its ID.
      *
-     * @param list<string> $repoTags
+     * @param list<string>|null $repoTags
      *
      * @return self
      */
-    public function setRepoTags(array $repoTags): self
+    public function setRepoTags(?array $repoTags): self
     {
         $this->initialized['repoTags'] = true;
         $this->repoTags                = $repoTags;
@@ -335,9 +343,9 @@ class ImageInspect extends ArrayObject
      * from a registry, or if the image was pushed to a registry, which is when
      * the manifest is generated and its digest calculated.
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getRepoDigests(): array
+    public function getRepoDigests(): ?array
     {
         return $this->repoDigests;
     }
@@ -351,11 +359,11 @@ class ImageInspect extends ArrayObject
      * from a registry, or if the image was pushed to a registry, which is when
      * the manifest is generated and its digest calculated.
      *
-     * @param list<string> $repoDigests
+     * @param list<string>|null $repoDigests
      *
      * @return self
      */
-    public function setRepoDigests(array $repoDigests): self
+    public function setRepoDigests(?array $repoDigests): self
     {
         $this->initialized['repoDigests'] = true;
         $this->repoDigests                = $repoDigests;
@@ -364,54 +372,11 @@ class ImageInspect extends ArrayObject
     }
 
     /**
-     * ID of the parent image.
-     *
-     * Depending on how the image was created, this field may be empty and
-     * is only set for images that were built/created locally. This field
-     * is empty if the image was pulled from an image registry.
-     *
-     * > **Deprecated**: This field is only set when using the deprecated
-     * > legacy builder. It is included in API responses for informational
-     * > purposes, but should not be depended on as it will be omitted
-     * > once the legacy builder is removed.
-     *
-     * @return string
-     */
-    public function getParent(): string
-    {
-        return $this->parent;
-    }
-
-    /**
-     * ID of the parent image.
-     *
-     * Depending on how the image was created, this field may be empty and
-     * is only set for images that were built/created locally. This field
-     * is empty if the image was pulled from an image registry.
-     *
-     * > **Deprecated**: This field is only set when using the deprecated
-     * > legacy builder. It is included in API responses for informational
-     * > purposes, but should not be depended on as it will be omitted
-     * > once the legacy builder is removed.
-     *
-     * @param string $parent
-     *
-     * @return self
-     */
-    public function setParent(string $parent): self
-    {
-        $this->initialized['parent'] = true;
-        $this->parent                = $parent;
-
-        return $this;
-    }
-
-    /**
      * Optional message that was set when committing or importing the image.
      *
-     * @return string
+     * @return string|null
      */
-    public function getComment(): string
+    public function getComment(): ?string
     {
         return $this->comment;
     }
@@ -419,11 +384,11 @@ class ImageInspect extends ArrayObject
     /**
      * Optional message that was set when committing or importing the image.
      *
-     * @param string $comment
+     * @param string|null $comment
      *
      * @return self
      */
-    public function setComment(string $comment): self
+    public function setComment(?string $comment): self
     {
         $this->initialized['comment'] = true;
         $this->comment                = $comment;
@@ -465,51 +430,12 @@ class ImageInspect extends ArrayObject
     }
 
     /**
-     * The version of Docker that was used to build the image.
-     *
-     * Depending on how the image was created, this field may be empty.
-     *
-     * > **Deprecated**: This field is only set when using the deprecated
-     * > legacy builder. It is included in API responses for informational
-     * > purposes, but should not be depended on as it will be omitted
-     * > once the legacy builder is removed.
-     *
-     * @return string
-     */
-    public function getDockerVersion(): string
-    {
-        return $this->dockerVersion;
-    }
-
-    /**
-     * The version of Docker that was used to build the image.
-     *
-     * Depending on how the image was created, this field may be empty.
-     *
-     * > **Deprecated**: This field is only set when using the deprecated
-     * > legacy builder. It is included in API responses for informational
-     * > purposes, but should not be depended on as it will be omitted
-     * > once the legacy builder is removed.
-     *
-     * @param string $dockerVersion
-     *
-     * @return self
-     */
-    public function setDockerVersion(string $dockerVersion): self
-    {
-        $this->initialized['dockerVersion'] = true;
-        $this->dockerVersion                = $dockerVersion;
-
-        return $this;
-    }
-
-    /**
      * Name of the author that was specified when committing the image, or as
      * specified through MAINTAINER (deprecated) in the Dockerfile.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAuthor(): string
+    public function getAuthor(): ?string
     {
         return $this->author;
     }
@@ -518,11 +444,11 @@ class ImageInspect extends ArrayObject
      * Name of the author that was specified when committing the image, or as
      * specified through MAINTAINER (deprecated) in the Dockerfile.
      *
-     * @param string $author
+     * @param string|null $author
      *
      * @return self
      */
-    public function setAuthor(string $author): self
+    public function setAuthor(?string $author): self
     {
         $this->initialized['author'] = true;
         $this->author                = $author;
@@ -714,9 +640,9 @@ class ImageInspect extends ArrayObject
     /**
      * Information about the image's RootFS, including the layer IDs.
      *
-     * @return ImageInspectRootFS
+     * @return ImageInspectRootFS|null
      */
-    public function getRootFS(): ImageInspectRootFS
+    public function getRootFS(): ?ImageInspectRootFS
     {
         return $this->rootFS;
     }
@@ -724,11 +650,11 @@ class ImageInspect extends ArrayObject
     /**
      * Information about the image's RootFS, including the layer IDs.
      *
-     * @param ImageInspectRootFS $rootFS
+     * @param ImageInspectRootFS|null $rootFS
      *
      * @return self
      */
-    public function setRootFS(ImageInspectRootFS $rootFS): self
+    public function setRootFS(?ImageInspectRootFS $rootFS): self
     {
         $this->initialized['rootFS'] = true;
         $this->rootFS                = $rootFS;
@@ -740,9 +666,9 @@ class ImageInspect extends ArrayObject
      * Additional metadata of the image in the local cache. This information
      * is local to the daemon, and not part of the image itself.
      *
-     * @return ImageInspectMetadata
+     * @return ImageInspectMetadata|null
      */
-    public function getMetadata(): ImageInspectMetadata
+    public function getMetadata(): ?ImageInspectMetadata
     {
         return $this->metadata;
     }
@@ -751,11 +677,11 @@ class ImageInspect extends ArrayObject
      * Additional metadata of the image in the local cache. This information
      * is local to the daemon, and not part of the image itself.
      *
-     * @param ImageInspectMetadata $metadata
+     * @param ImageInspectMetadata|null $metadata
      *
      * @return self
      */
-    public function setMetadata(ImageInspectMetadata $metadata): self
+    public function setMetadata(?ImageInspectMetadata $metadata): self
     {
         $this->initialized['metadata'] = true;
         $this->metadata                = $metadata;

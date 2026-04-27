@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class TLSInfo extends ArrayObject
+class TLSInfo
 {
     /**
      * @var array
@@ -21,19 +20,19 @@ class TLSInfo extends ArrayObject
      * The root CA certificate(s) that are used to validate leaf TLS
      * certificates.
      *
-     * @var string
+     * @var string|null
      */
     protected $trustRoot;
     /**
      * The base64-url-safe-encoded raw subject bytes of the issuer.
      *
-     * @var string
+     * @var string|null
      */
     protected $certIssuerSubject;
     /**
      * The base64-url-safe-encoded raw public key bytes of the issuer.
      *
-     * @var string
+     * @var string|null
      */
     protected $certIssuerPublicKey;
 
@@ -41,9 +40,9 @@ class TLSInfo extends ArrayObject
      * The root CA certificate(s) that are used to validate leaf TLS
      * certificates.
      *
-     * @return string
+     * @return string|null
      */
-    public function getTrustRoot(): string
+    public function getTrustRoot(): ?string
     {
         return $this->trustRoot;
     }
@@ -52,11 +51,11 @@ class TLSInfo extends ArrayObject
      * The root CA certificate(s) that are used to validate leaf TLS
      * certificates.
      *
-     * @param string $trustRoot
+     * @param string|null $trustRoot
      *
      * @return self
      */
-    public function setTrustRoot(string $trustRoot): self
+    public function setTrustRoot(?string $trustRoot): self
     {
         $this->initialized['trustRoot'] = true;
         $this->trustRoot                = $trustRoot;
@@ -67,9 +66,9 @@ class TLSInfo extends ArrayObject
     /**
      * The base64-url-safe-encoded raw subject bytes of the issuer.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCertIssuerSubject(): string
+    public function getCertIssuerSubject(): ?string
     {
         return $this->certIssuerSubject;
     }
@@ -77,11 +76,11 @@ class TLSInfo extends ArrayObject
     /**
      * The base64-url-safe-encoded raw subject bytes of the issuer.
      *
-     * @param string $certIssuerSubject
+     * @param string|null $certIssuerSubject
      *
      * @return self
      */
-    public function setCertIssuerSubject(string $certIssuerSubject): self
+    public function setCertIssuerSubject(?string $certIssuerSubject): self
     {
         $this->initialized['certIssuerSubject'] = true;
         $this->certIssuerSubject                = $certIssuerSubject;
@@ -92,9 +91,9 @@ class TLSInfo extends ArrayObject
     /**
      * The base64-url-safe-encoded raw public key bytes of the issuer.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCertIssuerPublicKey(): string
+    public function getCertIssuerPublicKey(): ?string
     {
         return $this->certIssuerPublicKey;
     }
@@ -102,11 +101,11 @@ class TLSInfo extends ArrayObject
     /**
      * The base64-url-safe-encoded raw public key bytes of the issuer.
      *
-     * @param string $certIssuerPublicKey
+     * @param string|null $certIssuerPublicKey
      *
      * @return self
      */
-    public function setCertIssuerPublicKey(string $certIssuerPublicKey): self
+    public function setCertIssuerPublicKey(?string $certIssuerPublicKey): self
     {
         $this->initialized['certIssuerPublicKey'] = true;
         $this->certIssuerPublicKey                = $certIssuerPublicKey;

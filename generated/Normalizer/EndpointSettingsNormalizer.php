@@ -16,7 +16,9 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
+use function is_string;
 
 class EndpointSettingsNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
@@ -37,106 +39,190 @@ class EndpointSettingsNormalizer implements DenormalizerInterface, NormalizerInt
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\EndpointSettings();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\EndpointSettings();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('IPAMConfig', $data) && null !== $data['IPAMConfig']) {
             $object->setIPAMConfig($this->denormalizer->denormalize($data['IPAMConfig'], \WebProject\DockerApi\Library\Generated\Model\EndpointIPAMConfig::class, 'json', $context));
-            unset($data['IPAMConfig']);
         } elseif (array_key_exists('IPAMConfig', $data) && null === $data['IPAMConfig']) {
             $object->setIPAMConfig(null);
         }
         if (array_key_exists('Links', $data) && null !== $data['Links']) {
-            $values = [];
-            foreach ($data['Links'] as $value) {
-                $values[] = $value;
+            $value = $data['Links'];
+            if (is_array($data['Links']) && $this->isOnlyNumericKeys($data['Links'])) {
+                $values = [];
+                foreach ($data['Links'] as $value_1) {
+                    $values[] = $value_1;
+                }
+                $value = $values;
+            } elseif (null === $data['Links']) {
+                $value = $data['Links'];
             }
-            $object->setLinks($values);
-            unset($data['Links']);
+            $object->setLinks($value);
         } elseif (array_key_exists('Links', $data) && null === $data['Links']) {
             $object->setLinks(null);
         }
-        if (array_key_exists('MacAddress', $data)) {
-            $object->setMacAddress($data['MacAddress']);
-            unset($data['MacAddress']);
+        if (array_key_exists('MacAddress', $data) && null !== $data['MacAddress']) {
+            $value_2 = $data['MacAddress'];
+            if (is_string($data['MacAddress'])) {
+                $value_2 = $data['MacAddress'];
+            } elseif (null === $data['MacAddress']) {
+                $value_2 = $data['MacAddress'];
+            }
+            $object->setMacAddress($value_2);
+        } elseif (array_key_exists('MacAddress', $data) && null === $data['MacAddress']) {
+            $object->setMacAddress(null);
         }
         if (array_key_exists('Aliases', $data) && null !== $data['Aliases']) {
-            $values_1 = [];
-            foreach ($data['Aliases'] as $value_1) {
-                $values_1[] = $value_1;
+            $value_3 = $data['Aliases'];
+            if (is_array($data['Aliases']) && $this->isOnlyNumericKeys($data['Aliases'])) {
+                $values_1 = [];
+                foreach ($data['Aliases'] as $value_4) {
+                    $values_1[] = $value_4;
+                }
+                $value_3 = $values_1;
+            } elseif (null === $data['Aliases']) {
+                $value_3 = $data['Aliases'];
             }
-            $object->setAliases($values_1);
-            unset($data['Aliases']);
+            $object->setAliases($value_3);
         } elseif (array_key_exists('Aliases', $data) && null === $data['Aliases']) {
             $object->setAliases(null);
         }
         if (array_key_exists('DriverOpts', $data) && null !== $data['DriverOpts']) {
-            $values_2 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['DriverOpts'] as $key => $value_2) {
-                $values_2[$key] = $value_2;
+            $value_5 = $data['DriverOpts'];
+            if (is_array($data['DriverOpts']) && $this->isOnlyNumericKeys($data['DriverOpts'])) {
+                $values_2 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                foreach ($data['DriverOpts'] as $key => $value_6) {
+                    $values_2[$key] = $value_6;
+                }
+                $value_5 = $values_2;
+            } elseif (null === $data['DriverOpts']) {
+                $value_5 = $data['DriverOpts'];
             }
-            $object->setDriverOpts($values_2);
-            unset($data['DriverOpts']);
+            $object->setDriverOpts($value_5);
         } elseif (array_key_exists('DriverOpts', $data) && null === $data['DriverOpts']) {
             $object->setDriverOpts(null);
         }
-        if (array_key_exists('GwPriority', $data)) {
-            $object->setGwPriority($data['GwPriority']);
-            unset($data['GwPriority']);
+        if (array_key_exists('GwPriority', $data) && null !== $data['GwPriority']) {
+            $value_7 = $data['GwPriority'];
+            if (is_int($data['GwPriority'])) {
+                $value_7 = $data['GwPriority'];
+            } elseif (null === $data['GwPriority']) {
+                $value_7 = $data['GwPriority'];
+            }
+            $object->setGwPriority($value_7);
+        } elseif (array_key_exists('GwPriority', $data) && null === $data['GwPriority']) {
+            $object->setGwPriority(null);
         }
-        if (array_key_exists('NetworkID', $data)) {
-            $object->setNetworkID($data['NetworkID']);
-            unset($data['NetworkID']);
+        if (array_key_exists('NetworkID', $data) && null !== $data['NetworkID']) {
+            $value_8 = $data['NetworkID'];
+            if (is_string($data['NetworkID'])) {
+                $value_8 = $data['NetworkID'];
+            } elseif (null === $data['NetworkID']) {
+                $value_8 = $data['NetworkID'];
+            }
+            $object->setNetworkID($value_8);
+        } elseif (array_key_exists('NetworkID', $data) && null === $data['NetworkID']) {
+            $object->setNetworkID(null);
         }
-        if (array_key_exists('EndpointID', $data)) {
-            $object->setEndpointID($data['EndpointID']);
-            unset($data['EndpointID']);
+        if (array_key_exists('EndpointID', $data) && null !== $data['EndpointID']) {
+            $value_9 = $data['EndpointID'];
+            if (is_string($data['EndpointID'])) {
+                $value_9 = $data['EndpointID'];
+            } elseif (null === $data['EndpointID']) {
+                $value_9 = $data['EndpointID'];
+            }
+            $object->setEndpointID($value_9);
+        } elseif (array_key_exists('EndpointID', $data) && null === $data['EndpointID']) {
+            $object->setEndpointID(null);
         }
-        if (array_key_exists('Gateway', $data)) {
-            $object->setGateway($data['Gateway']);
-            unset($data['Gateway']);
+        if (array_key_exists('Gateway', $data) && null !== $data['Gateway']) {
+            $value_10 = $data['Gateway'];
+            if (is_string($data['Gateway'])) {
+                $value_10 = $data['Gateway'];
+            } elseif (null === $data['Gateway']) {
+                $value_10 = $data['Gateway'];
+            }
+            $object->setGateway($value_10);
+        } elseif (array_key_exists('Gateway', $data) && null === $data['Gateway']) {
+            $object->setGateway(null);
         }
-        if (array_key_exists('IPAddress', $data)) {
-            $object->setIPAddress($data['IPAddress']);
-            unset($data['IPAddress']);
+        if (array_key_exists('IPAddress', $data) && null !== $data['IPAddress']) {
+            $value_11 = $data['IPAddress'];
+            if (is_string($data['IPAddress'])) {
+                $value_11 = $data['IPAddress'];
+            } elseif (null === $data['IPAddress']) {
+                $value_11 = $data['IPAddress'];
+            }
+            $object->setIPAddress($value_11);
+        } elseif (array_key_exists('IPAddress', $data) && null === $data['IPAddress']) {
+            $object->setIPAddress(null);
         }
-        if (array_key_exists('IPPrefixLen', $data)) {
-            $object->setIPPrefixLen($data['IPPrefixLen']);
-            unset($data['IPPrefixLen']);
+        if (array_key_exists('IPPrefixLen', $data) && null !== $data['IPPrefixLen']) {
+            $value_12 = $data['IPPrefixLen'];
+            if (is_int($data['IPPrefixLen'])) {
+                $value_12 = $data['IPPrefixLen'];
+            } elseif (null === $data['IPPrefixLen']) {
+                $value_12 = $data['IPPrefixLen'];
+            }
+            $object->setIPPrefixLen($value_12);
+        } elseif (array_key_exists('IPPrefixLen', $data) && null === $data['IPPrefixLen']) {
+            $object->setIPPrefixLen(null);
         }
-        if (array_key_exists('IPv6Gateway', $data)) {
-            $object->setIPv6Gateway($data['IPv6Gateway']);
-            unset($data['IPv6Gateway']);
+        if (array_key_exists('IPv6Gateway', $data) && null !== $data['IPv6Gateway']) {
+            $value_13 = $data['IPv6Gateway'];
+            if (is_string($data['IPv6Gateway'])) {
+                $value_13 = $data['IPv6Gateway'];
+            } elseif (null === $data['IPv6Gateway']) {
+                $value_13 = $data['IPv6Gateway'];
+            }
+            $object->setIPv6Gateway($value_13);
+        } elseif (array_key_exists('IPv6Gateway', $data) && null === $data['IPv6Gateway']) {
+            $object->setIPv6Gateway(null);
         }
-        if (array_key_exists('GlobalIPv6Address', $data)) {
-            $object->setGlobalIPv6Address($data['GlobalIPv6Address']);
-            unset($data['GlobalIPv6Address']);
+        if (array_key_exists('GlobalIPv6Address', $data) && null !== $data['GlobalIPv6Address']) {
+            $value_14 = $data['GlobalIPv6Address'];
+            if (is_string($data['GlobalIPv6Address'])) {
+                $value_14 = $data['GlobalIPv6Address'];
+            } elseif (null === $data['GlobalIPv6Address']) {
+                $value_14 = $data['GlobalIPv6Address'];
+            }
+            $object->setGlobalIPv6Address($value_14);
+        } elseif (array_key_exists('GlobalIPv6Address', $data) && null === $data['GlobalIPv6Address']) {
+            $object->setGlobalIPv6Address(null);
         }
-        if (array_key_exists('GlobalIPv6PrefixLen', $data)) {
-            $object->setGlobalIPv6PrefixLen($data['GlobalIPv6PrefixLen']);
-            unset($data['GlobalIPv6PrefixLen']);
+        if (array_key_exists('GlobalIPv6PrefixLen', $data) && null !== $data['GlobalIPv6PrefixLen']) {
+            $value_15 = $data['GlobalIPv6PrefixLen'];
+            if (is_int($data['GlobalIPv6PrefixLen'])) {
+                $value_15 = $data['GlobalIPv6PrefixLen'];
+            } elseif (null === $data['GlobalIPv6PrefixLen']) {
+                $value_15 = $data['GlobalIPv6PrefixLen'];
+            }
+            $object->setGlobalIPv6PrefixLen($value_15);
+        } elseif (array_key_exists('GlobalIPv6PrefixLen', $data) && null === $data['GlobalIPv6PrefixLen']) {
+            $object->setGlobalIPv6PrefixLen(null);
         }
         if (array_key_exists('DNSNames', $data) && null !== $data['DNSNames']) {
-            $values_3 = [];
-            foreach ($data['DNSNames'] as $value_3) {
-                $values_3[] = $value_3;
+            $value_16 = $data['DNSNames'];
+            if (is_array($data['DNSNames']) && $this->isOnlyNumericKeys($data['DNSNames'])) {
+                $values_3 = [];
+                foreach ($data['DNSNames'] as $value_17) {
+                    $values_3[] = $value_17;
+                }
+                $value_16 = $values_3;
+            } elseif (null === $data['DNSNames']) {
+                $value_16 = $data['DNSNames'];
             }
-            $object->setDNSNames($values_3);
-            unset($data['DNSNames']);
+            $object->setDNSNames($value_16);
         } elseif (array_key_exists('DNSNames', $data) && null === $data['DNSNames']) {
             $object->setDNSNames(null);
-        }
-        foreach ($data as $key_1 => $value_4) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $object[$key_1] = $value_4;
-            }
         }
 
         return $object;
@@ -145,71 +231,150 @@ class EndpointSettingsNormalizer implements DenormalizerInterface, NormalizerInt
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('iPAMConfig') && null !== $data->getIPAMConfig()) {
+        if ($data->isInitialized('iPAMConfig')) {
             $dataArray['IPAMConfig'] = $this->normalizer->normalize($data->getIPAMConfig(), 'json', $context);
         }
-        if ($data->isInitialized('links') && null !== $data->getLinks()) {
-            $values = [];
-            foreach ($data->getLinks() as $value) {
-                $values[] = $value;
+        if ($data->isInitialized('links')) {
+            $value = $data->getLinks();
+            if (is_array($data->getLinks())) {
+                $values = [];
+                foreach ($data->getLinks() as $value_1) {
+                    $values[] = $value_1;
+                }
+                $value = $values;
+            } elseif (null === $data->getLinks()) {
+                $value = $data->getLinks();
             }
-            $dataArray['Links'] = $values;
+            $dataArray['Links'] = $value;
         }
-        if ($data->isInitialized('macAddress') && null !== $data->getMacAddress()) {
-            $dataArray['MacAddress'] = $data->getMacAddress();
-        }
-        if ($data->isInitialized('aliases') && null !== $data->getAliases()) {
-            $values_1 = [];
-            foreach ($data->getAliases() as $value_1) {
-                $values_1[] = $value_1;
+        if ($data->isInitialized('macAddress')) {
+            $value_2 = $data->getMacAddress();
+            if (is_string($data->getMacAddress())) {
+                $value_2 = $data->getMacAddress();
+            } elseif (null === $data->getMacAddress()) {
+                $value_2 = $data->getMacAddress();
             }
-            $dataArray['Aliases'] = $values_1;
+            $dataArray['MacAddress'] = $value_2;
         }
-        if ($data->isInitialized('driverOpts') && null !== $data->getDriverOpts()) {
-            $values_2 = [];
-            foreach ($data->getDriverOpts() as $key => $value_2) {
-                $values_2[$key] = $value_2;
+        if ($data->isInitialized('aliases')) {
+            $value_3 = $data->getAliases();
+            if (is_array($data->getAliases())) {
+                $values_1 = [];
+                foreach ($data->getAliases() as $value_4) {
+                    $values_1[] = $value_4;
+                }
+                $value_3 = $values_1;
+            } elseif (null === $data->getAliases()) {
+                $value_3 = $data->getAliases();
             }
-            $dataArray['DriverOpts'] = $values_2;
+            $dataArray['Aliases'] = $value_3;
         }
-        if ($data->isInitialized('gwPriority') && null !== $data->getGwPriority()) {
-            $dataArray['GwPriority'] = $data->getGwPriority();
-        }
-        if ($data->isInitialized('networkID') && null !== $data->getNetworkID()) {
-            $dataArray['NetworkID'] = $data->getNetworkID();
-        }
-        if ($data->isInitialized('endpointID') && null !== $data->getEndpointID()) {
-            $dataArray['EndpointID'] = $data->getEndpointID();
-        }
-        if ($data->isInitialized('gateway') && null !== $data->getGateway()) {
-            $dataArray['Gateway'] = $data->getGateway();
-        }
-        if ($data->isInitialized('iPAddress') && null !== $data->getIPAddress()) {
-            $dataArray['IPAddress'] = $data->getIPAddress();
-        }
-        if ($data->isInitialized('iPPrefixLen') && null !== $data->getIPPrefixLen()) {
-            $dataArray['IPPrefixLen'] = $data->getIPPrefixLen();
-        }
-        if ($data->isInitialized('iPv6Gateway') && null !== $data->getIPv6Gateway()) {
-            $dataArray['IPv6Gateway'] = $data->getIPv6Gateway();
-        }
-        if ($data->isInitialized('globalIPv6Address') && null !== $data->getGlobalIPv6Address()) {
-            $dataArray['GlobalIPv6Address'] = $data->getGlobalIPv6Address();
-        }
-        if ($data->isInitialized('globalIPv6PrefixLen') && null !== $data->getGlobalIPv6PrefixLen()) {
-            $dataArray['GlobalIPv6PrefixLen'] = $data->getGlobalIPv6PrefixLen();
-        }
-        if ($data->isInitialized('dNSNames') && null !== $data->getDNSNames()) {
-            $values_3 = [];
-            foreach ($data->getDNSNames() as $value_3) {
-                $values_3[] = $value_3;
+        if ($data->isInitialized('driverOpts')) {
+            $value_5 = $data->getDriverOpts();
+            if (is_object($data->getDriverOpts())) {
+                $values_2 = [];
+                foreach ($data->getDriverOpts() as $key => $value_6) {
+                    $values_2[$key] = $value_6;
+                }
+                $value_5 = $values_2;
+            } elseif (null === $data->getDriverOpts()) {
+                $value_5 = $data->getDriverOpts();
             }
-            $dataArray['DNSNames'] = $values_3;
+            $dataArray['DriverOpts'] = $value_5;
         }
-        foreach ($data as $key_1 => $value_4) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $dataArray[$key_1] = $value_4;
+        if ($data->isInitialized('gwPriority')) {
+            $value_7 = $data->getGwPriority();
+            if (is_int($data->getGwPriority())) {
+                $value_7 = $data->getGwPriority();
+            } elseif (null === $data->getGwPriority()) {
+                $value_7 = $data->getGwPriority();
             }
+            $dataArray['GwPriority'] = $value_7;
+        }
+        if ($data->isInitialized('networkID')) {
+            $value_8 = $data->getNetworkID();
+            if (is_string($data->getNetworkID())) {
+                $value_8 = $data->getNetworkID();
+            } elseif (null === $data->getNetworkID()) {
+                $value_8 = $data->getNetworkID();
+            }
+            $dataArray['NetworkID'] = $value_8;
+        }
+        if ($data->isInitialized('endpointID')) {
+            $value_9 = $data->getEndpointID();
+            if (is_string($data->getEndpointID())) {
+                $value_9 = $data->getEndpointID();
+            } elseif (null === $data->getEndpointID()) {
+                $value_9 = $data->getEndpointID();
+            }
+            $dataArray['EndpointID'] = $value_9;
+        }
+        if ($data->isInitialized('gateway')) {
+            $value_10 = $data->getGateway();
+            if (is_string($data->getGateway())) {
+                $value_10 = $data->getGateway();
+            } elseif (null === $data->getGateway()) {
+                $value_10 = $data->getGateway();
+            }
+            $dataArray['Gateway'] = $value_10;
+        }
+        if ($data->isInitialized('iPAddress')) {
+            $value_11 = $data->getIPAddress();
+            if (is_string($data->getIPAddress())) {
+                $value_11 = $data->getIPAddress();
+            } elseif (null === $data->getIPAddress()) {
+                $value_11 = $data->getIPAddress();
+            }
+            $dataArray['IPAddress'] = $value_11;
+        }
+        if ($data->isInitialized('iPPrefixLen')) {
+            $value_12 = $data->getIPPrefixLen();
+            if (is_int($data->getIPPrefixLen())) {
+                $value_12 = $data->getIPPrefixLen();
+            } elseif (null === $data->getIPPrefixLen()) {
+                $value_12 = $data->getIPPrefixLen();
+            }
+            $dataArray['IPPrefixLen'] = $value_12;
+        }
+        if ($data->isInitialized('iPv6Gateway')) {
+            $value_13 = $data->getIPv6Gateway();
+            if (is_string($data->getIPv6Gateway())) {
+                $value_13 = $data->getIPv6Gateway();
+            } elseif (null === $data->getIPv6Gateway()) {
+                $value_13 = $data->getIPv6Gateway();
+            }
+            $dataArray['IPv6Gateway'] = $value_13;
+        }
+        if ($data->isInitialized('globalIPv6Address')) {
+            $value_14 = $data->getGlobalIPv6Address();
+            if (is_string($data->getGlobalIPv6Address())) {
+                $value_14 = $data->getGlobalIPv6Address();
+            } elseif (null === $data->getGlobalIPv6Address()) {
+                $value_14 = $data->getGlobalIPv6Address();
+            }
+            $dataArray['GlobalIPv6Address'] = $value_14;
+        }
+        if ($data->isInitialized('globalIPv6PrefixLen')) {
+            $value_15 = $data->getGlobalIPv6PrefixLen();
+            if (is_int($data->getGlobalIPv6PrefixLen())) {
+                $value_15 = $data->getGlobalIPv6PrefixLen();
+            } elseif (null === $data->getGlobalIPv6PrefixLen()) {
+                $value_15 = $data->getGlobalIPv6PrefixLen();
+            }
+            $dataArray['GlobalIPv6PrefixLen'] = $value_15;
+        }
+        if ($data->isInitialized('dNSNames')) {
+            $value_16 = $data->getDNSNames();
+            if (is_array($data->getDNSNames())) {
+                $values_3 = [];
+                foreach ($data->getDNSNames() as $value_17) {
+                    $values_3[] = $value_17;
+                }
+                $value_16 = $values_3;
+            } elseif (null === $data->getDNSNames()) {
+                $value_16 = $data->getDNSNames();
+            }
+            $dataArray['DNSNames'] = $value_16;
         }
 
         return $dataArray;

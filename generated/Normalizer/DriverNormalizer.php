@@ -37,19 +37,18 @@ class DriverNormalizer implements DenormalizerInterface, NormalizerInterface, De
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\Driver();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\Driver();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
         if (array_key_exists('Name', $data)) {
             $object->setName($data['Name']);
-            unset($data['Name']);
         }
         if (array_key_exists('Options', $data)) {
             $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
@@ -57,12 +56,6 @@ class DriverNormalizer implements DenormalizerInterface, NormalizerInterface, De
                 $values[$key] = $value;
             }
             $object->setOptions($values);
-            unset($data['Options']);
-        }
-        foreach ($data as $key_1 => $value_1) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $object[$key_1] = $value_1;
-            }
         }
 
         return $object;
@@ -78,11 +71,6 @@ class DriverNormalizer implements DenormalizerInterface, NormalizerInterface, De
                 $values[$key] = $value;
             }
             $dataArray['Options'] = $values;
-        }
-        foreach ($data as $key_1 => $value_1) {
-            if (preg_match('/.*/', (string) $key_1)) {
-                $dataArray[$key_1] = $value_1;
-            }
         }
 
         return $dataArray;

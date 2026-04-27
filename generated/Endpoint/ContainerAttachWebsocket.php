@@ -10,19 +10,17 @@ class ContainerAttachWebsocket extends \WebProject\DockerApi\Library\Generated\R
     protected $accept;
 
     /**
-     * @param string $id              ID or name of the container
-     * @param array  $queryParameters {
-     *
-     * @var string $detachKeys Override the key sequence for detaching a container.Format is a single
-     *             character `[a-Z]` or `ctrl-<value>` where `<value>` is one of: `a-z`,
-     *             `@`, `^`, `[`, `,`, or `_`.
-     * @var bool   $logs Return logs
-     * @var bool   $stream Return stream
-     * @var bool   $stdin Attach to `stdin`
-     * @var bool   $stdout Attach to `stdout`
-     * @var bool   $stderr Attach to `stderr`
-     *             }
-     *
+     * @param string $id ID or name of the container
+     * @param array{
+     *    "detachKeys"?: string, //Override the key sequence for detaching a container.Format is a single
+     * character `[a-Z]` or `ctrl-<value>` where `<value>` is one of: `a-z`,
+     * `@`, `^`, `[`, `,`, or `_`.
+     *    "logs"?: bool, //Return logs
+     *    "stream"?: bool, //Return stream
+     *    "stdin"?: bool, //Attach to `stdin`
+     *    "stdout"?: bool, //Attach to `stdout`
+     *    "stderr"?: bool, //Attach to `stderr`
+     * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
     public function __construct(string $id, array $queryParameters = [], array $accept = [])
@@ -91,13 +89,13 @@ class ContainerAttachWebsocket extends \WebProject\DockerApi\Library\Generated\R
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerAttachWebsocketBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerAttachWebsocketNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerAttachWebsocketInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

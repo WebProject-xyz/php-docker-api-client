@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class Runtime extends ArrayObject
+class Runtime
 {
     /**
      * @var array
@@ -23,7 +22,7 @@ class Runtime extends ArrayObject
      * If the path is omitted, the daemon searches the host's `$PATH` for the
      * binary and uses the first result.
      *
-     * @var string
+     * @var string|null
      */
     protected $path;
     /**
@@ -58,9 +57,9 @@ class Runtime extends ArrayObject
      * If the path is omitted, the daemon searches the host's `$PATH` for the
      * binary and uses the first result.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPath(): string
+    public function getPath(): ?string
     {
         return $this->path;
     }
@@ -71,11 +70,11 @@ class Runtime extends ArrayObject
      * If the path is omitted, the daemon searches the host's `$PATH` for the
      * binary and uses the first result.
      *
-     * @param string $path
+     * @param string|null $path
      *
      * @return self
      */
-    public function setPath(string $path): self
+    public function setPath(?string $path): self
     {
         $this->initialized['path'] = true;
         $this->path                = $path;

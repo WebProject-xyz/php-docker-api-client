@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class PortBinding extends ArrayObject
+class PortBinding
 {
     /**
      * @var array
@@ -20,22 +19,22 @@ class PortBinding extends ArrayObject
     /**
      * Host IP address that the container's port is mapped to.
      *
-     * @var string
+     * @var string|null
      */
     protected $hostIp;
     /**
      * Host port number that the container's port is mapped to.
      *
-     * @var string
+     * @var string|null
      */
     protected $hostPort;
 
     /**
      * Host IP address that the container's port is mapped to.
      *
-     * @return string
+     * @return string|null
      */
-    public function getHostIp(): string
+    public function getHostIp(): ?string
     {
         return $this->hostIp;
     }
@@ -43,11 +42,11 @@ class PortBinding extends ArrayObject
     /**
      * Host IP address that the container's port is mapped to.
      *
-     * @param string $hostIp
+     * @param string|null $hostIp
      *
      * @return self
      */
-    public function setHostIp(string $hostIp): self
+    public function setHostIp(?string $hostIp): self
     {
         $this->initialized['hostIp'] = true;
         $this->hostIp                = $hostIp;
@@ -58,9 +57,9 @@ class PortBinding extends ArrayObject
     /**
      * Host port number that the container's port is mapped to.
      *
-     * @return string
+     * @return string|null
      */
-    public function getHostPort(): string
+    public function getHostPort(): ?string
     {
         return $this->hostPort;
     }
@@ -68,11 +67,11 @@ class PortBinding extends ArrayObject
     /**
      * Host port number that the container's port is mapped to.
      *
-     * @param string $hostPort
+     * @param string|null $hostPort
      *
      * @return self
      */
-    public function setHostPort(string $hostPort): self
+    public function setHostPort(?string $hostPort): self
     {
         $this->initialized['hostPort'] = true;
         $this->hostPort                = $hostPort;

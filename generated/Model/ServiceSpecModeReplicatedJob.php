@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ServiceSpecModeReplicatedJob extends ArrayObject
+class ServiceSpecModeReplicatedJob
 {
     /**
      * @var array
@@ -20,23 +19,23 @@ class ServiceSpecModeReplicatedJob extends ArrayObject
     /**
      * The maximum number of replicas to run simultaneously.
      *
-     * @var int
+     * @var int|null
      */
     protected $maxConcurrent = 1;
     /**
      * The total number of replicas desired to reach the Completed
      * state. If unset, will default to the value of `MaxConcurrent`.
      *
-     * @var int
+     * @var int|null
      */
     protected $totalCompletions;
 
     /**
      * The maximum number of replicas to run simultaneously.
      *
-     * @return int
+     * @return int|null
      */
-    public function getMaxConcurrent(): int
+    public function getMaxConcurrent(): ?int
     {
         return $this->maxConcurrent;
     }
@@ -44,11 +43,11 @@ class ServiceSpecModeReplicatedJob extends ArrayObject
     /**
      * The maximum number of replicas to run simultaneously.
      *
-     * @param int $maxConcurrent
+     * @param int|null $maxConcurrent
      *
      * @return self
      */
-    public function setMaxConcurrent(int $maxConcurrent): self
+    public function setMaxConcurrent(?int $maxConcurrent): self
     {
         $this->initialized['maxConcurrent'] = true;
         $this->maxConcurrent                = $maxConcurrent;
@@ -60,9 +59,9 @@ class ServiceSpecModeReplicatedJob extends ArrayObject
      * The total number of replicas desired to reach the Completed
      * state. If unset, will default to the value of `MaxConcurrent`.
      *
-     * @return int
+     * @return int|null
      */
-    public function getTotalCompletions(): int
+    public function getTotalCompletions(): ?int
     {
         return $this->totalCompletions;
     }
@@ -71,11 +70,11 @@ class ServiceSpecModeReplicatedJob extends ArrayObject
      * The total number of replicas desired to reach the Completed
      * state. If unset, will default to the value of `MaxConcurrent`.
      *
-     * @param int $totalCompletions
+     * @param int|null $totalCompletions
      *
      * @return self
      */
-    public function setTotalCompletions(int $totalCompletions): self
+    public function setTotalCompletions(?int $totalCompletions): self
     {
         $this->initialized['totalCompletions'] = true;
         $this->totalCompletions                = $totalCompletions;

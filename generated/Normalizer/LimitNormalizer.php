@@ -16,6 +16,7 @@ use WebProject\DockerApi\Library\Generated\Runtime\Normalizer\ValidatorTrait;
 use function array_key_exists;
 use function get_class;
 use function is_array;
+use function is_int;
 use function is_object;
 
 class LimitNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
@@ -37,32 +38,48 @@ class LimitNormalizer implements DenormalizerInterface, NormalizerInterface, Den
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (isset($data['$ref'])) {
+        $object = new \WebProject\DockerApi\Library\Generated\Model\Limit();
+        if (null === $data || false === is_array($data)) {
+            return $object;
+        }
+        if (isset($data['$ref']) && !isset($data['type']) && !isset($data['properties']) && !isset($data['allOf'])) {
             return new Reference($data['$ref'], $context['document-origin']);
         }
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \WebProject\DockerApi\Library\Generated\Model\Limit();
-        if (null === $data || false === is_array($data)) {
-            return $object;
-        }
-        if (array_key_exists('NanoCPUs', $data)) {
-            $object->setNanoCPUs($data['NanoCPUs']);
-            unset($data['NanoCPUs']);
-        }
-        if (array_key_exists('MemoryBytes', $data)) {
-            $object->setMemoryBytes($data['MemoryBytes']);
-            unset($data['MemoryBytes']);
-        }
-        if (array_key_exists('Pids', $data)) {
-            $object->setPids($data['Pids']);
-            unset($data['Pids']);
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $object[$key] = $value;
+        if (array_key_exists('NanoCPUs', $data) && null !== $data['NanoCPUs']) {
+            $value = $data['NanoCPUs'];
+            if (is_int($data['NanoCPUs'])) {
+                $value = $data['NanoCPUs'];
+            } elseif (null === $data['NanoCPUs']) {
+                $value = $data['NanoCPUs'];
             }
+            $object->setNanoCPUs($value);
+        } elseif (array_key_exists('NanoCPUs', $data) && null === $data['NanoCPUs']) {
+            $object->setNanoCPUs(null);
+        }
+        if (array_key_exists('MemoryBytes', $data) && null !== $data['MemoryBytes']) {
+            $value_1 = $data['MemoryBytes'];
+            if (is_int($data['MemoryBytes'])) {
+                $value_1 = $data['MemoryBytes'];
+            } elseif (null === $data['MemoryBytes']) {
+                $value_1 = $data['MemoryBytes'];
+            }
+            $object->setMemoryBytes($value_1);
+        } elseif (array_key_exists('MemoryBytes', $data) && null === $data['MemoryBytes']) {
+            $object->setMemoryBytes(null);
+        }
+        if (array_key_exists('Pids', $data) && null !== $data['Pids']) {
+            $value_2 = $data['Pids'];
+            if (is_int($data['Pids'])) {
+                $value_2 = $data['Pids'];
+            } elseif (null === $data['Pids']) {
+                $value_2 = $data['Pids'];
+            }
+            $object->setPids($value_2);
+        } elseif (array_key_exists('Pids', $data) && null === $data['Pids']) {
+            $object->setPids(null);
         }
 
         return $object;
@@ -71,19 +88,32 @@ class LimitNormalizer implements DenormalizerInterface, NormalizerInterface, Den
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('nanoCPUs') && null !== $data->getNanoCPUs()) {
-            $dataArray['NanoCPUs'] = $data->getNanoCPUs();
-        }
-        if ($data->isInitialized('memoryBytes') && null !== $data->getMemoryBytes()) {
-            $dataArray['MemoryBytes'] = $data->getMemoryBytes();
-        }
-        if ($data->isInitialized('pids') && null !== $data->getPids()) {
-            $dataArray['Pids'] = $data->getPids();
-        }
-        foreach ($data as $key => $value) {
-            if (preg_match('/.*/', (string) $key)) {
-                $dataArray[$key] = $value;
+        if ($data->isInitialized('nanoCPUs')) {
+            $value = $data->getNanoCPUs();
+            if (is_int($data->getNanoCPUs())) {
+                $value = $data->getNanoCPUs();
+            } elseif (null === $data->getNanoCPUs()) {
+                $value = $data->getNanoCPUs();
             }
+            $dataArray['NanoCPUs'] = $value;
+        }
+        if ($data->isInitialized('memoryBytes')) {
+            $value_1 = $data->getMemoryBytes();
+            if (is_int($data->getMemoryBytes())) {
+                $value_1 = $data->getMemoryBytes();
+            } elseif (null === $data->getMemoryBytes()) {
+                $value_1 = $data->getMemoryBytes();
+            }
+            $dataArray['MemoryBytes'] = $value_1;
+        }
+        if ($data->isInitialized('pids')) {
+            $value_2 = $data->getPids();
+            if (is_int($data->getPids())) {
+                $value_2 = $data->getPids();
+            } elseif (null === $data->getPids()) {
+                $value_2 = $data->getPids();
+            }
+            $dataArray['Pids'] = $value_2;
         }
 
         return $dataArray;

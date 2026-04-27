@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class ContainerCPUUsage extends ArrayObject
+class ContainerCPUUsage
 {
     /**
      * @var array
@@ -20,7 +19,7 @@ class ContainerCPUUsage extends ArrayObject
     /**
      * Total CPU time consumed in nanoseconds (Linux) or 100's of nanoseconds (Windows).
      *
-     * @var int
+     * @var int|null
      */
     protected $totalUsage;
     /**
@@ -39,7 +38,7 @@ class ContainerCPUUsage extends ArrayObject
      *
      * Not populated for Windows containers using Hyper-V isolation.
      *
-     * @var int
+     * @var int|null
      */
     protected $usageInKernelmode;
     /**
@@ -49,16 +48,16 @@ class ContainerCPUUsage extends ArrayObject
      *
      * Not populated for Windows containers using Hyper-V isolation.
      *
-     * @var int
+     * @var int|null
      */
     protected $usageInUsermode;
 
     /**
      * Total CPU time consumed in nanoseconds (Linux) or 100's of nanoseconds (Windows).
      *
-     * @return int
+     * @return int|null
      */
-    public function getTotalUsage(): int
+    public function getTotalUsage(): ?int
     {
         return $this->totalUsage;
     }
@@ -66,11 +65,11 @@ class ContainerCPUUsage extends ArrayObject
     /**
      * Total CPU time consumed in nanoseconds (Linux) or 100's of nanoseconds (Windows).
      *
-     * @param int $totalUsage
+     * @param int|null $totalUsage
      *
      * @return self
      */
-    public function setTotalUsage(int $totalUsage): self
+    public function setTotalUsage(?int $totalUsage): self
     {
         $this->initialized['totalUsage'] = true;
         $this->totalUsage                = $totalUsage;
@@ -116,9 +115,9 @@ class ContainerCPUUsage extends ArrayObject
      *
      * Not populated for Windows containers using Hyper-V isolation.
      *
-     * @return int
+     * @return int|null
      */
-    public function getUsageInKernelmode(): int
+    public function getUsageInKernelmode(): ?int
     {
         return $this->usageInKernelmode;
     }
@@ -130,11 +129,11 @@ class ContainerCPUUsage extends ArrayObject
      *
      * Not populated for Windows containers using Hyper-V isolation.
      *
-     * @param int $usageInKernelmode
+     * @param int|null $usageInKernelmode
      *
      * @return self
      */
-    public function setUsageInKernelmode(int $usageInKernelmode): self
+    public function setUsageInKernelmode(?int $usageInKernelmode): self
     {
         $this->initialized['usageInKernelmode'] = true;
         $this->usageInKernelmode                = $usageInKernelmode;
@@ -149,9 +148,9 @@ class ContainerCPUUsage extends ArrayObject
      *
      * Not populated for Windows containers using Hyper-V isolation.
      *
-     * @return int
+     * @return int|null
      */
-    public function getUsageInUsermode(): int
+    public function getUsageInUsermode(): ?int
     {
         return $this->usageInUsermode;
     }
@@ -163,11 +162,11 @@ class ContainerCPUUsage extends ArrayObject
      *
      * Not populated for Windows containers using Hyper-V isolation.
      *
-     * @param int $usageInUsermode
+     * @param int|null $usageInUsermode
      *
      * @return self
      */
-    public function setUsageInUsermode(int $usageInUsermode): self
+    public function setUsageInUsermode(?int $usageInUsermode): self
     {
         $this->initialized['usageInUsermode'] = true;
         $this->usageInUsermode                = $usageInUsermode;

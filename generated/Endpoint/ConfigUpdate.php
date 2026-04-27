@@ -10,15 +10,12 @@ class ConfigUpdate extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     protected $accept;
 
     /**
-     * @param string                                                        $id              The ID or name of the config
+     * @param string                                                        $id          The ID or name of the config
      * @param \WebProject\DockerApi\Library\Generated\Model\ConfigSpec|null $requestBody
-     * @param array                                                         $queryParameters {
-     *
-     * @var int $version The version number of the config object being updated. This is
-     *          required to avoid conflicting writes.
-     *
-     * }
-     *
+     * @param array{
+     *    "version": int, //The version number of the config object being updated. This is
+     * required to avoid conflicting writes.
+     * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
     public function __construct(string $id, ?\WebProject\DockerApi\Library\Generated\Model\ConfigSpec $requestBody = null, array $queryParameters = [], array $accept = [])
@@ -88,16 +85,16 @@ class ConfigUpdate extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ConfigUpdateBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ConfigUpdateNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ConfigUpdateInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (503 === $status && false !== mb_strpos($contentType, 'application/json'))) {
+        if ((null === $contentType) === false && (503 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ConfigUpdateServiceUnavailableException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
     }

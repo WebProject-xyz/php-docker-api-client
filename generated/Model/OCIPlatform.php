@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class OCIPlatform extends ArrayObject
+class OCIPlatform
 {
     /**
      * @var array
@@ -20,43 +19,43 @@ class OCIPlatform extends ArrayObject
     /**
      * The CPU architecture, for example `amd64` or `ppc64`.
      *
-     * @var string
+     * @var string|null
      */
     protected $architecture;
     /**
      * The operating system, for example `linux` or `windows`.
      *
-     * @var string
+     * @var string|null
      */
     protected $os;
     /**
      * Optional field specifying the operating system version, for example on
      * Windows `10.0.19041.1165`.
      *
-     * @var string
+     * @var string|null
      */
     protected $osVersion;
     /**
      * Optional field specifying an array of strings, each listing a required
      * OS feature (for example on Windows `win32k`).
      *
-     * @var list<string>
+     * @var list<string>|null
      */
     protected $osFeatures;
     /**
      * Optional field specifying a variant of the CPU, for example `v7` to
      * specify ARMv7 when architecture is `arm`.
      *
-     * @var string
+     * @var string|null
      */
     protected $variant;
 
     /**
      * The CPU architecture, for example `amd64` or `ppc64`.
      *
-     * @return string
+     * @return string|null
      */
-    public function getArchitecture(): string
+    public function getArchitecture(): ?string
     {
         return $this->architecture;
     }
@@ -64,11 +63,11 @@ class OCIPlatform extends ArrayObject
     /**
      * The CPU architecture, for example `amd64` or `ppc64`.
      *
-     * @param string $architecture
+     * @param string|null $architecture
      *
      * @return self
      */
-    public function setArchitecture(string $architecture): self
+    public function setArchitecture(?string $architecture): self
     {
         $this->initialized['architecture'] = true;
         $this->architecture                = $architecture;
@@ -79,9 +78,9 @@ class OCIPlatform extends ArrayObject
     /**
      * The operating system, for example `linux` or `windows`.
      *
-     * @return string
+     * @return string|null
      */
-    public function getOs(): string
+    public function getOs(): ?string
     {
         return $this->os;
     }
@@ -89,11 +88,11 @@ class OCIPlatform extends ArrayObject
     /**
      * The operating system, for example `linux` or `windows`.
      *
-     * @param string $os
+     * @param string|null $os
      *
      * @return self
      */
-    public function setOs(string $os): self
+    public function setOs(?string $os): self
     {
         $this->initialized['os'] = true;
         $this->os                = $os;
@@ -105,9 +104,9 @@ class OCIPlatform extends ArrayObject
      * Optional field specifying the operating system version, for example on
      * Windows `10.0.19041.1165`.
      *
-     * @return string
+     * @return string|null
      */
-    public function getOsVersion(): string
+    public function getOsVersion(): ?string
     {
         return $this->osVersion;
     }
@@ -116,11 +115,11 @@ class OCIPlatform extends ArrayObject
      * Optional field specifying the operating system version, for example on
      * Windows `10.0.19041.1165`.
      *
-     * @param string $osVersion
+     * @param string|null $osVersion
      *
      * @return self
      */
-    public function setOsVersion(string $osVersion): self
+    public function setOsVersion(?string $osVersion): self
     {
         $this->initialized['osVersion'] = true;
         $this->osVersion                = $osVersion;
@@ -132,9 +131,9 @@ class OCIPlatform extends ArrayObject
      * Optional field specifying an array of strings, each listing a required
      * OS feature (for example on Windows `win32k`).
      *
-     * @return list<string>
+     * @return list<string>|null
      */
-    public function getOsFeatures(): array
+    public function getOsFeatures(): ?array
     {
         return $this->osFeatures;
     }
@@ -143,11 +142,11 @@ class OCIPlatform extends ArrayObject
      * Optional field specifying an array of strings, each listing a required
      * OS feature (for example on Windows `win32k`).
      *
-     * @param list<string> $osFeatures
+     * @param list<string>|null $osFeatures
      *
      * @return self
      */
-    public function setOsFeatures(array $osFeatures): self
+    public function setOsFeatures(?array $osFeatures): self
     {
         $this->initialized['osFeatures'] = true;
         $this->osFeatures                = $osFeatures;
@@ -159,9 +158,9 @@ class OCIPlatform extends ArrayObject
      * Optional field specifying a variant of the CPU, for example `v7` to
      * specify ARMv7 when architecture is `arm`.
      *
-     * @return string
+     * @return string|null
      */
-    public function getVariant(): string
+    public function getVariant(): ?string
     {
         return $this->variant;
     }
@@ -170,11 +169,11 @@ class OCIPlatform extends ArrayObject
      * Optional field specifying a variant of the CPU, for example `v7` to
      * specify ARMv7 when architecture is `arm`.
      *
-     * @param string $variant
+     * @param string|null $variant
      *
      * @return self
      */
-    public function setVariant(string $variant): self
+    public function setVariant(?string $variant): self
     {
         $this->initialized['variant'] = true;
         $this->variant                = $variant;

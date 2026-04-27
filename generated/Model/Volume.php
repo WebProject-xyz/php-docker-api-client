@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use ArrayObject;
 use function array_key_exists;
 
-class Volume extends ArrayObject
+class Volume
 {
     /**
      * @var array
@@ -38,7 +37,7 @@ class Volume extends ArrayObject
     /**
      * Date/Time the volume was created.
      *
-     * @var string
+     * @var string|null
      */
     protected $createdAt;
     /**
@@ -49,7 +48,7 @@ class Volume extends ArrayObject
      * The `Status` field is optional, and is omitted if the volume driver
      * does not support this feature.
      *
-     * @var array<string, array<string, mixed>>
+     * @var array<string, mixed>|null
      */
     protected $status;
     /**
@@ -164,9 +163,9 @@ class Volume extends ArrayObject
     /**
      * Date/Time the volume was created.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?string
     {
         return $this->createdAt;
     }
@@ -174,11 +173,11 @@ class Volume extends ArrayObject
     /**
      * Date/Time the volume was created.
      *
-     * @param string $createdAt
+     * @param string|null $createdAt
      *
      * @return self
      */
-    public function setCreatedAt(string $createdAt): self
+    public function setCreatedAt(?string $createdAt): self
     {
         $this->initialized['createdAt'] = true;
         $this->createdAt                = $createdAt;
@@ -194,9 +193,9 @@ class Volume extends ArrayObject
      * The `Status` field is optional, and is omitted if the volume driver
      * does not support this feature.
      *
-     * @return array<string, array<string, mixed>>
+     * @return array<string, mixed>|null
      */
-    public function getStatus(): iterable
+    public function getStatus(): ?iterable
     {
         return $this->status;
     }
@@ -209,11 +208,11 @@ class Volume extends ArrayObject
      * The `Status` field is optional, and is omitted if the volume driver
      * does not support this feature.
      *
-     * @param array<string, array<string, mixed>> $status
+     * @param array<string, mixed>|null $status
      *
      * @return self
      */
-    public function setStatus(iterable $status): self
+    public function setStatus(?iterable $status): self
     {
         $this->initialized['status'] = true;
         $this->status                = $status;
