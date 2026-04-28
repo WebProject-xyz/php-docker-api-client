@@ -42,6 +42,8 @@ final readonly class ContainerResponseToContainerDtoUtil
         $ports = [];
         foreach ($networkSettings->getPorts() ?? [] as $portKey => $portBindings) {
             if (empty($portBindings)) {
+                // PortBindung without host binding
+                $ports[$portKey] = new \WebProject\DockerApi\Library\Generated\Model\PortBinding();
                 continue;
             }
             // PortBinding is expected by DTO for each string key
