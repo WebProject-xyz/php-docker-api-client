@@ -7,6 +7,7 @@ namespace WebProject\DockerApiClient\Util;
 use WebProject\DockerApi\Library\Generated\Model\ContainerInspectResponse;
 use WebProject\DockerApiClient\Dto\DockerContainerDto;
 use function array_unique;
+use function array_values;
 use function explode;
 
 final readonly class ContainerResponseToContainerDtoUtil
@@ -17,33 +18,45 @@ final readonly class ContainerResponseToContainerDtoUtil
         $ipAddresses = [];
         $networks    = [];
 
-        foreach ($containerInspect->getNetworkSettings()->getNetworks() as $networkName => $network) {
-            if ('' === $network->getIPAddress()) {
+        $networkSettings = $containerInspect->getNetworkSettings();
+        foreach ($networkSettings->getNetworks() as $networkName => $network) {
+            $ip = $network->getIPAddress();
+            if (null === $ip || '' === $ip) {
                 continue;
             }
-            $networks[$networkName]['aliases'] = array_unique($network->getAliases() ?? []);
-            $networks[$networkName]['ip']      = $network->getIPAddress();
-            $ipAddresses[]                     = $network->getIPAddress();
+            $networks[$networkName]['aliases'] = array_values(array_unique($network->getAliases() ?? []));
+            $networks[$networkName]['ip']      = $ip;
+            $ipAddresses[]                     = $ip;
         }
 
         $envVariables = [];
-        foreach ($containerInspect->getConfig()->getEnv() as $envVar) {
+        $config       = $containerInspect->getConfig();
+        foreach ($config->getEnv() ?? [] as $envVar) {
             if (!str_contains($envVar, '=')) {
                 continue;
             }
-            [$name, $value]      = explode('=', $envVar);
+            [$name, $value]      = explode('=', $envVar, 2);
             $envVariables[$name] = $value;
         }
 
+        $ports = [];
+        foreach ($networkSettings->getPorts() ?? [] as $portKey => $portBindings) {
+            if (empty($portBindings)) {
+                continue;
+            }
+            // PortBinding is expected by DTO for each string key
+            $ports[$portKey] = $portBindings[0];
+        }
+
         return new DockerContainerDto(
-            id: $containerInspect->getId(),
-            name: $containerInspect->getName(),
-            image: $containerInspect->getImage(),
+            id: (string) $containerInspect->getId(),
+            name: (string) $containerInspect->getName(),
+            image: (string) $containerInspect->getImage(),
             running: $containerInspect->getState()?->getRunning() ?? false,
             envVariables: $envVariables,
             ipAddresses: $ipAddresses,
             networks: $networks,
-            ports: (array) ($containerInspect->getNetworkSettings()->getPorts() ?? []),
+            ports: $ports,
         );
     }
 }
