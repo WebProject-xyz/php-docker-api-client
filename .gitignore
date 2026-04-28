@@ -82,3 +82,5 @@ composer.phar
 tests/Support/_generated/*
 !tests/Support/_generated/.gitkeep
 tmp-hosts
+CLAUDE.md
+AGENTS.md
