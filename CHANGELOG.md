@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.0](https://github.com/WebProject-xyz/php-docker-api-client/compare/1.3.3...1.4.0) (2026-04-28)
+
+### Features
+
+* **docker-api-client:** bump to v1.54-patched.yaml ([98933f3](https://github.com/WebProject-xyz/php-docker-api-client/commit/98933f3aba78ad17f16dc22aa0354c43357b46e0))
+* **docker-api:** bump docker api schema version to v1.54 ([302b8f3](https://github.com/WebProject-xyz/php-docker-api-client/commit/302b8f3e2a9e44e287a29b709f6d8ef088b9c81d))
+
+### Bug Fixes
+
+* **jane:** add support for openapi 3.1.0 and fix generate command ([787b9a3](https://github.com/WebProject-xyz/php-docker-api-client/commit/787b9a3e7e86c1e605f637b268578b105dd37568))
+* **qa:** fix phpstan issues ([2be9f38](https://github.com/WebProject-xyz/php-docker-api-client/commit/2be9f38ebda989139d18cfc690e93924a888027d))
+* **spec:** patch v1.54 nullables and date-time format ([b961da9](https://github.com/WebProject-xyz/php-docker-api-client/commit/b961da9a556c858c583f81f8263871aae6a56bb1))
+
 ## [1.3.3](https://github.com/WebProject-xyz/php-docker-api-client/compare/1.3.2...1.3.3) (2026-02-20)
 
 ### Bug Fixes
