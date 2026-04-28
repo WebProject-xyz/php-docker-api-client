@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/WebProject-xyz/php-docker-api-client/compare/1.4.0...1.4.1) (2026-04-28)
+
+### Bug Fixes
+
+* **api-client:** fix handling of exposed ports without host bindings ([ca38a34](https://github.com/WebProject-xyz/php-docker-api-client/commit/ca38a343afd7346e091c798bae0314a71ab8f8eb))
+
 ## [1.4.0](https://github.com/WebProject-xyz/php-docker-api-client/compare/1.3.3...1.4.0) (2026-04-28)
 
 ### Features
