@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApiClient\Tests\Unit\Client;
 
+use const JSON_THROW_ON_ERROR;
 use Codeception\Test\Unit;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use WebProject\DockerApi\Library\Generated\Client;
 use WebProject\DockerApiClient\Client\DockerApiClientWrapper;
 use WebProject\DockerApiClient\Event\ContainerEvent;
-
 use function json_encode;
-
-use const JSON_THROW_ON_ERROR;
+use function strlen;
 
 final class DockerApiClientWrapperTest extends Unit
 {
