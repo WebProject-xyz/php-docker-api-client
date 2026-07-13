@@ -5,18 +5,22 @@ declare(strict_types=1);
 namespace WebProject\DockerApiClient\Client;
 
 use JsonException;
-use Symfony\Component\HttpClient\Chunk\ServerSentEvent;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpClient\Psr18Client;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Webmozart\Assert\Assert;
 use WebProject\DockerApi\Library\Generated\Client;
 use WebProject\DockerApiClient\Event\ContainerEvent;
 use function is_array;
 use function json_decode;
+use function json_validate;
+use function strpos;
+use function substr;
+use function trim;
 
 final class DockerApiClientWrapper
 {
@@ -24,6 +28,7 @@ final class DockerApiClientWrapper
         private readonly string $baseUri,
         private readonly string $socketPath,
         private readonly Client $client,
+        private readonly ?HttpClientInterface $eventStreamClient = null,
     ) {
     }
 
@@ -35,7 +40,7 @@ final class DockerApiClientWrapper
      */
     public function listenForEvents(callable $eventCallback): void
     {
-        $client = HttpClient::create([
+        $client = $this->eventStreamClient ?? HttpClient::create([
             'base_uri' => $this->baseUri,
             'bindto'   => $this->socketPath,
             'timeout'  => null,
@@ -46,35 +51,37 @@ final class DockerApiClientWrapper
             encoders: [new JsonEncoder()]
         );
 
-        // Connect to the Docker API event stream
+        // Connect to the Docker API event stream. Docker streams
+        // newline-delimited JSON objects (Content-Type: application/json),
+        // NOT Server-Sent Events, so the payload arrives as plain data chunks
+        // that must be buffered and split on newlines before decoding.
         $source = $client->request(method: 'GET', url: '/events');
 
-        while ($client->request(method: 'GET', url: '/events')) {
-            foreach ($client->stream(responses: $source, timeout: 2) as $r => $chunk) {
-                if ($chunk->isTimeout()) {
-                    // Handle timeout
+        $buffer = '';
+        foreach ($client->stream(responses: $source) as $chunk) {
+            if ($chunk->isTimeout()) {
+                continue;
+            }
+
+            if ($chunk->isLast()) {
+                return;
+            }
+
+            $buffer .= $chunk->getContent();
+
+            while (false !== ($newlinePos = strpos($buffer, "\n"))) {
+                $line   = trim(substr($buffer, 0, $newlinePos));
+                $buffer = substr($buffer, $newlinePos + 1);
+
+                if ('' === $line || !json_validate($line)) {
                     continue;
                 }
 
-                if ($chunk->isLast()) {
-                    // Handle end of stream
-                    return;
-                }
+                $eventObject = json_decode(json: $line, associative: true, depth: 512, flags: JSON_THROW_ON_ERROR);
+                if (is_array($eventObject) && ($eventObject['Type'] ?? false) === 'container') {
+                    $event = $serializer->denormalize(data: $eventObject, type: ContainerEvent::class, format: 'json');
 
-                // Process the ServerSentEvent chunk
-                if ($chunk instanceof ServerSentEvent) {
-                    // Do something with the event data
-                    $content = $chunk->getContent();
-                    if (!json_validate($content)) {
-                        continue;
-                    }
-
-                    $eventObject = json_decode(json: $content, associative: true, depth: 512, flags: JSON_THROW_ON_ERROR);
-                    if (is_array($eventObject) && ($eventObject['Type'] ?? false) === 'container') {
-                        $event = $serializer->deserialize(data: $content, type: ContainerEvent::class, format: 'json');
-
-                        $eventCallback($event);
-                    }
+                    $eventCallback($event);
                 }
             }
         }
