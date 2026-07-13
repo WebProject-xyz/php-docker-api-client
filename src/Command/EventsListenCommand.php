@@ -39,7 +39,7 @@ final class EventsListenCommand extends Command
             'stop',
         ];
 
-        $service->listenForEvents(function (ContainerEvent $event) use ($service, $actions, $io) {
+        $service->listenForEvents(function (ContainerEvent $event) use ($service, $actions, $io): void {
             $container = $this->containers[$event->Actor->ID] ?? null;
             $prefix    = '[event]';
             if ($container) {
