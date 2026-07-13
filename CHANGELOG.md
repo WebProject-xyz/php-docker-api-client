@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.4](https://github.com/WebProject-xyz/php-docker-api-client/compare/1.4.3...1.4.4) (2026-07-13)
+
+### Bug Fixes
+
+* **events:** parse newline-delimited JSON from Docker event stream ([#270](https://github.com/WebProject-xyz/php-docker-api-client/issues/270)) ([ecd385e](https://github.com/WebProject-xyz/php-docker-api-client/commit/ecd385edded243dc5ec9d494ec92554c21b57849))
+
 ## [1.4.3](https://github.com/WebProject-xyz/php-docker-api-client/compare/1.4.2...1.4.3) (2026-06-22)
 
 ### Bug Fixes
