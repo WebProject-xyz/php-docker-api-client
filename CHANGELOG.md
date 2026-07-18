@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.5](https://github.com/WebProject-xyz/php-docker-api-client/compare/1.4.4...1.4.5) (2026-07-18)
+
+### Bug Fixes
+
+* **events:** infinite idle timeout so event listener never aborts ([#272](https://github.com/WebProject-xyz/php-docker-api-client/issues/272)) ([9a8c2c2](https://github.com/WebProject-xyz/php-docker-api-client/commit/9a8c2c2ae392dfe65ebe07c911714e8d11d255b2))
+
 ## [1.4.4](https://github.com/WebProject-xyz/php-docker-api-client/compare/1.4.3...1.4.4) (2026-07-13)
 
 ### Bug Fixes
