@@ -43,7 +43,14 @@ final class DockerApiClientWrapper
         $client = $this->eventStreamClient ?? HttpClient::create([
             'base_uri' => $this->baseUri,
             'bindto'   => $this->socketPath,
-            'timeout'  => null,
+            // Infinite idle timeout. The Docker event stream is long-lived and
+            // often silent for minutes. A finite timeout (php.ini
+            // default_socket_timeout, 60s by default) ends the stream on idle,
+            // so listenForEvents() returns and the process exits — under a
+            // "restart: always" container that shows up as a restart every 60s.
+            // -1 disables the idle timeout, so the listener blocks until a real
+            // event or a genuine end-of-stream arrives.
+            'timeout'  => -1,
         ]);
 
         $serializer = new Serializer(
