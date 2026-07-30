@@ -54,9 +54,6 @@ class ImageInspectNormalizer implements DenormalizerInterface, NormalizerInterfa
         if (array_key_exists('Descriptor', $data)) {
             $object->setDescriptor($this->denormalizer->denormalize($data['Descriptor'], \WebProject\DockerApi\Library\Generated\Model\OCIDescriptor::class, 'json', $context));
         }
-        if (array_key_exists('Identity', $data)) {
-            $object->setIdentity($this->denormalizer->denormalize($data['Identity'], \WebProject\DockerApi\Library\Generated\Model\Identity::class, 'json', $context));
-        }
         if (array_key_exists('Manifests', $data) && null !== $data['Manifests']) {
             $value = $data['Manifests'];
             if (is_array($data['Manifests']) && $this->isOnlyNumericKeys($data['Manifests'])) {
@@ -71,6 +68,9 @@ class ImageInspectNormalizer implements DenormalizerInterface, NormalizerInterfa
             $object->setManifests($value);
         } elseif (array_key_exists('Manifests', $data) && null === $data['Manifests']) {
             $object->setManifests(null);
+        }
+        if (array_key_exists('Identity', $data)) {
+            $object->setIdentity($this->denormalizer->denormalize($data['Identity'], \WebProject\DockerApi\Library\Generated\Model\Identity::class, 'json', $context));
         }
         if (array_key_exists('RepoTags', $data) && null !== $data['RepoTags']) {
             $value_2 = $data['RepoTags'];
@@ -195,9 +195,6 @@ class ImageInspectNormalizer implements DenormalizerInterface, NormalizerInterfa
         if ($data->isInitialized('descriptor') && null !== $data->getDescriptor()) {
             $dataArray['Descriptor'] = $this->normalizer->normalize($data->getDescriptor(), 'json', $context);
         }
-        if ($data->isInitialized('identity') && null !== $data->getIdentity()) {
-            $dataArray['Identity'] = $this->normalizer->normalize($data->getIdentity(), 'json', $context);
-        }
         if ($data->isInitialized('manifests')) {
             $value = $data->getManifests();
             if (is_array($data->getManifests())) {
@@ -210,6 +207,9 @@ class ImageInspectNormalizer implements DenormalizerInterface, NormalizerInterfa
                 $value = $data->getManifests();
             }
             $dataArray['Manifests'] = $value;
+        }
+        if ($data->isInitialized('identity') && null !== $data->getIdentity()) {
+            $dataArray['Identity'] = $this->normalizer->normalize($data->getIdentity(), 'json', $context);
         }
         if ($data->isInitialized('repoTags')) {
             $value_2 = $data->getRepoTags();

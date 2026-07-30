@@ -20,14 +20,14 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirements
      * A list of required topologies, at least one of which the
      * volume must be accessible from.
      *
-     * @var list<array<string, string>>|null
+     * @var list<Topology>|null
      */
     protected $requisite;
     /**
      * A list of topologies that the volume should attempt to be
      * provisioned in.
      *
-     * @var list<array<string, string>>|null
+     * @var list<Topology>|null
      */
     protected $preferred;
 
@@ -35,7 +35,7 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirements
      * A list of required topologies, at least one of which the
      * volume must be accessible from.
      *
-     * @return list<array<string, string>>|null
+     * @return list<Topology>|null
      */
     public function getRequisite(): ?array
     {
@@ -46,7 +46,7 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirements
      * A list of required topologies, at least one of which the
      * volume must be accessible from.
      *
-     * @param list<array<string, string>>|null $requisite
+     * @param list<Topology>|null $requisite
      *
      * @return self
      */
@@ -62,7 +62,7 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirements
      * A list of topologies that the volume should attempt to be
      * provisioned in.
      *
-     * @return list<array<string, string>>|null
+     * @return list<Topology>|null
      */
     public function getPreferred(): ?array
     {
@@ -73,7 +73,7 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirements
      * A list of topologies that the volume should attempt to be
      * provisioned in.
      *
-     * @param list<array<string, string>>|null $preferred
+     * @param list<Topology>|null $preferred
      *
      * @return self
      */

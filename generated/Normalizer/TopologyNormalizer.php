@@ -18,7 +18,7 @@ use function get_class;
 use function is_array;
 use function is_object;
 
-class SwarmJoinPostBodyNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
+class TopologyNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
     use CheckArray;
     use DenormalizerAwareTrait;
@@ -27,17 +27,17 @@ class SwarmJoinPostBodyNormalizer implements DenormalizerInterface, NormalizerIn
 
     public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
-        return \WebProject\DockerApi\Library\Generated\Model\SwarmJoinPostBody::class === $type;
+        return \WebProject\DockerApi\Library\Generated\Model\Topology::class === $type;
     }
 
     public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
-        return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\SwarmJoinPostBody::class === get_class($data);
+        return is_object($data) && \WebProject\DockerApi\Library\Generated\Model\Topology::class === get_class($data);
     }
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        $object = new \WebProject\DockerApi\Library\Generated\Model\SwarmJoinPostBody();
+        $object = new \WebProject\DockerApi\Library\Generated\Model\Topology();
         if (null === $data || false === is_array($data)) {
             return $object;
         }
@@ -47,24 +47,20 @@ class SwarmJoinPostBodyNormalizer implements DenormalizerInterface, NormalizerIn
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        if (array_key_exists('ListenAddr', $data)) {
-            $object->setListenAddr($data['ListenAddr']);
-        }
-        if (array_key_exists('AdvertiseAddr', $data)) {
-            $object->setAdvertiseAddr($data['AdvertiseAddr']);
-        }
-        if (array_key_exists('DataPathAddr', $data)) {
-            $object->setDataPathAddr($data['DataPathAddr']);
-        }
-        if (array_key_exists('RemoteAddrs', $data)) {
-            $values = [];
-            foreach ($data['RemoteAddrs'] as $value) {
-                $values[] = $value;
+        if (array_key_exists('Segments', $data) && null !== $data['Segments']) {
+            $value = $data['Segments'];
+            if (is_array($data['Segments']) && $this->isOnlyNumericKeys($data['Segments'])) {
+                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                foreach ($data['Segments'] as $key => $value_1) {
+                    $values[$key] = $value_1;
+                }
+                $value = $values;
+            } elseif (null === $data['Segments']) {
+                $value = $data['Segments'];
             }
-            $object->setRemoteAddrs($values);
-        }
-        if (array_key_exists('JoinToken', $data)) {
-            $object->setJoinToken($data['JoinToken']);
+            $object->setSegments($value);
+        } elseif (array_key_exists('Segments', $data) && null === $data['Segments']) {
+            $object->setSegments(null);
         }
 
         return $object;
@@ -72,27 +68,27 @@ class SwarmJoinPostBodyNormalizer implements DenormalizerInterface, NormalizerIn
 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
-        $dataArray               = [];
-        $dataArray['ListenAddr'] = $data->getListenAddr();
-        if ($data->isInitialized('advertiseAddr') && null !== $data->getAdvertiseAddr()) {
-            $dataArray['AdvertiseAddr'] = $data->getAdvertiseAddr();
+        $dataArray = [];
+        if ($data->isInitialized('segments')) {
+            $value = $data->getSegments();
+            if (is_object($data->getSegments())) {
+                $values = [];
+                foreach ($data->getSegments() as $key => $value_1) {
+                    $values[$key] = $value_1;
+                }
+                $value = $values;
+            } elseif (null === $data->getSegments()) {
+                $value = $data->getSegments();
+            }
+            $dataArray['Segments'] = $value;
         }
-        if ($data->isInitialized('dataPathAddr') && null !== $data->getDataPathAddr()) {
-            $dataArray['DataPathAddr'] = $data->getDataPathAddr();
-        }
-        $values = [];
-        foreach ($data->getRemoteAddrs() as $value) {
-            $values[] = $value;
-        }
-        $dataArray['RemoteAddrs'] = $values;
-        $dataArray['JoinToken']   = $data->getJoinToken();
 
         return $dataArray;
     }
 
     public function getSupportedTypes(?string $format = null): array
     {
-        return [\WebProject\DockerApi\Library\Generated\Model\SwarmJoinPostBody::class => true];
+        return [\WebProject\DockerApi\Library\Generated\Model\Topology::class => true];
     }
 
     public function hasCacheableSupportsMethod(): bool

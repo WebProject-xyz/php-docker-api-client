@@ -4,7 +4,7 @@
 2) download schema to "specs/" folder
 3) run command to convert schema to openapi v3.1.0
    ```shell
-   npx -p swagger2openapi swagger2openapi --yaml -t 3.1.0 --outfile docker-v1.54-patched.yaml docker-v1.54.yaml
+   npx -p swagger2openapi swagger2openapi --yaml -t 3.1.0 --outfile docker-v1.55-patched.yaml docker-v1.55.yaml
    ```
    Requires `jane-php/open-api-3-1` (require-dev). Jane auto-detects 3.1 once that package is installed.
 4) **Patch the converted file.** swagger2openapi output is not directly usable — Docker returns null for many "optional" fields and uses nano-precision timestamps that jane misparses. Apply these in-place:
@@ -13,7 +13,7 @@
    # 4a) date format: jane parses `format: date-time` as `Y-m-d\TH:i:sP`
    #     which fails on Docker's RFC3339Nano timestamps. Renaming to
    #     dateTime (camelCase) makes jane skip the field → keeps as plain string.
-   sed -i 's/format: date-time/format: dateTime/g' spec/docker-v1.54-patched.yaml
+   sed -i 's/format: date-time/format: dateTime/g' spec/docker-v1.55-patched.yaml
 
    # 4b) nullables. jane open-api-3-1 ignores `nullable: true` and only
    #     honors OpenAPI 3.1 type-arrays. Walk every schema and add 'null'
@@ -23,6 +23,8 @@
    ```
 
    The Python script lives in `spec/patch.py` (idempotent — safe to re-run).
+   Needs `ruamel.yaml`; without a system install use
+   `uv run --with ruamel.yaml python3 spec/patch.py`.
    It performs:
    - Convert every existing `nullable: true` → `type: [orig, 'null']` union.
    - Walk `components.schemas`: every property NOT in its parent's `required` list gets `null` added to its type, **except** `type: object` whose `additionalProperties` is a `$ref` (e.g. `NetworkSettings.Networks`) — making those nullable triggers jane's broken `isOnlyNumericKeys` short-circuit and breaks denormalization of map values into model instances.

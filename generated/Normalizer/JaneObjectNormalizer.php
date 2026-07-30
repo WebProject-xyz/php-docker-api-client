@@ -461,6 +461,10 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
 
         \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeCapacityRange::class => ClusterVolumeSpecAccessModeCapacityRangeNormalizer::class,
 
+        \WebProject\DockerApi\Library\Generated\Model\Topology::class => TopologyNormalizer::class,
+
+        \WebProject\DockerApi\Library\Generated\Model\AttestationStatement::class => AttestationStatementNormalizer::class,
+
         \WebProject\DockerApi\Library\Generated\Model\ImageManifestSummary::class => ImageManifestSummaryNormalizer::class,
 
         \WebProject\DockerApi\Library\Generated\Model\ImageManifestSummarySize::class => ImageManifestSummarySizeNormalizer::class,
@@ -764,6 +768,8 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
             \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeSecretsItem::class               => false,
             \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeAccessibilityRequirements::class => false,
             \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessModeCapacityRange::class             => false,
+            \WebProject\DockerApi\Library\Generated\Model\Topology::class                                             => false,
+            \WebProject\DockerApi\Library\Generated\Model\AttestationStatement::class                                 => false,
             \WebProject\DockerApi\Library\Generated\Model\ImageManifestSummary::class                                 => false,
             \WebProject\DockerApi\Library\Generated\Model\ImageManifestSummarySize::class                             => false,
             \WebProject\DockerApi\Library\Generated\Model\ImageManifestSummaryImageData::class                        => false,
