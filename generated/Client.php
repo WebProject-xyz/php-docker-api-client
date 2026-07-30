@@ -951,6 +951,51 @@ class Client extends Runtime\Client\Client
     }
 
     /**
+     * Return the in-toto attestation statements attached to the image for the
+     * given platform. The daemon locates the attestation manifest(s) that
+     * reference the matching platform image manifest, reads their statement
+     * layers, and returns the verbatim statement JSON together with layer
+     * metadata.
+     *
+     * If the image has no attestations an empty array is returned.
+     *
+     * @param string $name Image name or id
+     * @param array{
+     *    "platform"?: array, //JSON-encoded OCI platform to select the image variant whose
+     * attestations to return.
+     * If omitted, the daemon's default (host) platform is used.
+     *
+     * Only one platform value is currently accepted; passing more than
+     * one returns an error. The parameter is declared as an array so the
+     * wire shape can accept multiple values in the future without an
+     * API version bump.
+     *
+     * Example: `{"os": "linux", "architecture": "amd64"}`
+     *    "type"?: array, //In-toto predicate type URI to filter returned statements. May be
+     * repeated to accept any of several predicate types. If omitted, all
+     * statements are returned.
+     *
+     * Example: `type=https://slsa.dev/provenance/v0.2&type=https://spdx.dev/Document`
+     *    "statement"?: bool, //Include the verbatim in-toto statement body in each returned
+     * entry. Defaults to false; when omitted or false, only the
+     * descriptor and predicate type are returned and statement blobs
+     * are not read.
+     * } $queryParameters
+     * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
+     *
+     * @return ($fetch is 'object' ? Model\AttestationStatement[]|null : \Psr\Http\Message\ResponseInterface)
+     *
+     * @throws Exception\ImageAttestationsBadRequestException
+     * @throws Exception\ImageAttestationsNotFoundException
+     * @throws Exception\ImageAttestationsInternalServerErrorException
+     * @throws Exception\ImageAttestationsNotImplementedException
+     */
+    public function imageAttestations(string $name, array $queryParameters = [], string $fetch = self::FETCH_OBJECT)
+    {
+        return $this->executeEndpoint(new Endpoint\ImageAttestations($name, $queryParameters), $fetch);
+    }
+
+    /**
      * Return parent layers of an image.
      *
      * @param string $name Image name or ID
@@ -2567,7 +2612,7 @@ class Client extends Runtime\Client\Client
         if (null === $httpClient) {
             $httpClient = \Http\Discovery\Psr18ClientDiscovery::find();
             $plugins    = [];
-            $uri        = \Http\Discovery\Psr17FactoryDiscovery::findUriFactory()->createUri('/v1.54');
+            $uri        = \Http\Discovery\Psr17FactoryDiscovery::findUriFactory()->createUri('/v1.55');
             $plugins[]  = new \Http\Client\Common\Plugin\AddPathPlugin($uri);
             if (count($additionalPlugins) > 0) {
                 $plugins = array_merge($plugins, $additionalPlugins);

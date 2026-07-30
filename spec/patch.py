@@ -4,7 +4,7 @@
 Idempotent. Run after swagger2openapi conversion, before composer generate.
 
 Reads the spec path from .jane-openapi if invoked from the repo root, else
-defaults to spec/docker-v1.54-patched.yaml.
+defaults to spec/docker-v1.55-patched.yaml.
 
 Requires: ruamel.yaml (pip install ruamel.yaml)
 """
@@ -28,7 +28,7 @@ def find_spec_path() -> Path:
         m = re.search(r"openapi-file'\s*=>.*?/spec/([^']+)'", jane_cfg.read_text())
         if m:
             return repo_root / "spec" / m.group(1)
-    return repo_root / "spec" / "docker-v1.54-patched.yaml"
+    return repo_root / "spec" / "docker-v1.55-patched.yaml"
 
 
 def make_nullable(node) -> bool:

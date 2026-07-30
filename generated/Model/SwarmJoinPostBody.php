@@ -19,7 +19,9 @@ class SwarmJoinPostBody
     /**
      * Listen address used for inter-manager communication if the node
      * gets promoted to manager, as well as determining the networking
-     * interface used for the VXLAN Tunnel Endpoint (VTEP).
+     * interface used for the VXLAN Tunnel Endpoint (VTEP). This is
+     * required for joining a swarm. If the port number is omitted,
+     * the default swarm listening port is used.
      *
      * @var string
      */
@@ -66,7 +68,9 @@ class SwarmJoinPostBody
     /**
      * Listen address used for inter-manager communication if the node
      * gets promoted to manager, as well as determining the networking
-     * interface used for the VXLAN Tunnel Endpoint (VTEP).
+     * interface used for the VXLAN Tunnel Endpoint (VTEP). This is
+     * required for joining a swarm. If the port number is omitted,
+     * the default swarm listening port is used.
      *
      * @return string
      */
@@ -78,7 +82,9 @@ class SwarmJoinPostBody
     /**
      * Listen address used for inter-manager communication if the node
      * gets promoted to manager, as well as determining the networking
-     * interface used for the VXLAN Tunnel Endpoint (VTEP).
+     * interface used for the VXLAN Tunnel Endpoint (VTEP). This is
+     * required for joining a swarm. If the port number is omitted,
+     * the default swarm listening port is used.
      *
      * @param string $listenAddr
      *

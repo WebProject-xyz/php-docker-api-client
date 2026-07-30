@@ -91,11 +91,7 @@ class ClusterVolumeInfoNormalizer implements DenormalizerInterface, NormalizerIn
             if (is_array($data['AccessibleTopology']) && $this->isOnlyNumericKeys($data['AccessibleTopology'])) {
                 $values_1 = [];
                 foreach ($data['AccessibleTopology'] as $value_5) {
-                    $values_2 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-                    foreach ($value_5 as $key_1 => $value_6) {
-                        $values_2[$key_1] = $value_6;
-                    }
-                    $values_1[] = $values_2;
+                    $values_1[] = $this->denormalizer->denormalize($value_5, \WebProject\DockerApi\Library\Generated\Model\Topology::class, 'json', $context);
                 }
                 $value_4 = $values_1;
             } elseif (null === $data['AccessibleTopology']) {
@@ -148,11 +144,7 @@ class ClusterVolumeInfoNormalizer implements DenormalizerInterface, NormalizerIn
             if (is_array($data->getAccessibleTopology())) {
                 $values_1 = [];
                 foreach ($data->getAccessibleTopology() as $value_5) {
-                    $values_2 = [];
-                    foreach ($value_5 as $key_1 => $value_6) {
-                        $values_2[$key_1] = $value_6;
-                    }
-                    $values_1[] = $values_2;
+                    $values_1[] = $this->normalizer->normalize($value_5, 'json', $context);
                 }
                 $value_4 = $values_1;
             } elseif (null === $data->getAccessibleTopology()) {

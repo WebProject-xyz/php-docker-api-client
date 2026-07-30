@@ -37,14 +37,6 @@ class ImageInspect
      */
     protected $descriptor;
     /**
-     * Identity holds information about the identity and origin of the image.
-     * This is trusted information verified by the daemon and cannot be modified
-     * by tagging an image to a different name.
-     *
-     * @var Identity
-     */
-    protected $identity;
-    /**
      * Manifests is a list of image manifests available in this image. It
      * provides a more detailed view of the platform-specific image manifests or
      * other image-attached data like build attestations.
@@ -58,6 +50,14 @@ class ImageInspect
      * @var list<ImageManifestSummary>|null
      */
     protected $manifests;
+    /**
+     * Identity holds information about the identity and origin of the image.
+     * This is trusted information verified by the daemon and cannot be modified
+     * by tagging an image to a different name.
+     *
+     * @var Identity
+     */
+    protected $identity;
     /**
      * List of image names/tags in the local image cache that reference this
      * image.
@@ -230,35 +230,6 @@ class ImageInspect
     }
 
     /**
-     * Identity holds information about the identity and origin of the image.
-     * This is trusted information verified by the daemon and cannot be modified
-     * by tagging an image to a different name.
-     *
-     * @return Identity
-     */
-    public function getIdentity(): Identity
-    {
-        return $this->identity;
-    }
-
-    /**
-     * Identity holds information about the identity and origin of the image.
-     * This is trusted information verified by the daemon and cannot be modified
-     * by tagging an image to a different name.
-     *
-     * @param Identity $identity
-     *
-     * @return self
-     */
-    public function setIdentity(Identity $identity): self
-    {
-        $this->initialized['identity'] = true;
-        $this->identity                = $identity;
-
-        return $this;
-    }
-
-    /**
      * Manifests is a list of image manifests available in this image. It
      * provides a more detailed view of the platform-specific image manifests or
      * other image-attached data like build attestations.
@@ -295,6 +266,35 @@ class ImageInspect
     {
         $this->initialized['manifests'] = true;
         $this->manifests                = $manifests;
+
+        return $this;
+    }
+
+    /**
+     * Identity holds information about the identity and origin of the image.
+     * This is trusted information verified by the daemon and cannot be modified
+     * by tagging an image to a different name.
+     *
+     * @return Identity
+     */
+    public function getIdentity(): Identity
+    {
+        return $this->identity;
+    }
+
+    /**
+     * Identity holds information about the identity and origin of the image.
+     * This is trusted information verified by the daemon and cannot be modified
+     * by tagging an image to a different name.
+     *
+     * @param Identity $identity
+     *
+     * @return self
+     */
+    public function setIdentity(Identity $identity): self
+    {
+        $this->initialized['identity'] = true;
+        $this->identity                = $identity;
 
         return $this;
     }

@@ -52,11 +52,7 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirementsNormalizer implements 
             if (is_array($data['Requisite']) && $this->isOnlyNumericKeys($data['Requisite'])) {
                 $values = [];
                 foreach ($data['Requisite'] as $value_1) {
-                    $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-                    foreach ($value_1 as $key => $value_2) {
-                        $values_1[$key] = $value_2;
-                    }
-                    $values[] = $values_1;
+                    $values[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\Topology::class, 'json', $context);
                 }
                 $value = $values;
             } elseif (null === $data['Requisite']) {
@@ -67,21 +63,17 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirementsNormalizer implements 
             $object->setRequisite(null);
         }
         if (array_key_exists('Preferred', $data) && null !== $data['Preferred']) {
-            $value_3 = $data['Preferred'];
+            $value_2 = $data['Preferred'];
             if (is_array($data['Preferred']) && $this->isOnlyNumericKeys($data['Preferred'])) {
-                $values_2 = [];
-                foreach ($data['Preferred'] as $value_4) {
-                    $values_3 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-                    foreach ($value_4 as $key_1 => $value_5) {
-                        $values_3[$key_1] = $value_5;
-                    }
-                    $values_2[] = $values_3;
+                $values_1 = [];
+                foreach ($data['Preferred'] as $value_3) {
+                    $values_1[] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\Topology::class, 'json', $context);
                 }
-                $value_3 = $values_2;
+                $value_2 = $values_1;
             } elseif (null === $data['Preferred']) {
-                $value_3 = $data['Preferred'];
+                $value_2 = $data['Preferred'];
             }
-            $object->setPreferred($value_3);
+            $object->setPreferred($value_2);
         } elseif (array_key_exists('Preferred', $data) && null === $data['Preferred']) {
             $object->setPreferred(null);
         }
@@ -97,11 +89,7 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirementsNormalizer implements 
             if (is_array($data->getRequisite())) {
                 $values = [];
                 foreach ($data->getRequisite() as $value_1) {
-                    $values_1 = [];
-                    foreach ($value_1 as $key => $value_2) {
-                        $values_1[$key] = $value_2;
-                    }
-                    $values[] = $values_1;
+                    $values[] = $this->normalizer->normalize($value_1, 'json', $context);
                 }
                 $value = $values;
             } elseif (null === $data->getRequisite()) {
@@ -110,21 +98,17 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirementsNormalizer implements 
             $dataArray['Requisite'] = $value;
         }
         if ($data->isInitialized('preferred')) {
-            $value_3 = $data->getPreferred();
+            $value_2 = $data->getPreferred();
             if (is_array($data->getPreferred())) {
-                $values_2 = [];
-                foreach ($data->getPreferred() as $value_4) {
-                    $values_3 = [];
-                    foreach ($value_4 as $key_1 => $value_5) {
-                        $values_3[$key_1] = $value_5;
-                    }
-                    $values_2[] = $values_3;
+                $values_1 = [];
+                foreach ($data->getPreferred() as $value_3) {
+                    $values_1[] = $this->normalizer->normalize($value_3, 'json', $context);
                 }
-                $value_3 = $values_2;
+                $value_2 = $values_1;
             } elseif (null === $data->getPreferred()) {
-                $value_3 = $data->getPreferred();
+                $value_2 = $data->getPreferred();
             }
-            $dataArray['Preferred'] = $value_3;
+            $dataArray['Preferred'] = $value_2;
         }
 
         return $dataArray;

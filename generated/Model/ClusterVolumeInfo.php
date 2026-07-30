@@ -43,7 +43,7 @@ class ClusterVolumeInfo
     /**
      * The topology this volume is actually accessible from.
      *
-     * @var list<array<string, string>>|null
+     * @var list<Topology>|null
      */
     protected $accessibleTopology;
 
@@ -137,7 +137,7 @@ class ClusterVolumeInfo
     /**
      * The topology this volume is actually accessible from.
      *
-     * @return list<array<string, string>>|null
+     * @return list<Topology>|null
      */
     public function getAccessibleTopology(): ?array
     {
@@ -147,7 +147,7 @@ class ClusterVolumeInfo
     /**
      * The topology this volume is actually accessible from.
      *
-     * @param list<array<string, string>>|null $accessibleTopology
+     * @param list<Topology>|null $accessibleTopology
      *
      * @return self
      */
