@@ -3,7 +3,6 @@
   "description": "A PHP docker API client generated from docker api swagger schema with jane",
   "license": "MIT",
   "type": "library",
-  "homepage": "https://www.webproject.xyz",
   "authors": [
     {
       "name": "Benjamin Fahl",
@@ -11,32 +10,33 @@
       "role": "developer"
     }
   ],
+  "homepage": "https://www.webproject.xyz",
   "require": {
     "php": "~8.3.0 || ~8.4.0 || ~8.5.0",
-    "jane-php/open-api-runtime": "^7.11.2",
+    "jane-php/open-api-runtime": "^7.12.0",
     "phpdocumentor/reflection-docblock": "^6.0.3",
-    "phpstan/phpdoc-parser": "^2.3.2",
-    "symfony/console": "^7.4.13 || ^8.0",
-    "symfony/http-client": "^7.4.13 || ^8.0",
-    "symfony/http-client-contracts": "^3.7",
+    "phpstan/phpdoc-parser": "^2.3.3",
+    "symfony/console": "^7.4.15 || ^8.0",
+    "symfony/http-client": "^7.4.15 || ^8.0",
+    "symfony/http-client-contracts": "^3.7.1",
     "symfony/property-access": "^7.4.8 || ^8.0",
-    "symfony/property-info": "^7.4.8 || ^8.0",
-    "symfony/runtime": "^7.4.13 || ^8.0",
-    "symfony/serializer": "^7.4.10 || ^8.0"
+    "symfony/property-info": "^7.4.15 || ^8.0",
+    "symfony/runtime": "^7.4.14 || ^8.0",
+    "symfony/serializer": "^7.4.15 || ^8.0"
   },
   "require-dev": {
     "codeception/codeception": "^5.3.5",
     "codeception/module-asserts": "^3.3.0",
-    "codeception/module-phpbrowser": "^4.0.0",
+    "codeception/module-phpbrowser": "^4.1.0",
     "friendsofphp/php-cs-fixer": "3.95.18",
-    "jane-php/open-api-3": "^7.11.2",
-    "jane-php/open-api-3-1": "^7.11.2",
+    "jane-php/open-api-3": "^7.12.0",
+    "jane-php/open-api-3-1": "^7.12.0",
     "phpstan/extension-installer": "^1.4.3",
-    "phpstan/phpstan": "^2.2.2",
+    "phpstan/phpstan": "^2.2.7",
     "phpstan/phpstan-webmozart-assert": "^2.0.0",
     "roave/security-advisories": "dev-latest",
     "symfony/var-dumper": "7.4.0 || ^8.0",
-    "webproject-xyz/codeception-module-ai-reporter": "^1.2.1"
+    "webproject-xyz/codeception-module-ai-reporter": "^1.2.2"
   },
   "autoload": {
     "psr-4": {
@@ -53,30 +53,30 @@
     "bin/docker-api"
   ],
   "config": {
+    "allow-plugins": {
+      "php-http/discovery": true,
+      "phpstan/extension-installer": true,
+      "symfony/runtime": true
+    },
+    "optimize-autoloader": true,
     "platform": {
       "php": "8.3.0"
     },
-    "allow-plugins": {
-      "php-http/discovery": true,
-      "symfony/runtime": true,
-      "phpstan/extension-installer": true
-    },
-    "sort-packages": true,
-    "optimize-autoloader": true
+    "sort-packages": true
   },
   "scripts": {
-    "generate": "XDEBUG_MODE=off jane-openapi generate -vvv",
     "cs:check": "XDEBUG_MODE=off php-cs-fixer fix --allow-risky=yes --dry-run --diff --show-progress=dots",
     "cs:fix": "XDEBUG_MODE=off php-cs-fixer fix --show-progress=none --allow-risky=yes",
-    "stan": "XDEBUG_MODE=off phpstan analyse --no-progress --no-ansi --memory-limit=-1",
-    "test": "XDEBUG_MODE=off codecept run --report",
-    "test:coverage": "XDEBUG_MODE=coverage codecept run --coverage --coverage-xml=coverage.xml --xml  --report",
-    "test:build": "XDEBUG_MODE=off codecept build",
+    "generate": "XDEBUG_MODE=off jane-openapi generate -vvv",
     "qa": [
       "@test:build",
       "@cs:fix",
       "@test",
       "@stan"
-    ]
+    ],
+    "stan": "XDEBUG_MODE=off phpstan analyse --no-progress --no-ansi --memory-limit=-1",
+    "test": "XDEBUG_MODE=off codecept run --report",
+    "test:build": "XDEBUG_MODE=off codecept build",
+    "test:coverage": "XDEBUG_MODE=coverage codecept run --coverage --coverage-xml=coverage.xml --xml  --report"
   }
 }

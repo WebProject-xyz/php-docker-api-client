@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace WebProject\DockerApi\Library\Generated\Runtime\Client;
 
 use Http\Message\MultipartStream\MultipartStreamBuilder;
+use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Serializer\SerializerInterface;
