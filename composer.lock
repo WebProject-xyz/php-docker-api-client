@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6c6a778272d605692983cc7d6271dc61",
+    "content-hash": "6c85059019b76e7e352fd3639a7cd1f9",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -9774,16 +9774,16 @@
         },
         {
             "name": "webproject-xyz/codeception-module-ai-reporter",
-            "version": "1.2.2",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WebProject-xyz/codeception-module-ai-reporter.git",
-                "reference": "c29776307ef382c0f5b7654a7aca355be86bc0e6"
+                "reference": "d9c6f88c2ee15c76d302f55494e196d26c505fbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WebProject-xyz/codeception-module-ai-reporter/zipball/c29776307ef382c0f5b7654a7aca355be86bc0e6",
-                "reference": "c29776307ef382c0f5b7654a7aca355be86bc0e6",
+                "url": "https://api.github.com/repos/WebProject-xyz/codeception-module-ai-reporter/zipball/d9c6f88c2ee15c76d302f55494e196d26c505fbe",
+                "reference": "d9c6f88c2ee15c76d302f55494e196d26c505fbe",
                 "shasum": ""
             },
             "require": {
@@ -9794,12 +9794,10 @@
             "require-dev": {
                 "codeception/module-asserts": "^3.3",
                 "friendsofphp/php-cs-fixer": "^3.95.18",
-                "mockery/mockery": "^1.6.12",
                 "phpstan/extension-installer": "^1.4.3",
                 "phpstan/phpstan": "^2.2.7",
                 "phpstan/phpstan-webmozart-assert": "^2.0.0",
-                "roave/security-advisories": "dev-latest",
-                "symfony/var-dumper": "^6.4 || ^7.4.15 || ^8.0"
+                "roave/security-advisories": "dev-latest"
             },
             "type": "library",
             "autoload": {
@@ -9822,9 +9820,9 @@
             "homepage": "https://www.webproject.xyz",
             "support": {
                 "issues": "https://github.com/WebProject-xyz/codeception-module-ai-reporter/issues",
-                "source": "https://github.com/WebProject-xyz/codeception-module-ai-reporter/tree/1.2.2"
+                "source": "https://github.com/WebProject-xyz/codeception-module-ai-reporter/tree/2.0.0"
             },
-            "time": "2026-07-31T19:35:11+00:00"
+            "time": "2026-08-03T21:47:41+00:00"
         }
     ],
     "aliases": [],
