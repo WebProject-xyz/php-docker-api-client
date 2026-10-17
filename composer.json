@@ -29,7 +29,7 @@
     "codeception/module-asserts": "^3.3.0",
     "codeception/module-phpbrowser": "^4.1.0",
     "friendsofphp/php-cs-fixer": "3.95.27",
-    "jane-php/open-api-3": "^7.12.0",
+    "jane-php/open-api-3": "^8.0.0",
     "jane-php/open-api-3-1": "^7.12.0",
     "phpstan/extension-installer": "^1.4.3",
     "phpstan/phpstan": "^2.2.7",
