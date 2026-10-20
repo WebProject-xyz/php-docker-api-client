@@ -18,12 +18,12 @@
    #     honors OpenAPI 3.1 type-arrays. Walk every schema and add 'null'
    #     to non-required scalar/array properties; leave object+$ref-
    #     additionalProperties alone (triggers a jane codegen bug).
-   uv run --with ruamel.yaml python3 spec/patch.py
+   uv run --with ruamel.yaml python3 spec/patch.py spec/docker-v1.55-patched.yaml
    ```
 
    The Python script lives in `spec/patch.py` (idempotent — safe to re-run).
    Needs `ruamel.yaml`; without a system install use
-   `uv run --with ruamel.yaml python3 spec/patch.py`.
+   `uv run --with ruamel.yaml python3 spec/patch.py spec/docker-v1.55-patched.yaml`.
    It performs:
    - Convert every existing `nullable: true` → `type: [orig, 'null']` union.
    - Walk `components.schemas`: every property NOT in its parent's `required` list gets `null` added to its type, **except** `type: object` whose `additionalProperties` is a `$ref` (e.g. `NetworkSettings.Networks`) — making those nullable triggers jane's broken `isOnlyNumericKeys` short-circuit and breaks denormalization of map values into model instances.

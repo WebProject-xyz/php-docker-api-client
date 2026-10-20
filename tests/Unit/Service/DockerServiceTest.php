@@ -37,9 +37,11 @@ final class DockerServiceTest extends Unit
         $containerSummary     = new ContainerSummary();
         $containerSummary->id = $containerId;
 
+        $containerSummaryWithoutId = new ContainerSummary();
+
         $this->client->expects($this->once())
             ->method('containerList')
-            ->willReturn([$containerSummary]);
+            ->willReturn([$containerSummary, $containerSummaryWithoutId]);
 
         $state          = new ContainerState();
         $state->running = true;
