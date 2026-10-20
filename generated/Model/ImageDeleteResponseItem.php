@@ -3,79 +3,27 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ImageDeleteResponseItem
+class ImageDeleteResponseItem implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The image ID of an image that was untagged.
      *
      * @var string|null
      */
-    protected $untagged;
+    public ?string $untagged;
     /**
      * The image ID of an image that was deleted.
      *
      * @var string|null
      */
-    protected $deleted;
+    public ?string $deleted;
 
-    /**
-     * The image ID of an image that was untagged.
-     *
-     * @return string|null
-     */
-    public function getUntagged(): ?string
+    public function definedProperties(): array
     {
-        return $this->untagged;
-    }
-
-    /**
-     * The image ID of an image that was untagged.
-     *
-     * @param string|null $untagged
-     *
-     * @return self
-     */
-    public function setUntagged(?string $untagged): self
-    {
-        $this->initialized['untagged'] = true;
-        $this->untagged                = $untagged;
-
-        return $this;
-    }
-
-    /**
-     * The image ID of an image that was deleted.
-     *
-     * @return string|null
-     */
-    public function getDeleted(): ?string
-    {
-        return $this->deleted;
-    }
-
-    /**
-     * The image ID of an image that was deleted.
-     *
-     * @param string|null $deleted
-     *
-     * @return self
-     */
-    public function setDeleted(?string $deleted): self
-    {
-        $this->initialized['deleted'] = true;
-        $this->deleted                = $deleted;
-
-        return $this;
+        return ['untagged' => 'Untagged', 'deleted' => 'Deleted'];
     }
 }

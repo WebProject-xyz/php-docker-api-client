@@ -3,48 +3,21 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class MountImageOptions
+class MountImageOptions implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Source path inside the image. Must be relative without any back traversals.
      *
      * @var string|null
      */
-    protected $subpath;
+    public ?string $subpath;
 
-    /**
-     * Source path inside the image. Must be relative without any back traversals.
-     *
-     * @return string|null
-     */
-    public function getSubpath(): ?string
+    public function definedProperties(): array
     {
-        return $this->subpath;
-    }
-
-    /**
-     * Source path inside the image. Must be relative without any back traversals.
-     *
-     * @param string|null $subpath
-     *
-     * @return self
-     */
-    public function setSubpath(?string $subpath): self
-    {
-        $this->initialized['subpath'] = true;
-        $this->subpath                = $subpath;
-
-        return $this;
+        return ['subpath' => 'Subpath'];
     }
 }

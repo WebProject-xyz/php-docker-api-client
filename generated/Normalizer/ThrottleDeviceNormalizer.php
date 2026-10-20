@@ -56,9 +56,11 @@ class ThrottleDeviceNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['Path']) {
                 $value = $data['Path'];
             }
-            $object->setPath($value);
-        } elseif (array_key_exists('Path', $data) && null === $data['Path']) {
-            $object->setPath(null);
+            $object->path = $value;
+            unset($data['Path']);
+        } elseif (array_key_exists('Path', $data)) {
+            $object->path = null;
+            unset($data['Path']);
         }
         if (array_key_exists('Rate', $data) && null !== $data['Rate']) {
             $value_1 = $data['Rate'];
@@ -67,9 +69,16 @@ class ThrottleDeviceNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['Rate']) {
                 $value_1 = $data['Rate'];
             }
-            $object->setRate($value_1);
-        } elseif (array_key_exists('Rate', $data) && null === $data['Rate']) {
-            $object->setRate(null);
+            $object->rate = $value_1;
+            unset($data['Rate']);
+        } elseif (array_key_exists('Rate', $data)) {
+            $object->rate = null;
+            unset($data['Rate']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -78,23 +87,28 @@ class ThrottleDeviceNormalizer implements DenormalizerInterface, NormalizerInter
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('path')) {
-            $value = $data->getPath();
-            if (is_string($data->getPath())) {
-                $value = $data->getPath();
-            } elseif (null === $data->getPath()) {
-                $value = $data->getPath();
+        if (array_key_exists('path', get_object_vars($data)) && null !== ($data->path ?? null)) {
+            $value = $data->path;
+            if (is_string($data->path)) {
+                $value = $data->path;
+            } elseif (null === $data->path) {
+                $value = $data->path;
             }
             $dataArray['Path'] = $value;
         }
-        if ($data->isInitialized('rate')) {
-            $value_1 = $data->getRate();
-            if (is_int($data->getRate())) {
-                $value_1 = $data->getRate();
-            } elseif (null === $data->getRate()) {
-                $value_1 = $data->getRate();
+        if (array_key_exists('rate', get_object_vars($data)) && null !== ($data->rate ?? null)) {
+            $value_1 = $data->rate;
+            if (is_int($data->rate)) {
+                $value_1 = $data->rate;
+            } elseif (null === $data->rate) {
+                $value_1 = $data->rate;
             }
             $dataArray['Rate'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

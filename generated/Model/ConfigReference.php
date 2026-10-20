@@ -3,19 +3,12 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ConfigReference
+class ConfigReference implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The name of the config-only network that provides the network's
      * configuration. The specified network must be an existing config-only
@@ -23,34 +16,10 @@ class ConfigReference
      *
      * @var string|null
      */
-    protected $network;
+    public ?string $network;
 
-    /**
-     * The name of the config-only network that provides the network's
-     * configuration. The specified network must be an existing config-only
-     * network. Only network names are allowed, not network IDs.
-     *
-     * @return string|null
-     */
-    public function getNetwork(): ?string
+    public function definedProperties(): array
     {
-        return $this->network;
-    }
-
-    /**
-     * The name of the config-only network that provides the network's
-     * configuration. The specified network must be an existing config-only
-     * network. Only network names are allowed, not network IDs.
-     *
-     * @param string|null $network
-     *
-     * @return self
-     */
-    public function setNetwork(?string $network): self
-    {
-        $this->initialized['network'] = true;
-        $this->network                = $network;
-
-        return $this;
+        return ['network' => 'Network'];
     }
 }

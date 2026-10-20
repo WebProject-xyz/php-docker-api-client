@@ -48,10 +48,17 @@ class NetworkConnectRequestNormalizer implements DenormalizerInterface, Normaliz
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Container', $data)) {
-            $object->setContainer($data['Container']);
+            $object->container = $data['Container'];
+            unset($data['Container']);
         }
         if (array_key_exists('EndpointConfig', $data)) {
-            $object->setEndpointConfig($this->denormalizer->denormalize($data['EndpointConfig'], \WebProject\DockerApi\Library\Generated\Model\EndpointSettings::class, 'json', $context));
+            $object->endpointConfig = $this->denormalizer->denormalize($data['EndpointConfig'], \WebProject\DockerApi\Library\Generated\Model\EndpointSettings::class, 'json', $context);
+            unset($data['EndpointConfig']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -60,9 +67,15 @@ class NetworkConnectRequestNormalizer implements DenormalizerInterface, Normaliz
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray              = [];
-        $dataArray['Container'] = $data->getContainer();
-        if ($data->isInitialized('endpointConfig') && null !== $data->getEndpointConfig()) {
-            $dataArray['EndpointConfig'] = $this->normalizer->normalize($data->getEndpointConfig(), 'json', $context);
+        $dataArray['Container'] = $data->container;
+        if (array_key_exists('endpointConfig', get_object_vars($data)) && null !== ($data->endpointConfig ?? null)) {
+            $normalized                  = $this->normalizer->normalize($data->endpointConfig, 'json', $context);
+            $dataArray['EndpointConfig'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
         }
 
         return $dataArray;

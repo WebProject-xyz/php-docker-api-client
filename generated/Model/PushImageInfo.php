@@ -3,92 +3,27 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class PushImageInfo
+class PushImageInfo implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var ErrorDetail
      */
-    protected $errorDetail;
+    public ErrorDetail $errorDetail;
     /**
      * @var string|null
      */
-    protected $status;
+    public ?string $status;
     /**
      * @var ProgressDetail
      */
-    protected $progressDetail;
+    public ProgressDetail $progressDetail;
 
-    /**
-     * @return ErrorDetail
-     */
-    public function getErrorDetail(): ErrorDetail
+    public function definedProperties(): array
     {
-        return $this->errorDetail;
-    }
-
-    /**
-     * @param ErrorDetail $errorDetail
-     *
-     * @return self
-     */
-    public function setErrorDetail(ErrorDetail $errorDetail): self
-    {
-        $this->initialized['errorDetail'] = true;
-        $this->errorDetail                = $errorDetail;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param string|null $status
-     *
-     * @return self
-     */
-    public function setStatus(?string $status): self
-    {
-        $this->initialized['status'] = true;
-        $this->status                = $status;
-
-        return $this;
-    }
-
-    /**
-     * @return ProgressDetail
-     */
-    public function getProgressDetail(): ProgressDetail
-    {
-        return $this->progressDetail;
-    }
-
-    /**
-     * @param ProgressDetail $progressDetail
-     *
-     * @return self
-     */
-    public function setProgressDetail(ProgressDetail $progressDetail): self
-    {
-        $this->initialized['progressDetail'] = true;
-        $this->progressDetail                = $progressDetail;
-
-        return $this;
+        return ['errorDetail' => 'errorDetail', 'status' => 'status', 'progressDetail' => 'progressDetail'];
     }
 }

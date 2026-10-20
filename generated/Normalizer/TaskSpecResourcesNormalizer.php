@@ -49,10 +49,12 @@ class TaskSpecResourcesNormalizer implements DenormalizerInterface, NormalizerIn
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Limits', $data)) {
-            $object->setLimits($this->denormalizer->denormalize($data['Limits'], \WebProject\DockerApi\Library\Generated\Model\Limit::class, 'json', $context));
+            $object->limits = $this->denormalizer->denormalize($data['Limits'], \WebProject\DockerApi\Library\Generated\Model\Limit::class, 'json', $context);
+            unset($data['Limits']);
         }
         if (array_key_exists('Reservations', $data)) {
-            $object->setReservations($this->denormalizer->denormalize($data['Reservations'], \WebProject\DockerApi\Library\Generated\Model\ResourceObject::class, 'json', $context));
+            $object->reservations = $this->denormalizer->denormalize($data['Reservations'], \WebProject\DockerApi\Library\Generated\Model\ResourceObject::class, 'json', $context);
+            unset($data['Reservations']);
         }
         if (array_key_exists('SwapBytes', $data) && null !== $data['SwapBytes']) {
             $value = $data['SwapBytes'];
@@ -61,9 +63,11 @@ class TaskSpecResourcesNormalizer implements DenormalizerInterface, NormalizerIn
             } elseif (null === $data['SwapBytes']) {
                 $value = $data['SwapBytes'];
             }
-            $object->setSwapBytes($value);
-        } elseif (array_key_exists('SwapBytes', $data) && null === $data['SwapBytes']) {
-            $object->setSwapBytes(null);
+            $object->swapBytes = $value;
+            unset($data['SwapBytes']);
+        } elseif (array_key_exists('SwapBytes', $data)) {
+            $object->swapBytes = null;
+            unset($data['SwapBytes']);
         }
         if (array_key_exists('MemorySwappiness', $data) && null !== $data['MemorySwappiness']) {
             $value_1 = $data['MemorySwappiness'];
@@ -72,9 +76,16 @@ class TaskSpecResourcesNormalizer implements DenormalizerInterface, NormalizerIn
             } elseif (null === $data['MemorySwappiness']) {
                 $value_1 = $data['MemorySwappiness'];
             }
-            $object->setMemorySwappiness($value_1);
-        } elseif (array_key_exists('MemorySwappiness', $data) && null === $data['MemorySwappiness']) {
-            $object->setMemorySwappiness(null);
+            $object->memorySwappiness = $value_1;
+            unset($data['MemorySwappiness']);
+        } elseif (array_key_exists('MemorySwappiness', $data)) {
+            $object->memorySwappiness = null;
+            unset($data['MemorySwappiness']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -83,29 +94,36 @@ class TaskSpecResourcesNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('limits') && null !== $data->getLimits()) {
-            $dataArray['Limits'] = $this->normalizer->normalize($data->getLimits(), 'json', $context);
+        if (array_key_exists('limits', get_object_vars($data)) && null !== ($data->limits ?? null)) {
+            $normalized          = $this->normalizer->normalize($data->limits, 'json', $context);
+            $dataArray['Limits'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         }
-        if ($data->isInitialized('reservations') && null !== $data->getReservations()) {
-            $dataArray['Reservations'] = $this->normalizer->normalize($data->getReservations(), 'json', $context);
+        if (array_key_exists('reservations', get_object_vars($data)) && null !== ($data->reservations ?? null)) {
+            $normalized_1              = $this->normalizer->normalize($data->reservations, 'json', $context);
+            $dataArray['Reservations'] = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
         }
-        if ($data->isInitialized('swapBytes')) {
-            $value = $data->getSwapBytes();
-            if (is_int($data->getSwapBytes())) {
-                $value = $data->getSwapBytes();
-            } elseif (null === $data->getSwapBytes()) {
-                $value = $data->getSwapBytes();
+        if (array_key_exists('swapBytes', get_object_vars($data)) && null !== ($data->swapBytes ?? null)) {
+            $value = $data->swapBytes;
+            if (is_int($data->swapBytes)) {
+                $value = $data->swapBytes;
+            } elseif (null === $data->swapBytes) {
+                $value = $data->swapBytes;
             }
             $dataArray['SwapBytes'] = $value;
         }
-        if ($data->isInitialized('memorySwappiness')) {
-            $value_1 = $data->getMemorySwappiness();
-            if (is_int($data->getMemorySwappiness())) {
-                $value_1 = $data->getMemorySwappiness();
-            } elseif (null === $data->getMemorySwappiness()) {
-                $value_1 = $data->getMemorySwappiness();
+        if (array_key_exists('memorySwappiness', get_object_vars($data)) && null !== ($data->memorySwappiness ?? null)) {
+            $value_1 = $data->memorySwappiness;
+            if (is_int($data->memorySwappiness)) {
+                $value_1 = $data->memorySwappiness;
+            } elseif (null === $data->memorySwappiness) {
+                $value_1 = $data->memorySwappiness;
             }
             $dataArray['MemorySwappiness'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

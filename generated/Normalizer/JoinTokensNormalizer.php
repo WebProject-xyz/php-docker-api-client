@@ -55,9 +55,11 @@ class JoinTokensNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['Worker']) {
                 $value = $data['Worker'];
             }
-            $object->setWorker($value);
-        } elseif (array_key_exists('Worker', $data) && null === $data['Worker']) {
-            $object->setWorker(null);
+            $object->worker = $value;
+            unset($data['Worker']);
+        } elseif (array_key_exists('Worker', $data)) {
+            $object->worker = null;
+            unset($data['Worker']);
         }
         if (array_key_exists('Manager', $data) && null !== $data['Manager']) {
             $value_1 = $data['Manager'];
@@ -66,9 +68,16 @@ class JoinTokensNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['Manager']) {
                 $value_1 = $data['Manager'];
             }
-            $object->setManager($value_1);
-        } elseif (array_key_exists('Manager', $data) && null === $data['Manager']) {
-            $object->setManager(null);
+            $object->manager = $value_1;
+            unset($data['Manager']);
+        } elseif (array_key_exists('Manager', $data)) {
+            $object->manager = null;
+            unset($data['Manager']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class JoinTokensNormalizer implements DenormalizerInterface, NormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('worker')) {
-            $value = $data->getWorker();
-            if (is_string($data->getWorker())) {
-                $value = $data->getWorker();
-            } elseif (null === $data->getWorker()) {
-                $value = $data->getWorker();
+        if (array_key_exists('worker', get_object_vars($data)) && null !== ($data->worker ?? null)) {
+            $value = $data->worker;
+            if (is_string($data->worker)) {
+                $value = $data->worker;
+            } elseif (null === $data->worker) {
+                $value = $data->worker;
             }
             $dataArray['Worker'] = $value;
         }
-        if ($data->isInitialized('manager')) {
-            $value_1 = $data->getManager();
-            if (is_string($data->getManager())) {
-                $value_1 = $data->getManager();
-            } elseif (null === $data->getManager()) {
-                $value_1 = $data->getManager();
+        if (array_key_exists('manager', get_object_vars($data)) && null !== ($data->manager ?? null)) {
+            $value_1 = $data->manager;
+            if (is_string($data->manager)) {
+                $value_1 = $data->manager;
+            } elseif (null === $data->manager) {
+                $value_1 = $data->manager;
             }
             $dataArray['Manager'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

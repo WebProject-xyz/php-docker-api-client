@@ -3,42 +3,19 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ObjectVersion
+class ObjectVersion implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var int|null
      */
-    protected $index;
+    public ?int $index;
 
-    /**
-     * @return int|null
-     */
-    public function getIndex(): ?int
+    public function definedProperties(): array
     {
-        return $this->index;
-    }
-
-    /**
-     * @param int|null $index
-     *
-     * @return self
-     */
-    public function setIndex(?int $index): self
-    {
-        $this->initialized['index'] = true;
-        $this->index                = $index;
-
-        return $this;
+        return ['index' => 'Index'];
     }
 }

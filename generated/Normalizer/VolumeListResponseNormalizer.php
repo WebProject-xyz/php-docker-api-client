@@ -48,34 +48,31 @@ class VolumeListResponseNormalizer implements DenormalizerInterface, NormalizerI
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Volumes', $data) && null !== $data['Volumes']) {
-            $value = $data['Volumes'];
-            if (is_array($data['Volumes']) && $this->isOnlyNumericKeys($data['Volumes'])) {
-                $values = [];
-                foreach ($data['Volumes'] as $value_1) {
-                    $values[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\Volume::class, 'json', $context);
-                }
-                $value = $values;
-            } elseif (null === $data['Volumes']) {
-                $value = $data['Volumes'];
+            $values = [];
+            foreach ($data['Volumes'] as $value) {
+                $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\Volume::class, 'json', $context);
             }
-            $object->setVolumes($value);
-        } elseif (array_key_exists('Volumes', $data) && null === $data['Volumes']) {
-            $object->setVolumes(null);
+            $object->volumes = $values;
+            unset($data['Volumes']);
+        } elseif (array_key_exists('Volumes', $data)) {
+            $object->volumes = null;
+            unset($data['Volumes']);
         }
         if (array_key_exists('Warnings', $data) && null !== $data['Warnings']) {
-            $value_2 = $data['Warnings'];
-            if (is_array($data['Warnings']) && $this->isOnlyNumericKeys($data['Warnings'])) {
-                $values_1 = [];
-                foreach ($data['Warnings'] as $value_3) {
-                    $values_1[] = $value_3;
-                }
-                $value_2 = $values_1;
-            } elseif (null === $data['Warnings']) {
-                $value_2 = $data['Warnings'];
+            $values_1 = [];
+            foreach ($data['Warnings'] as $value_1) {
+                $values_1[] = $value_1;
             }
-            $object->setWarnings($value_2);
-        } elseif (array_key_exists('Warnings', $data) && null === $data['Warnings']) {
-            $object->setWarnings(null);
+            $object->warnings = $values_1;
+            unset($data['Warnings']);
+        } elseif (array_key_exists('Warnings', $data)) {
+            $object->warnings = null;
+            unset($data['Warnings']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -84,31 +81,25 @@ class VolumeListResponseNormalizer implements DenormalizerInterface, NormalizerI
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('volumes')) {
-            $value = $data->getVolumes();
-            if (is_array($data->getVolumes())) {
-                $values = [];
-                foreach ($data->getVolumes() as $value_1) {
-                    $values[] = $this->normalizer->normalize($value_1, 'json', $context);
-                }
-                $value = $values;
-            } elseif (null === $data->getVolumes()) {
-                $value = $data->getVolumes();
+        if (array_key_exists('volumes', get_object_vars($data)) && null !== ($data->volumes ?? null)) {
+            $values = [];
+            foreach ($data->volumes as $value) {
+                $normalized = null === $value ? null : $this->normalizer->normalize($value, 'json', $context);
+                $values[]   = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
             }
-            $dataArray['Volumes'] = $value;
+            $dataArray['Volumes'] = $values;
         }
-        if ($data->isInitialized('warnings')) {
-            $value_2 = $data->getWarnings();
-            if (is_array($data->getWarnings())) {
-                $values_1 = [];
-                foreach ($data->getWarnings() as $value_3) {
-                    $values_1[] = $value_3;
-                }
-                $value_2 = $values_1;
-            } elseif (null === $data->getWarnings()) {
-                $value_2 = $data->getWarnings();
+        if (array_key_exists('warnings', get_object_vars($data)) && null !== ($data->warnings ?? null)) {
+            $values_1 = [];
+            foreach ($data->warnings as $value_1) {
+                $values_1[] = $value_1;
             }
-            $dataArray['Warnings'] = $value_2;
+            $dataArray['Warnings'] = $values_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

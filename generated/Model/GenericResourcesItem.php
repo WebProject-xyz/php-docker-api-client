@@ -3,67 +3,23 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class GenericResourcesItem
+class GenericResourcesItem implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var GenericResourcesItemNamedResourceSpec|null
      */
-    protected $namedResourceSpec;
+    public ?GenericResourcesItemNamedResourceSpec $namedResourceSpec;
     /**
      * @var GenericResourcesItemDiscreteResourceSpec|null
      */
-    protected $discreteResourceSpec;
+    public ?GenericResourcesItemDiscreteResourceSpec $discreteResourceSpec;
 
-    /**
-     * @return GenericResourcesItemNamedResourceSpec|null
-     */
-    public function getNamedResourceSpec(): ?GenericResourcesItemNamedResourceSpec
+    public function definedProperties(): array
     {
-        return $this->namedResourceSpec;
-    }
-
-    /**
-     * @param GenericResourcesItemNamedResourceSpec|null $namedResourceSpec
-     *
-     * @return self
-     */
-    public function setNamedResourceSpec(?GenericResourcesItemNamedResourceSpec $namedResourceSpec): self
-    {
-        $this->initialized['namedResourceSpec'] = true;
-        $this->namedResourceSpec                = $namedResourceSpec;
-
-        return $this;
-    }
-
-    /**
-     * @return GenericResourcesItemDiscreteResourceSpec|null
-     */
-    public function getDiscreteResourceSpec(): ?GenericResourcesItemDiscreteResourceSpec
-    {
-        return $this->discreteResourceSpec;
-    }
-
-    /**
-     * @param GenericResourcesItemDiscreteResourceSpec|null $discreteResourceSpec
-     *
-     * @return self
-     */
-    public function setDiscreteResourceSpec(?GenericResourcesItemDiscreteResourceSpec $discreteResourceSpec): self
-    {
-        $this->initialized['discreteResourceSpec'] = true;
-        $this->discreteResourceSpec                = $discreteResourceSpec;
-
-        return $this;
+        return ['namedResourceSpec' => 'NamedResourceSpec', 'discreteResourceSpec' => 'DiscreteResourceSpec'];
     }
 }

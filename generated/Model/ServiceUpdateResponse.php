@@ -3,48 +3,21 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ServiceUpdateResponse
+class ServiceUpdateResponse implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Optional warning messages.
      *
      * @var list<string>|null
      */
-    protected $warnings;
+    public ?array $warnings;
 
-    /**
-     * Optional warning messages.
-     *
-     * @return list<string>|null
-     */
-    public function getWarnings(): ?array
+    public function definedProperties(): array
     {
-        return $this->warnings;
-    }
-
-    /**
-     * Optional warning messages.
-     *
-     * @param list<string>|null $warnings
-     *
-     * @return self
-     */
-    public function setWarnings(?array $warnings): self
-    {
-        $this->initialized['warnings'] = true;
-        $this->warnings                = $warnings;
-
-        return $this;
+        return ['warnings' => 'Warnings'];
     }
 }

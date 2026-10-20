@@ -55,9 +55,16 @@ class SwarmSpecDispatcherNormalizer implements DenormalizerInterface, Normalizer
             } elseif (null === $data['HeartbeatPeriod']) {
                 $value = $data['HeartbeatPeriod'];
             }
-            $object->setHeartbeatPeriod($value);
-        } elseif (array_key_exists('HeartbeatPeriod', $data) && null === $data['HeartbeatPeriod']) {
-            $object->setHeartbeatPeriod(null);
+            $object->heartbeatPeriod = $value;
+            unset($data['HeartbeatPeriod']);
+        } elseif (array_key_exists('HeartbeatPeriod', $data)) {
+            $object->heartbeatPeriod = null;
+            unset($data['HeartbeatPeriod']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -66,14 +73,19 @@ class SwarmSpecDispatcherNormalizer implements DenormalizerInterface, Normalizer
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('heartbeatPeriod')) {
-            $value = $data->getHeartbeatPeriod();
-            if (is_int($data->getHeartbeatPeriod())) {
-                $value = $data->getHeartbeatPeriod();
-            } elseif (null === $data->getHeartbeatPeriod()) {
-                $value = $data->getHeartbeatPeriod();
+        if (array_key_exists('heartbeatPeriod', get_object_vars($data)) && null !== ($data->heartbeatPeriod ?? null)) {
+            $value = $data->heartbeatPeriod;
+            if (is_int($data->heartbeatPeriod)) {
+                $value = $data->heartbeatPeriod;
+            } elseif (null === $data->heartbeatPeriod) {
+                $value = $data->heartbeatPeriod;
             }
             $dataArray['HeartbeatPeriod'] = $value;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

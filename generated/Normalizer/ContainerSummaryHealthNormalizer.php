@@ -56,9 +56,11 @@ class ContainerSummaryHealthNormalizer implements DenormalizerInterface, Normali
             } elseif (null === $data['Status']) {
                 $value = $data['Status'];
             }
-            $object->setStatus($value);
-        } elseif (array_key_exists('Status', $data) && null === $data['Status']) {
-            $object->setStatus(null);
+            $object->status = $value;
+            unset($data['Status']);
+        } elseif (array_key_exists('Status', $data)) {
+            $object->status = null;
+            unset($data['Status']);
         }
         if (array_key_exists('FailingStreak', $data) && null !== $data['FailingStreak']) {
             $value_1 = $data['FailingStreak'];
@@ -67,9 +69,16 @@ class ContainerSummaryHealthNormalizer implements DenormalizerInterface, Normali
             } elseif (null === $data['FailingStreak']) {
                 $value_1 = $data['FailingStreak'];
             }
-            $object->setFailingStreak($value_1);
-        } elseif (array_key_exists('FailingStreak', $data) && null === $data['FailingStreak']) {
-            $object->setFailingStreak(null);
+            $object->failingStreak = $value_1;
+            unset($data['FailingStreak']);
+        } elseif (array_key_exists('FailingStreak', $data)) {
+            $object->failingStreak = null;
+            unset($data['FailingStreak']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -78,23 +87,28 @@ class ContainerSummaryHealthNormalizer implements DenormalizerInterface, Normali
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('status')) {
-            $value = $data->getStatus();
-            if (is_string($data->getStatus())) {
-                $value = $data->getStatus();
-            } elseif (null === $data->getStatus()) {
-                $value = $data->getStatus();
+        if (array_key_exists('status', get_object_vars($data)) && null !== ($data->status ?? null)) {
+            $value = $data->status;
+            if (is_string($data->status)) {
+                $value = $data->status;
+            } elseif (null === $data->status) {
+                $value = $data->status;
             }
             $dataArray['Status'] = $value;
         }
-        if ($data->isInitialized('failingStreak')) {
-            $value_1 = $data->getFailingStreak();
-            if (is_int($data->getFailingStreak())) {
-                $value_1 = $data->getFailingStreak();
-            } elseif (null === $data->getFailingStreak()) {
-                $value_1 = $data->getFailingStreak();
+        if (array_key_exists('failingStreak', get_object_vars($data)) && null !== ($data->failingStreak ?? null)) {
+            $value_1 = $data->failingStreak;
+            if (is_int($data->failingStreak)) {
+                $value_1 = $data->failingStreak;
+            } elseif (null === $data->failingStreak) {
+                $value_1 = $data->failingStreak;
             }
             $dataArray['FailingStreak'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

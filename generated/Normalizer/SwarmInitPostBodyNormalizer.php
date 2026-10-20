@@ -52,32 +52,45 @@ class SwarmInitPostBodyNormalizer implements DenormalizerInterface, NormalizerIn
             $data['ForceNewCluster'] = (bool) $data['ForceNewCluster'];
         }
         if (array_key_exists('ListenAddr', $data)) {
-            $object->setListenAddr($data['ListenAddr']);
+            $object->listenAddr = $data['ListenAddr'];
+            unset($data['ListenAddr']);
         }
         if (array_key_exists('AdvertiseAddr', $data)) {
-            $object->setAdvertiseAddr($data['AdvertiseAddr']);
+            $object->advertiseAddr = $data['AdvertiseAddr'];
+            unset($data['AdvertiseAddr']);
         }
         if (array_key_exists('DataPathAddr', $data)) {
-            $object->setDataPathAddr($data['DataPathAddr']);
+            $object->dataPathAddr = $data['DataPathAddr'];
+            unset($data['DataPathAddr']);
         }
         if (array_key_exists('DataPathPort', $data)) {
-            $object->setDataPathPort($data['DataPathPort']);
+            $object->dataPathPort = $data['DataPathPort'];
+            unset($data['DataPathPort']);
         }
         if (array_key_exists('DefaultAddrPool', $data)) {
             $values = [];
             foreach ($data['DefaultAddrPool'] as $value) {
                 $values[] = $value;
             }
-            $object->setDefaultAddrPool($values);
+            $object->defaultAddrPool = $values;
+            unset($data['DefaultAddrPool']);
         }
         if (array_key_exists('ForceNewCluster', $data)) {
-            $object->setForceNewCluster($data['ForceNewCluster']);
+            $object->forceNewCluster = $data['ForceNewCluster'];
+            unset($data['ForceNewCluster']);
         }
         if (array_key_exists('SubnetSize', $data)) {
-            $object->setSubnetSize($data['SubnetSize']);
+            $object->subnetSize = $data['SubnetSize'];
+            unset($data['SubnetSize']);
         }
         if (array_key_exists('Spec', $data)) {
-            $object->setSpec($this->denormalizer->denormalize($data['Spec'], \WebProject\DockerApi\Library\Generated\Model\SwarmSpec::class, 'json', $context));
+            $object->spec = $this->denormalizer->denormalize($data['Spec'], \WebProject\DockerApi\Library\Generated\Model\SwarmSpec::class, 'json', $context);
+            unset($data['Spec']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -86,33 +99,39 @@ class SwarmInitPostBodyNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('listenAddr') && null !== $data->getListenAddr()) {
-            $dataArray['ListenAddr'] = $data->getListenAddr();
+        if (array_key_exists('listenAddr', get_object_vars($data)) && null !== ($data->listenAddr ?? null)) {
+            $dataArray['ListenAddr'] = $data->listenAddr;
         }
-        if ($data->isInitialized('advertiseAddr') && null !== $data->getAdvertiseAddr()) {
-            $dataArray['AdvertiseAddr'] = $data->getAdvertiseAddr();
+        if (array_key_exists('advertiseAddr', get_object_vars($data)) && null !== ($data->advertiseAddr ?? null)) {
+            $dataArray['AdvertiseAddr'] = $data->advertiseAddr;
         }
-        if ($data->isInitialized('dataPathAddr') && null !== $data->getDataPathAddr()) {
-            $dataArray['DataPathAddr'] = $data->getDataPathAddr();
+        if (array_key_exists('dataPathAddr', get_object_vars($data)) && null !== ($data->dataPathAddr ?? null)) {
+            $dataArray['DataPathAddr'] = $data->dataPathAddr;
         }
-        if ($data->isInitialized('dataPathPort') && null !== $data->getDataPathPort()) {
-            $dataArray['DataPathPort'] = $data->getDataPathPort();
+        if (array_key_exists('dataPathPort', get_object_vars($data)) && null !== ($data->dataPathPort ?? null)) {
+            $dataArray['DataPathPort'] = $data->dataPathPort;
         }
-        if ($data->isInitialized('defaultAddrPool') && null !== $data->getDefaultAddrPool()) {
+        if (array_key_exists('defaultAddrPool', get_object_vars($data)) && null !== ($data->defaultAddrPool ?? null)) {
             $values = [];
-            foreach ($data->getDefaultAddrPool() as $value) {
+            foreach ($data->defaultAddrPool as $value) {
                 $values[] = $value;
             }
             $dataArray['DefaultAddrPool'] = $values;
         }
-        if ($data->isInitialized('forceNewCluster') && null !== $data->getForceNewCluster()) {
-            $dataArray['ForceNewCluster'] = $data->getForceNewCluster();
+        if (array_key_exists('forceNewCluster', get_object_vars($data)) && null !== ($data->forceNewCluster ?? null)) {
+            $dataArray['ForceNewCluster'] = $data->forceNewCluster;
         }
-        if ($data->isInitialized('subnetSize') && null !== $data->getSubnetSize()) {
-            $dataArray['SubnetSize'] = $data->getSubnetSize();
+        if (array_key_exists('subnetSize', get_object_vars($data)) && null !== ($data->subnetSize ?? null)) {
+            $dataArray['SubnetSize'] = $data->subnetSize;
         }
-        if ($data->isInitialized('spec') && null !== $data->getSpec()) {
-            $dataArray['Spec'] = $this->normalizer->normalize($data->getSpec(), 'json', $context);
+        if (array_key_exists('spec', get_object_vars($data)) && null !== ($data->spec ?? null)) {
+            $normalized        = $this->normalizer->normalize($data->spec, 'json', $context);
+            $dataArray['Spec'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

@@ -3,19 +3,12 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ContainerdInfoNamespaces
+class ContainerdInfoNamespaces implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The default containerd namespace used for containers managed
      * by the daemon.
@@ -27,7 +20,7 @@ class ContainerdInfoNamespaces
      *
      * @var string|null
      */
-    protected $containers = 'moby';
+    public ?string $containers = 'moby';
     /**
      * The default containerd namespace used for plugins managed by
      * the daemon.
@@ -39,79 +32,10 @@ class ContainerdInfoNamespaces
      *
      * @var string|null
      */
-    protected $plugins = 'plugins.moby';
+    public ?string $plugins = 'plugins.moby';
 
-    /**
-     * The default containerd namespace used for containers managed
-     * by the daemon.
-     *
-     * The default namespace for containers is "moby", but will be
-     * suffixed with the `<uid>.<gid>` of the remapped `root` if
-     * user-namespaces are enabled and the containerd image-store
-     * is used.
-     *
-     * @return string|null
-     */
-    public function getContainers(): ?string
+    public function definedProperties(): array
     {
-        return $this->containers;
-    }
-
-    /**
-     * The default containerd namespace used for containers managed
-     * by the daemon.
-     *
-     * The default namespace for containers is "moby", but will be
-     * suffixed with the `<uid>.<gid>` of the remapped `root` if
-     * user-namespaces are enabled and the containerd image-store
-     * is used.
-     *
-     * @param string|null $containers
-     *
-     * @return self
-     */
-    public function setContainers(?string $containers): self
-    {
-        $this->initialized['containers'] = true;
-        $this->containers                = $containers;
-
-        return $this;
-    }
-
-    /**
-     * The default containerd namespace used for plugins managed by
-     * the daemon.
-     *
-     * The default namespace for plugins is "plugins.moby", but will be
-     * suffixed with the `<uid>.<gid>` of the remapped `root` if
-     * user-namespaces are enabled and the containerd image-store
-     * is used.
-     *
-     * @return string|null
-     */
-    public function getPlugins(): ?string
-    {
-        return $this->plugins;
-    }
-
-    /**
-     * The default containerd namespace used for plugins managed by
-     * the daemon.
-     *
-     * The default namespace for plugins is "plugins.moby", but will be
-     * suffixed with the `<uid>.<gid>` of the remapped `root` if
-     * user-namespaces are enabled and the containerd image-store
-     * is used.
-     *
-     * @param string|null $plugins
-     *
-     * @return self
-     */
-    public function setPlugins(?string $plugins): self
-    {
-        $this->initialized['plugins'] = true;
-        $this->plugins                = $plugins;
-
-        return $this;
+        return ['containers' => 'Containers', 'plugins' => 'Plugins'];
     }
 }

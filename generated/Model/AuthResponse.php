@@ -3,79 +3,27 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class AuthResponse
+class AuthResponse implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The status of the authentication.
      *
      * @var string
      */
-    protected $status;
+    public string $status;
     /**
      * An opaque token used to authenticate a user after a successful login.
      *
      * @var string
      */
-    protected $identityToken;
+    public string $identityToken;
 
-    /**
-     * The status of the authentication.
-     *
-     * @return string
-     */
-    public function getStatus(): string
+    public function definedProperties(): array
     {
-        return $this->status;
-    }
-
-    /**
-     * The status of the authentication.
-     *
-     * @param string $status
-     *
-     * @return self
-     */
-    public function setStatus(string $status): self
-    {
-        $this->initialized['status'] = true;
-        $this->status                = $status;
-
-        return $this;
-    }
-
-    /**
-     * An opaque token used to authenticate a user after a successful login.
-     *
-     * @return string
-     */
-    public function getIdentityToken(): string
-    {
-        return $this->identityToken;
-    }
-
-    /**
-     * An opaque token used to authenticate a user after a successful login.
-     *
-     * @param string $identityToken
-     *
-     * @return self
-     */
-    public function setIdentityToken(string $identityToken): self
-    {
-        $this->initialized['identityToken'] = true;
-        $this->identityToken                = $identityToken;
-
-        return $this;
+        return ['status' => 'Status', 'identityToken' => 'IdentityToken'];
     }
 }

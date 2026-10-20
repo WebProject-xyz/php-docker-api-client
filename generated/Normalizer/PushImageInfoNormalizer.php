@@ -49,7 +49,8 @@ class PushImageInfoNormalizer implements DenormalizerInterface, NormalizerInterf
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('errorDetail', $data)) {
-            $object->setErrorDetail($this->denormalizer->denormalize($data['errorDetail'], \WebProject\DockerApi\Library\Generated\Model\ErrorDetail::class, 'json', $context));
+            $object->errorDetail = $this->denormalizer->denormalize($data['errorDetail'], \WebProject\DockerApi\Library\Generated\Model\ErrorDetail::class, 'json', $context);
+            unset($data['errorDetail']);
         }
         if (array_key_exists('status', $data) && null !== $data['status']) {
             $value = $data['status'];
@@ -58,12 +59,20 @@ class PushImageInfoNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['status']) {
                 $value = $data['status'];
             }
-            $object->setStatus($value);
-        } elseif (array_key_exists('status', $data) && null === $data['status']) {
-            $object->setStatus(null);
+            $object->status = $value;
+            unset($data['status']);
+        } elseif (array_key_exists('status', $data)) {
+            $object->status = null;
+            unset($data['status']);
         }
         if (array_key_exists('progressDetail', $data)) {
-            $object->setProgressDetail($this->denormalizer->denormalize($data['progressDetail'], \WebProject\DockerApi\Library\Generated\Model\ProgressDetail::class, 'json', $context));
+            $object->progressDetail = $this->denormalizer->denormalize($data['progressDetail'], \WebProject\DockerApi\Library\Generated\Model\ProgressDetail::class, 'json', $context);
+            unset($data['progressDetail']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -72,20 +81,27 @@ class PushImageInfoNormalizer implements DenormalizerInterface, NormalizerInterf
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('errorDetail') && null !== $data->getErrorDetail()) {
-            $dataArray['errorDetail'] = $this->normalizer->normalize($data->getErrorDetail(), 'json', $context);
+        if (array_key_exists('errorDetail', get_object_vars($data)) && null !== ($data->errorDetail ?? null)) {
+            $normalized               = $this->normalizer->normalize($data->errorDetail, 'json', $context);
+            $dataArray['errorDetail'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         }
-        if ($data->isInitialized('status')) {
-            $value = $data->getStatus();
-            if (is_string($data->getStatus())) {
-                $value = $data->getStatus();
-            } elseif (null === $data->getStatus()) {
-                $value = $data->getStatus();
+        if (array_key_exists('status', get_object_vars($data)) && null !== ($data->status ?? null)) {
+            $value = $data->status;
+            if (is_string($data->status)) {
+                $value = $data->status;
+            } elseif (null === $data->status) {
+                $value = $data->status;
             }
             $dataArray['status'] = $value;
         }
-        if ($data->isInitialized('progressDetail') && null !== $data->getProgressDetail()) {
-            $dataArray['progressDetail'] = $this->normalizer->normalize($data->getProgressDetail(), 'json', $context);
+        if (array_key_exists('progressDetail', get_object_vars($data)) && null !== ($data->progressDetail ?? null)) {
+            $normalized_1                = $this->normalizer->normalize($data->progressDetail, 'json', $context);
+            $dataArray['progressDetail'] = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

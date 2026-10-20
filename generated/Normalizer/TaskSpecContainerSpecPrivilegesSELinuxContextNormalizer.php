@@ -56,9 +56,11 @@ class TaskSpecContainerSpecPrivilegesSELinuxContextNormalizer implements Denorma
             } elseif (null === $data['Disable']) {
                 $value = $data['Disable'];
             }
-            $object->setDisable($value);
-        } elseif (array_key_exists('Disable', $data) && null === $data['Disable']) {
-            $object->setDisable(null);
+            $object->disable = $value;
+            unset($data['Disable']);
+        } elseif (array_key_exists('Disable', $data)) {
+            $object->disable = null;
+            unset($data['Disable']);
         }
         if (array_key_exists('User', $data) && null !== $data['User']) {
             $value_1 = $data['User'];
@@ -67,9 +69,11 @@ class TaskSpecContainerSpecPrivilegesSELinuxContextNormalizer implements Denorma
             } elseif (null === $data['User']) {
                 $value_1 = $data['User'];
             }
-            $object->setUser($value_1);
-        } elseif (array_key_exists('User', $data) && null === $data['User']) {
-            $object->setUser(null);
+            $object->user = $value_1;
+            unset($data['User']);
+        } elseif (array_key_exists('User', $data)) {
+            $object->user = null;
+            unset($data['User']);
         }
         if (array_key_exists('Role', $data) && null !== $data['Role']) {
             $value_2 = $data['Role'];
@@ -78,9 +82,11 @@ class TaskSpecContainerSpecPrivilegesSELinuxContextNormalizer implements Denorma
             } elseif (null === $data['Role']) {
                 $value_2 = $data['Role'];
             }
-            $object->setRole($value_2);
-        } elseif (array_key_exists('Role', $data) && null === $data['Role']) {
-            $object->setRole(null);
+            $object->role = $value_2;
+            unset($data['Role']);
+        } elseif (array_key_exists('Role', $data)) {
+            $object->role = null;
+            unset($data['Role']);
         }
         if (array_key_exists('Type', $data) && null !== $data['Type']) {
             $value_3 = $data['Type'];
@@ -89,9 +95,11 @@ class TaskSpecContainerSpecPrivilegesSELinuxContextNormalizer implements Denorma
             } elseif (null === $data['Type']) {
                 $value_3 = $data['Type'];
             }
-            $object->setType($value_3);
-        } elseif (array_key_exists('Type', $data) && null === $data['Type']) {
-            $object->setType(null);
+            $object->type = $value_3;
+            unset($data['Type']);
+        } elseif (array_key_exists('Type', $data)) {
+            $object->type = null;
+            unset($data['Type']);
         }
         if (array_key_exists('Level', $data) && null !== $data['Level']) {
             $value_4 = $data['Level'];
@@ -100,9 +108,16 @@ class TaskSpecContainerSpecPrivilegesSELinuxContextNormalizer implements Denorma
             } elseif (null === $data['Level']) {
                 $value_4 = $data['Level'];
             }
-            $object->setLevel($value_4);
-        } elseif (array_key_exists('Level', $data) && null === $data['Level']) {
-            $object->setLevel(null);
+            $object->level = $value_4;
+            unset($data['Level']);
+        } elseif (array_key_exists('Level', $data)) {
+            $object->level = null;
+            unset($data['Level']);
+        }
+        foreach ($data as $key => $value_5) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_5;
+            }
         }
 
         return $object;
@@ -111,50 +126,55 @@ class TaskSpecContainerSpecPrivilegesSELinuxContextNormalizer implements Denorma
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('disable')) {
-            $value = $data->getDisable();
-            if (is_bool($data->getDisable())) {
-                $value = $data->getDisable();
-            } elseif (null === $data->getDisable()) {
-                $value = $data->getDisable();
+        if (array_key_exists('disable', get_object_vars($data)) && null !== ($data->disable ?? null)) {
+            $value = $data->disable;
+            if (is_bool($data->disable)) {
+                $value = $data->disable;
+            } elseif (null === $data->disable) {
+                $value = $data->disable;
             }
             $dataArray['Disable'] = $value;
         }
-        if ($data->isInitialized('user')) {
-            $value_1 = $data->getUser();
-            if (is_string($data->getUser())) {
-                $value_1 = $data->getUser();
-            } elseif (null === $data->getUser()) {
-                $value_1 = $data->getUser();
+        if (array_key_exists('user', get_object_vars($data)) && null !== ($data->user ?? null)) {
+            $value_1 = $data->user;
+            if (is_string($data->user)) {
+                $value_1 = $data->user;
+            } elseif (null === $data->user) {
+                $value_1 = $data->user;
             }
             $dataArray['User'] = $value_1;
         }
-        if ($data->isInitialized('role')) {
-            $value_2 = $data->getRole();
-            if (is_string($data->getRole())) {
-                $value_2 = $data->getRole();
-            } elseif (null === $data->getRole()) {
-                $value_2 = $data->getRole();
+        if (array_key_exists('role', get_object_vars($data)) && null !== ($data->role ?? null)) {
+            $value_2 = $data->role;
+            if (is_string($data->role)) {
+                $value_2 = $data->role;
+            } elseif (null === $data->role) {
+                $value_2 = $data->role;
             }
             $dataArray['Role'] = $value_2;
         }
-        if ($data->isInitialized('type')) {
-            $value_3 = $data->getType();
-            if (is_string($data->getType())) {
-                $value_3 = $data->getType();
-            } elseif (null === $data->getType()) {
-                $value_3 = $data->getType();
+        if (array_key_exists('type', get_object_vars($data)) && null !== ($data->type ?? null)) {
+            $value_3 = $data->type;
+            if (is_string($data->type)) {
+                $value_3 = $data->type;
+            } elseif (null === $data->type) {
+                $value_3 = $data->type;
             }
             $dataArray['Type'] = $value_3;
         }
-        if ($data->isInitialized('level')) {
-            $value_4 = $data->getLevel();
-            if (is_string($data->getLevel())) {
-                $value_4 = $data->getLevel();
-            } elseif (null === $data->getLevel()) {
-                $value_4 = $data->getLevel();
+        if (array_key_exists('level', get_object_vars($data)) && null !== ($data->level ?? null)) {
+            $value_4 = $data->level;
+            if (is_string($data->level)) {
+                $value_4 = $data->level;
+            } elseif (null === $data->level) {
+                $value_4 = $data->level;
             }
             $dataArray['Level'] = $value_4;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_5) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_5;
+            }
         }
 
         return $dataArray;

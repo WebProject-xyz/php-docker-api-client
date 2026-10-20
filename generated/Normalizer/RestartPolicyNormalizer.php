@@ -56,9 +56,11 @@ class RestartPolicyNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['Name']) {
                 $value = $data['Name'];
             }
-            $object->setName($value);
-        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
-            $object->setName(null);
+            $object->name = $value;
+            unset($data['Name']);
+        } elseif (array_key_exists('Name', $data)) {
+            $object->name = null;
+            unset($data['Name']);
         }
         if (array_key_exists('MaximumRetryCount', $data) && null !== $data['MaximumRetryCount']) {
             $value_1 = $data['MaximumRetryCount'];
@@ -67,9 +69,16 @@ class RestartPolicyNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['MaximumRetryCount']) {
                 $value_1 = $data['MaximumRetryCount'];
             }
-            $object->setMaximumRetryCount($value_1);
-        } elseif (array_key_exists('MaximumRetryCount', $data) && null === $data['MaximumRetryCount']) {
-            $object->setMaximumRetryCount(null);
+            $object->maximumRetryCount = $value_1;
+            unset($data['MaximumRetryCount']);
+        } elseif (array_key_exists('MaximumRetryCount', $data)) {
+            $object->maximumRetryCount = null;
+            unset($data['MaximumRetryCount']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -78,23 +87,28 @@ class RestartPolicyNormalizer implements DenormalizerInterface, NormalizerInterf
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name')) {
-            $value = $data->getName();
-            if (is_string($data->getName())) {
-                $value = $data->getName();
-            } elseif (null === $data->getName()) {
-                $value = $data->getName();
+        if (array_key_exists('name', get_object_vars($data)) && null !== ($data->name ?? null)) {
+            $value = $data->name;
+            if (is_string($data->name)) {
+                $value = $data->name;
+            } elseif (null === $data->name) {
+                $value = $data->name;
             }
             $dataArray['Name'] = $value;
         }
-        if ($data->isInitialized('maximumRetryCount')) {
-            $value_1 = $data->getMaximumRetryCount();
-            if (is_int($data->getMaximumRetryCount())) {
-                $value_1 = $data->getMaximumRetryCount();
-            } elseif (null === $data->getMaximumRetryCount()) {
-                $value_1 = $data->getMaximumRetryCount();
+        if (array_key_exists('maximumRetryCount', get_object_vars($data)) && null !== ($data->maximumRetryCount ?? null)) {
+            $value_1 = $data->maximumRetryCount;
+            if (is_int($data->maximumRetryCount)) {
+                $value_1 = $data->maximumRetryCount;
+            } elseif (null === $data->maximumRetryCount) {
+                $value_1 = $data->maximumRetryCount;
             }
             $dataArray['MaximumRetryCount'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

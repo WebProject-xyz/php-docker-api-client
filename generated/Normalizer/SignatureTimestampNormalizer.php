@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace WebProject\DockerApi\Library\Generated\Normalizer;
 
 use ArrayObject;
+use DateTime;
+use Exception;
 use Jane\Component\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -49,7 +51,8 @@ class SignatureTimestampNormalizer implements DenormalizerInterface, NormalizerI
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Type', $data)) {
-            $object->setType($data['Type']);
+            $object->type = \WebProject\DockerApi\Library\Generated\Model\SignatureTimestampType::from($data['Type']);
+            unset($data['Type']);
         }
         if (array_key_exists('URI', $data) && null !== $data['URI']) {
             $value = $data['URI'];
@@ -58,20 +61,35 @@ class SignatureTimestampNormalizer implements DenormalizerInterface, NormalizerI
             } elseif (null === $data['URI']) {
                 $value = $data['URI'];
             }
-            $object->setURI($value);
-        } elseif (array_key_exists('URI', $data) && null === $data['URI']) {
-            $object->setURI(null);
+            $object->uRI = $value;
+            unset($data['URI']);
+        } elseif (array_key_exists('URI', $data)) {
+            $object->uRI = null;
+            unset($data['URI']);
         }
         if (array_key_exists('Timestamp', $data) && null !== $data['Timestamp']) {
-            $value_1 = $data['Timestamp'];
-            if (is_string($data['Timestamp'])) {
-                $value_1 = $data['Timestamp'];
-            } elseif (null === $data['Timestamp']) {
-                $value_1 = $data['Timestamp'];
+            $date = DateTime::createFromFormat('Y-m-d\TH:i:sP', $data['Timestamp']);
+            if (false === $date) {
+                if (is_string($data['Timestamp']) && 1 === preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/', $data['Timestamp'])) {
+                    try {
+                        $date = new DateTime($data['Timestamp']);
+                    } catch (Exception) {
+                        throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['Timestamp'], 'Y-m-d\TH:i:sP');
+                    }
+                } else {
+                    throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['Timestamp'], 'Y-m-d\TH:i:sP');
+                }
             }
-            $object->setTimestamp($value_1);
-        } elseif (array_key_exists('Timestamp', $data) && null === $data['Timestamp']) {
-            $object->setTimestamp(null);
+            $object->timestamp = $date;
+            unset($data['Timestamp']);
+        } elseif (array_key_exists('Timestamp', $data)) {
+            $object->timestamp = null;
+            unset($data['Timestamp']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -80,26 +98,25 @@ class SignatureTimestampNormalizer implements DenormalizerInterface, NormalizerI
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('type') && null !== $data->getType()) {
-            $dataArray['Type'] = $data->getType();
+        if (array_key_exists('type', get_object_vars($data)) && null !== ($data->type ?? null)) {
+            $dataArray['Type'] = $data->type->value;
         }
-        if ($data->isInitialized('uRI')) {
-            $value = $data->getURI();
-            if (is_string($data->getURI())) {
-                $value = $data->getURI();
-            } elseif (null === $data->getURI()) {
-                $value = $data->getURI();
+        if (array_key_exists('uRI', get_object_vars($data)) && null !== ($data->uRI ?? null)) {
+            $value = $data->uRI;
+            if (is_string($data->uRI)) {
+                $value = $data->uRI;
+            } elseif (null === $data->uRI) {
+                $value = $data->uRI;
             }
             $dataArray['URI'] = $value;
         }
-        if ($data->isInitialized('timestamp')) {
-            $value_1 = $data->getTimestamp();
-            if (is_string($data->getTimestamp())) {
-                $value_1 = $data->getTimestamp();
-            } elseif (null === $data->getTimestamp()) {
-                $value_1 = $data->getTimestamp();
+        if (array_key_exists('timestamp', get_object_vars($data)) && null !== ($data->timestamp ?? null)) {
+            $dataArray['Timestamp'] = $data->timestamp?->format('Y-m-d\TH:i:sP');
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
             }
-            $dataArray['Timestamp'] = $value_1;
         }
 
         return $dataArray;

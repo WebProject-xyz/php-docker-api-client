@@ -55,9 +55,16 @@ class ServiceSpecModeReplicatedNormalizer implements DenormalizerInterface, Norm
             } elseif (null === $data['Replicas']) {
                 $value = $data['Replicas'];
             }
-            $object->setReplicas($value);
-        } elseif (array_key_exists('Replicas', $data) && null === $data['Replicas']) {
-            $object->setReplicas(null);
+            $object->replicas = $value;
+            unset($data['Replicas']);
+        } elseif (array_key_exists('Replicas', $data)) {
+            $object->replicas = null;
+            unset($data['Replicas']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -66,14 +73,19 @@ class ServiceSpecModeReplicatedNormalizer implements DenormalizerInterface, Norm
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('replicas')) {
-            $value = $data->getReplicas();
-            if (is_int($data->getReplicas())) {
-                $value = $data->getReplicas();
-            } elseif (null === $data->getReplicas()) {
-                $value = $data->getReplicas();
+        if (array_key_exists('replicas', get_object_vars($data)) && null !== ($data->replicas ?? null)) {
+            $value = $data->replicas;
+            if (is_int($data->replicas)) {
+                $value = $data->replicas;
+            } elseif (null === $data->replicas) {
+                $value = $data->replicas;
             }
             $dataArray['Replicas'] = $value;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

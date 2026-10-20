@@ -28,27 +28,27 @@ class ImagePush extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
      * Use the `tag` parameter to specify the tag to push.
      * @param array{
      *    "tag"?: string, //Tag of the image to push. For example, `latest`. If no tag is provided,
-     * all tags of the given image that are present in the local image store
-     * are pushed.
+     *                    //all tags of the given image that are present in the local image store
+     *                    //are pushed.
      *    "platform"?: string, //JSON-encoded OCI platform to select the platform-variant to push.
-     * If not provided, all available variants will attempt to be pushed.
-     *
-     * If the daemon provides a multi-platform image store, this selects
-     * the platform-variant to push to the registry. If the image is
-     * a single-platform image, or if the multi-platform image does not
-     * provide a variant matching the given platform, an error is returned.
-     *
-     * Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
+     *                         //If not provided, all available variants will attempt to be pushed.
+     *                         //
+     *                         //If the daemon provides a multi-platform image store, this selects
+     *                         //the platform-variant to push to the registry. If the image is
+     *                         //a single-platform image, or if the multi-platform image does not
+     *                         //provide a variant matching the given platform, an error is returned.
+     *                         //
+     *                         //Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
      * } $queryParameters
      * @param array{
      *    "X-Registry-Auth": string, //A base64url-encoded auth configuration.
-     *
-     * Refer to the [authentication section](#section/Authentication) for
-     * details.
+     *                               //
+     *                               //Refer to the [authentication section](#section/Authentication) for
+     *                               //details.
      * } $headerParameters
      * @param array $accept Accept content header application/json|text/plain
      */
-    public function __construct(string $name, array $queryParameters = [], array $headerParameters = [], array $accept = [])
+    public function __construct(string $name, array $queryParameters, array $headerParameters, array $accept = [])
     {
         $this->name             = $name;
         $this->queryParameters  = $queryParameters;
@@ -63,10 +63,10 @@ class ImagePush extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
 
     public function getUri(): string
     {
-        return str_replace(['{name}'], [$this->name], '/images/{name}/push');
+        return str_replace(['{name}'], [rawurlencode($this->name)], '/images/{name}/push');
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
         return [[], null];
     }
@@ -110,24 +110,36 @@ class ImagePush extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ImagePushNotFoundException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ImagePushInternalServerErrorException
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
+        $body   = $response->getContent(false);
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (404 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImagePushNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (500 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImagePushInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Eager->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

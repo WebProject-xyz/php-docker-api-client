@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace WebProject\DockerApi\Library\Generated\Normalizer;
 
 use ArrayObject;
+use DateTime;
+use Exception;
 use Jane\Component\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -49,18 +51,32 @@ class ServiceJobStatusNormalizer implements DenormalizerInterface, NormalizerInt
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('JobIteration', $data)) {
-            $object->setJobIteration($this->denormalizer->denormalize($data['JobIteration'], \WebProject\DockerApi\Library\Generated\Model\ObjectVersion::class, 'json', $context));
+            $object->jobIteration = $this->denormalizer->denormalize($data['JobIteration'], \WebProject\DockerApi\Library\Generated\Model\ObjectVersion::class, 'json', $context);
+            unset($data['JobIteration']);
         }
         if (array_key_exists('LastExecution', $data) && null !== $data['LastExecution']) {
-            $value = $data['LastExecution'];
-            if (is_string($data['LastExecution'])) {
-                $value = $data['LastExecution'];
-            } elseif (null === $data['LastExecution']) {
-                $value = $data['LastExecution'];
+            $date = DateTime::createFromFormat('Y-m-d\TH:i:sP', $data['LastExecution']);
+            if (false === $date) {
+                if (is_string($data['LastExecution']) && 1 === preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/', $data['LastExecution'])) {
+                    try {
+                        $date = new DateTime($data['LastExecution']);
+                    } catch (Exception) {
+                        throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['LastExecution'], 'Y-m-d\TH:i:sP');
+                    }
+                } else {
+                    throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['LastExecution'], 'Y-m-d\TH:i:sP');
+                }
             }
-            $object->setLastExecution($value);
-        } elseif (array_key_exists('LastExecution', $data) && null === $data['LastExecution']) {
-            $object->setLastExecution(null);
+            $object->lastExecution = $date;
+            unset($data['LastExecution']);
+        } elseif (array_key_exists('LastExecution', $data)) {
+            $object->lastExecution = null;
+            unset($data['LastExecution']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -69,17 +85,17 @@ class ServiceJobStatusNormalizer implements DenormalizerInterface, NormalizerInt
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('jobIteration') && null !== $data->getJobIteration()) {
-            $dataArray['JobIteration'] = $this->normalizer->normalize($data->getJobIteration(), 'json', $context);
+        if (array_key_exists('jobIteration', get_object_vars($data)) && null !== ($data->jobIteration ?? null)) {
+            $normalized                = $this->normalizer->normalize($data->jobIteration, 'json', $context);
+            $dataArray['JobIteration'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         }
-        if ($data->isInitialized('lastExecution')) {
-            $value = $data->getLastExecution();
-            if (is_string($data->getLastExecution())) {
-                $value = $data->getLastExecution();
-            } elseif (null === $data->getLastExecution()) {
-                $value = $data->getLastExecution();
+        if (array_key_exists('lastExecution', get_object_vars($data)) && null !== ($data->lastExecution ?? null)) {
+            $dataArray['LastExecution'] = $data->lastExecution?->format('Y-m-d\TH:i:sP');
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
             }
-            $dataArray['LastExecution'] = $value;
         }
 
         return $dataArray;

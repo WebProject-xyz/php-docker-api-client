@@ -56,9 +56,11 @@ class AddressNormalizer implements DenormalizerInterface, NormalizerInterface, D
             } elseif (null === $data['Addr']) {
                 $value = $data['Addr'];
             }
-            $object->setAddr($value);
-        } elseif (array_key_exists('Addr', $data) && null === $data['Addr']) {
-            $object->setAddr(null);
+            $object->addr = $value;
+            unset($data['Addr']);
+        } elseif (array_key_exists('Addr', $data)) {
+            $object->addr = null;
+            unset($data['Addr']);
         }
         if (array_key_exists('PrefixLen', $data) && null !== $data['PrefixLen']) {
             $value_1 = $data['PrefixLen'];
@@ -67,9 +69,16 @@ class AddressNormalizer implements DenormalizerInterface, NormalizerInterface, D
             } elseif (null === $data['PrefixLen']) {
                 $value_1 = $data['PrefixLen'];
             }
-            $object->setPrefixLen($value_1);
-        } elseif (array_key_exists('PrefixLen', $data) && null === $data['PrefixLen']) {
-            $object->setPrefixLen(null);
+            $object->prefixLen = $value_1;
+            unset($data['PrefixLen']);
+        } elseif (array_key_exists('PrefixLen', $data)) {
+            $object->prefixLen = null;
+            unset($data['PrefixLen']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -78,23 +87,28 @@ class AddressNormalizer implements DenormalizerInterface, NormalizerInterface, D
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('addr')) {
-            $value = $data->getAddr();
-            if (is_string($data->getAddr())) {
-                $value = $data->getAddr();
-            } elseif (null === $data->getAddr()) {
-                $value = $data->getAddr();
+        if (array_key_exists('addr', get_object_vars($data)) && null !== ($data->addr ?? null)) {
+            $value = $data->addr;
+            if (is_string($data->addr)) {
+                $value = $data->addr;
+            } elseif (null === $data->addr) {
+                $value = $data->addr;
             }
             $dataArray['Addr'] = $value;
         }
-        if ($data->isInitialized('prefixLen')) {
-            $value_1 = $data->getPrefixLen();
-            if (is_int($data->getPrefixLen())) {
-                $value_1 = $data->getPrefixLen();
-            } elseif (null === $data->getPrefixLen()) {
-                $value_1 = $data->getPrefixLen();
+        if (array_key_exists('prefixLen', get_object_vars($data)) && null !== ($data->prefixLen ?? null)) {
+            $value_1 = $data->prefixLen;
+            if (is_int($data->prefixLen)) {
+                $value_1 = $data->prefixLen;
+            } elseif (null === $data->prefixLen) {
+                $value_1 = $data->prefixLen;
             }
             $dataArray['PrefixLen'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

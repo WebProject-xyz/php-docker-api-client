@@ -55,9 +55,11 @@ class PeerInfoNormalizer implements DenormalizerInterface, NormalizerInterface, 
             } elseif (null === $data['Name']) {
                 $value = $data['Name'];
             }
-            $object->setName($value);
-        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
-            $object->setName(null);
+            $object->name = $value;
+            unset($data['Name']);
+        } elseif (array_key_exists('Name', $data)) {
+            $object->name = null;
+            unset($data['Name']);
         }
         if (array_key_exists('IP', $data) && null !== $data['IP']) {
             $value_1 = $data['IP'];
@@ -66,9 +68,16 @@ class PeerInfoNormalizer implements DenormalizerInterface, NormalizerInterface, 
             } elseif (null === $data['IP']) {
                 $value_1 = $data['IP'];
             }
-            $object->setIP($value_1);
-        } elseif (array_key_exists('IP', $data) && null === $data['IP']) {
-            $object->setIP(null);
+            $object->iP = $value_1;
+            unset($data['IP']);
+        } elseif (array_key_exists('IP', $data)) {
+            $object->iP = null;
+            unset($data['IP']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class PeerInfoNormalizer implements DenormalizerInterface, NormalizerInterface, 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name')) {
-            $value = $data->getName();
-            if (is_string($data->getName())) {
-                $value = $data->getName();
-            } elseif (null === $data->getName()) {
-                $value = $data->getName();
+        if (array_key_exists('name', get_object_vars($data)) && null !== ($data->name ?? null)) {
+            $value = $data->name;
+            if (is_string($data->name)) {
+                $value = $data->name;
+            } elseif (null === $data->name) {
+                $value = $data->name;
             }
             $dataArray['Name'] = $value;
         }
-        if ($data->isInitialized('iP')) {
-            $value_1 = $data->getIP();
-            if (is_string($data->getIP())) {
-                $value_1 = $data->getIP();
-            } elseif (null === $data->getIP()) {
-                $value_1 = $data->getIP();
+        if (array_key_exists('iP', get_object_vars($data)) && null !== ($data->iP ?? null)) {
+            $value_1 = $data->iP;
+            if (is_string($data->iP)) {
+                $value_1 = $data->iP;
+            } elseif (null === $data->iP) {
+                $value_1 = $data->iP;
             }
             $dataArray['IP'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

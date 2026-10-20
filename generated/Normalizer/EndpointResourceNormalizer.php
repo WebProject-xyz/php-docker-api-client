@@ -55,9 +55,11 @@ class EndpointResourceNormalizer implements DenormalizerInterface, NormalizerInt
             } elseif (null === $data['Name']) {
                 $value = $data['Name'];
             }
-            $object->setName($value);
-        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
-            $object->setName(null);
+            $object->name = $value;
+            unset($data['Name']);
+        } elseif (array_key_exists('Name', $data)) {
+            $object->name = null;
+            unset($data['Name']);
         }
         if (array_key_exists('EndpointID', $data) && null !== $data['EndpointID']) {
             $value_1 = $data['EndpointID'];
@@ -66,9 +68,11 @@ class EndpointResourceNormalizer implements DenormalizerInterface, NormalizerInt
             } elseif (null === $data['EndpointID']) {
                 $value_1 = $data['EndpointID'];
             }
-            $object->setEndpointID($value_1);
-        } elseif (array_key_exists('EndpointID', $data) && null === $data['EndpointID']) {
-            $object->setEndpointID(null);
+            $object->endpointID = $value_1;
+            unset($data['EndpointID']);
+        } elseif (array_key_exists('EndpointID', $data)) {
+            $object->endpointID = null;
+            unset($data['EndpointID']);
         }
         if (array_key_exists('MacAddress', $data) && null !== $data['MacAddress']) {
             $value_2 = $data['MacAddress'];
@@ -77,9 +81,11 @@ class EndpointResourceNormalizer implements DenormalizerInterface, NormalizerInt
             } elseif (null === $data['MacAddress']) {
                 $value_2 = $data['MacAddress'];
             }
-            $object->setMacAddress($value_2);
-        } elseif (array_key_exists('MacAddress', $data) && null === $data['MacAddress']) {
-            $object->setMacAddress(null);
+            $object->macAddress = $value_2;
+            unset($data['MacAddress']);
+        } elseif (array_key_exists('MacAddress', $data)) {
+            $object->macAddress = null;
+            unset($data['MacAddress']);
         }
         if (array_key_exists('IPv4Address', $data) && null !== $data['IPv4Address']) {
             $value_3 = $data['IPv4Address'];
@@ -88,9 +94,11 @@ class EndpointResourceNormalizer implements DenormalizerInterface, NormalizerInt
             } elseif (null === $data['IPv4Address']) {
                 $value_3 = $data['IPv4Address'];
             }
-            $object->setIPv4Address($value_3);
-        } elseif (array_key_exists('IPv4Address', $data) && null === $data['IPv4Address']) {
-            $object->setIPv4Address(null);
+            $object->iPv4Address = $value_3;
+            unset($data['IPv4Address']);
+        } elseif (array_key_exists('IPv4Address', $data)) {
+            $object->iPv4Address = null;
+            unset($data['IPv4Address']);
         }
         if (array_key_exists('IPv6Address', $data) && null !== $data['IPv6Address']) {
             $value_4 = $data['IPv6Address'];
@@ -99,9 +107,16 @@ class EndpointResourceNormalizer implements DenormalizerInterface, NormalizerInt
             } elseif (null === $data['IPv6Address']) {
                 $value_4 = $data['IPv6Address'];
             }
-            $object->setIPv6Address($value_4);
-        } elseif (array_key_exists('IPv6Address', $data) && null === $data['IPv6Address']) {
-            $object->setIPv6Address(null);
+            $object->iPv6Address = $value_4;
+            unset($data['IPv6Address']);
+        } elseif (array_key_exists('IPv6Address', $data)) {
+            $object->iPv6Address = null;
+            unset($data['IPv6Address']);
+        }
+        foreach ($data as $key => $value_5) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_5;
+            }
         }
 
         return $object;
@@ -110,50 +125,55 @@ class EndpointResourceNormalizer implements DenormalizerInterface, NormalizerInt
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name')) {
-            $value = $data->getName();
-            if (is_string($data->getName())) {
-                $value = $data->getName();
-            } elseif (null === $data->getName()) {
-                $value = $data->getName();
+        if (array_key_exists('name', get_object_vars($data)) && null !== ($data->name ?? null)) {
+            $value = $data->name;
+            if (is_string($data->name)) {
+                $value = $data->name;
+            } elseif (null === $data->name) {
+                $value = $data->name;
             }
             $dataArray['Name'] = $value;
         }
-        if ($data->isInitialized('endpointID')) {
-            $value_1 = $data->getEndpointID();
-            if (is_string($data->getEndpointID())) {
-                $value_1 = $data->getEndpointID();
-            } elseif (null === $data->getEndpointID()) {
-                $value_1 = $data->getEndpointID();
+        if (array_key_exists('endpointID', get_object_vars($data)) && null !== ($data->endpointID ?? null)) {
+            $value_1 = $data->endpointID;
+            if (is_string($data->endpointID)) {
+                $value_1 = $data->endpointID;
+            } elseif (null === $data->endpointID) {
+                $value_1 = $data->endpointID;
             }
             $dataArray['EndpointID'] = $value_1;
         }
-        if ($data->isInitialized('macAddress')) {
-            $value_2 = $data->getMacAddress();
-            if (is_string($data->getMacAddress())) {
-                $value_2 = $data->getMacAddress();
-            } elseif (null === $data->getMacAddress()) {
-                $value_2 = $data->getMacAddress();
+        if (array_key_exists('macAddress', get_object_vars($data)) && null !== ($data->macAddress ?? null)) {
+            $value_2 = $data->macAddress;
+            if (is_string($data->macAddress)) {
+                $value_2 = $data->macAddress;
+            } elseif (null === $data->macAddress) {
+                $value_2 = $data->macAddress;
             }
             $dataArray['MacAddress'] = $value_2;
         }
-        if ($data->isInitialized('iPv4Address')) {
-            $value_3 = $data->getIPv4Address();
-            if (is_string($data->getIPv4Address())) {
-                $value_3 = $data->getIPv4Address();
-            } elseif (null === $data->getIPv4Address()) {
-                $value_3 = $data->getIPv4Address();
+        if (array_key_exists('iPv4Address', get_object_vars($data)) && null !== ($data->iPv4Address ?? null)) {
+            $value_3 = $data->iPv4Address;
+            if (is_string($data->iPv4Address)) {
+                $value_3 = $data->iPv4Address;
+            } elseif (null === $data->iPv4Address) {
+                $value_3 = $data->iPv4Address;
             }
             $dataArray['IPv4Address'] = $value_3;
         }
-        if ($data->isInitialized('iPv6Address')) {
-            $value_4 = $data->getIPv6Address();
-            if (is_string($data->getIPv6Address())) {
-                $value_4 = $data->getIPv6Address();
-            } elseif (null === $data->getIPv6Address()) {
-                $value_4 = $data->getIPv6Address();
+        if (array_key_exists('iPv6Address', get_object_vars($data)) && null !== ($data->iPv6Address ?? null)) {
+            $value_4 = $data->iPv6Address;
+            if (is_string($data->iPv6Address)) {
+                $value_4 = $data->iPv6Address;
+            } elseif (null === $data->iPv6Address) {
+                $value_4 = $data->iPv6Address;
             }
             $dataArray['IPv6Address'] = $value_4;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_5) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_5;
+            }
         }
 
         return $dataArray;

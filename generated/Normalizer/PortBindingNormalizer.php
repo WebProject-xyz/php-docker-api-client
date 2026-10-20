@@ -55,9 +55,11 @@ class PortBindingNormalizer implements DenormalizerInterface, NormalizerInterfac
             } elseif (null === $data['HostIp']) {
                 $value = $data['HostIp'];
             }
-            $object->setHostIp($value);
-        } elseif (array_key_exists('HostIp', $data) && null === $data['HostIp']) {
-            $object->setHostIp(null);
+            $object->hostIp = $value;
+            unset($data['HostIp']);
+        } elseif (array_key_exists('HostIp', $data)) {
+            $object->hostIp = null;
+            unset($data['HostIp']);
         }
         if (array_key_exists('HostPort', $data) && null !== $data['HostPort']) {
             $value_1 = $data['HostPort'];
@@ -66,9 +68,16 @@ class PortBindingNormalizer implements DenormalizerInterface, NormalizerInterfac
             } elseif (null === $data['HostPort']) {
                 $value_1 = $data['HostPort'];
             }
-            $object->setHostPort($value_1);
-        } elseif (array_key_exists('HostPort', $data) && null === $data['HostPort']) {
-            $object->setHostPort(null);
+            $object->hostPort = $value_1;
+            unset($data['HostPort']);
+        } elseif (array_key_exists('HostPort', $data)) {
+            $object->hostPort = null;
+            unset($data['HostPort']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class PortBindingNormalizer implements DenormalizerInterface, NormalizerInterfac
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('hostIp')) {
-            $value = $data->getHostIp();
-            if (is_string($data->getHostIp())) {
-                $value = $data->getHostIp();
-            } elseif (null === $data->getHostIp()) {
-                $value = $data->getHostIp();
+        if (array_key_exists('hostIp', get_object_vars($data)) && null !== ($data->hostIp ?? null)) {
+            $value = $data->hostIp;
+            if (is_string($data->hostIp)) {
+                $value = $data->hostIp;
+            } elseif (null === $data->hostIp) {
+                $value = $data->hostIp;
             }
             $dataArray['HostIp'] = $value;
         }
-        if ($data->isInitialized('hostPort')) {
-            $value_1 = $data->getHostPort();
-            if (is_string($data->getHostPort())) {
-                $value_1 = $data->getHostPort();
-            } elseif (null === $data->getHostPort()) {
-                $value_1 = $data->getHostPort();
+        if (array_key_exists('hostPort', get_object_vars($data)) && null !== ($data->hostPort ?? null)) {
+            $value_1 = $data->hostPort;
+            if (is_string($data->hostPort)) {
+                $value_1 = $data->hostPort;
+            } elseif (null === $data->hostPort) {
+                $value_1 = $data->hostPort;
             }
             $dataArray['HostPort'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

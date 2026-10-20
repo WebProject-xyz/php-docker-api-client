@@ -55,25 +55,28 @@ class ExecIdStartPostBodyNormalizer implements DenormalizerInterface, Normalizer
             $data['Tty'] = (bool) $data['Tty'];
         }
         if (array_key_exists('Detach', $data)) {
-            $object->setDetach($data['Detach']);
+            $object->detach = $data['Detach'];
+            unset($data['Detach']);
         }
         if (array_key_exists('Tty', $data)) {
-            $object->setTty($data['Tty']);
+            $object->tty = $data['Tty'];
+            unset($data['Tty']);
         }
         if (array_key_exists('ConsoleSize', $data) && null !== $data['ConsoleSize']) {
-            $value = $data['ConsoleSize'];
-            if (is_array($data['ConsoleSize']) && $this->isOnlyNumericKeys($data['ConsoleSize'])) {
-                $values = [];
-                foreach ($data['ConsoleSize'] as $value_1) {
-                    $values[] = $value_1;
-                }
-                $value = $values;
-            } elseif (null === $data['ConsoleSize']) {
-                $value = $data['ConsoleSize'];
+            $values = [];
+            foreach ($data['ConsoleSize'] as $value) {
+                $values[] = $value;
             }
-            $object->setConsoleSize($value);
-        } elseif (array_key_exists('ConsoleSize', $data) && null === $data['ConsoleSize']) {
-            $object->setConsoleSize(null);
+            $object->consoleSize = $values;
+            unset($data['ConsoleSize']);
+        } elseif (array_key_exists('ConsoleSize', $data)) {
+            $object->consoleSize = null;
+            unset($data['ConsoleSize']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -82,24 +85,23 @@ class ExecIdStartPostBodyNormalizer implements DenormalizerInterface, Normalizer
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('detach') && null !== $data->getDetach()) {
-            $dataArray['Detach'] = $data->getDetach();
+        if (array_key_exists('detach', get_object_vars($data)) && null !== ($data->detach ?? null)) {
+            $dataArray['Detach'] = $data->detach;
         }
-        if ($data->isInitialized('tty') && null !== $data->getTty()) {
-            $dataArray['Tty'] = $data->getTty();
+        if (array_key_exists('tty', get_object_vars($data)) && null !== ($data->tty ?? null)) {
+            $dataArray['Tty'] = $data->tty;
         }
-        if ($data->isInitialized('consoleSize')) {
-            $value = $data->getConsoleSize();
-            if (is_array($data->getConsoleSize())) {
-                $values = [];
-                foreach ($data->getConsoleSize() as $value_1) {
-                    $values[] = $value_1;
-                }
-                $value = $values;
-            } elseif (null === $data->getConsoleSize()) {
-                $value = $data->getConsoleSize();
+        if (array_key_exists('consoleSize', get_object_vars($data)) && null !== ($data->consoleSize ?? null)) {
+            $values = [];
+            foreach ($data->consoleSize as $value) {
+                $values[] = $value;
             }
-            $dataArray['ConsoleSize'] = $value;
+            $dataArray['ConsoleSize'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

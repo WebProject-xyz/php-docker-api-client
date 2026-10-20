@@ -3,79 +3,27 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class MountVolumeOptionsDriverConfig
+class MountVolumeOptionsDriverConfig implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Name of the driver to use to create the volume.
      *
      * @var string|null
      */
-    protected $name;
+    public ?string $name;
     /**
      * key/value map of driver specific options.
      *
-     * @var array<string, string>|null
+     * @var iterable<string, string>|null
      */
-    protected $options;
+    public ?iterable $options;
 
-    /**
-     * Name of the driver to use to create the volume.
-     *
-     * @return string|null
-     */
-    public function getName(): ?string
+    public function definedProperties(): array
     {
-        return $this->name;
-    }
-
-    /**
-     * Name of the driver to use to create the volume.
-     *
-     * @param string|null $name
-     *
-     * @return self
-     */
-    public function setName(?string $name): self
-    {
-        $this->initialized['name'] = true;
-        $this->name                = $name;
-
-        return $this;
-    }
-
-    /**
-     * key/value map of driver specific options.
-     *
-     * @return array<string, string>|null
-     */
-    public function getOptions(): ?iterable
-    {
-        return $this->options;
-    }
-
-    /**
-     * key/value map of driver specific options.
-     *
-     * @param array<string, string>|null $options
-     *
-     * @return self
-     */
-    public function setOptions(?iterable $options): self
-    {
-        $this->initialized['options'] = true;
-        $this->options                = $options;
-
-        return $this;
+        return ['name' => 'Name', 'options' => 'Options'];
     }
 }

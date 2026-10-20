@@ -3,88 +3,30 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class DriverData
+class DriverData implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Name of the storage driver.
      *
      * @var string
      */
-    protected $name;
+    public string $name;
     /**
      * Low-level storage metadata, provided as key/value pairs.
      *
      * This information is driver-specific, and depends on the storage-driver
      * in use, and should be used for informational purposes only.
      *
-     * @var array<string, string>
+     * @var iterable<string, string>
      */
-    protected $data;
+    public iterable $data;
 
-    /**
-     * Name of the storage driver.
-     *
-     * @return string
-     */
-    public function getName(): string
+    public function definedProperties(): array
     {
-        return $this->name;
-    }
-
-    /**
-     * Name of the storage driver.
-     *
-     * @param string $name
-     *
-     * @return self
-     */
-    public function setName(string $name): self
-    {
-        $this->initialized['name'] = true;
-        $this->name                = $name;
-
-        return $this;
-    }
-
-    /**
-     * Low-level storage metadata, provided as key/value pairs.
-     *
-     * This information is driver-specific, and depends on the storage-driver
-     * in use, and should be used for informational purposes only.
-     *
-     * @return array<string, string>
-     */
-    public function getData(): iterable
-    {
-        return $this->data;
-    }
-
-    /**
-     * Low-level storage metadata, provided as key/value pairs.
-     *
-     * This information is driver-specific, and depends on the storage-driver
-     * in use, and should be used for informational purposes only.
-     *
-     * @param array<string, string> $data
-     *
-     * @return self
-     */
-    public function setData(iterable $data): self
-    {
-        $this->initialized['data'] = true;
-        $this->data                = $data;
-
-        return $this;
+        return ['name' => 'Name', 'data' => 'Data'];
     }
 }

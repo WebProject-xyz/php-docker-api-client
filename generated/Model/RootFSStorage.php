@@ -3,48 +3,21 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class RootFSStorage
+class RootFSStorage implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Information about a snapshot backend of the container's root filesystem.
      *
      * @var RootFSStorageSnapshot
      */
-    protected $snapshot;
+    public RootFSStorageSnapshot $snapshot;
 
-    /**
-     * Information about a snapshot backend of the container's root filesystem.
-     *
-     * @return RootFSStorageSnapshot
-     */
-    public function getSnapshot(): RootFSStorageSnapshot
+    public function definedProperties(): array
     {
-        return $this->snapshot;
-    }
-
-    /**
-     * Information about a snapshot backend of the container's root filesystem.
-     *
-     * @param RootFSStorageSnapshot $snapshot
-     *
-     * @return self
-     */
-    public function setSnapshot(RootFSStorageSnapshot $snapshot): self
-    {
-        $this->initialized['snapshot'] = true;
-        $this->snapshot                = $snapshot;
-
-        return $this;
+        return ['snapshot' => 'Snapshot'];
     }
 }

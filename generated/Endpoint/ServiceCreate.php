@@ -11,10 +11,10 @@ class ServiceCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Clie
      * @param \WebProject\DockerApi\Library\Generated\Model\ServicesCreatePostBody $requestBody
      * @param array{
      *    "X-Registry-Auth"?: string, //A base64url-encoded auth configuration for pulling from private
-     * registries.
-     *
-     * Refer to the [authentication section](#section/Authentication) for
-     * details.
+     *                                //registries.
+     *                                //
+     *                                //Refer to the [authentication section](#section/Authentication) for
+     *                                //details.
      * } $headerParameters
      */
     public function __construct(\WebProject\DockerApi\Library\Generated\Model\ServicesCreatePostBody $requestBody, array $headerParameters = [])
@@ -33,10 +33,10 @@ class ServiceCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Clie
         return '/services/create';
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
         if ($this->body instanceof \WebProject\DockerApi\Library\Generated\Model\ServicesCreatePostBody) {
-            return [['Content-Type' => ['application/json']], $serializer->serialize($this->body, 'json')];
+            return [['Content-Type' => ['application/json']], \WebProject\DockerApi\Library\Generated\Runtime\Client\JsonPayload::encode($serializer, $this->body)];
         }
 
         return [[], null];
@@ -61,40 +61,52 @@ class ServiceCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Clie
     /**
      * {@inheritdoc}
      *
-     * @return \WebProject\DockerApi\Library\Generated\Model\ServiceCreateResponse|null
+     * @return \WebProject\DockerApi\Library\Generated\Model\ServiceCreateResponse
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ServiceCreateBadRequestException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ServiceCreateForbiddenException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ServiceCreateConflictException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ServiceCreateInternalServerErrorException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ServiceCreateServiceUnavailableException
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (201 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        $body   = $response->getContent(false);
+        if (null !== $contentType && (201 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ServiceCreateResponse', 'json');
         }
-        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (400 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ServiceCreateBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (403 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (403 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ServiceCreateForbiddenException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (409 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (409 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ServiceCreateConflictException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (500 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ServiceCreateInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (503 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (503 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ServiceCreateServiceUnavailableException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Eager->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

@@ -3,117 +3,31 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class IPAMConfig
+class IPAMConfig implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var string|null
      */
-    protected $subnet;
+    public ?string $subnet;
     /**
      * @var string|null
      */
-    protected $iPRange;
+    public ?string $iPRange;
     /**
      * @var string|null
      */
-    protected $gateway;
+    public ?string $gateway;
     /**
-     * @var array<string, string>|null
+     * @var iterable<string, string>|null
      */
-    protected $auxiliaryAddresses;
+    public ?iterable $auxiliaryAddresses;
 
-    /**
-     * @return string|null
-     */
-    public function getSubnet(): ?string
+    public function definedProperties(): array
     {
-        return $this->subnet;
-    }
-
-    /**
-     * @param string|null $subnet
-     *
-     * @return self
-     */
-    public function setSubnet(?string $subnet): self
-    {
-        $this->initialized['subnet'] = true;
-        $this->subnet                = $subnet;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getIPRange(): ?string
-    {
-        return $this->iPRange;
-    }
-
-    /**
-     * @param string|null $iPRange
-     *
-     * @return self
-     */
-    public function setIPRange(?string $iPRange): self
-    {
-        $this->initialized['iPRange'] = true;
-        $this->iPRange                = $iPRange;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getGateway(): ?string
-    {
-        return $this->gateway;
-    }
-
-    /**
-     * @param string|null $gateway
-     *
-     * @return self
-     */
-    public function setGateway(?string $gateway): self
-    {
-        $this->initialized['gateway'] = true;
-        $this->gateway                = $gateway;
-
-        return $this;
-    }
-
-    /**
-     * @return array<string, string>|null
-     */
-    public function getAuxiliaryAddresses(): ?iterable
-    {
-        return $this->auxiliaryAddresses;
-    }
-
-    /**
-     * @param array<string, string>|null $auxiliaryAddresses
-     *
-     * @return self
-     */
-    public function setAuxiliaryAddresses(?iterable $auxiliaryAddresses): self
-    {
-        $this->initialized['auxiliaryAddresses'] = true;
-        $this->auxiliaryAddresses                = $auxiliaryAddresses;
-
-        return $this;
+        return ['subnet' => 'Subnet', 'iPRange' => 'IPRange', 'gateway' => 'Gateway', 'auxiliaryAddresses' => 'AuxiliaryAddresses'];
     }
 }

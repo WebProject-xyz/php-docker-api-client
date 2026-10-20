@@ -3,110 +3,33 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class NetworkAttachmentConfig
+class NetworkAttachmentConfig implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The target network for attachment. Must be a network name or ID.
      *
      * @var string|null
      */
-    protected $target;
+    public ?string $target;
     /**
      * Discoverable alternate names for the service on this network.
      *
      * @var list<string>|null
      */
-    protected $aliases;
+    public ?array $aliases;
     /**
      * Driver attachment options for the network target.
      *
-     * @var array<string, string>|null
+     * @var iterable<string, string>|null
      */
-    protected $driverOpts;
+    public ?iterable $driverOpts;
 
-    /**
-     * The target network for attachment. Must be a network name or ID.
-     *
-     * @return string|null
-     */
-    public function getTarget(): ?string
+    public function definedProperties(): array
     {
-        return $this->target;
-    }
-
-    /**
-     * The target network for attachment. Must be a network name or ID.
-     *
-     * @param string|null $target
-     *
-     * @return self
-     */
-    public function setTarget(?string $target): self
-    {
-        $this->initialized['target'] = true;
-        $this->target                = $target;
-
-        return $this;
-    }
-
-    /**
-     * Discoverable alternate names for the service on this network.
-     *
-     * @return list<string>|null
-     */
-    public function getAliases(): ?array
-    {
-        return $this->aliases;
-    }
-
-    /**
-     * Discoverable alternate names for the service on this network.
-     *
-     * @param list<string>|null $aliases
-     *
-     * @return self
-     */
-    public function setAliases(?array $aliases): self
-    {
-        $this->initialized['aliases'] = true;
-        $this->aliases                = $aliases;
-
-        return $this;
-    }
-
-    /**
-     * Driver attachment options for the network target.
-     *
-     * @return array<string, string>|null
-     */
-    public function getDriverOpts(): ?iterable
-    {
-        return $this->driverOpts;
-    }
-
-    /**
-     * Driver attachment options for the network target.
-     *
-     * @param array<string, string>|null $driverOpts
-     *
-     * @return self
-     */
-    public function setDriverOpts(?iterable $driverOpts): self
-    {
-        $this->initialized['driverOpts'] = true;
-        $this->driverOpts                = $driverOpts;
-
-        return $this;
+        return ['target' => 'Target', 'aliases' => 'Aliases', 'driverOpts' => 'DriverOpts'];
     }
 }

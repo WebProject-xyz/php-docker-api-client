@@ -20,7 +20,7 @@ class ExecResize extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
      * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
-    public function __construct(string $id, array $queryParameters = [], array $accept = [])
+    public function __construct(string $id, array $queryParameters, array $accept = [])
     {
         $this->id              = $id;
         $this->queryParameters = $queryParameters;
@@ -34,10 +34,10 @@ class ExecResize extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
 
     public function getUri(): string
     {
-        return str_replace(['{id}'], [$this->id], '/exec/{id}/resize');
+        return str_replace(['{id}'], [rawurlencode($this->id)], '/exec/{id}/resize');
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
         return [[], null];
     }
@@ -71,27 +71,39 @@ class ExecResize extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ExecResizeBadRequestException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ExecResizeNotFoundException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ExecResizeInternalServerErrorException
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
+        $body   = $response->getContent(false);
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (400 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ExecResizeBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (404 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ExecResizeNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (500 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ExecResizeInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Eager->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

@@ -55,9 +55,11 @@ class PeerNodeNormalizer implements DenormalizerInterface, NormalizerInterface, 
             } elseif (null === $data['NodeID']) {
                 $value = $data['NodeID'];
             }
-            $object->setNodeID($value);
-        } elseif (array_key_exists('NodeID', $data) && null === $data['NodeID']) {
-            $object->setNodeID(null);
+            $object->nodeID = $value;
+            unset($data['NodeID']);
+        } elseif (array_key_exists('NodeID', $data)) {
+            $object->nodeID = null;
+            unset($data['NodeID']);
         }
         if (array_key_exists('Addr', $data) && null !== $data['Addr']) {
             $value_1 = $data['Addr'];
@@ -66,9 +68,16 @@ class PeerNodeNormalizer implements DenormalizerInterface, NormalizerInterface, 
             } elseif (null === $data['Addr']) {
                 $value_1 = $data['Addr'];
             }
-            $object->setAddr($value_1);
-        } elseif (array_key_exists('Addr', $data) && null === $data['Addr']) {
-            $object->setAddr(null);
+            $object->addr = $value_1;
+            unset($data['Addr']);
+        } elseif (array_key_exists('Addr', $data)) {
+            $object->addr = null;
+            unset($data['Addr']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class PeerNodeNormalizer implements DenormalizerInterface, NormalizerInterface, 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('nodeID')) {
-            $value = $data->getNodeID();
-            if (is_string($data->getNodeID())) {
-                $value = $data->getNodeID();
-            } elseif (null === $data->getNodeID()) {
-                $value = $data->getNodeID();
+        if (array_key_exists('nodeID', get_object_vars($data)) && null !== ($data->nodeID ?? null)) {
+            $value = $data->nodeID;
+            if (is_string($data->nodeID)) {
+                $value = $data->nodeID;
+            } elseif (null === $data->nodeID) {
+                $value = $data->nodeID;
             }
             $dataArray['NodeID'] = $value;
         }
-        if ($data->isInitialized('addr')) {
-            $value_1 = $data->getAddr();
-            if (is_string($data->getAddr())) {
-                $value_1 = $data->getAddr();
-            } elseif (null === $data->getAddr()) {
-                $value_1 = $data->getAddr();
+        if (array_key_exists('addr', get_object_vars($data)) && null !== ($data->addr ?? null)) {
+            $value_1 = $data->addr;
+            if (is_string($data->addr)) {
+                $value_1 = $data->addr;
+            } elseif (null === $data->addr) {
+                $value_1 = $data->addr;
             }
             $dataArray['Addr'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

@@ -49,24 +49,32 @@ class TaskSpecContainerSpecPrivilegesNormalizer implements DenormalizerInterface
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('CredentialSpec', $data) && null !== $data['CredentialSpec']) {
-            $object->setCredentialSpec($this->denormalizer->denormalize($data['CredentialSpec'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecPrivilegesCredentialSpec::class, 'json', $context));
-        } elseif (array_key_exists('CredentialSpec', $data) && null === $data['CredentialSpec']) {
-            $object->setCredentialSpec(null);
+            $object->credentialSpec = $this->denormalizer->denormalize($data['CredentialSpec'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecPrivilegesCredentialSpec::class, 'json', $context);
+            unset($data['CredentialSpec']);
+        } elseif (array_key_exists('CredentialSpec', $data)) {
+            $object->credentialSpec = null;
+            unset($data['CredentialSpec']);
         }
         if (array_key_exists('SELinuxContext', $data) && null !== $data['SELinuxContext']) {
-            $object->setSELinuxContext($this->denormalizer->denormalize($data['SELinuxContext'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecPrivilegesSELinuxContext::class, 'json', $context));
-        } elseif (array_key_exists('SELinuxContext', $data) && null === $data['SELinuxContext']) {
-            $object->setSELinuxContext(null);
+            $object->sELinuxContext = $this->denormalizer->denormalize($data['SELinuxContext'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecPrivilegesSELinuxContext::class, 'json', $context);
+            unset($data['SELinuxContext']);
+        } elseif (array_key_exists('SELinuxContext', $data)) {
+            $object->sELinuxContext = null;
+            unset($data['SELinuxContext']);
         }
         if (array_key_exists('Seccomp', $data) && null !== $data['Seccomp']) {
-            $object->setSeccomp($this->denormalizer->denormalize($data['Seccomp'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecPrivilegesSeccomp::class, 'json', $context));
-        } elseif (array_key_exists('Seccomp', $data) && null === $data['Seccomp']) {
-            $object->setSeccomp(null);
+            $object->seccomp = $this->denormalizer->denormalize($data['Seccomp'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecPrivilegesSeccomp::class, 'json', $context);
+            unset($data['Seccomp']);
+        } elseif (array_key_exists('Seccomp', $data)) {
+            $object->seccomp = null;
+            unset($data['Seccomp']);
         }
         if (array_key_exists('AppArmor', $data) && null !== $data['AppArmor']) {
-            $object->setAppArmor($this->denormalizer->denormalize($data['AppArmor'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecPrivilegesAppArmor::class, 'json', $context));
-        } elseif (array_key_exists('AppArmor', $data) && null === $data['AppArmor']) {
-            $object->setAppArmor(null);
+            $object->appArmor = $this->denormalizer->denormalize($data['AppArmor'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecPrivilegesAppArmor::class, 'json', $context);
+            unset($data['AppArmor']);
+        } elseif (array_key_exists('AppArmor', $data)) {
+            $object->appArmor = null;
+            unset($data['AppArmor']);
         }
         if (array_key_exists('NoNewPrivileges', $data) && null !== $data['NoNewPrivileges']) {
             $value = $data['NoNewPrivileges'];
@@ -75,9 +83,16 @@ class TaskSpecContainerSpecPrivilegesNormalizer implements DenormalizerInterface
             } elseif (null === $data['NoNewPrivileges']) {
                 $value = $data['NoNewPrivileges'];
             }
-            $object->setNoNewPrivileges($value);
-        } elseif (array_key_exists('NoNewPrivileges', $data) && null === $data['NoNewPrivileges']) {
-            $object->setNoNewPrivileges(null);
+            $object->noNewPrivileges = $value;
+            unset($data['NoNewPrivileges']);
+        } elseif (array_key_exists('NoNewPrivileges', $data)) {
+            $object->noNewPrivileges = null;
+            unset($data['NoNewPrivileges']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -86,26 +101,35 @@ class TaskSpecContainerSpecPrivilegesNormalizer implements DenormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('credentialSpec')) {
-            $dataArray['CredentialSpec'] = $this->normalizer->normalize($data->getCredentialSpec(), 'json', $context);
+        if (array_key_exists('credentialSpec', get_object_vars($data)) && null !== ($data->credentialSpec ?? null)) {
+            $normalized                  = $this->normalizer->normalize($data->credentialSpec, 'json', $context);
+            $dataArray['CredentialSpec'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         }
-        if ($data->isInitialized('sELinuxContext')) {
-            $dataArray['SELinuxContext'] = $this->normalizer->normalize($data->getSELinuxContext(), 'json', $context);
+        if (array_key_exists('sELinuxContext', get_object_vars($data)) && null !== ($data->sELinuxContext ?? null)) {
+            $normalized_1                = $this->normalizer->normalize($data->sELinuxContext, 'json', $context);
+            $dataArray['SELinuxContext'] = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
         }
-        if ($data->isInitialized('seccomp')) {
-            $dataArray['Seccomp'] = $this->normalizer->normalize($data->getSeccomp(), 'json', $context);
+        if (array_key_exists('seccomp', get_object_vars($data)) && null !== ($data->seccomp ?? null)) {
+            $normalized_2         = $this->normalizer->normalize($data->seccomp, 'json', $context);
+            $dataArray['Seccomp'] = is_iterable($normalized_2) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_2) : $normalized_2;
         }
-        if ($data->isInitialized('appArmor')) {
-            $dataArray['AppArmor'] = $this->normalizer->normalize($data->getAppArmor(), 'json', $context);
+        if (array_key_exists('appArmor', get_object_vars($data)) && null !== ($data->appArmor ?? null)) {
+            $normalized_3          = $this->normalizer->normalize($data->appArmor, 'json', $context);
+            $dataArray['AppArmor'] = is_iterable($normalized_3) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_3) : $normalized_3;
         }
-        if ($data->isInitialized('noNewPrivileges')) {
-            $value = $data->getNoNewPrivileges();
-            if (is_bool($data->getNoNewPrivileges())) {
-                $value = $data->getNoNewPrivileges();
-            } elseif (null === $data->getNoNewPrivileges()) {
-                $value = $data->getNoNewPrivileges();
+        if (array_key_exists('noNewPrivileges', get_object_vars($data)) && null !== ($data->noNewPrivileges ?? null)) {
+            $value = $data->noNewPrivileges;
+            if (is_bool($data->noNewPrivileges)) {
+                $value = $data->noNewPrivileges;
+            } elseif (null === $data->noNewPrivileges) {
+                $value = $data->noNewPrivileges;
             }
             $dataArray['NoNewPrivileges'] = $value;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

@@ -52,10 +52,17 @@ class NetworkDisconnectRequestNormalizer implements DenormalizerInterface, Norma
             $data['Force'] = (bool) $data['Force'];
         }
         if (array_key_exists('Container', $data)) {
-            $object->setContainer($data['Container']);
+            $object->container = $data['Container'];
+            unset($data['Container']);
         }
         if (array_key_exists('Force', $data)) {
-            $object->setForce($data['Force']);
+            $object->force = $data['Force'];
+            unset($data['Force']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -64,9 +71,14 @@ class NetworkDisconnectRequestNormalizer implements DenormalizerInterface, Norma
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray              = [];
-        $dataArray['Container'] = $data->getContainer();
-        if ($data->isInitialized('force') && null !== $data->getForce()) {
-            $dataArray['Force'] = $data->getForce();
+        $dataArray['Container'] = $data->container;
+        if (array_key_exists('force', get_object_vars($data)) && null !== ($data->force ?? null)) {
+            $dataArray['Force'] = $data->force;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
         }
 
         return $dataArray;

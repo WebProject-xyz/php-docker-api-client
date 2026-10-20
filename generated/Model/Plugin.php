@@ -3,191 +3,47 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class Plugin
+class Plugin implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var string|null
      */
-    protected $id;
+    public ?string $id;
     /**
      * @var string
      */
-    protected $name;
+    public string $name;
     /**
      * True if the plugin is running. False if the plugin is not running, only installed.
      *
      * @var bool
      */
-    protected $enabled;
+    public bool $enabled;
     /**
      * user-configurable settings for the plugin.
      *
      * @var PluginSettings
      */
-    protected $settings;
+    public PluginSettings $settings;
     /**
      * plugin remote reference used to push/pull the plugin.
      *
      * @var string
      */
-    protected $pluginReference;
+    public string $pluginReference;
     /**
      * The config of a plugin.
      *
      * @var PluginConfig
      */
-    protected $config;
+    public PluginConfig $config;
 
-    /**
-     * @return string|null
-     */
-    public function getId(): ?string
+    public function definedProperties(): array
     {
-        return $this->id;
-    }
-
-    /**
-     * @param string|null $id
-     *
-     * @return self
-     */
-    public function setId(?string $id): self
-    {
-        $this->initialized['id'] = true;
-        $this->id                = $id;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return self
-     */
-    public function setName(string $name): self
-    {
-        $this->initialized['name'] = true;
-        $this->name                = $name;
-
-        return $this;
-    }
-
-    /**
-     * True if the plugin is running. False if the plugin is not running, only installed.
-     *
-     * @return bool
-     */
-    public function getEnabled(): bool
-    {
-        return $this->enabled;
-    }
-
-    /**
-     * True if the plugin is running. False if the plugin is not running, only installed.
-     *
-     * @param bool $enabled
-     *
-     * @return self
-     */
-    public function setEnabled(bool $enabled): self
-    {
-        $this->initialized['enabled'] = true;
-        $this->enabled                = $enabled;
-
-        return $this;
-    }
-
-    /**
-     * user-configurable settings for the plugin.
-     *
-     * @return PluginSettings
-     */
-    public function getSettings(): PluginSettings
-    {
-        return $this->settings;
-    }
-
-    /**
-     * user-configurable settings for the plugin.
-     *
-     * @param PluginSettings $settings
-     *
-     * @return self
-     */
-    public function setSettings(PluginSettings $settings): self
-    {
-        $this->initialized['settings'] = true;
-        $this->settings                = $settings;
-
-        return $this;
-    }
-
-    /**
-     * plugin remote reference used to push/pull the plugin.
-     *
-     * @return string
-     */
-    public function getPluginReference(): string
-    {
-        return $this->pluginReference;
-    }
-
-    /**
-     * plugin remote reference used to push/pull the plugin.
-     *
-     * @param string $pluginReference
-     *
-     * @return self
-     */
-    public function setPluginReference(string $pluginReference): self
-    {
-        $this->initialized['pluginReference'] = true;
-        $this->pluginReference                = $pluginReference;
-
-        return $this;
-    }
-
-    /**
-     * The config of a plugin.
-     *
-     * @return PluginConfig
-     */
-    public function getConfig(): PluginConfig
-    {
-        return $this->config;
-    }
-
-    /**
-     * The config of a plugin.
-     *
-     * @param PluginConfig $config
-     *
-     * @return self
-     */
-    public function setConfig(PluginConfig $config): self
-    {
-        $this->initialized['config'] = true;
-        $this->config                = $config;
-
-        return $this;
+        return ['id' => 'Id', 'name' => 'Name', 'enabled' => 'Enabled', 'settings' => 'Settings', 'pluginReference' => 'PluginReference', 'config' => 'Config'];
     }
 }

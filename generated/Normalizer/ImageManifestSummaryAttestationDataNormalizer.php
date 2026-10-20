@@ -48,7 +48,13 @@ class ImageManifestSummaryAttestationDataNormalizer implements DenormalizerInter
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('For', $data)) {
-            $object->setFor($data['For']);
+            $object->for = $data['For'];
+            unset($data['For']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -57,7 +63,12 @@ class ImageManifestSummaryAttestationDataNormalizer implements DenormalizerInter
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray        = [];
-        $dataArray['For'] = $data->getFor();
+        $dataArray['For'] = $data->for;
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
+        }
 
         return $dataArray;
     }

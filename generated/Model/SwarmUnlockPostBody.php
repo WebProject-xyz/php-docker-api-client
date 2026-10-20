@@ -3,48 +3,21 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class SwarmUnlockPostBody
+class SwarmUnlockPostBody implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The swarm's unlock key.
      *
      * @var string
      */
-    protected $unlockKey;
+    public string $unlockKey;
 
-    /**
-     * The swarm's unlock key.
-     *
-     * @return string
-     */
-    public function getUnlockKey(): string
+    public function definedProperties(): array
     {
-        return $this->unlockKey;
-    }
-
-    /**
-     * The swarm's unlock key.
-     *
-     * @param string $unlockKey
-     *
-     * @return self
-     */
-    public function setUnlockKey(string $unlockKey): self
-    {
-        $this->initialized['unlockKey'] = true;
-        $this->unlockKey                = $unlockKey;
-
-        return $this;
+        return ['unlockKey' => 'UnlockKey'];
     }
 }

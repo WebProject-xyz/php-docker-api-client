@@ -3,25 +3,18 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class IPAM
+class IPAM implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Name of the IPAM driver to use.
      *
      * @var string|null
      */
-    protected $driver = 'default';
+    public ?string $driver = 'default';
     /**
      * List of IPAM configuration options, specified as a map:
      *
@@ -31,94 +24,16 @@ class IPAM
      *
      * @var list<IPAMConfig>|null
      */
-    protected $config;
+    public ?array $config;
     /**
      * Driver-specific options, specified as a map.
      *
-     * @var array<string, string>|null
+     * @var iterable<string, string>|null
      */
-    protected $options;
+    public ?iterable $options;
 
-    /**
-     * Name of the IPAM driver to use.
-     *
-     * @return string|null
-     */
-    public function getDriver(): ?string
+    public function definedProperties(): array
     {
-        return $this->driver;
-    }
-
-    /**
-     * Name of the IPAM driver to use.
-     *
-     * @param string|null $driver
-     *
-     * @return self
-     */
-    public function setDriver(?string $driver): self
-    {
-        $this->initialized['driver'] = true;
-        $this->driver                = $driver;
-
-        return $this;
-    }
-
-    /**
-     * List of IPAM configuration options, specified as a map:
-     *
-     * ```
-     * {"Subnet": <CIDR>, "IPRange": <CIDR>, "Gateway": <IP address>, "AuxAddress": <device_name:IP address>}
-     * ```
-     *
-     * @return list<IPAMConfig>|null
-     */
-    public function getConfig(): ?array
-    {
-        return $this->config;
-    }
-
-    /**
-     * List of IPAM configuration options, specified as a map:
-     *
-     * ```
-     * {"Subnet": <CIDR>, "IPRange": <CIDR>, "Gateway": <IP address>, "AuxAddress": <device_name:IP address>}
-     * ```
-     *
-     * @param list<IPAMConfig>|null $config
-     *
-     * @return self
-     */
-    public function setConfig(?array $config): self
-    {
-        $this->initialized['config'] = true;
-        $this->config                = $config;
-
-        return $this;
-    }
-
-    /**
-     * Driver-specific options, specified as a map.
-     *
-     * @return array<string, string>|null
-     */
-    public function getOptions(): ?iterable
-    {
-        return $this->options;
-    }
-
-    /**
-     * Driver-specific options, specified as a map.
-     *
-     * @param array<string, string>|null $options
-     *
-     * @return self
-     */
-    public function setOptions(?iterable $options): self
-    {
-        $this->initialized['options'] = true;
-        $this->options                = $options;
-
-        return $this;
+        return ['driver' => 'Driver', 'config' => 'Config', 'options' => 'Options'];
     }
 }

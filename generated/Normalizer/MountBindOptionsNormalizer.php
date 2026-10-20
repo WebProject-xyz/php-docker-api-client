@@ -56,9 +56,11 @@ class MountBindOptionsNormalizer implements DenormalizerInterface, NormalizerInt
             } elseif (null === $data['Propagation']) {
                 $value = $data['Propagation'];
             }
-            $object->setPropagation($value);
-        } elseif (array_key_exists('Propagation', $data) && null === $data['Propagation']) {
-            $object->setPropagation(null);
+            $object->propagation = $value;
+            unset($data['Propagation']);
+        } elseif (array_key_exists('Propagation', $data)) {
+            $object->propagation = null;
+            unset($data['Propagation']);
         }
         if (array_key_exists('NonRecursive', $data) && null !== $data['NonRecursive']) {
             $value_1 = $data['NonRecursive'];
@@ -67,9 +69,11 @@ class MountBindOptionsNormalizer implements DenormalizerInterface, NormalizerInt
             } elseif (null === $data['NonRecursive']) {
                 $value_1 = $data['NonRecursive'];
             }
-            $object->setNonRecursive($value_1);
-        } elseif (array_key_exists('NonRecursive', $data) && null === $data['NonRecursive']) {
-            $object->setNonRecursive(null);
+            $object->nonRecursive = $value_1;
+            unset($data['NonRecursive']);
+        } elseif (array_key_exists('NonRecursive', $data)) {
+            $object->nonRecursive = null;
+            unset($data['NonRecursive']);
         }
         if (array_key_exists('CreateMountpoint', $data) && null !== $data['CreateMountpoint']) {
             $value_2 = $data['CreateMountpoint'];
@@ -78,9 +82,11 @@ class MountBindOptionsNormalizer implements DenormalizerInterface, NormalizerInt
             } elseif (null === $data['CreateMountpoint']) {
                 $value_2 = $data['CreateMountpoint'];
             }
-            $object->setCreateMountpoint($value_2);
-        } elseif (array_key_exists('CreateMountpoint', $data) && null === $data['CreateMountpoint']) {
-            $object->setCreateMountpoint(null);
+            $object->createMountpoint = $value_2;
+            unset($data['CreateMountpoint']);
+        } elseif (array_key_exists('CreateMountpoint', $data)) {
+            $object->createMountpoint = null;
+            unset($data['CreateMountpoint']);
         }
         if (array_key_exists('ReadOnlyNonRecursive', $data) && null !== $data['ReadOnlyNonRecursive']) {
             $value_3 = $data['ReadOnlyNonRecursive'];
@@ -89,9 +95,11 @@ class MountBindOptionsNormalizer implements DenormalizerInterface, NormalizerInt
             } elseif (null === $data['ReadOnlyNonRecursive']) {
                 $value_3 = $data['ReadOnlyNonRecursive'];
             }
-            $object->setReadOnlyNonRecursive($value_3);
-        } elseif (array_key_exists('ReadOnlyNonRecursive', $data) && null === $data['ReadOnlyNonRecursive']) {
-            $object->setReadOnlyNonRecursive(null);
+            $object->readOnlyNonRecursive = $value_3;
+            unset($data['ReadOnlyNonRecursive']);
+        } elseif (array_key_exists('ReadOnlyNonRecursive', $data)) {
+            $object->readOnlyNonRecursive = null;
+            unset($data['ReadOnlyNonRecursive']);
         }
         if (array_key_exists('ReadOnlyForceRecursive', $data) && null !== $data['ReadOnlyForceRecursive']) {
             $value_4 = $data['ReadOnlyForceRecursive'];
@@ -100,9 +108,16 @@ class MountBindOptionsNormalizer implements DenormalizerInterface, NormalizerInt
             } elseif (null === $data['ReadOnlyForceRecursive']) {
                 $value_4 = $data['ReadOnlyForceRecursive'];
             }
-            $object->setReadOnlyForceRecursive($value_4);
-        } elseif (array_key_exists('ReadOnlyForceRecursive', $data) && null === $data['ReadOnlyForceRecursive']) {
-            $object->setReadOnlyForceRecursive(null);
+            $object->readOnlyForceRecursive = $value_4;
+            unset($data['ReadOnlyForceRecursive']);
+        } elseif (array_key_exists('ReadOnlyForceRecursive', $data)) {
+            $object->readOnlyForceRecursive = null;
+            unset($data['ReadOnlyForceRecursive']);
+        }
+        foreach ($data as $key => $value_5) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_5;
+            }
         }
 
         return $object;
@@ -111,50 +126,55 @@ class MountBindOptionsNormalizer implements DenormalizerInterface, NormalizerInt
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('propagation')) {
-            $value = $data->getPropagation();
-            if (is_string($data->getPropagation())) {
-                $value = $data->getPropagation();
-            } elseif (null === $data->getPropagation()) {
-                $value = $data->getPropagation();
+        if (array_key_exists('propagation', get_object_vars($data)) && null !== ($data->propagation ?? null)) {
+            $value = $data->propagation;
+            if (is_string($data->propagation)) {
+                $value = $data->propagation;
+            } elseif (null === $data->propagation) {
+                $value = $data->propagation;
             }
             $dataArray['Propagation'] = $value;
         }
-        if ($data->isInitialized('nonRecursive')) {
-            $value_1 = $data->getNonRecursive();
-            if (is_bool($data->getNonRecursive())) {
-                $value_1 = $data->getNonRecursive();
-            } elseif (null === $data->getNonRecursive()) {
-                $value_1 = $data->getNonRecursive();
+        if (array_key_exists('nonRecursive', get_object_vars($data)) && null !== ($data->nonRecursive ?? null)) {
+            $value_1 = $data->nonRecursive;
+            if (is_bool($data->nonRecursive)) {
+                $value_1 = $data->nonRecursive;
+            } elseif (null === $data->nonRecursive) {
+                $value_1 = $data->nonRecursive;
             }
             $dataArray['NonRecursive'] = $value_1;
         }
-        if ($data->isInitialized('createMountpoint')) {
-            $value_2 = $data->getCreateMountpoint();
-            if (is_bool($data->getCreateMountpoint())) {
-                $value_2 = $data->getCreateMountpoint();
-            } elseif (null === $data->getCreateMountpoint()) {
-                $value_2 = $data->getCreateMountpoint();
+        if (array_key_exists('createMountpoint', get_object_vars($data)) && null !== ($data->createMountpoint ?? null)) {
+            $value_2 = $data->createMountpoint;
+            if (is_bool($data->createMountpoint)) {
+                $value_2 = $data->createMountpoint;
+            } elseif (null === $data->createMountpoint) {
+                $value_2 = $data->createMountpoint;
             }
             $dataArray['CreateMountpoint'] = $value_2;
         }
-        if ($data->isInitialized('readOnlyNonRecursive')) {
-            $value_3 = $data->getReadOnlyNonRecursive();
-            if (is_bool($data->getReadOnlyNonRecursive())) {
-                $value_3 = $data->getReadOnlyNonRecursive();
-            } elseif (null === $data->getReadOnlyNonRecursive()) {
-                $value_3 = $data->getReadOnlyNonRecursive();
+        if (array_key_exists('readOnlyNonRecursive', get_object_vars($data)) && null !== ($data->readOnlyNonRecursive ?? null)) {
+            $value_3 = $data->readOnlyNonRecursive;
+            if (is_bool($data->readOnlyNonRecursive)) {
+                $value_3 = $data->readOnlyNonRecursive;
+            } elseif (null === $data->readOnlyNonRecursive) {
+                $value_3 = $data->readOnlyNonRecursive;
             }
             $dataArray['ReadOnlyNonRecursive'] = $value_3;
         }
-        if ($data->isInitialized('readOnlyForceRecursive')) {
-            $value_4 = $data->getReadOnlyForceRecursive();
-            if (is_bool($data->getReadOnlyForceRecursive())) {
-                $value_4 = $data->getReadOnlyForceRecursive();
-            } elseif (null === $data->getReadOnlyForceRecursive()) {
-                $value_4 = $data->getReadOnlyForceRecursive();
+        if (array_key_exists('readOnlyForceRecursive', get_object_vars($data)) && null !== ($data->readOnlyForceRecursive ?? null)) {
+            $value_4 = $data->readOnlyForceRecursive;
+            if (is_bool($data->readOnlyForceRecursive)) {
+                $value_4 = $data->readOnlyForceRecursive;
+            } elseif (null === $data->readOnlyForceRecursive) {
+                $value_4 = $data->readOnlyForceRecursive;
             }
             $dataArray['ReadOnlyForceRecursive'] = $value_4;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_5) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_5;
+            }
         }
 
         return $dataArray;

@@ -3,42 +3,19 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class NetworkStatus
+class NetworkStatus implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var IPAMStatus
      */
-    protected $iPAM;
+    public IPAMStatus $iPAM;
 
-    /**
-     * @return IPAMStatus
-     */
-    public function getIPAM(): IPAMStatus
+    public function definedProperties(): array
     {
-        return $this->iPAM;
-    }
-
-    /**
-     * @param IPAMStatus $iPAM
-     *
-     * @return self
-     */
-    public function setIPAM(IPAMStatus $iPAM): self
-    {
-        $this->initialized['iPAM'] = true;
-        $this->iPAM                = $iPAM;
-
-        return $this;
+        return ['iPAM' => 'IPAM'];
     }
 }

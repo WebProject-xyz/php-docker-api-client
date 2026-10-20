@@ -3,51 +3,22 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class SwarmSpecEncryptionConfig
+class SwarmSpecEncryptionConfig implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * If set, generate a key and use it to lock data stored on the
      * managers.
      *
      * @var bool|null
      */
-    protected $autoLockManagers;
+    public ?bool $autoLockManagers;
 
-    /**
-     * If set, generate a key and use it to lock data stored on the
-     * managers.
-     *
-     * @return bool|null
-     */
-    public function getAutoLockManagers(): ?bool
+    public function definedProperties(): array
     {
-        return $this->autoLockManagers;
-    }
-
-    /**
-     * If set, generate a key and use it to lock data stored on the
-     * managers.
-     *
-     * @param bool|null $autoLockManagers
-     *
-     * @return self
-     */
-    public function setAutoLockManagers(?bool $autoLockManagers): self
-    {
-        $this->initialized['autoLockManagers'] = true;
-        $this->autoLockManagers                = $autoLockManagers;
-
-        return $this;
+        return ['autoLockManagers' => 'AutoLockManagers'];
     }
 }

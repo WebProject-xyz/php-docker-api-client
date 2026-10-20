@@ -48,22 +48,24 @@ class ImageInspectRootFSNormalizer implements DenormalizerInterface, NormalizerI
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Type', $data)) {
-            $object->setType($data['Type']);
+            $object->type = $data['Type'];
+            unset($data['Type']);
         }
         if (array_key_exists('Layers', $data) && null !== $data['Layers']) {
-            $value = $data['Layers'];
-            if (is_array($data['Layers']) && $this->isOnlyNumericKeys($data['Layers'])) {
-                $values = [];
-                foreach ($data['Layers'] as $value_1) {
-                    $values[] = $value_1;
-                }
-                $value = $values;
-            } elseif (null === $data['Layers']) {
-                $value = $data['Layers'];
+            $values = [];
+            foreach ($data['Layers'] as $value) {
+                $values[] = $value;
             }
-            $object->setLayers($value);
-        } elseif (array_key_exists('Layers', $data) && null === $data['Layers']) {
-            $object->setLayers(null);
+            $object->layers = $values;
+            unset($data['Layers']);
+        } elseif (array_key_exists('Layers', $data)) {
+            $object->layers = null;
+            unset($data['Layers']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -72,19 +74,18 @@ class ImageInspectRootFSNormalizer implements DenormalizerInterface, NormalizerI
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray         = [];
-        $dataArray['Type'] = $data->getType();
-        if ($data->isInitialized('layers')) {
-            $value = $data->getLayers();
-            if (is_array($data->getLayers())) {
-                $values = [];
-                foreach ($data->getLayers() as $value_1) {
-                    $values[] = $value_1;
-                }
-                $value = $values;
-            } elseif (null === $data->getLayers()) {
-                $value = $data->getLayers();
+        $dataArray['Type'] = $data->type;
+        if (array_key_exists('layers', get_object_vars($data)) && null !== ($data->layers ?? null)) {
+            $values = [];
+            foreach ($data->layers as $value) {
+                $values[] = $value;
             }
-            $dataArray['Layers'] = $value;
+            $dataArray['Layers'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

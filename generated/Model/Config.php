@@ -3,23 +3,17 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use DateTimeInterface;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class Config
+class Config implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var string|null
      */
-    protected $iD;
+    public ?string $iD;
     /**
      * The version number of the object such as node, service, etc. This is needed
      * to avoid conflicting writes. The client must send the version number along
@@ -34,144 +28,22 @@ class Config
      *
      * @var ObjectVersion
      */
-    protected $version;
+    public ObjectVersion $version;
     /**
-     * @var string|null
+     * @var DateTimeInterface|null
      */
-    protected $createdAt;
+    public ?DateTimeInterface $createdAt;
     /**
-     * @var string|null
+     * @var DateTimeInterface|null
      */
-    protected $updatedAt;
+    public ?DateTimeInterface $updatedAt;
     /**
      * @var ConfigSpec
      */
-    protected $spec;
+    public ConfigSpec $spec;
 
-    /**
-     * @return string|null
-     */
-    public function getID(): ?string
+    public function definedProperties(): array
     {
-        return $this->iD;
-    }
-
-    /**
-     * @param string|null $iD
-     *
-     * @return self
-     */
-    public function setID(?string $iD): self
-    {
-        $this->initialized['iD'] = true;
-        $this->iD                = $iD;
-
-        return $this;
-    }
-
-    /**
-     * The version number of the object such as node, service, etc. This is needed
-     * to avoid conflicting writes. The client must send the version number along
-     * with the modified specification when updating these objects.
-     *
-     * This approach ensures safe concurrency and determinism in that the change
-     * on the object may not be applied if the version number has changed from the
-     * last read. In other words, if two update requests specify the same base
-     * version, only one of the requests can succeed. As a result, two separate
-     * update requests that happen at the same time will not unintentionally
-     * overwrite each other.
-     *
-     * @return ObjectVersion
-     */
-    public function getVersion(): ObjectVersion
-    {
-        return $this->version;
-    }
-
-    /**
-     * The version number of the object such as node, service, etc. This is needed
-     * to avoid conflicting writes. The client must send the version number along
-     * with the modified specification when updating these objects.
-     *
-     * This approach ensures safe concurrency and determinism in that the change
-     * on the object may not be applied if the version number has changed from the
-     * last read. In other words, if two update requests specify the same base
-     * version, only one of the requests can succeed. As a result, two separate
-     * update requests that happen at the same time will not unintentionally
-     * overwrite each other.
-     *
-     * @param ObjectVersion $version
-     *
-     * @return self
-     */
-    public function setVersion(ObjectVersion $version): self
-    {
-        $this->initialized['version'] = true;
-        $this->version                = $version;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCreatedAt(): ?string
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param string|null $createdAt
-     *
-     * @return self
-     */
-    public function setCreatedAt(?string $createdAt): self
-    {
-        $this->initialized['createdAt'] = true;
-        $this->createdAt                = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getUpdatedAt(): ?string
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param string|null $updatedAt
-     *
-     * @return self
-     */
-    public function setUpdatedAt(?string $updatedAt): self
-    {
-        $this->initialized['updatedAt'] = true;
-        $this->updatedAt                = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return ConfigSpec
-     */
-    public function getSpec(): ConfigSpec
-    {
-        return $this->spec;
-    }
-
-    /**
-     * @param ConfigSpec $spec
-     *
-     * @return self
-     */
-    public function setSpec(ConfigSpec $spec): self
-    {
-        $this->initialized['spec'] = true;
-        $this->spec                = $spec;
-
-        return $this;
+        return ['iD' => 'ID', 'version' => 'Version', 'createdAt' => 'CreatedAt', 'updatedAt' => 'UpdatedAt', 'spec' => 'Spec'];
     }
 }

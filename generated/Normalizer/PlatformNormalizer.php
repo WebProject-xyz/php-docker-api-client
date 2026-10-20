@@ -55,9 +55,11 @@ class PlatformNormalizer implements DenormalizerInterface, NormalizerInterface, 
             } elseif (null === $data['Architecture']) {
                 $value = $data['Architecture'];
             }
-            $object->setArchitecture($value);
-        } elseif (array_key_exists('Architecture', $data) && null === $data['Architecture']) {
-            $object->setArchitecture(null);
+            $object->architecture = $value;
+            unset($data['Architecture']);
+        } elseif (array_key_exists('Architecture', $data)) {
+            $object->architecture = null;
+            unset($data['Architecture']);
         }
         if (array_key_exists('OS', $data) && null !== $data['OS']) {
             $value_1 = $data['OS'];
@@ -66,9 +68,16 @@ class PlatformNormalizer implements DenormalizerInterface, NormalizerInterface, 
             } elseif (null === $data['OS']) {
                 $value_1 = $data['OS'];
             }
-            $object->setOS($value_1);
-        } elseif (array_key_exists('OS', $data) && null === $data['OS']) {
-            $object->setOS(null);
+            $object->oS = $value_1;
+            unset($data['OS']);
+        } elseif (array_key_exists('OS', $data)) {
+            $object->oS = null;
+            unset($data['OS']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class PlatformNormalizer implements DenormalizerInterface, NormalizerInterface, 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('architecture')) {
-            $value = $data->getArchitecture();
-            if (is_string($data->getArchitecture())) {
-                $value = $data->getArchitecture();
-            } elseif (null === $data->getArchitecture()) {
-                $value = $data->getArchitecture();
+        if (array_key_exists('architecture', get_object_vars($data)) && null !== ($data->architecture ?? null)) {
+            $value = $data->architecture;
+            if (is_string($data->architecture)) {
+                $value = $data->architecture;
+            } elseif (null === $data->architecture) {
+                $value = $data->architecture;
             }
             $dataArray['Architecture'] = $value;
         }
-        if ($data->isInitialized('oS')) {
-            $value_1 = $data->getOS();
-            if (is_string($data->getOS())) {
-                $value_1 = $data->getOS();
-            } elseif (null === $data->getOS()) {
-                $value_1 = $data->getOS();
+        if (array_key_exists('oS', get_object_vars($data)) && null !== ($data->oS ?? null)) {
+            $value_1 = $data->oS;
+            if (is_string($data->oS)) {
+                $value_1 = $data->oS;
+            } elseif (null === $data->oS) {
+                $value_1 = $data->oS;
             }
             $dataArray['OS'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

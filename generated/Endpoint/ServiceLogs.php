@@ -25,7 +25,7 @@ class ServiceLogs extends \WebProject\DockerApi\Library\Generated\Runtime\Client
      *    "since"?: int, //Only return logs since this time, as a UNIX timestamp
      *    "timestamps"?: bool, //Add timestamps to every log line
      *    "tail"?: string, //Only return this number of log lines from the end of the logs.
-     * Specify as an integer or `all` to output all log lines.
+     *                     //Specify as an integer or `all` to output all log lines.
      * } $queryParameters
      * @param array $accept Accept content header application/vnd.docker.raw-stream|application/vnd.docker.multiplexed-stream|application/json
      */
@@ -43,10 +43,10 @@ class ServiceLogs extends \WebProject\DockerApi\Library\Generated\Runtime\Client
 
     public function getUri(): string
     {
-        return str_replace(['{id}'], [$this->id], '/services/{id}/logs');
+        return str_replace(['{id}'], [rawurlencode($this->id)], '/services/{id}/logs');
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
         return [[], null];
     }
@@ -80,27 +80,39 @@ class ServiceLogs extends \WebProject\DockerApi\Library\Generated\Runtime\Client
     /**
      * {@inheritdoc}
      *
-     * @return null
+     * @return mixed
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ServiceLogsNotFoundException
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
+        $body   = $response->getContent(false);
         if (200 === $status) {
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (404 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ServiceLogsNotFoundException($response);
         }
         if (500 === $status) {
         }
         if (503 === $status) {
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Lazy->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

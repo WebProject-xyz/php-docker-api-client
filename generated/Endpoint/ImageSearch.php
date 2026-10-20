@@ -14,12 +14,12 @@ class ImageSearch extends \WebProject\DockerApi\Library\Generated\Runtime\Client
      *    "term": string, //Term to search
      *    "limit"?: int, //Maximum number of results to return
      *    "filters"?: string, //A JSON encoded value of the filters (a `map[string][]string`) to process on the images list. Available filters:
-     *
-     * - `is-official=(true|false)`
-     * - `stars=<number>` Matches images that has at least 'number' stars.
+     *                        //
+     *                        //- `is-official=(true|false)`
+     *                        //- `stars=<number>` Matches images that has at least 'number' stars.
      * } $queryParameters
      */
-    public function __construct(array $queryParameters = [])
+    public function __construct(array $queryParameters)
     {
         $this->queryParameters = $queryParameters;
     }
@@ -34,7 +34,7 @@ class ImageSearch extends \WebProject\DockerApi\Library\Generated\Runtime\Client
         return '/images/search';
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
         return [[], null];
     }
@@ -60,24 +60,36 @@ class ImageSearch extends \WebProject\DockerApi\Library\Generated\Runtime\Client
     /**
      * {@inheritdoc}
      *
-     * @return null
+     * @return \WebProject\DockerApi\Library\Generated\Model\ImagesSearchGetResponse200Item[]
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ImageSearchInternalServerErrorException
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
-            return json_decode($body);
+        $body   = $response->getContent(false);
+        if (null !== $contentType && (200 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
+            return $this->deserializeListResponse($serializer, $body, 'WebProject\DockerApi\Library\Generated\Model\ImagesSearchGetResponse200Item[]', 'json');
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (500 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageSearchInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Lazy->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

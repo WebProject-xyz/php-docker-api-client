@@ -3,19 +3,12 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class RestartPolicy
+class RestartPolicy implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * - Empty string means not to restart
      * - `no` Do not automatically restart
@@ -25,69 +18,16 @@ class RestartPolicy
      *
      * @var string|null
      */
-    protected $name;
+    public ?string $name;
     /**
      * If `on-failure` is used, the number of times to retry before giving up.
      *
      * @var int|null
      */
-    protected $maximumRetryCount;
+    public ?int $maximumRetryCount;
 
-    /**
-     * - Empty string means not to restart
-     * - `no` Do not automatically restart
-     * - `always` Always restart
-     * - `unless-stopped` Restart always except when the user has manually stopped the container
-     * - `on-failure` Restart only when the container exit code is non-zero.
-     *
-     * @return string|null
-     */
-    public function getName(): ?string
+    public function definedProperties(): array
     {
-        return $this->name;
-    }
-
-    /**
-     * - Empty string means not to restart
-     * - `no` Do not automatically restart
-     * - `always` Always restart
-     * - `unless-stopped` Restart always except when the user has manually stopped the container
-     * - `on-failure` Restart only when the container exit code is non-zero.
-     *
-     * @param string|null $name
-     *
-     * @return self
-     */
-    public function setName(?string $name): self
-    {
-        $this->initialized['name'] = true;
-        $this->name                = $name;
-
-        return $this;
-    }
-
-    /**
-     * If `on-failure` is used, the number of times to retry before giving up.
-     *
-     * @return int|null
-     */
-    public function getMaximumRetryCount(): ?int
-    {
-        return $this->maximumRetryCount;
-    }
-
-    /**
-     * If `on-failure` is used, the number of times to retry before giving up.
-     *
-     * @param int|null $maximumRetryCount
-     *
-     * @return self
-     */
-    public function setMaximumRetryCount(?int $maximumRetryCount): self
-    {
-        $this->initialized['maximumRetryCount'] = true;
-        $this->maximumRetryCount                = $maximumRetryCount;
-
-        return $this;
+        return ['name' => 'Name', 'maximumRetryCount' => 'MaximumRetryCount'];
     }
 }

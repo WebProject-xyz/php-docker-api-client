@@ -56,46 +56,53 @@ class IndexInfoNormalizer implements DenormalizerInterface, NormalizerInterface,
             } elseif (null === $data['Name']) {
                 $value = $data['Name'];
             }
-            $object->setName($value);
-        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
-            $object->setName(null);
+            $object->name = $value;
+            unset($data['Name']);
+        } elseif (array_key_exists('Name', $data)) {
+            $object->name = null;
+            unset($data['Name']);
         }
         if (array_key_exists('Mirrors', $data) && null !== $data['Mirrors']) {
-            $value_1 = $data['Mirrors'];
-            if (is_array($data['Mirrors']) && $this->isOnlyNumericKeys($data['Mirrors'])) {
-                $values = [];
-                foreach ($data['Mirrors'] as $value_2) {
-                    $values[] = $value_2;
-                }
-                $value_1 = $values;
-            } elseif (null === $data['Mirrors']) {
-                $value_1 = $data['Mirrors'];
+            $values = [];
+            foreach ($data['Mirrors'] as $value_1) {
+                $values[] = $value_1;
             }
-            $object->setMirrors($value_1);
-        } elseif (array_key_exists('Mirrors', $data) && null === $data['Mirrors']) {
-            $object->setMirrors(null);
+            $object->mirrors = $values;
+            unset($data['Mirrors']);
+        } elseif (array_key_exists('Mirrors', $data)) {
+            $object->mirrors = null;
+            unset($data['Mirrors']);
         }
         if (array_key_exists('Secure', $data) && null !== $data['Secure']) {
-            $value_3 = $data['Secure'];
+            $value_2 = $data['Secure'];
             if (is_bool($data['Secure'])) {
-                $value_3 = $data['Secure'];
+                $value_2 = $data['Secure'];
             } elseif (null === $data['Secure']) {
-                $value_3 = $data['Secure'];
+                $value_2 = $data['Secure'];
             }
-            $object->setSecure($value_3);
-        } elseif (array_key_exists('Secure', $data) && null === $data['Secure']) {
-            $object->setSecure(null);
+            $object->secure = $value_2;
+            unset($data['Secure']);
+        } elseif (array_key_exists('Secure', $data)) {
+            $object->secure = null;
+            unset($data['Secure']);
         }
         if (array_key_exists('Official', $data) && null !== $data['Official']) {
-            $value_4 = $data['Official'];
+            $value_3 = $data['Official'];
             if (is_bool($data['Official'])) {
-                $value_4 = $data['Official'];
+                $value_3 = $data['Official'];
             } elseif (null === $data['Official']) {
-                $value_4 = $data['Official'];
+                $value_3 = $data['Official'];
             }
-            $object->setOfficial($value_4);
-        } elseif (array_key_exists('Official', $data) && null === $data['Official']) {
-            $object->setOfficial(null);
+            $object->official = $value_3;
+            unset($data['Official']);
+        } elseif (array_key_exists('Official', $data)) {
+            $object->official = null;
+            unset($data['Official']);
+        }
+        foreach ($data as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_4;
+            }
         }
 
         return $object;
@@ -104,45 +111,44 @@ class IndexInfoNormalizer implements DenormalizerInterface, NormalizerInterface,
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name')) {
-            $value = $data->getName();
-            if (is_string($data->getName())) {
-                $value = $data->getName();
-            } elseif (null === $data->getName()) {
-                $value = $data->getName();
+        if (array_key_exists('name', get_object_vars($data)) && null !== ($data->name ?? null)) {
+            $value = $data->name;
+            if (is_string($data->name)) {
+                $value = $data->name;
+            } elseif (null === $data->name) {
+                $value = $data->name;
             }
             $dataArray['Name'] = $value;
         }
-        if ($data->isInitialized('mirrors')) {
-            $value_1 = $data->getMirrors();
-            if (is_array($data->getMirrors())) {
-                $values = [];
-                foreach ($data->getMirrors() as $value_2) {
-                    $values[] = $value_2;
-                }
-                $value_1 = $values;
-            } elseif (null === $data->getMirrors()) {
-                $value_1 = $data->getMirrors();
+        if (array_key_exists('mirrors', get_object_vars($data)) && null !== ($data->mirrors ?? null)) {
+            $values = [];
+            foreach ($data->mirrors as $value_1) {
+                $values[] = $value_1;
             }
-            $dataArray['Mirrors'] = $value_1;
+            $dataArray['Mirrors'] = $values;
         }
-        if ($data->isInitialized('secure')) {
-            $value_3 = $data->getSecure();
-            if (is_bool($data->getSecure())) {
-                $value_3 = $data->getSecure();
-            } elseif (null === $data->getSecure()) {
-                $value_3 = $data->getSecure();
+        if (array_key_exists('secure', get_object_vars($data)) && null !== ($data->secure ?? null)) {
+            $value_2 = $data->secure;
+            if (is_bool($data->secure)) {
+                $value_2 = $data->secure;
+            } elseif (null === $data->secure) {
+                $value_2 = $data->secure;
             }
-            $dataArray['Secure'] = $value_3;
+            $dataArray['Secure'] = $value_2;
         }
-        if ($data->isInitialized('official')) {
-            $value_4 = $data->getOfficial();
-            if (is_bool($data->getOfficial())) {
-                $value_4 = $data->getOfficial();
-            } elseif (null === $data->getOfficial()) {
-                $value_4 = $data->getOfficial();
+        if (array_key_exists('official', get_object_vars($data)) && null !== ($data->official ?? null)) {
+            $value_3 = $data->official;
+            if (is_bool($data->official)) {
+                $value_3 = $data->official;
+            } elseif (null === $data->official) {
+                $value_3 = $data->official;
             }
-            $dataArray['Official'] = $value_4;
+            $dataArray['Official'] = $value_3;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_4;
+            }
         }
 
         return $dataArray;

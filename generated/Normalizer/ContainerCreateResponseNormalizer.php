@@ -48,14 +48,21 @@ class ContainerCreateResponseNormalizer implements DenormalizerInterface, Normal
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Id', $data)) {
-            $object->setId($data['Id']);
+            $object->id = $data['Id'];
+            unset($data['Id']);
         }
         if (array_key_exists('Warnings', $data)) {
             $values = [];
             foreach ($data['Warnings'] as $value) {
                 $values[] = $value;
             }
-            $object->setWarnings($values);
+            $object->warnings = $values;
+            unset($data['Warnings']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -64,12 +71,17 @@ class ContainerCreateResponseNormalizer implements DenormalizerInterface, Normal
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray       = [];
-        $dataArray['Id'] = $data->getId();
+        $dataArray['Id'] = $data->id;
         $values          = [];
-        foreach ($data->getWarnings() as $value) {
+        foreach ($data->warnings as $value) {
             $values[] = $value;
         }
         $dataArray['Warnings'] = $values;
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
+        }
 
         return $dataArray;
     }

@@ -3,79 +3,27 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class NetworkCreateResponse
+class NetworkCreateResponse implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The ID of the created network.
      *
      * @var string
      */
-    protected $id;
+    public string $id;
     /**
      * Warnings encountered when creating the container.
      *
      * @var string
      */
-    protected $warning;
+    public string $warning;
 
-    /**
-     * The ID of the created network.
-     *
-     * @return string
-     */
-    public function getId(): string
+    public function definedProperties(): array
     {
-        return $this->id;
-    }
-
-    /**
-     * The ID of the created network.
-     *
-     * @param string $id
-     *
-     * @return self
-     */
-    public function setId(string $id): self
-    {
-        $this->initialized['id'] = true;
-        $this->id                = $id;
-
-        return $this;
-    }
-
-    /**
-     * Warnings encountered when creating the container.
-     *
-     * @return string
-     */
-    public function getWarning(): string
-    {
-        return $this->warning;
-    }
-
-    /**
-     * Warnings encountered when creating the container.
-     *
-     * @param string $warning
-     *
-     * @return self
-     */
-    public function setWarning(string $warning): self
-    {
-        $this->initialized['warning'] = true;
-        $this->warning                = $warning;
-
-        return $this;
+        return ['id' => 'Id', 'warning' => 'Warning'];
     }
 }

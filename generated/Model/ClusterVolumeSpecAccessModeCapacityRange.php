@@ -3,85 +3,29 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ClusterVolumeSpecAccessModeCapacityRange
+class ClusterVolumeSpecAccessModeCapacityRange implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The volume must be at least this big. The value of 0
      * indicates an unspecified minimum.
      *
      * @var int|null
      */
-    protected $requiredBytes;
+    public ?int $requiredBytes;
     /**
      * The volume must not be bigger than this. The value of 0
      * indicates an unspecified maximum.
      *
      * @var int|null
      */
-    protected $limitBytes;
+    public ?int $limitBytes;
 
-    /**
-     * The volume must be at least this big. The value of 0
-     * indicates an unspecified minimum.
-     *
-     * @return int|null
-     */
-    public function getRequiredBytes(): ?int
+    public function definedProperties(): array
     {
-        return $this->requiredBytes;
-    }
-
-    /**
-     * The volume must be at least this big. The value of 0
-     * indicates an unspecified minimum.
-     *
-     * @param int|null $requiredBytes
-     *
-     * @return self
-     */
-    public function setRequiredBytes(?int $requiredBytes): self
-    {
-        $this->initialized['requiredBytes'] = true;
-        $this->requiredBytes                = $requiredBytes;
-
-        return $this;
-    }
-
-    /**
-     * The volume must not be bigger than this. The value of 0
-     * indicates an unspecified maximum.
-     *
-     * @return int|null
-     */
-    public function getLimitBytes(): ?int
-    {
-        return $this->limitBytes;
-    }
-
-    /**
-     * The volume must not be bigger than this. The value of 0
-     * indicates an unspecified maximum.
-     *
-     * @param int|null $limitBytes
-     *
-     * @return self
-     */
-    public function setLimitBytes(?int $limitBytes): self
-    {
-        $this->initialized['limitBytes'] = true;
-        $this->limitBytes                = $limitBytes;
-
-        return $this;
+        return ['requiredBytes' => 'RequiredBytes', 'limitBytes' => 'LimitBytes'];
     }
 }

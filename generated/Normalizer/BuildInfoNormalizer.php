@@ -55,9 +55,11 @@ class BuildInfoNormalizer implements DenormalizerInterface, NormalizerInterface,
             } elseif (null === $data['id']) {
                 $value = $data['id'];
             }
-            $object->setId($value);
-        } elseif (array_key_exists('id', $data) && null === $data['id']) {
-            $object->setId(null);
+            $object->id = $value;
+            unset($data['id']);
+        } elseif (array_key_exists('id', $data)) {
+            $object->id = null;
+            unset($data['id']);
         }
         if (array_key_exists('stream', $data) && null !== $data['stream']) {
             $value_1 = $data['stream'];
@@ -66,12 +68,15 @@ class BuildInfoNormalizer implements DenormalizerInterface, NormalizerInterface,
             } elseif (null === $data['stream']) {
                 $value_1 = $data['stream'];
             }
-            $object->setStream($value_1);
-        } elseif (array_key_exists('stream', $data) && null === $data['stream']) {
-            $object->setStream(null);
+            $object->stream = $value_1;
+            unset($data['stream']);
+        } elseif (array_key_exists('stream', $data)) {
+            $object->stream = null;
+            unset($data['stream']);
         }
         if (array_key_exists('errorDetail', $data)) {
-            $object->setErrorDetail($this->denormalizer->denormalize($data['errorDetail'], \WebProject\DockerApi\Library\Generated\Model\ErrorDetail::class, 'json', $context));
+            $object->errorDetail = $this->denormalizer->denormalize($data['errorDetail'], \WebProject\DockerApi\Library\Generated\Model\ErrorDetail::class, 'json', $context);
+            unset($data['errorDetail']);
         }
         if (array_key_exists('status', $data) && null !== $data['status']) {
             $value_2 = $data['status'];
@@ -80,15 +85,24 @@ class BuildInfoNormalizer implements DenormalizerInterface, NormalizerInterface,
             } elseif (null === $data['status']) {
                 $value_2 = $data['status'];
             }
-            $object->setStatus($value_2);
-        } elseif (array_key_exists('status', $data) && null === $data['status']) {
-            $object->setStatus(null);
+            $object->status = $value_2;
+            unset($data['status']);
+        } elseif (array_key_exists('status', $data)) {
+            $object->status = null;
+            unset($data['status']);
         }
         if (array_key_exists('progressDetail', $data)) {
-            $object->setProgressDetail($this->denormalizer->denormalize($data['progressDetail'], \WebProject\DockerApi\Library\Generated\Model\ProgressDetail::class, 'json', $context));
+            $object->progressDetail = $this->denormalizer->denormalize($data['progressDetail'], \WebProject\DockerApi\Library\Generated\Model\ProgressDetail::class, 'json', $context);
+            unset($data['progressDetail']);
         }
         if (array_key_exists('aux', $data)) {
-            $object->setAux($this->denormalizer->denormalize($data['aux'], \WebProject\DockerApi\Library\Generated\Model\ImageID::class, 'json', $context));
+            $object->aux = $this->denormalizer->denormalize($data['aux'], \WebProject\DockerApi\Library\Generated\Model\ImageID::class, 'json', $context);
+            unset($data['aux']);
+        }
+        foreach ($data as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_3;
+            }
         }
 
         return $object;
@@ -97,41 +111,49 @@ class BuildInfoNormalizer implements DenormalizerInterface, NormalizerInterface,
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('id')) {
-            $value = $data->getId();
-            if (is_string($data->getId())) {
-                $value = $data->getId();
-            } elseif (null === $data->getId()) {
-                $value = $data->getId();
+        if (array_key_exists('id', get_object_vars($data)) && null !== ($data->id ?? null)) {
+            $value = $data->id;
+            if (is_string($data->id)) {
+                $value = $data->id;
+            } elseif (null === $data->id) {
+                $value = $data->id;
             }
             $dataArray['id'] = $value;
         }
-        if ($data->isInitialized('stream')) {
-            $value_1 = $data->getStream();
-            if (is_string($data->getStream())) {
-                $value_1 = $data->getStream();
-            } elseif (null === $data->getStream()) {
-                $value_1 = $data->getStream();
+        if (array_key_exists('stream', get_object_vars($data)) && null !== ($data->stream ?? null)) {
+            $value_1 = $data->stream;
+            if (is_string($data->stream)) {
+                $value_1 = $data->stream;
+            } elseif (null === $data->stream) {
+                $value_1 = $data->stream;
             }
             $dataArray['stream'] = $value_1;
         }
-        if ($data->isInitialized('errorDetail') && null !== $data->getErrorDetail()) {
-            $dataArray['errorDetail'] = $this->normalizer->normalize($data->getErrorDetail(), 'json', $context);
+        if (array_key_exists('errorDetail', get_object_vars($data)) && null !== ($data->errorDetail ?? null)) {
+            $normalized               = $this->normalizer->normalize($data->errorDetail, 'json', $context);
+            $dataArray['errorDetail'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         }
-        if ($data->isInitialized('status')) {
-            $value_2 = $data->getStatus();
-            if (is_string($data->getStatus())) {
-                $value_2 = $data->getStatus();
-            } elseif (null === $data->getStatus()) {
-                $value_2 = $data->getStatus();
+        if (array_key_exists('status', get_object_vars($data)) && null !== ($data->status ?? null)) {
+            $value_2 = $data->status;
+            if (is_string($data->status)) {
+                $value_2 = $data->status;
+            } elseif (null === $data->status) {
+                $value_2 = $data->status;
             }
             $dataArray['status'] = $value_2;
         }
-        if ($data->isInitialized('progressDetail') && null !== $data->getProgressDetail()) {
-            $dataArray['progressDetail'] = $this->normalizer->normalize($data->getProgressDetail(), 'json', $context);
+        if (array_key_exists('progressDetail', get_object_vars($data)) && null !== ($data->progressDetail ?? null)) {
+            $normalized_1                = $this->normalizer->normalize($data->progressDetail, 'json', $context);
+            $dataArray['progressDetail'] = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
         }
-        if ($data->isInitialized('aux') && null !== $data->getAux()) {
-            $dataArray['aux'] = $this->normalizer->normalize($data->getAux(), 'json', $context);
+        if (array_key_exists('aux', get_object_vars($data)) && null !== ($data->aux ?? null)) {
+            $normalized_2     = $this->normalizer->normalize($data->aux, 'json', $context);
+            $dataArray['aux'] = is_iterable($normalized_2) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_2) : $normalized_2;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_3;
+            }
         }
 
         return $dataArray;

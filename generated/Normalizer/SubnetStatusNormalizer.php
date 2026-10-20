@@ -55,9 +55,11 @@ class SubnetStatusNormalizer implements DenormalizerInterface, NormalizerInterfa
             } elseif (null === $data['IPsInUse']) {
                 $value = $data['IPsInUse'];
             }
-            $object->setIPsInUse($value);
-        } elseif (array_key_exists('IPsInUse', $data) && null === $data['IPsInUse']) {
-            $object->setIPsInUse(null);
+            $object->iPsInUse = $value;
+            unset($data['IPsInUse']);
+        } elseif (array_key_exists('IPsInUse', $data)) {
+            $object->iPsInUse = null;
+            unset($data['IPsInUse']);
         }
         if (array_key_exists('DynamicIPsAvailable', $data) && null !== $data['DynamicIPsAvailable']) {
             $value_1 = $data['DynamicIPsAvailable'];
@@ -66,9 +68,16 @@ class SubnetStatusNormalizer implements DenormalizerInterface, NormalizerInterfa
             } elseif (null === $data['DynamicIPsAvailable']) {
                 $value_1 = $data['DynamicIPsAvailable'];
             }
-            $object->setDynamicIPsAvailable($value_1);
-        } elseif (array_key_exists('DynamicIPsAvailable', $data) && null === $data['DynamicIPsAvailable']) {
-            $object->setDynamicIPsAvailable(null);
+            $object->dynamicIPsAvailable = $value_1;
+            unset($data['DynamicIPsAvailable']);
+        } elseif (array_key_exists('DynamicIPsAvailable', $data)) {
+            $object->dynamicIPsAvailable = null;
+            unset($data['DynamicIPsAvailable']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class SubnetStatusNormalizer implements DenormalizerInterface, NormalizerInterfa
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('iPsInUse')) {
-            $value = $data->getIPsInUse();
-            if (is_int($data->getIPsInUse())) {
-                $value = $data->getIPsInUse();
-            } elseif (null === $data->getIPsInUse()) {
-                $value = $data->getIPsInUse();
+        if (array_key_exists('iPsInUse', get_object_vars($data)) && null !== ($data->iPsInUse ?? null)) {
+            $value = $data->iPsInUse;
+            if (is_int($data->iPsInUse)) {
+                $value = $data->iPsInUse;
+            } elseif (null === $data->iPsInUse) {
+                $value = $data->iPsInUse;
             }
             $dataArray['IPsInUse'] = $value;
         }
-        if ($data->isInitialized('dynamicIPsAvailable')) {
-            $value_1 = $data->getDynamicIPsAvailable();
-            if (is_int($data->getDynamicIPsAvailable())) {
-                $value_1 = $data->getDynamicIPsAvailable();
-            } elseif (null === $data->getDynamicIPsAvailable()) {
-                $value_1 = $data->getDynamicIPsAvailable();
+        if (array_key_exists('dynamicIPsAvailable', get_object_vars($data)) && null !== ($data->dynamicIPsAvailable ?? null)) {
+            $value_1 = $data->dynamicIPsAvailable;
+            if (is_int($data->dynamicIPsAvailable)) {
+                $value_1 = $data->dynamicIPsAvailable;
+            } elseif (null === $data->dynamicIPsAvailable) {
+                $value_1 = $data->dynamicIPsAvailable;
             }
             $dataArray['DynamicIPsAvailable'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

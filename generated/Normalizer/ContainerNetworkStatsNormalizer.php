@@ -56,9 +56,11 @@ class ContainerNetworkStatsNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['rx_bytes']) {
                 $value = $data['rx_bytes'];
             }
-            $object->setRxBytes($value);
-        } elseif (array_key_exists('rx_bytes', $data) && null === $data['rx_bytes']) {
-            $object->setRxBytes(null);
+            $object->rxBytes = $value;
+            unset($data['rx_bytes']);
+        } elseif (array_key_exists('rx_bytes', $data)) {
+            $object->rxBytes = null;
+            unset($data['rx_bytes']);
         }
         if (array_key_exists('rx_packets', $data) && null !== $data['rx_packets']) {
             $value_1 = $data['rx_packets'];
@@ -67,9 +69,11 @@ class ContainerNetworkStatsNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['rx_packets']) {
                 $value_1 = $data['rx_packets'];
             }
-            $object->setRxPackets($value_1);
-        } elseif (array_key_exists('rx_packets', $data) && null === $data['rx_packets']) {
-            $object->setRxPackets(null);
+            $object->rxPackets = $value_1;
+            unset($data['rx_packets']);
+        } elseif (array_key_exists('rx_packets', $data)) {
+            $object->rxPackets = null;
+            unset($data['rx_packets']);
         }
         if (array_key_exists('rx_errors', $data) && null !== $data['rx_errors']) {
             $value_2 = $data['rx_errors'];
@@ -78,9 +82,11 @@ class ContainerNetworkStatsNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['rx_errors']) {
                 $value_2 = $data['rx_errors'];
             }
-            $object->setRxErrors($value_2);
-        } elseif (array_key_exists('rx_errors', $data) && null === $data['rx_errors']) {
-            $object->setRxErrors(null);
+            $object->rxErrors = $value_2;
+            unset($data['rx_errors']);
+        } elseif (array_key_exists('rx_errors', $data)) {
+            $object->rxErrors = null;
+            unset($data['rx_errors']);
         }
         if (array_key_exists('rx_dropped', $data) && null !== $data['rx_dropped']) {
             $value_3 = $data['rx_dropped'];
@@ -89,9 +95,11 @@ class ContainerNetworkStatsNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['rx_dropped']) {
                 $value_3 = $data['rx_dropped'];
             }
-            $object->setRxDropped($value_3);
-        } elseif (array_key_exists('rx_dropped', $data) && null === $data['rx_dropped']) {
-            $object->setRxDropped(null);
+            $object->rxDropped = $value_3;
+            unset($data['rx_dropped']);
+        } elseif (array_key_exists('rx_dropped', $data)) {
+            $object->rxDropped = null;
+            unset($data['rx_dropped']);
         }
         if (array_key_exists('tx_bytes', $data) && null !== $data['tx_bytes']) {
             $value_4 = $data['tx_bytes'];
@@ -100,9 +108,11 @@ class ContainerNetworkStatsNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['tx_bytes']) {
                 $value_4 = $data['tx_bytes'];
             }
-            $object->setTxBytes($value_4);
-        } elseif (array_key_exists('tx_bytes', $data) && null === $data['tx_bytes']) {
-            $object->setTxBytes(null);
+            $object->txBytes = $value_4;
+            unset($data['tx_bytes']);
+        } elseif (array_key_exists('tx_bytes', $data)) {
+            $object->txBytes = null;
+            unset($data['tx_bytes']);
         }
         if (array_key_exists('tx_packets', $data) && null !== $data['tx_packets']) {
             $value_5 = $data['tx_packets'];
@@ -111,9 +121,11 @@ class ContainerNetworkStatsNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['tx_packets']) {
                 $value_5 = $data['tx_packets'];
             }
-            $object->setTxPackets($value_5);
-        } elseif (array_key_exists('tx_packets', $data) && null === $data['tx_packets']) {
-            $object->setTxPackets(null);
+            $object->txPackets = $value_5;
+            unset($data['tx_packets']);
+        } elseif (array_key_exists('tx_packets', $data)) {
+            $object->txPackets = null;
+            unset($data['tx_packets']);
         }
         if (array_key_exists('tx_errors', $data) && null !== $data['tx_errors']) {
             $value_6 = $data['tx_errors'];
@@ -122,9 +134,11 @@ class ContainerNetworkStatsNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['tx_errors']) {
                 $value_6 = $data['tx_errors'];
             }
-            $object->setTxErrors($value_6);
-        } elseif (array_key_exists('tx_errors', $data) && null === $data['tx_errors']) {
-            $object->setTxErrors(null);
+            $object->txErrors = $value_6;
+            unset($data['tx_errors']);
+        } elseif (array_key_exists('tx_errors', $data)) {
+            $object->txErrors = null;
+            unset($data['tx_errors']);
         }
         if (array_key_exists('tx_dropped', $data) && null !== $data['tx_dropped']) {
             $value_7 = $data['tx_dropped'];
@@ -133,9 +147,11 @@ class ContainerNetworkStatsNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['tx_dropped']) {
                 $value_7 = $data['tx_dropped'];
             }
-            $object->setTxDropped($value_7);
-        } elseif (array_key_exists('tx_dropped', $data) && null === $data['tx_dropped']) {
-            $object->setTxDropped(null);
+            $object->txDropped = $value_7;
+            unset($data['tx_dropped']);
+        } elseif (array_key_exists('tx_dropped', $data)) {
+            $object->txDropped = null;
+            unset($data['tx_dropped']);
         }
         if (array_key_exists('endpoint_id', $data) && null !== $data['endpoint_id']) {
             $value_8 = $data['endpoint_id'];
@@ -144,9 +160,11 @@ class ContainerNetworkStatsNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['endpoint_id']) {
                 $value_8 = $data['endpoint_id'];
             }
-            $object->setEndpointId($value_8);
-        } elseif (array_key_exists('endpoint_id', $data) && null === $data['endpoint_id']) {
-            $object->setEndpointId(null);
+            $object->endpointId = $value_8;
+            unset($data['endpoint_id']);
+        } elseif (array_key_exists('endpoint_id', $data)) {
+            $object->endpointId = null;
+            unset($data['endpoint_id']);
         }
         if (array_key_exists('instance_id', $data) && null !== $data['instance_id']) {
             $value_9 = $data['instance_id'];
@@ -155,9 +173,16 @@ class ContainerNetworkStatsNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['instance_id']) {
                 $value_9 = $data['instance_id'];
             }
-            $object->setInstanceId($value_9);
-        } elseif (array_key_exists('instance_id', $data) && null === $data['instance_id']) {
-            $object->setInstanceId(null);
+            $object->instanceId = $value_9;
+            unset($data['instance_id']);
+        } elseif (array_key_exists('instance_id', $data)) {
+            $object->instanceId = null;
+            unset($data['instance_id']);
+        }
+        foreach ($data as $key => $value_10) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_10;
+            }
         }
 
         return $object;
@@ -166,95 +191,100 @@ class ContainerNetworkStatsNormalizer implements DenormalizerInterface, Normaliz
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('rxBytes')) {
-            $value = $data->getRxBytes();
-            if (is_int($data->getRxBytes())) {
-                $value = $data->getRxBytes();
-            } elseif (null === $data->getRxBytes()) {
-                $value = $data->getRxBytes();
+        if (array_key_exists('rxBytes', get_object_vars($data)) && null !== ($data->rxBytes ?? null)) {
+            $value = $data->rxBytes;
+            if (is_int($data->rxBytes)) {
+                $value = $data->rxBytes;
+            } elseif (null === $data->rxBytes) {
+                $value = $data->rxBytes;
             }
             $dataArray['rx_bytes'] = $value;
         }
-        if ($data->isInitialized('rxPackets')) {
-            $value_1 = $data->getRxPackets();
-            if (is_int($data->getRxPackets())) {
-                $value_1 = $data->getRxPackets();
-            } elseif (null === $data->getRxPackets()) {
-                $value_1 = $data->getRxPackets();
+        if (array_key_exists('rxPackets', get_object_vars($data)) && null !== ($data->rxPackets ?? null)) {
+            $value_1 = $data->rxPackets;
+            if (is_int($data->rxPackets)) {
+                $value_1 = $data->rxPackets;
+            } elseif (null === $data->rxPackets) {
+                $value_1 = $data->rxPackets;
             }
             $dataArray['rx_packets'] = $value_1;
         }
-        if ($data->isInitialized('rxErrors')) {
-            $value_2 = $data->getRxErrors();
-            if (is_int($data->getRxErrors())) {
-                $value_2 = $data->getRxErrors();
-            } elseif (null === $data->getRxErrors()) {
-                $value_2 = $data->getRxErrors();
+        if (array_key_exists('rxErrors', get_object_vars($data)) && null !== ($data->rxErrors ?? null)) {
+            $value_2 = $data->rxErrors;
+            if (is_int($data->rxErrors)) {
+                $value_2 = $data->rxErrors;
+            } elseif (null === $data->rxErrors) {
+                $value_2 = $data->rxErrors;
             }
             $dataArray['rx_errors'] = $value_2;
         }
-        if ($data->isInitialized('rxDropped')) {
-            $value_3 = $data->getRxDropped();
-            if (is_int($data->getRxDropped())) {
-                $value_3 = $data->getRxDropped();
-            } elseif (null === $data->getRxDropped()) {
-                $value_3 = $data->getRxDropped();
+        if (array_key_exists('rxDropped', get_object_vars($data)) && null !== ($data->rxDropped ?? null)) {
+            $value_3 = $data->rxDropped;
+            if (is_int($data->rxDropped)) {
+                $value_3 = $data->rxDropped;
+            } elseif (null === $data->rxDropped) {
+                $value_3 = $data->rxDropped;
             }
             $dataArray['rx_dropped'] = $value_3;
         }
-        if ($data->isInitialized('txBytes')) {
-            $value_4 = $data->getTxBytes();
-            if (is_int($data->getTxBytes())) {
-                $value_4 = $data->getTxBytes();
-            } elseif (null === $data->getTxBytes()) {
-                $value_4 = $data->getTxBytes();
+        if (array_key_exists('txBytes', get_object_vars($data)) && null !== ($data->txBytes ?? null)) {
+            $value_4 = $data->txBytes;
+            if (is_int($data->txBytes)) {
+                $value_4 = $data->txBytes;
+            } elseif (null === $data->txBytes) {
+                $value_4 = $data->txBytes;
             }
             $dataArray['tx_bytes'] = $value_4;
         }
-        if ($data->isInitialized('txPackets')) {
-            $value_5 = $data->getTxPackets();
-            if (is_int($data->getTxPackets())) {
-                $value_5 = $data->getTxPackets();
-            } elseif (null === $data->getTxPackets()) {
-                $value_5 = $data->getTxPackets();
+        if (array_key_exists('txPackets', get_object_vars($data)) && null !== ($data->txPackets ?? null)) {
+            $value_5 = $data->txPackets;
+            if (is_int($data->txPackets)) {
+                $value_5 = $data->txPackets;
+            } elseif (null === $data->txPackets) {
+                $value_5 = $data->txPackets;
             }
             $dataArray['tx_packets'] = $value_5;
         }
-        if ($data->isInitialized('txErrors')) {
-            $value_6 = $data->getTxErrors();
-            if (is_int($data->getTxErrors())) {
-                $value_6 = $data->getTxErrors();
-            } elseif (null === $data->getTxErrors()) {
-                $value_6 = $data->getTxErrors();
+        if (array_key_exists('txErrors', get_object_vars($data)) && null !== ($data->txErrors ?? null)) {
+            $value_6 = $data->txErrors;
+            if (is_int($data->txErrors)) {
+                $value_6 = $data->txErrors;
+            } elseif (null === $data->txErrors) {
+                $value_6 = $data->txErrors;
             }
             $dataArray['tx_errors'] = $value_6;
         }
-        if ($data->isInitialized('txDropped')) {
-            $value_7 = $data->getTxDropped();
-            if (is_int($data->getTxDropped())) {
-                $value_7 = $data->getTxDropped();
-            } elseif (null === $data->getTxDropped()) {
-                $value_7 = $data->getTxDropped();
+        if (array_key_exists('txDropped', get_object_vars($data)) && null !== ($data->txDropped ?? null)) {
+            $value_7 = $data->txDropped;
+            if (is_int($data->txDropped)) {
+                $value_7 = $data->txDropped;
+            } elseif (null === $data->txDropped) {
+                $value_7 = $data->txDropped;
             }
             $dataArray['tx_dropped'] = $value_7;
         }
-        if ($data->isInitialized('endpointId')) {
-            $value_8 = $data->getEndpointId();
-            if (is_string($data->getEndpointId())) {
-                $value_8 = $data->getEndpointId();
-            } elseif (null === $data->getEndpointId()) {
-                $value_8 = $data->getEndpointId();
+        if (array_key_exists('endpointId', get_object_vars($data)) && null !== ($data->endpointId ?? null)) {
+            $value_8 = $data->endpointId;
+            if (is_string($data->endpointId)) {
+                $value_8 = $data->endpointId;
+            } elseif (null === $data->endpointId) {
+                $value_8 = $data->endpointId;
             }
             $dataArray['endpoint_id'] = $value_8;
         }
-        if ($data->isInitialized('instanceId')) {
-            $value_9 = $data->getInstanceId();
-            if (is_string($data->getInstanceId())) {
-                $value_9 = $data->getInstanceId();
-            } elseif (null === $data->getInstanceId()) {
-                $value_9 = $data->getInstanceId();
+        if (array_key_exists('instanceId', get_object_vars($data)) && null !== ($data->instanceId ?? null)) {
+            $value_9 = $data->instanceId;
+            if (is_string($data->instanceId)) {
+                $value_9 = $data->instanceId;
+            } elseif (null === $data->instanceId) {
+                $value_9 = $data->instanceId;
             }
             $dataArray['instance_id'] = $value_9;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_10) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_10;
+            }
         }
 
         return $dataArray;

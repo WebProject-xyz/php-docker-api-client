@@ -55,9 +55,11 @@ class SwarmSpecRaftNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['SnapshotInterval']) {
                 $value = $data['SnapshotInterval'];
             }
-            $object->setSnapshotInterval($value);
-        } elseif (array_key_exists('SnapshotInterval', $data) && null === $data['SnapshotInterval']) {
-            $object->setSnapshotInterval(null);
+            $object->snapshotInterval = $value;
+            unset($data['SnapshotInterval']);
+        } elseif (array_key_exists('SnapshotInterval', $data)) {
+            $object->snapshotInterval = null;
+            unset($data['SnapshotInterval']);
         }
         if (array_key_exists('KeepOldSnapshots', $data) && null !== $data['KeepOldSnapshots']) {
             $value_1 = $data['KeepOldSnapshots'];
@@ -66,9 +68,11 @@ class SwarmSpecRaftNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['KeepOldSnapshots']) {
                 $value_1 = $data['KeepOldSnapshots'];
             }
-            $object->setKeepOldSnapshots($value_1);
-        } elseif (array_key_exists('KeepOldSnapshots', $data) && null === $data['KeepOldSnapshots']) {
-            $object->setKeepOldSnapshots(null);
+            $object->keepOldSnapshots = $value_1;
+            unset($data['KeepOldSnapshots']);
+        } elseif (array_key_exists('KeepOldSnapshots', $data)) {
+            $object->keepOldSnapshots = null;
+            unset($data['KeepOldSnapshots']);
         }
         if (array_key_exists('LogEntriesForSlowFollowers', $data) && null !== $data['LogEntriesForSlowFollowers']) {
             $value_2 = $data['LogEntriesForSlowFollowers'];
@@ -77,9 +81,11 @@ class SwarmSpecRaftNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['LogEntriesForSlowFollowers']) {
                 $value_2 = $data['LogEntriesForSlowFollowers'];
             }
-            $object->setLogEntriesForSlowFollowers($value_2);
-        } elseif (array_key_exists('LogEntriesForSlowFollowers', $data) && null === $data['LogEntriesForSlowFollowers']) {
-            $object->setLogEntriesForSlowFollowers(null);
+            $object->logEntriesForSlowFollowers = $value_2;
+            unset($data['LogEntriesForSlowFollowers']);
+        } elseif (array_key_exists('LogEntriesForSlowFollowers', $data)) {
+            $object->logEntriesForSlowFollowers = null;
+            unset($data['LogEntriesForSlowFollowers']);
         }
         if (array_key_exists('ElectionTick', $data) && null !== $data['ElectionTick']) {
             $value_3 = $data['ElectionTick'];
@@ -88,9 +94,11 @@ class SwarmSpecRaftNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['ElectionTick']) {
                 $value_3 = $data['ElectionTick'];
             }
-            $object->setElectionTick($value_3);
-        } elseif (array_key_exists('ElectionTick', $data) && null === $data['ElectionTick']) {
-            $object->setElectionTick(null);
+            $object->electionTick = $value_3;
+            unset($data['ElectionTick']);
+        } elseif (array_key_exists('ElectionTick', $data)) {
+            $object->electionTick = null;
+            unset($data['ElectionTick']);
         }
         if (array_key_exists('HeartbeatTick', $data) && null !== $data['HeartbeatTick']) {
             $value_4 = $data['HeartbeatTick'];
@@ -99,9 +107,16 @@ class SwarmSpecRaftNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['HeartbeatTick']) {
                 $value_4 = $data['HeartbeatTick'];
             }
-            $object->setHeartbeatTick($value_4);
-        } elseif (array_key_exists('HeartbeatTick', $data) && null === $data['HeartbeatTick']) {
-            $object->setHeartbeatTick(null);
+            $object->heartbeatTick = $value_4;
+            unset($data['HeartbeatTick']);
+        } elseif (array_key_exists('HeartbeatTick', $data)) {
+            $object->heartbeatTick = null;
+            unset($data['HeartbeatTick']);
+        }
+        foreach ($data as $key => $value_5) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_5;
+            }
         }
 
         return $object;
@@ -110,50 +125,55 @@ class SwarmSpecRaftNormalizer implements DenormalizerInterface, NormalizerInterf
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('snapshotInterval')) {
-            $value = $data->getSnapshotInterval();
-            if (is_int($data->getSnapshotInterval())) {
-                $value = $data->getSnapshotInterval();
-            } elseif (null === $data->getSnapshotInterval()) {
-                $value = $data->getSnapshotInterval();
+        if (array_key_exists('snapshotInterval', get_object_vars($data)) && null !== ($data->snapshotInterval ?? null)) {
+            $value = $data->snapshotInterval;
+            if (is_int($data->snapshotInterval)) {
+                $value = $data->snapshotInterval;
+            } elseif (null === $data->snapshotInterval) {
+                $value = $data->snapshotInterval;
             }
             $dataArray['SnapshotInterval'] = $value;
         }
-        if ($data->isInitialized('keepOldSnapshots')) {
-            $value_1 = $data->getKeepOldSnapshots();
-            if (is_int($data->getKeepOldSnapshots())) {
-                $value_1 = $data->getKeepOldSnapshots();
-            } elseif (null === $data->getKeepOldSnapshots()) {
-                $value_1 = $data->getKeepOldSnapshots();
+        if (array_key_exists('keepOldSnapshots', get_object_vars($data)) && null !== ($data->keepOldSnapshots ?? null)) {
+            $value_1 = $data->keepOldSnapshots;
+            if (is_int($data->keepOldSnapshots)) {
+                $value_1 = $data->keepOldSnapshots;
+            } elseif (null === $data->keepOldSnapshots) {
+                $value_1 = $data->keepOldSnapshots;
             }
             $dataArray['KeepOldSnapshots'] = $value_1;
         }
-        if ($data->isInitialized('logEntriesForSlowFollowers')) {
-            $value_2 = $data->getLogEntriesForSlowFollowers();
-            if (is_int($data->getLogEntriesForSlowFollowers())) {
-                $value_2 = $data->getLogEntriesForSlowFollowers();
-            } elseif (null === $data->getLogEntriesForSlowFollowers()) {
-                $value_2 = $data->getLogEntriesForSlowFollowers();
+        if (array_key_exists('logEntriesForSlowFollowers', get_object_vars($data)) && null !== ($data->logEntriesForSlowFollowers ?? null)) {
+            $value_2 = $data->logEntriesForSlowFollowers;
+            if (is_int($data->logEntriesForSlowFollowers)) {
+                $value_2 = $data->logEntriesForSlowFollowers;
+            } elseif (null === $data->logEntriesForSlowFollowers) {
+                $value_2 = $data->logEntriesForSlowFollowers;
             }
             $dataArray['LogEntriesForSlowFollowers'] = $value_2;
         }
-        if ($data->isInitialized('electionTick')) {
-            $value_3 = $data->getElectionTick();
-            if (is_int($data->getElectionTick())) {
-                $value_3 = $data->getElectionTick();
-            } elseif (null === $data->getElectionTick()) {
-                $value_3 = $data->getElectionTick();
+        if (array_key_exists('electionTick', get_object_vars($data)) && null !== ($data->electionTick ?? null)) {
+            $value_3 = $data->electionTick;
+            if (is_int($data->electionTick)) {
+                $value_3 = $data->electionTick;
+            } elseif (null === $data->electionTick) {
+                $value_3 = $data->electionTick;
             }
             $dataArray['ElectionTick'] = $value_3;
         }
-        if ($data->isInitialized('heartbeatTick')) {
-            $value_4 = $data->getHeartbeatTick();
-            if (is_int($data->getHeartbeatTick())) {
-                $value_4 = $data->getHeartbeatTick();
-            } elseif (null === $data->getHeartbeatTick()) {
-                $value_4 = $data->getHeartbeatTick();
+        if (array_key_exists('heartbeatTick', get_object_vars($data)) && null !== ($data->heartbeatTick ?? null)) {
+            $value_4 = $data->heartbeatTick;
+            if (is_int($data->heartbeatTick)) {
+                $value_4 = $data->heartbeatTick;
+            } elseif (null === $data->heartbeatTick) {
+                $value_4 = $data->heartbeatTick;
             }
             $dataArray['HeartbeatTick'] = $value_4;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_5) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_5;
+            }
         }
 
         return $dataArray;

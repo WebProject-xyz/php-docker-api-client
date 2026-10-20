@@ -56,9 +56,11 @@ class MountNormalizer implements DenormalizerInterface, NormalizerInterface, Den
             } elseif (null === $data['Target']) {
                 $value = $data['Target'];
             }
-            $object->setTarget($value);
-        } elseif (array_key_exists('Target', $data) && null === $data['Target']) {
-            $object->setTarget(null);
+            $object->target = $value;
+            unset($data['Target']);
+        } elseif (array_key_exists('Target', $data)) {
+            $object->target = null;
+            unset($data['Target']);
         }
         if (array_key_exists('Source', $data) && null !== $data['Source']) {
             $value_1 = $data['Source'];
@@ -67,12 +69,15 @@ class MountNormalizer implements DenormalizerInterface, NormalizerInterface, Den
             } elseif (null === $data['Source']) {
                 $value_1 = $data['Source'];
             }
-            $object->setSource($value_1);
-        } elseif (array_key_exists('Source', $data) && null === $data['Source']) {
-            $object->setSource(null);
+            $object->source = $value_1;
+            unset($data['Source']);
+        } elseif (array_key_exists('Source', $data)) {
+            $object->source = null;
+            unset($data['Source']);
         }
         if (array_key_exists('Type', $data)) {
-            $object->setType($data['Type']);
+            $object->type = \WebProject\DockerApi\Library\Generated\Model\MountType::from($data['Type']);
+            unset($data['Type']);
         }
         if (array_key_exists('ReadOnly', $data) && null !== $data['ReadOnly']) {
             $value_2 = $data['ReadOnly'];
@@ -81,9 +86,11 @@ class MountNormalizer implements DenormalizerInterface, NormalizerInterface, Den
             } elseif (null === $data['ReadOnly']) {
                 $value_2 = $data['ReadOnly'];
             }
-            $object->setReadOnly($value_2);
-        } elseif (array_key_exists('ReadOnly', $data) && null === $data['ReadOnly']) {
-            $object->setReadOnly(null);
+            $object->readOnly = $value_2;
+            unset($data['ReadOnly']);
+        } elseif (array_key_exists('ReadOnly', $data)) {
+            $object->readOnly = null;
+            unset($data['ReadOnly']);
         }
         if (array_key_exists('Consistency', $data) && null !== $data['Consistency']) {
             $value_3 = $data['Consistency'];
@@ -92,29 +99,44 @@ class MountNormalizer implements DenormalizerInterface, NormalizerInterface, Den
             } elseif (null === $data['Consistency']) {
                 $value_3 = $data['Consistency'];
             }
-            $object->setConsistency($value_3);
-        } elseif (array_key_exists('Consistency', $data) && null === $data['Consistency']) {
-            $object->setConsistency(null);
+            $object->consistency = $value_3;
+            unset($data['Consistency']);
+        } elseif (array_key_exists('Consistency', $data)) {
+            $object->consistency = null;
+            unset($data['Consistency']);
         }
         if (array_key_exists('BindOptions', $data) && null !== $data['BindOptions']) {
-            $object->setBindOptions($this->denormalizer->denormalize($data['BindOptions'], \WebProject\DockerApi\Library\Generated\Model\MountBindOptions::class, 'json', $context));
-        } elseif (array_key_exists('BindOptions', $data) && null === $data['BindOptions']) {
-            $object->setBindOptions(null);
+            $object->bindOptions = $this->denormalizer->denormalize($data['BindOptions'], \WebProject\DockerApi\Library\Generated\Model\MountBindOptions::class, 'json', $context);
+            unset($data['BindOptions']);
+        } elseif (array_key_exists('BindOptions', $data)) {
+            $object->bindOptions = null;
+            unset($data['BindOptions']);
         }
         if (array_key_exists('VolumeOptions', $data) && null !== $data['VolumeOptions']) {
-            $object->setVolumeOptions($this->denormalizer->denormalize($data['VolumeOptions'], \WebProject\DockerApi\Library\Generated\Model\MountVolumeOptions::class, 'json', $context));
-        } elseif (array_key_exists('VolumeOptions', $data) && null === $data['VolumeOptions']) {
-            $object->setVolumeOptions(null);
+            $object->volumeOptions = $this->denormalizer->denormalize($data['VolumeOptions'], \WebProject\DockerApi\Library\Generated\Model\MountVolumeOptions::class, 'json', $context);
+            unset($data['VolumeOptions']);
+        } elseif (array_key_exists('VolumeOptions', $data)) {
+            $object->volumeOptions = null;
+            unset($data['VolumeOptions']);
         }
         if (array_key_exists('ImageOptions', $data) && null !== $data['ImageOptions']) {
-            $object->setImageOptions($this->denormalizer->denormalize($data['ImageOptions'], \WebProject\DockerApi\Library\Generated\Model\MountImageOptions::class, 'json', $context));
-        } elseif (array_key_exists('ImageOptions', $data) && null === $data['ImageOptions']) {
-            $object->setImageOptions(null);
+            $object->imageOptions = $this->denormalizer->denormalize($data['ImageOptions'], \WebProject\DockerApi\Library\Generated\Model\MountImageOptions::class, 'json', $context);
+            unset($data['ImageOptions']);
+        } elseif (array_key_exists('ImageOptions', $data)) {
+            $object->imageOptions = null;
+            unset($data['ImageOptions']);
         }
         if (array_key_exists('TmpfsOptions', $data) && null !== $data['TmpfsOptions']) {
-            $object->setTmpfsOptions($this->denormalizer->denormalize($data['TmpfsOptions'], \WebProject\DockerApi\Library\Generated\Model\MountTmpfsOptions::class, 'json', $context));
-        } elseif (array_key_exists('TmpfsOptions', $data) && null === $data['TmpfsOptions']) {
-            $object->setTmpfsOptions(null);
+            $object->tmpfsOptions = $this->denormalizer->denormalize($data['TmpfsOptions'], \WebProject\DockerApi\Library\Generated\Model\MountTmpfsOptions::class, 'json', $context);
+            unset($data['TmpfsOptions']);
+        } elseif (array_key_exists('TmpfsOptions', $data)) {
+            $object->tmpfsOptions = null;
+            unset($data['TmpfsOptions']);
+        }
+        foreach ($data as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_4;
+            }
         }
 
         return $object;
@@ -123,56 +145,65 @@ class MountNormalizer implements DenormalizerInterface, NormalizerInterface, Den
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('target')) {
-            $value = $data->getTarget();
-            if (is_string($data->getTarget())) {
-                $value = $data->getTarget();
-            } elseif (null === $data->getTarget()) {
-                $value = $data->getTarget();
+        if (array_key_exists('target', get_object_vars($data)) && null !== ($data->target ?? null)) {
+            $value = $data->target;
+            if (is_string($data->target)) {
+                $value = $data->target;
+            } elseif (null === $data->target) {
+                $value = $data->target;
             }
             $dataArray['Target'] = $value;
         }
-        if ($data->isInitialized('source')) {
-            $value_1 = $data->getSource();
-            if (is_string($data->getSource())) {
-                $value_1 = $data->getSource();
-            } elseif (null === $data->getSource()) {
-                $value_1 = $data->getSource();
+        if (array_key_exists('source', get_object_vars($data)) && null !== ($data->source ?? null)) {
+            $value_1 = $data->source;
+            if (is_string($data->source)) {
+                $value_1 = $data->source;
+            } elseif (null === $data->source) {
+                $value_1 = $data->source;
             }
             $dataArray['Source'] = $value_1;
         }
-        if ($data->isInitialized('type') && null !== $data->getType()) {
-            $dataArray['Type'] = $data->getType();
+        if (array_key_exists('type', get_object_vars($data)) && null !== ($data->type ?? null)) {
+            $dataArray['Type'] = $data->type->value;
         }
-        if ($data->isInitialized('readOnly')) {
-            $value_2 = $data->getReadOnly();
-            if (is_bool($data->getReadOnly())) {
-                $value_2 = $data->getReadOnly();
-            } elseif (null === $data->getReadOnly()) {
-                $value_2 = $data->getReadOnly();
+        if (array_key_exists('readOnly', get_object_vars($data)) && null !== ($data->readOnly ?? null)) {
+            $value_2 = $data->readOnly;
+            if (is_bool($data->readOnly)) {
+                $value_2 = $data->readOnly;
+            } elseif (null === $data->readOnly) {
+                $value_2 = $data->readOnly;
             }
             $dataArray['ReadOnly'] = $value_2;
         }
-        if ($data->isInitialized('consistency')) {
-            $value_3 = $data->getConsistency();
-            if (is_string($data->getConsistency())) {
-                $value_3 = $data->getConsistency();
-            } elseif (null === $data->getConsistency()) {
-                $value_3 = $data->getConsistency();
+        if (array_key_exists('consistency', get_object_vars($data)) && null !== ($data->consistency ?? null)) {
+            $value_3 = $data->consistency;
+            if (is_string($data->consistency)) {
+                $value_3 = $data->consistency;
+            } elseif (null === $data->consistency) {
+                $value_3 = $data->consistency;
             }
             $dataArray['Consistency'] = $value_3;
         }
-        if ($data->isInitialized('bindOptions')) {
-            $dataArray['BindOptions'] = $this->normalizer->normalize($data->getBindOptions(), 'json', $context);
+        if (array_key_exists('bindOptions', get_object_vars($data)) && null !== ($data->bindOptions ?? null)) {
+            $normalized               = $this->normalizer->normalize($data->bindOptions, 'json', $context);
+            $dataArray['BindOptions'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         }
-        if ($data->isInitialized('volumeOptions')) {
-            $dataArray['VolumeOptions'] = $this->normalizer->normalize($data->getVolumeOptions(), 'json', $context);
+        if (array_key_exists('volumeOptions', get_object_vars($data)) && null !== ($data->volumeOptions ?? null)) {
+            $normalized_1               = $this->normalizer->normalize($data->volumeOptions, 'json', $context);
+            $dataArray['VolumeOptions'] = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
         }
-        if ($data->isInitialized('imageOptions')) {
-            $dataArray['ImageOptions'] = $this->normalizer->normalize($data->getImageOptions(), 'json', $context);
+        if (array_key_exists('imageOptions', get_object_vars($data)) && null !== ($data->imageOptions ?? null)) {
+            $normalized_2              = $this->normalizer->normalize($data->imageOptions, 'json', $context);
+            $dataArray['ImageOptions'] = is_iterable($normalized_2) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_2) : $normalized_2;
         }
-        if ($data->isInitialized('tmpfsOptions')) {
-            $dataArray['TmpfsOptions'] = $this->normalizer->normalize($data->getTmpfsOptions(), 'json', $context);
+        if (array_key_exists('tmpfsOptions', get_object_vars($data)) && null !== ($data->tmpfsOptions ?? null)) {
+            $normalized_3              = $this->normalizer->normalize($data->tmpfsOptions, 'json', $context);
+            $dataArray['TmpfsOptions'] = is_iterable($normalized_3) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_3) : $normalized_3;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_4;
+            }
         }
 
         return $dataArray;

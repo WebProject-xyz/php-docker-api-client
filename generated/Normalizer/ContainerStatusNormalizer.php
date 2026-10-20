@@ -56,9 +56,11 @@ class ContainerStatusNormalizer implements DenormalizerInterface, NormalizerInte
             } elseif (null === $data['ContainerID']) {
                 $value = $data['ContainerID'];
             }
-            $object->setContainerID($value);
-        } elseif (array_key_exists('ContainerID', $data) && null === $data['ContainerID']) {
-            $object->setContainerID(null);
+            $object->containerID = $value;
+            unset($data['ContainerID']);
+        } elseif (array_key_exists('ContainerID', $data)) {
+            $object->containerID = null;
+            unset($data['ContainerID']);
         }
         if (array_key_exists('PID', $data) && null !== $data['PID']) {
             $value_1 = $data['PID'];
@@ -67,9 +69,11 @@ class ContainerStatusNormalizer implements DenormalizerInterface, NormalizerInte
             } elseif (null === $data['PID']) {
                 $value_1 = $data['PID'];
             }
-            $object->setPID($value_1);
-        } elseif (array_key_exists('PID', $data) && null === $data['PID']) {
-            $object->setPID(null);
+            $object->pID = $value_1;
+            unset($data['PID']);
+        } elseif (array_key_exists('PID', $data)) {
+            $object->pID = null;
+            unset($data['PID']);
         }
         if (array_key_exists('ExitCode', $data) && null !== $data['ExitCode']) {
             $value_2 = $data['ExitCode'];
@@ -78,9 +82,16 @@ class ContainerStatusNormalizer implements DenormalizerInterface, NormalizerInte
             } elseif (null === $data['ExitCode']) {
                 $value_2 = $data['ExitCode'];
             }
-            $object->setExitCode($value_2);
-        } elseif (array_key_exists('ExitCode', $data) && null === $data['ExitCode']) {
-            $object->setExitCode(null);
+            $object->exitCode = $value_2;
+            unset($data['ExitCode']);
+        } elseif (array_key_exists('ExitCode', $data)) {
+            $object->exitCode = null;
+            unset($data['ExitCode']);
+        }
+        foreach ($data as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_3;
+            }
         }
 
         return $object;
@@ -89,32 +100,37 @@ class ContainerStatusNormalizer implements DenormalizerInterface, NormalizerInte
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('containerID')) {
-            $value = $data->getContainerID();
-            if (is_string($data->getContainerID())) {
-                $value = $data->getContainerID();
-            } elseif (null === $data->getContainerID()) {
-                $value = $data->getContainerID();
+        if (array_key_exists('containerID', get_object_vars($data)) && null !== ($data->containerID ?? null)) {
+            $value = $data->containerID;
+            if (is_string($data->containerID)) {
+                $value = $data->containerID;
+            } elseif (null === $data->containerID) {
+                $value = $data->containerID;
             }
             $dataArray['ContainerID'] = $value;
         }
-        if ($data->isInitialized('pID')) {
-            $value_1 = $data->getPID();
-            if (is_int($data->getPID())) {
-                $value_1 = $data->getPID();
-            } elseif (null === $data->getPID()) {
-                $value_1 = $data->getPID();
+        if (array_key_exists('pID', get_object_vars($data)) && null !== ($data->pID ?? null)) {
+            $value_1 = $data->pID;
+            if (is_int($data->pID)) {
+                $value_1 = $data->pID;
+            } elseif (null === $data->pID) {
+                $value_1 = $data->pID;
             }
             $dataArray['PID'] = $value_1;
         }
-        if ($data->isInitialized('exitCode')) {
-            $value_2 = $data->getExitCode();
-            if (is_int($data->getExitCode())) {
-                $value_2 = $data->getExitCode();
-            } elseif (null === $data->getExitCode()) {
-                $value_2 = $data->getExitCode();
+        if (array_key_exists('exitCode', get_object_vars($data)) && null !== ($data->exitCode ?? null)) {
+            $value_2 = $data->exitCode;
+            if (is_int($data->exitCode)) {
+                $value_2 = $data->exitCode;
+            } elseif (null === $data->exitCode) {
+                $value_2 = $data->exitCode;
             }
             $dataArray['ExitCode'] = $value_2;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_3;
+            }
         }
 
         return $dataArray;

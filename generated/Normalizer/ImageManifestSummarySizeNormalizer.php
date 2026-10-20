@@ -48,10 +48,17 @@ class ImageManifestSummarySizeNormalizer implements DenormalizerInterface, Norma
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Total', $data)) {
-            $object->setTotal($data['Total']);
+            $object->total = $data['Total'];
+            unset($data['Total']);
         }
         if (array_key_exists('Content', $data)) {
-            $object->setContent($data['Content']);
+            $object->content = $data['Content'];
+            unset($data['Content']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -60,8 +67,13 @@ class ImageManifestSummarySizeNormalizer implements DenormalizerInterface, Norma
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray            = [];
-        $dataArray['Total']   = $data->getTotal();
-        $dataArray['Content'] = $data->getContent();
+        $dataArray['Total']   = $data->total;
+        $dataArray['Content'] = $data->content;
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
+        }
 
         return $dataArray;
     }

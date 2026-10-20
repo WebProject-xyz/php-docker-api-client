@@ -55,9 +55,16 @@ class SwarmSpecEncryptionConfigNormalizer implements DenormalizerInterface, Norm
             } elseif (null === $data['AutoLockManagers']) {
                 $value = $data['AutoLockManagers'];
             }
-            $object->setAutoLockManagers($value);
-        } elseif (array_key_exists('AutoLockManagers', $data) && null === $data['AutoLockManagers']) {
-            $object->setAutoLockManagers(null);
+            $object->autoLockManagers = $value;
+            unset($data['AutoLockManagers']);
+        } elseif (array_key_exists('AutoLockManagers', $data)) {
+            $object->autoLockManagers = null;
+            unset($data['AutoLockManagers']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -66,14 +73,19 @@ class SwarmSpecEncryptionConfigNormalizer implements DenormalizerInterface, Norm
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('autoLockManagers')) {
-            $value = $data->getAutoLockManagers();
-            if (is_bool($data->getAutoLockManagers())) {
-                $value = $data->getAutoLockManagers();
-            } elseif (null === $data->getAutoLockManagers()) {
-                $value = $data->getAutoLockManagers();
+        if (array_key_exists('autoLockManagers', get_object_vars($data)) && null !== ($data->autoLockManagers ?? null)) {
+            $value = $data->autoLockManagers;
+            if (is_bool($data->autoLockManagers)) {
+                $value = $data->autoLockManagers;
+            } elseif (null === $data->autoLockManagers) {
+                $value = $data->autoLockManagers;
             }
             $dataArray['AutoLockManagers'] = $value;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

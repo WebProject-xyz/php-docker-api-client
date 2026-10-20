@@ -3,92 +3,27 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class AuthConfig
+class AuthConfig implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var string|null
      */
-    protected $username;
+    public ?string $username;
     /**
      * @var string|null
      */
-    protected $password;
+    public ?string $password;
     /**
      * @var string|null
      */
-    protected $serveraddress;
+    public ?string $serveraddress;
 
-    /**
-     * @return string|null
-     */
-    public function getUsername(): ?string
+    public function definedProperties(): array
     {
-        return $this->username;
-    }
-
-    /**
-     * @param string|null $username
-     *
-     * @return self
-     */
-    public function setUsername(?string $username): self
-    {
-        $this->initialized['username'] = true;
-        $this->username                = $username;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param string|null $password
-     *
-     * @return self
-     */
-    public function setPassword(?string $password): self
-    {
-        $this->initialized['password'] = true;
-        $this->password                = $password;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getServeraddress(): ?string
-    {
-        return $this->serveraddress;
-    }
-
-    /**
-     * @param string|null $serveraddress
-     *
-     * @return self
-     */
-    public function setServeraddress(?string $serveraddress): self
-    {
-        $this->initialized['serveraddress'] = true;
-        $this->serveraddress                = $serveraddress;
-
-        return $this;
+        return ['username' => 'username', 'password' => 'password', 'serveraddress' => 'serveraddress'];
     }
 }

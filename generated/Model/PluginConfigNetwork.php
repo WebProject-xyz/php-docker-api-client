@@ -3,42 +3,19 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class PluginConfigNetwork
+class PluginConfigNetwork implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var string
      */
-    protected $type;
+    public string $type;
 
-    /**
-     * @return string
-     */
-    public function getType(): string
+    public function definedProperties(): array
     {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     *
-     * @return self
-     */
-    public function setType(string $type): self
-    {
-        $this->initialized['type'] = true;
-        $this->type                = $type;
-
-        return $this;
+        return ['type' => 'Type'];
     }
 }

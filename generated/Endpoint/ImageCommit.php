@@ -35,10 +35,10 @@ class ImageCommit extends \WebProject\DockerApi\Library\Generated\Runtime\Client
         return '/commit';
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
         if ($this->body instanceof \WebProject\DockerApi\Library\Generated\Model\ContainerConfig) {
-            return [['Content-Type' => ['application/json']], $serializer->serialize($this->body, 'json')];
+            return [['Content-Type' => ['application/json']], \WebProject\DockerApi\Library\Generated\Runtime\Client\JsonPayload::encode($serializer, $this->body)];
         }
 
         return [[], null];
@@ -69,28 +69,40 @@ class ImageCommit extends \WebProject\DockerApi\Library\Generated\Runtime\Client
     /**
      * {@inheritdoc}
      *
-     * @return \WebProject\DockerApi\Library\Generated\Model\IDResponse|null
+     * @return \WebProject\DockerApi\Library\Generated\Model\IDResponse
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ImageCommitNotFoundException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ImageCommitInternalServerErrorException
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (201 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        $body   = $response->getContent(false);
+        if (null !== $contentType && (201 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\IDResponse', 'json');
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (404 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageCommitNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (500 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageCommitInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Eager->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

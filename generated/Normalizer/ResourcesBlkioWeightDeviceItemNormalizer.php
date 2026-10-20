@@ -56,9 +56,11 @@ class ResourcesBlkioWeightDeviceItemNormalizer implements DenormalizerInterface,
             } elseif (null === $data['Path']) {
                 $value = $data['Path'];
             }
-            $object->setPath($value);
-        } elseif (array_key_exists('Path', $data) && null === $data['Path']) {
-            $object->setPath(null);
+            $object->path = $value;
+            unset($data['Path']);
+        } elseif (array_key_exists('Path', $data)) {
+            $object->path = null;
+            unset($data['Path']);
         }
         if (array_key_exists('Weight', $data) && null !== $data['Weight']) {
             $value_1 = $data['Weight'];
@@ -67,9 +69,16 @@ class ResourcesBlkioWeightDeviceItemNormalizer implements DenormalizerInterface,
             } elseif (null === $data['Weight']) {
                 $value_1 = $data['Weight'];
             }
-            $object->setWeight($value_1);
-        } elseif (array_key_exists('Weight', $data) && null === $data['Weight']) {
-            $object->setWeight(null);
+            $object->weight = $value_1;
+            unset($data['Weight']);
+        } elseif (array_key_exists('Weight', $data)) {
+            $object->weight = null;
+            unset($data['Weight']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -78,23 +87,28 @@ class ResourcesBlkioWeightDeviceItemNormalizer implements DenormalizerInterface,
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('path')) {
-            $value = $data->getPath();
-            if (is_string($data->getPath())) {
-                $value = $data->getPath();
-            } elseif (null === $data->getPath()) {
-                $value = $data->getPath();
+        if (array_key_exists('path', get_object_vars($data)) && null !== ($data->path ?? null)) {
+            $value = $data->path;
+            if (is_string($data->path)) {
+                $value = $data->path;
+            } elseif (null === $data->path) {
+                $value = $data->path;
             }
             $dataArray['Path'] = $value;
         }
-        if ($data->isInitialized('weight')) {
-            $value_1 = $data->getWeight();
-            if (is_int($data->getWeight())) {
-                $value_1 = $data->getWeight();
-            } elseif (null === $data->getWeight()) {
-                $value_1 = $data->getWeight();
+        if (array_key_exists('weight', get_object_vars($data)) && null !== ($data->weight ?? null)) {
+            $value_1 = $data->weight;
+            if (is_int($data->weight)) {
+                $value_1 = $data->weight;
+            } elseif (null === $data->weight) {
+                $value_1 = $data->weight;
             }
             $dataArray['Weight'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

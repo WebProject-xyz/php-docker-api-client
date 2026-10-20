@@ -16,21 +16,21 @@ class PluginPull extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
      * @param \WebProject\DockerApi\Library\Generated\Model\PluginPrivilege[]|null $requestBody
      * @param array{
      *    "remote": string, //Remote reference for plugin to install.
-     *
-     * The `:latest` tag is optional, and is used as the default if omitted.
+     *                      //
+     *                      //The `:latest` tag is optional, and is used as the default if omitted.
      *    "name"?: string, //Local name for the pulled plugin.
-     *
-     * The `:latest` tag is optional, and is used as the default if omitted.
+     *                     //
+     *                     //The `:latest` tag is optional, and is used as the default if omitted.
      * } $queryParameters
      * @param array{
      *    "X-Registry-Auth"?: string, //A base64url-encoded auth configuration to use when pulling a plugin
-     * from a registry.
-     *
-     * Refer to the [authentication section](#section/Authentication) for
-     * details.
+     *                                //from a registry.
+     *                                //
+     *                                //Refer to the [authentication section](#section/Authentication) for
+     *                                //details.
      * } $headerParameters
      */
-    public function __construct(?array $requestBody = null, array $queryParameters = [], array $headerParameters = [])
+    public function __construct(?array $requestBody, array $queryParameters, array $headerParameters = [])
     {
         $this->body             = $requestBody;
         $this->queryParameters  = $queryParameters;
@@ -47,7 +47,7 @@ class PluginPull extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
         return '/plugins/pull';
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
         if (is_array($this->body) && isset($this->body[0]) && $this->body[0] instanceof \WebProject\DockerApi\Library\Generated\Model\PluginPrivilege) {
             return [['Content-Type' => ['application/json']], $serializer->serialize($this->body, 'json')];
@@ -93,21 +93,33 @@ class PluginPull extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
      * @return null
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\PluginPullInternalServerErrorException
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
+        $body   = $response->getContent(false);
         if (204 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (500 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\PluginPullInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Eager->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

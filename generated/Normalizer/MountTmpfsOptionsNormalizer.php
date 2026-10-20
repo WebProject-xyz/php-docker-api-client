@@ -55,9 +55,11 @@ class MountTmpfsOptionsNormalizer implements DenormalizerInterface, NormalizerIn
             } elseif (null === $data['SizeBytes']) {
                 $value = $data['SizeBytes'];
             }
-            $object->setSizeBytes($value);
-        } elseif (array_key_exists('SizeBytes', $data) && null === $data['SizeBytes']) {
-            $object->setSizeBytes(null);
+            $object->sizeBytes = $value;
+            unset($data['SizeBytes']);
+        } elseif (array_key_exists('SizeBytes', $data)) {
+            $object->sizeBytes = null;
+            unset($data['SizeBytes']);
         }
         if (array_key_exists('Mode', $data) && null !== $data['Mode']) {
             $value_1 = $data['Mode'];
@@ -66,28 +68,31 @@ class MountTmpfsOptionsNormalizer implements DenormalizerInterface, NormalizerIn
             } elseif (null === $data['Mode']) {
                 $value_1 = $data['Mode'];
             }
-            $object->setMode($value_1);
-        } elseif (array_key_exists('Mode', $data) && null === $data['Mode']) {
-            $object->setMode(null);
+            $object->mode = $value_1;
+            unset($data['Mode']);
+        } elseif (array_key_exists('Mode', $data)) {
+            $object->mode = null;
+            unset($data['Mode']);
         }
         if (array_key_exists('Options', $data) && null !== $data['Options']) {
-            $value_2 = $data['Options'];
-            if (is_array($data['Options']) && $this->isOnlyNumericKeys($data['Options'])) {
-                $values = [];
-                foreach ($data['Options'] as $value_3) {
-                    $values_1 = [];
-                    foreach ($value_3 as $value_4) {
-                        $values_1[] = $value_4;
-                    }
-                    $values[] = $values_1;
+            $values = [];
+            foreach ($data['Options'] as $value_2) {
+                $values_1 = [];
+                foreach ($value_2 as $value_3) {
+                    $values_1[] = $value_3;
                 }
-                $value_2 = $values;
-            } elseif (null === $data['Options']) {
-                $value_2 = $data['Options'];
+                $values[] = $values_1;
             }
-            $object->setOptions($value_2);
-        } elseif (array_key_exists('Options', $data) && null === $data['Options']) {
-            $object->setOptions(null);
+            $object->options = $values;
+            unset($data['Options']);
+        } elseif (array_key_exists('Options', $data)) {
+            $object->options = null;
+            unset($data['Options']);
+        }
+        foreach ($data as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_4;
+            }
         }
 
         return $object;
@@ -96,40 +101,39 @@ class MountTmpfsOptionsNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('sizeBytes')) {
-            $value = $data->getSizeBytes();
-            if (is_int($data->getSizeBytes())) {
-                $value = $data->getSizeBytes();
-            } elseif (null === $data->getSizeBytes()) {
-                $value = $data->getSizeBytes();
+        if (array_key_exists('sizeBytes', get_object_vars($data)) && null !== ($data->sizeBytes ?? null)) {
+            $value = $data->sizeBytes;
+            if (is_int($data->sizeBytes)) {
+                $value = $data->sizeBytes;
+            } elseif (null === $data->sizeBytes) {
+                $value = $data->sizeBytes;
             }
             $dataArray['SizeBytes'] = $value;
         }
-        if ($data->isInitialized('mode')) {
-            $value_1 = $data->getMode();
-            if (is_int($data->getMode())) {
-                $value_1 = $data->getMode();
-            } elseif (null === $data->getMode()) {
-                $value_1 = $data->getMode();
+        if (array_key_exists('mode', get_object_vars($data)) && null !== ($data->mode ?? null)) {
+            $value_1 = $data->mode;
+            if (is_int($data->mode)) {
+                $value_1 = $data->mode;
+            } elseif (null === $data->mode) {
+                $value_1 = $data->mode;
             }
             $dataArray['Mode'] = $value_1;
         }
-        if ($data->isInitialized('options')) {
-            $value_2 = $data->getOptions();
-            if (is_array($data->getOptions())) {
-                $values = [];
-                foreach ($data->getOptions() as $value_3) {
-                    $values_1 = [];
-                    foreach ($value_3 as $value_4) {
-                        $values_1[] = $value_4;
-                    }
-                    $values[] = $values_1;
+        if (array_key_exists('options', get_object_vars($data)) && null !== ($data->options ?? null)) {
+            $values = [];
+            foreach ($data->options as $value_2) {
+                $values_1 = [];
+                foreach ($value_2 as $value_3) {
+                    $values_1[] = $value_3;
                 }
-                $value_2 = $values;
-            } elseif (null === $data->getOptions()) {
-                $value_2 = $data->getOptions();
+                $values[] = $values_1;
             }
-            $dataArray['Options'] = $value_2;
+            $dataArray['Options'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_4;
+            }
         }
 
         return $dataArray;

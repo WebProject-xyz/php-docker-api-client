@@ -48,7 +48,13 @@ class RootFSStorageNormalizer implements DenormalizerInterface, NormalizerInterf
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Snapshot', $data)) {
-            $object->setSnapshot($this->denormalizer->denormalize($data['Snapshot'], \WebProject\DockerApi\Library\Generated\Model\RootFSStorageSnapshot::class, 'json', $context));
+            $object->snapshot = $this->denormalizer->denormalize($data['Snapshot'], \WebProject\DockerApi\Library\Generated\Model\RootFSStorageSnapshot::class, 'json', $context);
+            unset($data['Snapshot']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -57,8 +63,14 @@ class RootFSStorageNormalizer implements DenormalizerInterface, NormalizerInterf
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('snapshot') && null !== $data->getSnapshot()) {
-            $dataArray['Snapshot'] = $this->normalizer->normalize($data->getSnapshot(), 'json', $context);
+        if (array_key_exists('snapshot', get_object_vars($data)) && null !== ($data->snapshot ?? null)) {
+            $normalized            = $this->normalizer->normalize($data->snapshot, 'json', $context);
+            $dataArray['Snapshot'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
         }
 
         return $dataArray;

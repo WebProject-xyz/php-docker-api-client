@@ -3,19 +3,12 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class SwarmSpecTaskDefaults
+class SwarmSpecTaskDefaults implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The log driver to use for tasks created in the orchestrator if
      * unspecified by a service.
@@ -25,38 +18,10 @@ class SwarmSpecTaskDefaults
      *
      * @var SwarmSpecTaskDefaultsLogDriver|null
      */
-    protected $logDriver;
+    public ?SwarmSpecTaskDefaultsLogDriver $logDriver;
 
-    /**
-     * The log driver to use for tasks created in the orchestrator if
-     * unspecified by a service.
-     *
-     * Updating this value only affects new tasks. Existing tasks continue
-     * to use their previously configured log driver until recreated.
-     *
-     * @return SwarmSpecTaskDefaultsLogDriver|null
-     */
-    public function getLogDriver(): ?SwarmSpecTaskDefaultsLogDriver
+    public function definedProperties(): array
     {
-        return $this->logDriver;
-    }
-
-    /**
-     * The log driver to use for tasks created in the orchestrator if
-     * unspecified by a service.
-     *
-     * Updating this value only affects new tasks. Existing tasks continue
-     * to use their previously configured log driver until recreated.
-     *
-     * @param SwarmSpecTaskDefaultsLogDriver|null $logDriver
-     *
-     * @return self
-     */
-    public function setLogDriver(?SwarmSpecTaskDefaultsLogDriver $logDriver): self
-    {
-        $this->initialized['logDriver'] = true;
-        $this->logDriver                = $logDriver;
-
-        return $this;
+        return ['logDriver' => 'LogDriver'];
     }
 }

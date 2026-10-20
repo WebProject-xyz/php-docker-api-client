@@ -3,117 +3,31 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ServiceInfo
+class ServiceInfo implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var string|null
      */
-    protected $vIP;
+    public ?string $vIP;
     /**
      * @var list<string>|null
      */
-    protected $ports;
+    public ?array $ports;
     /**
      * @var int|null
      */
-    protected $localLBIndex;
+    public ?int $localLBIndex;
     /**
      * @var list<NetworkTaskInfo>|null
      */
-    protected $tasks;
+    public ?array $tasks;
 
-    /**
-     * @return string|null
-     */
-    public function getVIP(): ?string
+    public function definedProperties(): array
     {
-        return $this->vIP;
-    }
-
-    /**
-     * @param string|null $vIP
-     *
-     * @return self
-     */
-    public function setVIP(?string $vIP): self
-    {
-        $this->initialized['vIP'] = true;
-        $this->vIP                = $vIP;
-
-        return $this;
-    }
-
-    /**
-     * @return list<string>|null
-     */
-    public function getPorts(): ?array
-    {
-        return $this->ports;
-    }
-
-    /**
-     * @param list<string>|null $ports
-     *
-     * @return self
-     */
-    public function setPorts(?array $ports): self
-    {
-        $this->initialized['ports'] = true;
-        $this->ports                = $ports;
-
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getLocalLBIndex(): ?int
-    {
-        return $this->localLBIndex;
-    }
-
-    /**
-     * @param int|null $localLBIndex
-     *
-     * @return self
-     */
-    public function setLocalLBIndex(?int $localLBIndex): self
-    {
-        $this->initialized['localLBIndex'] = true;
-        $this->localLBIndex                = $localLBIndex;
-
-        return $this;
-    }
-
-    /**
-     * @return list<NetworkTaskInfo>|null
-     */
-    public function getTasks(): ?array
-    {
-        return $this->tasks;
-    }
-
-    /**
-     * @param list<NetworkTaskInfo>|null $tasks
-     *
-     * @return self
-     */
-    public function setTasks(?array $tasks): self
-    {
-        $this->initialized['tasks'] = true;
-        $this->tasks                = $tasks;
-
-        return $this;
+        return ['vIP' => 'VIP', 'ports' => 'Ports', 'localLBIndex' => 'LocalLBIndex', 'tasks' => 'Tasks'];
     }
 }

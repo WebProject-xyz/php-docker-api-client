@@ -3,173 +3,41 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class BuildInfo
+class BuildInfo implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var string|null
      */
-    protected $id;
+    public ?string $id;
     /**
      * @var string|null
      */
-    protected $stream;
+    public ?string $stream;
     /**
      * @var ErrorDetail
      */
-    protected $errorDetail;
+    public ErrorDetail $errorDetail;
     /**
      * @var string|null
      */
-    protected $status;
+    public ?string $status;
     /**
      * @var ProgressDetail
      */
-    protected $progressDetail;
+    public ProgressDetail $progressDetail;
     /**
      * Image ID or Digest.
      *
      * @var ImageID
      */
-    protected $aux;
+    public ImageID $aux;
 
-    /**
-     * @return string|null
-     */
-    public function getId(): ?string
+    public function definedProperties(): array
     {
-        return $this->id;
-    }
-
-    /**
-     * @param string|null $id
-     *
-     * @return self
-     */
-    public function setId(?string $id): self
-    {
-        $this->initialized['id'] = true;
-        $this->id                = $id;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getStream(): ?string
-    {
-        return $this->stream;
-    }
-
-    /**
-     * @param string|null $stream
-     *
-     * @return self
-     */
-    public function setStream(?string $stream): self
-    {
-        $this->initialized['stream'] = true;
-        $this->stream                = $stream;
-
-        return $this;
-    }
-
-    /**
-     * @return ErrorDetail
-     */
-    public function getErrorDetail(): ErrorDetail
-    {
-        return $this->errorDetail;
-    }
-
-    /**
-     * @param ErrorDetail $errorDetail
-     *
-     * @return self
-     */
-    public function setErrorDetail(ErrorDetail $errorDetail): self
-    {
-        $this->initialized['errorDetail'] = true;
-        $this->errorDetail                = $errorDetail;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param string|null $status
-     *
-     * @return self
-     */
-    public function setStatus(?string $status): self
-    {
-        $this->initialized['status'] = true;
-        $this->status                = $status;
-
-        return $this;
-    }
-
-    /**
-     * @return ProgressDetail
-     */
-    public function getProgressDetail(): ProgressDetail
-    {
-        return $this->progressDetail;
-    }
-
-    /**
-     * @param ProgressDetail $progressDetail
-     *
-     * @return self
-     */
-    public function setProgressDetail(ProgressDetail $progressDetail): self
-    {
-        $this->initialized['progressDetail'] = true;
-        $this->progressDetail                = $progressDetail;
-
-        return $this;
-    }
-
-    /**
-     * Image ID or Digest.
-     *
-     * @return ImageID
-     */
-    public function getAux(): ImageID
-    {
-        return $this->aux;
-    }
-
-    /**
-     * Image ID or Digest.
-     *
-     * @param ImageID $aux
-     *
-     * @return self
-     */
-    public function setAux(ImageID $aux): self
-    {
-        $this->initialized['aux'] = true;
-        $this->aux                = $aux;
-
-        return $this;
+        return ['id' => 'id', 'stream' => 'stream', 'errorDetail' => 'errorDetail', 'status' => 'status', 'progressDetail' => 'progressDetail', 'aux' => 'aux'];
     }
 }

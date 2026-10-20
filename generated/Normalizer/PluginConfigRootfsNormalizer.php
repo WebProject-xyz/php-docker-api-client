@@ -55,24 +55,27 @@ class PluginConfigRootfsNormalizer implements DenormalizerInterface, NormalizerI
             } elseif (null === $data['type']) {
                 $value = $data['type'];
             }
-            $object->setType($value);
-        } elseif (array_key_exists('type', $data) && null === $data['type']) {
-            $object->setType(null);
+            $object->type = $value;
+            unset($data['type']);
+        } elseif (array_key_exists('type', $data)) {
+            $object->type = null;
+            unset($data['type']);
         }
         if (array_key_exists('diff_ids', $data) && null !== $data['diff_ids']) {
-            $value_1 = $data['diff_ids'];
-            if (is_array($data['diff_ids']) && $this->isOnlyNumericKeys($data['diff_ids'])) {
-                $values = [];
-                foreach ($data['diff_ids'] as $value_2) {
-                    $values[] = $value_2;
-                }
-                $value_1 = $values;
-            } elseif (null === $data['diff_ids']) {
-                $value_1 = $data['diff_ids'];
+            $values = [];
+            foreach ($data['diff_ids'] as $value_1) {
+                $values[] = $value_1;
             }
-            $object->setDiffIds($value_1);
-        } elseif (array_key_exists('diff_ids', $data) && null === $data['diff_ids']) {
-            $object->setDiffIds(null);
+            $object->diffIds = $values;
+            unset($data['diff_ids']);
+        } elseif (array_key_exists('diff_ids', $data)) {
+            $object->diffIds = null;
+            unset($data['diff_ids']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -81,27 +84,26 @@ class PluginConfigRootfsNormalizer implements DenormalizerInterface, NormalizerI
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('type')) {
-            $value = $data->getType();
-            if (is_string($data->getType())) {
-                $value = $data->getType();
-            } elseif (null === $data->getType()) {
-                $value = $data->getType();
+        if (array_key_exists('type', get_object_vars($data)) && null !== ($data->type ?? null)) {
+            $value = $data->type;
+            if (is_string($data->type)) {
+                $value = $data->type;
+            } elseif (null === $data->type) {
+                $value = $data->type;
             }
             $dataArray['type'] = $value;
         }
-        if ($data->isInitialized('diffIds')) {
-            $value_1 = $data->getDiffIds();
-            if (is_array($data->getDiffIds())) {
-                $values = [];
-                foreach ($data->getDiffIds() as $value_2) {
-                    $values[] = $value_2;
-                }
-                $value_1 = $values;
-            } elseif (null === $data->getDiffIds()) {
-                $value_1 = $data->getDiffIds();
+        if (array_key_exists('diffIds', get_object_vars($data)) && null !== ($data->diffIds ?? null)) {
+            $values = [];
+            foreach ($data->diffIds as $value_1) {
+                $values[] = $value_1;
             }
-            $dataArray['diff_ids'] = $value_1;
+            $dataArray['diff_ids'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

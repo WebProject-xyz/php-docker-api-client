@@ -48,14 +48,21 @@ class DistributionInspectNormalizer implements DenormalizerInterface, Normalizer
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Descriptor', $data)) {
-            $object->setDescriptor($this->denormalizer->denormalize($data['Descriptor'], \WebProject\DockerApi\Library\Generated\Model\OCIDescriptor::class, 'json', $context));
+            $object->descriptor = $this->denormalizer->denormalize($data['Descriptor'], \WebProject\DockerApi\Library\Generated\Model\OCIDescriptor::class, 'json', $context);
+            unset($data['Descriptor']);
         }
         if (array_key_exists('Platforms', $data)) {
             $values = [];
             foreach ($data['Platforms'] as $value) {
                 $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\OCIPlatform::class, 'json', $context);
             }
-            $object->setPlatforms($values);
+            $object->platforms = $values;
+            unset($data['Platforms']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -64,12 +71,19 @@ class DistributionInspectNormalizer implements DenormalizerInterface, Normalizer
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray               = [];
-        $dataArray['Descriptor'] = $this->normalizer->normalize($data->getDescriptor(), 'json', $context);
+        $normalized              = null === $data->descriptor ? null : $this->normalizer->normalize($data->descriptor, 'json', $context);
+        $dataArray['Descriptor'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         $values                  = [];
-        foreach ($data->getPlatforms() as $value) {
-            $values[] = $this->normalizer->normalize($value, 'json', $context);
+        foreach ($data->platforms as $value) {
+            $normalized_1 = null === $value ? null : $this->normalizer->normalize($value, 'json', $context);
+            $values[]     = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
         }
         $dataArray['Platforms'] = $values;
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
+        }
 
         return $dataArray;
     }

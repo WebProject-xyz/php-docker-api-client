@@ -55,9 +55,11 @@ class TaskSpecContainerSpecPrivilegesSeccompNormalizer implements DenormalizerIn
             } elseif (null === $data['Mode']) {
                 $value = $data['Mode'];
             }
-            $object->setMode($value);
-        } elseif (array_key_exists('Mode', $data) && null === $data['Mode']) {
-            $object->setMode(null);
+            $object->mode = $value;
+            unset($data['Mode']);
+        } elseif (array_key_exists('Mode', $data)) {
+            $object->mode = null;
+            unset($data['Mode']);
         }
         if (array_key_exists('Profile', $data) && null !== $data['Profile']) {
             $value_1 = $data['Profile'];
@@ -66,9 +68,16 @@ class TaskSpecContainerSpecPrivilegesSeccompNormalizer implements DenormalizerIn
             } elseif (null === $data['Profile']) {
                 $value_1 = $data['Profile'];
             }
-            $object->setProfile($value_1);
-        } elseif (array_key_exists('Profile', $data) && null === $data['Profile']) {
-            $object->setProfile(null);
+            $object->profile = $value_1;
+            unset($data['Profile']);
+        } elseif (array_key_exists('Profile', $data)) {
+            $object->profile = null;
+            unset($data['Profile']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class TaskSpecContainerSpecPrivilegesSeccompNormalizer implements DenormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('mode')) {
-            $value = $data->getMode();
-            if (is_string($data->getMode())) {
-                $value = $data->getMode();
-            } elseif (null === $data->getMode()) {
-                $value = $data->getMode();
+        if (array_key_exists('mode', get_object_vars($data)) && null !== ($data->mode ?? null)) {
+            $value = $data->mode;
+            if (is_string($data->mode)) {
+                $value = $data->mode;
+            } elseif (null === $data->mode) {
+                $value = $data->mode;
             }
             $dataArray['Mode'] = $value;
         }
-        if ($data->isInitialized('profile')) {
-            $value_1 = $data->getProfile();
-            if (is_string($data->getProfile())) {
-                $value_1 = $data->getProfile();
-            } elseif (null === $data->getProfile()) {
-                $value_1 = $data->getProfile();
+        if (array_key_exists('profile', get_object_vars($data)) && null !== ($data->profile ?? null)) {
+            $value_1 = $data->profile;
+            if (is_string($data->profile)) {
+                $value_1 = $data->profile;
+            } elseif (null === $data->profile) {
+                $value_1 = $data->profile;
             }
             $dataArray['Profile'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

@@ -3,48 +3,21 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class VolumesNamePutBody
+class VolumesNamePutBody implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Cluster-specific options used to create the volume.
      *
      * @var ClusterVolumeSpec
      */
-    protected $spec;
+    public ClusterVolumeSpec $spec;
 
-    /**
-     * Cluster-specific options used to create the volume.
-     *
-     * @return ClusterVolumeSpec
-     */
-    public function getSpec(): ClusterVolumeSpec
+    public function definedProperties(): array
     {
-        return $this->spec;
-    }
-
-    /**
-     * Cluster-specific options used to create the volume.
-     *
-     * @param ClusterVolumeSpec $spec
-     *
-     * @return self
-     */
-    public function setSpec(ClusterVolumeSpec $spec): self
-    {
-        $this->initialized['spec'] = true;
-        $this->spec                = $spec;
-
-        return $this;
+        return ['spec' => 'Spec'];
     }
 }

@@ -55,9 +55,11 @@ class ServiceServiceStatusNormalizer implements DenormalizerInterface, Normalize
             } elseif (null === $data['RunningTasks']) {
                 $value = $data['RunningTasks'];
             }
-            $object->setRunningTasks($value);
-        } elseif (array_key_exists('RunningTasks', $data) && null === $data['RunningTasks']) {
-            $object->setRunningTasks(null);
+            $object->runningTasks = $value;
+            unset($data['RunningTasks']);
+        } elseif (array_key_exists('RunningTasks', $data)) {
+            $object->runningTasks = null;
+            unset($data['RunningTasks']);
         }
         if (array_key_exists('DesiredTasks', $data) && null !== $data['DesiredTasks']) {
             $value_1 = $data['DesiredTasks'];
@@ -66,9 +68,11 @@ class ServiceServiceStatusNormalizer implements DenormalizerInterface, Normalize
             } elseif (null === $data['DesiredTasks']) {
                 $value_1 = $data['DesiredTasks'];
             }
-            $object->setDesiredTasks($value_1);
-        } elseif (array_key_exists('DesiredTasks', $data) && null === $data['DesiredTasks']) {
-            $object->setDesiredTasks(null);
+            $object->desiredTasks = $value_1;
+            unset($data['DesiredTasks']);
+        } elseif (array_key_exists('DesiredTasks', $data)) {
+            $object->desiredTasks = null;
+            unset($data['DesiredTasks']);
         }
         if (array_key_exists('CompletedTasks', $data) && null !== $data['CompletedTasks']) {
             $value_2 = $data['CompletedTasks'];
@@ -77,9 +81,16 @@ class ServiceServiceStatusNormalizer implements DenormalizerInterface, Normalize
             } elseif (null === $data['CompletedTasks']) {
                 $value_2 = $data['CompletedTasks'];
             }
-            $object->setCompletedTasks($value_2);
-        } elseif (array_key_exists('CompletedTasks', $data) && null === $data['CompletedTasks']) {
-            $object->setCompletedTasks(null);
+            $object->completedTasks = $value_2;
+            unset($data['CompletedTasks']);
+        } elseif (array_key_exists('CompletedTasks', $data)) {
+            $object->completedTasks = null;
+            unset($data['CompletedTasks']);
+        }
+        foreach ($data as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_3;
+            }
         }
 
         return $object;
@@ -88,32 +99,37 @@ class ServiceServiceStatusNormalizer implements DenormalizerInterface, Normalize
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('runningTasks')) {
-            $value = $data->getRunningTasks();
-            if (is_int($data->getRunningTasks())) {
-                $value = $data->getRunningTasks();
-            } elseif (null === $data->getRunningTasks()) {
-                $value = $data->getRunningTasks();
+        if (array_key_exists('runningTasks', get_object_vars($data)) && null !== ($data->runningTasks ?? null)) {
+            $value = $data->runningTasks;
+            if (is_int($data->runningTasks)) {
+                $value = $data->runningTasks;
+            } elseif (null === $data->runningTasks) {
+                $value = $data->runningTasks;
             }
             $dataArray['RunningTasks'] = $value;
         }
-        if ($data->isInitialized('desiredTasks')) {
-            $value_1 = $data->getDesiredTasks();
-            if (is_int($data->getDesiredTasks())) {
-                $value_1 = $data->getDesiredTasks();
-            } elseif (null === $data->getDesiredTasks()) {
-                $value_1 = $data->getDesiredTasks();
+        if (array_key_exists('desiredTasks', get_object_vars($data)) && null !== ($data->desiredTasks ?? null)) {
+            $value_1 = $data->desiredTasks;
+            if (is_int($data->desiredTasks)) {
+                $value_1 = $data->desiredTasks;
+            } elseif (null === $data->desiredTasks) {
+                $value_1 = $data->desiredTasks;
             }
             $dataArray['DesiredTasks'] = $value_1;
         }
-        if ($data->isInitialized('completedTasks')) {
-            $value_2 = $data->getCompletedTasks();
-            if (is_int($data->getCompletedTasks())) {
-                $value_2 = $data->getCompletedTasks();
-            } elseif (null === $data->getCompletedTasks()) {
-                $value_2 = $data->getCompletedTasks();
+        if (array_key_exists('completedTasks', get_object_vars($data)) && null !== ($data->completedTasks ?? null)) {
+            $value_2 = $data->completedTasks;
+            if (is_int($data->completedTasks)) {
+                $value_2 = $data->completedTasks;
+            } elseif (null === $data->completedTasks) {
+                $value_2 = $data->completedTasks;
             }
             $dataArray['CompletedTasks'] = $value_2;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_3;
+            }
         }
 
         return $dataArray;

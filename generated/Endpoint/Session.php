@@ -17,7 +17,7 @@ class Session extends \WebProject\DockerApi\Library\Generated\Runtime\Client\Bas
         return '/session';
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
         return [[], null];
     }
@@ -31,11 +31,13 @@ class Session extends \WebProject\DockerApi\Library\Generated\Runtime\Client\Bas
      * {@inheritdoc}
      *
      * @return null
+     *
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
+        $body   = $response->getContent(false);
         if (101 === $status) {
             return null;
         }
@@ -43,10 +45,21 @@ class Session extends \WebProject\DockerApi\Library\Generated\Runtime\Client\Bas
         }
         if (500 === $status) {
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Eager->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

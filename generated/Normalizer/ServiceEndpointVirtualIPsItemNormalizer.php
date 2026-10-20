@@ -55,9 +55,11 @@ class ServiceEndpointVirtualIPsItemNormalizer implements DenormalizerInterface, 
             } elseif (null === $data['NetworkID']) {
                 $value = $data['NetworkID'];
             }
-            $object->setNetworkID($value);
-        } elseif (array_key_exists('NetworkID', $data) && null === $data['NetworkID']) {
-            $object->setNetworkID(null);
+            $object->networkID = $value;
+            unset($data['NetworkID']);
+        } elseif (array_key_exists('NetworkID', $data)) {
+            $object->networkID = null;
+            unset($data['NetworkID']);
         }
         if (array_key_exists('Addr', $data) && null !== $data['Addr']) {
             $value_1 = $data['Addr'];
@@ -66,9 +68,16 @@ class ServiceEndpointVirtualIPsItemNormalizer implements DenormalizerInterface, 
             } elseif (null === $data['Addr']) {
                 $value_1 = $data['Addr'];
             }
-            $object->setAddr($value_1);
-        } elseif (array_key_exists('Addr', $data) && null === $data['Addr']) {
-            $object->setAddr(null);
+            $object->addr = $value_1;
+            unset($data['Addr']);
+        } elseif (array_key_exists('Addr', $data)) {
+            $object->addr = null;
+            unset($data['Addr']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class ServiceEndpointVirtualIPsItemNormalizer implements DenormalizerInterface, 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('networkID')) {
-            $value = $data->getNetworkID();
-            if (is_string($data->getNetworkID())) {
-                $value = $data->getNetworkID();
-            } elseif (null === $data->getNetworkID()) {
-                $value = $data->getNetworkID();
+        if (array_key_exists('networkID', get_object_vars($data)) && null !== ($data->networkID ?? null)) {
+            $value = $data->networkID;
+            if (is_string($data->networkID)) {
+                $value = $data->networkID;
+            } elseif (null === $data->networkID) {
+                $value = $data->networkID;
             }
             $dataArray['NetworkID'] = $value;
         }
-        if ($data->isInitialized('addr')) {
-            $value_1 = $data->getAddr();
-            if (is_string($data->getAddr())) {
-                $value_1 = $data->getAddr();
-            } elseif (null === $data->getAddr()) {
-                $value_1 = $data->getAddr();
+        if (array_key_exists('addr', get_object_vars($data)) && null !== ($data->addr ?? null)) {
+            $value_1 = $data->addr;
+            if (is_string($data->addr)) {
+                $value_1 = $data->addr;
+            } elseif (null === $data->addr) {
+                $value_1 = $data->addr;
             }
             $dataArray['Addr'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

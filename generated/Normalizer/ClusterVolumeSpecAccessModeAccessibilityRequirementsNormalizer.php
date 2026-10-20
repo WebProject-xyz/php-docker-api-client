@@ -48,34 +48,31 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirementsNormalizer implements 
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Requisite', $data) && null !== $data['Requisite']) {
-            $value = $data['Requisite'];
-            if (is_array($data['Requisite']) && $this->isOnlyNumericKeys($data['Requisite'])) {
-                $values = [];
-                foreach ($data['Requisite'] as $value_1) {
-                    $values[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\Topology::class, 'json', $context);
-                }
-                $value = $values;
-            } elseif (null === $data['Requisite']) {
-                $value = $data['Requisite'];
+            $values = [];
+            foreach ($data['Requisite'] as $value) {
+                $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\Topology::class, 'json', $context);
             }
-            $object->setRequisite($value);
-        } elseif (array_key_exists('Requisite', $data) && null === $data['Requisite']) {
-            $object->setRequisite(null);
+            $object->requisite = $values;
+            unset($data['Requisite']);
+        } elseif (array_key_exists('Requisite', $data)) {
+            $object->requisite = null;
+            unset($data['Requisite']);
         }
         if (array_key_exists('Preferred', $data) && null !== $data['Preferred']) {
-            $value_2 = $data['Preferred'];
-            if (is_array($data['Preferred']) && $this->isOnlyNumericKeys($data['Preferred'])) {
-                $values_1 = [];
-                foreach ($data['Preferred'] as $value_3) {
-                    $values_1[] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\Topology::class, 'json', $context);
-                }
-                $value_2 = $values_1;
-            } elseif (null === $data['Preferred']) {
-                $value_2 = $data['Preferred'];
+            $values_1 = [];
+            foreach ($data['Preferred'] as $value_1) {
+                $values_1[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\Topology::class, 'json', $context);
             }
-            $object->setPreferred($value_2);
-        } elseif (array_key_exists('Preferred', $data) && null === $data['Preferred']) {
-            $object->setPreferred(null);
+            $object->preferred = $values_1;
+            unset($data['Preferred']);
+        } elseif (array_key_exists('Preferred', $data)) {
+            $object->preferred = null;
+            unset($data['Preferred']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -84,31 +81,26 @@ class ClusterVolumeSpecAccessModeAccessibilityRequirementsNormalizer implements 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('requisite')) {
-            $value = $data->getRequisite();
-            if (is_array($data->getRequisite())) {
-                $values = [];
-                foreach ($data->getRequisite() as $value_1) {
-                    $values[] = $this->normalizer->normalize($value_1, 'json', $context);
-                }
-                $value = $values;
-            } elseif (null === $data->getRequisite()) {
-                $value = $data->getRequisite();
+        if (array_key_exists('requisite', get_object_vars($data)) && null !== ($data->requisite ?? null)) {
+            $values = [];
+            foreach ($data->requisite as $value) {
+                $normalized = null === $value ? null : $this->normalizer->normalize($value, 'json', $context);
+                $values[]   = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
             }
-            $dataArray['Requisite'] = $value;
+            $dataArray['Requisite'] = $values;
         }
-        if ($data->isInitialized('preferred')) {
-            $value_2 = $data->getPreferred();
-            if (is_array($data->getPreferred())) {
-                $values_1 = [];
-                foreach ($data->getPreferred() as $value_3) {
-                    $values_1[] = $this->normalizer->normalize($value_3, 'json', $context);
-                }
-                $value_2 = $values_1;
-            } elseif (null === $data->getPreferred()) {
-                $value_2 = $data->getPreferred();
+        if (array_key_exists('preferred', get_object_vars($data)) && null !== ($data->preferred ?? null)) {
+            $values_1 = [];
+            foreach ($data->preferred as $value_1) {
+                $normalized_1 = null === $value_1 ? null : $this->normalizer->normalize($value_1, 'json', $context);
+                $values_1[]   = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
             }
-            $dataArray['Preferred'] = $value_2;
+            $dataArray['Preferred'] = $values_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

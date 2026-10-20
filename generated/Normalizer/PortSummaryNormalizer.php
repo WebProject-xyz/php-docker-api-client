@@ -56,12 +56,15 @@ class PortSummaryNormalizer implements DenormalizerInterface, NormalizerInterfac
             } elseif (null === $data['IP']) {
                 $value = $data['IP'];
             }
-            $object->setIP($value);
-        } elseif (array_key_exists('IP', $data) && null === $data['IP']) {
-            $object->setIP(null);
+            $object->iP = $value;
+            unset($data['IP']);
+        } elseif (array_key_exists('IP', $data)) {
+            $object->iP = null;
+            unset($data['IP']);
         }
         if (array_key_exists('PrivatePort', $data)) {
-            $object->setPrivatePort($data['PrivatePort']);
+            $object->privatePort = $data['PrivatePort'];
+            unset($data['PrivatePort']);
         }
         if (array_key_exists('PublicPort', $data) && null !== $data['PublicPort']) {
             $value_1 = $data['PublicPort'];
@@ -70,12 +73,20 @@ class PortSummaryNormalizer implements DenormalizerInterface, NormalizerInterfac
             } elseif (null === $data['PublicPort']) {
                 $value_1 = $data['PublicPort'];
             }
-            $object->setPublicPort($value_1);
-        } elseif (array_key_exists('PublicPort', $data) && null === $data['PublicPort']) {
-            $object->setPublicPort(null);
+            $object->publicPort = $value_1;
+            unset($data['PublicPort']);
+        } elseif (array_key_exists('PublicPort', $data)) {
+            $object->publicPort = null;
+            unset($data['PublicPort']);
         }
         if (array_key_exists('Type', $data)) {
-            $object->setType($data['Type']);
+            $object->type = \WebProject\DockerApi\Library\Generated\Model\PortSummaryType::from($data['Type']);
+            unset($data['Type']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -84,26 +95,31 @@ class PortSummaryNormalizer implements DenormalizerInterface, NormalizerInterfac
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('iP')) {
-            $value = $data->getIP();
-            if (is_string($data->getIP())) {
-                $value = $data->getIP();
-            } elseif (null === $data->getIP()) {
-                $value = $data->getIP();
+        if (array_key_exists('iP', get_object_vars($data)) && null !== ($data->iP ?? null)) {
+            $value = $data->iP;
+            if (is_string($data->iP)) {
+                $value = $data->iP;
+            } elseif (null === $data->iP) {
+                $value = $data->iP;
             }
             $dataArray['IP'] = $value;
         }
-        $dataArray['PrivatePort'] = $data->getPrivatePort();
-        if ($data->isInitialized('publicPort')) {
-            $value_1 = $data->getPublicPort();
-            if (is_int($data->getPublicPort())) {
-                $value_1 = $data->getPublicPort();
-            } elseif (null === $data->getPublicPort()) {
-                $value_1 = $data->getPublicPort();
+        $dataArray['PrivatePort'] = $data->privatePort;
+        if (array_key_exists('publicPort', get_object_vars($data)) && null !== ($data->publicPort ?? null)) {
+            $value_1 = $data->publicPort;
+            if (is_int($data->publicPort)) {
+                $value_1 = $data->publicPort;
+            } elseif (null === $data->publicPort) {
+                $value_1 = $data->publicPort;
             }
             $dataArray['PublicPort'] = $value_1;
         }
-        $dataArray['Type'] = $data->getType();
+        $dataArray['Type'] = $data->type->value;
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
+        }
 
         return $dataArray;
     }

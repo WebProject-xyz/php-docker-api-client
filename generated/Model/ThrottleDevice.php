@@ -3,79 +3,27 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ThrottleDevice
+class ThrottleDevice implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Device path.
      *
      * @var string|null
      */
-    protected $path;
+    public ?string $path;
     /**
      * Rate.
      *
      * @var int|null
      */
-    protected $rate;
+    public ?int $rate;
 
-    /**
-     * Device path.
-     *
-     * @return string|null
-     */
-    public function getPath(): ?string
+    public function definedProperties(): array
     {
-        return $this->path;
-    }
-
-    /**
-     * Device path.
-     *
-     * @param string|null $path
-     *
-     * @return self
-     */
-    public function setPath(?string $path): self
-    {
-        $this->initialized['path'] = true;
-        $this->path                = $path;
-
-        return $this;
-    }
-
-    /**
-     * Rate.
-     *
-     * @return int|null
-     */
-    public function getRate(): ?int
-    {
-        return $this->rate;
-    }
-
-    /**
-     * Rate.
-     *
-     * @param int|null $rate
-     *
-     * @return self
-     */
-    public function setRate(?int $rate): self
-    {
-        $this->initialized['rate'] = true;
-        $this->rate                = $rate;
-
-        return $this;
+        return ['path' => 'Path', 'rate' => 'Rate'];
     }
 }

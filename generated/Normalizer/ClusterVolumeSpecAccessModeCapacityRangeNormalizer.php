@@ -55,9 +55,11 @@ class ClusterVolumeSpecAccessModeCapacityRangeNormalizer implements Denormalizer
             } elseif (null === $data['RequiredBytes']) {
                 $value = $data['RequiredBytes'];
             }
-            $object->setRequiredBytes($value);
-        } elseif (array_key_exists('RequiredBytes', $data) && null === $data['RequiredBytes']) {
-            $object->setRequiredBytes(null);
+            $object->requiredBytes = $value;
+            unset($data['RequiredBytes']);
+        } elseif (array_key_exists('RequiredBytes', $data)) {
+            $object->requiredBytes = null;
+            unset($data['RequiredBytes']);
         }
         if (array_key_exists('LimitBytes', $data) && null !== $data['LimitBytes']) {
             $value_1 = $data['LimitBytes'];
@@ -66,9 +68,16 @@ class ClusterVolumeSpecAccessModeCapacityRangeNormalizer implements Denormalizer
             } elseif (null === $data['LimitBytes']) {
                 $value_1 = $data['LimitBytes'];
             }
-            $object->setLimitBytes($value_1);
-        } elseif (array_key_exists('LimitBytes', $data) && null === $data['LimitBytes']) {
-            $object->setLimitBytes(null);
+            $object->limitBytes = $value_1;
+            unset($data['LimitBytes']);
+        } elseif (array_key_exists('LimitBytes', $data)) {
+            $object->limitBytes = null;
+            unset($data['LimitBytes']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class ClusterVolumeSpecAccessModeCapacityRangeNormalizer implements Denormalizer
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('requiredBytes')) {
-            $value = $data->getRequiredBytes();
-            if (is_int($data->getRequiredBytes())) {
-                $value = $data->getRequiredBytes();
-            } elseif (null === $data->getRequiredBytes()) {
-                $value = $data->getRequiredBytes();
+        if (array_key_exists('requiredBytes', get_object_vars($data)) && null !== ($data->requiredBytes ?? null)) {
+            $value = $data->requiredBytes;
+            if (is_int($data->requiredBytes)) {
+                $value = $data->requiredBytes;
+            } elseif (null === $data->requiredBytes) {
+                $value = $data->requiredBytes;
             }
             $dataArray['RequiredBytes'] = $value;
         }
-        if ($data->isInitialized('limitBytes')) {
-            $value_1 = $data->getLimitBytes();
-            if (is_int($data->getLimitBytes())) {
-                $value_1 = $data->getLimitBytes();
-            } elseif (null === $data->getLimitBytes()) {
-                $value_1 = $data->getLimitBytes();
+        if (array_key_exists('limitBytes', get_object_vars($data)) && null !== ($data->limitBytes ?? null)) {
+            $value_1 = $data->limitBytes;
+            if (is_int($data->limitBytes)) {
+                $value_1 = $data->limitBytes;
+            } elseif (null === $data->limitBytes) {
+                $value_1 = $data->limitBytes;
             }
             $dataArray['LimitBytes'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

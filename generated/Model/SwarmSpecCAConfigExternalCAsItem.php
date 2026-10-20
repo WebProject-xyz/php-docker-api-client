@@ -3,39 +3,32 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class SwarmSpecCAConfigExternalCAsItem
+class SwarmSpecCAConfigExternalCAsItem implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Protocol for communication with the external CA (currently
      * only `cfssl` is supported).
      *
      * @var string|null
      */
-    protected $protocol = 'cfssl';
+    public ?string $protocol = 'cfssl';
     /**
      * URL where certificate signing requests should be sent.
      *
      * @var string|null
      */
-    protected $uRL;
+    public ?string $uRL;
     /**
      * An object with key/value pairs that are interpreted as
      * protocol-specific options for the external CA driver.
      *
-     * @var array<string, string>|null
+     * @var iterable<string, string>|null
      */
-    protected $options;
+    public ?iterable $options;
     /**
      * The root CA certificate (in PEM format) this external CA uses
      * to issue TLS certificates (assumed to be to the current swarm
@@ -43,113 +36,10 @@ class SwarmSpecCAConfigExternalCAsItem
      *
      * @var string|null
      */
-    protected $cACert;
+    public ?string $cACert;
 
-    /**
-     * Protocol for communication with the external CA (currently
-     * only `cfssl` is supported).
-     *
-     * @return string|null
-     */
-    public function getProtocol(): ?string
+    public function definedProperties(): array
     {
-        return $this->protocol;
-    }
-
-    /**
-     * Protocol for communication with the external CA (currently
-     * only `cfssl` is supported).
-     *
-     * @param string|null $protocol
-     *
-     * @return self
-     */
-    public function setProtocol(?string $protocol): self
-    {
-        $this->initialized['protocol'] = true;
-        $this->protocol                = $protocol;
-
-        return $this;
-    }
-
-    /**
-     * URL where certificate signing requests should be sent.
-     *
-     * @return string|null
-     */
-    public function getURL(): ?string
-    {
-        return $this->uRL;
-    }
-
-    /**
-     * URL where certificate signing requests should be sent.
-     *
-     * @param string|null $uRL
-     *
-     * @return self
-     */
-    public function setURL(?string $uRL): self
-    {
-        $this->initialized['uRL'] = true;
-        $this->uRL                = $uRL;
-
-        return $this;
-    }
-
-    /**
-     * An object with key/value pairs that are interpreted as
-     * protocol-specific options for the external CA driver.
-     *
-     * @return array<string, string>|null
-     */
-    public function getOptions(): ?iterable
-    {
-        return $this->options;
-    }
-
-    /**
-     * An object with key/value pairs that are interpreted as
-     * protocol-specific options for the external CA driver.
-     *
-     * @param array<string, string>|null $options
-     *
-     * @return self
-     */
-    public function setOptions(?iterable $options): self
-    {
-        $this->initialized['options'] = true;
-        $this->options                = $options;
-
-        return $this;
-    }
-
-    /**
-     * The root CA certificate (in PEM format) this external CA uses
-     * to issue TLS certificates (assumed to be to the current swarm
-     * root CA certificate if not provided).
-     *
-     * @return string|null
-     */
-    public function getCACert(): ?string
-    {
-        return $this->cACert;
-    }
-
-    /**
-     * The root CA certificate (in PEM format) this external CA uses
-     * to issue TLS certificates (assumed to be to the current swarm
-     * root CA certificate if not provided).
-     *
-     * @param string|null $cACert
-     *
-     * @return self
-     */
-    public function setCACert(?string $cACert): self
-    {
-        $this->initialized['cACert'] = true;
-        $this->cACert                = $cACert;
-
-        return $this;
+        return ['protocol' => 'Protocol', 'uRL' => 'URL', 'options' => 'Options', 'cACert' => 'CACert'];
     }
 }

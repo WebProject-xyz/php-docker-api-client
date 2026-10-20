@@ -48,14 +48,21 @@ class DriverDataNormalizer implements DenormalizerInterface, NormalizerInterface
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Name', $data)) {
-            $object->setName($data['Name']);
+            $object->name = $data['Name'];
+            unset($data['Name']);
         }
         if (array_key_exists('Data', $data)) {
-            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+            $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
             foreach ($data['Data'] as $key => $value) {
                 $values[$key] = $value;
             }
-            $object->setData($values);
+            $object->data = $values;
+            unset($data['Data']);
+        }
+        foreach ($data as $key_1 => $value_1) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_1;
+            }
         }
 
         return $object;
@@ -64,12 +71,17 @@ class DriverDataNormalizer implements DenormalizerInterface, NormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray         = [];
-        $dataArray['Name'] = $data->getName();
-        $values            = [];
-        foreach ($data->getData() as $key => $value) {
+        $dataArray['Name'] = $data->name;
+        $values            = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+        foreach ($data->data as $key => $value) {
             $values[$key] = $value;
         }
         $dataArray['Data'] = $values;
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_1) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_1;
+            }
+        }
 
         return $dataArray;
     }

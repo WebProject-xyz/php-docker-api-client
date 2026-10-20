@@ -55,9 +55,11 @@ class DeviceMappingNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['PathOnHost']) {
                 $value = $data['PathOnHost'];
             }
-            $object->setPathOnHost($value);
-        } elseif (array_key_exists('PathOnHost', $data) && null === $data['PathOnHost']) {
-            $object->setPathOnHost(null);
+            $object->pathOnHost = $value;
+            unset($data['PathOnHost']);
+        } elseif (array_key_exists('PathOnHost', $data)) {
+            $object->pathOnHost = null;
+            unset($data['PathOnHost']);
         }
         if (array_key_exists('PathInContainer', $data) && null !== $data['PathInContainer']) {
             $value_1 = $data['PathInContainer'];
@@ -66,9 +68,11 @@ class DeviceMappingNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['PathInContainer']) {
                 $value_1 = $data['PathInContainer'];
             }
-            $object->setPathInContainer($value_1);
-        } elseif (array_key_exists('PathInContainer', $data) && null === $data['PathInContainer']) {
-            $object->setPathInContainer(null);
+            $object->pathInContainer = $value_1;
+            unset($data['PathInContainer']);
+        } elseif (array_key_exists('PathInContainer', $data)) {
+            $object->pathInContainer = null;
+            unset($data['PathInContainer']);
         }
         if (array_key_exists('CgroupPermissions', $data) && null !== $data['CgroupPermissions']) {
             $value_2 = $data['CgroupPermissions'];
@@ -77,9 +81,16 @@ class DeviceMappingNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['CgroupPermissions']) {
                 $value_2 = $data['CgroupPermissions'];
             }
-            $object->setCgroupPermissions($value_2);
-        } elseif (array_key_exists('CgroupPermissions', $data) && null === $data['CgroupPermissions']) {
-            $object->setCgroupPermissions(null);
+            $object->cgroupPermissions = $value_2;
+            unset($data['CgroupPermissions']);
+        } elseif (array_key_exists('CgroupPermissions', $data)) {
+            $object->cgroupPermissions = null;
+            unset($data['CgroupPermissions']);
+        }
+        foreach ($data as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_3;
+            }
         }
 
         return $object;
@@ -88,32 +99,37 @@ class DeviceMappingNormalizer implements DenormalizerInterface, NormalizerInterf
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('pathOnHost')) {
-            $value = $data->getPathOnHost();
-            if (is_string($data->getPathOnHost())) {
-                $value = $data->getPathOnHost();
-            } elseif (null === $data->getPathOnHost()) {
-                $value = $data->getPathOnHost();
+        if (array_key_exists('pathOnHost', get_object_vars($data)) && null !== ($data->pathOnHost ?? null)) {
+            $value = $data->pathOnHost;
+            if (is_string($data->pathOnHost)) {
+                $value = $data->pathOnHost;
+            } elseif (null === $data->pathOnHost) {
+                $value = $data->pathOnHost;
             }
             $dataArray['PathOnHost'] = $value;
         }
-        if ($data->isInitialized('pathInContainer')) {
-            $value_1 = $data->getPathInContainer();
-            if (is_string($data->getPathInContainer())) {
-                $value_1 = $data->getPathInContainer();
-            } elseif (null === $data->getPathInContainer()) {
-                $value_1 = $data->getPathInContainer();
+        if (array_key_exists('pathInContainer', get_object_vars($data)) && null !== ($data->pathInContainer ?? null)) {
+            $value_1 = $data->pathInContainer;
+            if (is_string($data->pathInContainer)) {
+                $value_1 = $data->pathInContainer;
+            } elseif (null === $data->pathInContainer) {
+                $value_1 = $data->pathInContainer;
             }
             $dataArray['PathInContainer'] = $value_1;
         }
-        if ($data->isInitialized('cgroupPermissions')) {
-            $value_2 = $data->getCgroupPermissions();
-            if (is_string($data->getCgroupPermissions())) {
-                $value_2 = $data->getCgroupPermissions();
-            } elseif (null === $data->getCgroupPermissions()) {
-                $value_2 = $data->getCgroupPermissions();
+        if (array_key_exists('cgroupPermissions', get_object_vars($data)) && null !== ($data->cgroupPermissions ?? null)) {
+            $value_2 = $data->cgroupPermissions;
+            if (is_string($data->cgroupPermissions)) {
+                $value_2 = $data->cgroupPermissions;
+            } elseif (null === $data->cgroupPermissions) {
+                $value_2 = $data->cgroupPermissions;
             }
             $dataArray['CgroupPermissions'] = $value_2;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_3;
+            }
         }
 
         return $dataArray;

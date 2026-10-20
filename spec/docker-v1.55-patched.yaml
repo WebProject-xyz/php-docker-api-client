@@ -7989,7 +7989,7 @@ paths:
       tags:
         - Session
 servers:
-  - url: /v1.55
+  - url: /
 components:
   requestBodies:
     PluginPrivilegeArray:
@@ -8883,7 +8883,7 @@ components:
 
             [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
           type: [string, 'null']
-          format: dateTime
+          format: date-time
           example: 2020-01-04T10:44:24.496526Z
         End:
           description: >
@@ -8891,7 +8891,7 @@ components:
 
             [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
           type: [string, 'null']
-          format: dateTime
+          format: date-time
           example: 2020-01-04T10:45:21.364525Z
         ExitCode:
           description: |
@@ -9870,7 +9870,7 @@ components:
 
             and omitted otherwise.
           type: [string, 'null']
-          format: dateTime
+          format: date-time
           example: 2022-02-04T21:20:12.497795Z
         Author:
           description: >
@@ -9951,7 +9951,7 @@ components:
 
                 and omitted otherwise.
               type: [string, 'null']
-              format: dateTime
+              format: date-time
               example: 2022-02-28T14:40:02.623929Z
     Identity:
       description: >-
@@ -9997,7 +9997,7 @@ components:
         CreatedAt:
           description: CreatedAt is the time when the build ran.
           type: [string, 'null']
-          format: dateTime
+          format: date-time
     PullIdentity:
       description: >-
         PullIdentity contains remote location information if image was created
@@ -10060,7 +10060,7 @@ components:
           type: [string, 'null']
         Timestamp:
           type: [string, 'null']
-          format: dateTime
+          format: date-time
     SignatureTimestampType:
       description: SignatureTimestampType is the type of timestamp used in the signature.
       type: string
@@ -10402,7 +10402,7 @@ components:
           nullable: false
         CreatedAt:
           type: [string, 'null']
-          format: dateTime
+          format: date-time
           description: Date/Time the volume was created.
           example: 2016-06-07T20:31:11.853782Z
         Status:
@@ -10603,7 +10603,7 @@ components:
 
             [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
           type: [string, 'null']
-          format: dateTime
+          format: date-time
           x-omitempty: false
           x-go-type:
             type: Time
@@ -11071,7 +11071,7 @@ components:
 
             [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
           type: [string, 'null']
-          format: dateTime
+          format: date-time
           example: 2016-08-18T10:44:24.496526Z
         LastUsedAt:
           description: >
@@ -11079,7 +11079,7 @@ components:
 
             [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
           type: [string, 'null']
-          format: dateTime
+          format: date-time
           example: 2017-08-09T07:09:37.632106Z
         UsageCount:
           type: [integer, 'null']
@@ -11841,7 +11841,7 @@ components:
 
             [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
           type: [string, 'null']
-          format: dateTime
+          format: date-time
           example: 2016-08-18T10:44:24.496526Z
         UpdatedAt:
           description: >
@@ -11849,7 +11849,7 @@ components:
 
             [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
           type: [string, 'null']
-          format: dateTime
+          format: date-time
           example: 2017-08-09T07:09:37.632106Z
         Spec:
           $ref: "#/components/schemas/NodeSpec"
@@ -12248,7 +12248,7 @@ components:
 
             [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
           type: [string, 'null']
-          format: dateTime
+          format: date-time
           example: 2016-08-18T10:44:24.496526Z
         UpdatedAt:
           description: >
@@ -12256,7 +12256,7 @@ components:
 
             [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
           type: [string, 'null']
-          format: dateTime
+          format: date-time
           example: 2017-08-09T07:09:37.632106Z
         Spec:
           $ref: "#/components/schemas/SwarmSpec"
@@ -13022,7 +13022,7 @@ components:
       properties:
         Timestamp:
           type: [string, 'null']
-          format: dateTime
+          format: date-time
         State:
           $ref: "#/components/schemas/TaskState"
         Message:
@@ -13043,10 +13043,10 @@ components:
           $ref: "#/components/schemas/ObjectVersion"
         CreatedAt:
           type: [string, 'null']
-          format: dateTime
+          format: date-time
         UpdatedAt:
           type: [string, 'null']
-          format: dateTime
+          format: date-time
         Name:
           description: Name of the task.
           type: [string, 'null']
@@ -13362,10 +13362,10 @@ components:
           $ref: "#/components/schemas/ObjectVersion"
         CreatedAt:
           type: [string, 'null']
-          format: dateTime
+          format: date-time
         UpdatedAt:
           type: [string, 'null']
-          format: dateTime
+          format: date-time
         Spec:
           $ref: "#/components/schemas/ServiceSpec"
         Endpoint:
@@ -13398,10 +13398,10 @@ components:
                 - completed
             StartedAt:
               type: [string, 'null']
-              format: dateTime
+              format: date-time
             CompletedAt:
               type: [string, 'null']
-              format: dateTime
+              format: date-time
             Message:
               type: [string, 'null']
         ServiceStatus:
@@ -13453,7 +13453,7 @@ components:
                 The last time, as observed by the server, that this job was
                 started.
               type: [string, 'null']
-              format: dateTime
+              format: date-time
       example:
         ID: 9mnpnzenvg8p8tdbtq4wvbkcz
         Version:
@@ -13572,7 +13572,7 @@ components:
 
             [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format with nano-seconds.
           type: [string, 'null']
-          format: dateTime
+          format: date-time
           example: 2025-02-17T17:43:39.640014Z
         Path:
           description: The path to the command being run
@@ -14032,11 +14032,11 @@ components:
           $ref: "#/components/schemas/ObjectVersion"
         CreatedAt:
           type: [string, 'null']
-          format: dateTime
+          format: date-time
           example: 2017-07-20T13:55:28.678959Z
         UpdatedAt:
           type: [string, 'null']
-          format: dateTime
+          format: date-time
           example: 2017-07-20T13:55:28.678959Z
         Spec:
           $ref: "#/components/schemas/SecretSpec"
@@ -14071,10 +14071,10 @@ components:
           $ref: "#/components/schemas/ObjectVersion"
         CreatedAt:
           type: [string, 'null']
-          format: dateTime
+          format: date-time
         UpdatedAt:
           type: [string, 'null']
-          format: dateTime
+          format: date-time
         Spec:
           $ref: "#/components/schemas/ConfigSpec"
     ContainerState:
@@ -14225,7 +14225,7 @@ components:
 
             with nano-seconds.
           type: [string, 'null']
-          format: dateTime
+          format: date-time
           example: 2025-01-16T13:55:22.165244Z
         cpu_stats:
           $ref: "#/components/schemas/ContainerCPUStats"
@@ -14286,7 +14286,7 @@ components:
 
             with nano-seconds.
           type: [string, 'null']
-          format: dateTime
+          format: date-time
           example: 2025-01-16T13:55:21.160453Z
         precpu_stats:
           $ref: "#/components/schemas/ContainerCPUStats"
@@ -16113,10 +16113,10 @@ components:
           $ref: "#/components/schemas/ObjectVersion"
         CreatedAt:
           type: [string, 'null']
-          format: dateTime
+          format: date-time
         UpdatedAt:
           type: [string, 'null']
-          format: dateTime
+          format: date-time
         Spec:
           $ref: "#/components/schemas/ClusterVolumeSpec"
         Info:

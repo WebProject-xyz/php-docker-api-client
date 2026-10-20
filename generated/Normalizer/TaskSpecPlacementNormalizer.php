@@ -49,60 +49,55 @@ class TaskSpecPlacementNormalizer implements DenormalizerInterface, NormalizerIn
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Constraints', $data) && null !== $data['Constraints']) {
-            $value = $data['Constraints'];
-            if (is_array($data['Constraints']) && $this->isOnlyNumericKeys($data['Constraints'])) {
-                $values = [];
-                foreach ($data['Constraints'] as $value_1) {
-                    $values[] = $value_1;
-                }
-                $value = $values;
-            } elseif (null === $data['Constraints']) {
-                $value = $data['Constraints'];
+            $values = [];
+            foreach ($data['Constraints'] as $value) {
+                $values[] = $value;
             }
-            $object->setConstraints($value);
-        } elseif (array_key_exists('Constraints', $data) && null === $data['Constraints']) {
-            $object->setConstraints(null);
+            $object->constraints = $values;
+            unset($data['Constraints']);
+        } elseif (array_key_exists('Constraints', $data)) {
+            $object->constraints = null;
+            unset($data['Constraints']);
         }
         if (array_key_exists('Preferences', $data) && null !== $data['Preferences']) {
-            $value_2 = $data['Preferences'];
-            if (is_array($data['Preferences']) && $this->isOnlyNumericKeys($data['Preferences'])) {
-                $values_1 = [];
-                foreach ($data['Preferences'] as $value_3) {
-                    $values_1[] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\TaskSpecPlacementPreferencesItem::class, 'json', $context);
-                }
-                $value_2 = $values_1;
-            } elseif (null === $data['Preferences']) {
-                $value_2 = $data['Preferences'];
+            $values_1 = [];
+            foreach ($data['Preferences'] as $value_1) {
+                $values_1[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\TaskSpecPlacementPreferencesItem::class, 'json', $context);
             }
-            $object->setPreferences($value_2);
-        } elseif (array_key_exists('Preferences', $data) && null === $data['Preferences']) {
-            $object->setPreferences(null);
+            $object->preferences = $values_1;
+            unset($data['Preferences']);
+        } elseif (array_key_exists('Preferences', $data)) {
+            $object->preferences = null;
+            unset($data['Preferences']);
         }
         if (array_key_exists('MaxReplicas', $data) && null !== $data['MaxReplicas']) {
-            $value_4 = $data['MaxReplicas'];
+            $value_2 = $data['MaxReplicas'];
             if (is_int($data['MaxReplicas'])) {
-                $value_4 = $data['MaxReplicas'];
+                $value_2 = $data['MaxReplicas'];
             } elseif (null === $data['MaxReplicas']) {
-                $value_4 = $data['MaxReplicas'];
+                $value_2 = $data['MaxReplicas'];
             }
-            $object->setMaxReplicas($value_4);
-        } elseif (array_key_exists('MaxReplicas', $data) && null === $data['MaxReplicas']) {
-            $object->setMaxReplicas(null);
+            $object->maxReplicas = $value_2;
+            unset($data['MaxReplicas']);
+        } elseif (array_key_exists('MaxReplicas', $data)) {
+            $object->maxReplicas = null;
+            unset($data['MaxReplicas']);
         }
         if (array_key_exists('Platforms', $data) && null !== $data['Platforms']) {
-            $value_5 = $data['Platforms'];
-            if (is_array($data['Platforms']) && $this->isOnlyNumericKeys($data['Platforms'])) {
-                $values_2 = [];
-                foreach ($data['Platforms'] as $value_6) {
-                    $values_2[] = $this->denormalizer->denormalize($value_6, \WebProject\DockerApi\Library\Generated\Model\Platform::class, 'json', $context);
-                }
-                $value_5 = $values_2;
-            } elseif (null === $data['Platforms']) {
-                $value_5 = $data['Platforms'];
+            $values_2 = [];
+            foreach ($data['Platforms'] as $value_3) {
+                $values_2[] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\Platform::class, 'json', $context);
             }
-            $object->setPlatforms($value_5);
-        } elseif (array_key_exists('Platforms', $data) && null === $data['Platforms']) {
-            $object->setPlatforms(null);
+            $object->platforms = $values_2;
+            unset($data['Platforms']);
+        } elseif (array_key_exists('Platforms', $data)) {
+            $object->platforms = null;
+            unset($data['Platforms']);
+        }
+        foreach ($data as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_4;
+            }
         }
 
         return $object;
@@ -111,53 +106,42 @@ class TaskSpecPlacementNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('constraints')) {
-            $value = $data->getConstraints();
-            if (is_array($data->getConstraints())) {
-                $values = [];
-                foreach ($data->getConstraints() as $value_1) {
-                    $values[] = $value_1;
-                }
-                $value = $values;
-            } elseif (null === $data->getConstraints()) {
-                $value = $data->getConstraints();
+        if (array_key_exists('constraints', get_object_vars($data)) && null !== ($data->constraints ?? null)) {
+            $values = [];
+            foreach ($data->constraints as $value) {
+                $values[] = $value;
             }
-            $dataArray['Constraints'] = $value;
+            $dataArray['Constraints'] = $values;
         }
-        if ($data->isInitialized('preferences')) {
-            $value_2 = $data->getPreferences();
-            if (is_array($data->getPreferences())) {
-                $values_1 = [];
-                foreach ($data->getPreferences() as $value_3) {
-                    $values_1[] = $this->normalizer->normalize($value_3, 'json', $context);
-                }
-                $value_2 = $values_1;
-            } elseif (null === $data->getPreferences()) {
-                $value_2 = $data->getPreferences();
+        if (array_key_exists('preferences', get_object_vars($data)) && null !== ($data->preferences ?? null)) {
+            $values_1 = [];
+            foreach ($data->preferences as $value_1) {
+                $normalized = null === $value_1 ? null : $this->normalizer->normalize($value_1, 'json', $context);
+                $values_1[] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
             }
-            $dataArray['Preferences'] = $value_2;
+            $dataArray['Preferences'] = $values_1;
         }
-        if ($data->isInitialized('maxReplicas')) {
-            $value_4 = $data->getMaxReplicas();
-            if (is_int($data->getMaxReplicas())) {
-                $value_4 = $data->getMaxReplicas();
-            } elseif (null === $data->getMaxReplicas()) {
-                $value_4 = $data->getMaxReplicas();
+        if (array_key_exists('maxReplicas', get_object_vars($data)) && null !== ($data->maxReplicas ?? null)) {
+            $value_2 = $data->maxReplicas;
+            if (is_int($data->maxReplicas)) {
+                $value_2 = $data->maxReplicas;
+            } elseif (null === $data->maxReplicas) {
+                $value_2 = $data->maxReplicas;
             }
-            $dataArray['MaxReplicas'] = $value_4;
+            $dataArray['MaxReplicas'] = $value_2;
         }
-        if ($data->isInitialized('platforms')) {
-            $value_5 = $data->getPlatforms();
-            if (is_array($data->getPlatforms())) {
-                $values_2 = [];
-                foreach ($data->getPlatforms() as $value_6) {
-                    $values_2[] = $this->normalizer->normalize($value_6, 'json', $context);
-                }
-                $value_5 = $values_2;
-            } elseif (null === $data->getPlatforms()) {
-                $value_5 = $data->getPlatforms();
+        if (array_key_exists('platforms', get_object_vars($data)) && null !== ($data->platforms ?? null)) {
+            $values_2 = [];
+            foreach ($data->platforms as $value_3) {
+                $normalized_1 = null === $value_3 ? null : $this->normalizer->normalize($value_3, 'json', $context);
+                $values_2[]   = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
             }
-            $dataArray['Platforms'] = $value_5;
+            $dataArray['Platforms'] = $values_2;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_4;
+            }
         }
 
         return $dataArray;

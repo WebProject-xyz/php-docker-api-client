@@ -19,7 +19,7 @@ class ImageBuild extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
      *
      * The build is canceled if the client drops the connection by quitting or being killed.
      *
-     * @param string|resource|\Psr\Http\Message\StreamInterface|null $requestBody
+     * @param string|resource|null $requestBody
      * @param array{
      *    "dockerfile"?: string, //Path within the build context to the `Dockerfile`. This is ignored if `remote` is specified and points to an external `Dockerfile`.
      *    "t"?: string, //A name and optional tag to apply to the image in the `name:tag` format. If you omit the tag the default `latest` value is assumed. You can provide several `t` parameters.
@@ -38,55 +38,55 @@ class ImageBuild extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
      *    "cpuperiod"?: int, //The length of a CPU period in microseconds.
      *    "cpuquota"?: int, //Microseconds of CPU time that the container can get in a CPU period.
      *    "buildargs"?: string, //JSON map of string pairs for build-time variables. Users pass these values at build-time. Docker uses the buildargs as the environment context for commands run via the `Dockerfile` RUN instruction, or for variable expansion in other `Dockerfile` instructions. This is not meant for passing secret values.
-     *
-     * For example, the build arg `FOO=bar` would become `{"FOO":"bar"}` in JSON. This would result in the query parameter `buildargs={"FOO":"bar"}`. Note that `{"FOO":"bar"}` should be URI component encoded.
-     *
-     * [Read more about the buildargs instruction.](https://docs.docker.com/engine/reference/builder/#arg)
+     *                          //
+     *                          //For example, the build arg `FOO=bar` would become `{"FOO":"bar"}` in JSON. This would result in the query parameter `buildargs={"FOO":"bar"}`. Note that `{"FOO":"bar"}` should be URI component encoded.
+     *                          //
+     *                          //[Read more about the buildargs instruction.](https://docs.docker.com/engine/reference/builder/#arg)
      *    "shmsize"?: int, //Size of `/dev/shm` in bytes. The size must be greater than 0. If omitted the system uses 64MB.
      *    "squash"?: bool, //Squash the resulting images layers into a single layer. *(Experimental release only.)*
      *    "labels"?: string, //Arbitrary key/value labels to set on the image, as a JSON map of string pairs.
      *    "networkmode"?: string, //Sets the networking mode for the run commands during build. Supported
-     * standard values are: `bridge`, `host`, `none`, and `container:<name|id>`.
-     * Any other value is taken as a custom network's name or ID to which this
-     * container should connect to.
+     *                            //standard values are: `bridge`, `host`, `none`, and `container:<name|id>`.
+     *                            //Any other value is taken as a custom network's name or ID to which this
+     *                            //container should connect to.
      *    "platform"?: string, //Platform in the format os[/arch[/variant]]
      *    "target"?: string, //Target build stage
      *    "outputs"?: string, //BuildKit output configuration in the format of a stringified JSON array of objects.
-     * Each object must have two top-level properties: `Type` and `Attrs`.
-     * The `Type` property must be set to 'moby'.
-     * The `Attrs` property is a map of attributes for the BuildKit output configuration.
-     * See https://docs.docker.com/build/exporters/oci-docker/ for more information.
-     *
-     * Example:
-     *
-     * ```
-     * [{"Type":"moby","Attrs":{"type":"image","force-compression":"true","compression":"zstd"}}]
-     * ```
+     *                        //Each object must have two top-level properties: `Type` and `Attrs`.
+     *                        //The `Type` property must be set to 'moby'.
+     *                        //The `Attrs` property is a map of attributes for the BuildKit output configuration.
+     *                        //See https://docs.docker.com/build/exporters/oci-docker/ for more information.
+     *                        //
+     *                        //Example:
+     *                        //
+     *                        //```
+     *                        //[{"Type":"moby","Attrs":{"type":"image","force-compression":"true","compression":"zstd"}}]
+     *                        //```
      *    "version"?: string, //Version of the builder backend to use.
-     *
-     * - `1` is the first generation classic (deprecated) builder in the Docker daemon (default)
-     * - `2` is [BuildKit](https://github.com/moby/buildkit)
+     *                        //
+     *                        //- `1` is the first generation classic (deprecated) builder in the Docker daemon (default)
+     *                        //- `2` is [BuildKit](https://github.com/moby/buildkit)
      * } $queryParameters
      * @param array{
      *    "Content-type"?: string,
      *    "X-Registry-Config"?: string, //This is a base64-encoded JSON object with auth configurations for multiple registries that a build may refer to.
-     *
-     * The key is a registry URL, and the value is an auth configuration object, [as described in the authentication section](#section/Authentication). For example:
-     *
-     * ```
-     * {
-     * "docker.example.com": {
-     * "username": "janedoe",
-     * "password": "hunter2"
-     * },
-     * "https://index.docker.io/v1/": {
-     * "username": "mobydock",
-     * "password": "conta1n3rize14"
-     * }
-     * }
-     * ```
-     *
-     * Only the registry domain name (and port if not the default 443) are required. However, for legacy reasons, the Docker Hub registry must be specified with both a `https://` prefix and a `/v1/` suffix even though Docker will prefer to use the v2 registry API.
+     *                                  //
+     *                                  //The key is a registry URL, and the value is an auth configuration object, [as described in the authentication section](#section/Authentication). For example:
+     *                                  //
+     *                                  //```
+     *                                  //{
+     *                                  //  "docker.example.com": {
+     *                                  //    "username": "janedoe",
+     *                                  //    "password": "hunter2"
+     *                                  //  },
+     *                                  //  "https://index.docker.io/v1/": {
+     *                                  //    "username": "mobydock",
+     *                                  //    "password": "conta1n3rize14"
+     *                                  //  }
+     *                                  //}
+     *                                  //```
+     *                                  //
+     *                                  //Only the registry domain name (and port if not the default 443) are required. However, for legacy reasons, the Docker Hub registry must be specified with both a `https://` prefix and a `/v1/` suffix even though Docker will prefer to use the v2 registry API.
      * } $headerParameters
      */
     public function __construct($requestBody = null, array $queryParameters = [], array $headerParameters = [])
@@ -106,9 +106,9 @@ class ImageBuild extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
         return '/build';
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
-        if (is_string($this->body) || is_resource($this->body) || $this->body instanceof \Psr\Http\Message\StreamInterface) {
+        if (is_string($this->body) || is_resource($this->body)) {
             return [['Content-Type' => ['application/octet-stream']], $this->body];
         }
 
@@ -174,24 +174,36 @@ class ImageBuild extends \WebProject\DockerApi\Library\Generated\Runtime\Client\
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ImageBuildBadRequestException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ImageBuildInternalServerErrorException
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
+        $body   = $response->getContent(false);
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (400 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageBuildBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (500 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageBuildInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Eager->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

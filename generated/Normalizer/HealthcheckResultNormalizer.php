@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace WebProject\DockerApi\Library\Generated\Normalizer;
 
 use ArrayObject;
+use DateTime;
+use Exception;
 use Jane\Component\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -50,48 +52,73 @@ class HealthcheckResultNormalizer implements DenormalizerInterface, NormalizerIn
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Start', $data) && null !== $data['Start']) {
-            $value = $data['Start'];
-            if (is_string($data['Start'])) {
-                $value = $data['Start'];
-            } elseif (null === $data['Start']) {
-                $value = $data['Start'];
+            $date = DateTime::createFromFormat('Y-m-d\TH:i:sP', $data['Start']);
+            if (false === $date) {
+                if (is_string($data['Start']) && 1 === preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/', $data['Start'])) {
+                    try {
+                        $date = new DateTime($data['Start']);
+                    } catch (Exception) {
+                        throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['Start'], 'Y-m-d\TH:i:sP');
+                    }
+                } else {
+                    throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['Start'], 'Y-m-d\TH:i:sP');
+                }
             }
-            $object->setStart($value);
-        } elseif (array_key_exists('Start', $data) && null === $data['Start']) {
-            $object->setStart(null);
+            $object->start = $date;
+            unset($data['Start']);
+        } elseif (array_key_exists('Start', $data)) {
+            $object->start = null;
+            unset($data['Start']);
         }
         if (array_key_exists('End', $data) && null !== $data['End']) {
-            $value_1 = $data['End'];
-            if (is_string($data['End'])) {
-                $value_1 = $data['End'];
-            } elseif (null === $data['End']) {
-                $value_1 = $data['End'];
+            $date_1 = DateTime::createFromFormat('Y-m-d\TH:i:sP', $data['End']);
+            if (false === $date_1) {
+                if (is_string($data['End']) && 1 === preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/', $data['End'])) {
+                    try {
+                        $date_1 = new DateTime($data['End']);
+                    } catch (Exception) {
+                        throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['End'], 'Y-m-d\TH:i:sP');
+                    }
+                } else {
+                    throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['End'], 'Y-m-d\TH:i:sP');
+                }
             }
-            $object->setEnd($value_1);
-        } elseif (array_key_exists('End', $data) && null === $data['End']) {
-            $object->setEnd(null);
+            $object->end = $date_1;
+            unset($data['End']);
+        } elseif (array_key_exists('End', $data)) {
+            $object->end = null;
+            unset($data['End']);
         }
         if (array_key_exists('ExitCode', $data) && null !== $data['ExitCode']) {
-            $value_2 = $data['ExitCode'];
+            $value = $data['ExitCode'];
             if (is_int($data['ExitCode'])) {
-                $value_2 = $data['ExitCode'];
+                $value = $data['ExitCode'];
             } elseif (null === $data['ExitCode']) {
-                $value_2 = $data['ExitCode'];
+                $value = $data['ExitCode'];
             }
-            $object->setExitCode($value_2);
-        } elseif (array_key_exists('ExitCode', $data) && null === $data['ExitCode']) {
-            $object->setExitCode(null);
+            $object->exitCode = $value;
+            unset($data['ExitCode']);
+        } elseif (array_key_exists('ExitCode', $data)) {
+            $object->exitCode = null;
+            unset($data['ExitCode']);
         }
         if (array_key_exists('Output', $data) && null !== $data['Output']) {
-            $value_3 = $data['Output'];
+            $value_1 = $data['Output'];
             if (is_string($data['Output'])) {
-                $value_3 = $data['Output'];
+                $value_1 = $data['Output'];
             } elseif (null === $data['Output']) {
-                $value_3 = $data['Output'];
+                $value_1 = $data['Output'];
             }
-            $object->setOutput($value_3);
-        } elseif (array_key_exists('Output', $data) && null === $data['Output']) {
-            $object->setOutput(null);
+            $object->output = $value_1;
+            unset($data['Output']);
+        } elseif (array_key_exists('Output', $data)) {
+            $object->output = null;
+            unset($data['Output']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -100,41 +127,34 @@ class HealthcheckResultNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('start')) {
-            $value = $data->getStart();
-            if (is_string($data->getStart())) {
-                $value = $data->getStart();
-            } elseif (null === $data->getStart()) {
-                $value = $data->getStart();
-            }
-            $dataArray['Start'] = $value;
+        if (array_key_exists('start', get_object_vars($data)) && null !== ($data->start ?? null)) {
+            $dataArray['Start'] = $data->start?->format('Y-m-d\TH:i:sP');
         }
-        if ($data->isInitialized('end')) {
-            $value_1 = $data->getEnd();
-            if (is_string($data->getEnd())) {
-                $value_1 = $data->getEnd();
-            } elseif (null === $data->getEnd()) {
-                $value_1 = $data->getEnd();
-            }
-            $dataArray['End'] = $value_1;
+        if (array_key_exists('end', get_object_vars($data)) && null !== ($data->end ?? null)) {
+            $dataArray['End'] = $data->end?->format('Y-m-d\TH:i:sP');
         }
-        if ($data->isInitialized('exitCode')) {
-            $value_2 = $data->getExitCode();
-            if (is_int($data->getExitCode())) {
-                $value_2 = $data->getExitCode();
-            } elseif (null === $data->getExitCode()) {
-                $value_2 = $data->getExitCode();
+        if (array_key_exists('exitCode', get_object_vars($data)) && null !== ($data->exitCode ?? null)) {
+            $value = $data->exitCode;
+            if (is_int($data->exitCode)) {
+                $value = $data->exitCode;
+            } elseif (null === $data->exitCode) {
+                $value = $data->exitCode;
             }
-            $dataArray['ExitCode'] = $value_2;
+            $dataArray['ExitCode'] = $value;
         }
-        if ($data->isInitialized('output')) {
-            $value_3 = $data->getOutput();
-            if (is_string($data->getOutput())) {
-                $value_3 = $data->getOutput();
-            } elseif (null === $data->getOutput()) {
-                $value_3 = $data->getOutput();
+        if (array_key_exists('output', get_object_vars($data)) && null !== ($data->output ?? null)) {
+            $value_1 = $data->output;
+            if (is_string($data->output)) {
+                $value_1 = $data->output;
+            } elseif (null === $data->output) {
+                $value_1 = $data->output;
             }
-            $dataArray['Output'] = $value_3;
+            $dataArray['Output'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

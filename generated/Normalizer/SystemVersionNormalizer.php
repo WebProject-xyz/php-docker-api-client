@@ -50,134 +50,157 @@ class SystemVersionNormalizer implements DenormalizerInterface, NormalizerInterf
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Platform', $data) && null !== $data['Platform']) {
-            $object->setPlatform($this->denormalizer->denormalize($data['Platform'], \WebProject\DockerApi\Library\Generated\Model\SystemVersionPlatform::class, 'json', $context));
-        } elseif (array_key_exists('Platform', $data) && null === $data['Platform']) {
-            $object->setPlatform(null);
+            $object->platform = $this->denormalizer->denormalize($data['Platform'], \WebProject\DockerApi\Library\Generated\Model\SystemVersionPlatform::class, 'json', $context);
+            unset($data['Platform']);
+        } elseif (array_key_exists('Platform', $data)) {
+            $object->platform = null;
+            unset($data['Platform']);
         }
         if (array_key_exists('Components', $data) && null !== $data['Components']) {
-            $value = $data['Components'];
-            if (is_array($data['Components']) && $this->isOnlyNumericKeys($data['Components'])) {
-                $values = [];
-                foreach ($data['Components'] as $value_1) {
-                    $values[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\SystemVersionComponentsItem::class, 'json', $context);
-                }
-                $value = $values;
-            } elseif (null === $data['Components']) {
-                $value = $data['Components'];
+            $values = [];
+            foreach ($data['Components'] as $value) {
+                $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\SystemVersionComponentsItem::class, 'json', $context);
             }
-            $object->setComponents($value);
-        } elseif (array_key_exists('Components', $data) && null === $data['Components']) {
-            $object->setComponents(null);
+            $object->components = $values;
+            unset($data['Components']);
+        } elseif (array_key_exists('Components', $data)) {
+            $object->components = null;
+            unset($data['Components']);
         }
         if (array_key_exists('Version', $data) && null !== $data['Version']) {
-            $value_2 = $data['Version'];
+            $value_1 = $data['Version'];
             if (is_string($data['Version'])) {
-                $value_2 = $data['Version'];
+                $value_1 = $data['Version'];
             } elseif (null === $data['Version']) {
-                $value_2 = $data['Version'];
+                $value_1 = $data['Version'];
             }
-            $object->setVersion($value_2);
-        } elseif (array_key_exists('Version', $data) && null === $data['Version']) {
-            $object->setVersion(null);
+            $object->version = $value_1;
+            unset($data['Version']);
+        } elseif (array_key_exists('Version', $data)) {
+            $object->version = null;
+            unset($data['Version']);
         }
         if (array_key_exists('ApiVersion', $data) && null !== $data['ApiVersion']) {
-            $value_3 = $data['ApiVersion'];
+            $value_2 = $data['ApiVersion'];
             if (is_string($data['ApiVersion'])) {
-                $value_3 = $data['ApiVersion'];
+                $value_2 = $data['ApiVersion'];
             } elseif (null === $data['ApiVersion']) {
-                $value_3 = $data['ApiVersion'];
+                $value_2 = $data['ApiVersion'];
             }
-            $object->setApiVersion($value_3);
-        } elseif (array_key_exists('ApiVersion', $data) && null === $data['ApiVersion']) {
-            $object->setApiVersion(null);
+            $object->apiVersion = $value_2;
+            unset($data['ApiVersion']);
+        } elseif (array_key_exists('ApiVersion', $data)) {
+            $object->apiVersion = null;
+            unset($data['ApiVersion']);
         }
         if (array_key_exists('MinAPIVersion', $data) && null !== $data['MinAPIVersion']) {
-            $value_4 = $data['MinAPIVersion'];
+            $value_3 = $data['MinAPIVersion'];
             if (is_string($data['MinAPIVersion'])) {
-                $value_4 = $data['MinAPIVersion'];
+                $value_3 = $data['MinAPIVersion'];
             } elseif (null === $data['MinAPIVersion']) {
-                $value_4 = $data['MinAPIVersion'];
+                $value_3 = $data['MinAPIVersion'];
             }
-            $object->setMinAPIVersion($value_4);
-        } elseif (array_key_exists('MinAPIVersion', $data) && null === $data['MinAPIVersion']) {
-            $object->setMinAPIVersion(null);
+            $object->minAPIVersion = $value_3;
+            unset($data['MinAPIVersion']);
+        } elseif (array_key_exists('MinAPIVersion', $data)) {
+            $object->minAPIVersion = null;
+            unset($data['MinAPIVersion']);
         }
         if (array_key_exists('GitCommit', $data) && null !== $data['GitCommit']) {
-            $value_5 = $data['GitCommit'];
+            $value_4 = $data['GitCommit'];
             if (is_string($data['GitCommit'])) {
-                $value_5 = $data['GitCommit'];
+                $value_4 = $data['GitCommit'];
             } elseif (null === $data['GitCommit']) {
-                $value_5 = $data['GitCommit'];
+                $value_4 = $data['GitCommit'];
             }
-            $object->setGitCommit($value_5);
-        } elseif (array_key_exists('GitCommit', $data) && null === $data['GitCommit']) {
-            $object->setGitCommit(null);
+            $object->gitCommit = $value_4;
+            unset($data['GitCommit']);
+        } elseif (array_key_exists('GitCommit', $data)) {
+            $object->gitCommit = null;
+            unset($data['GitCommit']);
         }
         if (array_key_exists('GoVersion', $data) && null !== $data['GoVersion']) {
-            $value_6 = $data['GoVersion'];
+            $value_5 = $data['GoVersion'];
             if (is_string($data['GoVersion'])) {
-                $value_6 = $data['GoVersion'];
+                $value_5 = $data['GoVersion'];
             } elseif (null === $data['GoVersion']) {
-                $value_6 = $data['GoVersion'];
+                $value_5 = $data['GoVersion'];
             }
-            $object->setGoVersion($value_6);
-        } elseif (array_key_exists('GoVersion', $data) && null === $data['GoVersion']) {
-            $object->setGoVersion(null);
+            $object->goVersion = $value_5;
+            unset($data['GoVersion']);
+        } elseif (array_key_exists('GoVersion', $data)) {
+            $object->goVersion = null;
+            unset($data['GoVersion']);
         }
         if (array_key_exists('Os', $data) && null !== $data['Os']) {
-            $value_7 = $data['Os'];
+            $value_6 = $data['Os'];
             if (is_string($data['Os'])) {
-                $value_7 = $data['Os'];
+                $value_6 = $data['Os'];
             } elseif (null === $data['Os']) {
-                $value_7 = $data['Os'];
+                $value_6 = $data['Os'];
             }
-            $object->setOs($value_7);
-        } elseif (array_key_exists('Os', $data) && null === $data['Os']) {
-            $object->setOs(null);
+            $object->os = $value_6;
+            unset($data['Os']);
+        } elseif (array_key_exists('Os', $data)) {
+            $object->os = null;
+            unset($data['Os']);
         }
         if (array_key_exists('Arch', $data) && null !== $data['Arch']) {
-            $value_8 = $data['Arch'];
+            $value_7 = $data['Arch'];
             if (is_string($data['Arch'])) {
-                $value_8 = $data['Arch'];
+                $value_7 = $data['Arch'];
             } elseif (null === $data['Arch']) {
-                $value_8 = $data['Arch'];
+                $value_7 = $data['Arch'];
             }
-            $object->setArch($value_8);
-        } elseif (array_key_exists('Arch', $data) && null === $data['Arch']) {
-            $object->setArch(null);
+            $object->arch = $value_7;
+            unset($data['Arch']);
+        } elseif (array_key_exists('Arch', $data)) {
+            $object->arch = null;
+            unset($data['Arch']);
         }
         if (array_key_exists('KernelVersion', $data) && null !== $data['KernelVersion']) {
-            $value_9 = $data['KernelVersion'];
+            $value_8 = $data['KernelVersion'];
             if (is_string($data['KernelVersion'])) {
-                $value_9 = $data['KernelVersion'];
+                $value_8 = $data['KernelVersion'];
             } elseif (null === $data['KernelVersion']) {
-                $value_9 = $data['KernelVersion'];
+                $value_8 = $data['KernelVersion'];
             }
-            $object->setKernelVersion($value_9);
-        } elseif (array_key_exists('KernelVersion', $data) && null === $data['KernelVersion']) {
-            $object->setKernelVersion(null);
+            $object->kernelVersion = $value_8;
+            unset($data['KernelVersion']);
+        } elseif (array_key_exists('KernelVersion', $data)) {
+            $object->kernelVersion = null;
+            unset($data['KernelVersion']);
         }
         if (array_key_exists('Experimental', $data) && null !== $data['Experimental']) {
-            $value_10 = $data['Experimental'];
+            $value_9 = $data['Experimental'];
             if (is_bool($data['Experimental'])) {
-                $value_10 = $data['Experimental'];
+                $value_9 = $data['Experimental'];
             } elseif (null === $data['Experimental']) {
-                $value_10 = $data['Experimental'];
+                $value_9 = $data['Experimental'];
             }
-            $object->setExperimental($value_10);
-        } elseif (array_key_exists('Experimental', $data) && null === $data['Experimental']) {
-            $object->setExperimental(null);
+            $object->experimental = $value_9;
+            unset($data['Experimental']);
+        } elseif (array_key_exists('Experimental', $data)) {
+            $object->experimental = null;
+            unset($data['Experimental']);
         }
         if (array_key_exists('BuildTime', $data) && null !== $data['BuildTime']) {
-            $value_11 = $data['BuildTime'];
+            $value_10 = $data['BuildTime'];
             if (is_string($data['BuildTime'])) {
-                $value_11 = $data['BuildTime'];
+                $value_10 = $data['BuildTime'];
             } elseif (null === $data['BuildTime']) {
-                $value_11 = $data['BuildTime'];
+                $value_10 = $data['BuildTime'];
             }
-            $object->setBuildTime($value_11);
-        } elseif (array_key_exists('BuildTime', $data) && null === $data['BuildTime']) {
-            $object->setBuildTime(null);
+            $object->buildTime = $value_10;
+            unset($data['BuildTime']);
+        } elseif (array_key_exists('BuildTime', $data)) {
+            $object->buildTime = null;
+            unset($data['BuildTime']);
+        }
+        foreach ($data as $key => $value_11) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_11;
+            }
         }
 
         return $object;
@@ -186,111 +209,112 @@ class SystemVersionNormalizer implements DenormalizerInterface, NormalizerInterf
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('platform')) {
-            $dataArray['Platform'] = $this->normalizer->normalize($data->getPlatform(), 'json', $context);
+        if (array_key_exists('platform', get_object_vars($data)) && null !== ($data->platform ?? null)) {
+            $normalized            = $this->normalizer->normalize($data->platform, 'json', $context);
+            $dataArray['Platform'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         }
-        if ($data->isInitialized('components')) {
-            $value = $data->getComponents();
-            if (is_array($data->getComponents())) {
-                $values = [];
-                foreach ($data->getComponents() as $value_1) {
-                    $values[] = $this->normalizer->normalize($value_1, 'json', $context);
-                }
-                $value = $values;
-            } elseif (null === $data->getComponents()) {
-                $value = $data->getComponents();
+        if (array_key_exists('components', get_object_vars($data)) && null !== ($data->components ?? null)) {
+            $values = [];
+            foreach ($data->components as $value) {
+                $normalized_1 = null === $value ? null : $this->normalizer->normalize($value, 'json', $context);
+                $values[]     = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
             }
-            $dataArray['Components'] = $value;
+            $dataArray['Components'] = $values;
         }
-        if ($data->isInitialized('version')) {
-            $value_2 = $data->getVersion();
-            if (is_string($data->getVersion())) {
-                $value_2 = $data->getVersion();
-            } elseif (null === $data->getVersion()) {
-                $value_2 = $data->getVersion();
+        if (array_key_exists('version', get_object_vars($data)) && null !== ($data->version ?? null)) {
+            $value_1 = $data->version;
+            if (is_string($data->version)) {
+                $value_1 = $data->version;
+            } elseif (null === $data->version) {
+                $value_1 = $data->version;
             }
-            $dataArray['Version'] = $value_2;
+            $dataArray['Version'] = $value_1;
         }
-        if ($data->isInitialized('apiVersion')) {
-            $value_3 = $data->getApiVersion();
-            if (is_string($data->getApiVersion())) {
-                $value_3 = $data->getApiVersion();
-            } elseif (null === $data->getApiVersion()) {
-                $value_3 = $data->getApiVersion();
+        if (array_key_exists('apiVersion', get_object_vars($data)) && null !== ($data->apiVersion ?? null)) {
+            $value_2 = $data->apiVersion;
+            if (is_string($data->apiVersion)) {
+                $value_2 = $data->apiVersion;
+            } elseif (null === $data->apiVersion) {
+                $value_2 = $data->apiVersion;
             }
-            $dataArray['ApiVersion'] = $value_3;
+            $dataArray['ApiVersion'] = $value_2;
         }
-        if ($data->isInitialized('minAPIVersion')) {
-            $value_4 = $data->getMinAPIVersion();
-            if (is_string($data->getMinAPIVersion())) {
-                $value_4 = $data->getMinAPIVersion();
-            } elseif (null === $data->getMinAPIVersion()) {
-                $value_4 = $data->getMinAPIVersion();
+        if (array_key_exists('minAPIVersion', get_object_vars($data)) && null !== ($data->minAPIVersion ?? null)) {
+            $value_3 = $data->minAPIVersion;
+            if (is_string($data->minAPIVersion)) {
+                $value_3 = $data->minAPIVersion;
+            } elseif (null === $data->minAPIVersion) {
+                $value_3 = $data->minAPIVersion;
             }
-            $dataArray['MinAPIVersion'] = $value_4;
+            $dataArray['MinAPIVersion'] = $value_3;
         }
-        if ($data->isInitialized('gitCommit')) {
-            $value_5 = $data->getGitCommit();
-            if (is_string($data->getGitCommit())) {
-                $value_5 = $data->getGitCommit();
-            } elseif (null === $data->getGitCommit()) {
-                $value_5 = $data->getGitCommit();
+        if (array_key_exists('gitCommit', get_object_vars($data)) && null !== ($data->gitCommit ?? null)) {
+            $value_4 = $data->gitCommit;
+            if (is_string($data->gitCommit)) {
+                $value_4 = $data->gitCommit;
+            } elseif (null === $data->gitCommit) {
+                $value_4 = $data->gitCommit;
             }
-            $dataArray['GitCommit'] = $value_5;
+            $dataArray['GitCommit'] = $value_4;
         }
-        if ($data->isInitialized('goVersion')) {
-            $value_6 = $data->getGoVersion();
-            if (is_string($data->getGoVersion())) {
-                $value_6 = $data->getGoVersion();
-            } elseif (null === $data->getGoVersion()) {
-                $value_6 = $data->getGoVersion();
+        if (array_key_exists('goVersion', get_object_vars($data)) && null !== ($data->goVersion ?? null)) {
+            $value_5 = $data->goVersion;
+            if (is_string($data->goVersion)) {
+                $value_5 = $data->goVersion;
+            } elseif (null === $data->goVersion) {
+                $value_5 = $data->goVersion;
             }
-            $dataArray['GoVersion'] = $value_6;
+            $dataArray['GoVersion'] = $value_5;
         }
-        if ($data->isInitialized('os')) {
-            $value_7 = $data->getOs();
-            if (is_string($data->getOs())) {
-                $value_7 = $data->getOs();
-            } elseif (null === $data->getOs()) {
-                $value_7 = $data->getOs();
+        if (array_key_exists('os', get_object_vars($data)) && null !== ($data->os ?? null)) {
+            $value_6 = $data->os;
+            if (is_string($data->os)) {
+                $value_6 = $data->os;
+            } elseif (null === $data->os) {
+                $value_6 = $data->os;
             }
-            $dataArray['Os'] = $value_7;
+            $dataArray['Os'] = $value_6;
         }
-        if ($data->isInitialized('arch')) {
-            $value_8 = $data->getArch();
-            if (is_string($data->getArch())) {
-                $value_8 = $data->getArch();
-            } elseif (null === $data->getArch()) {
-                $value_8 = $data->getArch();
+        if (array_key_exists('arch', get_object_vars($data)) && null !== ($data->arch ?? null)) {
+            $value_7 = $data->arch;
+            if (is_string($data->arch)) {
+                $value_7 = $data->arch;
+            } elseif (null === $data->arch) {
+                $value_7 = $data->arch;
             }
-            $dataArray['Arch'] = $value_8;
+            $dataArray['Arch'] = $value_7;
         }
-        if ($data->isInitialized('kernelVersion')) {
-            $value_9 = $data->getKernelVersion();
-            if (is_string($data->getKernelVersion())) {
-                $value_9 = $data->getKernelVersion();
-            } elseif (null === $data->getKernelVersion()) {
-                $value_9 = $data->getKernelVersion();
+        if (array_key_exists('kernelVersion', get_object_vars($data)) && null !== ($data->kernelVersion ?? null)) {
+            $value_8 = $data->kernelVersion;
+            if (is_string($data->kernelVersion)) {
+                $value_8 = $data->kernelVersion;
+            } elseif (null === $data->kernelVersion) {
+                $value_8 = $data->kernelVersion;
             }
-            $dataArray['KernelVersion'] = $value_9;
+            $dataArray['KernelVersion'] = $value_8;
         }
-        if ($data->isInitialized('experimental')) {
-            $value_10 = $data->getExperimental();
-            if (is_bool($data->getExperimental())) {
-                $value_10 = $data->getExperimental();
-            } elseif (null === $data->getExperimental()) {
-                $value_10 = $data->getExperimental();
+        if (array_key_exists('experimental', get_object_vars($data)) && null !== ($data->experimental ?? null)) {
+            $value_9 = $data->experimental;
+            if (is_bool($data->experimental)) {
+                $value_9 = $data->experimental;
+            } elseif (null === $data->experimental) {
+                $value_9 = $data->experimental;
             }
-            $dataArray['Experimental'] = $value_10;
+            $dataArray['Experimental'] = $value_9;
         }
-        if ($data->isInitialized('buildTime')) {
-            $value_11 = $data->getBuildTime();
-            if (is_string($data->getBuildTime())) {
-                $value_11 = $data->getBuildTime();
-            } elseif (null === $data->getBuildTime()) {
-                $value_11 = $data->getBuildTime();
+        if (array_key_exists('buildTime', get_object_vars($data)) && null !== ($data->buildTime ?? null)) {
+            $value_10 = $data->buildTime;
+            if (is_string($data->buildTime)) {
+                $value_10 = $data->buildTime;
+            } elseif (null === $data->buildTime) {
+                $value_10 = $data->buildTime;
             }
-            $dataArray['BuildTime'] = $value_11;
+            $dataArray['BuildTime'] = $value_10;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_11) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_11;
+            }
         }
 
         return $dataArray;

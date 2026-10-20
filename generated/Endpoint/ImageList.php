@@ -13,16 +13,16 @@ class ImageList extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
      * @param array{
      *    "all"?: bool, //Show all images. Only images from a final layer (no children) are shown by default.
      *    "filters"?: string, //A JSON encoded value of the filters (a `map[string][]string`) to
-     * process on the images list.
-     *
-     * Available filters:
-     *
-     * - `before`=(`<image-name>[:<tag>]`,  `<image id>` or `<image@digest>`)
-     * - `dangling=true`
-     * - `label=key` or `label="key=value"` of an image label
-     * - `reference`=(`<image-name>[:<tag>]`)
-     * - `since`=(`<image-name>[:<tag>]`,  `<image id>` or `<image@digest>`)
-     * - `until=<timestamp>`
+     *                        //process on the images list.
+     *                        //
+     *                        //Available filters:
+     *                        //
+     *                        //- `before`=(`<image-name>[:<tag>]`,  `<image id>` or `<image@digest>`)
+     *                        //- `dangling=true`
+     *                        //- `label=key` or `label="key=value"` of an image label
+     *                        //- `reference`=(`<image-name>[:<tag>]`)
+     *                        //- `since`=(`<image-name>[:<tag>]`,  `<image id>` or `<image@digest>`)
+     *                        //- `until=<timestamp>`
      *    "shared-size"?: bool, //Compute and show shared size as a `SharedSize` field on each image.
      *    "digests"?: bool, //Show digest information as a `RepoDigests` field on each image.
      *    "manifests"?: bool, //Include `Manifests` in the image summary.
@@ -44,7 +44,7 @@ class ImageList extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
         return '/images/json';
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
         return [[], null];
     }
@@ -73,24 +73,36 @@ class ImageList extends \WebProject\DockerApi\Library\Generated\Runtime\Client\B
     /**
      * {@inheritdoc}
      *
-     * @return \WebProject\DockerApi\Library\Generated\Model\ImageSummary[]|null
+     * @return \WebProject\DockerApi\Library\Generated\Model\ImageSummary[]
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ImageListInternalServerErrorException
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
-            return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ImageSummary[]', 'json');
+        $body   = $response->getContent(false);
+        if (null !== $contentType && (200 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
+            return $this->deserializeListResponse($serializer, $body, 'WebProject\DockerApi\Library\Generated\Model\ImageSummary[]', 'json');
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (500 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageListInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Lazy->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

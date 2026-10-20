@@ -55,9 +55,11 @@ class ImageDeleteResponseItemNormalizer implements DenormalizerInterface, Normal
             } elseif (null === $data['Untagged']) {
                 $value = $data['Untagged'];
             }
-            $object->setUntagged($value);
-        } elseif (array_key_exists('Untagged', $data) && null === $data['Untagged']) {
-            $object->setUntagged(null);
+            $object->untagged = $value;
+            unset($data['Untagged']);
+        } elseif (array_key_exists('Untagged', $data)) {
+            $object->untagged = null;
+            unset($data['Untagged']);
         }
         if (array_key_exists('Deleted', $data) && null !== $data['Deleted']) {
             $value_1 = $data['Deleted'];
@@ -66,9 +68,16 @@ class ImageDeleteResponseItemNormalizer implements DenormalizerInterface, Normal
             } elseif (null === $data['Deleted']) {
                 $value_1 = $data['Deleted'];
             }
-            $object->setDeleted($value_1);
-        } elseif (array_key_exists('Deleted', $data) && null === $data['Deleted']) {
-            $object->setDeleted(null);
+            $object->deleted = $value_1;
+            unset($data['Deleted']);
+        } elseif (array_key_exists('Deleted', $data)) {
+            $object->deleted = null;
+            unset($data['Deleted']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class ImageDeleteResponseItemNormalizer implements DenormalizerInterface, Normal
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('untagged')) {
-            $value = $data->getUntagged();
-            if (is_string($data->getUntagged())) {
-                $value = $data->getUntagged();
-            } elseif (null === $data->getUntagged()) {
-                $value = $data->getUntagged();
+        if (array_key_exists('untagged', get_object_vars($data)) && null !== ($data->untagged ?? null)) {
+            $value = $data->untagged;
+            if (is_string($data->untagged)) {
+                $value = $data->untagged;
+            } elseif (null === $data->untagged) {
+                $value = $data->untagged;
             }
             $dataArray['Untagged'] = $value;
         }
-        if ($data->isInitialized('deleted')) {
-            $value_1 = $data->getDeleted();
-            if (is_string($data->getDeleted())) {
-                $value_1 = $data->getDeleted();
-            } elseif (null === $data->getDeleted()) {
-                $value_1 = $data->getDeleted();
+        if (array_key_exists('deleted', get_object_vars($data)) && null !== ($data->deleted ?? null)) {
+            $value_1 = $data->deleted;
+            if (is_string($data->deleted)) {
+                $value_1 = $data->deleted;
+            } elseif (null === $data->deleted) {
+                $value_1 = $data->deleted;
             }
             $dataArray['Deleted'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

@@ -18,20 +18,20 @@ final readonly class ContainerResponseToContainerDtoUtil
         $ipAddresses = [];
         $networks    = [];
 
-        $networkSettings = $containerInspect->getNetworkSettings();
-        foreach ($networkSettings->getNetworks() as $networkName => $network) {
-            $ip = $network->getIPAddress();
+        $networkSettings = $containerInspect->networkSettings;
+        foreach ($networkSettings->networks as $networkName => $network) {
+            $ip = $network->iPAddress;
             if (null === $ip || '' === $ip) {
                 continue;
             }
-            $networks[$networkName]['aliases'] = array_values(array_unique($network->getAliases() ?? []));
+            $networks[$networkName]['aliases'] = array_values(array_unique($network->aliases ?? []));
             $networks[$networkName]['ip']      = $ip;
             $ipAddresses[]                     = $ip;
         }
 
         $envVariables = [];
-        $config       = $containerInspect->getConfig();
-        foreach ($config->getEnv() ?? [] as $envVar) {
+        $config       = $containerInspect->config;
+        foreach ($config->env ?? [] as $envVar) {
             if (!str_contains($envVar, '=')) {
                 continue;
             }
@@ -40,7 +40,7 @@ final readonly class ContainerResponseToContainerDtoUtil
         }
 
         $ports = [];
-        foreach ($networkSettings->getPorts() ?? [] as $portKey => $portBindings) {
+        foreach ($networkSettings->ports ?? [] as $portKey => $portBindings) {
             if (empty($portBindings)) {
                 // PortBindung without host binding
                 $ports[$portKey] = new \WebProject\DockerApi\Library\Generated\Model\PortBinding();
@@ -51,10 +51,10 @@ final readonly class ContainerResponseToContainerDtoUtil
         }
 
         return new DockerContainerDto(
-            id: (string) $containerInspect->getId(),
-            name: (string) $containerInspect->getName(),
-            image: (string) $containerInspect->getImage(),
-            running: $containerInspect->getState()?->getRunning() ?? false,
+            id: (string) $containerInspect->id,
+            name: (string) $containerInspect->name,
+            image: (string) $containerInspect->image,
+            running: $containerInspect->state->running ?? false,
             envVariables: $envVariables,
             ipAddresses: $ipAddresses,
             networks: $networks,

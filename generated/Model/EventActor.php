@@ -3,79 +3,27 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class EventActor
+class EventActor implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The ID of the object emitting the event.
      *
      * @var string|null
      */
-    protected $iD;
+    public ?string $iD;
     /**
      * Various key/value attributes of the object, depending on its type.
      *
-     * @var array<string, string>|null
+     * @var iterable<string, string>|null
      */
-    protected $attributes;
+    public ?iterable $attributes;
 
-    /**
-     * The ID of the object emitting the event.
-     *
-     * @return string|null
-     */
-    public function getID(): ?string
+    public function definedProperties(): array
     {
-        return $this->iD;
-    }
-
-    /**
-     * The ID of the object emitting the event.
-     *
-     * @param string|null $iD
-     *
-     * @return self
-     */
-    public function setID(?string $iD): self
-    {
-        $this->initialized['iD'] = true;
-        $this->iD                = $iD;
-
-        return $this;
-    }
-
-    /**
-     * Various key/value attributes of the object, depending on its type.
-     *
-     * @return array<string, string>|null
-     */
-    public function getAttributes(): ?iterable
-    {
-        return $this->attributes;
-    }
-
-    /**
-     * Various key/value attributes of the object, depending on its type.
-     *
-     * @param array<string, string>|null $attributes
-     *
-     * @return self
-     */
-    public function setAttributes(?iterable $attributes): self
-    {
-        $this->initialized['attributes'] = true;
-        $this->attributes                = $attributes;
-
-        return $this;
+        return ['iD' => 'ID', 'attributes' => 'Attributes'];
     }
 }

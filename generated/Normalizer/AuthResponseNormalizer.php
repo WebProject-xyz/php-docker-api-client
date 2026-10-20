@@ -48,10 +48,17 @@ class AuthResponseNormalizer implements DenormalizerInterface, NormalizerInterfa
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Status', $data)) {
-            $object->setStatus($data['Status']);
+            $object->status = $data['Status'];
+            unset($data['Status']);
         }
         if (array_key_exists('IdentityToken', $data)) {
-            $object->setIdentityToken($data['IdentityToken']);
+            $object->identityToken = $data['IdentityToken'];
+            unset($data['IdentityToken']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -60,9 +67,14 @@ class AuthResponseNormalizer implements DenormalizerInterface, NormalizerInterfa
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray           = [];
-        $dataArray['Status'] = $data->getStatus();
-        if ($data->isInitialized('identityToken') && null !== $data->getIdentityToken()) {
-            $dataArray['IdentityToken'] = $data->getIdentityToken();
+        $dataArray['Status'] = $data->status;
+        if (array_key_exists('identityToken', get_object_vars($data)) && null !== ($data->identityToken ?? null)) {
+            $dataArray['IdentityToken'] = $data->identityToken;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
         }
 
         return $dataArray;

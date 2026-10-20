@@ -48,23 +48,33 @@ class SwarmJoinPostBodyNormalizer implements DenormalizerInterface, NormalizerIn
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('ListenAddr', $data)) {
-            $object->setListenAddr($data['ListenAddr']);
+            $object->listenAddr = $data['ListenAddr'];
+            unset($data['ListenAddr']);
         }
         if (array_key_exists('AdvertiseAddr', $data)) {
-            $object->setAdvertiseAddr($data['AdvertiseAddr']);
+            $object->advertiseAddr = $data['AdvertiseAddr'];
+            unset($data['AdvertiseAddr']);
         }
         if (array_key_exists('DataPathAddr', $data)) {
-            $object->setDataPathAddr($data['DataPathAddr']);
+            $object->dataPathAddr = $data['DataPathAddr'];
+            unset($data['DataPathAddr']);
         }
         if (array_key_exists('RemoteAddrs', $data)) {
             $values = [];
             foreach ($data['RemoteAddrs'] as $value) {
                 $values[] = $value;
             }
-            $object->setRemoteAddrs($values);
+            $object->remoteAddrs = $values;
+            unset($data['RemoteAddrs']);
         }
         if (array_key_exists('JoinToken', $data)) {
-            $object->setJoinToken($data['JoinToken']);
+            $object->joinToken = $data['JoinToken'];
+            unset($data['JoinToken']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -73,19 +83,24 @@ class SwarmJoinPostBodyNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray               = [];
-        $dataArray['ListenAddr'] = $data->getListenAddr();
-        if ($data->isInitialized('advertiseAddr') && null !== $data->getAdvertiseAddr()) {
-            $dataArray['AdvertiseAddr'] = $data->getAdvertiseAddr();
+        $dataArray['ListenAddr'] = $data->listenAddr;
+        if (array_key_exists('advertiseAddr', get_object_vars($data)) && null !== ($data->advertiseAddr ?? null)) {
+            $dataArray['AdvertiseAddr'] = $data->advertiseAddr;
         }
-        if ($data->isInitialized('dataPathAddr') && null !== $data->getDataPathAddr()) {
-            $dataArray['DataPathAddr'] = $data->getDataPathAddr();
+        if (array_key_exists('dataPathAddr', get_object_vars($data)) && null !== ($data->dataPathAddr ?? null)) {
+            $dataArray['DataPathAddr'] = $data->dataPathAddr;
         }
         $values = [];
-        foreach ($data->getRemoteAddrs() as $value) {
+        foreach ($data->remoteAddrs as $value) {
             $values[] = $value;
         }
         $dataArray['RemoteAddrs'] = $values;
-        $dataArray['JoinToken']   = $data->getJoinToken();
+        $dataArray['JoinToken']   = $data->joinToken;
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
+        }
 
         return $dataArray;
     }

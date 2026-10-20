@@ -55,14 +55,23 @@ class ClusterVolumeSpecNormalizer implements DenormalizerInterface, NormalizerIn
             } elseif (null === $data['Group']) {
                 $value = $data['Group'];
             }
-            $object->setGroup($value);
-        } elseif (array_key_exists('Group', $data) && null === $data['Group']) {
-            $object->setGroup(null);
+            $object->group = $value;
+            unset($data['Group']);
+        } elseif (array_key_exists('Group', $data)) {
+            $object->group = null;
+            unset($data['Group']);
         }
         if (array_key_exists('AccessMode', $data) && null !== $data['AccessMode']) {
-            $object->setAccessMode($this->denormalizer->denormalize($data['AccessMode'], \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessMode::class, 'json', $context));
-        } elseif (array_key_exists('AccessMode', $data) && null === $data['AccessMode']) {
-            $object->setAccessMode(null);
+            $object->accessMode = $this->denormalizer->denormalize($data['AccessMode'], \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpecAccessMode::class, 'json', $context);
+            unset($data['AccessMode']);
+        } elseif (array_key_exists('AccessMode', $data)) {
+            $object->accessMode = null;
+            unset($data['AccessMode']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -71,17 +80,23 @@ class ClusterVolumeSpecNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('group')) {
-            $value = $data->getGroup();
-            if (is_string($data->getGroup())) {
-                $value = $data->getGroup();
-            } elseif (null === $data->getGroup()) {
-                $value = $data->getGroup();
+        if (array_key_exists('group', get_object_vars($data)) && null !== ($data->group ?? null)) {
+            $value = $data->group;
+            if (is_string($data->group)) {
+                $value = $data->group;
+            } elseif (null === $data->group) {
+                $value = $data->group;
             }
             $dataArray['Group'] = $value;
         }
-        if ($data->isInitialized('accessMode')) {
-            $dataArray['AccessMode'] = $this->normalizer->normalize($data->getAccessMode(), 'json', $context);
+        if (array_key_exists('accessMode', get_object_vars($data)) && null !== ($data->accessMode ?? null)) {
+            $normalized              = $this->normalizer->normalize($data->accessMode, 'json', $context);
+            $dataArray['AccessMode'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

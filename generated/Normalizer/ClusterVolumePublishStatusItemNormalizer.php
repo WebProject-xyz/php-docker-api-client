@@ -55,9 +55,11 @@ class ClusterVolumePublishStatusItemNormalizer implements DenormalizerInterface,
             } elseif (null === $data['NodeID']) {
                 $value = $data['NodeID'];
             }
-            $object->setNodeID($value);
-        } elseif (array_key_exists('NodeID', $data) && null === $data['NodeID']) {
-            $object->setNodeID(null);
+            $object->nodeID = $value;
+            unset($data['NodeID']);
+        } elseif (array_key_exists('NodeID', $data)) {
+            $object->nodeID = null;
+            unset($data['NodeID']);
         }
         if (array_key_exists('State', $data) && null !== $data['State']) {
             $value_1 = $data['State'];
@@ -66,14 +68,16 @@ class ClusterVolumePublishStatusItemNormalizer implements DenormalizerInterface,
             } elseif (null === $data['State']) {
                 $value_1 = $data['State'];
             }
-            $object->setState($value_1);
-        } elseif (array_key_exists('State', $data) && null === $data['State']) {
-            $object->setState(null);
+            $object->state = $value_1;
+            unset($data['State']);
+        } elseif (array_key_exists('State', $data)) {
+            $object->state = null;
+            unset($data['State']);
         }
         if (array_key_exists('PublishContext', $data) && null !== $data['PublishContext']) {
             $value_2 = $data['PublishContext'];
             if (is_array($data['PublishContext']) && $this->isOnlyNumericKeys($data['PublishContext'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['PublishContext'] as $key => $value_3) {
                     $values[$key] = $value_3;
                 }
@@ -81,9 +85,16 @@ class ClusterVolumePublishStatusItemNormalizer implements DenormalizerInterface,
             } elseif (null === $data['PublishContext']) {
                 $value_2 = $data['PublishContext'];
             }
-            $object->setPublishContext($value_2);
-        } elseif (array_key_exists('PublishContext', $data) && null === $data['PublishContext']) {
-            $object->setPublishContext(null);
+            $object->publishContext = $value_2;
+            unset($data['PublishContext']);
+        } elseif (array_key_exists('PublishContext', $data)) {
+            $object->publishContext = null;
+            unset($data['PublishContext']);
+        }
+        foreach ($data as $key_1 => $value_4) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_4;
+            }
         }
 
         return $object;
@@ -92,36 +103,41 @@ class ClusterVolumePublishStatusItemNormalizer implements DenormalizerInterface,
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('nodeID')) {
-            $value = $data->getNodeID();
-            if (is_string($data->getNodeID())) {
-                $value = $data->getNodeID();
-            } elseif (null === $data->getNodeID()) {
-                $value = $data->getNodeID();
+        if (array_key_exists('nodeID', get_object_vars($data)) && null !== ($data->nodeID ?? null)) {
+            $value = $data->nodeID;
+            if (is_string($data->nodeID)) {
+                $value = $data->nodeID;
+            } elseif (null === $data->nodeID) {
+                $value = $data->nodeID;
             }
             $dataArray['NodeID'] = $value;
         }
-        if ($data->isInitialized('state')) {
-            $value_1 = $data->getState();
-            if (is_string($data->getState())) {
-                $value_1 = $data->getState();
-            } elseif (null === $data->getState()) {
-                $value_1 = $data->getState();
+        if (array_key_exists('state', get_object_vars($data)) && null !== ($data->state ?? null)) {
+            $value_1 = $data->state;
+            if (is_string($data->state)) {
+                $value_1 = $data->state;
+            } elseif (null === $data->state) {
+                $value_1 = $data->state;
             }
             $dataArray['State'] = $value_1;
         }
-        if ($data->isInitialized('publishContext')) {
-            $value_2 = $data->getPublishContext();
-            if (is_object($data->getPublishContext())) {
-                $values = [];
-                foreach ($data->getPublishContext() as $key => $value_3) {
+        if (array_key_exists('publishContext', get_object_vars($data)) && null !== ($data->publishContext ?? null)) {
+            $value_2 = $data->publishContext;
+            if (is_iterable($data->publishContext)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->publishContext as $key => $value_3) {
                     $values[$key] = $value_3;
                 }
                 $value_2 = $values;
-            } elseif (null === $data->getPublishContext()) {
-                $value_2 = $data->getPublishContext();
+            } elseif (null === $data->publishContext) {
+                $value_2 = $data->publishContext;
             }
             $dataArray['PublishContext'] = $value_2;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_4) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_4;
+            }
         }
 
         return $dataArray;

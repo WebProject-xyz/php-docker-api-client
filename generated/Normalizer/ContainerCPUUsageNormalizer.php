@@ -55,46 +55,53 @@ class ContainerCPUUsageNormalizer implements DenormalizerInterface, NormalizerIn
             } elseif (null === $data['total_usage']) {
                 $value = $data['total_usage'];
             }
-            $object->setTotalUsage($value);
-        } elseif (array_key_exists('total_usage', $data) && null === $data['total_usage']) {
-            $object->setTotalUsage(null);
+            $object->totalUsage = $value;
+            unset($data['total_usage']);
+        } elseif (array_key_exists('total_usage', $data)) {
+            $object->totalUsage = null;
+            unset($data['total_usage']);
         }
         if (array_key_exists('percpu_usage', $data) && null !== $data['percpu_usage']) {
-            $value_1 = $data['percpu_usage'];
-            if (is_array($data['percpu_usage']) && $this->isOnlyNumericKeys($data['percpu_usage'])) {
-                $values = [];
-                foreach ($data['percpu_usage'] as $value_2) {
-                    $values[] = $value_2;
-                }
-                $value_1 = $values;
-            } elseif (null === $data['percpu_usage']) {
-                $value_1 = $data['percpu_usage'];
+            $values = [];
+            foreach ($data['percpu_usage'] as $value_1) {
+                $values[] = $value_1;
             }
-            $object->setPercpuUsage($value_1);
-        } elseif (array_key_exists('percpu_usage', $data) && null === $data['percpu_usage']) {
-            $object->setPercpuUsage(null);
+            $object->percpuUsage = $values;
+            unset($data['percpu_usage']);
+        } elseif (array_key_exists('percpu_usage', $data)) {
+            $object->percpuUsage = null;
+            unset($data['percpu_usage']);
         }
         if (array_key_exists('usage_in_kernelmode', $data) && null !== $data['usage_in_kernelmode']) {
-            $value_3 = $data['usage_in_kernelmode'];
+            $value_2 = $data['usage_in_kernelmode'];
             if (is_int($data['usage_in_kernelmode'])) {
-                $value_3 = $data['usage_in_kernelmode'];
+                $value_2 = $data['usage_in_kernelmode'];
             } elseif (null === $data['usage_in_kernelmode']) {
-                $value_3 = $data['usage_in_kernelmode'];
+                $value_2 = $data['usage_in_kernelmode'];
             }
-            $object->setUsageInKernelmode($value_3);
-        } elseif (array_key_exists('usage_in_kernelmode', $data) && null === $data['usage_in_kernelmode']) {
-            $object->setUsageInKernelmode(null);
+            $object->usageInKernelmode = $value_2;
+            unset($data['usage_in_kernelmode']);
+        } elseif (array_key_exists('usage_in_kernelmode', $data)) {
+            $object->usageInKernelmode = null;
+            unset($data['usage_in_kernelmode']);
         }
         if (array_key_exists('usage_in_usermode', $data) && null !== $data['usage_in_usermode']) {
-            $value_4 = $data['usage_in_usermode'];
+            $value_3 = $data['usage_in_usermode'];
             if (is_int($data['usage_in_usermode'])) {
-                $value_4 = $data['usage_in_usermode'];
+                $value_3 = $data['usage_in_usermode'];
             } elseif (null === $data['usage_in_usermode']) {
-                $value_4 = $data['usage_in_usermode'];
+                $value_3 = $data['usage_in_usermode'];
             }
-            $object->setUsageInUsermode($value_4);
-        } elseif (array_key_exists('usage_in_usermode', $data) && null === $data['usage_in_usermode']) {
-            $object->setUsageInUsermode(null);
+            $object->usageInUsermode = $value_3;
+            unset($data['usage_in_usermode']);
+        } elseif (array_key_exists('usage_in_usermode', $data)) {
+            $object->usageInUsermode = null;
+            unset($data['usage_in_usermode']);
+        }
+        foreach ($data as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_4;
+            }
         }
 
         return $object;
@@ -103,45 +110,44 @@ class ContainerCPUUsageNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('totalUsage')) {
-            $value = $data->getTotalUsage();
-            if (is_int($data->getTotalUsage())) {
-                $value = $data->getTotalUsage();
-            } elseif (null === $data->getTotalUsage()) {
-                $value = $data->getTotalUsage();
+        if (array_key_exists('totalUsage', get_object_vars($data)) && null !== ($data->totalUsage ?? null)) {
+            $value = $data->totalUsage;
+            if (is_int($data->totalUsage)) {
+                $value = $data->totalUsage;
+            } elseif (null === $data->totalUsage) {
+                $value = $data->totalUsage;
             }
             $dataArray['total_usage'] = $value;
         }
-        if ($data->isInitialized('percpuUsage')) {
-            $value_1 = $data->getPercpuUsage();
-            if (is_array($data->getPercpuUsage())) {
-                $values = [];
-                foreach ($data->getPercpuUsage() as $value_2) {
-                    $values[] = $value_2;
-                }
-                $value_1 = $values;
-            } elseif (null === $data->getPercpuUsage()) {
-                $value_1 = $data->getPercpuUsage();
+        if (array_key_exists('percpuUsage', get_object_vars($data)) && null !== ($data->percpuUsage ?? null)) {
+            $values = [];
+            foreach ($data->percpuUsage as $value_1) {
+                $values[] = $value_1;
             }
-            $dataArray['percpu_usage'] = $value_1;
+            $dataArray['percpu_usage'] = $values;
         }
-        if ($data->isInitialized('usageInKernelmode')) {
-            $value_3 = $data->getUsageInKernelmode();
-            if (is_int($data->getUsageInKernelmode())) {
-                $value_3 = $data->getUsageInKernelmode();
-            } elseif (null === $data->getUsageInKernelmode()) {
-                $value_3 = $data->getUsageInKernelmode();
+        if (array_key_exists('usageInKernelmode', get_object_vars($data)) && null !== ($data->usageInKernelmode ?? null)) {
+            $value_2 = $data->usageInKernelmode;
+            if (is_int($data->usageInKernelmode)) {
+                $value_2 = $data->usageInKernelmode;
+            } elseif (null === $data->usageInKernelmode) {
+                $value_2 = $data->usageInKernelmode;
             }
-            $dataArray['usage_in_kernelmode'] = $value_3;
+            $dataArray['usage_in_kernelmode'] = $value_2;
         }
-        if ($data->isInitialized('usageInUsermode')) {
-            $value_4 = $data->getUsageInUsermode();
-            if (is_int($data->getUsageInUsermode())) {
-                $value_4 = $data->getUsageInUsermode();
-            } elseif (null === $data->getUsageInUsermode()) {
-                $value_4 = $data->getUsageInUsermode();
+        if (array_key_exists('usageInUsermode', get_object_vars($data)) && null !== ($data->usageInUsermode ?? null)) {
+            $value_3 = $data->usageInUsermode;
+            if (is_int($data->usageInUsermode)) {
+                $value_3 = $data->usageInUsermode;
+            } elseif (null === $data->usageInUsermode) {
+                $value_3 = $data->usageInUsermode;
             }
-            $dataArray['usage_in_usermode'] = $value_4;
+            $dataArray['usage_in_usermode'] = $value_3;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_4;
+            }
         }
 
         return $dataArray;

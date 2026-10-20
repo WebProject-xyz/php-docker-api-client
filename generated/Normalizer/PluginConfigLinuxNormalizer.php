@@ -56,17 +56,25 @@ class PluginConfigLinuxNormalizer implements DenormalizerInterface, NormalizerIn
             foreach ($data['Capabilities'] as $value) {
                 $values[] = $value;
             }
-            $object->setCapabilities($values);
+            $object->capabilities = $values;
+            unset($data['Capabilities']);
         }
         if (array_key_exists('AllowAllDevices', $data)) {
-            $object->setAllowAllDevices($data['AllowAllDevices']);
+            $object->allowAllDevices = $data['AllowAllDevices'];
+            unset($data['AllowAllDevices']);
         }
         if (array_key_exists('Devices', $data)) {
             $values_1 = [];
             foreach ($data['Devices'] as $value_1) {
                 $values_1[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\PluginDevice::class, 'json', $context);
             }
-            $object->setDevices($values_1);
+            $object->devices = $values_1;
+            unset($data['Devices']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -76,16 +84,22 @@ class PluginConfigLinuxNormalizer implements DenormalizerInterface, NormalizerIn
     {
         $dataArray = [];
         $values    = [];
-        foreach ($data->getCapabilities() as $value) {
+        foreach ($data->capabilities as $value) {
             $values[] = $value;
         }
         $dataArray['Capabilities']    = $values;
-        $dataArray['AllowAllDevices'] = $data->getAllowAllDevices();
+        $dataArray['AllowAllDevices'] = $data->allowAllDevices;
         $values_1                     = [];
-        foreach ($data->getDevices() as $value_1) {
-            $values_1[] = $this->normalizer->normalize($value_1, 'json', $context);
+        foreach ($data->devices as $value_1) {
+            $normalized = null === $value_1 ? null : $this->normalizer->normalize($value_1, 'json', $context);
+            $values_1[] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         }
         $dataArray['Devices'] = $values_1;
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
+        }
 
         return $dataArray;
     }

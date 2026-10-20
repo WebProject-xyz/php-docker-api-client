@@ -3,51 +3,22 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class SwarmSpecOrchestration
+class SwarmSpecOrchestration implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The number of historic tasks to keep per instance or node. If
      * negative, never remove completed or failed tasks.
      *
      * @var int|null
      */
-    protected $taskHistoryRetentionLimit;
+    public ?int $taskHistoryRetentionLimit;
 
-    /**
-     * The number of historic tasks to keep per instance or node. If
-     * negative, never remove completed or failed tasks.
-     *
-     * @return int|null
-     */
-    public function getTaskHistoryRetentionLimit(): ?int
+    public function definedProperties(): array
     {
-        return $this->taskHistoryRetentionLimit;
-    }
-
-    /**
-     * The number of historic tasks to keep per instance or node. If
-     * negative, never remove completed or failed tasks.
-     *
-     * @param int|null $taskHistoryRetentionLimit
-     *
-     * @return self
-     */
-    public function setTaskHistoryRetentionLimit(?int $taskHistoryRetentionLimit): self
-    {
-        $this->initialized['taskHistoryRetentionLimit'] = true;
-        $this->taskHistoryRetentionLimit                = $taskHistoryRetentionLimit;
-
-        return $this;
+        return ['taskHistoryRetentionLimit' => 'TaskHistoryRetentionLimit'];
     }
 }

@@ -5,18 +5,16 @@ namespace WebProject\DockerApi\Library\Generated\Exception;
 
 class ContainerAttachNotFoundException extends NotFoundException
 {
-    /**
-     * @var \Psr\Http\Message\ResponseInterface
-     */
-    private $response;
-
-    public function __construct(?\Psr\Http\Message\ResponseInterface $response = null)
-    {
+    public function __construct(
+        /**
+         * @var \Symfony\Contracts\HttpClient\ResponseInterface|null
+         */
+        private readonly ?\Symfony\Contracts\HttpClient\ResponseInterface $response = null
+    ) {
         parent::__construct('no such container');
-        $this->response = $response;
     }
 
-    public function getResponse(): ?\Psr\Http\Message\ResponseInterface
+    public function getResponse(): ?\Symfony\Contracts\HttpClient\ResponseInterface
     {
         return $this->response;
     }

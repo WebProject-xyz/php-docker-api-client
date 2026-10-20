@@ -48,9 +48,16 @@ class SwarmSpecTaskDefaultsNormalizer implements DenormalizerInterface, Normaliz
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('LogDriver', $data) && null !== $data['LogDriver']) {
-            $object->setLogDriver($this->denormalizer->denormalize($data['LogDriver'], \WebProject\DockerApi\Library\Generated\Model\SwarmSpecTaskDefaultsLogDriver::class, 'json', $context));
-        } elseif (array_key_exists('LogDriver', $data) && null === $data['LogDriver']) {
-            $object->setLogDriver(null);
+            $object->logDriver = $this->denormalizer->denormalize($data['LogDriver'], \WebProject\DockerApi\Library\Generated\Model\SwarmSpecTaskDefaultsLogDriver::class, 'json', $context);
+            unset($data['LogDriver']);
+        } elseif (array_key_exists('LogDriver', $data)) {
+            $object->logDriver = null;
+            unset($data['LogDriver']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -59,8 +66,14 @@ class SwarmSpecTaskDefaultsNormalizer implements DenormalizerInterface, Normaliz
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('logDriver')) {
-            $dataArray['LogDriver'] = $this->normalizer->normalize($data->getLogDriver(), 'json', $context);
+        if (array_key_exists('logDriver', get_object_vars($data)) && null !== ($data->logDriver ?? null)) {
+            $normalized             = $this->normalizer->normalize($data->logDriver, 'json', $context);
+            $dataArray['LogDriver'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
         }
 
         return $dataArray;

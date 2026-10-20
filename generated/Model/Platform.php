@@ -3,82 +3,28 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class Platform
+class Platform implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Architecture represents the hardware architecture (for example,
      * `x86_64`).
      *
      * @var string|null
      */
-    protected $architecture;
+    public ?string $architecture;
     /**
      * OS represents the Operating System (for example, `linux` or `windows`).
      *
      * @var string|null
      */
-    protected $oS;
+    public ?string $oS;
 
-    /**
-     * Architecture represents the hardware architecture (for example,
-     * `x86_64`).
-     *
-     * @return string|null
-     */
-    public function getArchitecture(): ?string
+    public function definedProperties(): array
     {
-        return $this->architecture;
-    }
-
-    /**
-     * Architecture represents the hardware architecture (for example,
-     * `x86_64`).
-     *
-     * @param string|null $architecture
-     *
-     * @return self
-     */
-    public function setArchitecture(?string $architecture): self
-    {
-        $this->initialized['architecture'] = true;
-        $this->architecture                = $architecture;
-
-        return $this;
-    }
-
-    /**
-     * OS represents the Operating System (for example, `linux` or `windows`).
-     *
-     * @return string|null
-     */
-    public function getOS(): ?string
-    {
-        return $this->oS;
-    }
-
-    /**
-     * OS represents the Operating System (for example, `linux` or `windows`).
-     *
-     * @param string|null $oS
-     *
-     * @return self
-     */
-    public function setOS(?string $oS): self
-    {
-        $this->initialized['oS'] = true;
-        $this->oS                = $oS;
-
-        return $this;
+        return ['architecture' => 'Architecture', 'oS' => 'OS'];
     }
 }

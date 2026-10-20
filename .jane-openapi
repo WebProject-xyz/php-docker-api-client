@@ -12,4 +12,6 @@ return [
     'reference'                     => true,
     'use-cacheable-supports-method' => true,
     'validation'                    => false, // needs more patches to fully work
+    'enums-as-objects'              => true,
+    'date-prefer-interface'         => true,
 ];

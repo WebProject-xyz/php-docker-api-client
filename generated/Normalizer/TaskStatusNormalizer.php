@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace WebProject\DockerApi\Library\Generated\Normalizer;
 
 use ArrayObject;
+use DateTime;
+use Exception;
 use Jane\Component\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -49,46 +51,66 @@ class TaskStatusNormalizer implements DenormalizerInterface, NormalizerInterface
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Timestamp', $data) && null !== $data['Timestamp']) {
-            $value = $data['Timestamp'];
-            if (is_string($data['Timestamp'])) {
-                $value = $data['Timestamp'];
-            } elseif (null === $data['Timestamp']) {
-                $value = $data['Timestamp'];
+            $date = DateTime::createFromFormat('Y-m-d\TH:i:sP', $data['Timestamp']);
+            if (false === $date) {
+                if (is_string($data['Timestamp']) && 1 === preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/', $data['Timestamp'])) {
+                    try {
+                        $date = new DateTime($data['Timestamp']);
+                    } catch (Exception) {
+                        throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['Timestamp'], 'Y-m-d\TH:i:sP');
+                    }
+                } else {
+                    throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['Timestamp'], 'Y-m-d\TH:i:sP');
+                }
             }
-            $object->setTimestamp($value);
-        } elseif (array_key_exists('Timestamp', $data) && null === $data['Timestamp']) {
-            $object->setTimestamp(null);
+            $object->timestamp = $date;
+            unset($data['Timestamp']);
+        } elseif (array_key_exists('Timestamp', $data)) {
+            $object->timestamp = null;
+            unset($data['Timestamp']);
         }
         if (array_key_exists('State', $data)) {
-            $object->setState($data['State']);
+            $object->state = \WebProject\DockerApi\Library\Generated\Model\TaskState::from($data['State']);
+            unset($data['State']);
         }
         if (array_key_exists('Message', $data) && null !== $data['Message']) {
-            $value_1 = $data['Message'];
+            $value = $data['Message'];
             if (is_string($data['Message'])) {
-                $value_1 = $data['Message'];
+                $value = $data['Message'];
             } elseif (null === $data['Message']) {
-                $value_1 = $data['Message'];
+                $value = $data['Message'];
             }
-            $object->setMessage($value_1);
-        } elseif (array_key_exists('Message', $data) && null === $data['Message']) {
-            $object->setMessage(null);
+            $object->message = $value;
+            unset($data['Message']);
+        } elseif (array_key_exists('Message', $data)) {
+            $object->message = null;
+            unset($data['Message']);
         }
         if (array_key_exists('Err', $data) && null !== $data['Err']) {
-            $value_2 = $data['Err'];
+            $value_1 = $data['Err'];
             if (is_string($data['Err'])) {
-                $value_2 = $data['Err'];
+                $value_1 = $data['Err'];
             } elseif (null === $data['Err']) {
-                $value_2 = $data['Err'];
+                $value_1 = $data['Err'];
             }
-            $object->setErr($value_2);
-        } elseif (array_key_exists('Err', $data) && null === $data['Err']) {
-            $object->setErr(null);
+            $object->err = $value_1;
+            unset($data['Err']);
+        } elseif (array_key_exists('Err', $data)) {
+            $object->err = null;
+            unset($data['Err']);
         }
         if (array_key_exists('ContainerStatus', $data)) {
-            $object->setContainerStatus($this->denormalizer->denormalize($data['ContainerStatus'], \WebProject\DockerApi\Library\Generated\Model\ContainerStatus::class, 'json', $context));
+            $object->containerStatus = $this->denormalizer->denormalize($data['ContainerStatus'], \WebProject\DockerApi\Library\Generated\Model\ContainerStatus::class, 'json', $context);
+            unset($data['ContainerStatus']);
         }
         if (array_key_exists('PortStatus', $data)) {
-            $object->setPortStatus($this->denormalizer->denormalize($data['PortStatus'], \WebProject\DockerApi\Library\Generated\Model\PortStatus::class, 'json', $context));
+            $object->portStatus = $this->denormalizer->denormalize($data['PortStatus'], \WebProject\DockerApi\Library\Generated\Model\PortStatus::class, 'json', $context);
+            unset($data['PortStatus']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -97,41 +119,42 @@ class TaskStatusNormalizer implements DenormalizerInterface, NormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('timestamp')) {
-            $value = $data->getTimestamp();
-            if (is_string($data->getTimestamp())) {
-                $value = $data->getTimestamp();
-            } elseif (null === $data->getTimestamp()) {
-                $value = $data->getTimestamp();
+        if (array_key_exists('timestamp', get_object_vars($data)) && null !== ($data->timestamp ?? null)) {
+            $dataArray['Timestamp'] = $data->timestamp?->format('Y-m-d\TH:i:sP');
+        }
+        if (array_key_exists('state', get_object_vars($data)) && null !== ($data->state ?? null)) {
+            $dataArray['State'] = $data->state->value;
+        }
+        if (array_key_exists('message', get_object_vars($data)) && null !== ($data->message ?? null)) {
+            $value = $data->message;
+            if (is_string($data->message)) {
+                $value = $data->message;
+            } elseif (null === $data->message) {
+                $value = $data->message;
             }
-            $dataArray['Timestamp'] = $value;
+            $dataArray['Message'] = $value;
         }
-        if ($data->isInitialized('state') && null !== $data->getState()) {
-            $dataArray['State'] = $data->getState();
-        }
-        if ($data->isInitialized('message')) {
-            $value_1 = $data->getMessage();
-            if (is_string($data->getMessage())) {
-                $value_1 = $data->getMessage();
-            } elseif (null === $data->getMessage()) {
-                $value_1 = $data->getMessage();
+        if (array_key_exists('err', get_object_vars($data)) && null !== ($data->err ?? null)) {
+            $value_1 = $data->err;
+            if (is_string($data->err)) {
+                $value_1 = $data->err;
+            } elseif (null === $data->err) {
+                $value_1 = $data->err;
             }
-            $dataArray['Message'] = $value_1;
+            $dataArray['Err'] = $value_1;
         }
-        if ($data->isInitialized('err')) {
-            $value_2 = $data->getErr();
-            if (is_string($data->getErr())) {
-                $value_2 = $data->getErr();
-            } elseif (null === $data->getErr()) {
-                $value_2 = $data->getErr();
+        if (array_key_exists('containerStatus', get_object_vars($data)) && null !== ($data->containerStatus ?? null)) {
+            $normalized                   = $this->normalizer->normalize($data->containerStatus, 'json', $context);
+            $dataArray['ContainerStatus'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        }
+        if (array_key_exists('portStatus', get_object_vars($data)) && null !== ($data->portStatus ?? null)) {
+            $normalized_1            = $this->normalizer->normalize($data->portStatus, 'json', $context);
+            $dataArray['PortStatus'] = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
             }
-            $dataArray['Err'] = $value_2;
-        }
-        if ($data->isInitialized('containerStatus') && null !== $data->getContainerStatus()) {
-            $dataArray['ContainerStatus'] = $this->normalizer->normalize($data->getContainerStatus(), 'json', $context);
-        }
-        if ($data->isInitialized('portStatus') && null !== $data->getPortStatus()) {
-            $dataArray['PortStatus'] = $this->normalizer->normalize($data->getPortStatus(), 'json', $context);
         }
 
         return $dataArray;

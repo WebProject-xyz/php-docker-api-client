@@ -55,9 +55,11 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['CertificateIssuer']) {
                 $value = $data['CertificateIssuer'];
             }
-            $object->setCertificateIssuer($value);
-        } elseif (array_key_exists('CertificateIssuer', $data) && null === $data['CertificateIssuer']) {
-            $object->setCertificateIssuer(null);
+            $object->certificateIssuer = $value;
+            unset($data['CertificateIssuer']);
+        } elseif (array_key_exists('CertificateIssuer', $data)) {
+            $object->certificateIssuer = null;
+            unset($data['CertificateIssuer']);
         }
         if (array_key_exists('SubjectAlternativeName', $data) && null !== $data['SubjectAlternativeName']) {
             $value_1 = $data['SubjectAlternativeName'];
@@ -66,9 +68,11 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['SubjectAlternativeName']) {
                 $value_1 = $data['SubjectAlternativeName'];
             }
-            $object->setSubjectAlternativeName($value_1);
-        } elseif (array_key_exists('SubjectAlternativeName', $data) && null === $data['SubjectAlternativeName']) {
-            $object->setSubjectAlternativeName(null);
+            $object->subjectAlternativeName = $value_1;
+            unset($data['SubjectAlternativeName']);
+        } elseif (array_key_exists('SubjectAlternativeName', $data)) {
+            $object->subjectAlternativeName = null;
+            unset($data['SubjectAlternativeName']);
         }
         if (array_key_exists('Issuer', $data) && null !== $data['Issuer']) {
             $value_2 = $data['Issuer'];
@@ -77,9 +81,11 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['Issuer']) {
                 $value_2 = $data['Issuer'];
             }
-            $object->setIssuer($value_2);
-        } elseif (array_key_exists('Issuer', $data) && null === $data['Issuer']) {
-            $object->setIssuer(null);
+            $object->issuer = $value_2;
+            unset($data['Issuer']);
+        } elseif (array_key_exists('Issuer', $data)) {
+            $object->issuer = null;
+            unset($data['Issuer']);
         }
         if (array_key_exists('BuildSignerURI', $data) && null !== $data['BuildSignerURI']) {
             $value_3 = $data['BuildSignerURI'];
@@ -88,9 +94,11 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['BuildSignerURI']) {
                 $value_3 = $data['BuildSignerURI'];
             }
-            $object->setBuildSignerURI($value_3);
-        } elseif (array_key_exists('BuildSignerURI', $data) && null === $data['BuildSignerURI']) {
-            $object->setBuildSignerURI(null);
+            $object->buildSignerURI = $value_3;
+            unset($data['BuildSignerURI']);
+        } elseif (array_key_exists('BuildSignerURI', $data)) {
+            $object->buildSignerURI = null;
+            unset($data['BuildSignerURI']);
         }
         if (array_key_exists('BuildSignerDigest', $data) && null !== $data['BuildSignerDigest']) {
             $value_4 = $data['BuildSignerDigest'];
@@ -99,9 +107,11 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['BuildSignerDigest']) {
                 $value_4 = $data['BuildSignerDigest'];
             }
-            $object->setBuildSignerDigest($value_4);
-        } elseif (array_key_exists('BuildSignerDigest', $data) && null === $data['BuildSignerDigest']) {
-            $object->setBuildSignerDigest(null);
+            $object->buildSignerDigest = $value_4;
+            unset($data['BuildSignerDigest']);
+        } elseif (array_key_exists('BuildSignerDigest', $data)) {
+            $object->buildSignerDigest = null;
+            unset($data['BuildSignerDigest']);
         }
         if (array_key_exists('RunnerEnvironment', $data) && null !== $data['RunnerEnvironment']) {
             $value_5 = $data['RunnerEnvironment'];
@@ -110,9 +120,11 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['RunnerEnvironment']) {
                 $value_5 = $data['RunnerEnvironment'];
             }
-            $object->setRunnerEnvironment($value_5);
-        } elseif (array_key_exists('RunnerEnvironment', $data) && null === $data['RunnerEnvironment']) {
-            $object->setRunnerEnvironment(null);
+            $object->runnerEnvironment = $value_5;
+            unset($data['RunnerEnvironment']);
+        } elseif (array_key_exists('RunnerEnvironment', $data)) {
+            $object->runnerEnvironment = null;
+            unset($data['RunnerEnvironment']);
         }
         if (array_key_exists('SourceRepositoryURI', $data) && null !== $data['SourceRepositoryURI']) {
             $value_6 = $data['SourceRepositoryURI'];
@@ -121,9 +133,11 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['SourceRepositoryURI']) {
                 $value_6 = $data['SourceRepositoryURI'];
             }
-            $object->setSourceRepositoryURI($value_6);
-        } elseif (array_key_exists('SourceRepositoryURI', $data) && null === $data['SourceRepositoryURI']) {
-            $object->setSourceRepositoryURI(null);
+            $object->sourceRepositoryURI = $value_6;
+            unset($data['SourceRepositoryURI']);
+        } elseif (array_key_exists('SourceRepositoryURI', $data)) {
+            $object->sourceRepositoryURI = null;
+            unset($data['SourceRepositoryURI']);
         }
         if (array_key_exists('SourceRepositoryDigest', $data) && null !== $data['SourceRepositoryDigest']) {
             $value_7 = $data['SourceRepositoryDigest'];
@@ -132,9 +146,11 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['SourceRepositoryDigest']) {
                 $value_7 = $data['SourceRepositoryDigest'];
             }
-            $object->setSourceRepositoryDigest($value_7);
-        } elseif (array_key_exists('SourceRepositoryDigest', $data) && null === $data['SourceRepositoryDigest']) {
-            $object->setSourceRepositoryDigest(null);
+            $object->sourceRepositoryDigest = $value_7;
+            unset($data['SourceRepositoryDigest']);
+        } elseif (array_key_exists('SourceRepositoryDigest', $data)) {
+            $object->sourceRepositoryDigest = null;
+            unset($data['SourceRepositoryDigest']);
         }
         if (array_key_exists('SourceRepositoryRef', $data) && null !== $data['SourceRepositoryRef']) {
             $value_8 = $data['SourceRepositoryRef'];
@@ -143,9 +159,11 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['SourceRepositoryRef']) {
                 $value_8 = $data['SourceRepositoryRef'];
             }
-            $object->setSourceRepositoryRef($value_8);
-        } elseif (array_key_exists('SourceRepositoryRef', $data) && null === $data['SourceRepositoryRef']) {
-            $object->setSourceRepositoryRef(null);
+            $object->sourceRepositoryRef = $value_8;
+            unset($data['SourceRepositoryRef']);
+        } elseif (array_key_exists('SourceRepositoryRef', $data)) {
+            $object->sourceRepositoryRef = null;
+            unset($data['SourceRepositoryRef']);
         }
         if (array_key_exists('SourceRepositoryIdentifier', $data) && null !== $data['SourceRepositoryIdentifier']) {
             $value_9 = $data['SourceRepositoryIdentifier'];
@@ -154,9 +172,11 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['SourceRepositoryIdentifier']) {
                 $value_9 = $data['SourceRepositoryIdentifier'];
             }
-            $object->setSourceRepositoryIdentifier($value_9);
-        } elseif (array_key_exists('SourceRepositoryIdentifier', $data) && null === $data['SourceRepositoryIdentifier']) {
-            $object->setSourceRepositoryIdentifier(null);
+            $object->sourceRepositoryIdentifier = $value_9;
+            unset($data['SourceRepositoryIdentifier']);
+        } elseif (array_key_exists('SourceRepositoryIdentifier', $data)) {
+            $object->sourceRepositoryIdentifier = null;
+            unset($data['SourceRepositoryIdentifier']);
         }
         if (array_key_exists('SourceRepositoryOwnerURI', $data) && null !== $data['SourceRepositoryOwnerURI']) {
             $value_10 = $data['SourceRepositoryOwnerURI'];
@@ -165,9 +185,11 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['SourceRepositoryOwnerURI']) {
                 $value_10 = $data['SourceRepositoryOwnerURI'];
             }
-            $object->setSourceRepositoryOwnerURI($value_10);
-        } elseif (array_key_exists('SourceRepositoryOwnerURI', $data) && null === $data['SourceRepositoryOwnerURI']) {
-            $object->setSourceRepositoryOwnerURI(null);
+            $object->sourceRepositoryOwnerURI = $value_10;
+            unset($data['SourceRepositoryOwnerURI']);
+        } elseif (array_key_exists('SourceRepositoryOwnerURI', $data)) {
+            $object->sourceRepositoryOwnerURI = null;
+            unset($data['SourceRepositoryOwnerURI']);
         }
         if (array_key_exists('SourceRepositoryOwnerIdentifier', $data) && null !== $data['SourceRepositoryOwnerIdentifier']) {
             $value_11 = $data['SourceRepositoryOwnerIdentifier'];
@@ -176,9 +198,11 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['SourceRepositoryOwnerIdentifier']) {
                 $value_11 = $data['SourceRepositoryOwnerIdentifier'];
             }
-            $object->setSourceRepositoryOwnerIdentifier($value_11);
-        } elseif (array_key_exists('SourceRepositoryOwnerIdentifier', $data) && null === $data['SourceRepositoryOwnerIdentifier']) {
-            $object->setSourceRepositoryOwnerIdentifier(null);
+            $object->sourceRepositoryOwnerIdentifier = $value_11;
+            unset($data['SourceRepositoryOwnerIdentifier']);
+        } elseif (array_key_exists('SourceRepositoryOwnerIdentifier', $data)) {
+            $object->sourceRepositoryOwnerIdentifier = null;
+            unset($data['SourceRepositoryOwnerIdentifier']);
         }
         if (array_key_exists('BuildConfigURI', $data) && null !== $data['BuildConfigURI']) {
             $value_12 = $data['BuildConfigURI'];
@@ -187,9 +211,11 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['BuildConfigURI']) {
                 $value_12 = $data['BuildConfigURI'];
             }
-            $object->setBuildConfigURI($value_12);
-        } elseif (array_key_exists('BuildConfigURI', $data) && null === $data['BuildConfigURI']) {
-            $object->setBuildConfigURI(null);
+            $object->buildConfigURI = $value_12;
+            unset($data['BuildConfigURI']);
+        } elseif (array_key_exists('BuildConfigURI', $data)) {
+            $object->buildConfigURI = null;
+            unset($data['BuildConfigURI']);
         }
         if (array_key_exists('BuildConfigDigest', $data) && null !== $data['BuildConfigDigest']) {
             $value_13 = $data['BuildConfigDigest'];
@@ -198,9 +224,11 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['BuildConfigDigest']) {
                 $value_13 = $data['BuildConfigDigest'];
             }
-            $object->setBuildConfigDigest($value_13);
-        } elseif (array_key_exists('BuildConfigDigest', $data) && null === $data['BuildConfigDigest']) {
-            $object->setBuildConfigDigest(null);
+            $object->buildConfigDigest = $value_13;
+            unset($data['BuildConfigDigest']);
+        } elseif (array_key_exists('BuildConfigDigest', $data)) {
+            $object->buildConfigDigest = null;
+            unset($data['BuildConfigDigest']);
         }
         if (array_key_exists('BuildTrigger', $data) && null !== $data['BuildTrigger']) {
             $value_14 = $data['BuildTrigger'];
@@ -209,9 +237,11 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['BuildTrigger']) {
                 $value_14 = $data['BuildTrigger'];
             }
-            $object->setBuildTrigger($value_14);
-        } elseif (array_key_exists('BuildTrigger', $data) && null === $data['BuildTrigger']) {
-            $object->setBuildTrigger(null);
+            $object->buildTrigger = $value_14;
+            unset($data['BuildTrigger']);
+        } elseif (array_key_exists('BuildTrigger', $data)) {
+            $object->buildTrigger = null;
+            unset($data['BuildTrigger']);
         }
         if (array_key_exists('RunInvocationURI', $data) && null !== $data['RunInvocationURI']) {
             $value_15 = $data['RunInvocationURI'];
@@ -220,9 +250,11 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['RunInvocationURI']) {
                 $value_15 = $data['RunInvocationURI'];
             }
-            $object->setRunInvocationURI($value_15);
-        } elseif (array_key_exists('RunInvocationURI', $data) && null === $data['RunInvocationURI']) {
-            $object->setRunInvocationURI(null);
+            $object->runInvocationURI = $value_15;
+            unset($data['RunInvocationURI']);
+        } elseif (array_key_exists('RunInvocationURI', $data)) {
+            $object->runInvocationURI = null;
+            unset($data['RunInvocationURI']);
         }
         if (array_key_exists('SourceRepositoryVisibilityAtSigning', $data) && null !== $data['SourceRepositoryVisibilityAtSigning']) {
             $value_16 = $data['SourceRepositoryVisibilityAtSigning'];
@@ -231,9 +263,16 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['SourceRepositoryVisibilityAtSigning']) {
                 $value_16 = $data['SourceRepositoryVisibilityAtSigning'];
             }
-            $object->setSourceRepositoryVisibilityAtSigning($value_16);
-        } elseif (array_key_exists('SourceRepositoryVisibilityAtSigning', $data) && null === $data['SourceRepositoryVisibilityAtSigning']) {
-            $object->setSourceRepositoryVisibilityAtSigning(null);
+            $object->sourceRepositoryVisibilityAtSigning = $value_16;
+            unset($data['SourceRepositoryVisibilityAtSigning']);
+        } elseif (array_key_exists('SourceRepositoryVisibilityAtSigning', $data)) {
+            $object->sourceRepositoryVisibilityAtSigning = null;
+            unset($data['SourceRepositoryVisibilityAtSigning']);
+        }
+        foreach ($data as $key => $value_17) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_17;
+            }
         }
 
         return $object;
@@ -242,158 +281,163 @@ class SignerIdentityNormalizer implements DenormalizerInterface, NormalizerInter
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('certificateIssuer')) {
-            $value = $data->getCertificateIssuer();
-            if (is_string($data->getCertificateIssuer())) {
-                $value = $data->getCertificateIssuer();
-            } elseif (null === $data->getCertificateIssuer()) {
-                $value = $data->getCertificateIssuer();
+        if (array_key_exists('certificateIssuer', get_object_vars($data)) && null !== ($data->certificateIssuer ?? null)) {
+            $value = $data->certificateIssuer;
+            if (is_string($data->certificateIssuer)) {
+                $value = $data->certificateIssuer;
+            } elseif (null === $data->certificateIssuer) {
+                $value = $data->certificateIssuer;
             }
             $dataArray['CertificateIssuer'] = $value;
         }
-        if ($data->isInitialized('subjectAlternativeName')) {
-            $value_1 = $data->getSubjectAlternativeName();
-            if (is_string($data->getSubjectAlternativeName())) {
-                $value_1 = $data->getSubjectAlternativeName();
-            } elseif (null === $data->getSubjectAlternativeName()) {
-                $value_1 = $data->getSubjectAlternativeName();
+        if (array_key_exists('subjectAlternativeName', get_object_vars($data)) && null !== ($data->subjectAlternativeName ?? null)) {
+            $value_1 = $data->subjectAlternativeName;
+            if (is_string($data->subjectAlternativeName)) {
+                $value_1 = $data->subjectAlternativeName;
+            } elseif (null === $data->subjectAlternativeName) {
+                $value_1 = $data->subjectAlternativeName;
             }
             $dataArray['SubjectAlternativeName'] = $value_1;
         }
-        if ($data->isInitialized('issuer')) {
-            $value_2 = $data->getIssuer();
-            if (is_string($data->getIssuer())) {
-                $value_2 = $data->getIssuer();
-            } elseif (null === $data->getIssuer()) {
-                $value_2 = $data->getIssuer();
+        if (array_key_exists('issuer', get_object_vars($data)) && null !== ($data->issuer ?? null)) {
+            $value_2 = $data->issuer;
+            if (is_string($data->issuer)) {
+                $value_2 = $data->issuer;
+            } elseif (null === $data->issuer) {
+                $value_2 = $data->issuer;
             }
             $dataArray['Issuer'] = $value_2;
         }
-        if ($data->isInitialized('buildSignerURI')) {
-            $value_3 = $data->getBuildSignerURI();
-            if (is_string($data->getBuildSignerURI())) {
-                $value_3 = $data->getBuildSignerURI();
-            } elseif (null === $data->getBuildSignerURI()) {
-                $value_3 = $data->getBuildSignerURI();
+        if (array_key_exists('buildSignerURI', get_object_vars($data)) && null !== ($data->buildSignerURI ?? null)) {
+            $value_3 = $data->buildSignerURI;
+            if (is_string($data->buildSignerURI)) {
+                $value_3 = $data->buildSignerURI;
+            } elseif (null === $data->buildSignerURI) {
+                $value_3 = $data->buildSignerURI;
             }
             $dataArray['BuildSignerURI'] = $value_3;
         }
-        if ($data->isInitialized('buildSignerDigest')) {
-            $value_4 = $data->getBuildSignerDigest();
-            if (is_string($data->getBuildSignerDigest())) {
-                $value_4 = $data->getBuildSignerDigest();
-            } elseif (null === $data->getBuildSignerDigest()) {
-                $value_4 = $data->getBuildSignerDigest();
+        if (array_key_exists('buildSignerDigest', get_object_vars($data)) && null !== ($data->buildSignerDigest ?? null)) {
+            $value_4 = $data->buildSignerDigest;
+            if (is_string($data->buildSignerDigest)) {
+                $value_4 = $data->buildSignerDigest;
+            } elseif (null === $data->buildSignerDigest) {
+                $value_4 = $data->buildSignerDigest;
             }
             $dataArray['BuildSignerDigest'] = $value_4;
         }
-        if ($data->isInitialized('runnerEnvironment')) {
-            $value_5 = $data->getRunnerEnvironment();
-            if (is_string($data->getRunnerEnvironment())) {
-                $value_5 = $data->getRunnerEnvironment();
-            } elseif (null === $data->getRunnerEnvironment()) {
-                $value_5 = $data->getRunnerEnvironment();
+        if (array_key_exists('runnerEnvironment', get_object_vars($data)) && null !== ($data->runnerEnvironment ?? null)) {
+            $value_5 = $data->runnerEnvironment;
+            if (is_string($data->runnerEnvironment)) {
+                $value_5 = $data->runnerEnvironment;
+            } elseif (null === $data->runnerEnvironment) {
+                $value_5 = $data->runnerEnvironment;
             }
             $dataArray['RunnerEnvironment'] = $value_5;
         }
-        if ($data->isInitialized('sourceRepositoryURI')) {
-            $value_6 = $data->getSourceRepositoryURI();
-            if (is_string($data->getSourceRepositoryURI())) {
-                $value_6 = $data->getSourceRepositoryURI();
-            } elseif (null === $data->getSourceRepositoryURI()) {
-                $value_6 = $data->getSourceRepositoryURI();
+        if (array_key_exists('sourceRepositoryURI', get_object_vars($data)) && null !== ($data->sourceRepositoryURI ?? null)) {
+            $value_6 = $data->sourceRepositoryURI;
+            if (is_string($data->sourceRepositoryURI)) {
+                $value_6 = $data->sourceRepositoryURI;
+            } elseif (null === $data->sourceRepositoryURI) {
+                $value_6 = $data->sourceRepositoryURI;
             }
             $dataArray['SourceRepositoryURI'] = $value_6;
         }
-        if ($data->isInitialized('sourceRepositoryDigest')) {
-            $value_7 = $data->getSourceRepositoryDigest();
-            if (is_string($data->getSourceRepositoryDigest())) {
-                $value_7 = $data->getSourceRepositoryDigest();
-            } elseif (null === $data->getSourceRepositoryDigest()) {
-                $value_7 = $data->getSourceRepositoryDigest();
+        if (array_key_exists('sourceRepositoryDigest', get_object_vars($data)) && null !== ($data->sourceRepositoryDigest ?? null)) {
+            $value_7 = $data->sourceRepositoryDigest;
+            if (is_string($data->sourceRepositoryDigest)) {
+                $value_7 = $data->sourceRepositoryDigest;
+            } elseif (null === $data->sourceRepositoryDigest) {
+                $value_7 = $data->sourceRepositoryDigest;
             }
             $dataArray['SourceRepositoryDigest'] = $value_7;
         }
-        if ($data->isInitialized('sourceRepositoryRef')) {
-            $value_8 = $data->getSourceRepositoryRef();
-            if (is_string($data->getSourceRepositoryRef())) {
-                $value_8 = $data->getSourceRepositoryRef();
-            } elseif (null === $data->getSourceRepositoryRef()) {
-                $value_8 = $data->getSourceRepositoryRef();
+        if (array_key_exists('sourceRepositoryRef', get_object_vars($data)) && null !== ($data->sourceRepositoryRef ?? null)) {
+            $value_8 = $data->sourceRepositoryRef;
+            if (is_string($data->sourceRepositoryRef)) {
+                $value_8 = $data->sourceRepositoryRef;
+            } elseif (null === $data->sourceRepositoryRef) {
+                $value_8 = $data->sourceRepositoryRef;
             }
             $dataArray['SourceRepositoryRef'] = $value_8;
         }
-        if ($data->isInitialized('sourceRepositoryIdentifier')) {
-            $value_9 = $data->getSourceRepositoryIdentifier();
-            if (is_string($data->getSourceRepositoryIdentifier())) {
-                $value_9 = $data->getSourceRepositoryIdentifier();
-            } elseif (null === $data->getSourceRepositoryIdentifier()) {
-                $value_9 = $data->getSourceRepositoryIdentifier();
+        if (array_key_exists('sourceRepositoryIdentifier', get_object_vars($data)) && null !== ($data->sourceRepositoryIdentifier ?? null)) {
+            $value_9 = $data->sourceRepositoryIdentifier;
+            if (is_string($data->sourceRepositoryIdentifier)) {
+                $value_9 = $data->sourceRepositoryIdentifier;
+            } elseif (null === $data->sourceRepositoryIdentifier) {
+                $value_9 = $data->sourceRepositoryIdentifier;
             }
             $dataArray['SourceRepositoryIdentifier'] = $value_9;
         }
-        if ($data->isInitialized('sourceRepositoryOwnerURI')) {
-            $value_10 = $data->getSourceRepositoryOwnerURI();
-            if (is_string($data->getSourceRepositoryOwnerURI())) {
-                $value_10 = $data->getSourceRepositoryOwnerURI();
-            } elseif (null === $data->getSourceRepositoryOwnerURI()) {
-                $value_10 = $data->getSourceRepositoryOwnerURI();
+        if (array_key_exists('sourceRepositoryOwnerURI', get_object_vars($data)) && null !== ($data->sourceRepositoryOwnerURI ?? null)) {
+            $value_10 = $data->sourceRepositoryOwnerURI;
+            if (is_string($data->sourceRepositoryOwnerURI)) {
+                $value_10 = $data->sourceRepositoryOwnerURI;
+            } elseif (null === $data->sourceRepositoryOwnerURI) {
+                $value_10 = $data->sourceRepositoryOwnerURI;
             }
             $dataArray['SourceRepositoryOwnerURI'] = $value_10;
         }
-        if ($data->isInitialized('sourceRepositoryOwnerIdentifier')) {
-            $value_11 = $data->getSourceRepositoryOwnerIdentifier();
-            if (is_string($data->getSourceRepositoryOwnerIdentifier())) {
-                $value_11 = $data->getSourceRepositoryOwnerIdentifier();
-            } elseif (null === $data->getSourceRepositoryOwnerIdentifier()) {
-                $value_11 = $data->getSourceRepositoryOwnerIdentifier();
+        if (array_key_exists('sourceRepositoryOwnerIdentifier', get_object_vars($data)) && null !== ($data->sourceRepositoryOwnerIdentifier ?? null)) {
+            $value_11 = $data->sourceRepositoryOwnerIdentifier;
+            if (is_string($data->sourceRepositoryOwnerIdentifier)) {
+                $value_11 = $data->sourceRepositoryOwnerIdentifier;
+            } elseif (null === $data->sourceRepositoryOwnerIdentifier) {
+                $value_11 = $data->sourceRepositoryOwnerIdentifier;
             }
             $dataArray['SourceRepositoryOwnerIdentifier'] = $value_11;
         }
-        if ($data->isInitialized('buildConfigURI')) {
-            $value_12 = $data->getBuildConfigURI();
-            if (is_string($data->getBuildConfigURI())) {
-                $value_12 = $data->getBuildConfigURI();
-            } elseif (null === $data->getBuildConfigURI()) {
-                $value_12 = $data->getBuildConfigURI();
+        if (array_key_exists('buildConfigURI', get_object_vars($data)) && null !== ($data->buildConfigURI ?? null)) {
+            $value_12 = $data->buildConfigURI;
+            if (is_string($data->buildConfigURI)) {
+                $value_12 = $data->buildConfigURI;
+            } elseif (null === $data->buildConfigURI) {
+                $value_12 = $data->buildConfigURI;
             }
             $dataArray['BuildConfigURI'] = $value_12;
         }
-        if ($data->isInitialized('buildConfigDigest')) {
-            $value_13 = $data->getBuildConfigDigest();
-            if (is_string($data->getBuildConfigDigest())) {
-                $value_13 = $data->getBuildConfigDigest();
-            } elseif (null === $data->getBuildConfigDigest()) {
-                $value_13 = $data->getBuildConfigDigest();
+        if (array_key_exists('buildConfigDigest', get_object_vars($data)) && null !== ($data->buildConfigDigest ?? null)) {
+            $value_13 = $data->buildConfigDigest;
+            if (is_string($data->buildConfigDigest)) {
+                $value_13 = $data->buildConfigDigest;
+            } elseif (null === $data->buildConfigDigest) {
+                $value_13 = $data->buildConfigDigest;
             }
             $dataArray['BuildConfigDigest'] = $value_13;
         }
-        if ($data->isInitialized('buildTrigger')) {
-            $value_14 = $data->getBuildTrigger();
-            if (is_string($data->getBuildTrigger())) {
-                $value_14 = $data->getBuildTrigger();
-            } elseif (null === $data->getBuildTrigger()) {
-                $value_14 = $data->getBuildTrigger();
+        if (array_key_exists('buildTrigger', get_object_vars($data)) && null !== ($data->buildTrigger ?? null)) {
+            $value_14 = $data->buildTrigger;
+            if (is_string($data->buildTrigger)) {
+                $value_14 = $data->buildTrigger;
+            } elseif (null === $data->buildTrigger) {
+                $value_14 = $data->buildTrigger;
             }
             $dataArray['BuildTrigger'] = $value_14;
         }
-        if ($data->isInitialized('runInvocationURI')) {
-            $value_15 = $data->getRunInvocationURI();
-            if (is_string($data->getRunInvocationURI())) {
-                $value_15 = $data->getRunInvocationURI();
-            } elseif (null === $data->getRunInvocationURI()) {
-                $value_15 = $data->getRunInvocationURI();
+        if (array_key_exists('runInvocationURI', get_object_vars($data)) && null !== ($data->runInvocationURI ?? null)) {
+            $value_15 = $data->runInvocationURI;
+            if (is_string($data->runInvocationURI)) {
+                $value_15 = $data->runInvocationURI;
+            } elseif (null === $data->runInvocationURI) {
+                $value_15 = $data->runInvocationURI;
             }
             $dataArray['RunInvocationURI'] = $value_15;
         }
-        if ($data->isInitialized('sourceRepositoryVisibilityAtSigning')) {
-            $value_16 = $data->getSourceRepositoryVisibilityAtSigning();
-            if (is_string($data->getSourceRepositoryVisibilityAtSigning())) {
-                $value_16 = $data->getSourceRepositoryVisibilityAtSigning();
-            } elseif (null === $data->getSourceRepositoryVisibilityAtSigning()) {
-                $value_16 = $data->getSourceRepositoryVisibilityAtSigning();
+        if (array_key_exists('sourceRepositoryVisibilityAtSigning', get_object_vars($data)) && null !== ($data->sourceRepositoryVisibilityAtSigning ?? null)) {
+            $value_16 = $data->sourceRepositoryVisibilityAtSigning;
+            if (is_string($data->sourceRepositoryVisibilityAtSigning)) {
+                $value_16 = $data->sourceRepositoryVisibilityAtSigning;
+            } elseif (null === $data->sourceRepositoryVisibilityAtSigning) {
+                $value_16 = $data->sourceRepositoryVisibilityAtSigning;
             }
             $dataArray['SourceRepositoryVisibilityAtSigning'] = $value_16;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_17) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_17;
+            }
         }
 
         return $dataArray;

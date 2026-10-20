@@ -37,21 +37,21 @@ class SystemEvents extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
      *    "since"?: string, //Show events created since this timestamp then stream new events.
      *    "until"?: string, //Show events created until this timestamp then stop streaming.
      *    "filters"?: string, //A JSON encoded value of filters (a `map[string][]string`) to process on the event list. Available filters:
-     *
-     * - `config=<string>` config name or ID
-     * - `container=<string>` container name or ID
-     * - `daemon=<string>` daemon name or ID
-     * - `event=<string>` event type
-     * - `image=<string>` image name or ID
-     * - `label=<string>` image or container label
-     * - `network=<string>` network name or ID
-     * - `node=<string>` node ID
-     * - `plugin`=<string> plugin name or ID
-     * - `scope`=<string> local or swarm
-     * - `secret=<string>` secret name or ID
-     * - `service=<string>` service name or ID
-     * - `type=<string>` object to filter by, one of `container`, `image`, `volume`, `network`, `daemon`, `plugin`, `node`, `service`, `secret` or `config`
-     * - `volume=<string>` volume name
+     *                        //
+     *                        //- `config=<string>` config name or ID
+     *                        //- `container=<string>` container name or ID
+     *                        //- `daemon=<string>` daemon name or ID
+     *                        //- `event=<string>` event type
+     *                        //- `image=<string>` image name or ID
+     *                        //- `label=<string>` image or container label
+     *                        //- `network=<string>` network name or ID
+     *                        //- `node=<string>` node ID
+     *                        //- `plugin`=<string> plugin name or ID
+     *                        //- `scope`=<string> local or swarm
+     *                        //- `secret=<string>` secret name or ID
+     *                        //- `service=<string>` service name or ID
+     *                        //- `type=<string>` object to filter by, one of `container`, `image`, `volume`, `network`, `daemon`, `plugin`, `node`, `service`, `secret` or `config`
+     *                        //- `volume=<string>` volume name
      * } $queryParameters
      * @param array $accept Accept content header application/jsonl|application/x-ndjson|application/json-seq
      */
@@ -71,7 +71,7 @@ class SystemEvents extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
         return '/events';
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
         return [[], null];
     }
@@ -101,22 +101,35 @@ class SystemEvents extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     /**
      * {@inheritdoc}
      *
-     * @return null
+     * @return mixed
+     *
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
+        $body   = $response->getContent(false);
         if (200 === $status) {
         }
         if (400 === $status) {
         }
         if (500 === $status) {
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Lazy->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

@@ -3,42 +3,19 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class TaskSpecPlacementPreferencesItem
+class TaskSpecPlacementPreferencesItem implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var TaskSpecPlacementPreferencesItemSpread|null
      */
-    protected $spread;
+    public ?TaskSpecPlacementPreferencesItemSpread $spread;
 
-    /**
-     * @return TaskSpecPlacementPreferencesItemSpread|null
-     */
-    public function getSpread(): ?TaskSpecPlacementPreferencesItemSpread
+    public function definedProperties(): array
     {
-        return $this->spread;
-    }
-
-    /**
-     * @param TaskSpecPlacementPreferencesItemSpread|null $spread
-     *
-     * @return self
-     */
-    public function setSpread(?TaskSpecPlacementPreferencesItemSpread $spread): self
-    {
-        $this->initialized['spread'] = true;
-        $this->spread                = $spread;
-
-        return $this;
+        return ['spread' => 'Spread'];
     }
 }

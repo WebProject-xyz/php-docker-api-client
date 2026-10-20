@@ -3,117 +3,31 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ContainerStorageStats
+class ContainerStorageStats implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var int|null
      */
-    protected $readCountNormalized;
+    public ?int $readCountNormalized;
     /**
      * @var int|null
      */
-    protected $readSizeBytes;
+    public ?int $readSizeBytes;
     /**
      * @var int|null
      */
-    protected $writeCountNormalized;
+    public ?int $writeCountNormalized;
     /**
      * @var int|null
      */
-    protected $writeSizeBytes;
+    public ?int $writeSizeBytes;
 
-    /**
-     * @return int|null
-     */
-    public function getReadCountNormalized(): ?int
+    public function definedProperties(): array
     {
-        return $this->readCountNormalized;
-    }
-
-    /**
-     * @param int|null $readCountNormalized
-     *
-     * @return self
-     */
-    public function setReadCountNormalized(?int $readCountNormalized): self
-    {
-        $this->initialized['readCountNormalized'] = true;
-        $this->readCountNormalized                = $readCountNormalized;
-
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getReadSizeBytes(): ?int
-    {
-        return $this->readSizeBytes;
-    }
-
-    /**
-     * @param int|null $readSizeBytes
-     *
-     * @return self
-     */
-    public function setReadSizeBytes(?int $readSizeBytes): self
-    {
-        $this->initialized['readSizeBytes'] = true;
-        $this->readSizeBytes                = $readSizeBytes;
-
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getWriteCountNormalized(): ?int
-    {
-        return $this->writeCountNormalized;
-    }
-
-    /**
-     * @param int|null $writeCountNormalized
-     *
-     * @return self
-     */
-    public function setWriteCountNormalized(?int $writeCountNormalized): self
-    {
-        $this->initialized['writeCountNormalized'] = true;
-        $this->writeCountNormalized                = $writeCountNormalized;
-
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getWriteSizeBytes(): ?int
-    {
-        return $this->writeSizeBytes;
-    }
-
-    /**
-     * @param int|null $writeSizeBytes
-     *
-     * @return self
-     */
-    public function setWriteSizeBytes(?int $writeSizeBytes): self
-    {
-        $this->initialized['writeSizeBytes'] = true;
-        $this->writeSizeBytes                = $writeSizeBytes;
-
-        return $this;
+        return ['readCountNormalized' => 'read_count_normalized', 'readSizeBytes' => 'read_size_bytes', 'writeCountNormalized' => 'write_count_normalized', 'writeSizeBytes' => 'write_size_bytes'];
     }
 }

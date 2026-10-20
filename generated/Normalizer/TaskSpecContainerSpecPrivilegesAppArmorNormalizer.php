@@ -55,9 +55,16 @@ class TaskSpecContainerSpecPrivilegesAppArmorNormalizer implements DenormalizerI
             } elseif (null === $data['Mode']) {
                 $value = $data['Mode'];
             }
-            $object->setMode($value);
-        } elseif (array_key_exists('Mode', $data) && null === $data['Mode']) {
-            $object->setMode(null);
+            $object->mode = $value;
+            unset($data['Mode']);
+        } elseif (array_key_exists('Mode', $data)) {
+            $object->mode = null;
+            unset($data['Mode']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -66,14 +73,19 @@ class TaskSpecContainerSpecPrivilegesAppArmorNormalizer implements DenormalizerI
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('mode')) {
-            $value = $data->getMode();
-            if (is_string($data->getMode())) {
-                $value = $data->getMode();
-            } elseif (null === $data->getMode()) {
-                $value = $data->getMode();
+        if (array_key_exists('mode', get_object_vars($data)) && null !== ($data->mode ?? null)) {
+            $value = $data->mode;
+            if (is_string($data->mode)) {
+                $value = $data->mode;
+            } elseif (null === $data->mode) {
+                $value = $data->mode;
             }
             $dataArray['Mode'] = $value;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

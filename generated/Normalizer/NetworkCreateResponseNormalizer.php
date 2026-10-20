@@ -48,10 +48,17 @@ class NetworkCreateResponseNormalizer implements DenormalizerInterface, Normaliz
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Id', $data)) {
-            $object->setId($data['Id']);
+            $object->id = $data['Id'];
+            unset($data['Id']);
         }
         if (array_key_exists('Warning', $data)) {
-            $object->setWarning($data['Warning']);
+            $object->warning = $data['Warning'];
+            unset($data['Warning']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -60,8 +67,13 @@ class NetworkCreateResponseNormalizer implements DenormalizerInterface, Normaliz
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray            = [];
-        $dataArray['Id']      = $data->getId();
-        $dataArray['Warning'] = $data->getWarning();
+        $dataArray['Id']      = $data->id;
+        $dataArray['Warning'] = $data->warning;
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
+        }
 
         return $dataArray;
     }

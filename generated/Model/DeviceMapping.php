@@ -3,92 +3,27 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class DeviceMapping
+class DeviceMapping implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var string|null
      */
-    protected $pathOnHost;
+    public ?string $pathOnHost;
     /**
      * @var string|null
      */
-    protected $pathInContainer;
+    public ?string $pathInContainer;
     /**
      * @var string|null
      */
-    protected $cgroupPermissions;
+    public ?string $cgroupPermissions;
 
-    /**
-     * @return string|null
-     */
-    public function getPathOnHost(): ?string
+    public function definedProperties(): array
     {
-        return $this->pathOnHost;
-    }
-
-    /**
-     * @param string|null $pathOnHost
-     *
-     * @return self
-     */
-    public function setPathOnHost(?string $pathOnHost): self
-    {
-        $this->initialized['pathOnHost'] = true;
-        $this->pathOnHost                = $pathOnHost;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPathInContainer(): ?string
-    {
-        return $this->pathInContainer;
-    }
-
-    /**
-     * @param string|null $pathInContainer
-     *
-     * @return self
-     */
-    public function setPathInContainer(?string $pathInContainer): self
-    {
-        $this->initialized['pathInContainer'] = true;
-        $this->pathInContainer                = $pathInContainer;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCgroupPermissions(): ?string
-    {
-        return $this->cgroupPermissions;
-    }
-
-    /**
-     * @param string|null $cgroupPermissions
-     *
-     * @return self
-     */
-    public function setCgroupPermissions(?string $cgroupPermissions): self
-    {
-        $this->initialized['cgroupPermissions'] = true;
-        $this->cgroupPermissions                = $cgroupPermissions;
-
-        return $this;
+        return ['pathOnHost' => 'PathOnHost', 'pathInContainer' => 'PathInContainer', 'cgroupPermissions' => 'CgroupPermissions'];
     }
 }

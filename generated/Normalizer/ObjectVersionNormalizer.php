@@ -55,9 +55,16 @@ class ObjectVersionNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['Index']) {
                 $value = $data['Index'];
             }
-            $object->setIndex($value);
-        } elseif (array_key_exists('Index', $data) && null === $data['Index']) {
-            $object->setIndex(null);
+            $object->index = $value;
+            unset($data['Index']);
+        } elseif (array_key_exists('Index', $data)) {
+            $object->index = null;
+            unset($data['Index']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -66,14 +73,19 @@ class ObjectVersionNormalizer implements DenormalizerInterface, NormalizerInterf
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('index')) {
-            $value = $data->getIndex();
-            if (is_int($data->getIndex())) {
-                $value = $data->getIndex();
-            } elseif (null === $data->getIndex()) {
-                $value = $data->getIndex();
+        if (array_key_exists('index', get_object_vars($data)) && null !== ($data->index ?? null)) {
+            $value = $data->index;
+            if (is_int($data->index)) {
+                $value = $data->index;
+            } elseif (null === $data->index) {
+                $value = $data->index;
             }
             $dataArray['Index'] = $value;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

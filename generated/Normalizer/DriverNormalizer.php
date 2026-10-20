@@ -48,14 +48,21 @@ class DriverNormalizer implements DenormalizerInterface, NormalizerInterface, De
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Name', $data)) {
-            $object->setName($data['Name']);
+            $object->name = $data['Name'];
+            unset($data['Name']);
         }
         if (array_key_exists('Options', $data)) {
-            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+            $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
             foreach ($data['Options'] as $key => $value) {
                 $values[$key] = $value;
             }
-            $object->setOptions($values);
+            $object->options = $values;
+            unset($data['Options']);
+        }
+        foreach ($data as $key_1 => $value_1) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_1;
+            }
         }
 
         return $object;
@@ -64,13 +71,18 @@ class DriverNormalizer implements DenormalizerInterface, NormalizerInterface, De
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray         = [];
-        $dataArray['Name'] = $data->getName();
-        if ($data->isInitialized('options') && null !== $data->getOptions()) {
-            $values = [];
-            foreach ($data->getOptions() as $key => $value) {
+        $dataArray['Name'] = $data->name;
+        if (array_key_exists('options', get_object_vars($data)) && null !== ($data->options ?? null)) {
+            $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+            foreach ($data->options as $key => $value) {
                 $values[$key] = $value;
             }
             $dataArray['Options'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_1) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_1;
+            }
         }
 
         return $dataArray;

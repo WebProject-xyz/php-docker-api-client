@@ -3,82 +3,28 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class SwarmSpecTaskDefaultsLogDriver
+class SwarmSpecTaskDefaultsLogDriver implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The log driver to use as a default for new tasks.
      *
      * @var string|null
      */
-    protected $name;
+    public ?string $name;
     /**
      * Driver-specific options for the selected log driver, specified
      * as key/value pairs.
      *
-     * @var array<string, string>|null
+     * @var iterable<string, string>|null
      */
-    protected $options;
+    public ?iterable $options;
 
-    /**
-     * The log driver to use as a default for new tasks.
-     *
-     * @return string|null
-     */
-    public function getName(): ?string
+    public function definedProperties(): array
     {
-        return $this->name;
-    }
-
-    /**
-     * The log driver to use as a default for new tasks.
-     *
-     * @param string|null $name
-     *
-     * @return self
-     */
-    public function setName(?string $name): self
-    {
-        $this->initialized['name'] = true;
-        $this->name                = $name;
-
-        return $this;
-    }
-
-    /**
-     * Driver-specific options for the selected log driver, specified
-     * as key/value pairs.
-     *
-     * @return array<string, string>|null
-     */
-    public function getOptions(): ?iterable
-    {
-        return $this->options;
-    }
-
-    /**
-     * Driver-specific options for the selected log driver, specified
-     * as key/value pairs.
-     *
-     * @param array<string, string>|null $options
-     *
-     * @return self
-     */
-    public function setOptions(?iterable $options): self
-    {
-        $this->initialized['options'] = true;
-        $this->options                = $options;
-
-        return $this;
+        return ['name' => 'Name', 'options' => 'Options'];
     }
 }

@@ -48,10 +48,12 @@ class AttestationStatementNormalizer implements DenormalizerInterface, Normalize
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Descriptor', $data)) {
-            $object->setDescriptor($this->denormalizer->denormalize($data['Descriptor'], \WebProject\DockerApi\Library\Generated\Model\OCIDescriptor::class, 'json', $context));
+            $object->descriptor = $this->denormalizer->denormalize($data['Descriptor'], \WebProject\DockerApi\Library\Generated\Model\OCIDescriptor::class, 'json', $context);
+            unset($data['Descriptor']);
         }
         if (array_key_exists('PredicateType', $data)) {
-            $object->setPredicateType($data['PredicateType']);
+            $object->predicateType = $data['PredicateType'];
+            unset($data['PredicateType']);
         }
         if (array_key_exists('Statement', $data) && null !== $data['Statement']) {
             $value = $data['Statement'];
@@ -60,9 +62,16 @@ class AttestationStatementNormalizer implements DenormalizerInterface, Normalize
             } elseif (isset($data['Statement'])) {
                 $value = $data['Statement'];
             }
-            $object->setStatement($value);
-        } elseif (array_key_exists('Statement', $data) && null === $data['Statement']) {
-            $object->setStatement(null);
+            $object->statement = $value;
+            unset($data['Statement']);
+        } elseif (array_key_exists('Statement', $data)) {
+            $object->statement = null;
+            unset($data['Statement']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -71,16 +80,22 @@ class AttestationStatementNormalizer implements DenormalizerInterface, Normalize
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray                  = [];
-        $dataArray['Descriptor']    = $this->normalizer->normalize($data->getDescriptor(), 'json', $context);
-        $dataArray['PredicateType'] = $data->getPredicateType();
-        if ($data->isInitialized('statement')) {
-            $value = $data->getStatement();
-            if (null === $data->getStatement()) {
-                $value = $data->getStatement();
-            } elseif (null !== $data->getStatement()) {
-                $value = $data->getStatement();
+        $normalized                 = null === $data->descriptor ? null : $this->normalizer->normalize($data->descriptor, 'json', $context);
+        $dataArray['Descriptor']    = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        $dataArray['PredicateType'] = $data->predicateType;
+        if (array_key_exists('statement', get_object_vars($data)) && null !== ($data->statement ?? null)) {
+            $value = $data->statement;
+            if (null === $data->statement) {
+                $value = $data->statement;
+            } elseif (null !== $data->statement) {
+                $value = $data->statement;
             }
             $dataArray['Statement'] = $value;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

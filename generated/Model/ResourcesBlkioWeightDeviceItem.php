@@ -3,67 +3,23 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ResourcesBlkioWeightDeviceItem
+class ResourcesBlkioWeightDeviceItem implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var string|null
      */
-    protected $path;
+    public ?string $path;
     /**
      * @var int|null
      */
-    protected $weight;
+    public ?int $weight;
 
-    /**
-     * @return string|null
-     */
-    public function getPath(): ?string
+    public function definedProperties(): array
     {
-        return $this->path;
-    }
-
-    /**
-     * @param string|null $path
-     *
-     * @return self
-     */
-    public function setPath(?string $path): self
-    {
-        $this->initialized['path'] = true;
-        $this->path                = $path;
-
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getWeight(): ?int
-    {
-        return $this->weight;
-    }
-
-    /**
-     * @param int|null $weight
-     *
-     * @return self
-     */
-    public function setWeight(?int $weight): self
-    {
-        $this->initialized['weight'] = true;
-        $this->weight                = $weight;
-
-        return $this;
+        return ['path' => 'Path', 'weight' => 'Weight'];
     }
 }

@@ -121,7 +121,9 @@ def main() -> int:
         return 1
 
     text = spec_path.read_text()
-    text = text.replace("format: date-time", "format: dateTime")
+    # Jane v8 handles RFC 3339 nano-precision timestamps with lenient parsing.
+    # Normalize legacy workaround `dateTime` back to standard `date-time`.
+    text = text.replace("format: dateTime", "format: date-time")
     spec_path.write_text(text)
 
     yaml = YAML()
@@ -141,6 +143,11 @@ def main() -> int:
     for s in ("HostConfig", "PortMap"):
         if s in schemas:
             make_nullable(schemas[s])
+
+    if "servers" in doc and isinstance(doc["servers"], list):
+        for server in doc["servers"]:
+            if isinstance(server, dict) and server.get("url", "").startswith("/"):
+                server["url"] = "/"
 
     with spec_path.open("w") as f:
         yaml.dump(doc, f)

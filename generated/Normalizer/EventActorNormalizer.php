@@ -55,14 +55,16 @@ class EventActorNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['ID']) {
                 $value = $data['ID'];
             }
-            $object->setID($value);
-        } elseif (array_key_exists('ID', $data) && null === $data['ID']) {
-            $object->setID(null);
+            $object->iD = $value;
+            unset($data['ID']);
+        } elseif (array_key_exists('ID', $data)) {
+            $object->iD = null;
+            unset($data['ID']);
         }
         if (array_key_exists('Attributes', $data) && null !== $data['Attributes']) {
             $value_1 = $data['Attributes'];
             if (is_array($data['Attributes']) && $this->isOnlyNumericKeys($data['Attributes'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['Attributes'] as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
@@ -70,9 +72,16 @@ class EventActorNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['Attributes']) {
                 $value_1 = $data['Attributes'];
             }
-            $object->setAttributes($value_1);
-        } elseif (array_key_exists('Attributes', $data) && null === $data['Attributes']) {
-            $object->setAttributes(null);
+            $object->attributes = $value_1;
+            unset($data['Attributes']);
+        } elseif (array_key_exists('Attributes', $data)) {
+            $object->attributes = null;
+            unset($data['Attributes']);
+        }
+        foreach ($data as $key_1 => $value_3) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_3;
+            }
         }
 
         return $object;
@@ -81,27 +90,32 @@ class EventActorNormalizer implements DenormalizerInterface, NormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('iD')) {
-            $value = $data->getID();
-            if (is_string($data->getID())) {
-                $value = $data->getID();
-            } elseif (null === $data->getID()) {
-                $value = $data->getID();
+        if (array_key_exists('iD', get_object_vars($data)) && null !== ($data->iD ?? null)) {
+            $value = $data->iD;
+            if (is_string($data->iD)) {
+                $value = $data->iD;
+            } elseif (null === $data->iD) {
+                $value = $data->iD;
             }
             $dataArray['ID'] = $value;
         }
-        if ($data->isInitialized('attributes')) {
-            $value_1 = $data->getAttributes();
-            if (is_object($data->getAttributes())) {
-                $values = [];
-                foreach ($data->getAttributes() as $key => $value_2) {
+        if (array_key_exists('attributes', get_object_vars($data)) && null !== ($data->attributes ?? null)) {
+            $value_1 = $data->attributes;
+            if (is_iterable($data->attributes)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->attributes as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
                 $value_1 = $values;
-            } elseif (null === $data->getAttributes()) {
-                $value_1 = $data->getAttributes();
+            } elseif (null === $data->attributes) {
+                $value_1 = $data->attributes;
             }
             $dataArray['Attributes'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_3) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_3;
+            }
         }
 
         return $dataArray;

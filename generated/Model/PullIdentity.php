@@ -3,48 +3,21 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class PullIdentity
+class PullIdentity implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Repository is the remote repository location the image was pulled from.
      *
      * @var string|null
      */
-    protected $repository;
+    public ?string $repository;
 
-    /**
-     * Repository is the remote repository location the image was pulled from.
-     *
-     * @return string|null
-     */
-    public function getRepository(): ?string
+    public function definedProperties(): array
     {
-        return $this->repository;
-    }
-
-    /**
-     * Repository is the remote repository location the image was pulled from.
-     *
-     * @param string|null $repository
-     *
-     * @return self
-     */
-    public function setRepository(?string $repository): self
-    {
-        $this->initialized['repository'] = true;
-        $this->repository                = $repository;
-
-        return $this;
+        return ['repository' => 'Repository'];
     }
 }

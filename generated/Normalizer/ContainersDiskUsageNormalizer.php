@@ -55,9 +55,11 @@ class ContainersDiskUsageNormalizer implements DenormalizerInterface, Normalizer
             } elseif (null === $data['ActiveCount']) {
                 $value = $data['ActiveCount'];
             }
-            $object->setActiveCount($value);
-        } elseif (array_key_exists('ActiveCount', $data) && null === $data['ActiveCount']) {
-            $object->setActiveCount(null);
+            $object->activeCount = $value;
+            unset($data['ActiveCount']);
+        } elseif (array_key_exists('ActiveCount', $data)) {
+            $object->activeCount = null;
+            unset($data['ActiveCount']);
         }
         if (array_key_exists('TotalCount', $data) && null !== $data['TotalCount']) {
             $value_1 = $data['TotalCount'];
@@ -66,9 +68,11 @@ class ContainersDiskUsageNormalizer implements DenormalizerInterface, Normalizer
             } elseif (null === $data['TotalCount']) {
                 $value_1 = $data['TotalCount'];
             }
-            $object->setTotalCount($value_1);
-        } elseif (array_key_exists('TotalCount', $data) && null === $data['TotalCount']) {
-            $object->setTotalCount(null);
+            $object->totalCount = $value_1;
+            unset($data['TotalCount']);
+        } elseif (array_key_exists('TotalCount', $data)) {
+            $object->totalCount = null;
+            unset($data['TotalCount']);
         }
         if (array_key_exists('Reclaimable', $data) && null !== $data['Reclaimable']) {
             $value_2 = $data['Reclaimable'];
@@ -77,9 +81,11 @@ class ContainersDiskUsageNormalizer implements DenormalizerInterface, Normalizer
             } elseif (null === $data['Reclaimable']) {
                 $value_2 = $data['Reclaimable'];
             }
-            $object->setReclaimable($value_2);
-        } elseif (array_key_exists('Reclaimable', $data) && null === $data['Reclaimable']) {
-            $object->setReclaimable(null);
+            $object->reclaimable = $value_2;
+            unset($data['Reclaimable']);
+        } elseif (array_key_exists('Reclaimable', $data)) {
+            $object->reclaimable = null;
+            unset($data['Reclaimable']);
         }
         if (array_key_exists('TotalSize', $data) && null !== $data['TotalSize']) {
             $value_3 = $data['TotalSize'];
@@ -88,24 +94,27 @@ class ContainersDiskUsageNormalizer implements DenormalizerInterface, Normalizer
             } elseif (null === $data['TotalSize']) {
                 $value_3 = $data['TotalSize'];
             }
-            $object->setTotalSize($value_3);
-        } elseif (array_key_exists('TotalSize', $data) && null === $data['TotalSize']) {
-            $object->setTotalSize(null);
+            $object->totalSize = $value_3;
+            unset($data['TotalSize']);
+        } elseif (array_key_exists('TotalSize', $data)) {
+            $object->totalSize = null;
+            unset($data['TotalSize']);
         }
         if (array_key_exists('Items', $data) && null !== $data['Items']) {
-            $value_4 = $data['Items'];
-            if (is_array($data['Items']) && $this->isOnlyNumericKeys($data['Items'])) {
-                $values = [];
-                foreach ($data['Items'] as $value_5) {
-                    $values[] = $value_5;
-                }
-                $value_4 = $values;
-            } elseif (null === $data['Items']) {
-                $value_4 = $data['Items'];
+            $values = [];
+            foreach ($data['Items'] as $value_4) {
+                $values[] = $value_4;
             }
-            $object->setItems($value_4);
-        } elseif (array_key_exists('Items', $data) && null === $data['Items']) {
-            $object->setItems(null);
+            $object->items = $values;
+            unset($data['Items']);
+        } elseif (array_key_exists('Items', $data)) {
+            $object->items = null;
+            unset($data['Items']);
+        }
+        foreach ($data as $key => $value_5) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_5;
+            }
         }
 
         return $object;
@@ -114,54 +123,53 @@ class ContainersDiskUsageNormalizer implements DenormalizerInterface, Normalizer
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('activeCount')) {
-            $value = $data->getActiveCount();
-            if (is_int($data->getActiveCount())) {
-                $value = $data->getActiveCount();
-            } elseif (null === $data->getActiveCount()) {
-                $value = $data->getActiveCount();
+        if (array_key_exists('activeCount', get_object_vars($data)) && null !== ($data->activeCount ?? null)) {
+            $value = $data->activeCount;
+            if (is_int($data->activeCount)) {
+                $value = $data->activeCount;
+            } elseif (null === $data->activeCount) {
+                $value = $data->activeCount;
             }
             $dataArray['ActiveCount'] = $value;
         }
-        if ($data->isInitialized('totalCount')) {
-            $value_1 = $data->getTotalCount();
-            if (is_int($data->getTotalCount())) {
-                $value_1 = $data->getTotalCount();
-            } elseif (null === $data->getTotalCount()) {
-                $value_1 = $data->getTotalCount();
+        if (array_key_exists('totalCount', get_object_vars($data)) && null !== ($data->totalCount ?? null)) {
+            $value_1 = $data->totalCount;
+            if (is_int($data->totalCount)) {
+                $value_1 = $data->totalCount;
+            } elseif (null === $data->totalCount) {
+                $value_1 = $data->totalCount;
             }
             $dataArray['TotalCount'] = $value_1;
         }
-        if ($data->isInitialized('reclaimable')) {
-            $value_2 = $data->getReclaimable();
-            if (is_int($data->getReclaimable())) {
-                $value_2 = $data->getReclaimable();
-            } elseif (null === $data->getReclaimable()) {
-                $value_2 = $data->getReclaimable();
+        if (array_key_exists('reclaimable', get_object_vars($data)) && null !== ($data->reclaimable ?? null)) {
+            $value_2 = $data->reclaimable;
+            if (is_int($data->reclaimable)) {
+                $value_2 = $data->reclaimable;
+            } elseif (null === $data->reclaimable) {
+                $value_2 = $data->reclaimable;
             }
             $dataArray['Reclaimable'] = $value_2;
         }
-        if ($data->isInitialized('totalSize')) {
-            $value_3 = $data->getTotalSize();
-            if (is_int($data->getTotalSize())) {
-                $value_3 = $data->getTotalSize();
-            } elseif (null === $data->getTotalSize()) {
-                $value_3 = $data->getTotalSize();
+        if (array_key_exists('totalSize', get_object_vars($data)) && null !== ($data->totalSize ?? null)) {
+            $value_3 = $data->totalSize;
+            if (is_int($data->totalSize)) {
+                $value_3 = $data->totalSize;
+            } elseif (null === $data->totalSize) {
+                $value_3 = $data->totalSize;
             }
             $dataArray['TotalSize'] = $value_3;
         }
-        if ($data->isInitialized('items')) {
-            $value_4 = $data->getItems();
-            if (is_array($data->getItems())) {
-                $values = [];
-                foreach ($data->getItems() as $value_5) {
-                    $values[] = $value_5;
-                }
-                $value_4 = $values;
-            } elseif (null === $data->getItems()) {
-                $value_4 = $data->getItems();
+        if (array_key_exists('items', get_object_vars($data)) && null !== ($data->items ?? null)) {
+            $values = [];
+            foreach ($data->items as $value_4) {
+                $values[] = $value_4;
             }
-            $dataArray['Items'] = $value_4;
+            $dataArray['Items'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_5) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_5;
+            }
         }
 
         return $dataArray;

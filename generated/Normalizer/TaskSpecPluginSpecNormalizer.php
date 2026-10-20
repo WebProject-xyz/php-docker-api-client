@@ -56,9 +56,11 @@ class TaskSpecPluginSpecNormalizer implements DenormalizerInterface, NormalizerI
             } elseif (null === $data['Name']) {
                 $value = $data['Name'];
             }
-            $object->setName($value);
-        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
-            $object->setName(null);
+            $object->name = $value;
+            unset($data['Name']);
+        } elseif (array_key_exists('Name', $data)) {
+            $object->name = null;
+            unset($data['Name']);
         }
         if (array_key_exists('Remote', $data) && null !== $data['Remote']) {
             $value_1 = $data['Remote'];
@@ -67,9 +69,11 @@ class TaskSpecPluginSpecNormalizer implements DenormalizerInterface, NormalizerI
             } elseif (null === $data['Remote']) {
                 $value_1 = $data['Remote'];
             }
-            $object->setRemote($value_1);
-        } elseif (array_key_exists('Remote', $data) && null === $data['Remote']) {
-            $object->setRemote(null);
+            $object->remote = $value_1;
+            unset($data['Remote']);
+        } elseif (array_key_exists('Remote', $data)) {
+            $object->remote = null;
+            unset($data['Remote']);
         }
         if (array_key_exists('Disabled', $data) && null !== $data['Disabled']) {
             $value_2 = $data['Disabled'];
@@ -78,24 +82,27 @@ class TaskSpecPluginSpecNormalizer implements DenormalizerInterface, NormalizerI
             } elseif (null === $data['Disabled']) {
                 $value_2 = $data['Disabled'];
             }
-            $object->setDisabled($value_2);
-        } elseif (array_key_exists('Disabled', $data) && null === $data['Disabled']) {
-            $object->setDisabled(null);
+            $object->disabled = $value_2;
+            unset($data['Disabled']);
+        } elseif (array_key_exists('Disabled', $data)) {
+            $object->disabled = null;
+            unset($data['Disabled']);
         }
         if (array_key_exists('PluginPrivilege', $data) && null !== $data['PluginPrivilege']) {
-            $value_3 = $data['PluginPrivilege'];
-            if (is_array($data['PluginPrivilege']) && $this->isOnlyNumericKeys($data['PluginPrivilege'])) {
-                $values = [];
-                foreach ($data['PluginPrivilege'] as $value_4) {
-                    $values[] = $this->denormalizer->denormalize($value_4, \WebProject\DockerApi\Library\Generated\Model\PluginPrivilege::class, 'json', $context);
-                }
-                $value_3 = $values;
-            } elseif (null === $data['PluginPrivilege']) {
-                $value_3 = $data['PluginPrivilege'];
+            $values = [];
+            foreach ($data['PluginPrivilege'] as $value_3) {
+                $values[] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\PluginPrivilege::class, 'json', $context);
             }
-            $object->setPluginPrivilege($value_3);
-        } elseif (array_key_exists('PluginPrivilege', $data) && null === $data['PluginPrivilege']) {
-            $object->setPluginPrivilege(null);
+            $object->pluginPrivilege = $values;
+            unset($data['PluginPrivilege']);
+        } elseif (array_key_exists('PluginPrivilege', $data)) {
+            $object->pluginPrivilege = null;
+            unset($data['PluginPrivilege']);
+        }
+        foreach ($data as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_4;
+            }
         }
 
         return $object;
@@ -104,45 +111,45 @@ class TaskSpecPluginSpecNormalizer implements DenormalizerInterface, NormalizerI
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name')) {
-            $value = $data->getName();
-            if (is_string($data->getName())) {
-                $value = $data->getName();
-            } elseif (null === $data->getName()) {
-                $value = $data->getName();
+        if (array_key_exists('name', get_object_vars($data)) && null !== ($data->name ?? null)) {
+            $value = $data->name;
+            if (is_string($data->name)) {
+                $value = $data->name;
+            } elseif (null === $data->name) {
+                $value = $data->name;
             }
             $dataArray['Name'] = $value;
         }
-        if ($data->isInitialized('remote')) {
-            $value_1 = $data->getRemote();
-            if (is_string($data->getRemote())) {
-                $value_1 = $data->getRemote();
-            } elseif (null === $data->getRemote()) {
-                $value_1 = $data->getRemote();
+        if (array_key_exists('remote', get_object_vars($data)) && null !== ($data->remote ?? null)) {
+            $value_1 = $data->remote;
+            if (is_string($data->remote)) {
+                $value_1 = $data->remote;
+            } elseif (null === $data->remote) {
+                $value_1 = $data->remote;
             }
             $dataArray['Remote'] = $value_1;
         }
-        if ($data->isInitialized('disabled')) {
-            $value_2 = $data->getDisabled();
-            if (is_bool($data->getDisabled())) {
-                $value_2 = $data->getDisabled();
-            } elseif (null === $data->getDisabled()) {
-                $value_2 = $data->getDisabled();
+        if (array_key_exists('disabled', get_object_vars($data)) && null !== ($data->disabled ?? null)) {
+            $value_2 = $data->disabled;
+            if (is_bool($data->disabled)) {
+                $value_2 = $data->disabled;
+            } elseif (null === $data->disabled) {
+                $value_2 = $data->disabled;
             }
             $dataArray['Disabled'] = $value_2;
         }
-        if ($data->isInitialized('pluginPrivilege')) {
-            $value_3 = $data->getPluginPrivilege();
-            if (is_array($data->getPluginPrivilege())) {
-                $values = [];
-                foreach ($data->getPluginPrivilege() as $value_4) {
-                    $values[] = $this->normalizer->normalize($value_4, 'json', $context);
-                }
-                $value_3 = $values;
-            } elseif (null === $data->getPluginPrivilege()) {
-                $value_3 = $data->getPluginPrivilege();
+        if (array_key_exists('pluginPrivilege', get_object_vars($data)) && null !== ($data->pluginPrivilege ?? null)) {
+            $values = [];
+            foreach ($data->pluginPrivilege as $value_3) {
+                $normalized = null === $value_3 ? null : $this->normalizer->normalize($value_3, 'json', $context);
+                $values[]   = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
             }
-            $dataArray['PluginPrivilege'] = $value_3;
+            $dataArray['PluginPrivilege'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_4;
+            }
         }
 
         return $dataArray;

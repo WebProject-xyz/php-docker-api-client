@@ -48,11 +48,17 @@ class ContainerSummaryNetworkSettingsNormalizer implements DenormalizerInterface
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Networks', $data)) {
-            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+            $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
             foreach ($data['Networks'] as $key => $value) {
                 $values[$key] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\EndpointSettings::class, 'json', $context);
             }
-            $object->setNetworks($values);
+            $object->networks = $values;
+            unset($data['Networks']);
+        }
+        foreach ($data as $key_1 => $value_1) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_1;
+            }
         }
 
         return $object;
@@ -61,12 +67,18 @@ class ContainerSummaryNetworkSettingsNormalizer implements DenormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('networks') && null !== $data->getNetworks()) {
-            $values = [];
-            foreach ($data->getNetworks() as $key => $value) {
-                $values[$key] = $this->normalizer->normalize($value, 'json', $context);
+        if (array_key_exists('networks', get_object_vars($data)) && null !== ($data->networks ?? null)) {
+            $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+            foreach ($data->networks as $key => $value) {
+                $normalized   = null === $value ? null : $this->normalizer->normalize($value, 'json', $context);
+                $values[$key] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
             }
             $dataArray['Networks'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_1) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_1;
+            }
         }
 
         return $dataArray;

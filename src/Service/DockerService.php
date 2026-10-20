@@ -35,7 +35,7 @@ final class DockerService implements LoggerAwareInterface
             Assert::allIsInstanceOf($containerSummaries, ContainerSummary::class);
 
             foreach ($containerSummaries as $container) {
-                $id = $container->getId();
+                $id = $container->id;
                 if (null === $id) {
                     continue;
                 }

@@ -3,42 +3,19 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class PortStatus
+class PortStatus implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var list<EndpointPortConfig>|null
      */
-    protected $ports;
+    public ?array $ports;
 
-    /**
-     * @return list<EndpointPortConfig>|null
-     */
-    public function getPorts(): ?array
+    public function definedProperties(): array
     {
-        return $this->ports;
-    }
-
-    /**
-     * @param list<EndpointPortConfig>|null $ports
-     *
-     * @return self
-     */
-    public function setPorts(?array $ports): self
-    {
-        $this->initialized['ports'] = true;
-        $this->ports                = $ports;
-
-        return $this;
+        return ['ports' => 'Ports'];
     }
 }

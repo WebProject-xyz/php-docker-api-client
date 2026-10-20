@@ -20,7 +20,7 @@ class ContainerArchiveInfo extends \WebProject\DockerApi\Library\Generated\Runti
      * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
-    public function __construct(string $id, array $queryParameters = [], array $accept = [])
+    public function __construct(string $id, array $queryParameters, array $accept = [])
     {
         $this->id              = $id;
         $this->queryParameters = $queryParameters;
@@ -34,10 +34,10 @@ class ContainerArchiveInfo extends \WebProject\DockerApi\Library\Generated\Runti
 
     public function getUri(): string
     {
-        return str_replace(['{id}'], [$this->id], '/containers/{id}/archive');
+        return str_replace(['{id}'], [rawurlencode($this->id)], '/containers/{id}/archive');
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
         return [[], null];
     }
@@ -70,27 +70,39 @@ class ContainerArchiveInfo extends \WebProject\DockerApi\Library\Generated\Runti
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ContainerArchiveInfoBadRequestException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ContainerArchiveInfoNotFoundException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ContainerArchiveInfoInternalServerErrorException
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
+        $body   = $response->getContent(false);
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (400 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerArchiveInfoBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (404 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerArchiveInfoNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (500 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerArchiveInfoInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Lazy->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

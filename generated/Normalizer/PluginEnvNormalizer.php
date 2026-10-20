@@ -48,20 +48,29 @@ class PluginEnvNormalizer implements DenormalizerInterface, NormalizerInterface,
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Name', $data)) {
-            $object->setName($data['Name']);
+            $object->name = $data['Name'];
+            unset($data['Name']);
         }
         if (array_key_exists('Description', $data)) {
-            $object->setDescription($data['Description']);
+            $object->description = $data['Description'];
+            unset($data['Description']);
         }
         if (array_key_exists('Settable', $data)) {
             $values = [];
             foreach ($data['Settable'] as $value) {
                 $values[] = $value;
             }
-            $object->setSettable($values);
+            $object->settable = $values;
+            unset($data['Settable']);
         }
         if (array_key_exists('Value', $data)) {
-            $object->setValue($data['Value']);
+            $object->value = $data['Value'];
+            unset($data['Value']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -70,14 +79,19 @@ class PluginEnvNormalizer implements DenormalizerInterface, NormalizerInterface,
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray                = [];
-        $dataArray['Name']        = $data->getName();
-        $dataArray['Description'] = $data->getDescription();
+        $dataArray['Name']        = $data->name;
+        $dataArray['Description'] = $data->description;
         $values                   = [];
-        foreach ($data->getSettable() as $value) {
+        foreach ($data->settable as $value) {
             $values[] = $value;
         }
         $dataArray['Settable'] = $values;
-        $dataArray['Value']    = $data->getValue();
+        $dataArray['Value']    = $data->value;
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
+        }
 
         return $dataArray;
     }

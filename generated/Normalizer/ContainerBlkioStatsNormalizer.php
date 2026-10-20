@@ -48,124 +48,97 @@ class ContainerBlkioStatsNormalizer implements DenormalizerInterface, Normalizer
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('io_service_bytes_recursive', $data) && null !== $data['io_service_bytes_recursive']) {
-            $value = $data['io_service_bytes_recursive'];
-            if (is_array($data['io_service_bytes_recursive']) && $this->isOnlyNumericKeys($data['io_service_bytes_recursive'])) {
-                $values = [];
-                foreach ($data['io_service_bytes_recursive'] as $value_1) {
-                    $values[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStatEntry::class, 'json', $context);
-                }
-                $value = $values;
-            } elseif (null === $data['io_service_bytes_recursive']) {
-                $value = $data['io_service_bytes_recursive'];
+            $values = [];
+            foreach ($data['io_service_bytes_recursive'] as $value) {
+                $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStatEntry::class, 'json', $context);
             }
-            $object->setIoServiceBytesRecursive($value);
-        } elseif (array_key_exists('io_service_bytes_recursive', $data) && null === $data['io_service_bytes_recursive']) {
-            $object->setIoServiceBytesRecursive(null);
+            $object->ioServiceBytesRecursive = $values;
+            unset($data['io_service_bytes_recursive']);
+        } elseif (array_key_exists('io_service_bytes_recursive', $data)) {
+            $object->ioServiceBytesRecursive = null;
+            unset($data['io_service_bytes_recursive']);
         }
         if (array_key_exists('io_serviced_recursive', $data) && null !== $data['io_serviced_recursive']) {
-            $value_2 = $data['io_serviced_recursive'];
-            if (is_array($data['io_serviced_recursive']) && $this->isOnlyNumericKeys($data['io_serviced_recursive'])) {
-                $values_1 = [];
-                foreach ($data['io_serviced_recursive'] as $value_3) {
-                    $values_1[] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStatEntry::class, 'json', $context);
-                }
-                $value_2 = $values_1;
-            } elseif (null === $data['io_serviced_recursive']) {
-                $value_2 = $data['io_serviced_recursive'];
+            $values_1 = [];
+            foreach ($data['io_serviced_recursive'] as $value_1) {
+                $values_1[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStatEntry::class, 'json', $context);
             }
-            $object->setIoServicedRecursive($value_2);
-        } elseif (array_key_exists('io_serviced_recursive', $data) && null === $data['io_serviced_recursive']) {
-            $object->setIoServicedRecursive(null);
+            $object->ioServicedRecursive = $values_1;
+            unset($data['io_serviced_recursive']);
+        } elseif (array_key_exists('io_serviced_recursive', $data)) {
+            $object->ioServicedRecursive = null;
+            unset($data['io_serviced_recursive']);
         }
         if (array_key_exists('io_queue_recursive', $data) && null !== $data['io_queue_recursive']) {
-            $value_4 = $data['io_queue_recursive'];
-            if (is_array($data['io_queue_recursive']) && $this->isOnlyNumericKeys($data['io_queue_recursive'])) {
-                $values_2 = [];
-                foreach ($data['io_queue_recursive'] as $value_5) {
-                    $values_2[] = $this->denormalizer->denormalize($value_5, \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStatEntry::class, 'json', $context);
-                }
-                $value_4 = $values_2;
-            } elseif (null === $data['io_queue_recursive']) {
-                $value_4 = $data['io_queue_recursive'];
+            $values_2 = [];
+            foreach ($data['io_queue_recursive'] as $value_2) {
+                $values_2[] = $this->denormalizer->denormalize($value_2, \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStatEntry::class, 'json', $context);
             }
-            $object->setIoQueueRecursive($value_4);
-        } elseif (array_key_exists('io_queue_recursive', $data) && null === $data['io_queue_recursive']) {
-            $object->setIoQueueRecursive(null);
+            $object->ioQueueRecursive = $values_2;
+            unset($data['io_queue_recursive']);
+        } elseif (array_key_exists('io_queue_recursive', $data)) {
+            $object->ioQueueRecursive = null;
+            unset($data['io_queue_recursive']);
         }
         if (array_key_exists('io_service_time_recursive', $data) && null !== $data['io_service_time_recursive']) {
-            $value_6 = $data['io_service_time_recursive'];
-            if (is_array($data['io_service_time_recursive']) && $this->isOnlyNumericKeys($data['io_service_time_recursive'])) {
-                $values_3 = [];
-                foreach ($data['io_service_time_recursive'] as $value_7) {
-                    $values_3[] = $this->denormalizer->denormalize($value_7, \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStatEntry::class, 'json', $context);
-                }
-                $value_6 = $values_3;
-            } elseif (null === $data['io_service_time_recursive']) {
-                $value_6 = $data['io_service_time_recursive'];
+            $values_3 = [];
+            foreach ($data['io_service_time_recursive'] as $value_3) {
+                $values_3[] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStatEntry::class, 'json', $context);
             }
-            $object->setIoServiceTimeRecursive($value_6);
-        } elseif (array_key_exists('io_service_time_recursive', $data) && null === $data['io_service_time_recursive']) {
-            $object->setIoServiceTimeRecursive(null);
+            $object->ioServiceTimeRecursive = $values_3;
+            unset($data['io_service_time_recursive']);
+        } elseif (array_key_exists('io_service_time_recursive', $data)) {
+            $object->ioServiceTimeRecursive = null;
+            unset($data['io_service_time_recursive']);
         }
         if (array_key_exists('io_wait_time_recursive', $data) && null !== $data['io_wait_time_recursive']) {
-            $value_8 = $data['io_wait_time_recursive'];
-            if (is_array($data['io_wait_time_recursive']) && $this->isOnlyNumericKeys($data['io_wait_time_recursive'])) {
-                $values_4 = [];
-                foreach ($data['io_wait_time_recursive'] as $value_9) {
-                    $values_4[] = $this->denormalizer->denormalize($value_9, \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStatEntry::class, 'json', $context);
-                }
-                $value_8 = $values_4;
-            } elseif (null === $data['io_wait_time_recursive']) {
-                $value_8 = $data['io_wait_time_recursive'];
+            $values_4 = [];
+            foreach ($data['io_wait_time_recursive'] as $value_4) {
+                $values_4[] = $this->denormalizer->denormalize($value_4, \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStatEntry::class, 'json', $context);
             }
-            $object->setIoWaitTimeRecursive($value_8);
-        } elseif (array_key_exists('io_wait_time_recursive', $data) && null === $data['io_wait_time_recursive']) {
-            $object->setIoWaitTimeRecursive(null);
+            $object->ioWaitTimeRecursive = $values_4;
+            unset($data['io_wait_time_recursive']);
+        } elseif (array_key_exists('io_wait_time_recursive', $data)) {
+            $object->ioWaitTimeRecursive = null;
+            unset($data['io_wait_time_recursive']);
         }
         if (array_key_exists('io_merged_recursive', $data) && null !== $data['io_merged_recursive']) {
-            $value_10 = $data['io_merged_recursive'];
-            if (is_array($data['io_merged_recursive']) && $this->isOnlyNumericKeys($data['io_merged_recursive'])) {
-                $values_5 = [];
-                foreach ($data['io_merged_recursive'] as $value_11) {
-                    $values_5[] = $this->denormalizer->denormalize($value_11, \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStatEntry::class, 'json', $context);
-                }
-                $value_10 = $values_5;
-            } elseif (null === $data['io_merged_recursive']) {
-                $value_10 = $data['io_merged_recursive'];
+            $values_5 = [];
+            foreach ($data['io_merged_recursive'] as $value_5) {
+                $values_5[] = $this->denormalizer->denormalize($value_5, \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStatEntry::class, 'json', $context);
             }
-            $object->setIoMergedRecursive($value_10);
-        } elseif (array_key_exists('io_merged_recursive', $data) && null === $data['io_merged_recursive']) {
-            $object->setIoMergedRecursive(null);
+            $object->ioMergedRecursive = $values_5;
+            unset($data['io_merged_recursive']);
+        } elseif (array_key_exists('io_merged_recursive', $data)) {
+            $object->ioMergedRecursive = null;
+            unset($data['io_merged_recursive']);
         }
         if (array_key_exists('io_time_recursive', $data) && null !== $data['io_time_recursive']) {
-            $value_12 = $data['io_time_recursive'];
-            if (is_array($data['io_time_recursive']) && $this->isOnlyNumericKeys($data['io_time_recursive'])) {
-                $values_6 = [];
-                foreach ($data['io_time_recursive'] as $value_13) {
-                    $values_6[] = $this->denormalizer->denormalize($value_13, \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStatEntry::class, 'json', $context);
-                }
-                $value_12 = $values_6;
-            } elseif (null === $data['io_time_recursive']) {
-                $value_12 = $data['io_time_recursive'];
+            $values_6 = [];
+            foreach ($data['io_time_recursive'] as $value_6) {
+                $values_6[] = $this->denormalizer->denormalize($value_6, \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStatEntry::class, 'json', $context);
             }
-            $object->setIoTimeRecursive($value_12);
-        } elseif (array_key_exists('io_time_recursive', $data) && null === $data['io_time_recursive']) {
-            $object->setIoTimeRecursive(null);
+            $object->ioTimeRecursive = $values_6;
+            unset($data['io_time_recursive']);
+        } elseif (array_key_exists('io_time_recursive', $data)) {
+            $object->ioTimeRecursive = null;
+            unset($data['io_time_recursive']);
         }
         if (array_key_exists('sectors_recursive', $data) && null !== $data['sectors_recursive']) {
-            $value_14 = $data['sectors_recursive'];
-            if (is_array($data['sectors_recursive']) && $this->isOnlyNumericKeys($data['sectors_recursive'])) {
-                $values_7 = [];
-                foreach ($data['sectors_recursive'] as $value_15) {
-                    $values_7[] = $this->denormalizer->denormalize($value_15, \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStatEntry::class, 'json', $context);
-                }
-                $value_14 = $values_7;
-            } elseif (null === $data['sectors_recursive']) {
-                $value_14 = $data['sectors_recursive'];
+            $values_7 = [];
+            foreach ($data['sectors_recursive'] as $value_7) {
+                $values_7[] = $this->denormalizer->denormalize($value_7, \WebProject\DockerApi\Library\Generated\Model\ContainerBlkioStatEntry::class, 'json', $context);
             }
-            $object->setSectorsRecursive($value_14);
-        } elseif (array_key_exists('sectors_recursive', $data) && null === $data['sectors_recursive']) {
-            $object->setSectorsRecursive(null);
+            $object->sectorsRecursive = $values_7;
+            unset($data['sectors_recursive']);
+        } elseif (array_key_exists('sectors_recursive', $data)) {
+            $object->sectorsRecursive = null;
+            unset($data['sectors_recursive']);
+        }
+        foreach ($data as $key => $value_8) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_8;
+            }
         }
 
         return $object;
@@ -174,109 +147,74 @@ class ContainerBlkioStatsNormalizer implements DenormalizerInterface, Normalizer
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('ioServiceBytesRecursive')) {
-            $value = $data->getIoServiceBytesRecursive();
-            if (is_array($data->getIoServiceBytesRecursive())) {
-                $values = [];
-                foreach ($data->getIoServiceBytesRecursive() as $value_1) {
-                    $values[] = $this->normalizer->normalize($value_1, 'json', $context);
-                }
-                $value = $values;
-            } elseif (null === $data->getIoServiceBytesRecursive()) {
-                $value = $data->getIoServiceBytesRecursive();
+        if (array_key_exists('ioServiceBytesRecursive', get_object_vars($data)) && null !== ($data->ioServiceBytesRecursive ?? null)) {
+            $values = [];
+            foreach ($data->ioServiceBytesRecursive as $value) {
+                $normalized = null === $value ? null : $this->normalizer->normalize($value, 'json', $context);
+                $values[]   = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
             }
-            $dataArray['io_service_bytes_recursive'] = $value;
+            $dataArray['io_service_bytes_recursive'] = $values;
         }
-        if ($data->isInitialized('ioServicedRecursive')) {
-            $value_2 = $data->getIoServicedRecursive();
-            if (is_array($data->getIoServicedRecursive())) {
-                $values_1 = [];
-                foreach ($data->getIoServicedRecursive() as $value_3) {
-                    $values_1[] = $this->normalizer->normalize($value_3, 'json', $context);
-                }
-                $value_2 = $values_1;
-            } elseif (null === $data->getIoServicedRecursive()) {
-                $value_2 = $data->getIoServicedRecursive();
+        if (array_key_exists('ioServicedRecursive', get_object_vars($data)) && null !== ($data->ioServicedRecursive ?? null)) {
+            $values_1 = [];
+            foreach ($data->ioServicedRecursive as $value_1) {
+                $normalized_1 = null === $value_1 ? null : $this->normalizer->normalize($value_1, 'json', $context);
+                $values_1[]   = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
             }
-            $dataArray['io_serviced_recursive'] = $value_2;
+            $dataArray['io_serviced_recursive'] = $values_1;
         }
-        if ($data->isInitialized('ioQueueRecursive')) {
-            $value_4 = $data->getIoQueueRecursive();
-            if (is_array($data->getIoQueueRecursive())) {
-                $values_2 = [];
-                foreach ($data->getIoQueueRecursive() as $value_5) {
-                    $values_2[] = $this->normalizer->normalize($value_5, 'json', $context);
-                }
-                $value_4 = $values_2;
-            } elseif (null === $data->getIoQueueRecursive()) {
-                $value_4 = $data->getIoQueueRecursive();
+        if (array_key_exists('ioQueueRecursive', get_object_vars($data)) && null !== ($data->ioQueueRecursive ?? null)) {
+            $values_2 = [];
+            foreach ($data->ioQueueRecursive as $value_2) {
+                $normalized_2 = null === $value_2 ? null : $this->normalizer->normalize($value_2, 'json', $context);
+                $values_2[]   = is_iterable($normalized_2) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_2) : $normalized_2;
             }
-            $dataArray['io_queue_recursive'] = $value_4;
+            $dataArray['io_queue_recursive'] = $values_2;
         }
-        if ($data->isInitialized('ioServiceTimeRecursive')) {
-            $value_6 = $data->getIoServiceTimeRecursive();
-            if (is_array($data->getIoServiceTimeRecursive())) {
-                $values_3 = [];
-                foreach ($data->getIoServiceTimeRecursive() as $value_7) {
-                    $values_3[] = $this->normalizer->normalize($value_7, 'json', $context);
-                }
-                $value_6 = $values_3;
-            } elseif (null === $data->getIoServiceTimeRecursive()) {
-                $value_6 = $data->getIoServiceTimeRecursive();
+        if (array_key_exists('ioServiceTimeRecursive', get_object_vars($data)) && null !== ($data->ioServiceTimeRecursive ?? null)) {
+            $values_3 = [];
+            foreach ($data->ioServiceTimeRecursive as $value_3) {
+                $normalized_3 = null === $value_3 ? null : $this->normalizer->normalize($value_3, 'json', $context);
+                $values_3[]   = is_iterable($normalized_3) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_3) : $normalized_3;
             }
-            $dataArray['io_service_time_recursive'] = $value_6;
+            $dataArray['io_service_time_recursive'] = $values_3;
         }
-        if ($data->isInitialized('ioWaitTimeRecursive')) {
-            $value_8 = $data->getIoWaitTimeRecursive();
-            if (is_array($data->getIoWaitTimeRecursive())) {
-                $values_4 = [];
-                foreach ($data->getIoWaitTimeRecursive() as $value_9) {
-                    $values_4[] = $this->normalizer->normalize($value_9, 'json', $context);
-                }
-                $value_8 = $values_4;
-            } elseif (null === $data->getIoWaitTimeRecursive()) {
-                $value_8 = $data->getIoWaitTimeRecursive();
+        if (array_key_exists('ioWaitTimeRecursive', get_object_vars($data)) && null !== ($data->ioWaitTimeRecursive ?? null)) {
+            $values_4 = [];
+            foreach ($data->ioWaitTimeRecursive as $value_4) {
+                $normalized_4 = null === $value_4 ? null : $this->normalizer->normalize($value_4, 'json', $context);
+                $values_4[]   = is_iterable($normalized_4) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_4) : $normalized_4;
             }
-            $dataArray['io_wait_time_recursive'] = $value_8;
+            $dataArray['io_wait_time_recursive'] = $values_4;
         }
-        if ($data->isInitialized('ioMergedRecursive')) {
-            $value_10 = $data->getIoMergedRecursive();
-            if (is_array($data->getIoMergedRecursive())) {
-                $values_5 = [];
-                foreach ($data->getIoMergedRecursive() as $value_11) {
-                    $values_5[] = $this->normalizer->normalize($value_11, 'json', $context);
-                }
-                $value_10 = $values_5;
-            } elseif (null === $data->getIoMergedRecursive()) {
-                $value_10 = $data->getIoMergedRecursive();
+        if (array_key_exists('ioMergedRecursive', get_object_vars($data)) && null !== ($data->ioMergedRecursive ?? null)) {
+            $values_5 = [];
+            foreach ($data->ioMergedRecursive as $value_5) {
+                $normalized_5 = null === $value_5 ? null : $this->normalizer->normalize($value_5, 'json', $context);
+                $values_5[]   = is_iterable($normalized_5) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_5) : $normalized_5;
             }
-            $dataArray['io_merged_recursive'] = $value_10;
+            $dataArray['io_merged_recursive'] = $values_5;
         }
-        if ($data->isInitialized('ioTimeRecursive')) {
-            $value_12 = $data->getIoTimeRecursive();
-            if (is_array($data->getIoTimeRecursive())) {
-                $values_6 = [];
-                foreach ($data->getIoTimeRecursive() as $value_13) {
-                    $values_6[] = $this->normalizer->normalize($value_13, 'json', $context);
-                }
-                $value_12 = $values_6;
-            } elseif (null === $data->getIoTimeRecursive()) {
-                $value_12 = $data->getIoTimeRecursive();
+        if (array_key_exists('ioTimeRecursive', get_object_vars($data)) && null !== ($data->ioTimeRecursive ?? null)) {
+            $values_6 = [];
+            foreach ($data->ioTimeRecursive as $value_6) {
+                $normalized_6 = null === $value_6 ? null : $this->normalizer->normalize($value_6, 'json', $context);
+                $values_6[]   = is_iterable($normalized_6) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_6) : $normalized_6;
             }
-            $dataArray['io_time_recursive'] = $value_12;
+            $dataArray['io_time_recursive'] = $values_6;
         }
-        if ($data->isInitialized('sectorsRecursive')) {
-            $value_14 = $data->getSectorsRecursive();
-            if (is_array($data->getSectorsRecursive())) {
-                $values_7 = [];
-                foreach ($data->getSectorsRecursive() as $value_15) {
-                    $values_7[] = $this->normalizer->normalize($value_15, 'json', $context);
-                }
-                $value_14 = $values_7;
-            } elseif (null === $data->getSectorsRecursive()) {
-                $value_14 = $data->getSectorsRecursive();
+        if (array_key_exists('sectorsRecursive', get_object_vars($data)) && null !== ($data->sectorsRecursive ?? null)) {
+            $values_7 = [];
+            foreach ($data->sectorsRecursive as $value_7) {
+                $normalized_7 = null === $value_7 ? null : $this->normalizer->normalize($value_7, 'json', $context);
+                $values_7[]   = is_iterable($normalized_7) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_7) : $normalized_7;
             }
-            $dataArray['sectors_recursive'] = $value_14;
+            $dataArray['sectors_recursive'] = $values_7;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_8) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_8;
+            }
         }
 
         return $dataArray;
