@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.0](https://github.com/WebProject-xyz/php-docker-api-client/compare/1.5.2...1.6.0) (2026-10-23)
+
+### Features
+
+* **jane:** upgrade client generation to Jane v8 with public properties and enums ([#290](https://github.com/WebProject-xyz/php-docker-api-client/issues/290)) ([25920a8](https://github.com/WebProject-xyz/php-docker-api-client/commit/25920a87ee6f5db9bc171f8ee96a72dcb964c94c))
+
+### Bug Fixes
+
+* **ci:** update min php version ([7a1069e](https://github.com/WebProject-xyz/php-docker-api-client/commit/7a1069ef2e45038acef50f06b760c0d67433b7af))
+* **ci:** update shared workflow for semantic-release and remove redundant release.yml ([#292](https://github.com/WebProject-xyz/php-docker-api-client/issues/292)) ([495b5a7](https://github.com/WebProject-xyz/php-docker-api-client/commit/495b5a75fda94c752734aa5368b260321940f1fc))
+* **ci:** update shared workflow to force php update in setup-php ([#291](https://github.com/WebProject-xyz/php-docker-api-client/issues/291)) ([bdda618](https://github.com/WebProject-xyz/php-docker-api-client/commit/bdda61897def0b1220e7cc462aecae2235bcfb7c))
+
 ## [1.5.2](https://github.com/WebProject-xyz/php-docker-api-client/compare/1.5.1...1.5.2) (2026-09-04)
 
 ### Bug Fixes
