@@ -12,8 +12,8 @@
   ],
   "homepage": "https://www.webproject.xyz",
   "require": {
-    "php": "~8.3.0 || ~8.4.0 || ~8.5.0",
-    "jane-php/open-api-runtime": "^8.0.1",
+    "php": "~8.3.36 || ~8.4.27 || ~8.5.12",
+    "jane-php/open-api-runtime": "^8.1.0",
     "phpdocumentor/reflection-docblock": "^6.0.3",
     "phpstan/phpdoc-parser": "^2.3.6",
     "symfony/console": "^7.4.21 || ^8.0",
@@ -29,8 +29,8 @@
     "codeception/module-asserts": "^3.3.0",
     "codeception/module-phpbrowser": "^4.1.0",
     "friendsofphp/php-cs-fixer": "3.95.27",
-    "jane-php/open-api-3": "^8.0.1",
-    "jane-php/open-api-3-1": "^8.0.1",
+    "jane-php/open-api-3": "^8.1.0",
+    "jane-php/open-api-3-1": "^8.1.0",
     "phpstan/extension-installer": "^1.4.3",
     "phpstan/phpstan": "^2.3.1",
     "phpstan/phpstan-webmozart-assert": "^2.0.0",
@@ -60,7 +60,7 @@
     },
     "optimize-autoloader": true,
     "platform": {
-      "php": "8.3.0"
+      "php": "8.3.36"
     },
     "sort-packages": true
   },
