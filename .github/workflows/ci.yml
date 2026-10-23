@@ -13,10 +13,11 @@ permissions:
 
 jobs:
   ci:
-    uses: "WebProject-xyz/.github/.github/workflows/ci.yml@324cd8969896d366971c67d3c964c92791fbc207" # main
+    uses: "WebProject-xyz/.github/.github/workflows/ci.yml@dec2eb1cd3cfeded884d25c7b73d9d3f04ec69f7" # main
     secrets: inherit
     with:
       php-cs-fixer-ignore-env: true
+      php-extensions: ""
       test-matrix: |
         [
           {"php-version": "8.3", "dependencies": "locked",  "with_coverage": true},
