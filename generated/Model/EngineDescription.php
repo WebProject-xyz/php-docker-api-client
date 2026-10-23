@@ -3,92 +3,27 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class EngineDescription
+class EngineDescription implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var string|null
      */
-    protected $engineVersion;
+    public ?string $engineVersion;
     /**
-     * @var array<string, string>|null
+     * @var iterable<string, string>|null
      */
-    protected $labels;
+    public ?iterable $labels;
     /**
      * @var list<EngineDescriptionPluginsItem>|null
      */
-    protected $plugins;
+    public ?array $plugins;
 
-    /**
-     * @return string|null
-     */
-    public function getEngineVersion(): ?string
+    public function definedProperties(): array
     {
-        return $this->engineVersion;
-    }
-
-    /**
-     * @param string|null $engineVersion
-     *
-     * @return self
-     */
-    public function setEngineVersion(?string $engineVersion): self
-    {
-        $this->initialized['engineVersion'] = true;
-        $this->engineVersion                = $engineVersion;
-
-        return $this;
-    }
-
-    /**
-     * @return array<string, string>|null
-     */
-    public function getLabels(): ?iterable
-    {
-        return $this->labels;
-    }
-
-    /**
-     * @param array<string, string>|null $labels
-     *
-     * @return self
-     */
-    public function setLabels(?iterable $labels): self
-    {
-        $this->initialized['labels'] = true;
-        $this->labels                = $labels;
-
-        return $this;
-    }
-
-    /**
-     * @return list<EngineDescriptionPluginsItem>|null
-     */
-    public function getPlugins(): ?array
-    {
-        return $this->plugins;
-    }
-
-    /**
-     * @param list<EngineDescriptionPluginsItem>|null $plugins
-     *
-     * @return self
-     */
-    public function setPlugins(?array $plugins): self
-    {
-        $this->initialized['plugins'] = true;
-        $this->plugins                = $plugins;
-
-        return $this;
+        return ['engineVersion' => 'EngineVersion', 'labels' => 'Labels', 'plugins' => 'Plugins'];
     }
 }

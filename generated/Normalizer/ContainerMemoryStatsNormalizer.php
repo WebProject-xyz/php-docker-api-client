@@ -55,9 +55,11 @@ class ContainerMemoryStatsNormalizer implements DenormalizerInterface, Normalize
             } elseif (null === $data['usage']) {
                 $value = $data['usage'];
             }
-            $object->setUsage($value);
-        } elseif (array_key_exists('usage', $data) && null === $data['usage']) {
-            $object->setUsage(null);
+            $object->usage = $value;
+            unset($data['usage']);
+        } elseif (array_key_exists('usage', $data)) {
+            $object->usage = null;
+            unset($data['usage']);
         }
         if (array_key_exists('max_usage', $data) && null !== $data['max_usage']) {
             $value_1 = $data['max_usage'];
@@ -66,14 +68,16 @@ class ContainerMemoryStatsNormalizer implements DenormalizerInterface, Normalize
             } elseif (null === $data['max_usage']) {
                 $value_1 = $data['max_usage'];
             }
-            $object->setMaxUsage($value_1);
-        } elseif (array_key_exists('max_usage', $data) && null === $data['max_usage']) {
-            $object->setMaxUsage(null);
+            $object->maxUsage = $value_1;
+            unset($data['max_usage']);
+        } elseif (array_key_exists('max_usage', $data)) {
+            $object->maxUsage = null;
+            unset($data['max_usage']);
         }
         if (array_key_exists('stats', $data) && null !== $data['stats']) {
             $value_2 = $data['stats'];
             if (is_array($data['stats']) && $this->isOnlyNumericKeys($data['stats'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['stats'] as $key => $value_3) {
                     $value_4 = $value_3;
                     if (is_int($value_3)) {
@@ -87,9 +91,11 @@ class ContainerMemoryStatsNormalizer implements DenormalizerInterface, Normalize
             } elseif (null === $data['stats']) {
                 $value_2 = $data['stats'];
             }
-            $object->setStats($value_2);
-        } elseif (array_key_exists('stats', $data) && null === $data['stats']) {
-            $object->setStats(null);
+            $object->stats = $value_2;
+            unset($data['stats']);
+        } elseif (array_key_exists('stats', $data)) {
+            $object->stats = null;
+            unset($data['stats']);
         }
         if (array_key_exists('failcnt', $data) && null !== $data['failcnt']) {
             $value_5 = $data['failcnt'];
@@ -98,9 +104,11 @@ class ContainerMemoryStatsNormalizer implements DenormalizerInterface, Normalize
             } elseif (null === $data['failcnt']) {
                 $value_5 = $data['failcnt'];
             }
-            $object->setFailcnt($value_5);
-        } elseif (array_key_exists('failcnt', $data) && null === $data['failcnt']) {
-            $object->setFailcnt(null);
+            $object->failcnt = $value_5;
+            unset($data['failcnt']);
+        } elseif (array_key_exists('failcnt', $data)) {
+            $object->failcnt = null;
+            unset($data['failcnt']);
         }
         if (array_key_exists('limit', $data) && null !== $data['limit']) {
             $value_6 = $data['limit'];
@@ -109,9 +117,11 @@ class ContainerMemoryStatsNormalizer implements DenormalizerInterface, Normalize
             } elseif (null === $data['limit']) {
                 $value_6 = $data['limit'];
             }
-            $object->setLimit($value_6);
-        } elseif (array_key_exists('limit', $data) && null === $data['limit']) {
-            $object->setLimit(null);
+            $object->limit = $value_6;
+            unset($data['limit']);
+        } elseif (array_key_exists('limit', $data)) {
+            $object->limit = null;
+            unset($data['limit']);
         }
         if (array_key_exists('commitbytes', $data) && null !== $data['commitbytes']) {
             $value_7 = $data['commitbytes'];
@@ -120,9 +130,11 @@ class ContainerMemoryStatsNormalizer implements DenormalizerInterface, Normalize
             } elseif (null === $data['commitbytes']) {
                 $value_7 = $data['commitbytes'];
             }
-            $object->setCommitbytes($value_7);
-        } elseif (array_key_exists('commitbytes', $data) && null === $data['commitbytes']) {
-            $object->setCommitbytes(null);
+            $object->commitbytes = $value_7;
+            unset($data['commitbytes']);
+        } elseif (array_key_exists('commitbytes', $data)) {
+            $object->commitbytes = null;
+            unset($data['commitbytes']);
         }
         if (array_key_exists('commitpeakbytes', $data) && null !== $data['commitpeakbytes']) {
             $value_8 = $data['commitpeakbytes'];
@@ -131,9 +143,11 @@ class ContainerMemoryStatsNormalizer implements DenormalizerInterface, Normalize
             } elseif (null === $data['commitpeakbytes']) {
                 $value_8 = $data['commitpeakbytes'];
             }
-            $object->setCommitpeakbytes($value_8);
-        } elseif (array_key_exists('commitpeakbytes', $data) && null === $data['commitpeakbytes']) {
-            $object->setCommitpeakbytes(null);
+            $object->commitpeakbytes = $value_8;
+            unset($data['commitpeakbytes']);
+        } elseif (array_key_exists('commitpeakbytes', $data)) {
+            $object->commitpeakbytes = null;
+            unset($data['commitpeakbytes']);
         }
         if (array_key_exists('privateworkingset', $data) && null !== $data['privateworkingset']) {
             $value_9 = $data['privateworkingset'];
@@ -142,9 +156,16 @@ class ContainerMemoryStatsNormalizer implements DenormalizerInterface, Normalize
             } elseif (null === $data['privateworkingset']) {
                 $value_9 = $data['privateworkingset'];
             }
-            $object->setPrivateworkingset($value_9);
-        } elseif (array_key_exists('privateworkingset', $data) && null === $data['privateworkingset']) {
-            $object->setPrivateworkingset(null);
+            $object->privateworkingset = $value_9;
+            unset($data['privateworkingset']);
+        } elseif (array_key_exists('privateworkingset', $data)) {
+            $object->privateworkingset = null;
+            unset($data['privateworkingset']);
+        }
+        foreach ($data as $key_1 => $value_10) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_10;
+            }
         }
 
         return $object;
@@ -153,29 +174,29 @@ class ContainerMemoryStatsNormalizer implements DenormalizerInterface, Normalize
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('usage')) {
-            $value = $data->getUsage();
-            if (is_int($data->getUsage())) {
-                $value = $data->getUsage();
-            } elseif (null === $data->getUsage()) {
-                $value = $data->getUsage();
+        if (array_key_exists('usage', get_object_vars($data)) && null !== ($data->usage ?? null)) {
+            $value = $data->usage;
+            if (is_int($data->usage)) {
+                $value = $data->usage;
+            } elseif (null === $data->usage) {
+                $value = $data->usage;
             }
             $dataArray['usage'] = $value;
         }
-        if ($data->isInitialized('maxUsage')) {
-            $value_1 = $data->getMaxUsage();
-            if (is_int($data->getMaxUsage())) {
-                $value_1 = $data->getMaxUsage();
-            } elseif (null === $data->getMaxUsage()) {
-                $value_1 = $data->getMaxUsage();
+        if (array_key_exists('maxUsage', get_object_vars($data)) && null !== ($data->maxUsage ?? null)) {
+            $value_1 = $data->maxUsage;
+            if (is_int($data->maxUsage)) {
+                $value_1 = $data->maxUsage;
+            } elseif (null === $data->maxUsage) {
+                $value_1 = $data->maxUsage;
             }
             $dataArray['max_usage'] = $value_1;
         }
-        if ($data->isInitialized('stats')) {
-            $value_2 = $data->getStats();
-            if (is_object($data->getStats())) {
-                $values = [];
-                foreach ($data->getStats() as $key => $value_3) {
+        if (array_key_exists('stats', get_object_vars($data)) && null !== ($data->stats ?? null)) {
+            $value_2 = $data->stats;
+            if (is_iterable($data->stats)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->stats as $key => $value_3) {
                     $value_4 = $value_3;
                     if (is_int($value_3)) {
                         $value_4 = $value_3;
@@ -185,55 +206,60 @@ class ContainerMemoryStatsNormalizer implements DenormalizerInterface, Normalize
                     $values[$key] = $value_4;
                 }
                 $value_2 = $values;
-            } elseif (null === $data->getStats()) {
-                $value_2 = $data->getStats();
+            } elseif (null === $data->stats) {
+                $value_2 = $data->stats;
             }
             $dataArray['stats'] = $value_2;
         }
-        if ($data->isInitialized('failcnt')) {
-            $value_5 = $data->getFailcnt();
-            if (is_int($data->getFailcnt())) {
-                $value_5 = $data->getFailcnt();
-            } elseif (null === $data->getFailcnt()) {
-                $value_5 = $data->getFailcnt();
+        if (array_key_exists('failcnt', get_object_vars($data)) && null !== ($data->failcnt ?? null)) {
+            $value_5 = $data->failcnt;
+            if (is_int($data->failcnt)) {
+                $value_5 = $data->failcnt;
+            } elseif (null === $data->failcnt) {
+                $value_5 = $data->failcnt;
             }
             $dataArray['failcnt'] = $value_5;
         }
-        if ($data->isInitialized('limit')) {
-            $value_6 = $data->getLimit();
-            if (is_int($data->getLimit())) {
-                $value_6 = $data->getLimit();
-            } elseif (null === $data->getLimit()) {
-                $value_6 = $data->getLimit();
+        if (array_key_exists('limit', get_object_vars($data)) && null !== ($data->limit ?? null)) {
+            $value_6 = $data->limit;
+            if (is_int($data->limit)) {
+                $value_6 = $data->limit;
+            } elseif (null === $data->limit) {
+                $value_6 = $data->limit;
             }
             $dataArray['limit'] = $value_6;
         }
-        if ($data->isInitialized('commitbytes')) {
-            $value_7 = $data->getCommitbytes();
-            if (is_int($data->getCommitbytes())) {
-                $value_7 = $data->getCommitbytes();
-            } elseif (null === $data->getCommitbytes()) {
-                $value_7 = $data->getCommitbytes();
+        if (array_key_exists('commitbytes', get_object_vars($data)) && null !== ($data->commitbytes ?? null)) {
+            $value_7 = $data->commitbytes;
+            if (is_int($data->commitbytes)) {
+                $value_7 = $data->commitbytes;
+            } elseif (null === $data->commitbytes) {
+                $value_7 = $data->commitbytes;
             }
             $dataArray['commitbytes'] = $value_7;
         }
-        if ($data->isInitialized('commitpeakbytes')) {
-            $value_8 = $data->getCommitpeakbytes();
-            if (is_int($data->getCommitpeakbytes())) {
-                $value_8 = $data->getCommitpeakbytes();
-            } elseif (null === $data->getCommitpeakbytes()) {
-                $value_8 = $data->getCommitpeakbytes();
+        if (array_key_exists('commitpeakbytes', get_object_vars($data)) && null !== ($data->commitpeakbytes ?? null)) {
+            $value_8 = $data->commitpeakbytes;
+            if (is_int($data->commitpeakbytes)) {
+                $value_8 = $data->commitpeakbytes;
+            } elseif (null === $data->commitpeakbytes) {
+                $value_8 = $data->commitpeakbytes;
             }
             $dataArray['commitpeakbytes'] = $value_8;
         }
-        if ($data->isInitialized('privateworkingset')) {
-            $value_9 = $data->getPrivateworkingset();
-            if (is_int($data->getPrivateworkingset())) {
-                $value_9 = $data->getPrivateworkingset();
-            } elseif (null === $data->getPrivateworkingset()) {
-                $value_9 = $data->getPrivateworkingset();
+        if (array_key_exists('privateworkingset', get_object_vars($data)) && null !== ($data->privateworkingset ?? null)) {
+            $value_9 = $data->privateworkingset;
+            if (is_int($data->privateworkingset)) {
+                $value_9 = $data->privateworkingset;
+            } elseif (null === $data->privateworkingset) {
+                $value_9 = $data->privateworkingset;
             }
             $dataArray['privateworkingset'] = $value_9;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_10) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_10;
+            }
         }
 
         return $dataArray;

@@ -15,42 +15,42 @@ class ImageCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Client
      * @param string|null $requestBody
      * @param array{
      *    "fromImage"?: string, //Name of the image to pull. If the name includes a tag or digest, specific behavior applies:
-     *
-     * - If only `fromImage` includes a tag, that tag is used.
-     * - If both `fromImage` and `tag` are provided, `tag` takes precedence.
-     * - If `fromImage` includes a digest, the image is pulled by digest, and `tag` is ignored.
-     * - If neither a tag nor digest is specified, all tags are pulled.
+     *                          //
+     *                          //- If only `fromImage` includes a tag, that tag is used.
+     *                          //- If both `fromImage` and `tag` are provided, `tag` takes precedence.
+     *                          //- If `fromImage` includes a digest, the image is pulled by digest, and `tag` is ignored.
+     *                          //- If neither a tag nor digest is specified, all tags are pulled.
      *    "fromSrc"?: string, //Source to import. The value may be a URL from which the image can be retrieved or `-` to read the image from the request body. This parameter may only be used when importing an image.
      *    "repo"?: string, //Repository name given to an image when it is imported. The repo may include a tag. This parameter may only be used when importing an image.
      *    "tag"?: string, //Tag or digest. If empty when pulling an image, this causes all tags for the given image to be pulled.
      *    "message"?: string, //Set commit message for imported image.
      *    "changes"?: array, //Apply `Dockerfile` instructions to the image that is created,
-     * for example: `changes=ENV DEBUG=true`.
-     * Note that `ENV DEBUG=true` should be URI component encoded.
-     *
-     * Supported `Dockerfile` instructions:
-     * `CMD`|`ENTRYPOINT`|`ENV`|`EXPOSE`|`ONBUILD`|`USER`|`VOLUME`|`WORKDIR`
+     *                       //for example: `changes=ENV DEBUG=true`.
+     *                       //Note that `ENV DEBUG=true` should be URI component encoded.
+     *                       //
+     *                       //Supported `Dockerfile` instructions:
+     *                       //`CMD`|`ENTRYPOINT`|`ENV`|`EXPOSE`|`ONBUILD`|`USER`|`VOLUME`|`WORKDIR`
      *    "platform"?: string, //Platform in the format os[/arch[/variant]].
-     *
-     * When used in combination with the `fromImage` option, the daemon checks
-     * if the given image is present in the local image cache with the given
-     * OS and Architecture, and otherwise attempts to pull the image. If the
-     * option is not set, the host's native OS and Architecture are used.
-     * If the given image does not exist in the local image cache, the daemon
-     * attempts to pull the image with the host's native OS and Architecture.
-     * If the given image does exists in the local image cache, but its OS or
-     * architecture does not match, a warning is produced.
-     *
-     * When used with the `fromSrc` option to import an image from an archive,
-     * this option sets the platform information for the imported image. If
-     * the option is not set, the host's native OS and Architecture are used
-     * for the imported image.
+     *                         //
+     *                         //When used in combination with the `fromImage` option, the daemon checks
+     *                         //if the given image is present in the local image cache with the given
+     *                         //OS and Architecture, and otherwise attempts to pull the image. If the
+     *                         //option is not set, the host's native OS and Architecture are used.
+     *                         //If the given image does not exist in the local image cache, the daemon
+     *                         //attempts to pull the image with the host's native OS and Architecture.
+     *                         //If the given image does exists in the local image cache, but its OS or
+     *                         //architecture does not match, a warning is produced.
+     *                         //
+     *                         //When used with the `fromSrc` option to import an image from an archive,
+     *                         //this option sets the platform information for the imported image. If
+     *                         //the option is not set, the host's native OS and Architecture are used
+     *                         //for the imported image.
      * } $queryParameters
      * @param array{
      *    "X-Registry-Auth"?: string, //A base64url-encoded auth configuration.
-     *
-     * Refer to the [authentication section](#section/Authentication) for
-     * details.
+     *                                //
+     *                                //Refer to the [authentication section](#section/Authentication) for
+     *                                //details.
      * } $headerParameters
      */
     public function __construct(?string $requestBody = null, array $queryParameters = [], array $headerParameters = [])
@@ -70,7 +70,7 @@ class ImageCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Client
         return '/images/create';
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
         if (is_string($this->body)) {
             return [['Content-Type' => ['text/plain']], $this->body];
@@ -115,6 +115,11 @@ class ImageCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Client
         return $optionsResolver;
     }
 
+    protected function getQueryStyles(): array
+    {
+        return ['changes' => ['style' => 'form', 'explode' => true]];
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -122,24 +127,36 @@ class ImageCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Client
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ImageCreateNotFoundException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ImageCreateInternalServerErrorException
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
+        $body   = $response->getContent(false);
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (404 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageCreateNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (500 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ImageCreateInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Eager->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

@@ -56,9 +56,11 @@ class ResourcesUlimitsItemNormalizer implements DenormalizerInterface, Normalize
             } elseif (null === $data['Name']) {
                 $value = $data['Name'];
             }
-            $object->setName($value);
-        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
-            $object->setName(null);
+            $object->name = $value;
+            unset($data['Name']);
+        } elseif (array_key_exists('Name', $data)) {
+            $object->name = null;
+            unset($data['Name']);
         }
         if (array_key_exists('Soft', $data) && null !== $data['Soft']) {
             $value_1 = $data['Soft'];
@@ -67,9 +69,11 @@ class ResourcesUlimitsItemNormalizer implements DenormalizerInterface, Normalize
             } elseif (null === $data['Soft']) {
                 $value_1 = $data['Soft'];
             }
-            $object->setSoft($value_1);
-        } elseif (array_key_exists('Soft', $data) && null === $data['Soft']) {
-            $object->setSoft(null);
+            $object->soft = $value_1;
+            unset($data['Soft']);
+        } elseif (array_key_exists('Soft', $data)) {
+            $object->soft = null;
+            unset($data['Soft']);
         }
         if (array_key_exists('Hard', $data) && null !== $data['Hard']) {
             $value_2 = $data['Hard'];
@@ -78,9 +82,16 @@ class ResourcesUlimitsItemNormalizer implements DenormalizerInterface, Normalize
             } elseif (null === $data['Hard']) {
                 $value_2 = $data['Hard'];
             }
-            $object->setHard($value_2);
-        } elseif (array_key_exists('Hard', $data) && null === $data['Hard']) {
-            $object->setHard(null);
+            $object->hard = $value_2;
+            unset($data['Hard']);
+        } elseif (array_key_exists('Hard', $data)) {
+            $object->hard = null;
+            unset($data['Hard']);
+        }
+        foreach ($data as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_3;
+            }
         }
 
         return $object;
@@ -89,32 +100,37 @@ class ResourcesUlimitsItemNormalizer implements DenormalizerInterface, Normalize
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name')) {
-            $value = $data->getName();
-            if (is_string($data->getName())) {
-                $value = $data->getName();
-            } elseif (null === $data->getName()) {
-                $value = $data->getName();
+        if (array_key_exists('name', get_object_vars($data)) && null !== ($data->name ?? null)) {
+            $value = $data->name;
+            if (is_string($data->name)) {
+                $value = $data->name;
+            } elseif (null === $data->name) {
+                $value = $data->name;
             }
             $dataArray['Name'] = $value;
         }
-        if ($data->isInitialized('soft')) {
-            $value_1 = $data->getSoft();
-            if (is_int($data->getSoft())) {
-                $value_1 = $data->getSoft();
-            } elseif (null === $data->getSoft()) {
-                $value_1 = $data->getSoft();
+        if (array_key_exists('soft', get_object_vars($data)) && null !== ($data->soft ?? null)) {
+            $value_1 = $data->soft;
+            if (is_int($data->soft)) {
+                $value_1 = $data->soft;
+            } elseif (null === $data->soft) {
+                $value_1 = $data->soft;
             }
             $dataArray['Soft'] = $value_1;
         }
-        if ($data->isInitialized('hard')) {
-            $value_2 = $data->getHard();
-            if (is_int($data->getHard())) {
-                $value_2 = $data->getHard();
-            } elseif (null === $data->getHard()) {
-                $value_2 = $data->getHard();
+        if (array_key_exists('hard', get_object_vars($data)) && null !== ($data->hard ?? null)) {
+            $value_2 = $data->hard;
+            if (is_int($data->hard)) {
+                $value_2 = $data->hard;
+            } elseif (null === $data->hard) {
+                $value_2 = $data->hard;
             }
             $dataArray['Hard'] = $value_2;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_3;
+            }
         }
 
         return $dataArray;

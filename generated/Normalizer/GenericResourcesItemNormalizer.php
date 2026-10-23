@@ -48,14 +48,23 @@ class GenericResourcesItemNormalizer implements DenormalizerInterface, Normalize
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('NamedResourceSpec', $data) && null !== $data['NamedResourceSpec']) {
-            $object->setNamedResourceSpec($this->denormalizer->denormalize($data['NamedResourceSpec'], \WebProject\DockerApi\Library\Generated\Model\GenericResourcesItemNamedResourceSpec::class, 'json', $context));
-        } elseif (array_key_exists('NamedResourceSpec', $data) && null === $data['NamedResourceSpec']) {
-            $object->setNamedResourceSpec(null);
+            $object->namedResourceSpec = $this->denormalizer->denormalize($data['NamedResourceSpec'], \WebProject\DockerApi\Library\Generated\Model\GenericResourcesItemNamedResourceSpec::class, 'json', $context);
+            unset($data['NamedResourceSpec']);
+        } elseif (array_key_exists('NamedResourceSpec', $data)) {
+            $object->namedResourceSpec = null;
+            unset($data['NamedResourceSpec']);
         }
         if (array_key_exists('DiscreteResourceSpec', $data) && null !== $data['DiscreteResourceSpec']) {
-            $object->setDiscreteResourceSpec($this->denormalizer->denormalize($data['DiscreteResourceSpec'], \WebProject\DockerApi\Library\Generated\Model\GenericResourcesItemDiscreteResourceSpec::class, 'json', $context));
-        } elseif (array_key_exists('DiscreteResourceSpec', $data) && null === $data['DiscreteResourceSpec']) {
-            $object->setDiscreteResourceSpec(null);
+            $object->discreteResourceSpec = $this->denormalizer->denormalize($data['DiscreteResourceSpec'], \WebProject\DockerApi\Library\Generated\Model\GenericResourcesItemDiscreteResourceSpec::class, 'json', $context);
+            unset($data['DiscreteResourceSpec']);
+        } elseif (array_key_exists('DiscreteResourceSpec', $data)) {
+            $object->discreteResourceSpec = null;
+            unset($data['DiscreteResourceSpec']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -64,11 +73,18 @@ class GenericResourcesItemNormalizer implements DenormalizerInterface, Normalize
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('namedResourceSpec')) {
-            $dataArray['NamedResourceSpec'] = $this->normalizer->normalize($data->getNamedResourceSpec(), 'json', $context);
+        if (array_key_exists('namedResourceSpec', get_object_vars($data)) && null !== ($data->namedResourceSpec ?? null)) {
+            $normalized                     = $this->normalizer->normalize($data->namedResourceSpec, 'json', $context);
+            $dataArray['NamedResourceSpec'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         }
-        if ($data->isInitialized('discreteResourceSpec')) {
-            $dataArray['DiscreteResourceSpec'] = $this->normalizer->normalize($data->getDiscreteResourceSpec(), 'json', $context);
+        if (array_key_exists('discreteResourceSpec', get_object_vars($data)) && null !== ($data->discreteResourceSpec ?? null)) {
+            $normalized_1                      = $this->normalizer->normalize($data->discreteResourceSpec, 'json', $context);
+            $dataArray['DiscreteResourceSpec'] = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
         }
 
         return $dataArray;

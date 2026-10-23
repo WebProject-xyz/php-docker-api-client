@@ -59,24 +59,36 @@ class PluginNormalizer implements DenormalizerInterface, NormalizerInterface, De
             } elseif (null === $data['Id']) {
                 $value = $data['Id'];
             }
-            $object->setId($value);
-        } elseif (array_key_exists('Id', $data) && null === $data['Id']) {
-            $object->setId(null);
+            $object->id = $value;
+            unset($data['Id']);
+        } elseif (array_key_exists('Id', $data)) {
+            $object->id = null;
+            unset($data['Id']);
         }
         if (array_key_exists('Name', $data)) {
-            $object->setName($data['Name']);
+            $object->name = $data['Name'];
+            unset($data['Name']);
         }
         if (array_key_exists('Enabled', $data)) {
-            $object->setEnabled($data['Enabled']);
+            $object->enabled = $data['Enabled'];
+            unset($data['Enabled']);
         }
         if (array_key_exists('Settings', $data)) {
-            $object->setSettings($this->denormalizer->denormalize($data['Settings'], \WebProject\DockerApi\Library\Generated\Model\PluginSettings::class, 'json', $context));
+            $object->settings = $this->denormalizer->denormalize($data['Settings'], \WebProject\DockerApi\Library\Generated\Model\PluginSettings::class, 'json', $context);
+            unset($data['Settings']);
         }
         if (array_key_exists('PluginReference', $data)) {
-            $object->setPluginReference($data['PluginReference']);
+            $object->pluginReference = $data['PluginReference'];
+            unset($data['PluginReference']);
         }
         if (array_key_exists('Config', $data)) {
-            $object->setConfig($this->denormalizer->denormalize($data['Config'], \WebProject\DockerApi\Library\Generated\Model\PluginConfig::class, 'json', $context));
+            $object->config = $this->denormalizer->denormalize($data['Config'], \WebProject\DockerApi\Library\Generated\Model\PluginConfig::class, 'json', $context);
+            unset($data['Config']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -85,22 +97,29 @@ class PluginNormalizer implements DenormalizerInterface, NormalizerInterface, De
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('id')) {
-            $value = $data->getId();
-            if (is_string($data->getId())) {
-                $value = $data->getId();
-            } elseif (null === $data->getId()) {
-                $value = $data->getId();
+        if (array_key_exists('id', get_object_vars($data)) && null !== ($data->id ?? null)) {
+            $value = $data->id;
+            if (is_string($data->id)) {
+                $value = $data->id;
+            } elseif (null === $data->id) {
+                $value = $data->id;
             }
             $dataArray['Id'] = $value;
         }
-        $dataArray['Name']     = $data->getName();
-        $dataArray['Enabled']  = $data->getEnabled();
-        $dataArray['Settings'] = $this->normalizer->normalize($data->getSettings(), 'json', $context);
-        if ($data->isInitialized('pluginReference') && null !== $data->getPluginReference()) {
-            $dataArray['PluginReference'] = $data->getPluginReference();
+        $dataArray['Name']     = $data->name;
+        $dataArray['Enabled']  = $data->enabled;
+        $normalized            = null === $data->settings ? null : $this->normalizer->normalize($data->settings, 'json', $context);
+        $dataArray['Settings'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        if (array_key_exists('pluginReference', get_object_vars($data)) && null !== ($data->pluginReference ?? null)) {
+            $dataArray['PluginReference'] = $data->pluginReference;
         }
-        $dataArray['Config'] = $this->normalizer->normalize($data->getConfig(), 'json', $context);
+        $normalized_1        = null === $data->config ? null : $this->normalizer->normalize($data->config, 'json', $context);
+        $dataArray['Config'] = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
+        }
 
         return $dataArray;
     }

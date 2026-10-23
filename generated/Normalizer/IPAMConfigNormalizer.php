@@ -55,9 +55,11 @@ class IPAMConfigNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['Subnet']) {
                 $value = $data['Subnet'];
             }
-            $object->setSubnet($value);
-        } elseif (array_key_exists('Subnet', $data) && null === $data['Subnet']) {
-            $object->setSubnet(null);
+            $object->subnet = $value;
+            unset($data['Subnet']);
+        } elseif (array_key_exists('Subnet', $data)) {
+            $object->subnet = null;
+            unset($data['Subnet']);
         }
         if (array_key_exists('IPRange', $data) && null !== $data['IPRange']) {
             $value_1 = $data['IPRange'];
@@ -66,9 +68,11 @@ class IPAMConfigNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['IPRange']) {
                 $value_1 = $data['IPRange'];
             }
-            $object->setIPRange($value_1);
-        } elseif (array_key_exists('IPRange', $data) && null === $data['IPRange']) {
-            $object->setIPRange(null);
+            $object->iPRange = $value_1;
+            unset($data['IPRange']);
+        } elseif (array_key_exists('IPRange', $data)) {
+            $object->iPRange = null;
+            unset($data['IPRange']);
         }
         if (array_key_exists('Gateway', $data) && null !== $data['Gateway']) {
             $value_2 = $data['Gateway'];
@@ -77,14 +81,16 @@ class IPAMConfigNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['Gateway']) {
                 $value_2 = $data['Gateway'];
             }
-            $object->setGateway($value_2);
-        } elseif (array_key_exists('Gateway', $data) && null === $data['Gateway']) {
-            $object->setGateway(null);
+            $object->gateway = $value_2;
+            unset($data['Gateway']);
+        } elseif (array_key_exists('Gateway', $data)) {
+            $object->gateway = null;
+            unset($data['Gateway']);
         }
         if (array_key_exists('AuxiliaryAddresses', $data) && null !== $data['AuxiliaryAddresses']) {
             $value_3 = $data['AuxiliaryAddresses'];
             if (is_array($data['AuxiliaryAddresses']) && $this->isOnlyNumericKeys($data['AuxiliaryAddresses'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['AuxiliaryAddresses'] as $key => $value_4) {
                     $values[$key] = $value_4;
                 }
@@ -92,9 +98,16 @@ class IPAMConfigNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['AuxiliaryAddresses']) {
                 $value_3 = $data['AuxiliaryAddresses'];
             }
-            $object->setAuxiliaryAddresses($value_3);
-        } elseif (array_key_exists('AuxiliaryAddresses', $data) && null === $data['AuxiliaryAddresses']) {
-            $object->setAuxiliaryAddresses(null);
+            $object->auxiliaryAddresses = $value_3;
+            unset($data['AuxiliaryAddresses']);
+        } elseif (array_key_exists('AuxiliaryAddresses', $data)) {
+            $object->auxiliaryAddresses = null;
+            unset($data['AuxiliaryAddresses']);
+        }
+        foreach ($data as $key_1 => $value_5) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_5;
+            }
         }
 
         return $object;
@@ -103,45 +116,50 @@ class IPAMConfigNormalizer implements DenormalizerInterface, NormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('subnet')) {
-            $value = $data->getSubnet();
-            if (is_string($data->getSubnet())) {
-                $value = $data->getSubnet();
-            } elseif (null === $data->getSubnet()) {
-                $value = $data->getSubnet();
+        if (array_key_exists('subnet', get_object_vars($data)) && null !== ($data->subnet ?? null)) {
+            $value = $data->subnet;
+            if (is_string($data->subnet)) {
+                $value = $data->subnet;
+            } elseif (null === $data->subnet) {
+                $value = $data->subnet;
             }
             $dataArray['Subnet'] = $value;
         }
-        if ($data->isInitialized('iPRange')) {
-            $value_1 = $data->getIPRange();
-            if (is_string($data->getIPRange())) {
-                $value_1 = $data->getIPRange();
-            } elseif (null === $data->getIPRange()) {
-                $value_1 = $data->getIPRange();
+        if (array_key_exists('iPRange', get_object_vars($data)) && null !== ($data->iPRange ?? null)) {
+            $value_1 = $data->iPRange;
+            if (is_string($data->iPRange)) {
+                $value_1 = $data->iPRange;
+            } elseif (null === $data->iPRange) {
+                $value_1 = $data->iPRange;
             }
             $dataArray['IPRange'] = $value_1;
         }
-        if ($data->isInitialized('gateway')) {
-            $value_2 = $data->getGateway();
-            if (is_string($data->getGateway())) {
-                $value_2 = $data->getGateway();
-            } elseif (null === $data->getGateway()) {
-                $value_2 = $data->getGateway();
+        if (array_key_exists('gateway', get_object_vars($data)) && null !== ($data->gateway ?? null)) {
+            $value_2 = $data->gateway;
+            if (is_string($data->gateway)) {
+                $value_2 = $data->gateway;
+            } elseif (null === $data->gateway) {
+                $value_2 = $data->gateway;
             }
             $dataArray['Gateway'] = $value_2;
         }
-        if ($data->isInitialized('auxiliaryAddresses')) {
-            $value_3 = $data->getAuxiliaryAddresses();
-            if (is_object($data->getAuxiliaryAddresses())) {
-                $values = [];
-                foreach ($data->getAuxiliaryAddresses() as $key => $value_4) {
+        if (array_key_exists('auxiliaryAddresses', get_object_vars($data)) && null !== ($data->auxiliaryAddresses ?? null)) {
+            $value_3 = $data->auxiliaryAddresses;
+            if (is_iterable($data->auxiliaryAddresses)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->auxiliaryAddresses as $key => $value_4) {
                     $values[$key] = $value_4;
                 }
                 $value_3 = $values;
-            } elseif (null === $data->getAuxiliaryAddresses()) {
-                $value_3 = $data->getAuxiliaryAddresses();
+            } elseif (null === $data->auxiliaryAddresses) {
+                $value_3 = $data->auxiliaryAddresses;
             }
             $dataArray['AuxiliaryAddresses'] = $value_3;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_5) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_5;
+            }
         }
 
         return $dataArray;

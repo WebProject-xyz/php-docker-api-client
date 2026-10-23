@@ -55,14 +55,16 @@ class NodeSpecNormalizer implements DenormalizerInterface, NormalizerInterface, 
             } elseif (null === $data['Name']) {
                 $value = $data['Name'];
             }
-            $object->setName($value);
-        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
-            $object->setName(null);
+            $object->name = $value;
+            unset($data['Name']);
+        } elseif (array_key_exists('Name', $data)) {
+            $object->name = null;
+            unset($data['Name']);
         }
         if (array_key_exists('Labels', $data) && null !== $data['Labels']) {
             $value_1 = $data['Labels'];
             if (is_array($data['Labels']) && $this->isOnlyNumericKeys($data['Labels'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['Labels'] as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
@@ -70,9 +72,11 @@ class NodeSpecNormalizer implements DenormalizerInterface, NormalizerInterface, 
             } elseif (null === $data['Labels']) {
                 $value_1 = $data['Labels'];
             }
-            $object->setLabels($value_1);
-        } elseif (array_key_exists('Labels', $data) && null === $data['Labels']) {
-            $object->setLabels(null);
+            $object->labels = $value_1;
+            unset($data['Labels']);
+        } elseif (array_key_exists('Labels', $data)) {
+            $object->labels = null;
+            unset($data['Labels']);
         }
         if (array_key_exists('Role', $data) && null !== $data['Role']) {
             $value_3 = $data['Role'];
@@ -81,9 +85,11 @@ class NodeSpecNormalizer implements DenormalizerInterface, NormalizerInterface, 
             } elseif (null === $data['Role']) {
                 $value_3 = $data['Role'];
             }
-            $object->setRole($value_3);
-        } elseif (array_key_exists('Role', $data) && null === $data['Role']) {
-            $object->setRole(null);
+            $object->role = $value_3;
+            unset($data['Role']);
+        } elseif (array_key_exists('Role', $data)) {
+            $object->role = null;
+            unset($data['Role']);
         }
         if (array_key_exists('Availability', $data) && null !== $data['Availability']) {
             $value_4 = $data['Availability'];
@@ -92,9 +98,16 @@ class NodeSpecNormalizer implements DenormalizerInterface, NormalizerInterface, 
             } elseif (null === $data['Availability']) {
                 $value_4 = $data['Availability'];
             }
-            $object->setAvailability($value_4);
-        } elseif (array_key_exists('Availability', $data) && null === $data['Availability']) {
-            $object->setAvailability(null);
+            $object->availability = $value_4;
+            unset($data['Availability']);
+        } elseif (array_key_exists('Availability', $data)) {
+            $object->availability = null;
+            unset($data['Availability']);
+        }
+        foreach ($data as $key_1 => $value_5) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_5;
+            }
         }
 
         return $object;
@@ -103,45 +116,50 @@ class NodeSpecNormalizer implements DenormalizerInterface, NormalizerInterface, 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name')) {
-            $value = $data->getName();
-            if (is_string($data->getName())) {
-                $value = $data->getName();
-            } elseif (null === $data->getName()) {
-                $value = $data->getName();
+        if (array_key_exists('name', get_object_vars($data)) && null !== ($data->name ?? null)) {
+            $value = $data->name;
+            if (is_string($data->name)) {
+                $value = $data->name;
+            } elseif (null === $data->name) {
+                $value = $data->name;
             }
             $dataArray['Name'] = $value;
         }
-        if ($data->isInitialized('labels')) {
-            $value_1 = $data->getLabels();
-            if (is_object($data->getLabels())) {
-                $values = [];
-                foreach ($data->getLabels() as $key => $value_2) {
+        if (array_key_exists('labels', get_object_vars($data)) && null !== ($data->labels ?? null)) {
+            $value_1 = $data->labels;
+            if (is_iterable($data->labels)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->labels as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
                 $value_1 = $values;
-            } elseif (null === $data->getLabels()) {
-                $value_1 = $data->getLabels();
+            } elseif (null === $data->labels) {
+                $value_1 = $data->labels;
             }
             $dataArray['Labels'] = $value_1;
         }
-        if ($data->isInitialized('role')) {
-            $value_3 = $data->getRole();
-            if (is_string($data->getRole())) {
-                $value_3 = $data->getRole();
-            } elseif (null === $data->getRole()) {
-                $value_3 = $data->getRole();
+        if (array_key_exists('role', get_object_vars($data)) && null !== ($data->role ?? null)) {
+            $value_3 = $data->role;
+            if (is_string($data->role)) {
+                $value_3 = $data->role;
+            } elseif (null === $data->role) {
+                $value_3 = $data->role;
             }
             $dataArray['Role'] = $value_3;
         }
-        if ($data->isInitialized('availability')) {
-            $value_4 = $data->getAvailability();
-            if (is_string($data->getAvailability())) {
-                $value_4 = $data->getAvailability();
-            } elseif (null === $data->getAvailability()) {
-                $value_4 = $data->getAvailability();
+        if (array_key_exists('availability', get_object_vars($data)) && null !== ($data->availability ?? null)) {
+            $value_4 = $data->availability;
+            if (is_string($data->availability)) {
+                $value_4 = $data->availability;
+            } elseif (null === $data->availability) {
+                $value_4 = $data->availability;
             }
             $dataArray['Availability'] = $value_4;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_5) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_5;
+            }
         }
 
         return $dataArray;

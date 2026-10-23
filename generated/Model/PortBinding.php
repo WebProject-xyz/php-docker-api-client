@@ -3,79 +3,27 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class PortBinding
+class PortBinding implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Host IP address that the container's port is mapped to.
      *
      * @var string|null
      */
-    protected $hostIp;
+    public ?string $hostIp;
     /**
      * Host port number that the container's port is mapped to.
      *
      * @var string|null
      */
-    protected $hostPort;
+    public ?string $hostPort;
 
-    /**
-     * Host IP address that the container's port is mapped to.
-     *
-     * @return string|null
-     */
-    public function getHostIp(): ?string
+    public function definedProperties(): array
     {
-        return $this->hostIp;
-    }
-
-    /**
-     * Host IP address that the container's port is mapped to.
-     *
-     * @param string|null $hostIp
-     *
-     * @return self
-     */
-    public function setHostIp(?string $hostIp): self
-    {
-        $this->initialized['hostIp'] = true;
-        $this->hostIp                = $hostIp;
-
-        return $this;
-    }
-
-    /**
-     * Host port number that the container's port is mapped to.
-     *
-     * @return string|null
-     */
-    public function getHostPort(): ?string
-    {
-        return $this->hostPort;
-    }
-
-    /**
-     * Host port number that the container's port is mapped to.
-     *
-     * @param string|null $hostPort
-     *
-     * @return self
-     */
-    public function setHostPort(?string $hostPort): self
-    {
-        $this->initialized['hostPort'] = true;
-        $this->hostPort                = $hostPort;
-
-        return $this;
+        return ['hostIp' => 'HostIp', 'hostPort' => 'HostPort'];
     }
 }

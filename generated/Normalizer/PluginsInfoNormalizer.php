@@ -48,64 +48,53 @@ class PluginsInfoNormalizer implements DenormalizerInterface, NormalizerInterfac
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Volume', $data) && null !== $data['Volume']) {
-            $value = $data['Volume'];
-            if (is_array($data['Volume']) && $this->isOnlyNumericKeys($data['Volume'])) {
-                $values = [];
-                foreach ($data['Volume'] as $value_1) {
-                    $values[] = $value_1;
-                }
-                $value = $values;
-            } elseif (null === $data['Volume']) {
-                $value = $data['Volume'];
+            $values = [];
+            foreach ($data['Volume'] as $value) {
+                $values[] = $value;
             }
-            $object->setVolume($value);
-        } elseif (array_key_exists('Volume', $data) && null === $data['Volume']) {
-            $object->setVolume(null);
+            $object->volume = $values;
+            unset($data['Volume']);
+        } elseif (array_key_exists('Volume', $data)) {
+            $object->volume = null;
+            unset($data['Volume']);
         }
         if (array_key_exists('Network', $data) && null !== $data['Network']) {
-            $value_2 = $data['Network'];
-            if (is_array($data['Network']) && $this->isOnlyNumericKeys($data['Network'])) {
-                $values_1 = [];
-                foreach ($data['Network'] as $value_3) {
-                    $values_1[] = $value_3;
-                }
-                $value_2 = $values_1;
-            } elseif (null === $data['Network']) {
-                $value_2 = $data['Network'];
+            $values_1 = [];
+            foreach ($data['Network'] as $value_1) {
+                $values_1[] = $value_1;
             }
-            $object->setNetwork($value_2);
-        } elseif (array_key_exists('Network', $data) && null === $data['Network']) {
-            $object->setNetwork(null);
+            $object->network = $values_1;
+            unset($data['Network']);
+        } elseif (array_key_exists('Network', $data)) {
+            $object->network = null;
+            unset($data['Network']);
         }
         if (array_key_exists('Authorization', $data) && null !== $data['Authorization']) {
-            $value_4 = $data['Authorization'];
-            if (is_array($data['Authorization']) && $this->isOnlyNumericKeys($data['Authorization'])) {
-                $values_2 = [];
-                foreach ($data['Authorization'] as $value_5) {
-                    $values_2[] = $value_5;
-                }
-                $value_4 = $values_2;
-            } elseif (null === $data['Authorization']) {
-                $value_4 = $data['Authorization'];
+            $values_2 = [];
+            foreach ($data['Authorization'] as $value_2) {
+                $values_2[] = $value_2;
             }
-            $object->setAuthorization($value_4);
-        } elseif (array_key_exists('Authorization', $data) && null === $data['Authorization']) {
-            $object->setAuthorization(null);
+            $object->authorization = $values_2;
+            unset($data['Authorization']);
+        } elseif (array_key_exists('Authorization', $data)) {
+            $object->authorization = null;
+            unset($data['Authorization']);
         }
         if (array_key_exists('Log', $data) && null !== $data['Log']) {
-            $value_6 = $data['Log'];
-            if (is_array($data['Log']) && $this->isOnlyNumericKeys($data['Log'])) {
-                $values_3 = [];
-                foreach ($data['Log'] as $value_7) {
-                    $values_3[] = $value_7;
-                }
-                $value_6 = $values_3;
-            } elseif (null === $data['Log']) {
-                $value_6 = $data['Log'];
+            $values_3 = [];
+            foreach ($data['Log'] as $value_3) {
+                $values_3[] = $value_3;
             }
-            $object->setLog($value_6);
-        } elseif (array_key_exists('Log', $data) && null === $data['Log']) {
-            $object->setLog(null);
+            $object->log = $values_3;
+            unset($data['Log']);
+        } elseif (array_key_exists('Log', $data)) {
+            $object->log = null;
+            unset($data['Log']);
+        }
+        foreach ($data as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_4;
+            }
         }
 
         return $object;
@@ -114,57 +103,38 @@ class PluginsInfoNormalizer implements DenormalizerInterface, NormalizerInterfac
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('volume')) {
-            $value = $data->getVolume();
-            if (is_array($data->getVolume())) {
-                $values = [];
-                foreach ($data->getVolume() as $value_1) {
-                    $values[] = $value_1;
-                }
-                $value = $values;
-            } elseif (null === $data->getVolume()) {
-                $value = $data->getVolume();
+        if (array_key_exists('volume', get_object_vars($data)) && null !== ($data->volume ?? null)) {
+            $values = [];
+            foreach ($data->volume as $value) {
+                $values[] = $value;
             }
-            $dataArray['Volume'] = $value;
+            $dataArray['Volume'] = $values;
         }
-        if ($data->isInitialized('network')) {
-            $value_2 = $data->getNetwork();
-            if (is_array($data->getNetwork())) {
-                $values_1 = [];
-                foreach ($data->getNetwork() as $value_3) {
-                    $values_1[] = $value_3;
-                }
-                $value_2 = $values_1;
-            } elseif (null === $data->getNetwork()) {
-                $value_2 = $data->getNetwork();
+        if (array_key_exists('network', get_object_vars($data)) && null !== ($data->network ?? null)) {
+            $values_1 = [];
+            foreach ($data->network as $value_1) {
+                $values_1[] = $value_1;
             }
-            $dataArray['Network'] = $value_2;
+            $dataArray['Network'] = $values_1;
         }
-        if ($data->isInitialized('authorization')) {
-            $value_4 = $data->getAuthorization();
-            if (is_array($data->getAuthorization())) {
-                $values_2 = [];
-                foreach ($data->getAuthorization() as $value_5) {
-                    $values_2[] = $value_5;
-                }
-                $value_4 = $values_2;
-            } elseif (null === $data->getAuthorization()) {
-                $value_4 = $data->getAuthorization();
+        if (array_key_exists('authorization', get_object_vars($data)) && null !== ($data->authorization ?? null)) {
+            $values_2 = [];
+            foreach ($data->authorization as $value_2) {
+                $values_2[] = $value_2;
             }
-            $dataArray['Authorization'] = $value_4;
+            $dataArray['Authorization'] = $values_2;
         }
-        if ($data->isInitialized('log')) {
-            $value_6 = $data->getLog();
-            if (is_array($data->getLog())) {
-                $values_3 = [];
-                foreach ($data->getLog() as $value_7) {
-                    $values_3[] = $value_7;
-                }
-                $value_6 = $values_3;
-            } elseif (null === $data->getLog()) {
-                $value_6 = $data->getLog();
+        if (array_key_exists('log', get_object_vars($data)) && null !== ($data->log ?? null)) {
+            $values_3 = [];
+            foreach ($data->log as $value_3) {
+                $values_3[] = $value_3;
             }
-            $dataArray['Log'] = $value_6;
+            $dataArray['Log'] = $values_3;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_4;
+            }
         }
 
         return $dataArray;

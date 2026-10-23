@@ -55,9 +55,11 @@ class SwarmSpecCAConfigExternalCAsItemNormalizer implements DenormalizerInterfac
             } elseif (null === $data['Protocol']) {
                 $value = $data['Protocol'];
             }
-            $object->setProtocol($value);
-        } elseif (array_key_exists('Protocol', $data) && null === $data['Protocol']) {
-            $object->setProtocol(null);
+            $object->protocol = $value;
+            unset($data['Protocol']);
+        } elseif (array_key_exists('Protocol', $data)) {
+            $object->protocol = null;
+            unset($data['Protocol']);
         }
         if (array_key_exists('URL', $data) && null !== $data['URL']) {
             $value_1 = $data['URL'];
@@ -66,14 +68,16 @@ class SwarmSpecCAConfigExternalCAsItemNormalizer implements DenormalizerInterfac
             } elseif (null === $data['URL']) {
                 $value_1 = $data['URL'];
             }
-            $object->setURL($value_1);
-        } elseif (array_key_exists('URL', $data) && null === $data['URL']) {
-            $object->setURL(null);
+            $object->uRL = $value_1;
+            unset($data['URL']);
+        } elseif (array_key_exists('URL', $data)) {
+            $object->uRL = null;
+            unset($data['URL']);
         }
         if (array_key_exists('Options', $data) && null !== $data['Options']) {
             $value_2 = $data['Options'];
             if (is_array($data['Options']) && $this->isOnlyNumericKeys($data['Options'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['Options'] as $key => $value_3) {
                     $values[$key] = $value_3;
                 }
@@ -81,9 +85,11 @@ class SwarmSpecCAConfigExternalCAsItemNormalizer implements DenormalizerInterfac
             } elseif (null === $data['Options']) {
                 $value_2 = $data['Options'];
             }
-            $object->setOptions($value_2);
-        } elseif (array_key_exists('Options', $data) && null === $data['Options']) {
-            $object->setOptions(null);
+            $object->options = $value_2;
+            unset($data['Options']);
+        } elseif (array_key_exists('Options', $data)) {
+            $object->options = null;
+            unset($data['Options']);
         }
         if (array_key_exists('CACert', $data) && null !== $data['CACert']) {
             $value_4 = $data['CACert'];
@@ -92,9 +98,16 @@ class SwarmSpecCAConfigExternalCAsItemNormalizer implements DenormalizerInterfac
             } elseif (null === $data['CACert']) {
                 $value_4 = $data['CACert'];
             }
-            $object->setCACert($value_4);
-        } elseif (array_key_exists('CACert', $data) && null === $data['CACert']) {
-            $object->setCACert(null);
+            $object->cACert = $value_4;
+            unset($data['CACert']);
+        } elseif (array_key_exists('CACert', $data)) {
+            $object->cACert = null;
+            unset($data['CACert']);
+        }
+        foreach ($data as $key_1 => $value_5) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_5;
+            }
         }
 
         return $object;
@@ -103,45 +116,50 @@ class SwarmSpecCAConfigExternalCAsItemNormalizer implements DenormalizerInterfac
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('protocol')) {
-            $value = $data->getProtocol();
-            if (is_string($data->getProtocol())) {
-                $value = $data->getProtocol();
-            } elseif (null === $data->getProtocol()) {
-                $value = $data->getProtocol();
+        if (array_key_exists('protocol', get_object_vars($data)) && null !== ($data->protocol ?? null)) {
+            $value = $data->protocol;
+            if (is_string($data->protocol)) {
+                $value = $data->protocol;
+            } elseif (null === $data->protocol) {
+                $value = $data->protocol;
             }
             $dataArray['Protocol'] = $value;
         }
-        if ($data->isInitialized('uRL')) {
-            $value_1 = $data->getURL();
-            if (is_string($data->getURL())) {
-                $value_1 = $data->getURL();
-            } elseif (null === $data->getURL()) {
-                $value_1 = $data->getURL();
+        if (array_key_exists('uRL', get_object_vars($data)) && null !== ($data->uRL ?? null)) {
+            $value_1 = $data->uRL;
+            if (is_string($data->uRL)) {
+                $value_1 = $data->uRL;
+            } elseif (null === $data->uRL) {
+                $value_1 = $data->uRL;
             }
             $dataArray['URL'] = $value_1;
         }
-        if ($data->isInitialized('options')) {
-            $value_2 = $data->getOptions();
-            if (is_object($data->getOptions())) {
-                $values = [];
-                foreach ($data->getOptions() as $key => $value_3) {
+        if (array_key_exists('options', get_object_vars($data)) && null !== ($data->options ?? null)) {
+            $value_2 = $data->options;
+            if (is_iterable($data->options)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->options as $key => $value_3) {
                     $values[$key] = $value_3;
                 }
                 $value_2 = $values;
-            } elseif (null === $data->getOptions()) {
-                $value_2 = $data->getOptions();
+            } elseif (null === $data->options) {
+                $value_2 = $data->options;
             }
             $dataArray['Options'] = $value_2;
         }
-        if ($data->isInitialized('cACert')) {
-            $value_4 = $data->getCACert();
-            if (is_string($data->getCACert())) {
-                $value_4 = $data->getCACert();
-            } elseif (null === $data->getCACert()) {
-                $value_4 = $data->getCACert();
+        if (array_key_exists('cACert', get_object_vars($data)) && null !== ($data->cACert ?? null)) {
+            $value_4 = $data->cACert;
+            if (is_string($data->cACert)) {
+                $value_4 = $data->cACert;
+            } elseif (null === $data->cACert) {
+                $value_4 = $data->cACert;
             }
             $dataArray['CACert'] = $value_4;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_5) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_5;
+            }
         }
 
         return $dataArray;

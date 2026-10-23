@@ -57,9 +57,11 @@ class ServiceSpecRollbackConfigNormalizer implements DenormalizerInterface, Norm
             } elseif (null === $data['Parallelism']) {
                 $value = $data['Parallelism'];
             }
-            $object->setParallelism($value);
-        } elseif (array_key_exists('Parallelism', $data) && null === $data['Parallelism']) {
-            $object->setParallelism(null);
+            $object->parallelism = $value;
+            unset($data['Parallelism']);
+        } elseif (array_key_exists('Parallelism', $data)) {
+            $object->parallelism = null;
+            unset($data['Parallelism']);
         }
         if (array_key_exists('Delay', $data) && null !== $data['Delay']) {
             $value_1 = $data['Delay'];
@@ -68,9 +70,11 @@ class ServiceSpecRollbackConfigNormalizer implements DenormalizerInterface, Norm
             } elseif (null === $data['Delay']) {
                 $value_1 = $data['Delay'];
             }
-            $object->setDelay($value_1);
-        } elseif (array_key_exists('Delay', $data) && null === $data['Delay']) {
-            $object->setDelay(null);
+            $object->delay = $value_1;
+            unset($data['Delay']);
+        } elseif (array_key_exists('Delay', $data)) {
+            $object->delay = null;
+            unset($data['Delay']);
         }
         if (array_key_exists('FailureAction', $data) && null !== $data['FailureAction']) {
             $value_2 = $data['FailureAction'];
@@ -79,9 +83,11 @@ class ServiceSpecRollbackConfigNormalizer implements DenormalizerInterface, Norm
             } elseif (null === $data['FailureAction']) {
                 $value_2 = $data['FailureAction'];
             }
-            $object->setFailureAction($value_2);
-        } elseif (array_key_exists('FailureAction', $data) && null === $data['FailureAction']) {
-            $object->setFailureAction(null);
+            $object->failureAction = $value_2;
+            unset($data['FailureAction']);
+        } elseif (array_key_exists('FailureAction', $data)) {
+            $object->failureAction = null;
+            unset($data['FailureAction']);
         }
         if (array_key_exists('Monitor', $data) && null !== $data['Monitor']) {
             $value_3 = $data['Monitor'];
@@ -90,9 +96,11 @@ class ServiceSpecRollbackConfigNormalizer implements DenormalizerInterface, Norm
             } elseif (null === $data['Monitor']) {
                 $value_3 = $data['Monitor'];
             }
-            $object->setMonitor($value_3);
-        } elseif (array_key_exists('Monitor', $data) && null === $data['Monitor']) {
-            $object->setMonitor(null);
+            $object->monitor = $value_3;
+            unset($data['Monitor']);
+        } elseif (array_key_exists('Monitor', $data)) {
+            $object->monitor = null;
+            unset($data['Monitor']);
         }
         if (array_key_exists('MaxFailureRatio', $data) && null !== $data['MaxFailureRatio']) {
             $value_4 = $data['MaxFailureRatio'];
@@ -101,9 +109,11 @@ class ServiceSpecRollbackConfigNormalizer implements DenormalizerInterface, Norm
             } elseif (null === $data['MaxFailureRatio']) {
                 $value_4 = $data['MaxFailureRatio'];
             }
-            $object->setMaxFailureRatio($value_4);
-        } elseif (array_key_exists('MaxFailureRatio', $data) && null === $data['MaxFailureRatio']) {
-            $object->setMaxFailureRatio(null);
+            $object->maxFailureRatio = $value_4;
+            unset($data['MaxFailureRatio']);
+        } elseif (array_key_exists('MaxFailureRatio', $data)) {
+            $object->maxFailureRatio = null;
+            unset($data['MaxFailureRatio']);
         }
         if (array_key_exists('Order', $data) && null !== $data['Order']) {
             $value_5 = $data['Order'];
@@ -112,9 +122,16 @@ class ServiceSpecRollbackConfigNormalizer implements DenormalizerInterface, Norm
             } elseif (null === $data['Order']) {
                 $value_5 = $data['Order'];
             }
-            $object->setOrder($value_5);
-        } elseif (array_key_exists('Order', $data) && null === $data['Order']) {
-            $object->setOrder(null);
+            $object->order = $value_5;
+            unset($data['Order']);
+        } elseif (array_key_exists('Order', $data)) {
+            $object->order = null;
+            unset($data['Order']);
+        }
+        foreach ($data as $key => $value_6) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_6;
+            }
         }
 
         return $object;
@@ -123,59 +140,64 @@ class ServiceSpecRollbackConfigNormalizer implements DenormalizerInterface, Norm
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('parallelism')) {
-            $value = $data->getParallelism();
-            if (is_int($data->getParallelism())) {
-                $value = $data->getParallelism();
-            } elseif (null === $data->getParallelism()) {
-                $value = $data->getParallelism();
+        if (array_key_exists('parallelism', get_object_vars($data)) && null !== ($data->parallelism ?? null)) {
+            $value = $data->parallelism;
+            if (is_int($data->parallelism)) {
+                $value = $data->parallelism;
+            } elseif (null === $data->parallelism) {
+                $value = $data->parallelism;
             }
             $dataArray['Parallelism'] = $value;
         }
-        if ($data->isInitialized('delay')) {
-            $value_1 = $data->getDelay();
-            if (is_int($data->getDelay())) {
-                $value_1 = $data->getDelay();
-            } elseif (null === $data->getDelay()) {
-                $value_1 = $data->getDelay();
+        if (array_key_exists('delay', get_object_vars($data)) && null !== ($data->delay ?? null)) {
+            $value_1 = $data->delay;
+            if (is_int($data->delay)) {
+                $value_1 = $data->delay;
+            } elseif (null === $data->delay) {
+                $value_1 = $data->delay;
             }
             $dataArray['Delay'] = $value_1;
         }
-        if ($data->isInitialized('failureAction')) {
-            $value_2 = $data->getFailureAction();
-            if (is_string($data->getFailureAction())) {
-                $value_2 = $data->getFailureAction();
-            } elseif (null === $data->getFailureAction()) {
-                $value_2 = $data->getFailureAction();
+        if (array_key_exists('failureAction', get_object_vars($data)) && null !== ($data->failureAction ?? null)) {
+            $value_2 = $data->failureAction;
+            if (is_string($data->failureAction)) {
+                $value_2 = $data->failureAction;
+            } elseif (null === $data->failureAction) {
+                $value_2 = $data->failureAction;
             }
             $dataArray['FailureAction'] = $value_2;
         }
-        if ($data->isInitialized('monitor')) {
-            $value_3 = $data->getMonitor();
-            if (is_int($data->getMonitor())) {
-                $value_3 = $data->getMonitor();
-            } elseif (null === $data->getMonitor()) {
-                $value_3 = $data->getMonitor();
+        if (array_key_exists('monitor', get_object_vars($data)) && null !== ($data->monitor ?? null)) {
+            $value_3 = $data->monitor;
+            if (is_int($data->monitor)) {
+                $value_3 = $data->monitor;
+            } elseif (null === $data->monitor) {
+                $value_3 = $data->monitor;
             }
             $dataArray['Monitor'] = $value_3;
         }
-        if ($data->isInitialized('maxFailureRatio')) {
-            $value_4 = $data->getMaxFailureRatio();
-            if (is_float($data->getMaxFailureRatio())) {
-                $value_4 = $data->getMaxFailureRatio();
-            } elseif (null === $data->getMaxFailureRatio()) {
-                $value_4 = $data->getMaxFailureRatio();
+        if (array_key_exists('maxFailureRatio', get_object_vars($data)) && null !== ($data->maxFailureRatio ?? null)) {
+            $value_4 = $data->maxFailureRatio;
+            if (is_float($data->maxFailureRatio)) {
+                $value_4 = $data->maxFailureRatio;
+            } elseif (null === $data->maxFailureRatio) {
+                $value_4 = $data->maxFailureRatio;
             }
             $dataArray['MaxFailureRatio'] = $value_4;
         }
-        if ($data->isInitialized('order')) {
-            $value_5 = $data->getOrder();
-            if (is_string($data->getOrder())) {
-                $value_5 = $data->getOrder();
-            } elseif (null === $data->getOrder()) {
-                $value_5 = $data->getOrder();
+        if (array_key_exists('order', get_object_vars($data)) && null !== ($data->order ?? null)) {
+            $value_5 = $data->order;
+            if (is_string($data->order)) {
+                $value_5 = $data->order;
+            } elseif (null === $data->order) {
+                $value_5 = $data->order;
             }
             $dataArray['Order'] = $value_5;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_6) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_6;
+            }
         }
 
         return $dataArray;

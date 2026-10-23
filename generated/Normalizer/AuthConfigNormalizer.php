@@ -55,9 +55,11 @@ class AuthConfigNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['username']) {
                 $value = $data['username'];
             }
-            $object->setUsername($value);
-        } elseif (array_key_exists('username', $data) && null === $data['username']) {
-            $object->setUsername(null);
+            $object->username = $value;
+            unset($data['username']);
+        } elseif (array_key_exists('username', $data)) {
+            $object->username = null;
+            unset($data['username']);
         }
         if (array_key_exists('password', $data) && null !== $data['password']) {
             $value_1 = $data['password'];
@@ -66,9 +68,11 @@ class AuthConfigNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['password']) {
                 $value_1 = $data['password'];
             }
-            $object->setPassword($value_1);
-        } elseif (array_key_exists('password', $data) && null === $data['password']) {
-            $object->setPassword(null);
+            $object->password = $value_1;
+            unset($data['password']);
+        } elseif (array_key_exists('password', $data)) {
+            $object->password = null;
+            unset($data['password']);
         }
         if (array_key_exists('serveraddress', $data) && null !== $data['serveraddress']) {
             $value_2 = $data['serveraddress'];
@@ -77,9 +81,16 @@ class AuthConfigNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['serveraddress']) {
                 $value_2 = $data['serveraddress'];
             }
-            $object->setServeraddress($value_2);
-        } elseif (array_key_exists('serveraddress', $data) && null === $data['serveraddress']) {
-            $object->setServeraddress(null);
+            $object->serveraddress = $value_2;
+            unset($data['serveraddress']);
+        } elseif (array_key_exists('serveraddress', $data)) {
+            $object->serveraddress = null;
+            unset($data['serveraddress']);
+        }
+        foreach ($data as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_3;
+            }
         }
 
         return $object;
@@ -88,32 +99,37 @@ class AuthConfigNormalizer implements DenormalizerInterface, NormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('username')) {
-            $value = $data->getUsername();
-            if (is_string($data->getUsername())) {
-                $value = $data->getUsername();
-            } elseif (null === $data->getUsername()) {
-                $value = $data->getUsername();
+        if (array_key_exists('username', get_object_vars($data)) && null !== ($data->username ?? null)) {
+            $value = $data->username;
+            if (is_string($data->username)) {
+                $value = $data->username;
+            } elseif (null === $data->username) {
+                $value = $data->username;
             }
             $dataArray['username'] = $value;
         }
-        if ($data->isInitialized('password')) {
-            $value_1 = $data->getPassword();
-            if (is_string($data->getPassword())) {
-                $value_1 = $data->getPassword();
-            } elseif (null === $data->getPassword()) {
-                $value_1 = $data->getPassword();
+        if (array_key_exists('password', get_object_vars($data)) && null !== ($data->password ?? null)) {
+            $value_1 = $data->password;
+            if (is_string($data->password)) {
+                $value_1 = $data->password;
+            } elseif (null === $data->password) {
+                $value_1 = $data->password;
             }
             $dataArray['password'] = $value_1;
         }
-        if ($data->isInitialized('serveraddress')) {
-            $value_2 = $data->getServeraddress();
-            if (is_string($data->getServeraddress())) {
-                $value_2 = $data->getServeraddress();
-            } elseif (null === $data->getServeraddress()) {
-                $value_2 = $data->getServeraddress();
+        if (array_key_exists('serveraddress', get_object_vars($data)) && null !== ($data->serveraddress ?? null)) {
+            $value_2 = $data->serveraddress;
+            if (is_string($data->serveraddress)) {
+                $value_2 = $data->serveraddress;
+            } elseif (null === $data->serveraddress) {
+                $value_2 = $data->serveraddress;
             }
             $dataArray['serveraddress'] = $value_2;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_3;
+            }
         }
 
         return $dataArray;

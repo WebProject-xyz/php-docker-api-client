@@ -55,9 +55,11 @@ class ServiceSpecModeReplicatedJobNormalizer implements DenormalizerInterface, N
             } elseif (null === $data['MaxConcurrent']) {
                 $value = $data['MaxConcurrent'];
             }
-            $object->setMaxConcurrent($value);
-        } elseif (array_key_exists('MaxConcurrent', $data) && null === $data['MaxConcurrent']) {
-            $object->setMaxConcurrent(null);
+            $object->maxConcurrent = $value;
+            unset($data['MaxConcurrent']);
+        } elseif (array_key_exists('MaxConcurrent', $data)) {
+            $object->maxConcurrent = null;
+            unset($data['MaxConcurrent']);
         }
         if (array_key_exists('TotalCompletions', $data) && null !== $data['TotalCompletions']) {
             $value_1 = $data['TotalCompletions'];
@@ -66,9 +68,16 @@ class ServiceSpecModeReplicatedJobNormalizer implements DenormalizerInterface, N
             } elseif (null === $data['TotalCompletions']) {
                 $value_1 = $data['TotalCompletions'];
             }
-            $object->setTotalCompletions($value_1);
-        } elseif (array_key_exists('TotalCompletions', $data) && null === $data['TotalCompletions']) {
-            $object->setTotalCompletions(null);
+            $object->totalCompletions = $value_1;
+            unset($data['TotalCompletions']);
+        } elseif (array_key_exists('TotalCompletions', $data)) {
+            $object->totalCompletions = null;
+            unset($data['TotalCompletions']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class ServiceSpecModeReplicatedJobNormalizer implements DenormalizerInterface, N
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('maxConcurrent')) {
-            $value = $data->getMaxConcurrent();
-            if (is_int($data->getMaxConcurrent())) {
-                $value = $data->getMaxConcurrent();
-            } elseif (null === $data->getMaxConcurrent()) {
-                $value = $data->getMaxConcurrent();
+        if (array_key_exists('maxConcurrent', get_object_vars($data)) && null !== ($data->maxConcurrent ?? null)) {
+            $value = $data->maxConcurrent;
+            if (is_int($data->maxConcurrent)) {
+                $value = $data->maxConcurrent;
+            } elseif (null === $data->maxConcurrent) {
+                $value = $data->maxConcurrent;
             }
             $dataArray['MaxConcurrent'] = $value;
         }
-        if ($data->isInitialized('totalCompletions')) {
-            $value_1 = $data->getTotalCompletions();
-            if (is_int($data->getTotalCompletions())) {
-                $value_1 = $data->getTotalCompletions();
-            } elseif (null === $data->getTotalCompletions()) {
-                $value_1 = $data->getTotalCompletions();
+        if (array_key_exists('totalCompletions', get_object_vars($data)) && null !== ($data->totalCompletions ?? null)) {
+            $value_1 = $data->totalCompletions;
+            if (is_int($data->totalCompletions)) {
+                $value_1 = $data->totalCompletions;
+            } elseif (null === $data->totalCompletions) {
+                $value_1 = $data->totalCompletions;
             }
             $dataArray['TotalCompletions'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

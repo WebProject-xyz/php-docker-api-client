@@ -55,63 +55,84 @@ class PluginConfigNormalizer implements DenormalizerInterface, NormalizerInterfa
             $data['PidHost'] = (bool) $data['PidHost'];
         }
         if (array_key_exists('Description', $data)) {
-            $object->setDescription($data['Description']);
+            $object->description = $data['Description'];
+            unset($data['Description']);
         }
         if (array_key_exists('Documentation', $data)) {
-            $object->setDocumentation($data['Documentation']);
+            $object->documentation = $data['Documentation'];
+            unset($data['Documentation']);
         }
         if (array_key_exists('Interface', $data)) {
-            $object->setInterface($this->denormalizer->denormalize($data['Interface'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigInterface::class, 'json', $context));
+            $object->interface = $this->denormalizer->denormalize($data['Interface'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigInterface::class, 'json', $context);
+            unset($data['Interface']);
         }
         if (array_key_exists('Entrypoint', $data)) {
             $values = [];
             foreach ($data['Entrypoint'] as $value) {
                 $values[] = $value;
             }
-            $object->setEntrypoint($values);
+            $object->entrypoint = $values;
+            unset($data['Entrypoint']);
         }
         if (array_key_exists('WorkDir', $data)) {
-            $object->setWorkDir($data['WorkDir']);
+            $object->workDir = $data['WorkDir'];
+            unset($data['WorkDir']);
         }
         if (array_key_exists('User', $data)) {
-            $object->setUser($this->denormalizer->denormalize($data['User'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigUser::class, 'json', $context));
+            $object->user = $this->denormalizer->denormalize($data['User'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigUser::class, 'json', $context);
+            unset($data['User']);
         }
         if (array_key_exists('Network', $data)) {
-            $object->setNetwork($this->denormalizer->denormalize($data['Network'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigNetwork::class, 'json', $context));
+            $object->network = $this->denormalizer->denormalize($data['Network'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigNetwork::class, 'json', $context);
+            unset($data['Network']);
         }
         if (array_key_exists('Linux', $data)) {
-            $object->setLinux($this->denormalizer->denormalize($data['Linux'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigLinux::class, 'json', $context));
+            $object->linux = $this->denormalizer->denormalize($data['Linux'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigLinux::class, 'json', $context);
+            unset($data['Linux']);
         }
         if (array_key_exists('PropagatedMount', $data)) {
-            $object->setPropagatedMount($data['PropagatedMount']);
+            $object->propagatedMount = $data['PropagatedMount'];
+            unset($data['PropagatedMount']);
         }
         if (array_key_exists('IpcHost', $data)) {
-            $object->setIpcHost($data['IpcHost']);
+            $object->ipcHost = $data['IpcHost'];
+            unset($data['IpcHost']);
         }
         if (array_key_exists('PidHost', $data)) {
-            $object->setPidHost($data['PidHost']);
+            $object->pidHost = $data['PidHost'];
+            unset($data['PidHost']);
         }
         if (array_key_exists('Mounts', $data)) {
             $values_1 = [];
             foreach ($data['Mounts'] as $value_1) {
                 $values_1[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\PluginMount::class, 'json', $context);
             }
-            $object->setMounts($values_1);
+            $object->mounts = $values_1;
+            unset($data['Mounts']);
         }
         if (array_key_exists('Env', $data)) {
             $values_2 = [];
             foreach ($data['Env'] as $value_2) {
                 $values_2[] = $this->denormalizer->denormalize($value_2, \WebProject\DockerApi\Library\Generated\Model\PluginEnv::class, 'json', $context);
             }
-            $object->setEnv($values_2);
+            $object->env = $values_2;
+            unset($data['Env']);
         }
         if (array_key_exists('Args', $data)) {
-            $object->setArgs($this->denormalizer->denormalize($data['Args'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigArgs::class, 'json', $context));
+            $object->args = $this->denormalizer->denormalize($data['Args'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigArgs::class, 'json', $context);
+            unset($data['Args']);
         }
         if (array_key_exists('rootfs', $data) && null !== $data['rootfs']) {
-            $object->setRootfs($this->denormalizer->denormalize($data['rootfs'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigRootfs::class, 'json', $context));
-        } elseif (array_key_exists('rootfs', $data) && null === $data['rootfs']) {
-            $object->setRootfs(null);
+            $object->rootfs = $this->denormalizer->denormalize($data['rootfs'], \WebProject\DockerApi\Library\Generated\Model\PluginConfigRootfs::class, 'json', $context);
+            unset($data['rootfs']);
+        } elseif (array_key_exists('rootfs', $data)) {
+            $object->rootfs = null;
+            unset($data['rootfs']);
+        }
+        foreach ($data as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_3;
+            }
         }
 
         return $object;
@@ -120,36 +141,49 @@ class PluginConfigNormalizer implements DenormalizerInterface, NormalizerInterfa
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray                  = [];
-        $dataArray['Description']   = $data->getDescription();
-        $dataArray['Documentation'] = $data->getDocumentation();
-        $dataArray['Interface']     = $this->normalizer->normalize($data->getInterface(), 'json', $context);
+        $dataArray['Description']   = $data->description;
+        $dataArray['Documentation'] = $data->documentation;
+        $normalized                 = null === $data->interface ? null : $this->normalizer->normalize($data->interface, 'json', $context);
+        $dataArray['Interface']     = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         $values                     = [];
-        foreach ($data->getEntrypoint() as $value) {
+        foreach ($data->entrypoint as $value) {
             $values[] = $value;
         }
         $dataArray['Entrypoint'] = $values;
-        $dataArray['WorkDir']    = $data->getWorkDir();
-        if ($data->isInitialized('user') && null !== $data->getUser()) {
-            $dataArray['User'] = $this->normalizer->normalize($data->getUser(), 'json', $context);
+        $dataArray['WorkDir']    = $data->workDir;
+        if (array_key_exists('user', get_object_vars($data)) && null !== ($data->user ?? null)) {
+            $normalized_1      = $this->normalizer->normalize($data->user, 'json', $context);
+            $dataArray['User'] = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
         }
-        $dataArray['Network']         = $this->normalizer->normalize($data->getNetwork(), 'json', $context);
-        $dataArray['Linux']           = $this->normalizer->normalize($data->getLinux(), 'json', $context);
-        $dataArray['PropagatedMount'] = $data->getPropagatedMount();
-        $dataArray['IpcHost']         = $data->getIpcHost();
-        $dataArray['PidHost']         = $data->getPidHost();
+        $normalized_2                 = null === $data->network ? null : $this->normalizer->normalize($data->network, 'json', $context);
+        $dataArray['Network']         = is_iterable($normalized_2) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_2) : $normalized_2;
+        $normalized_3                 = null === $data->linux ? null : $this->normalizer->normalize($data->linux, 'json', $context);
+        $dataArray['Linux']           = is_iterable($normalized_3) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_3) : $normalized_3;
+        $dataArray['PropagatedMount'] = $data->propagatedMount;
+        $dataArray['IpcHost']         = $data->ipcHost;
+        $dataArray['PidHost']         = $data->pidHost;
         $values_1                     = [];
-        foreach ($data->getMounts() as $value_1) {
-            $values_1[] = $this->normalizer->normalize($value_1, 'json', $context);
+        foreach ($data->mounts as $value_1) {
+            $normalized_4 = null === $value_1 ? null : $this->normalizer->normalize($value_1, 'json', $context);
+            $values_1[]   = is_iterable($normalized_4) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_4) : $normalized_4;
         }
         $dataArray['Mounts'] = $values_1;
         $values_2            = [];
-        foreach ($data->getEnv() as $value_2) {
-            $values_2[] = $this->normalizer->normalize($value_2, 'json', $context);
+        foreach ($data->env as $value_2) {
+            $normalized_5 = null === $value_2 ? null : $this->normalizer->normalize($value_2, 'json', $context);
+            $values_2[]   = is_iterable($normalized_5) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_5) : $normalized_5;
         }
         $dataArray['Env']  = $values_2;
-        $dataArray['Args'] = $this->normalizer->normalize($data->getArgs(), 'json', $context);
-        if ($data->isInitialized('rootfs')) {
-            $dataArray['rootfs'] = $this->normalizer->normalize($data->getRootfs(), 'json', $context);
+        $normalized_6      = null === $data->args ? null : $this->normalizer->normalize($data->args, 'json', $context);
+        $dataArray['Args'] = is_iterable($normalized_6) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_6) : $normalized_6;
+        if (array_key_exists('rootfs', get_object_vars($data)) && null !== ($data->rootfs ?? null)) {
+            $normalized_7        = $this->normalizer->normalize($data->rootfs, 'json', $context);
+            $dataArray['rootfs'] = is_iterable($normalized_7) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_7) : $normalized_7;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_3;
+            }
         }
 
         return $dataArray;

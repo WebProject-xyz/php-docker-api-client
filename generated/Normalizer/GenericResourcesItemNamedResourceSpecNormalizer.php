@@ -55,9 +55,11 @@ class GenericResourcesItemNamedResourceSpecNormalizer implements DenormalizerInt
             } elseif (null === $data['Kind']) {
                 $value = $data['Kind'];
             }
-            $object->setKind($value);
-        } elseif (array_key_exists('Kind', $data) && null === $data['Kind']) {
-            $object->setKind(null);
+            $object->kind = $value;
+            unset($data['Kind']);
+        } elseif (array_key_exists('Kind', $data)) {
+            $object->kind = null;
+            unset($data['Kind']);
         }
         if (array_key_exists('Value', $data) && null !== $data['Value']) {
             $value_1 = $data['Value'];
@@ -66,9 +68,16 @@ class GenericResourcesItemNamedResourceSpecNormalizer implements DenormalizerInt
             } elseif (null === $data['Value']) {
                 $value_1 = $data['Value'];
             }
-            $object->setValue($value_1);
-        } elseif (array_key_exists('Value', $data) && null === $data['Value']) {
-            $object->setValue(null);
+            $object->value = $value_1;
+            unset($data['Value']);
+        } elseif (array_key_exists('Value', $data)) {
+            $object->value = null;
+            unset($data['Value']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class GenericResourcesItemNamedResourceSpecNormalizer implements DenormalizerInt
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('kind')) {
-            $value = $data->getKind();
-            if (is_string($data->getKind())) {
-                $value = $data->getKind();
-            } elseif (null === $data->getKind()) {
-                $value = $data->getKind();
+        if (array_key_exists('kind', get_object_vars($data)) && null !== ($data->kind ?? null)) {
+            $value = $data->kind;
+            if (is_string($data->kind)) {
+                $value = $data->kind;
+            } elseif (null === $data->kind) {
+                $value = $data->kind;
             }
             $dataArray['Kind'] = $value;
         }
-        if ($data->isInitialized('value')) {
-            $value_1 = $data->getValue();
-            if (is_string($data->getValue())) {
-                $value_1 = $data->getValue();
-            } elseif (null === $data->getValue()) {
-                $value_1 = $data->getValue();
+        if (array_key_exists('value', get_object_vars($data)) && null !== ($data->value ?? null)) {
+            $value_1 = $data->value;
+            if (is_string($data->value)) {
+                $value_1 = $data->value;
+            } elseif (null === $data->value) {
+                $value_1 = $data->value;
             }
             $dataArray['Value'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

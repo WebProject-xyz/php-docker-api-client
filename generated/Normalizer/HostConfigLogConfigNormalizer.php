@@ -55,14 +55,16 @@ class HostConfigLogConfigNormalizer implements DenormalizerInterface, Normalizer
             } elseif (null === $data['Type']) {
                 $value = $data['Type'];
             }
-            $object->setType($value);
-        } elseif (array_key_exists('Type', $data) && null === $data['Type']) {
-            $object->setType(null);
+            $object->type = $value;
+            unset($data['Type']);
+        } elseif (array_key_exists('Type', $data)) {
+            $object->type = null;
+            unset($data['Type']);
         }
         if (array_key_exists('Config', $data) && null !== $data['Config']) {
             $value_1 = $data['Config'];
             if (is_array($data['Config']) && $this->isOnlyNumericKeys($data['Config'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['Config'] as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
@@ -70,9 +72,16 @@ class HostConfigLogConfigNormalizer implements DenormalizerInterface, Normalizer
             } elseif (null === $data['Config']) {
                 $value_1 = $data['Config'];
             }
-            $object->setConfig($value_1);
-        } elseif (array_key_exists('Config', $data) && null === $data['Config']) {
-            $object->setConfig(null);
+            $object->config = $value_1;
+            unset($data['Config']);
+        } elseif (array_key_exists('Config', $data)) {
+            $object->config = null;
+            unset($data['Config']);
+        }
+        foreach ($data as $key_1 => $value_3) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_3;
+            }
         }
 
         return $object;
@@ -81,27 +90,32 @@ class HostConfigLogConfigNormalizer implements DenormalizerInterface, Normalizer
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('type')) {
-            $value = $data->getType();
-            if (is_string($data->getType())) {
-                $value = $data->getType();
-            } elseif (null === $data->getType()) {
-                $value = $data->getType();
+        if (array_key_exists('type', get_object_vars($data)) && null !== ($data->type ?? null)) {
+            $value = $data->type;
+            if (is_string($data->type)) {
+                $value = $data->type;
+            } elseif (null === $data->type) {
+                $value = $data->type;
             }
             $dataArray['Type'] = $value;
         }
-        if ($data->isInitialized('config')) {
-            $value_1 = $data->getConfig();
-            if (is_object($data->getConfig())) {
-                $values = [];
-                foreach ($data->getConfig() as $key => $value_2) {
+        if (array_key_exists('config', get_object_vars($data)) && null !== ($data->config ?? null)) {
+            $value_1 = $data->config;
+            if (is_iterable($data->config)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->config as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
                 $value_1 = $values;
-            } elseif (null === $data->getConfig()) {
-                $value_1 = $data->getConfig();
+            } elseif (null === $data->config) {
+                $value_1 = $data->config;
             }
             $dataArray['Config'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_3) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_3;
+            }
         }
 
         return $dataArray;

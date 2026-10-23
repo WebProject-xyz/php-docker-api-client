@@ -55,14 +55,16 @@ class EngineDescriptionNormalizer implements DenormalizerInterface, NormalizerIn
             } elseif (null === $data['EngineVersion']) {
                 $value = $data['EngineVersion'];
             }
-            $object->setEngineVersion($value);
-        } elseif (array_key_exists('EngineVersion', $data) && null === $data['EngineVersion']) {
-            $object->setEngineVersion(null);
+            $object->engineVersion = $value;
+            unset($data['EngineVersion']);
+        } elseif (array_key_exists('EngineVersion', $data)) {
+            $object->engineVersion = null;
+            unset($data['EngineVersion']);
         }
         if (array_key_exists('Labels', $data) && null !== $data['Labels']) {
             $value_1 = $data['Labels'];
             if (is_array($data['Labels']) && $this->isOnlyNumericKeys($data['Labels'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['Labels'] as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
@@ -70,24 +72,27 @@ class EngineDescriptionNormalizer implements DenormalizerInterface, NormalizerIn
             } elseif (null === $data['Labels']) {
                 $value_1 = $data['Labels'];
             }
-            $object->setLabels($value_1);
-        } elseif (array_key_exists('Labels', $data) && null === $data['Labels']) {
-            $object->setLabels(null);
+            $object->labels = $value_1;
+            unset($data['Labels']);
+        } elseif (array_key_exists('Labels', $data)) {
+            $object->labels = null;
+            unset($data['Labels']);
         }
         if (array_key_exists('Plugins', $data) && null !== $data['Plugins']) {
-            $value_3 = $data['Plugins'];
-            if (is_array($data['Plugins']) && $this->isOnlyNumericKeys($data['Plugins'])) {
-                $values_1 = [];
-                foreach ($data['Plugins'] as $value_4) {
-                    $values_1[] = $this->denormalizer->denormalize($value_4, \WebProject\DockerApi\Library\Generated\Model\EngineDescriptionPluginsItem::class, 'json', $context);
-                }
-                $value_3 = $values_1;
-            } elseif (null === $data['Plugins']) {
-                $value_3 = $data['Plugins'];
+            $values_1 = [];
+            foreach ($data['Plugins'] as $value_3) {
+                $values_1[] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\EngineDescriptionPluginsItem::class, 'json', $context);
             }
-            $object->setPlugins($value_3);
-        } elseif (array_key_exists('Plugins', $data) && null === $data['Plugins']) {
-            $object->setPlugins(null);
+            $object->plugins = $values_1;
+            unset($data['Plugins']);
+        } elseif (array_key_exists('Plugins', $data)) {
+            $object->plugins = null;
+            unset($data['Plugins']);
+        }
+        foreach ($data as $key_1 => $value_4) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_4;
+            }
         }
 
         return $object;
@@ -96,40 +101,40 @@ class EngineDescriptionNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('engineVersion')) {
-            $value = $data->getEngineVersion();
-            if (is_string($data->getEngineVersion())) {
-                $value = $data->getEngineVersion();
-            } elseif (null === $data->getEngineVersion()) {
-                $value = $data->getEngineVersion();
+        if (array_key_exists('engineVersion', get_object_vars($data)) && null !== ($data->engineVersion ?? null)) {
+            $value = $data->engineVersion;
+            if (is_string($data->engineVersion)) {
+                $value = $data->engineVersion;
+            } elseif (null === $data->engineVersion) {
+                $value = $data->engineVersion;
             }
             $dataArray['EngineVersion'] = $value;
         }
-        if ($data->isInitialized('labels')) {
-            $value_1 = $data->getLabels();
-            if (is_object($data->getLabels())) {
-                $values = [];
-                foreach ($data->getLabels() as $key => $value_2) {
+        if (array_key_exists('labels', get_object_vars($data)) && null !== ($data->labels ?? null)) {
+            $value_1 = $data->labels;
+            if (is_iterable($data->labels)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->labels as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
                 $value_1 = $values;
-            } elseif (null === $data->getLabels()) {
-                $value_1 = $data->getLabels();
+            } elseif (null === $data->labels) {
+                $value_1 = $data->labels;
             }
             $dataArray['Labels'] = $value_1;
         }
-        if ($data->isInitialized('plugins')) {
-            $value_3 = $data->getPlugins();
-            if (is_array($data->getPlugins())) {
-                $values_1 = [];
-                foreach ($data->getPlugins() as $value_4) {
-                    $values_1[] = $this->normalizer->normalize($value_4, 'json', $context);
-                }
-                $value_3 = $values_1;
-            } elseif (null === $data->getPlugins()) {
-                $value_3 = $data->getPlugins();
+        if (array_key_exists('plugins', get_object_vars($data)) && null !== ($data->plugins ?? null)) {
+            $values_1 = [];
+            foreach ($data->plugins as $value_3) {
+                $normalized = null === $value_3 ? null : $this->normalizer->normalize($value_3, 'json', $context);
+                $values_1[] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
             }
-            $dataArray['Plugins'] = $value_3;
+            $dataArray['Plugins'] = $values_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_4) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_4;
+            }
         }
 
         return $dataArray;

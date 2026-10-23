@@ -55,14 +55,16 @@ class TaskSpecLogDriverNormalizer implements DenormalizerInterface, NormalizerIn
             } elseif (null === $data['Name']) {
                 $value = $data['Name'];
             }
-            $object->setName($value);
-        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
-            $object->setName(null);
+            $object->name = $value;
+            unset($data['Name']);
+        } elseif (array_key_exists('Name', $data)) {
+            $object->name = null;
+            unset($data['Name']);
         }
         if (array_key_exists('Options', $data) && null !== $data['Options']) {
             $value_1 = $data['Options'];
             if (is_array($data['Options']) && $this->isOnlyNumericKeys($data['Options'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['Options'] as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
@@ -70,9 +72,16 @@ class TaskSpecLogDriverNormalizer implements DenormalizerInterface, NormalizerIn
             } elseif (null === $data['Options']) {
                 $value_1 = $data['Options'];
             }
-            $object->setOptions($value_1);
-        } elseif (array_key_exists('Options', $data) && null === $data['Options']) {
-            $object->setOptions(null);
+            $object->options = $value_1;
+            unset($data['Options']);
+        } elseif (array_key_exists('Options', $data)) {
+            $object->options = null;
+            unset($data['Options']);
+        }
+        foreach ($data as $key_1 => $value_3) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_3;
+            }
         }
 
         return $object;
@@ -81,27 +90,32 @@ class TaskSpecLogDriverNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name')) {
-            $value = $data->getName();
-            if (is_string($data->getName())) {
-                $value = $data->getName();
-            } elseif (null === $data->getName()) {
-                $value = $data->getName();
+        if (array_key_exists('name', get_object_vars($data)) && null !== ($data->name ?? null)) {
+            $value = $data->name;
+            if (is_string($data->name)) {
+                $value = $data->name;
+            } elseif (null === $data->name) {
+                $value = $data->name;
             }
             $dataArray['Name'] = $value;
         }
-        if ($data->isInitialized('options')) {
-            $value_1 = $data->getOptions();
-            if (is_object($data->getOptions())) {
-                $values = [];
-                foreach ($data->getOptions() as $key => $value_2) {
+        if (array_key_exists('options', get_object_vars($data)) && null !== ($data->options ?? null)) {
+            $value_1 = $data->options;
+            if (is_iterable($data->options)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->options as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
                 $value_1 = $values;
-            } elseif (null === $data->getOptions()) {
-                $value_1 = $data->getOptions();
+            } elseif (null === $data->options) {
+                $value_1 = $data->options;
             }
             $dataArray['Options'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_3) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_3;
+            }
         }
 
         return $dataArray;

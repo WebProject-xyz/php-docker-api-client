@@ -55,9 +55,11 @@ class ProgressDetailNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['current']) {
                 $value = $data['current'];
             }
-            $object->setCurrent($value);
-        } elseif (array_key_exists('current', $data) && null === $data['current']) {
-            $object->setCurrent(null);
+            $object->current = $value;
+            unset($data['current']);
+        } elseif (array_key_exists('current', $data)) {
+            $object->current = null;
+            unset($data['current']);
         }
         if (array_key_exists('total', $data) && null !== $data['total']) {
             $value_1 = $data['total'];
@@ -66,9 +68,16 @@ class ProgressDetailNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['total']) {
                 $value_1 = $data['total'];
             }
-            $object->setTotal($value_1);
-        } elseif (array_key_exists('total', $data) && null === $data['total']) {
-            $object->setTotal(null);
+            $object->total = $value_1;
+            unset($data['total']);
+        } elseif (array_key_exists('total', $data)) {
+            $object->total = null;
+            unset($data['total']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class ProgressDetailNormalizer implements DenormalizerInterface, NormalizerInter
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('current')) {
-            $value = $data->getCurrent();
-            if (is_int($data->getCurrent())) {
-                $value = $data->getCurrent();
-            } elseif (null === $data->getCurrent()) {
-                $value = $data->getCurrent();
+        if (array_key_exists('current', get_object_vars($data)) && null !== ($data->current ?? null)) {
+            $value = $data->current;
+            if (is_int($data->current)) {
+                $value = $data->current;
+            } elseif (null === $data->current) {
+                $value = $data->current;
             }
             $dataArray['current'] = $value;
         }
-        if ($data->isInitialized('total')) {
-            $value_1 = $data->getTotal();
-            if (is_int($data->getTotal())) {
-                $value_1 = $data->getTotal();
-            } elseif (null === $data->getTotal()) {
-                $value_1 = $data->getTotal();
+        if (array_key_exists('total', get_object_vars($data)) && null !== ($data->total ?? null)) {
+            $value_1 = $data->total;
+            if (is_int($data->total)) {
+                $value_1 = $data->total;
+            } elseif (null === $data->total) {
+                $value_1 = $data->total;
             }
             $dataArray['total'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

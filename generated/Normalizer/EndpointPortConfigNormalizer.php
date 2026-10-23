@@ -56,9 +56,11 @@ class EndpointPortConfigNormalizer implements DenormalizerInterface, NormalizerI
             } elseif (null === $data['Name']) {
                 $value = $data['Name'];
             }
-            $object->setName($value);
-        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
-            $object->setName(null);
+            $object->name = $value;
+            unset($data['Name']);
+        } elseif (array_key_exists('Name', $data)) {
+            $object->name = null;
+            unset($data['Name']);
         }
         if (array_key_exists('Protocol', $data) && null !== $data['Protocol']) {
             $value_1 = $data['Protocol'];
@@ -67,9 +69,11 @@ class EndpointPortConfigNormalizer implements DenormalizerInterface, NormalizerI
             } elseif (null === $data['Protocol']) {
                 $value_1 = $data['Protocol'];
             }
-            $object->setProtocol($value_1);
-        } elseif (array_key_exists('Protocol', $data) && null === $data['Protocol']) {
-            $object->setProtocol(null);
+            $object->protocol = $value_1;
+            unset($data['Protocol']);
+        } elseif (array_key_exists('Protocol', $data)) {
+            $object->protocol = null;
+            unset($data['Protocol']);
         }
         if (array_key_exists('TargetPort', $data) && null !== $data['TargetPort']) {
             $value_2 = $data['TargetPort'];
@@ -78,9 +82,11 @@ class EndpointPortConfigNormalizer implements DenormalizerInterface, NormalizerI
             } elseif (null === $data['TargetPort']) {
                 $value_2 = $data['TargetPort'];
             }
-            $object->setTargetPort($value_2);
-        } elseif (array_key_exists('TargetPort', $data) && null === $data['TargetPort']) {
-            $object->setTargetPort(null);
+            $object->targetPort = $value_2;
+            unset($data['TargetPort']);
+        } elseif (array_key_exists('TargetPort', $data)) {
+            $object->targetPort = null;
+            unset($data['TargetPort']);
         }
         if (array_key_exists('PublishedPort', $data) && null !== $data['PublishedPort']) {
             $value_3 = $data['PublishedPort'];
@@ -89,9 +95,11 @@ class EndpointPortConfigNormalizer implements DenormalizerInterface, NormalizerI
             } elseif (null === $data['PublishedPort']) {
                 $value_3 = $data['PublishedPort'];
             }
-            $object->setPublishedPort($value_3);
-        } elseif (array_key_exists('PublishedPort', $data) && null === $data['PublishedPort']) {
-            $object->setPublishedPort(null);
+            $object->publishedPort = $value_3;
+            unset($data['PublishedPort']);
+        } elseif (array_key_exists('PublishedPort', $data)) {
+            $object->publishedPort = null;
+            unset($data['PublishedPort']);
         }
         if (array_key_exists('PublishMode', $data) && null !== $data['PublishMode']) {
             $value_4 = $data['PublishMode'];
@@ -100,9 +108,16 @@ class EndpointPortConfigNormalizer implements DenormalizerInterface, NormalizerI
             } elseif (null === $data['PublishMode']) {
                 $value_4 = $data['PublishMode'];
             }
-            $object->setPublishMode($value_4);
-        } elseif (array_key_exists('PublishMode', $data) && null === $data['PublishMode']) {
-            $object->setPublishMode(null);
+            $object->publishMode = $value_4;
+            unset($data['PublishMode']);
+        } elseif (array_key_exists('PublishMode', $data)) {
+            $object->publishMode = null;
+            unset($data['PublishMode']);
+        }
+        foreach ($data as $key => $value_5) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_5;
+            }
         }
 
         return $object;
@@ -111,50 +126,55 @@ class EndpointPortConfigNormalizer implements DenormalizerInterface, NormalizerI
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name')) {
-            $value = $data->getName();
-            if (is_string($data->getName())) {
-                $value = $data->getName();
-            } elseif (null === $data->getName()) {
-                $value = $data->getName();
+        if (array_key_exists('name', get_object_vars($data)) && null !== ($data->name ?? null)) {
+            $value = $data->name;
+            if (is_string($data->name)) {
+                $value = $data->name;
+            } elseif (null === $data->name) {
+                $value = $data->name;
             }
             $dataArray['Name'] = $value;
         }
-        if ($data->isInitialized('protocol')) {
-            $value_1 = $data->getProtocol();
-            if (is_string($data->getProtocol())) {
-                $value_1 = $data->getProtocol();
-            } elseif (null === $data->getProtocol()) {
-                $value_1 = $data->getProtocol();
+        if (array_key_exists('protocol', get_object_vars($data)) && null !== ($data->protocol ?? null)) {
+            $value_1 = $data->protocol;
+            if (is_string($data->protocol)) {
+                $value_1 = $data->protocol;
+            } elseif (null === $data->protocol) {
+                $value_1 = $data->protocol;
             }
             $dataArray['Protocol'] = $value_1;
         }
-        if ($data->isInitialized('targetPort')) {
-            $value_2 = $data->getTargetPort();
-            if (is_int($data->getTargetPort())) {
-                $value_2 = $data->getTargetPort();
-            } elseif (null === $data->getTargetPort()) {
-                $value_2 = $data->getTargetPort();
+        if (array_key_exists('targetPort', get_object_vars($data)) && null !== ($data->targetPort ?? null)) {
+            $value_2 = $data->targetPort;
+            if (is_int($data->targetPort)) {
+                $value_2 = $data->targetPort;
+            } elseif (null === $data->targetPort) {
+                $value_2 = $data->targetPort;
             }
             $dataArray['TargetPort'] = $value_2;
         }
-        if ($data->isInitialized('publishedPort')) {
-            $value_3 = $data->getPublishedPort();
-            if (is_int($data->getPublishedPort())) {
-                $value_3 = $data->getPublishedPort();
-            } elseif (null === $data->getPublishedPort()) {
-                $value_3 = $data->getPublishedPort();
+        if (array_key_exists('publishedPort', get_object_vars($data)) && null !== ($data->publishedPort ?? null)) {
+            $value_3 = $data->publishedPort;
+            if (is_int($data->publishedPort)) {
+                $value_3 = $data->publishedPort;
+            } elseif (null === $data->publishedPort) {
+                $value_3 = $data->publishedPort;
             }
             $dataArray['PublishedPort'] = $value_3;
         }
-        if ($data->isInitialized('publishMode')) {
-            $value_4 = $data->getPublishMode();
-            if (is_string($data->getPublishMode())) {
-                $value_4 = $data->getPublishMode();
-            } elseif (null === $data->getPublishMode()) {
-                $value_4 = $data->getPublishMode();
+        if (array_key_exists('publishMode', get_object_vars($data)) && null !== ($data->publishMode ?? null)) {
+            $value_4 = $data->publishMode;
+            if (is_string($data->publishMode)) {
+                $value_4 = $data->publishMode;
+            } elseif (null === $data->publishMode) {
+                $value_4 = $data->publishMode;
             }
             $dataArray['PublishMode'] = $value_4;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_5) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_5;
+            }
         }
 
         return $dataArray;

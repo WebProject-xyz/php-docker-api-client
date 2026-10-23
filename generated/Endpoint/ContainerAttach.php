@@ -108,16 +108,16 @@ class ContainerAttach extends \WebProject\DockerApi\Library\Generated\Runtime\Cl
      * @param string $id ID or name of the container
      * @param array{
      *    "detachKeys"?: string, //Override the key sequence for detaching a container.Format is a single
-     * character `[a-Z]` or `ctrl-<value>` where `<value>` is one of: `a-z`,
-     * `@`, `^`, `[`, `,` or `_`.
+     *                           //character `[a-Z]` or `ctrl-<value>` where `<value>` is one of: `a-z`,
+     *                           //`@`, `^`, `[`, `,` or `_`.
      *    "logs"?: bool, //Replay previous logs from the container.
-     *
-     * This is useful for attaching to a container that has started and you
-     * want to output everything since the container started.
-     *
-     * If `stream` is also enabled, once all the previous output has been
-     * returned, it will seamlessly transition into streaming current
-     * output.
+     *                   //
+     *                   //This is useful for attaching to a container that has started and you
+     *                   //want to output everything since the container started.
+     *                   //
+     *                   //If `stream` is also enabled, once all the previous output has been
+     *                   //returned, it will seamlessly transition into streaming current
+     *                   //output.
      *    "stream"?: bool, //Stream attached streams from the time the request was made onwards.
      *    "stdin"?: bool, //Attach to `stdin`
      *    "stdout"?: bool, //Attach to `stdout`
@@ -139,10 +139,10 @@ class ContainerAttach extends \WebProject\DockerApi\Library\Generated\Runtime\Cl
 
     public function getUri(): string
     {
-        return str_replace(['{id}'], [$this->id], '/containers/{id}/attach');
+        return str_replace(['{id}'], [rawurlencode($this->id)], '/containers/{id}/attach');
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
         return [[], null];
     }
@@ -178,11 +178,12 @@ class ContainerAttach extends \WebProject\DockerApi\Library\Generated\Runtime\Cl
      * @return null
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ContainerAttachNotFoundException
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
+        $body   = $response->getContent(false);
         if (101 === $status) {
             return null;
         }
@@ -191,15 +192,26 @@ class ContainerAttach extends \WebProject\DockerApi\Library\Generated\Runtime\Cl
         }
         if (400 === $status) {
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (404 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerAttachNotFoundException($response);
         }
         if (500 === $status) {
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Eager->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

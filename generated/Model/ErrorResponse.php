@@ -3,48 +3,21 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ErrorResponse
+class ErrorResponse implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The error message.
      *
      * @var string
      */
-    protected $message;
+    public string $message;
 
-    /**
-     * The error message.
-     *
-     * @return string
-     */
-    public function getMessage(): string
+    public function definedProperties(): array
     {
-        return $this->message;
-    }
-
-    /**
-     * The error message.
-     *
-     * @param string $message
-     *
-     * @return self
-     */
-    public function setMessage(string $message): self
-    {
-        $this->initialized['message'] = true;
-        $this->message                = $message;
-
-        return $this;
+        return ['message' => 'message'];
     }
 }

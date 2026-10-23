@@ -48,9 +48,16 @@ class TaskSpecPlacementPreferencesItemNormalizer implements DenormalizerInterfac
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Spread', $data) && null !== $data['Spread']) {
-            $object->setSpread($this->denormalizer->denormalize($data['Spread'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecPlacementPreferencesItemSpread::class, 'json', $context));
-        } elseif (array_key_exists('Spread', $data) && null === $data['Spread']) {
-            $object->setSpread(null);
+            $object->spread = $this->denormalizer->denormalize($data['Spread'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecPlacementPreferencesItemSpread::class, 'json', $context);
+            unset($data['Spread']);
+        } elseif (array_key_exists('Spread', $data)) {
+            $object->spread = null;
+            unset($data['Spread']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -59,8 +66,14 @@ class TaskSpecPlacementPreferencesItemNormalizer implements DenormalizerInterfac
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('spread')) {
-            $dataArray['Spread'] = $this->normalizer->normalize($data->getSpread(), 'json', $context);
+        if (array_key_exists('spread', get_object_vars($data)) && null !== ($data->spread ?? null)) {
+            $normalized          = $this->normalizer->normalize($data->spread, 'json', $context);
+            $dataArray['Spread'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
         }
 
         return $dataArray;

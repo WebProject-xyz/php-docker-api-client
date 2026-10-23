@@ -53,10 +53,12 @@ class PluginConfigInterfaceNormalizer implements DenormalizerInterface, Normaliz
             foreach ($data['Types'] as $value) {
                 $values[] = $value;
             }
-            $object->setTypes($values);
+            $object->types = $values;
+            unset($data['Types']);
         }
         if (array_key_exists('Socket', $data)) {
-            $object->setSocket($data['Socket']);
+            $object->socket = $data['Socket'];
+            unset($data['Socket']);
         }
         if (array_key_exists('ProtocolScheme', $data) && null !== $data['ProtocolScheme']) {
             $value_1 = $data['ProtocolScheme'];
@@ -65,9 +67,16 @@ class PluginConfigInterfaceNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['ProtocolScheme']) {
                 $value_1 = $data['ProtocolScheme'];
             }
-            $object->setProtocolScheme($value_1);
-        } elseif (array_key_exists('ProtocolScheme', $data) && null === $data['ProtocolScheme']) {
-            $object->setProtocolScheme(null);
+            $object->protocolScheme = $value_1;
+            unset($data['ProtocolScheme']);
+        } elseif (array_key_exists('ProtocolScheme', $data)) {
+            $object->protocolScheme = null;
+            unset($data['ProtocolScheme']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,19 +86,24 @@ class PluginConfigInterfaceNormalizer implements DenormalizerInterface, Normaliz
     {
         $dataArray = [];
         $values    = [];
-        foreach ($data->getTypes() as $value) {
+        foreach ($data->types as $value) {
             $values[] = $value;
         }
         $dataArray['Types']  = $values;
-        $dataArray['Socket'] = $data->getSocket();
-        if ($data->isInitialized('protocolScheme')) {
-            $value_1 = $data->getProtocolScheme();
-            if (is_string($data->getProtocolScheme())) {
-                $value_1 = $data->getProtocolScheme();
-            } elseif (null === $data->getProtocolScheme()) {
-                $value_1 = $data->getProtocolScheme();
+        $dataArray['Socket'] = $data->socket;
+        if (array_key_exists('protocolScheme', get_object_vars($data)) && null !== ($data->protocolScheme ?? null)) {
+            $value_1 = $data->protocolScheme;
+            if (is_string($data->protocolScheme)) {
+                $value_1 = $data->protocolScheme;
+            } elseif (null === $data->protocolScheme) {
+                $value_1 = $data->protocolScheme;
             }
             $dataArray['ProtocolScheme'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

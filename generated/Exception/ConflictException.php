@@ -5,7 +5,7 @@ namespace WebProject\DockerApi\Library\Generated\Exception;
 
 use RuntimeException;
 
-class ConflictException extends RuntimeException implements ClientException
+abstract class ConflictException extends RuntimeException implements ClientException, WithResponseInterface
 {
     public function __construct(string $message)
     {

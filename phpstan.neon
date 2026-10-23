@@ -6,5 +6,6 @@ parameters:
     paths:
         - src
         - tests
+        - examples
     excludePaths:
         - tests/Support/_generated

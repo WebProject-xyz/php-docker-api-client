@@ -56,9 +56,11 @@ class TaskSpecContainerSpecSecretsItemFileNormalizer implements DenormalizerInte
             } elseif (null === $data['Name']) {
                 $value = $data['Name'];
             }
-            $object->setName($value);
-        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
-            $object->setName(null);
+            $object->name = $value;
+            unset($data['Name']);
+        } elseif (array_key_exists('Name', $data)) {
+            $object->name = null;
+            unset($data['Name']);
         }
         if (array_key_exists('UID', $data) && null !== $data['UID']) {
             $value_1 = $data['UID'];
@@ -67,9 +69,11 @@ class TaskSpecContainerSpecSecretsItemFileNormalizer implements DenormalizerInte
             } elseif (null === $data['UID']) {
                 $value_1 = $data['UID'];
             }
-            $object->setUID($value_1);
-        } elseif (array_key_exists('UID', $data) && null === $data['UID']) {
-            $object->setUID(null);
+            $object->uID = $value_1;
+            unset($data['UID']);
+        } elseif (array_key_exists('UID', $data)) {
+            $object->uID = null;
+            unset($data['UID']);
         }
         if (array_key_exists('GID', $data) && null !== $data['GID']) {
             $value_2 = $data['GID'];
@@ -78,9 +82,11 @@ class TaskSpecContainerSpecSecretsItemFileNormalizer implements DenormalizerInte
             } elseif (null === $data['GID']) {
                 $value_2 = $data['GID'];
             }
-            $object->setGID($value_2);
-        } elseif (array_key_exists('GID', $data) && null === $data['GID']) {
-            $object->setGID(null);
+            $object->gID = $value_2;
+            unset($data['GID']);
+        } elseif (array_key_exists('GID', $data)) {
+            $object->gID = null;
+            unset($data['GID']);
         }
         if (array_key_exists('Mode', $data) && null !== $data['Mode']) {
             $value_3 = $data['Mode'];
@@ -89,9 +95,16 @@ class TaskSpecContainerSpecSecretsItemFileNormalizer implements DenormalizerInte
             } elseif (null === $data['Mode']) {
                 $value_3 = $data['Mode'];
             }
-            $object->setMode($value_3);
-        } elseif (array_key_exists('Mode', $data) && null === $data['Mode']) {
-            $object->setMode(null);
+            $object->mode = $value_3;
+            unset($data['Mode']);
+        } elseif (array_key_exists('Mode', $data)) {
+            $object->mode = null;
+            unset($data['Mode']);
+        }
+        foreach ($data as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_4;
+            }
         }
 
         return $object;
@@ -100,41 +113,46 @@ class TaskSpecContainerSpecSecretsItemFileNormalizer implements DenormalizerInte
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name')) {
-            $value = $data->getName();
-            if (is_string($data->getName())) {
-                $value = $data->getName();
-            } elseif (null === $data->getName()) {
-                $value = $data->getName();
+        if (array_key_exists('name', get_object_vars($data)) && null !== ($data->name ?? null)) {
+            $value = $data->name;
+            if (is_string($data->name)) {
+                $value = $data->name;
+            } elseif (null === $data->name) {
+                $value = $data->name;
             }
             $dataArray['Name'] = $value;
         }
-        if ($data->isInitialized('uID')) {
-            $value_1 = $data->getUID();
-            if (is_string($data->getUID())) {
-                $value_1 = $data->getUID();
-            } elseif (null === $data->getUID()) {
-                $value_1 = $data->getUID();
+        if (array_key_exists('uID', get_object_vars($data)) && null !== ($data->uID ?? null)) {
+            $value_1 = $data->uID;
+            if (is_string($data->uID)) {
+                $value_1 = $data->uID;
+            } elseif (null === $data->uID) {
+                $value_1 = $data->uID;
             }
             $dataArray['UID'] = $value_1;
         }
-        if ($data->isInitialized('gID')) {
-            $value_2 = $data->getGID();
-            if (is_string($data->getGID())) {
-                $value_2 = $data->getGID();
-            } elseif (null === $data->getGID()) {
-                $value_2 = $data->getGID();
+        if (array_key_exists('gID', get_object_vars($data)) && null !== ($data->gID ?? null)) {
+            $value_2 = $data->gID;
+            if (is_string($data->gID)) {
+                $value_2 = $data->gID;
+            } elseif (null === $data->gID) {
+                $value_2 = $data->gID;
             }
             $dataArray['GID'] = $value_2;
         }
-        if ($data->isInitialized('mode')) {
-            $value_3 = $data->getMode();
-            if (is_int($data->getMode())) {
-                $value_3 = $data->getMode();
-            } elseif (null === $data->getMode()) {
-                $value_3 = $data->getMode();
+        if (array_key_exists('mode', get_object_vars($data)) && null !== ($data->mode ?? null)) {
+            $value_3 = $data->mode;
+            if (is_int($data->mode)) {
+                $value_3 = $data->mode;
+            } elseif (null === $data->mode) {
+                $value_3 = $data->mode;
             }
             $dataArray['Mode'] = $value_3;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_4;
+            }
         }
 
         return $dataArray;

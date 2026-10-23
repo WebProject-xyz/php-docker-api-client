@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace WebProject\DockerApi\Library\Generated\Normalizer;
 
 use ArrayObject;
+use DateTime;
+use Exception;
 use Jane\Component\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -49,15 +51,28 @@ class ImageInspectMetadataNormalizer implements DenormalizerInterface, Normalize
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('LastTagTime', $data) && null !== $data['LastTagTime']) {
-            $value = $data['LastTagTime'];
-            if (is_string($data['LastTagTime'])) {
-                $value = $data['LastTagTime'];
-            } elseif (null === $data['LastTagTime']) {
-                $value = $data['LastTagTime'];
+            $date = DateTime::createFromFormat('Y-m-d\TH:i:sP', $data['LastTagTime']);
+            if (false === $date) {
+                if (is_string($data['LastTagTime']) && 1 === preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/', $data['LastTagTime'])) {
+                    try {
+                        $date = new DateTime($data['LastTagTime']);
+                    } catch (Exception) {
+                        throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['LastTagTime'], 'Y-m-d\TH:i:sP');
+                    }
+                } else {
+                    throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['LastTagTime'], 'Y-m-d\TH:i:sP');
+                }
             }
-            $object->setLastTagTime($value);
-        } elseif (array_key_exists('LastTagTime', $data) && null === $data['LastTagTime']) {
-            $object->setLastTagTime(null);
+            $object->lastTagTime = $date;
+            unset($data['LastTagTime']);
+        } elseif (array_key_exists('LastTagTime', $data)) {
+            $object->lastTagTime = null;
+            unset($data['LastTagTime']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -66,14 +81,13 @@ class ImageInspectMetadataNormalizer implements DenormalizerInterface, Normalize
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('lastTagTime')) {
-            $value = $data->getLastTagTime();
-            if (is_string($data->getLastTagTime())) {
-                $value = $data->getLastTagTime();
-            } elseif (null === $data->getLastTagTime()) {
-                $value = $data->getLastTagTime();
+        if (array_key_exists('lastTagTime', get_object_vars($data)) && null !== ($data->lastTagTime ?? null)) {
+            $dataArray['LastTagTime'] = $data->lastTagTime?->format('Y-m-d\TH:i:sP');
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
             }
-            $dataArray['LastTagTime'] = $value;
         }
 
         return $dataArray;

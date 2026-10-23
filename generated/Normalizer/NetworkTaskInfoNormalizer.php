@@ -55,9 +55,11 @@ class NetworkTaskInfoNormalizer implements DenormalizerInterface, NormalizerInte
             } elseif (null === $data['Name']) {
                 $value = $data['Name'];
             }
-            $object->setName($value);
-        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
-            $object->setName(null);
+            $object->name = $value;
+            unset($data['Name']);
+        } elseif (array_key_exists('Name', $data)) {
+            $object->name = null;
+            unset($data['Name']);
         }
         if (array_key_exists('EndpointID', $data) && null !== $data['EndpointID']) {
             $value_1 = $data['EndpointID'];
@@ -66,9 +68,11 @@ class NetworkTaskInfoNormalizer implements DenormalizerInterface, NormalizerInte
             } elseif (null === $data['EndpointID']) {
                 $value_1 = $data['EndpointID'];
             }
-            $object->setEndpointID($value_1);
-        } elseif (array_key_exists('EndpointID', $data) && null === $data['EndpointID']) {
-            $object->setEndpointID(null);
+            $object->endpointID = $value_1;
+            unset($data['EndpointID']);
+        } elseif (array_key_exists('EndpointID', $data)) {
+            $object->endpointID = null;
+            unset($data['EndpointID']);
         }
         if (array_key_exists('EndpointIP', $data) && null !== $data['EndpointIP']) {
             $value_2 = $data['EndpointIP'];
@@ -77,14 +81,16 @@ class NetworkTaskInfoNormalizer implements DenormalizerInterface, NormalizerInte
             } elseif (null === $data['EndpointIP']) {
                 $value_2 = $data['EndpointIP'];
             }
-            $object->setEndpointIP($value_2);
-        } elseif (array_key_exists('EndpointIP', $data) && null === $data['EndpointIP']) {
-            $object->setEndpointIP(null);
+            $object->endpointIP = $value_2;
+            unset($data['EndpointIP']);
+        } elseif (array_key_exists('EndpointIP', $data)) {
+            $object->endpointIP = null;
+            unset($data['EndpointIP']);
         }
         if (array_key_exists('Info', $data) && null !== $data['Info']) {
             $value_3 = $data['Info'];
             if (is_array($data['Info']) && $this->isOnlyNumericKeys($data['Info'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['Info'] as $key => $value_4) {
                     $values[$key] = $value_4;
                 }
@@ -92,9 +98,16 @@ class NetworkTaskInfoNormalizer implements DenormalizerInterface, NormalizerInte
             } elseif (null === $data['Info']) {
                 $value_3 = $data['Info'];
             }
-            $object->setInfo($value_3);
-        } elseif (array_key_exists('Info', $data) && null === $data['Info']) {
-            $object->setInfo(null);
+            $object->info = $value_3;
+            unset($data['Info']);
+        } elseif (array_key_exists('Info', $data)) {
+            $object->info = null;
+            unset($data['Info']);
+        }
+        foreach ($data as $key_1 => $value_5) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_5;
+            }
         }
 
         return $object;
@@ -103,45 +116,50 @@ class NetworkTaskInfoNormalizer implements DenormalizerInterface, NormalizerInte
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name')) {
-            $value = $data->getName();
-            if (is_string($data->getName())) {
-                $value = $data->getName();
-            } elseif (null === $data->getName()) {
-                $value = $data->getName();
+        if (array_key_exists('name', get_object_vars($data)) && null !== ($data->name ?? null)) {
+            $value = $data->name;
+            if (is_string($data->name)) {
+                $value = $data->name;
+            } elseif (null === $data->name) {
+                $value = $data->name;
             }
             $dataArray['Name'] = $value;
         }
-        if ($data->isInitialized('endpointID')) {
-            $value_1 = $data->getEndpointID();
-            if (is_string($data->getEndpointID())) {
-                $value_1 = $data->getEndpointID();
-            } elseif (null === $data->getEndpointID()) {
-                $value_1 = $data->getEndpointID();
+        if (array_key_exists('endpointID', get_object_vars($data)) && null !== ($data->endpointID ?? null)) {
+            $value_1 = $data->endpointID;
+            if (is_string($data->endpointID)) {
+                $value_1 = $data->endpointID;
+            } elseif (null === $data->endpointID) {
+                $value_1 = $data->endpointID;
             }
             $dataArray['EndpointID'] = $value_1;
         }
-        if ($data->isInitialized('endpointIP')) {
-            $value_2 = $data->getEndpointIP();
-            if (is_string($data->getEndpointIP())) {
-                $value_2 = $data->getEndpointIP();
-            } elseif (null === $data->getEndpointIP()) {
-                $value_2 = $data->getEndpointIP();
+        if (array_key_exists('endpointIP', get_object_vars($data)) && null !== ($data->endpointIP ?? null)) {
+            $value_2 = $data->endpointIP;
+            if (is_string($data->endpointIP)) {
+                $value_2 = $data->endpointIP;
+            } elseif (null === $data->endpointIP) {
+                $value_2 = $data->endpointIP;
             }
             $dataArray['EndpointIP'] = $value_2;
         }
-        if ($data->isInitialized('info')) {
-            $value_3 = $data->getInfo();
-            if (is_object($data->getInfo())) {
-                $values = [];
-                foreach ($data->getInfo() as $key => $value_4) {
+        if (array_key_exists('info', get_object_vars($data)) && null !== ($data->info ?? null)) {
+            $value_3 = $data->info;
+            if (is_iterable($data->info)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->info as $key => $value_4) {
                     $values[$key] = $value_4;
                 }
                 $value_3 = $values;
-            } elseif (null === $data->getInfo()) {
-                $value_3 = $data->getInfo();
+            } elseif (null === $data->info) {
+                $value_3 = $data->info;
             }
             $dataArray['Info'] = $value_3;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_5) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_5;
+            }
         }
 
         return $dataArray;

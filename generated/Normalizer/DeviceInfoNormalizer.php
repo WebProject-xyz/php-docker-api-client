@@ -55,9 +55,11 @@ class DeviceInfoNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['Source']) {
                 $value = $data['Source'];
             }
-            $object->setSource($value);
-        } elseif (array_key_exists('Source', $data) && null === $data['Source']) {
-            $object->setSource(null);
+            $object->source = $value;
+            unset($data['Source']);
+        } elseif (array_key_exists('Source', $data)) {
+            $object->source = null;
+            unset($data['Source']);
         }
         if (array_key_exists('ID', $data) && null !== $data['ID']) {
             $value_1 = $data['ID'];
@@ -66,9 +68,16 @@ class DeviceInfoNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['ID']) {
                 $value_1 = $data['ID'];
             }
-            $object->setID($value_1);
-        } elseif (array_key_exists('ID', $data) && null === $data['ID']) {
-            $object->setID(null);
+            $object->iD = $value_1;
+            unset($data['ID']);
+        } elseif (array_key_exists('ID', $data)) {
+            $object->iD = null;
+            unset($data['ID']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class DeviceInfoNormalizer implements DenormalizerInterface, NormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('source')) {
-            $value = $data->getSource();
-            if (is_string($data->getSource())) {
-                $value = $data->getSource();
-            } elseif (null === $data->getSource()) {
-                $value = $data->getSource();
+        if (array_key_exists('source', get_object_vars($data)) && null !== ($data->source ?? null)) {
+            $value = $data->source;
+            if (is_string($data->source)) {
+                $value = $data->source;
+            } elseif (null === $data->source) {
+                $value = $data->source;
             }
             $dataArray['Source'] = $value;
         }
-        if ($data->isInitialized('iD')) {
-            $value_1 = $data->getID();
-            if (is_string($data->getID())) {
-                $value_1 = $data->getID();
-            } elseif (null === $data->getID()) {
-                $value_1 = $data->getID();
+        if (array_key_exists('iD', get_object_vars($data)) && null !== ($data->iD ?? null)) {
+            $value_1 = $data->iD;
+            if (is_string($data->iD)) {
+                $value_1 = $data->iD;
+            } elseif (null === $data->iD) {
+                $value_1 = $data->iD;
             }
             $dataArray['ID'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

@@ -55,14 +55,16 @@ class ConfigsCreatePostBodyNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['Name']) {
                 $value = $data['Name'];
             }
-            $object->setName($value);
-        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
-            $object->setName(null);
+            $object->name = $value;
+            unset($data['Name']);
+        } elseif (array_key_exists('Name', $data)) {
+            $object->name = null;
+            unset($data['Name']);
         }
         if (array_key_exists('Labels', $data) && null !== $data['Labels']) {
             $value_1 = $data['Labels'];
             if (is_array($data['Labels']) && $this->isOnlyNumericKeys($data['Labels'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['Labels'] as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
@@ -70,9 +72,11 @@ class ConfigsCreatePostBodyNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['Labels']) {
                 $value_1 = $data['Labels'];
             }
-            $object->setLabels($value_1);
-        } elseif (array_key_exists('Labels', $data) && null === $data['Labels']) {
-            $object->setLabels(null);
+            $object->labels = $value_1;
+            unset($data['Labels']);
+        } elseif (array_key_exists('Labels', $data)) {
+            $object->labels = null;
+            unset($data['Labels']);
         }
         if (array_key_exists('Data', $data) && null !== $data['Data']) {
             $value_3 = $data['Data'];
@@ -81,12 +85,20 @@ class ConfigsCreatePostBodyNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['Data']) {
                 $value_3 = $data['Data'];
             }
-            $object->setData($value_3);
-        } elseif (array_key_exists('Data', $data) && null === $data['Data']) {
-            $object->setData(null);
+            $object->data = $value_3;
+            unset($data['Data']);
+        } elseif (array_key_exists('Data', $data)) {
+            $object->data = null;
+            unset($data['Data']);
         }
         if (array_key_exists('Templating', $data)) {
-            $object->setTemplating($this->denormalizer->denormalize($data['Templating'], \WebProject\DockerApi\Library\Generated\Model\Driver::class, 'json', $context));
+            $object->templating = $this->denormalizer->denormalize($data['Templating'], \WebProject\DockerApi\Library\Generated\Model\Driver::class, 'json', $context);
+            unset($data['Templating']);
+        }
+        foreach ($data as $key_1 => $value_4) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_4;
+            }
         }
 
         return $object;
@@ -95,39 +107,45 @@ class ConfigsCreatePostBodyNormalizer implements DenormalizerInterface, Normaliz
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name')) {
-            $value = $data->getName();
-            if (is_string($data->getName())) {
-                $value = $data->getName();
-            } elseif (null === $data->getName()) {
-                $value = $data->getName();
+        if (array_key_exists('name', get_object_vars($data)) && null !== ($data->name ?? null)) {
+            $value = $data->name;
+            if (is_string($data->name)) {
+                $value = $data->name;
+            } elseif (null === $data->name) {
+                $value = $data->name;
             }
             $dataArray['Name'] = $value;
         }
-        if ($data->isInitialized('labels')) {
-            $value_1 = $data->getLabels();
-            if (is_object($data->getLabels())) {
-                $values = [];
-                foreach ($data->getLabels() as $key => $value_2) {
+        if (array_key_exists('labels', get_object_vars($data)) && null !== ($data->labels ?? null)) {
+            $value_1 = $data->labels;
+            if (is_iterable($data->labels)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->labels as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
                 $value_1 = $values;
-            } elseif (null === $data->getLabels()) {
-                $value_1 = $data->getLabels();
+            } elseif (null === $data->labels) {
+                $value_1 = $data->labels;
             }
             $dataArray['Labels'] = $value_1;
         }
-        if ($data->isInitialized('data')) {
-            $value_3 = $data->getData();
-            if (is_string($data->getData())) {
-                $value_3 = $data->getData();
-            } elseif (null === $data->getData()) {
-                $value_3 = $data->getData();
+        if (array_key_exists('data', get_object_vars($data)) && null !== ($data->data ?? null)) {
+            $value_3 = $data->data;
+            if (is_string($data->data)) {
+                $value_3 = $data->data;
+            } elseif (null === $data->data) {
+                $value_3 = $data->data;
             }
             $dataArray['Data'] = $value_3;
         }
-        if ($data->isInitialized('templating') && null !== $data->getTemplating()) {
-            $dataArray['Templating'] = $this->normalizer->normalize($data->getTemplating(), 'json', $context);
+        if (array_key_exists('templating', get_object_vars($data)) && null !== ($data->templating ?? null)) {
+            $normalized              = $this->normalizer->normalize($data->templating, 'json', $context);
+            $dataArray['Templating'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_4) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_4;
+            }
         }
 
         return $dataArray;

@@ -55,9 +55,16 @@ class SwarmSpecOrchestrationNormalizer implements DenormalizerInterface, Normali
             } elseif (null === $data['TaskHistoryRetentionLimit']) {
                 $value = $data['TaskHistoryRetentionLimit'];
             }
-            $object->setTaskHistoryRetentionLimit($value);
-        } elseif (array_key_exists('TaskHistoryRetentionLimit', $data) && null === $data['TaskHistoryRetentionLimit']) {
-            $object->setTaskHistoryRetentionLimit(null);
+            $object->taskHistoryRetentionLimit = $value;
+            unset($data['TaskHistoryRetentionLimit']);
+        } elseif (array_key_exists('TaskHistoryRetentionLimit', $data)) {
+            $object->taskHistoryRetentionLimit = null;
+            unset($data['TaskHistoryRetentionLimit']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -66,14 +73,19 @@ class SwarmSpecOrchestrationNormalizer implements DenormalizerInterface, Normali
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('taskHistoryRetentionLimit')) {
-            $value = $data->getTaskHistoryRetentionLimit();
-            if (is_int($data->getTaskHistoryRetentionLimit())) {
-                $value = $data->getTaskHistoryRetentionLimit();
-            } elseif (null === $data->getTaskHistoryRetentionLimit()) {
-                $value = $data->getTaskHistoryRetentionLimit();
+        if (array_key_exists('taskHistoryRetentionLimit', get_object_vars($data)) && null !== ($data->taskHistoryRetentionLimit ?? null)) {
+            $value = $data->taskHistoryRetentionLimit;
+            if (is_int($data->taskHistoryRetentionLimit)) {
+                $value = $data->taskHistoryRetentionLimit;
+            } elseif (null === $data->taskHistoryRetentionLimit) {
+                $value = $data->taskHistoryRetentionLimit;
             }
             $dataArray['TaskHistoryRetentionLimit'] = $value;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

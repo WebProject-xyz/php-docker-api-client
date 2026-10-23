@@ -3,25 +3,18 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ContainerdInfo
+class ContainerdInfo implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The address of the containerd socket.
      *
      * @var string|null
      */
-    protected $address;
+    public ?string $address;
     /**
      * The namespaces that the daemon uses for running containers and
      * plugins in containerd. These namespaces can be configured in the
@@ -36,73 +29,10 @@ class ContainerdInfo
      *
      * @var ContainerdInfoNamespaces|null
      */
-    protected $namespaces;
+    public ?ContainerdInfoNamespaces $namespaces;
 
-    /**
-     * The address of the containerd socket.
-     *
-     * @return string|null
-     */
-    public function getAddress(): ?string
+    public function definedProperties(): array
     {
-        return $this->address;
-    }
-
-    /**
-     * The address of the containerd socket.
-     *
-     * @param string|null $address
-     *
-     * @return self
-     */
-    public function setAddress(?string $address): self
-    {
-        $this->initialized['address'] = true;
-        $this->address                = $address;
-
-        return $this;
-    }
-
-    /**
-     * The namespaces that the daemon uses for running containers and
-     * plugins in containerd. These namespaces can be configured in the
-     * daemon configuration, and are considered to be used exclusively
-     * by the daemon, Tampering with the containerd instance may cause
-     * unexpected behavior.
-     *
-     * As these namespaces are considered to be exclusively accessed
-     * by the daemon, it is not recommended to change these values,
-     * or to change them to a value that is used by other systems,
-     * such as cri-containerd.
-     *
-     * @return ContainerdInfoNamespaces|null
-     */
-    public function getNamespaces(): ?ContainerdInfoNamespaces
-    {
-        return $this->namespaces;
-    }
-
-    /**
-     * The namespaces that the daemon uses for running containers and
-     * plugins in containerd. These namespaces can be configured in the
-     * daemon configuration, and are considered to be used exclusively
-     * by the daemon, Tampering with the containerd instance may cause
-     * unexpected behavior.
-     *
-     * As these namespaces are considered to be exclusively accessed
-     * by the daemon, it is not recommended to change these values,
-     * or to change them to a value that is used by other systems,
-     * such as cri-containerd.
-     *
-     * @param ContainerdInfoNamespaces|null $namespaces
-     *
-     * @return self
-     */
-    public function setNamespaces(?ContainerdInfoNamespaces $namespaces): self
-    {
-        $this->initialized['namespaces'] = true;
-        $this->namespaces                = $namespaces;
-
-        return $this;
+        return ['address' => 'Address', 'namespaces' => 'Namespaces'];
     }
 }

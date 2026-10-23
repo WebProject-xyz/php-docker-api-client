@@ -3,110 +3,33 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class TaskSpecContainerSpecUlimitsItem
+class TaskSpecContainerSpecUlimitsItem implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Name of ulimit.
      *
      * @var string|null
      */
-    protected $name;
+    public ?string $name;
     /**
      * Soft limit.
      *
      * @var int|null
      */
-    protected $soft;
+    public ?int $soft;
     /**
      * Hard limit.
      *
      * @var int|null
      */
-    protected $hard;
+    public ?int $hard;
 
-    /**
-     * Name of ulimit.
-     *
-     * @return string|null
-     */
-    public function getName(): ?string
+    public function definedProperties(): array
     {
-        return $this->name;
-    }
-
-    /**
-     * Name of ulimit.
-     *
-     * @param string|null $name
-     *
-     * @return self
-     */
-    public function setName(?string $name): self
-    {
-        $this->initialized['name'] = true;
-        $this->name                = $name;
-
-        return $this;
-    }
-
-    /**
-     * Soft limit.
-     *
-     * @return int|null
-     */
-    public function getSoft(): ?int
-    {
-        return $this->soft;
-    }
-
-    /**
-     * Soft limit.
-     *
-     * @param int|null $soft
-     *
-     * @return self
-     */
-    public function setSoft(?int $soft): self
-    {
-        $this->initialized['soft'] = true;
-        $this->soft                = $soft;
-
-        return $this;
-    }
-
-    /**
-     * Hard limit.
-     *
-     * @return int|null
-     */
-    public function getHard(): ?int
-    {
-        return $this->hard;
-    }
-
-    /**
-     * Hard limit.
-     *
-     * @param int|null $hard
-     *
-     * @return self
-     */
-    public function setHard(?int $hard): self
-    {
-        $this->initialized['hard'] = true;
-        $this->hard                = $hard;
-
-        return $this;
+        return ['name' => 'Name', 'soft' => 'Soft', 'hard' => 'Hard'];
     }
 }

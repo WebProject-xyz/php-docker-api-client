@@ -10,21 +10,20 @@
 4) **Patch the converted file.** swagger2openapi output is not directly usable — Docker returns null for many "optional" fields and uses nano-precision timestamps that jane misparses. Apply these in-place:
 
    ```shell
-   # 4a) date format: jane parses `format: date-time` as `Y-m-d\TH:i:sP`
-   #     which fails on Docker's RFC3339Nano timestamps. Renaming to
-   #     dateTime (camelCase) makes jane skip the field → keeps as plain string.
-   sed -i 's/format: date-time/format: dateTime/g' spec/docker-v1.55-patched.yaml
+   # 4a) date format: Jane v8 handles RFC 3339 nano-precision timestamps
+   #     using lenient parsing and date-prefer-interface => true.
+   #     Standard format: date-time is preserved.
 
    # 4b) nullables. jane open-api-3-1 ignores `nullable: true` and only
    #     honors OpenAPI 3.1 type-arrays. Walk every schema and add 'null'
    #     to non-required scalar/array properties; leave object+$ref-
    #     additionalProperties alone (triggers a jane codegen bug).
-   python3 spec/patch.py
+   uv run --with ruamel.yaml python3 spec/patch.py spec/docker-v1.55-patched.yaml
    ```
 
    The Python script lives in `spec/patch.py` (idempotent — safe to re-run).
    Needs `ruamel.yaml`; without a system install use
-   `uv run --with ruamel.yaml python3 spec/patch.py`.
+   `uv run --with ruamel.yaml python3 spec/patch.py spec/docker-v1.55-patched.yaml`.
    It performs:
    - Convert every existing `nullable: true` → `type: [orig, 'null']` union.
    - Walk `components.schemas`: every property NOT in its parent's `required` list gets `null` added to its type, **except** `type: object` whose `additionalProperties` is a `$ref` (e.g. `NetworkSettings.Networks`) — making those nullable triggers jane's broken `isOnlyNumericKeys` short-circuit and breaks denormalization of map values into model instances.
@@ -46,7 +45,6 @@
 
 ## Known traps
 
-- **`format: date-time`** — jane's `Y-m-d\TH:i:sP` format fails Docker's `2026-04-27T10:44:24.496525531Z`. Workaround: rename to `dateTime` so jane treats the field as a plain string.
+- **`format: date-time`** — In Jane v7, RFC3339Nano failed; Jane v8 parses RFC 3339 nano-precision timestamps leniently into `\DateTimeInterface`.
 - **`nullable: true` (OpenAPI 3.0 form)** — `jane-php/open-api-3-1` does not honor it. Use `type: [orig, 'null']` instead.
 - **`type: [object, 'null']` + `additionalProperties: { $ref: ... }`** — jane emits a broken `isOnlyNumericKeys` switch that skips `denormalize()` for string-keyed maps, leaving values as raw arrays. Keep these objects non-nullable.
-- **`format: dateTime` (camelCase typo)** — intentional. jane only recognizes `date-time`; the typo lets the field stay as a plain string.

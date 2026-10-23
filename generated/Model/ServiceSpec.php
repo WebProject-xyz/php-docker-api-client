@@ -3,55 +3,48 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ServiceSpec
+class ServiceSpec implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Name of the service.
      *
      * @var string|null
      */
-    protected $name;
+    public ?string $name;
     /**
      * User-defined key/value metadata.
      *
-     * @var array<string, string>|null
+     * @var iterable<string, string>|null
      */
-    protected $labels;
+    public ?iterable $labels;
     /**
      * User modifiable task configuration.
      *
      * @var TaskSpec
      */
-    protected $taskTemplate;
+    public TaskSpec $taskTemplate;
     /**
      * Scheduling mode for the service.
      *
      * @var ServiceSpecMode|null
      */
-    protected $mode;
+    public ?ServiceSpecMode $mode;
     /**
      * Specification for the update strategy of the service.
      *
      * @var ServiceSpecUpdateConfig|null
      */
-    protected $updateConfig;
+    public ?ServiceSpecUpdateConfig $updateConfig;
     /**
      * Specification for the rollback strategy of the service.
      *
      * @var ServiceSpecRollbackConfig|null
      */
-    protected $rollbackConfig;
+    public ?ServiceSpecRollbackConfig $rollbackConfig;
     /**
      * Specifies which networks the service should attach to.
      *
@@ -59,215 +52,16 @@ class ServiceSpec
      *
      * @var list<NetworkAttachmentConfig>|null
      */
-    protected $networks;
+    public ?array $networks;
     /**
      * Properties that can be configured to access and load balance a service.
      *
      * @var EndpointSpec
      */
-    protected $endpointSpec;
+    public EndpointSpec $endpointSpec;
 
-    /**
-     * Name of the service.
-     *
-     * @return string|null
-     */
-    public function getName(): ?string
+    public function definedProperties(): array
     {
-        return $this->name;
-    }
-
-    /**
-     * Name of the service.
-     *
-     * @param string|null $name
-     *
-     * @return self
-     */
-    public function setName(?string $name): self
-    {
-        $this->initialized['name'] = true;
-        $this->name                = $name;
-
-        return $this;
-    }
-
-    /**
-     * User-defined key/value metadata.
-     *
-     * @return array<string, string>|null
-     */
-    public function getLabels(): ?iterable
-    {
-        return $this->labels;
-    }
-
-    /**
-     * User-defined key/value metadata.
-     *
-     * @param array<string, string>|null $labels
-     *
-     * @return self
-     */
-    public function setLabels(?iterable $labels): self
-    {
-        $this->initialized['labels'] = true;
-        $this->labels                = $labels;
-
-        return $this;
-    }
-
-    /**
-     * User modifiable task configuration.
-     *
-     * @return TaskSpec
-     */
-    public function getTaskTemplate(): TaskSpec
-    {
-        return $this->taskTemplate;
-    }
-
-    /**
-     * User modifiable task configuration.
-     *
-     * @param TaskSpec $taskTemplate
-     *
-     * @return self
-     */
-    public function setTaskTemplate(TaskSpec $taskTemplate): self
-    {
-        $this->initialized['taskTemplate'] = true;
-        $this->taskTemplate                = $taskTemplate;
-
-        return $this;
-    }
-
-    /**
-     * Scheduling mode for the service.
-     *
-     * @return ServiceSpecMode|null
-     */
-    public function getMode(): ?ServiceSpecMode
-    {
-        return $this->mode;
-    }
-
-    /**
-     * Scheduling mode for the service.
-     *
-     * @param ServiceSpecMode|null $mode
-     *
-     * @return self
-     */
-    public function setMode(?ServiceSpecMode $mode): self
-    {
-        $this->initialized['mode'] = true;
-        $this->mode                = $mode;
-
-        return $this;
-    }
-
-    /**
-     * Specification for the update strategy of the service.
-     *
-     * @return ServiceSpecUpdateConfig|null
-     */
-    public function getUpdateConfig(): ?ServiceSpecUpdateConfig
-    {
-        return $this->updateConfig;
-    }
-
-    /**
-     * Specification for the update strategy of the service.
-     *
-     * @param ServiceSpecUpdateConfig|null $updateConfig
-     *
-     * @return self
-     */
-    public function setUpdateConfig(?ServiceSpecUpdateConfig $updateConfig): self
-    {
-        $this->initialized['updateConfig'] = true;
-        $this->updateConfig                = $updateConfig;
-
-        return $this;
-    }
-
-    /**
-     * Specification for the rollback strategy of the service.
-     *
-     * @return ServiceSpecRollbackConfig|null
-     */
-    public function getRollbackConfig(): ?ServiceSpecRollbackConfig
-    {
-        return $this->rollbackConfig;
-    }
-
-    /**
-     * Specification for the rollback strategy of the service.
-     *
-     * @param ServiceSpecRollbackConfig|null $rollbackConfig
-     *
-     * @return self
-     */
-    public function setRollbackConfig(?ServiceSpecRollbackConfig $rollbackConfig): self
-    {
-        $this->initialized['rollbackConfig'] = true;
-        $this->rollbackConfig                = $rollbackConfig;
-
-        return $this;
-    }
-
-    /**
-     * Specifies which networks the service should attach to.
-     *
-     * Deprecated: This field is deprecated since v1.44. The Networks field in TaskSpec should be used instead.
-     *
-     * @return list<NetworkAttachmentConfig>|null
-     */
-    public function getNetworks(): ?array
-    {
-        return $this->networks;
-    }
-
-    /**
-     * Specifies which networks the service should attach to.
-     *
-     * Deprecated: This field is deprecated since v1.44. The Networks field in TaskSpec should be used instead.
-     *
-     * @param list<NetworkAttachmentConfig>|null $networks
-     *
-     * @return self
-     */
-    public function setNetworks(?array $networks): self
-    {
-        $this->initialized['networks'] = true;
-        $this->networks                = $networks;
-
-        return $this;
-    }
-
-    /**
-     * Properties that can be configured to access and load balance a service.
-     *
-     * @return EndpointSpec
-     */
-    public function getEndpointSpec(): EndpointSpec
-    {
-        return $this->endpointSpec;
-    }
-
-    /**
-     * Properties that can be configured to access and load balance a service.
-     *
-     * @param EndpointSpec $endpointSpec
-     *
-     * @return self
-     */
-    public function setEndpointSpec(EndpointSpec $endpointSpec): self
-    {
-        $this->initialized['endpointSpec'] = true;
-        $this->endpointSpec                = $endpointSpec;
-
-        return $this;
+        return ['name' => 'Name', 'labels' => 'Labels', 'taskTemplate' => 'TaskTemplate', 'mode' => 'Mode', 'updateConfig' => 'UpdateConfig', 'rollbackConfig' => 'RollbackConfig', 'networks' => 'Networks', 'endpointSpec' => 'EndpointSpec'];
     }
 }

@@ -56,50 +56,51 @@ class ServiceInfoNormalizer implements DenormalizerInterface, NormalizerInterfac
             } elseif (null === $data['VIP']) {
                 $value = $data['VIP'];
             }
-            $object->setVIP($value);
-        } elseif (array_key_exists('VIP', $data) && null === $data['VIP']) {
-            $object->setVIP(null);
+            $object->vIP = $value;
+            unset($data['VIP']);
+        } elseif (array_key_exists('VIP', $data)) {
+            $object->vIP = null;
+            unset($data['VIP']);
         }
         if (array_key_exists('Ports', $data) && null !== $data['Ports']) {
-            $value_1 = $data['Ports'];
-            if (is_array($data['Ports']) && $this->isOnlyNumericKeys($data['Ports'])) {
-                $values = [];
-                foreach ($data['Ports'] as $value_2) {
-                    $values[] = $value_2;
-                }
-                $value_1 = $values;
-            } elseif (null === $data['Ports']) {
-                $value_1 = $data['Ports'];
+            $values = [];
+            foreach ($data['Ports'] as $value_1) {
+                $values[] = $value_1;
             }
-            $object->setPorts($value_1);
-        } elseif (array_key_exists('Ports', $data) && null === $data['Ports']) {
-            $object->setPorts(null);
+            $object->ports = $values;
+            unset($data['Ports']);
+        } elseif (array_key_exists('Ports', $data)) {
+            $object->ports = null;
+            unset($data['Ports']);
         }
         if (array_key_exists('LocalLBIndex', $data) && null !== $data['LocalLBIndex']) {
-            $value_3 = $data['LocalLBIndex'];
+            $value_2 = $data['LocalLBIndex'];
             if (is_int($data['LocalLBIndex'])) {
-                $value_3 = $data['LocalLBIndex'];
+                $value_2 = $data['LocalLBIndex'];
             } elseif (null === $data['LocalLBIndex']) {
-                $value_3 = $data['LocalLBIndex'];
+                $value_2 = $data['LocalLBIndex'];
             }
-            $object->setLocalLBIndex($value_3);
-        } elseif (array_key_exists('LocalLBIndex', $data) && null === $data['LocalLBIndex']) {
-            $object->setLocalLBIndex(null);
+            $object->localLBIndex = $value_2;
+            unset($data['LocalLBIndex']);
+        } elseif (array_key_exists('LocalLBIndex', $data)) {
+            $object->localLBIndex = null;
+            unset($data['LocalLBIndex']);
         }
         if (array_key_exists('Tasks', $data) && null !== $data['Tasks']) {
-            $value_4 = $data['Tasks'];
-            if (is_array($data['Tasks']) && $this->isOnlyNumericKeys($data['Tasks'])) {
-                $values_1 = [];
-                foreach ($data['Tasks'] as $value_5) {
-                    $values_1[] = $this->denormalizer->denormalize($value_5, \WebProject\DockerApi\Library\Generated\Model\NetworkTaskInfo::class, 'json', $context);
-                }
-                $value_4 = $values_1;
-            } elseif (null === $data['Tasks']) {
-                $value_4 = $data['Tasks'];
+            $values_1 = [];
+            foreach ($data['Tasks'] as $value_3) {
+                $values_1[] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\NetworkTaskInfo::class, 'json', $context);
             }
-            $object->setTasks($value_4);
-        } elseif (array_key_exists('Tasks', $data) && null === $data['Tasks']) {
-            $object->setTasks(null);
+            $object->tasks = $values_1;
+            unset($data['Tasks']);
+        } elseif (array_key_exists('Tasks', $data)) {
+            $object->tasks = null;
+            unset($data['Tasks']);
+        }
+        foreach ($data as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_4;
+            }
         }
 
         return $object;
@@ -108,49 +109,43 @@ class ServiceInfoNormalizer implements DenormalizerInterface, NormalizerInterfac
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('vIP')) {
-            $value = $data->getVIP();
-            if (is_string($data->getVIP())) {
-                $value = $data->getVIP();
-            } elseif (null === $data->getVIP()) {
-                $value = $data->getVIP();
+        if (array_key_exists('vIP', get_object_vars($data)) && null !== ($data->vIP ?? null)) {
+            $value = $data->vIP;
+            if (is_string($data->vIP)) {
+                $value = $data->vIP;
+            } elseif (null === $data->vIP) {
+                $value = $data->vIP;
             }
             $dataArray['VIP'] = $value;
         }
-        if ($data->isInitialized('ports')) {
-            $value_1 = $data->getPorts();
-            if (is_array($data->getPorts())) {
-                $values = [];
-                foreach ($data->getPorts() as $value_2) {
-                    $values[] = $value_2;
-                }
-                $value_1 = $values;
-            } elseif (null === $data->getPorts()) {
-                $value_1 = $data->getPorts();
+        if (array_key_exists('ports', get_object_vars($data)) && null !== ($data->ports ?? null)) {
+            $values = [];
+            foreach ($data->ports as $value_1) {
+                $values[] = $value_1;
             }
-            $dataArray['Ports'] = $value_1;
+            $dataArray['Ports'] = $values;
         }
-        if ($data->isInitialized('localLBIndex')) {
-            $value_3 = $data->getLocalLBIndex();
-            if (is_int($data->getLocalLBIndex())) {
-                $value_3 = $data->getLocalLBIndex();
-            } elseif (null === $data->getLocalLBIndex()) {
-                $value_3 = $data->getLocalLBIndex();
+        if (array_key_exists('localLBIndex', get_object_vars($data)) && null !== ($data->localLBIndex ?? null)) {
+            $value_2 = $data->localLBIndex;
+            if (is_int($data->localLBIndex)) {
+                $value_2 = $data->localLBIndex;
+            } elseif (null === $data->localLBIndex) {
+                $value_2 = $data->localLBIndex;
             }
-            $dataArray['LocalLBIndex'] = $value_3;
+            $dataArray['LocalLBIndex'] = $value_2;
         }
-        if ($data->isInitialized('tasks')) {
-            $value_4 = $data->getTasks();
-            if (is_array($data->getTasks())) {
-                $values_1 = [];
-                foreach ($data->getTasks() as $value_5) {
-                    $values_1[] = $this->normalizer->normalize($value_5, 'json', $context);
-                }
-                $value_4 = $values_1;
-            } elseif (null === $data->getTasks()) {
-                $value_4 = $data->getTasks();
+        if (array_key_exists('tasks', get_object_vars($data)) && null !== ($data->tasks ?? null)) {
+            $values_1 = [];
+            foreach ($data->tasks as $value_3) {
+                $normalized = null === $value_3 ? null : $this->normalizer->normalize($value_3, 'json', $context);
+                $values_1[] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
             }
-            $dataArray['Tasks'] = $value_4;
+            $dataArray['Tasks'] = $values_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_4;
+            }
         }
 
         return $dataArray;

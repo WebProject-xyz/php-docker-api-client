@@ -48,7 +48,13 @@ class ImageManifestSummaryImageDataSizeNormalizer implements DenormalizerInterfa
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Unpacked', $data)) {
-            $object->setUnpacked($data['Unpacked']);
+            $object->unpacked = $data['Unpacked'];
+            unset($data['Unpacked']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -57,7 +63,12 @@ class ImageManifestSummaryImageDataSizeNormalizer implements DenormalizerInterfa
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray             = [];
-        $dataArray['Unpacked'] = $data->getUnpacked();
+        $dataArray['Unpacked'] = $data->unpacked;
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
+        }
 
         return $dataArray;
     }

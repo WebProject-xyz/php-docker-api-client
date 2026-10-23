@@ -48,15 +48,17 @@ class VolumeCreateRequestNormalizer implements DenormalizerInterface, Normalizer
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Name', $data)) {
-            $object->setName($data['Name']);
+            $object->name = $data['Name'];
+            unset($data['Name']);
         }
         if (array_key_exists('Driver', $data)) {
-            $object->setDriver($data['Driver']);
+            $object->driver = $data['Driver'];
+            unset($data['Driver']);
         }
         if (array_key_exists('DriverOpts', $data) && null !== $data['DriverOpts']) {
             $value = $data['DriverOpts'];
             if (is_array($data['DriverOpts']) && $this->isOnlyNumericKeys($data['DriverOpts'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['DriverOpts'] as $key => $value_1) {
                     $values[$key] = $value_1;
                 }
@@ -64,14 +66,16 @@ class VolumeCreateRequestNormalizer implements DenormalizerInterface, Normalizer
             } elseif (null === $data['DriverOpts']) {
                 $value = $data['DriverOpts'];
             }
-            $object->setDriverOpts($value);
-        } elseif (array_key_exists('DriverOpts', $data) && null === $data['DriverOpts']) {
-            $object->setDriverOpts(null);
+            $object->driverOpts = $value;
+            unset($data['DriverOpts']);
+        } elseif (array_key_exists('DriverOpts', $data)) {
+            $object->driverOpts = null;
+            unset($data['DriverOpts']);
         }
         if (array_key_exists('Labels', $data) && null !== $data['Labels']) {
             $value_2 = $data['Labels'];
             if (is_array($data['Labels']) && $this->isOnlyNumericKeys($data['Labels'])) {
-                $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values_1 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['Labels'] as $key_1 => $value_3) {
                     $values_1[$key_1] = $value_3;
                 }
@@ -79,12 +83,20 @@ class VolumeCreateRequestNormalizer implements DenormalizerInterface, Normalizer
             } elseif (null === $data['Labels']) {
                 $value_2 = $data['Labels'];
             }
-            $object->setLabels($value_2);
-        } elseif (array_key_exists('Labels', $data) && null === $data['Labels']) {
-            $object->setLabels(null);
+            $object->labels = $value_2;
+            unset($data['Labels']);
+        } elseif (array_key_exists('Labels', $data)) {
+            $object->labels = null;
+            unset($data['Labels']);
         }
         if (array_key_exists('ClusterVolumeSpec', $data)) {
-            $object->setClusterVolumeSpec($this->denormalizer->denormalize($data['ClusterVolumeSpec'], \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec::class, 'json', $context));
+            $object->clusterVolumeSpec = $this->denormalizer->denormalize($data['ClusterVolumeSpec'], \WebProject\DockerApi\Library\Generated\Model\ClusterVolumeSpec::class, 'json', $context);
+            unset($data['ClusterVolumeSpec']);
+        }
+        foreach ($data as $key_2 => $value_4) {
+            if (preg_match('/.*/', (string) $key_2)) {
+                $object[$key_2] = $value_4;
+            }
         }
 
         return $object;
@@ -93,40 +105,46 @@ class VolumeCreateRequestNormalizer implements DenormalizerInterface, Normalizer
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('name') && null !== $data->getName()) {
-            $dataArray['Name'] = $data->getName();
+        if (array_key_exists('name', get_object_vars($data)) && null !== ($data->name ?? null)) {
+            $dataArray['Name'] = $data->name;
         }
-        if ($data->isInitialized('driver') && null !== $data->getDriver()) {
-            $dataArray['Driver'] = $data->getDriver();
+        if (array_key_exists('driver', get_object_vars($data)) && null !== ($data->driver ?? null)) {
+            $dataArray['Driver'] = $data->driver;
         }
-        if ($data->isInitialized('driverOpts')) {
-            $value = $data->getDriverOpts();
-            if (is_object($data->getDriverOpts())) {
-                $values = [];
-                foreach ($data->getDriverOpts() as $key => $value_1) {
+        if (array_key_exists('driverOpts', get_object_vars($data)) && null !== ($data->driverOpts ?? null)) {
+            $value = $data->driverOpts;
+            if (is_iterable($data->driverOpts)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->driverOpts as $key => $value_1) {
                     $values[$key] = $value_1;
                 }
                 $value = $values;
-            } elseif (null === $data->getDriverOpts()) {
-                $value = $data->getDriverOpts();
+            } elseif (null === $data->driverOpts) {
+                $value = $data->driverOpts;
             }
             $dataArray['DriverOpts'] = $value;
         }
-        if ($data->isInitialized('labels')) {
-            $value_2 = $data->getLabels();
-            if (is_object($data->getLabels())) {
-                $values_1 = [];
-                foreach ($data->getLabels() as $key_1 => $value_3) {
+        if (array_key_exists('labels', get_object_vars($data)) && null !== ($data->labels ?? null)) {
+            $value_2 = $data->labels;
+            if (is_iterable($data->labels)) {
+                $values_1 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->labels as $key_1 => $value_3) {
                     $values_1[$key_1] = $value_3;
                 }
                 $value_2 = $values_1;
-            } elseif (null === $data->getLabels()) {
-                $value_2 = $data->getLabels();
+            } elseif (null === $data->labels) {
+                $value_2 = $data->labels;
             }
             $dataArray['Labels'] = $value_2;
         }
-        if ($data->isInitialized('clusterVolumeSpec') && null !== $data->getClusterVolumeSpec()) {
-            $dataArray['ClusterVolumeSpec'] = $this->normalizer->normalize($data->getClusterVolumeSpec(), 'json', $context);
+        if (array_key_exists('clusterVolumeSpec', get_object_vars($data)) && null !== ($data->clusterVolumeSpec ?? null)) {
+            $normalized                     = $this->normalizer->normalize($data->clusterVolumeSpec, 'json', $context);
+            $dataArray['ClusterVolumeSpec'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_2 => $value_4) {
+            if (preg_match('/.*/', (string) $key_2)) {
+                $dataArray[$key_2] = $value_4;
+            }
         }
 
         return $dataArray;

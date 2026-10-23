@@ -3,25 +3,18 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class FirewallInfo
+class FirewallInfo implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The name of the firewall backend driver.
      *
      * @var string|null
      */
-    protected $driver;
+    public ?string $driver;
     /**
      * Information about the firewall backend, provided as
      * "label" / "value" pairs.
@@ -34,69 +27,10 @@ class FirewallInfo
      *
      * @var list<list<string>>|null
      */
-    protected $info;
+    public ?array $info;
 
-    /**
-     * The name of the firewall backend driver.
-     *
-     * @return string|null
-     */
-    public function getDriver(): ?string
+    public function definedProperties(): array
     {
-        return $this->driver;
-    }
-
-    /**
-     * The name of the firewall backend driver.
-     *
-     * @param string|null $driver
-     *
-     * @return self
-     */
-    public function setDriver(?string $driver): self
-    {
-        $this->initialized['driver'] = true;
-        $this->driver                = $driver;
-
-        return $this;
-    }
-
-    /**
-     * Information about the firewall backend, provided as
-     * "label" / "value" pairs.
-     *
-     * <p><br /></p>
-     *
-     * > **Note**: The information returned in this field, including the
-     * > formatting of values and labels, should not be considered stable,
-     * > and may change without notice.
-     *
-     * @return list<list<string>>|null
-     */
-    public function getInfo(): ?array
-    {
-        return $this->info;
-    }
-
-    /**
-     * Information about the firewall backend, provided as
-     * "label" / "value" pairs.
-     *
-     * <p><br /></p>
-     *
-     * > **Note**: The information returned in this field, including the
-     * > formatting of values and labels, should not be considered stable,
-     * > and may change without notice.
-     *
-     * @param list<list<string>>|null $info
-     *
-     * @return self
-     */
-    public function setInfo(?array $info): self
-    {
-        $this->initialized['info'] = true;
-        $this->info                = $info;
-
-        return $this;
+        return ['driver' => 'Driver', 'info' => 'Info'];
     }
 }

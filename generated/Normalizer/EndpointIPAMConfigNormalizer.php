@@ -55,9 +55,11 @@ class EndpointIPAMConfigNormalizer implements DenormalizerInterface, NormalizerI
             } elseif (null === $data['IPv4Address']) {
                 $value = $data['IPv4Address'];
             }
-            $object->setIPv4Address($value);
-        } elseif (array_key_exists('IPv4Address', $data) && null === $data['IPv4Address']) {
-            $object->setIPv4Address(null);
+            $object->iPv4Address = $value;
+            unset($data['IPv4Address']);
+        } elseif (array_key_exists('IPv4Address', $data)) {
+            $object->iPv4Address = null;
+            unset($data['IPv4Address']);
         }
         if (array_key_exists('IPv6Address', $data) && null !== $data['IPv6Address']) {
             $value_1 = $data['IPv6Address'];
@@ -66,24 +68,27 @@ class EndpointIPAMConfigNormalizer implements DenormalizerInterface, NormalizerI
             } elseif (null === $data['IPv6Address']) {
                 $value_1 = $data['IPv6Address'];
             }
-            $object->setIPv6Address($value_1);
-        } elseif (array_key_exists('IPv6Address', $data) && null === $data['IPv6Address']) {
-            $object->setIPv6Address(null);
+            $object->iPv6Address = $value_1;
+            unset($data['IPv6Address']);
+        } elseif (array_key_exists('IPv6Address', $data)) {
+            $object->iPv6Address = null;
+            unset($data['IPv6Address']);
         }
         if (array_key_exists('LinkLocalIPs', $data) && null !== $data['LinkLocalIPs']) {
-            $value_2 = $data['LinkLocalIPs'];
-            if (is_array($data['LinkLocalIPs']) && $this->isOnlyNumericKeys($data['LinkLocalIPs'])) {
-                $values = [];
-                foreach ($data['LinkLocalIPs'] as $value_3) {
-                    $values[] = $value_3;
-                }
-                $value_2 = $values;
-            } elseif (null === $data['LinkLocalIPs']) {
-                $value_2 = $data['LinkLocalIPs'];
+            $values = [];
+            foreach ($data['LinkLocalIPs'] as $value_2) {
+                $values[] = $value_2;
             }
-            $object->setLinkLocalIPs($value_2);
-        } elseif (array_key_exists('LinkLocalIPs', $data) && null === $data['LinkLocalIPs']) {
-            $object->setLinkLocalIPs(null);
+            $object->linkLocalIPs = $values;
+            unset($data['LinkLocalIPs']);
+        } elseif (array_key_exists('LinkLocalIPs', $data)) {
+            $object->linkLocalIPs = null;
+            unset($data['LinkLocalIPs']);
+        }
+        foreach ($data as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_3;
+            }
         }
 
         return $object;
@@ -92,36 +97,35 @@ class EndpointIPAMConfigNormalizer implements DenormalizerInterface, NormalizerI
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('iPv4Address')) {
-            $value = $data->getIPv4Address();
-            if (is_string($data->getIPv4Address())) {
-                $value = $data->getIPv4Address();
-            } elseif (null === $data->getIPv4Address()) {
-                $value = $data->getIPv4Address();
+        if (array_key_exists('iPv4Address', get_object_vars($data)) && null !== ($data->iPv4Address ?? null)) {
+            $value = $data->iPv4Address;
+            if (is_string($data->iPv4Address)) {
+                $value = $data->iPv4Address;
+            } elseif (null === $data->iPv4Address) {
+                $value = $data->iPv4Address;
             }
             $dataArray['IPv4Address'] = $value;
         }
-        if ($data->isInitialized('iPv6Address')) {
-            $value_1 = $data->getIPv6Address();
-            if (is_string($data->getIPv6Address())) {
-                $value_1 = $data->getIPv6Address();
-            } elseif (null === $data->getIPv6Address()) {
-                $value_1 = $data->getIPv6Address();
+        if (array_key_exists('iPv6Address', get_object_vars($data)) && null !== ($data->iPv6Address ?? null)) {
+            $value_1 = $data->iPv6Address;
+            if (is_string($data->iPv6Address)) {
+                $value_1 = $data->iPv6Address;
+            } elseif (null === $data->iPv6Address) {
+                $value_1 = $data->iPv6Address;
             }
             $dataArray['IPv6Address'] = $value_1;
         }
-        if ($data->isInitialized('linkLocalIPs')) {
-            $value_2 = $data->getLinkLocalIPs();
-            if (is_array($data->getLinkLocalIPs())) {
-                $values = [];
-                foreach ($data->getLinkLocalIPs() as $value_3) {
-                    $values[] = $value_3;
-                }
-                $value_2 = $values;
-            } elseif (null === $data->getLinkLocalIPs()) {
-                $value_2 = $data->getLinkLocalIPs();
+        if (array_key_exists('linkLocalIPs', get_object_vars($data)) && null !== ($data->linkLocalIPs ?? null)) {
+            $values = [];
+            foreach ($data->linkLocalIPs as $value_2) {
+                $values[] = $value_2;
             }
-            $dataArray['LinkLocalIPs'] = $value_2;
+            $dataArray['LinkLocalIPs'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_3;
+            }
         }
 
         return $dataArray;

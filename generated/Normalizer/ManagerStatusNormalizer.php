@@ -56,12 +56,15 @@ class ManagerStatusNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['Leader']) {
                 $value = $data['Leader'];
             }
-            $object->setLeader($value);
-        } elseif (array_key_exists('Leader', $data) && null === $data['Leader']) {
-            $object->setLeader(null);
+            $object->leader = $value;
+            unset($data['Leader']);
+        } elseif (array_key_exists('Leader', $data)) {
+            $object->leader = null;
+            unset($data['Leader']);
         }
         if (array_key_exists('Reachability', $data)) {
-            $object->setReachability($data['Reachability']);
+            $object->reachability = \WebProject\DockerApi\Library\Generated\Model\Reachability::from($data['Reachability']);
+            unset($data['Reachability']);
         }
         if (array_key_exists('Addr', $data) && null !== $data['Addr']) {
             $value_1 = $data['Addr'];
@@ -70,9 +73,16 @@ class ManagerStatusNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['Addr']) {
                 $value_1 = $data['Addr'];
             }
-            $object->setAddr($value_1);
-        } elseif (array_key_exists('Addr', $data) && null === $data['Addr']) {
-            $object->setAddr(null);
+            $object->addr = $value_1;
+            unset($data['Addr']);
+        } elseif (array_key_exists('Addr', $data)) {
+            $object->addr = null;
+            unset($data['Addr']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -81,26 +91,31 @@ class ManagerStatusNormalizer implements DenormalizerInterface, NormalizerInterf
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('leader')) {
-            $value = $data->getLeader();
-            if (is_bool($data->getLeader())) {
-                $value = $data->getLeader();
-            } elseif (null === $data->getLeader()) {
-                $value = $data->getLeader();
+        if (array_key_exists('leader', get_object_vars($data)) && null !== ($data->leader ?? null)) {
+            $value = $data->leader;
+            if (is_bool($data->leader)) {
+                $value = $data->leader;
+            } elseif (null === $data->leader) {
+                $value = $data->leader;
             }
             $dataArray['Leader'] = $value;
         }
-        if ($data->isInitialized('reachability') && null !== $data->getReachability()) {
-            $dataArray['Reachability'] = $data->getReachability();
+        if (array_key_exists('reachability', get_object_vars($data)) && null !== ($data->reachability ?? null)) {
+            $dataArray['Reachability'] = $data->reachability->value;
         }
-        if ($data->isInitialized('addr')) {
-            $value_1 = $data->getAddr();
-            if (is_string($data->getAddr())) {
-                $value_1 = $data->getAddr();
-            } elseif (null === $data->getAddr()) {
-                $value_1 = $data->getAddr();
+        if (array_key_exists('addr', get_object_vars($data)) && null !== ($data->addr ?? null)) {
+            $value_1 = $data->addr;
+            if (is_string($data->addr)) {
+                $value_1 = $data->addr;
+            } elseif (null === $data->addr) {
+                $value_1 = $data->addr;
             }
             $dataArray['Addr'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

@@ -3,67 +3,23 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class GenericResourcesItemDiscreteResourceSpec
+class GenericResourcesItemDiscreteResourceSpec implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var string|null
      */
-    protected $kind;
+    public ?string $kind;
     /**
      * @var int|null
      */
-    protected $value;
+    public ?int $value;
 
-    /**
-     * @return string|null
-     */
-    public function getKind(): ?string
+    public function definedProperties(): array
     {
-        return $this->kind;
-    }
-
-    /**
-     * @param string|null $kind
-     *
-     * @return self
-     */
-    public function setKind(?string $kind): self
-    {
-        $this->initialized['kind'] = true;
-        $this->kind                = $kind;
-
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getValue(): ?int
-    {
-        return $this->value;
-    }
-
-    /**
-     * @param int|null $value
-     *
-     * @return self
-     */
-    public function setValue(?int $value): self
-    {
-        $this->initialized['value'] = true;
-        $this->value                = $value;
-
-        return $this;
+        return ['kind' => 'Kind', 'value' => 'Value'];
     }
 }

@@ -3,141 +3,39 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class MountVolumeOptions
+class MountVolumeOptions implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Populate volume with data from the target.
      *
      * @var bool|null
      */
-    protected $noCopy = false;
+    public ?bool $noCopy = false;
     /**
      * User-defined key/value metadata.
      *
-     * @var array<string, string>|null
+     * @var iterable<string, string>|null
      */
-    protected $labels;
+    public ?iterable $labels;
     /**
      * Map of driver specific options.
      *
      * @var MountVolumeOptionsDriverConfig|null
      */
-    protected $driverConfig;
+    public ?MountVolumeOptionsDriverConfig $driverConfig;
     /**
      * Source path inside the volume. Must be relative without any back traversals.
      *
      * @var string|null
      */
-    protected $subpath;
+    public ?string $subpath;
 
-    /**
-     * Populate volume with data from the target.
-     *
-     * @return bool|null
-     */
-    public function getNoCopy(): ?bool
+    public function definedProperties(): array
     {
-        return $this->noCopy;
-    }
-
-    /**
-     * Populate volume with data from the target.
-     *
-     * @param bool|null $noCopy
-     *
-     * @return self
-     */
-    public function setNoCopy(?bool $noCopy): self
-    {
-        $this->initialized['noCopy'] = true;
-        $this->noCopy                = $noCopy;
-
-        return $this;
-    }
-
-    /**
-     * User-defined key/value metadata.
-     *
-     * @return array<string, string>|null
-     */
-    public function getLabels(): ?iterable
-    {
-        return $this->labels;
-    }
-
-    /**
-     * User-defined key/value metadata.
-     *
-     * @param array<string, string>|null $labels
-     *
-     * @return self
-     */
-    public function setLabels(?iterable $labels): self
-    {
-        $this->initialized['labels'] = true;
-        $this->labels                = $labels;
-
-        return $this;
-    }
-
-    /**
-     * Map of driver specific options.
-     *
-     * @return MountVolumeOptionsDriverConfig|null
-     */
-    public function getDriverConfig(): ?MountVolumeOptionsDriverConfig
-    {
-        return $this->driverConfig;
-    }
-
-    /**
-     * Map of driver specific options.
-     *
-     * @param MountVolumeOptionsDriverConfig|null $driverConfig
-     *
-     * @return self
-     */
-    public function setDriverConfig(?MountVolumeOptionsDriverConfig $driverConfig): self
-    {
-        $this->initialized['driverConfig'] = true;
-        $this->driverConfig                = $driverConfig;
-
-        return $this;
-    }
-
-    /**
-     * Source path inside the volume. Must be relative without any back traversals.
-     *
-     * @return string|null
-     */
-    public function getSubpath(): ?string
-    {
-        return $this->subpath;
-    }
-
-    /**
-     * Source path inside the volume. Must be relative without any back traversals.
-     *
-     * @param string|null $subpath
-     *
-     * @return self
-     */
-    public function setSubpath(?string $subpath): self
-    {
-        $this->initialized['subpath'] = true;
-        $this->subpath                = $subpath;
-
-        return $this;
+        return ['noCopy' => 'NoCopy', 'labels' => 'Labels', 'driverConfig' => 'DriverConfig', 'subpath' => 'Subpath'];
     }
 }

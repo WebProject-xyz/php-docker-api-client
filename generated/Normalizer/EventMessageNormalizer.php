@@ -56,9 +56,11 @@ class EventMessageNormalizer implements DenormalizerInterface, NormalizerInterfa
             } elseif (null === $data['Type']) {
                 $value = $data['Type'];
             }
-            $object->setType($value);
-        } elseif (array_key_exists('Type', $data) && null === $data['Type']) {
-            $object->setType(null);
+            $object->type = $value;
+            unset($data['Type']);
+        } elseif (array_key_exists('Type', $data)) {
+            $object->type = null;
+            unset($data['Type']);
         }
         if (array_key_exists('Action', $data) && null !== $data['Action']) {
             $value_1 = $data['Action'];
@@ -67,12 +69,15 @@ class EventMessageNormalizer implements DenormalizerInterface, NormalizerInterfa
             } elseif (null === $data['Action']) {
                 $value_1 = $data['Action'];
             }
-            $object->setAction($value_1);
-        } elseif (array_key_exists('Action', $data) && null === $data['Action']) {
-            $object->setAction(null);
+            $object->action = $value_1;
+            unset($data['Action']);
+        } elseif (array_key_exists('Action', $data)) {
+            $object->action = null;
+            unset($data['Action']);
         }
         if (array_key_exists('Actor', $data)) {
-            $object->setActor($this->denormalizer->denormalize($data['Actor'], \WebProject\DockerApi\Library\Generated\Model\EventActor::class, 'json', $context));
+            $object->actor = $this->denormalizer->denormalize($data['Actor'], \WebProject\DockerApi\Library\Generated\Model\EventActor::class, 'json', $context);
+            unset($data['Actor']);
         }
         if (array_key_exists('scope', $data) && null !== $data['scope']) {
             $value_2 = $data['scope'];
@@ -81,9 +86,11 @@ class EventMessageNormalizer implements DenormalizerInterface, NormalizerInterfa
             } elseif (null === $data['scope']) {
                 $value_2 = $data['scope'];
             }
-            $object->setScope($value_2);
-        } elseif (array_key_exists('scope', $data) && null === $data['scope']) {
-            $object->setScope(null);
+            $object->scope = $value_2;
+            unset($data['scope']);
+        } elseif (array_key_exists('scope', $data)) {
+            $object->scope = null;
+            unset($data['scope']);
         }
         if (array_key_exists('time', $data) && null !== $data['time']) {
             $value_3 = $data['time'];
@@ -92,9 +99,11 @@ class EventMessageNormalizer implements DenormalizerInterface, NormalizerInterfa
             } elseif (null === $data['time']) {
                 $value_3 = $data['time'];
             }
-            $object->setTime($value_3);
-        } elseif (array_key_exists('time', $data) && null === $data['time']) {
-            $object->setTime(null);
+            $object->time = $value_3;
+            unset($data['time']);
+        } elseif (array_key_exists('time', $data)) {
+            $object->time = null;
+            unset($data['time']);
         }
         if (array_key_exists('timeNano', $data) && null !== $data['timeNano']) {
             $value_4 = $data['timeNano'];
@@ -103,9 +112,16 @@ class EventMessageNormalizer implements DenormalizerInterface, NormalizerInterfa
             } elseif (null === $data['timeNano']) {
                 $value_4 = $data['timeNano'];
             }
-            $object->setTimeNano($value_4);
-        } elseif (array_key_exists('timeNano', $data) && null === $data['timeNano']) {
-            $object->setTimeNano(null);
+            $object->timeNano = $value_4;
+            unset($data['timeNano']);
+        } elseif (array_key_exists('timeNano', $data)) {
+            $object->timeNano = null;
+            unset($data['timeNano']);
+        }
+        foreach ($data as $key => $value_5) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_5;
+            }
         }
 
         return $object;
@@ -114,53 +130,59 @@ class EventMessageNormalizer implements DenormalizerInterface, NormalizerInterfa
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('type')) {
-            $value = $data->getType();
-            if (is_string($data->getType())) {
-                $value = $data->getType();
-            } elseif (null === $data->getType()) {
-                $value = $data->getType();
+        if (array_key_exists('type', get_object_vars($data)) && null !== ($data->type ?? null)) {
+            $value = $data->type;
+            if (is_string($data->type)) {
+                $value = $data->type;
+            } elseif (null === $data->type) {
+                $value = $data->type;
             }
             $dataArray['Type'] = $value;
         }
-        if ($data->isInitialized('action')) {
-            $value_1 = $data->getAction();
-            if (is_string($data->getAction())) {
-                $value_1 = $data->getAction();
-            } elseif (null === $data->getAction()) {
-                $value_1 = $data->getAction();
+        if (array_key_exists('action', get_object_vars($data)) && null !== ($data->action ?? null)) {
+            $value_1 = $data->action;
+            if (is_string($data->action)) {
+                $value_1 = $data->action;
+            } elseif (null === $data->action) {
+                $value_1 = $data->action;
             }
             $dataArray['Action'] = $value_1;
         }
-        if ($data->isInitialized('actor') && null !== $data->getActor()) {
-            $dataArray['Actor'] = $this->normalizer->normalize($data->getActor(), 'json', $context);
+        if (array_key_exists('actor', get_object_vars($data)) && null !== ($data->actor ?? null)) {
+            $normalized         = $this->normalizer->normalize($data->actor, 'json', $context);
+            $dataArray['Actor'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         }
-        if ($data->isInitialized('scope')) {
-            $value_2 = $data->getScope();
-            if (is_string($data->getScope())) {
-                $value_2 = $data->getScope();
-            } elseif (null === $data->getScope()) {
-                $value_2 = $data->getScope();
+        if (array_key_exists('scope', get_object_vars($data)) && null !== ($data->scope ?? null)) {
+            $value_2 = $data->scope;
+            if (is_string($data->scope)) {
+                $value_2 = $data->scope;
+            } elseif (null === $data->scope) {
+                $value_2 = $data->scope;
             }
             $dataArray['scope'] = $value_2;
         }
-        if ($data->isInitialized('time')) {
-            $value_3 = $data->getTime();
-            if (is_int($data->getTime())) {
-                $value_3 = $data->getTime();
-            } elseif (null === $data->getTime()) {
-                $value_3 = $data->getTime();
+        if (array_key_exists('time', get_object_vars($data)) && null !== ($data->time ?? null)) {
+            $value_3 = $data->time;
+            if (is_int($data->time)) {
+                $value_3 = $data->time;
+            } elseif (null === $data->time) {
+                $value_3 = $data->time;
             }
             $dataArray['time'] = $value_3;
         }
-        if ($data->isInitialized('timeNano')) {
-            $value_4 = $data->getTimeNano();
-            if (is_int($data->getTimeNano())) {
-                $value_4 = $data->getTimeNano();
-            } elseif (null === $data->getTimeNano()) {
-                $value_4 = $data->getTimeNano();
+        if (array_key_exists('timeNano', get_object_vars($data)) && null !== ($data->timeNano ?? null)) {
+            $value_4 = $data->timeNano;
+            if (is_int($data->timeNano)) {
+                $value_4 = $data->timeNano;
+            } elseif (null === $data->timeNano) {
+                $value_4 = $data->timeNano;
             }
             $dataArray['timeNano'] = $value_4;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_5) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_5;
+            }
         }
 
         return $dataArray;

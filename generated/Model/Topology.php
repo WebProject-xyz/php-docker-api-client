@@ -3,42 +3,19 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class Topology
+class Topology implements AdditionalPropertiesInterface
 {
+    use AdditionalAndPatternProperties;
     /**
-     * @var array
+     * @var iterable<string, string>|null
      */
-    protected $initialized = [];
+    public ?iterable $segments;
 
-    public function isInitialized($property): bool
+    public function definedProperties(): array
     {
-        return array_key_exists($property, $this->initialized);
-    }
-    /**
-     * @var array<string, string>|null
-     */
-    protected $segments;
-
-    /**
-     * @return array<string, string>|null
-     */
-    public function getSegments(): ?iterable
-    {
-        return $this->segments;
-    }
-
-    /**
-     * @param array<string, string>|null $segments
-     *
-     * @return self
-     */
-    public function setSegments(?iterable $segments): self
-    {
-        $this->initialized['segments'] = true;
-        $this->segments                = $segments;
-
-        return $this;
+        return ['segments' => 'Segments'];
     }
 }

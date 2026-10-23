@@ -48,38 +48,35 @@ class ContainerTopResponseNormalizer implements DenormalizerInterface, Normalize
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Titles', $data) && null !== $data['Titles']) {
-            $value = $data['Titles'];
-            if (is_array($data['Titles']) && $this->isOnlyNumericKeys($data['Titles'])) {
-                $values = [];
-                foreach ($data['Titles'] as $value_1) {
-                    $values[] = $value_1;
-                }
-                $value = $values;
-            } elseif (null === $data['Titles']) {
-                $value = $data['Titles'];
+            $values = [];
+            foreach ($data['Titles'] as $value) {
+                $values[] = $value;
             }
-            $object->setTitles($value);
-        } elseif (array_key_exists('Titles', $data) && null === $data['Titles']) {
-            $object->setTitles(null);
+            $object->titles = $values;
+            unset($data['Titles']);
+        } elseif (array_key_exists('Titles', $data)) {
+            $object->titles = null;
+            unset($data['Titles']);
         }
         if (array_key_exists('Processes', $data) && null !== $data['Processes']) {
-            $value_2 = $data['Processes'];
-            if (is_array($data['Processes']) && $this->isOnlyNumericKeys($data['Processes'])) {
-                $values_1 = [];
-                foreach ($data['Processes'] as $value_3) {
-                    $values_2 = [];
-                    foreach ($value_3 as $value_4) {
-                        $values_2[] = $value_4;
-                    }
-                    $values_1[] = $values_2;
+            $values_1 = [];
+            foreach ($data['Processes'] as $value_1) {
+                $values_2 = [];
+                foreach ($value_1 as $value_2) {
+                    $values_2[] = $value_2;
                 }
-                $value_2 = $values_1;
-            } elseif (null === $data['Processes']) {
-                $value_2 = $data['Processes'];
+                $values_1[] = $values_2;
             }
-            $object->setProcesses($value_2);
-        } elseif (array_key_exists('Processes', $data) && null === $data['Processes']) {
-            $object->setProcesses(null);
+            $object->processes = $values_1;
+            unset($data['Processes']);
+        } elseif (array_key_exists('Processes', $data)) {
+            $object->processes = null;
+            unset($data['Processes']);
+        }
+        foreach ($data as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_3;
+            }
         }
 
         return $object;
@@ -88,35 +85,28 @@ class ContainerTopResponseNormalizer implements DenormalizerInterface, Normalize
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('titles')) {
-            $value = $data->getTitles();
-            if (is_array($data->getTitles())) {
-                $values = [];
-                foreach ($data->getTitles() as $value_1) {
-                    $values[] = $value_1;
-                }
-                $value = $values;
-            } elseif (null === $data->getTitles()) {
-                $value = $data->getTitles();
+        if (array_key_exists('titles', get_object_vars($data)) && null !== ($data->titles ?? null)) {
+            $values = [];
+            foreach ($data->titles as $value) {
+                $values[] = $value;
             }
-            $dataArray['Titles'] = $value;
+            $dataArray['Titles'] = $values;
         }
-        if ($data->isInitialized('processes')) {
-            $value_2 = $data->getProcesses();
-            if (is_array($data->getProcesses())) {
-                $values_1 = [];
-                foreach ($data->getProcesses() as $value_3) {
-                    $values_2 = [];
-                    foreach ($value_3 as $value_4) {
-                        $values_2[] = $value_4;
-                    }
-                    $values_1[] = $values_2;
+        if (array_key_exists('processes', get_object_vars($data)) && null !== ($data->processes ?? null)) {
+            $values_1 = [];
+            foreach ($data->processes as $value_1) {
+                $values_2 = [];
+                foreach ($value_1 as $value_2) {
+                    $values_2[] = $value_2;
                 }
-                $value_2 = $values_1;
-            } elseif (null === $data->getProcesses()) {
-                $value_2 = $data->getProcesses();
+                $values_1[] = $values_2;
             }
-            $dataArray['Processes'] = $value_2;
+            $dataArray['Processes'] = $values_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_3;
+            }
         }
 
         return $dataArray;

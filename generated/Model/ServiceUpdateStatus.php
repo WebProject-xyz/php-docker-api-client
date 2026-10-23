@@ -3,117 +3,32 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use DateTimeInterface;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ServiceUpdateStatus
+class ServiceUpdateStatus implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var string|null
      */
-    protected $state;
+    public ?string $state;
+    /**
+     * @var DateTimeInterface|null
+     */
+    public ?DateTimeInterface $startedAt;
+    /**
+     * @var DateTimeInterface|null
+     */
+    public ?DateTimeInterface $completedAt;
     /**
      * @var string|null
      */
-    protected $startedAt;
-    /**
-     * @var string|null
-     */
-    protected $completedAt;
-    /**
-     * @var string|null
-     */
-    protected $message;
+    public ?string $message;
 
-    /**
-     * @return string|null
-     */
-    public function getState(): ?string
+    public function definedProperties(): array
     {
-        return $this->state;
-    }
-
-    /**
-     * @param string|null $state
-     *
-     * @return self
-     */
-    public function setState(?string $state): self
-    {
-        $this->initialized['state'] = true;
-        $this->state                = $state;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getStartedAt(): ?string
-    {
-        return $this->startedAt;
-    }
-
-    /**
-     * @param string|null $startedAt
-     *
-     * @return self
-     */
-    public function setStartedAt(?string $startedAt): self
-    {
-        $this->initialized['startedAt'] = true;
-        $this->startedAt                = $startedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCompletedAt(): ?string
-    {
-        return $this->completedAt;
-    }
-
-    /**
-     * @param string|null $completedAt
-     *
-     * @return self
-     */
-    public function setCompletedAt(?string $completedAt): self
-    {
-        $this->initialized['completedAt'] = true;
-        $this->completedAt                = $completedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getMessage(): ?string
-    {
-        return $this->message;
-    }
-
-    /**
-     * @param string|null $message
-     *
-     * @return self
-     */
-    public function setMessage(?string $message): self
-    {
-        $this->initialized['message'] = true;
-        $this->message                = $message;
-
-        return $this;
+        return ['state' => 'State', 'startedAt' => 'StartedAt', 'completedAt' => 'CompletedAt', 'message' => 'Message'];
     }
 }

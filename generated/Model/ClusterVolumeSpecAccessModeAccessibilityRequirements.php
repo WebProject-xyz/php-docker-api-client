@@ -3,85 +3,29 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ClusterVolumeSpecAccessModeAccessibilityRequirements
+class ClusterVolumeSpecAccessModeAccessibilityRequirements implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * A list of required topologies, at least one of which the
      * volume must be accessible from.
      *
      * @var list<Topology>|null
      */
-    protected $requisite;
+    public ?array $requisite;
     /**
      * A list of topologies that the volume should attempt to be
      * provisioned in.
      *
      * @var list<Topology>|null
      */
-    protected $preferred;
+    public ?array $preferred;
 
-    /**
-     * A list of required topologies, at least one of which the
-     * volume must be accessible from.
-     *
-     * @return list<Topology>|null
-     */
-    public function getRequisite(): ?array
+    public function definedProperties(): array
     {
-        return $this->requisite;
-    }
-
-    /**
-     * A list of required topologies, at least one of which the
-     * volume must be accessible from.
-     *
-     * @param list<Topology>|null $requisite
-     *
-     * @return self
-     */
-    public function setRequisite(?array $requisite): self
-    {
-        $this->initialized['requisite'] = true;
-        $this->requisite                = $requisite;
-
-        return $this;
-    }
-
-    /**
-     * A list of topologies that the volume should attempt to be
-     * provisioned in.
-     *
-     * @return list<Topology>|null
-     */
-    public function getPreferred(): ?array
-    {
-        return $this->preferred;
-    }
-
-    /**
-     * A list of topologies that the volume should attempt to be
-     * provisioned in.
-     *
-     * @param list<Topology>|null $preferred
-     *
-     * @return self
-     */
-    public function setPreferred(?array $preferred): self
-    {
-        $this->initialized['preferred'] = true;
-        $this->preferred                = $preferred;
-
-        return $this;
+        return ['requisite' => 'Requisite', 'preferred' => 'Preferred'];
     }
 }

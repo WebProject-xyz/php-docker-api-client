@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace WebProject\DockerApi\Library\Generated\Normalizer;
 
 use ArrayObject;
+use DateTime;
+use Exception;
 use Jane\Component\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -55,42 +57,67 @@ class ServiceUpdateStatusNormalizer implements DenormalizerInterface, Normalizer
             } elseif (null === $data['State']) {
                 $value = $data['State'];
             }
-            $object->setState($value);
-        } elseif (array_key_exists('State', $data) && null === $data['State']) {
-            $object->setState(null);
+            $object->state = $value;
+            unset($data['State']);
+        } elseif (array_key_exists('State', $data)) {
+            $object->state = null;
+            unset($data['State']);
         }
         if (array_key_exists('StartedAt', $data) && null !== $data['StartedAt']) {
-            $value_1 = $data['StartedAt'];
-            if (is_string($data['StartedAt'])) {
-                $value_1 = $data['StartedAt'];
-            } elseif (null === $data['StartedAt']) {
-                $value_1 = $data['StartedAt'];
+            $date = DateTime::createFromFormat('Y-m-d\TH:i:sP', $data['StartedAt']);
+            if (false === $date) {
+                if (is_string($data['StartedAt']) && 1 === preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/', $data['StartedAt'])) {
+                    try {
+                        $date = new DateTime($data['StartedAt']);
+                    } catch (Exception) {
+                        throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['StartedAt'], 'Y-m-d\TH:i:sP');
+                    }
+                } else {
+                    throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['StartedAt'], 'Y-m-d\TH:i:sP');
+                }
             }
-            $object->setStartedAt($value_1);
-        } elseif (array_key_exists('StartedAt', $data) && null === $data['StartedAt']) {
-            $object->setStartedAt(null);
+            $object->startedAt = $date;
+            unset($data['StartedAt']);
+        } elseif (array_key_exists('StartedAt', $data)) {
+            $object->startedAt = null;
+            unset($data['StartedAt']);
         }
         if (array_key_exists('CompletedAt', $data) && null !== $data['CompletedAt']) {
-            $value_2 = $data['CompletedAt'];
-            if (is_string($data['CompletedAt'])) {
-                $value_2 = $data['CompletedAt'];
-            } elseif (null === $data['CompletedAt']) {
-                $value_2 = $data['CompletedAt'];
+            $date_1 = DateTime::createFromFormat('Y-m-d\TH:i:sP', $data['CompletedAt']);
+            if (false === $date_1) {
+                if (is_string($data['CompletedAt']) && 1 === preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/', $data['CompletedAt'])) {
+                    try {
+                        $date_1 = new DateTime($data['CompletedAt']);
+                    } catch (Exception) {
+                        throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['CompletedAt'], 'Y-m-d\TH:i:sP');
+                    }
+                } else {
+                    throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['CompletedAt'], 'Y-m-d\TH:i:sP');
+                }
             }
-            $object->setCompletedAt($value_2);
-        } elseif (array_key_exists('CompletedAt', $data) && null === $data['CompletedAt']) {
-            $object->setCompletedAt(null);
+            $object->completedAt = $date_1;
+            unset($data['CompletedAt']);
+        } elseif (array_key_exists('CompletedAt', $data)) {
+            $object->completedAt = null;
+            unset($data['CompletedAt']);
         }
         if (array_key_exists('Message', $data) && null !== $data['Message']) {
-            $value_3 = $data['Message'];
+            $value_1 = $data['Message'];
             if (is_string($data['Message'])) {
-                $value_3 = $data['Message'];
+                $value_1 = $data['Message'];
             } elseif (null === $data['Message']) {
-                $value_3 = $data['Message'];
+                $value_1 = $data['Message'];
             }
-            $object->setMessage($value_3);
-        } elseif (array_key_exists('Message', $data) && null === $data['Message']) {
-            $object->setMessage(null);
+            $object->message = $value_1;
+            unset($data['Message']);
+        } elseif (array_key_exists('Message', $data)) {
+            $object->message = null;
+            unset($data['Message']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -99,41 +126,34 @@ class ServiceUpdateStatusNormalizer implements DenormalizerInterface, Normalizer
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('state')) {
-            $value = $data->getState();
-            if (is_string($data->getState())) {
-                $value = $data->getState();
-            } elseif (null === $data->getState()) {
-                $value = $data->getState();
+        if (array_key_exists('state', get_object_vars($data)) && null !== ($data->state ?? null)) {
+            $value = $data->state;
+            if (is_string($data->state)) {
+                $value = $data->state;
+            } elseif (null === $data->state) {
+                $value = $data->state;
             }
             $dataArray['State'] = $value;
         }
-        if ($data->isInitialized('startedAt')) {
-            $value_1 = $data->getStartedAt();
-            if (is_string($data->getStartedAt())) {
-                $value_1 = $data->getStartedAt();
-            } elseif (null === $data->getStartedAt()) {
-                $value_1 = $data->getStartedAt();
-            }
-            $dataArray['StartedAt'] = $value_1;
+        if (array_key_exists('startedAt', get_object_vars($data)) && null !== ($data->startedAt ?? null)) {
+            $dataArray['StartedAt'] = $data->startedAt?->format('Y-m-d\TH:i:sP');
         }
-        if ($data->isInitialized('completedAt')) {
-            $value_2 = $data->getCompletedAt();
-            if (is_string($data->getCompletedAt())) {
-                $value_2 = $data->getCompletedAt();
-            } elseif (null === $data->getCompletedAt()) {
-                $value_2 = $data->getCompletedAt();
-            }
-            $dataArray['CompletedAt'] = $value_2;
+        if (array_key_exists('completedAt', get_object_vars($data)) && null !== ($data->completedAt ?? null)) {
+            $dataArray['CompletedAt'] = $data->completedAt?->format('Y-m-d\TH:i:sP');
         }
-        if ($data->isInitialized('message')) {
-            $value_3 = $data->getMessage();
-            if (is_string($data->getMessage())) {
-                $value_3 = $data->getMessage();
-            } elseif (null === $data->getMessage()) {
-                $value_3 = $data->getMessage();
+        if (array_key_exists('message', get_object_vars($data)) && null !== ($data->message ?? null)) {
+            $value_1 = $data->message;
+            if (is_string($data->message)) {
+                $value_1 = $data->message;
+            } elseif (null === $data->message) {
+                $value_1 = $data->message;
             }
-            $dataArray['Message'] = $value_3;
+            $dataArray['Message'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

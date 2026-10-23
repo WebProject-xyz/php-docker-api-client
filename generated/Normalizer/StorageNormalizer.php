@@ -48,7 +48,13 @@ class StorageNormalizer implements DenormalizerInterface, NormalizerInterface, D
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('RootFS', $data)) {
-            $object->setRootFS($this->denormalizer->denormalize($data['RootFS'], \WebProject\DockerApi\Library\Generated\Model\RootFSStorage::class, 'json', $context));
+            $object->rootFS = $this->denormalizer->denormalize($data['RootFS'], \WebProject\DockerApi\Library\Generated\Model\RootFSStorage::class, 'json', $context);
+            unset($data['RootFS']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -57,8 +63,14 @@ class StorageNormalizer implements DenormalizerInterface, NormalizerInterface, D
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('rootFS') && null !== $data->getRootFS()) {
-            $dataArray['RootFS'] = $this->normalizer->normalize($data->getRootFS(), 'json', $context);
+        if (array_key_exists('rootFS', get_object_vars($data)) && null !== ($data->rootFS ?? null)) {
+            $normalized          = $this->normalizer->normalize($data->rootFS, 'json', $context);
+            $dataArray['RootFS'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
         }
 
         return $dataArray;

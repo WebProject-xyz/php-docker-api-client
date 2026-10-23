@@ -48,10 +48,17 @@ class ContainerWaitResponseNormalizer implements DenormalizerInterface, Normaliz
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('StatusCode', $data)) {
-            $object->setStatusCode($data['StatusCode']);
+            $object->statusCode = $data['StatusCode'];
+            unset($data['StatusCode']);
         }
         if (array_key_exists('Error', $data)) {
-            $object->setError($this->denormalizer->denormalize($data['Error'], \WebProject\DockerApi\Library\Generated\Model\ContainerWaitExitError::class, 'json', $context));
+            $object->error = $this->denormalizer->denormalize($data['Error'], \WebProject\DockerApi\Library\Generated\Model\ContainerWaitExitError::class, 'json', $context);
+            unset($data['Error']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -60,9 +67,15 @@ class ContainerWaitResponseNormalizer implements DenormalizerInterface, Normaliz
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray               = [];
-        $dataArray['StatusCode'] = $data->getStatusCode();
-        if ($data->isInitialized('error') && null !== $data->getError()) {
-            $dataArray['Error'] = $this->normalizer->normalize($data->getError(), 'json', $context);
+        $dataArray['StatusCode'] = $data->statusCode;
+        if (array_key_exists('error', get_object_vars($data)) && null !== ($data->error ?? null)) {
+            $normalized         = $this->normalizer->normalize($data->error, 'json', $context);
+            $dataArray['Error'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
         }
 
         return $dataArray;

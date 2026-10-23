@@ -49,9 +49,11 @@ class TaskSpecContainerSpecConfigsItemNormalizer implements DenormalizerInterfac
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('File', $data) && null !== $data['File']) {
-            $object->setFile($this->denormalizer->denormalize($data['File'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecConfigsItemFile::class, 'json', $context));
-        } elseif (array_key_exists('File', $data) && null === $data['File']) {
-            $object->setFile(null);
+            $object->file = $this->denormalizer->denormalize($data['File'], \WebProject\DockerApi\Library\Generated\Model\TaskSpecContainerSpecConfigsItemFile::class, 'json', $context);
+            unset($data['File']);
+        } elseif (array_key_exists('File', $data)) {
+            $object->file = null;
+            unset($data['File']);
         }
         if (array_key_exists('Runtime', $data) && null !== $data['Runtime']) {
             $value = $data['Runtime'];
@@ -60,9 +62,11 @@ class TaskSpecContainerSpecConfigsItemNormalizer implements DenormalizerInterfac
             } elseif (isset($data['Runtime'])) {
                 $value = $data['Runtime'];
             }
-            $object->setRuntime($value);
-        } elseif (array_key_exists('Runtime', $data) && null === $data['Runtime']) {
-            $object->setRuntime(null);
+            $object->runtime = $value;
+            unset($data['Runtime']);
+        } elseif (array_key_exists('Runtime', $data)) {
+            $object->runtime = null;
+            unset($data['Runtime']);
         }
         if (array_key_exists('ConfigID', $data) && null !== $data['ConfigID']) {
             $value_1 = $data['ConfigID'];
@@ -71,9 +75,11 @@ class TaskSpecContainerSpecConfigsItemNormalizer implements DenormalizerInterfac
             } elseif (null === $data['ConfigID']) {
                 $value_1 = $data['ConfigID'];
             }
-            $object->setConfigID($value_1);
-        } elseif (array_key_exists('ConfigID', $data) && null === $data['ConfigID']) {
-            $object->setConfigID(null);
+            $object->configID = $value_1;
+            unset($data['ConfigID']);
+        } elseif (array_key_exists('ConfigID', $data)) {
+            $object->configID = null;
+            unset($data['ConfigID']);
         }
         if (array_key_exists('ConfigName', $data) && null !== $data['ConfigName']) {
             $value_2 = $data['ConfigName'];
@@ -82,9 +88,16 @@ class TaskSpecContainerSpecConfigsItemNormalizer implements DenormalizerInterfac
             } elseif (null === $data['ConfigName']) {
                 $value_2 = $data['ConfigName'];
             }
-            $object->setConfigName($value_2);
-        } elseif (array_key_exists('ConfigName', $data) && null === $data['ConfigName']) {
-            $object->setConfigName(null);
+            $object->configName = $value_2;
+            unset($data['ConfigName']);
+        } elseif (array_key_exists('ConfigName', $data)) {
+            $object->configName = null;
+            unset($data['ConfigName']);
+        }
+        foreach ($data as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_3;
+            }
         }
 
         return $object;
@@ -93,35 +106,41 @@ class TaskSpecContainerSpecConfigsItemNormalizer implements DenormalizerInterfac
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('file')) {
-            $dataArray['File'] = $this->normalizer->normalize($data->getFile(), 'json', $context);
+        if (array_key_exists('file', get_object_vars($data)) && null !== ($data->file ?? null)) {
+            $normalized        = $this->normalizer->normalize($data->file, 'json', $context);
+            $dataArray['File'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         }
-        if ($data->isInitialized('runtime')) {
-            $value = $data->getRuntime();
-            if (null === $data->getRuntime()) {
-                $value = $data->getRuntime();
-            } elseif (null !== $data->getRuntime()) {
-                $value = $data->getRuntime();
+        if (array_key_exists('runtime', get_object_vars($data)) && null !== ($data->runtime ?? null)) {
+            $value = $data->runtime;
+            if (null === $data->runtime) {
+                $value = $data->runtime;
+            } elseif (null !== $data->runtime) {
+                $value = $data->runtime;
             }
             $dataArray['Runtime'] = $value;
         }
-        if ($data->isInitialized('configID')) {
-            $value_1 = $data->getConfigID();
-            if (is_string($data->getConfigID())) {
-                $value_1 = $data->getConfigID();
-            } elseif (null === $data->getConfigID()) {
-                $value_1 = $data->getConfigID();
+        if (array_key_exists('configID', get_object_vars($data)) && null !== ($data->configID ?? null)) {
+            $value_1 = $data->configID;
+            if (is_string($data->configID)) {
+                $value_1 = $data->configID;
+            } elseif (null === $data->configID) {
+                $value_1 = $data->configID;
             }
             $dataArray['ConfigID'] = $value_1;
         }
-        if ($data->isInitialized('configName')) {
-            $value_2 = $data->getConfigName();
-            if (is_string($data->getConfigName())) {
-                $value_2 = $data->getConfigName();
-            } elseif (null === $data->getConfigName()) {
-                $value_2 = $data->getConfigName();
+        if (array_key_exists('configName', get_object_vars($data)) && null !== ($data->configName ?? null)) {
+            $value_2 = $data->configName;
+            if (is_string($data->configName)) {
+                $value_2 = $data->configName;
+            } elseif (null === $data->configName) {
+                $value_2 = $data->configName;
             }
             $dataArray['ConfigName'] = $value_2;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_3;
+            }
         }
 
         return $dataArray;

@@ -3,19 +3,12 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class Runtime
+class Runtime implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Name and, optional, path, of the OCI executable binary.
      *
@@ -24,13 +17,13 @@ class Runtime
      *
      * @var string|null
      */
-    protected $path;
+    public ?string $path;
     /**
      * List of command-line arguments to pass to the runtime when invoked.
      *
      * @var list<string>|null
      */
-    protected $runtimeArgs;
+    public ?array $runtimeArgs;
     /**
      * Information specific to the runtime.
      *
@@ -47,114 +40,12 @@ class Runtime
      * > formatting of values and labels, should not be considered stable,
      * > and may change without notice.
      *
-     * @var array<string, string>|null
+     * @var iterable<string, string>|null
      */
-    protected $status;
+    public ?iterable $status;
 
-    /**
-     * Name and, optional, path, of the OCI executable binary.
-     *
-     * If the path is omitted, the daemon searches the host's `$PATH` for the
-     * binary and uses the first result.
-     *
-     * @return string|null
-     */
-    public function getPath(): ?string
+    public function definedProperties(): array
     {
-        return $this->path;
-    }
-
-    /**
-     * Name and, optional, path, of the OCI executable binary.
-     *
-     * If the path is omitted, the daemon searches the host's `$PATH` for the
-     * binary and uses the first result.
-     *
-     * @param string|null $path
-     *
-     * @return self
-     */
-    public function setPath(?string $path): self
-    {
-        $this->initialized['path'] = true;
-        $this->path                = $path;
-
-        return $this;
-    }
-
-    /**
-     * List of command-line arguments to pass to the runtime when invoked.
-     *
-     * @return list<string>|null
-     */
-    public function getRuntimeArgs(): ?array
-    {
-        return $this->runtimeArgs;
-    }
-
-    /**
-     * List of command-line arguments to pass to the runtime when invoked.
-     *
-     * @param list<string>|null $runtimeArgs
-     *
-     * @return self
-     */
-    public function setRuntimeArgs(?array $runtimeArgs): self
-    {
-        $this->initialized['runtimeArgs'] = true;
-        $this->runtimeArgs                = $runtimeArgs;
-
-        return $this;
-    }
-
-    /**
-     * Information specific to the runtime.
-     *
-     * While this API specification does not define data provided by runtimes,
-     * the following well-known properties may be provided by runtimes:
-     *
-     * `org.opencontainers.runtime-spec.features`: features structure as defined
-     * in the [OCI Runtime Specification](https://github.com/opencontainers/runtime-spec/blob/main/features.md),
-     * in a JSON string representation.
-     *
-     * <p><br /></p>
-     *
-     * > **Note**: The information returned in this field, including the
-     * > formatting of values and labels, should not be considered stable,
-     * > and may change without notice.
-     *
-     * @return array<string, string>|null
-     */
-    public function getStatus(): ?iterable
-    {
-        return $this->status;
-    }
-
-    /**
-     * Information specific to the runtime.
-     *
-     * While this API specification does not define data provided by runtimes,
-     * the following well-known properties may be provided by runtimes:
-     *
-     * `org.opencontainers.runtime-spec.features`: features structure as defined
-     * in the [OCI Runtime Specification](https://github.com/opencontainers/runtime-spec/blob/main/features.md),
-     * in a JSON string representation.
-     *
-     * <p><br /></p>
-     *
-     * > **Note**: The information returned in this field, including the
-     * > formatting of values and labels, should not be considered stable,
-     * > and may change without notice.
-     *
-     * @param array<string, string>|null $status
-     *
-     * @return self
-     */
-    public function setStatus(?iterable $status): self
-    {
-        $this->initialized['status'] = true;
-        $this->status                = $status;
-
-        return $this;
+        return ['path' => 'path', 'runtimeArgs' => 'runtimeArgs', 'status' => 'status'];
     }
 }

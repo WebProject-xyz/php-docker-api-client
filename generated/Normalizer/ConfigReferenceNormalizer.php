@@ -55,9 +55,16 @@ class ConfigReferenceNormalizer implements DenormalizerInterface, NormalizerInte
             } elseif (null === $data['Network']) {
                 $value = $data['Network'];
             }
-            $object->setNetwork($value);
-        } elseif (array_key_exists('Network', $data) && null === $data['Network']) {
-            $object->setNetwork(null);
+            $object->network = $value;
+            unset($data['Network']);
+        } elseif (array_key_exists('Network', $data)) {
+            $object->network = null;
+            unset($data['Network']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -66,14 +73,19 @@ class ConfigReferenceNormalizer implements DenormalizerInterface, NormalizerInte
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('network')) {
-            $value = $data->getNetwork();
-            if (is_string($data->getNetwork())) {
-                $value = $data->getNetwork();
-            } elseif (null === $data->getNetwork()) {
-                $value = $data->getNetwork();
+        if (array_key_exists('network', get_object_vars($data)) && null !== ($data->network ?? null)) {
+            $value = $data->network;
+            if (is_string($data->network)) {
+                $value = $data->network;
+            } elseif (null === $data->network) {
+                $value = $data->network;
             }
             $dataArray['Network'] = $value;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

@@ -55,9 +55,11 @@ class NetworkSettingsNormalizer implements DenormalizerInterface, NormalizerInte
             } elseif (null === $data['SandboxID']) {
                 $value = $data['SandboxID'];
             }
-            $object->setSandboxID($value);
-        } elseif (array_key_exists('SandboxID', $data) && null === $data['SandboxID']) {
-            $object->setSandboxID(null);
+            $object->sandboxID = $value;
+            unset($data['SandboxID']);
+        } elseif (array_key_exists('SandboxID', $data)) {
+            $object->sandboxID = null;
+            unset($data['SandboxID']);
         }
         if (array_key_exists('SandboxKey', $data) && null !== $data['SandboxKey']) {
             $value_1 = $data['SandboxKey'];
@@ -66,41 +68,45 @@ class NetworkSettingsNormalizer implements DenormalizerInterface, NormalizerInte
             } elseif (null === $data['SandboxKey']) {
                 $value_1 = $data['SandboxKey'];
             }
-            $object->setSandboxKey($value_1);
-        } elseif (array_key_exists('SandboxKey', $data) && null === $data['SandboxKey']) {
-            $object->setSandboxKey(null);
+            $object->sandboxKey = $value_1;
+            unset($data['SandboxKey']);
+        } elseif (array_key_exists('SandboxKey', $data)) {
+            $object->sandboxKey = null;
+            unset($data['SandboxKey']);
         }
         if (array_key_exists('Ports', $data) && null !== $data['Ports']) {
             $value_2 = $data['Ports'];
             if (is_array($data['Ports']) && $this->isOnlyNumericKeys($data['Ports'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['Ports'] as $key => $value_3) {
-                    $value_4 = $value_3;
-                    if (is_array($value_3) && $this->isOnlyNumericKeys($value_3)) {
-                        $values_1 = [];
-                        foreach ($value_3 as $value_5) {
-                            $values_1[] = $this->denormalizer->denormalize($value_5, \WebProject\DockerApi\Library\Generated\Model\PortBinding::class, 'json', $context);
-                        }
-                        $value_4 = $values_1;
-                    } elseif (null === $value_3) {
-                        $value_4 = $value_3;
+                    $values_1 = [];
+                    foreach ($value_3 as $value_4) {
+                        $values_1[] = $this->denormalizer->denormalize($value_4, \WebProject\DockerApi\Library\Generated\Model\PortBinding::class, 'json', $context);
                     }
-                    $values[$key] = $value_4;
+                    $values[$key] = $values_1;
                 }
                 $value_2 = $values;
             } elseif (null === $data['Ports']) {
                 $value_2 = $data['Ports'];
             }
-            $object->setPorts($value_2);
-        } elseif (array_key_exists('Ports', $data) && null === $data['Ports']) {
-            $object->setPorts(null);
+            $object->ports = $value_2;
+            unset($data['Ports']);
+        } elseif (array_key_exists('Ports', $data)) {
+            $object->ports = null;
+            unset($data['Ports']);
         }
         if (array_key_exists('Networks', $data)) {
-            $values_2 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data['Networks'] as $key_1 => $value_6) {
-                $values_2[$key_1] = $this->denormalizer->denormalize($value_6, \WebProject\DockerApi\Library\Generated\Model\EndpointSettings::class, 'json', $context);
+            $values_2 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+            foreach ($data['Networks'] as $key_1 => $value_5) {
+                $values_2[$key_1] = $this->denormalizer->denormalize($value_5, \WebProject\DockerApi\Library\Generated\Model\EndpointSettings::class, 'json', $context);
             }
-            $object->setNetworks($values_2);
+            $object->networks = $values_2;
+            unset($data['Networks']);
+        }
+        foreach ($data as $key_2 => $value_6) {
+            if (preg_match('/.*/', (string) $key_2)) {
+                $object[$key_2] = $value_6;
+            }
         }
 
         return $object;
@@ -109,53 +115,54 @@ class NetworkSettingsNormalizer implements DenormalizerInterface, NormalizerInte
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('sandboxID')) {
-            $value = $data->getSandboxID();
-            if (is_string($data->getSandboxID())) {
-                $value = $data->getSandboxID();
-            } elseif (null === $data->getSandboxID()) {
-                $value = $data->getSandboxID();
+        if (array_key_exists('sandboxID', get_object_vars($data)) && null !== ($data->sandboxID ?? null)) {
+            $value = $data->sandboxID;
+            if (is_string($data->sandboxID)) {
+                $value = $data->sandboxID;
+            } elseif (null === $data->sandboxID) {
+                $value = $data->sandboxID;
             }
             $dataArray['SandboxID'] = $value;
         }
-        if ($data->isInitialized('sandboxKey')) {
-            $value_1 = $data->getSandboxKey();
-            if (is_string($data->getSandboxKey())) {
-                $value_1 = $data->getSandboxKey();
-            } elseif (null === $data->getSandboxKey()) {
-                $value_1 = $data->getSandboxKey();
+        if (array_key_exists('sandboxKey', get_object_vars($data)) && null !== ($data->sandboxKey ?? null)) {
+            $value_1 = $data->sandboxKey;
+            if (is_string($data->sandboxKey)) {
+                $value_1 = $data->sandboxKey;
+            } elseif (null === $data->sandboxKey) {
+                $value_1 = $data->sandboxKey;
             }
             $dataArray['SandboxKey'] = $value_1;
         }
-        if ($data->isInitialized('ports')) {
-            $value_2 = $data->getPorts();
-            if (is_object($data->getPorts())) {
-                $values = [];
-                foreach ($data->getPorts() as $key => $value_3) {
-                    $value_4 = $value_3;
-                    if (is_array($value_3)) {
-                        $values_1 = [];
-                        foreach ($value_3 as $value_5) {
-                            $values_1[] = $this->normalizer->normalize($value_5, 'json', $context);
-                        }
-                        $value_4 = $values_1;
-                    } elseif (null === $value_3) {
-                        $value_4 = $value_3;
+        if (array_key_exists('ports', get_object_vars($data)) && null !== ($data->ports ?? null)) {
+            $value_2 = $data->ports;
+            if (is_iterable($data->ports)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->ports as $key => $value_3) {
+                    $values_1 = [];
+                    foreach ($value_3 as $value_4) {
+                        $normalized = null === $value_4 ? null : $this->normalizer->normalize($value_4, 'json', $context);
+                        $values_1[] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
                     }
-                    $values[$key] = $value_4;
+                    $values[$key] = $values_1;
                 }
                 $value_2 = $values;
-            } elseif (null === $data->getPorts()) {
-                $value_2 = $data->getPorts();
+            } elseif (null === $data->ports) {
+                $value_2 = $data->ports;
             }
             $dataArray['Ports'] = $value_2;
         }
-        if ($data->isInitialized('networks') && null !== $data->getNetworks()) {
-            $values_2 = [];
-            foreach ($data->getNetworks() as $key_1 => $value_6) {
-                $values_2[$key_1] = $this->normalizer->normalize($value_6, 'json', $context);
+        if (array_key_exists('networks', get_object_vars($data)) && null !== ($data->networks ?? null)) {
+            $values_2 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+            foreach ($data->networks as $key_1 => $value_5) {
+                $normalized_1     = null === $value_5 ? null : $this->normalizer->normalize($value_5, 'json', $context);
+                $values_2[$key_1] = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
             }
             $dataArray['Networks'] = $values_2;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_2 => $value_6) {
+            if (preg_match('/.*/', (string) $key_2)) {
+                $dataArray[$key_2] = $value_6;
+            }
         }
 
         return $dataArray;

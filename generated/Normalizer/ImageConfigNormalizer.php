@@ -56,14 +56,16 @@ class ImageConfigNormalizer implements DenormalizerInterface, NormalizerInterfac
             } elseif (null === $data['User']) {
                 $value = $data['User'];
             }
-            $object->setUser($value);
-        } elseif (array_key_exists('User', $data) && null === $data['User']) {
-            $object->setUser(null);
+            $object->user = $value;
+            unset($data['User']);
+        } elseif (array_key_exists('User', $data)) {
+            $object->user = null;
+            unset($data['User']);
         }
         if (array_key_exists('ExposedPorts', $data) && null !== $data['ExposedPorts']) {
             $value_1 = $data['ExposedPorts'];
             if (is_array($data['ExposedPorts']) && $this->isOnlyNumericKeys($data['ExposedPorts'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['ExposedPorts'] as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
@@ -71,150 +73,148 @@ class ImageConfigNormalizer implements DenormalizerInterface, NormalizerInterfac
             } elseif (null === $data['ExposedPorts']) {
                 $value_1 = $data['ExposedPorts'];
             }
-            $object->setExposedPorts($value_1);
-        } elseif (array_key_exists('ExposedPorts', $data) && null === $data['ExposedPorts']) {
-            $object->setExposedPorts(null);
+            $object->exposedPorts = $value_1;
+            unset($data['ExposedPorts']);
+        } elseif (array_key_exists('ExposedPorts', $data)) {
+            $object->exposedPorts = null;
+            unset($data['ExposedPorts']);
         }
         if (array_key_exists('Env', $data) && null !== $data['Env']) {
-            $value_3 = $data['Env'];
-            if (is_array($data['Env']) && $this->isOnlyNumericKeys($data['Env'])) {
-                $values_1 = [];
-                foreach ($data['Env'] as $value_4) {
-                    $values_1[] = $value_4;
-                }
-                $value_3 = $values_1;
-            } elseif (null === $data['Env']) {
-                $value_3 = $data['Env'];
+            $values_1 = [];
+            foreach ($data['Env'] as $value_3) {
+                $values_1[] = $value_3;
             }
-            $object->setEnv($value_3);
-        } elseif (array_key_exists('Env', $data) && null === $data['Env']) {
-            $object->setEnv(null);
+            $object->env = $values_1;
+            unset($data['Env']);
+        } elseif (array_key_exists('Env', $data)) {
+            $object->env = null;
+            unset($data['Env']);
         }
         if (array_key_exists('Cmd', $data) && null !== $data['Cmd']) {
-            $value_5 = $data['Cmd'];
-            if (is_array($data['Cmd']) && $this->isOnlyNumericKeys($data['Cmd'])) {
-                $values_2 = [];
-                foreach ($data['Cmd'] as $value_6) {
-                    $values_2[] = $value_6;
-                }
-                $value_5 = $values_2;
-            } elseif (null === $data['Cmd']) {
-                $value_5 = $data['Cmd'];
+            $values_2 = [];
+            foreach ($data['Cmd'] as $value_4) {
+                $values_2[] = $value_4;
             }
-            $object->setCmd($value_5);
-        } elseif (array_key_exists('Cmd', $data) && null === $data['Cmd']) {
-            $object->setCmd(null);
+            $object->cmd = $values_2;
+            unset($data['Cmd']);
+        } elseif (array_key_exists('Cmd', $data)) {
+            $object->cmd = null;
+            unset($data['Cmd']);
         }
         if (array_key_exists('Healthcheck', $data)) {
-            $object->setHealthcheck($this->denormalizer->denormalize($data['Healthcheck'], \WebProject\DockerApi\Library\Generated\Model\HealthConfig::class, 'json', $context));
+            $object->healthcheck = $this->denormalizer->denormalize($data['Healthcheck'], \WebProject\DockerApi\Library\Generated\Model\HealthConfig::class, 'json', $context);
+            unset($data['Healthcheck']);
         }
         if (array_key_exists('ArgsEscaped', $data) && null !== $data['ArgsEscaped']) {
-            $value_7 = $data['ArgsEscaped'];
+            $value_5 = $data['ArgsEscaped'];
             if (is_bool($data['ArgsEscaped'])) {
-                $value_7 = $data['ArgsEscaped'];
+                $value_5 = $data['ArgsEscaped'];
             } elseif (null === $data['ArgsEscaped']) {
-                $value_7 = $data['ArgsEscaped'];
+                $value_5 = $data['ArgsEscaped'];
             }
-            $object->setArgsEscaped($value_7);
-        } elseif (array_key_exists('ArgsEscaped', $data) && null === $data['ArgsEscaped']) {
-            $object->setArgsEscaped(null);
+            $object->argsEscaped = $value_5;
+            unset($data['ArgsEscaped']);
+        } elseif (array_key_exists('ArgsEscaped', $data)) {
+            $object->argsEscaped = null;
+            unset($data['ArgsEscaped']);
         }
         if (array_key_exists('Volumes', $data) && null !== $data['Volumes']) {
-            $value_8 = $data['Volumes'];
+            $value_6 = $data['Volumes'];
             if (is_array($data['Volumes']) && $this->isOnlyNumericKeys($data['Volumes'])) {
-                $values_3 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-                foreach ($data['Volumes'] as $key_1 => $value_9) {
-                    $values_3[$key_1] = $value_9;
+                $values_3 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data['Volumes'] as $key_1 => $value_7) {
+                    $values_3[$key_1] = $value_7;
                 }
-                $value_8 = $values_3;
+                $value_6 = $values_3;
             } elseif (null === $data['Volumes']) {
-                $value_8 = $data['Volumes'];
+                $value_6 = $data['Volumes'];
             }
-            $object->setVolumes($value_8);
-        } elseif (array_key_exists('Volumes', $data) && null === $data['Volumes']) {
-            $object->setVolumes(null);
+            $object->volumes = $value_6;
+            unset($data['Volumes']);
+        } elseif (array_key_exists('Volumes', $data)) {
+            $object->volumes = null;
+            unset($data['Volumes']);
         }
         if (array_key_exists('WorkingDir', $data) && null !== $data['WorkingDir']) {
-            $value_10 = $data['WorkingDir'];
+            $value_8 = $data['WorkingDir'];
             if (is_string($data['WorkingDir'])) {
-                $value_10 = $data['WorkingDir'];
+                $value_8 = $data['WorkingDir'];
             } elseif (null === $data['WorkingDir']) {
-                $value_10 = $data['WorkingDir'];
+                $value_8 = $data['WorkingDir'];
             }
-            $object->setWorkingDir($value_10);
-        } elseif (array_key_exists('WorkingDir', $data) && null === $data['WorkingDir']) {
-            $object->setWorkingDir(null);
+            $object->workingDir = $value_8;
+            unset($data['WorkingDir']);
+        } elseif (array_key_exists('WorkingDir', $data)) {
+            $object->workingDir = null;
+            unset($data['WorkingDir']);
         }
         if (array_key_exists('Entrypoint', $data) && null !== $data['Entrypoint']) {
-            $value_11 = $data['Entrypoint'];
-            if (is_array($data['Entrypoint']) && $this->isOnlyNumericKeys($data['Entrypoint'])) {
-                $values_4 = [];
-                foreach ($data['Entrypoint'] as $value_12) {
-                    $values_4[] = $value_12;
-                }
-                $value_11 = $values_4;
-            } elseif (null === $data['Entrypoint']) {
-                $value_11 = $data['Entrypoint'];
+            $values_4 = [];
+            foreach ($data['Entrypoint'] as $value_9) {
+                $values_4[] = $value_9;
             }
-            $object->setEntrypoint($value_11);
-        } elseif (array_key_exists('Entrypoint', $data) && null === $data['Entrypoint']) {
-            $object->setEntrypoint(null);
+            $object->entrypoint = $values_4;
+            unset($data['Entrypoint']);
+        } elseif (array_key_exists('Entrypoint', $data)) {
+            $object->entrypoint = null;
+            unset($data['Entrypoint']);
         }
         if (array_key_exists('OnBuild', $data) && null !== $data['OnBuild']) {
-            $value_13 = $data['OnBuild'];
-            if (is_array($data['OnBuild']) && $this->isOnlyNumericKeys($data['OnBuild'])) {
-                $values_5 = [];
-                foreach ($data['OnBuild'] as $value_14) {
-                    $values_5[] = $value_14;
-                }
-                $value_13 = $values_5;
-            } elseif (null === $data['OnBuild']) {
-                $value_13 = $data['OnBuild'];
+            $values_5 = [];
+            foreach ($data['OnBuild'] as $value_10) {
+                $values_5[] = $value_10;
             }
-            $object->setOnBuild($value_13);
-        } elseif (array_key_exists('OnBuild', $data) && null === $data['OnBuild']) {
-            $object->setOnBuild(null);
+            $object->onBuild = $values_5;
+            unset($data['OnBuild']);
+        } elseif (array_key_exists('OnBuild', $data)) {
+            $object->onBuild = null;
+            unset($data['OnBuild']);
         }
         if (array_key_exists('Labels', $data) && null !== $data['Labels']) {
-            $value_15 = $data['Labels'];
+            $value_11 = $data['Labels'];
             if (is_array($data['Labels']) && $this->isOnlyNumericKeys($data['Labels'])) {
-                $values_6 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-                foreach ($data['Labels'] as $key_2 => $value_16) {
-                    $values_6[$key_2] = $value_16;
+                $values_6 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data['Labels'] as $key_2 => $value_12) {
+                    $values_6[$key_2] = $value_12;
                 }
-                $value_15 = $values_6;
+                $value_11 = $values_6;
             } elseif (null === $data['Labels']) {
-                $value_15 = $data['Labels'];
+                $value_11 = $data['Labels'];
             }
-            $object->setLabels($value_15);
-        } elseif (array_key_exists('Labels', $data) && null === $data['Labels']) {
-            $object->setLabels(null);
+            $object->labels = $value_11;
+            unset($data['Labels']);
+        } elseif (array_key_exists('Labels', $data)) {
+            $object->labels = null;
+            unset($data['Labels']);
         }
         if (array_key_exists('StopSignal', $data) && null !== $data['StopSignal']) {
-            $value_17 = $data['StopSignal'];
+            $value_13 = $data['StopSignal'];
             if (is_string($data['StopSignal'])) {
-                $value_17 = $data['StopSignal'];
+                $value_13 = $data['StopSignal'];
             } elseif (null === $data['StopSignal']) {
-                $value_17 = $data['StopSignal'];
+                $value_13 = $data['StopSignal'];
             }
-            $object->setStopSignal($value_17);
-        } elseif (array_key_exists('StopSignal', $data) && null === $data['StopSignal']) {
-            $object->setStopSignal(null);
+            $object->stopSignal = $value_13;
+            unset($data['StopSignal']);
+        } elseif (array_key_exists('StopSignal', $data)) {
+            $object->stopSignal = null;
+            unset($data['StopSignal']);
         }
         if (array_key_exists('Shell', $data) && null !== $data['Shell']) {
-            $value_18 = $data['Shell'];
-            if (is_array($data['Shell']) && $this->isOnlyNumericKeys($data['Shell'])) {
-                $values_7 = [];
-                foreach ($data['Shell'] as $value_19) {
-                    $values_7[] = $value_19;
-                }
-                $value_18 = $values_7;
-            } elseif (null === $data['Shell']) {
-                $value_18 = $data['Shell'];
+            $values_7 = [];
+            foreach ($data['Shell'] as $value_14) {
+                $values_7[] = $value_14;
             }
-            $object->setShell($value_18);
-        } elseif (array_key_exists('Shell', $data) && null === $data['Shell']) {
-            $object->setShell(null);
+            $object->shell = $values_7;
+            unset($data['Shell']);
+        } elseif (array_key_exists('Shell', $data)) {
+            $object->shell = null;
+            unset($data['Shell']);
+        }
+        foreach ($data as $key_3 => $value_15) {
+            if (preg_match('/.*/', (string) $key_3)) {
+                $object[$key_3] = $value_15;
+            }
         }
 
         return $object;
@@ -223,148 +223,124 @@ class ImageConfigNormalizer implements DenormalizerInterface, NormalizerInterfac
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('user')) {
-            $value = $data->getUser();
-            if (is_string($data->getUser())) {
-                $value = $data->getUser();
-            } elseif (null === $data->getUser()) {
-                $value = $data->getUser();
+        if (array_key_exists('user', get_object_vars($data)) && null !== ($data->user ?? null)) {
+            $value = $data->user;
+            if (is_string($data->user)) {
+                $value = $data->user;
+            } elseif (null === $data->user) {
+                $value = $data->user;
             }
             $dataArray['User'] = $value;
         }
-        if ($data->isInitialized('exposedPorts')) {
-            $value_1 = $data->getExposedPorts();
-            if (is_object($data->getExposedPorts())) {
-                $values = [];
-                foreach ($data->getExposedPorts() as $key => $value_2) {
+        if (array_key_exists('exposedPorts', get_object_vars($data)) && null !== ($data->exposedPorts ?? null)) {
+            $value_1 = $data->exposedPorts;
+            if (is_iterable($data->exposedPorts)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->exposedPorts as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
                 $value_1 = $values;
-            } elseif (null === $data->getExposedPorts()) {
-                $value_1 = $data->getExposedPorts();
+            } elseif (null === $data->exposedPorts) {
+                $value_1 = $data->exposedPorts;
             }
             $dataArray['ExposedPorts'] = $value_1;
         }
-        if ($data->isInitialized('env')) {
-            $value_3 = $data->getEnv();
-            if (is_array($data->getEnv())) {
-                $values_1 = [];
-                foreach ($data->getEnv() as $value_4) {
-                    $values_1[] = $value_4;
+        if (array_key_exists('env', get_object_vars($data)) && null !== ($data->env ?? null)) {
+            $values_1 = [];
+            foreach ($data->env as $value_3) {
+                $values_1[] = $value_3;
+            }
+            $dataArray['Env'] = $values_1;
+        }
+        if (array_key_exists('cmd', get_object_vars($data)) && null !== ($data->cmd ?? null)) {
+            $values_2 = [];
+            foreach ($data->cmd as $value_4) {
+                $values_2[] = $value_4;
+            }
+            $dataArray['Cmd'] = $values_2;
+        }
+        if (array_key_exists('healthcheck', get_object_vars($data)) && null !== ($data->healthcheck ?? null)) {
+            $normalized               = $this->normalizer->normalize($data->healthcheck, 'json', $context);
+            $dataArray['Healthcheck'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        }
+        if (array_key_exists('argsEscaped', get_object_vars($data)) && null !== ($data->argsEscaped ?? null)) {
+            $value_5 = $data->argsEscaped;
+            if (is_bool($data->argsEscaped)) {
+                $value_5 = $data->argsEscaped;
+            } elseif (null === $data->argsEscaped) {
+                $value_5 = $data->argsEscaped;
+            }
+            $dataArray['ArgsEscaped'] = $value_5;
+        }
+        if (array_key_exists('volumes', get_object_vars($data)) && null !== ($data->volumes ?? null)) {
+            $value_6 = $data->volumes;
+            if (is_iterable($data->volumes)) {
+                $values_3 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->volumes as $key_1 => $value_7) {
+                    $values_3[$key_1] = $value_7;
                 }
-                $value_3 = $values_1;
-            } elseif (null === $data->getEnv()) {
-                $value_3 = $data->getEnv();
+                $value_6 = $values_3;
+            } elseif (null === $data->volumes) {
+                $value_6 = $data->volumes;
             }
-            $dataArray['Env'] = $value_3;
+            $dataArray['Volumes'] = $value_6;
         }
-        if ($data->isInitialized('cmd')) {
-            $value_5 = $data->getCmd();
-            if (is_array($data->getCmd())) {
-                $values_2 = [];
-                foreach ($data->getCmd() as $value_6) {
-                    $values_2[] = $value_6;
+        if (array_key_exists('workingDir', get_object_vars($data)) && null !== ($data->workingDir ?? null)) {
+            $value_8 = $data->workingDir;
+            if (is_string($data->workingDir)) {
+                $value_8 = $data->workingDir;
+            } elseif (null === $data->workingDir) {
+                $value_8 = $data->workingDir;
+            }
+            $dataArray['WorkingDir'] = $value_8;
+        }
+        if (array_key_exists('entrypoint', get_object_vars($data)) && null !== ($data->entrypoint ?? null)) {
+            $values_4 = [];
+            foreach ($data->entrypoint as $value_9) {
+                $values_4[] = $value_9;
+            }
+            $dataArray['Entrypoint'] = $values_4;
+        }
+        if (array_key_exists('onBuild', get_object_vars($data)) && null !== ($data->onBuild ?? null)) {
+            $values_5 = [];
+            foreach ($data->onBuild as $value_10) {
+                $values_5[] = $value_10;
+            }
+            $dataArray['OnBuild'] = $values_5;
+        }
+        if (array_key_exists('labels', get_object_vars($data)) && null !== ($data->labels ?? null)) {
+            $value_11 = $data->labels;
+            if (is_iterable($data->labels)) {
+                $values_6 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->labels as $key_2 => $value_12) {
+                    $values_6[$key_2] = $value_12;
                 }
-                $value_5 = $values_2;
-            } elseif (null === $data->getCmd()) {
-                $value_5 = $data->getCmd();
+                $value_11 = $values_6;
+            } elseif (null === $data->labels) {
+                $value_11 = $data->labels;
             }
-            $dataArray['Cmd'] = $value_5;
+            $dataArray['Labels'] = $value_11;
         }
-        if ($data->isInitialized('healthcheck') && null !== $data->getHealthcheck()) {
-            $dataArray['Healthcheck'] = $this->normalizer->normalize($data->getHealthcheck(), 'json', $context);
-        }
-        if ($data->isInitialized('argsEscaped')) {
-            $value_7 = $data->getArgsEscaped();
-            if (is_bool($data->getArgsEscaped())) {
-                $value_7 = $data->getArgsEscaped();
-            } elseif (null === $data->getArgsEscaped()) {
-                $value_7 = $data->getArgsEscaped();
+        if (array_key_exists('stopSignal', get_object_vars($data)) && null !== ($data->stopSignal ?? null)) {
+            $value_13 = $data->stopSignal;
+            if (is_string($data->stopSignal)) {
+                $value_13 = $data->stopSignal;
+            } elseif (null === $data->stopSignal) {
+                $value_13 = $data->stopSignal;
             }
-            $dataArray['ArgsEscaped'] = $value_7;
+            $dataArray['StopSignal'] = $value_13;
         }
-        if ($data->isInitialized('volumes')) {
-            $value_8 = $data->getVolumes();
-            if (is_object($data->getVolumes())) {
-                $values_3 = [];
-                foreach ($data->getVolumes() as $key_1 => $value_9) {
-                    $values_3[$key_1] = $value_9;
-                }
-                $value_8 = $values_3;
-            } elseif (null === $data->getVolumes()) {
-                $value_8 = $data->getVolumes();
+        if (array_key_exists('shell', get_object_vars($data)) && null !== ($data->shell ?? null)) {
+            $values_7 = [];
+            foreach ($data->shell as $value_14) {
+                $values_7[] = $value_14;
             }
-            $dataArray['Volumes'] = $value_8;
+            $dataArray['Shell'] = $values_7;
         }
-        if ($data->isInitialized('workingDir')) {
-            $value_10 = $data->getWorkingDir();
-            if (is_string($data->getWorkingDir())) {
-                $value_10 = $data->getWorkingDir();
-            } elseif (null === $data->getWorkingDir()) {
-                $value_10 = $data->getWorkingDir();
+        foreach ($data->additionalPropertyEntries() as $key_3 => $value_15) {
+            if (preg_match('/.*/', (string) $key_3)) {
+                $dataArray[$key_3] = $value_15;
             }
-            $dataArray['WorkingDir'] = $value_10;
-        }
-        if ($data->isInitialized('entrypoint')) {
-            $value_11 = $data->getEntrypoint();
-            if (is_array($data->getEntrypoint())) {
-                $values_4 = [];
-                foreach ($data->getEntrypoint() as $value_12) {
-                    $values_4[] = $value_12;
-                }
-                $value_11 = $values_4;
-            } elseif (null === $data->getEntrypoint()) {
-                $value_11 = $data->getEntrypoint();
-            }
-            $dataArray['Entrypoint'] = $value_11;
-        }
-        if ($data->isInitialized('onBuild')) {
-            $value_13 = $data->getOnBuild();
-            if (is_array($data->getOnBuild())) {
-                $values_5 = [];
-                foreach ($data->getOnBuild() as $value_14) {
-                    $values_5[] = $value_14;
-                }
-                $value_13 = $values_5;
-            } elseif (null === $data->getOnBuild()) {
-                $value_13 = $data->getOnBuild();
-            }
-            $dataArray['OnBuild'] = $value_13;
-        }
-        if ($data->isInitialized('labels')) {
-            $value_15 = $data->getLabels();
-            if (is_object($data->getLabels())) {
-                $values_6 = [];
-                foreach ($data->getLabels() as $key_2 => $value_16) {
-                    $values_6[$key_2] = $value_16;
-                }
-                $value_15 = $values_6;
-            } elseif (null === $data->getLabels()) {
-                $value_15 = $data->getLabels();
-            }
-            $dataArray['Labels'] = $value_15;
-        }
-        if ($data->isInitialized('stopSignal')) {
-            $value_17 = $data->getStopSignal();
-            if (is_string($data->getStopSignal())) {
-                $value_17 = $data->getStopSignal();
-            } elseif (null === $data->getStopSignal()) {
-                $value_17 = $data->getStopSignal();
-            }
-            $dataArray['StopSignal'] = $value_17;
-        }
-        if ($data->isInitialized('shell')) {
-            $value_18 = $data->getShell();
-            if (is_array($data->getShell())) {
-                $values_7 = [];
-                foreach ($data->getShell() as $value_19) {
-                    $values_7[] = $value_19;
-                }
-                $value_18 = $values_7;
-            } elseif (null === $data->getShell()) {
-                $value_18 = $data->getShell();
-            }
-            $dataArray['Shell'] = $value_18;
         }
 
         return $dataArray;

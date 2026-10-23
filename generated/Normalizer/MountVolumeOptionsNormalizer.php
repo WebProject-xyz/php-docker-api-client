@@ -56,14 +56,16 @@ class MountVolumeOptionsNormalizer implements DenormalizerInterface, NormalizerI
             } elseif (null === $data['NoCopy']) {
                 $value = $data['NoCopy'];
             }
-            $object->setNoCopy($value);
-        } elseif (array_key_exists('NoCopy', $data) && null === $data['NoCopy']) {
-            $object->setNoCopy(null);
+            $object->noCopy = $value;
+            unset($data['NoCopy']);
+        } elseif (array_key_exists('NoCopy', $data)) {
+            $object->noCopy = null;
+            unset($data['NoCopy']);
         }
         if (array_key_exists('Labels', $data) && null !== $data['Labels']) {
             $value_1 = $data['Labels'];
             if (is_array($data['Labels']) && $this->isOnlyNumericKeys($data['Labels'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['Labels'] as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
@@ -71,14 +73,18 @@ class MountVolumeOptionsNormalizer implements DenormalizerInterface, NormalizerI
             } elseif (null === $data['Labels']) {
                 $value_1 = $data['Labels'];
             }
-            $object->setLabels($value_1);
-        } elseif (array_key_exists('Labels', $data) && null === $data['Labels']) {
-            $object->setLabels(null);
+            $object->labels = $value_1;
+            unset($data['Labels']);
+        } elseif (array_key_exists('Labels', $data)) {
+            $object->labels = null;
+            unset($data['Labels']);
         }
         if (array_key_exists('DriverConfig', $data) && null !== $data['DriverConfig']) {
-            $object->setDriverConfig($this->denormalizer->denormalize($data['DriverConfig'], \WebProject\DockerApi\Library\Generated\Model\MountVolumeOptionsDriverConfig::class, 'json', $context));
-        } elseif (array_key_exists('DriverConfig', $data) && null === $data['DriverConfig']) {
-            $object->setDriverConfig(null);
+            $object->driverConfig = $this->denormalizer->denormalize($data['DriverConfig'], \WebProject\DockerApi\Library\Generated\Model\MountVolumeOptionsDriverConfig::class, 'json', $context);
+            unset($data['DriverConfig']);
+        } elseif (array_key_exists('DriverConfig', $data)) {
+            $object->driverConfig = null;
+            unset($data['DriverConfig']);
         }
         if (array_key_exists('Subpath', $data) && null !== $data['Subpath']) {
             $value_3 = $data['Subpath'];
@@ -87,9 +93,16 @@ class MountVolumeOptionsNormalizer implements DenormalizerInterface, NormalizerI
             } elseif (null === $data['Subpath']) {
                 $value_3 = $data['Subpath'];
             }
-            $object->setSubpath($value_3);
-        } elseif (array_key_exists('Subpath', $data) && null === $data['Subpath']) {
-            $object->setSubpath(null);
+            $object->subpath = $value_3;
+            unset($data['Subpath']);
+        } elseif (array_key_exists('Subpath', $data)) {
+            $object->subpath = null;
+            unset($data['Subpath']);
+        }
+        foreach ($data as $key_1 => $value_4) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_4;
+            }
         }
 
         return $object;
@@ -98,39 +111,45 @@ class MountVolumeOptionsNormalizer implements DenormalizerInterface, NormalizerI
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('noCopy')) {
-            $value = $data->getNoCopy();
-            if (is_bool($data->getNoCopy())) {
-                $value = $data->getNoCopy();
-            } elseif (null === $data->getNoCopy()) {
-                $value = $data->getNoCopy();
+        if (array_key_exists('noCopy', get_object_vars($data)) && null !== ($data->noCopy ?? null)) {
+            $value = $data->noCopy;
+            if (is_bool($data->noCopy)) {
+                $value = $data->noCopy;
+            } elseif (null === $data->noCopy) {
+                $value = $data->noCopy;
             }
             $dataArray['NoCopy'] = $value;
         }
-        if ($data->isInitialized('labels')) {
-            $value_1 = $data->getLabels();
-            if (is_object($data->getLabels())) {
-                $values = [];
-                foreach ($data->getLabels() as $key => $value_2) {
+        if (array_key_exists('labels', get_object_vars($data)) && null !== ($data->labels ?? null)) {
+            $value_1 = $data->labels;
+            if (is_iterable($data->labels)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->labels as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
                 $value_1 = $values;
-            } elseif (null === $data->getLabels()) {
-                $value_1 = $data->getLabels();
+            } elseif (null === $data->labels) {
+                $value_1 = $data->labels;
             }
             $dataArray['Labels'] = $value_1;
         }
-        if ($data->isInitialized('driverConfig')) {
-            $dataArray['DriverConfig'] = $this->normalizer->normalize($data->getDriverConfig(), 'json', $context);
+        if (array_key_exists('driverConfig', get_object_vars($data)) && null !== ($data->driverConfig ?? null)) {
+            $normalized                = $this->normalizer->normalize($data->driverConfig, 'json', $context);
+            $dataArray['DriverConfig'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         }
-        if ($data->isInitialized('subpath')) {
-            $value_3 = $data->getSubpath();
-            if (is_string($data->getSubpath())) {
-                $value_3 = $data->getSubpath();
-            } elseif (null === $data->getSubpath()) {
-                $value_3 = $data->getSubpath();
+        if (array_key_exists('subpath', get_object_vars($data)) && null !== ($data->subpath ?? null)) {
+            $value_3 = $data->subpath;
+            if (is_string($data->subpath)) {
+                $value_3 = $data->subpath;
+            } elseif (null === $data->subpath) {
+                $value_3 = $data->subpath;
             }
             $dataArray['Subpath'] = $value_3;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_4) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_4;
+            }
         }
 
         return $dataArray;

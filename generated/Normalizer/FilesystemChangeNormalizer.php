@@ -48,10 +48,17 @@ class FilesystemChangeNormalizer implements DenormalizerInterface, NormalizerInt
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Path', $data)) {
-            $object->setPath($data['Path']);
+            $object->path = $data['Path'];
+            unset($data['Path']);
         }
         if (array_key_exists('Kind', $data)) {
-            $object->setKind($data['Kind']);
+            $object->kind = \WebProject\DockerApi\Library\Generated\Model\ChangeType::from($data['Kind']);
+            unset($data['Kind']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -60,8 +67,13 @@ class FilesystemChangeNormalizer implements DenormalizerInterface, NormalizerInt
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray         = [];
-        $dataArray['Path'] = $data->getPath();
-        $dataArray['Kind'] = $data->getKind();
+        $dataArray['Path'] = $data->path;
+        $dataArray['Kind'] = $data->kind->value;
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
+        }
 
         return $dataArray;
     }

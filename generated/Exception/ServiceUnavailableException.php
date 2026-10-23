@@ -5,7 +5,7 @@ namespace WebProject\DockerApi\Library\Generated\Exception;
 
 use RuntimeException;
 
-class ServiceUnavailableException extends RuntimeException implements ServerException
+abstract class ServiceUnavailableException extends RuntimeException implements ServerException, WithResponseInterface
 {
     public function __construct(string $message)
     {

@@ -48,11 +48,17 @@ class IPAMStatusNormalizer implements DenormalizerInterface, NormalizerInterface
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Subnets', $data)) {
-            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+            $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
             foreach ($data['Subnets'] as $key => $value) {
                 $values[$key] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\SubnetStatus::class, 'json', $context);
             }
-            $object->setSubnets($values);
+            $object->subnets = $values;
+            unset($data['Subnets']);
+        }
+        foreach ($data as $key_1 => $value_1) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_1;
+            }
         }
 
         return $object;
@@ -61,12 +67,18 @@ class IPAMStatusNormalizer implements DenormalizerInterface, NormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('subnets') && null !== $data->getSubnets()) {
-            $values = [];
-            foreach ($data->getSubnets() as $key => $value) {
-                $values[$key] = $this->normalizer->normalize($value, 'json', $context);
+        if (array_key_exists('subnets', get_object_vars($data)) && null !== ($data->subnets ?? null)) {
+            $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+            foreach ($data->subnets as $key => $value) {
+                $normalized   = null === $value ? null : $this->normalizer->normalize($value, 'json', $context);
+                $values[$key] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
             }
             $dataArray['Subnets'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_1) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_1;
+            }
         }
 
         return $dataArray;

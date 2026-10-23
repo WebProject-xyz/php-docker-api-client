@@ -55,9 +55,11 @@ class ContainerStorageStatsNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['read_count_normalized']) {
                 $value = $data['read_count_normalized'];
             }
-            $object->setReadCountNormalized($value);
-        } elseif (array_key_exists('read_count_normalized', $data) && null === $data['read_count_normalized']) {
-            $object->setReadCountNormalized(null);
+            $object->readCountNormalized = $value;
+            unset($data['read_count_normalized']);
+        } elseif (array_key_exists('read_count_normalized', $data)) {
+            $object->readCountNormalized = null;
+            unset($data['read_count_normalized']);
         }
         if (array_key_exists('read_size_bytes', $data) && null !== $data['read_size_bytes']) {
             $value_1 = $data['read_size_bytes'];
@@ -66,9 +68,11 @@ class ContainerStorageStatsNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['read_size_bytes']) {
                 $value_1 = $data['read_size_bytes'];
             }
-            $object->setReadSizeBytes($value_1);
-        } elseif (array_key_exists('read_size_bytes', $data) && null === $data['read_size_bytes']) {
-            $object->setReadSizeBytes(null);
+            $object->readSizeBytes = $value_1;
+            unset($data['read_size_bytes']);
+        } elseif (array_key_exists('read_size_bytes', $data)) {
+            $object->readSizeBytes = null;
+            unset($data['read_size_bytes']);
         }
         if (array_key_exists('write_count_normalized', $data) && null !== $data['write_count_normalized']) {
             $value_2 = $data['write_count_normalized'];
@@ -77,9 +81,11 @@ class ContainerStorageStatsNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['write_count_normalized']) {
                 $value_2 = $data['write_count_normalized'];
             }
-            $object->setWriteCountNormalized($value_2);
-        } elseif (array_key_exists('write_count_normalized', $data) && null === $data['write_count_normalized']) {
-            $object->setWriteCountNormalized(null);
+            $object->writeCountNormalized = $value_2;
+            unset($data['write_count_normalized']);
+        } elseif (array_key_exists('write_count_normalized', $data)) {
+            $object->writeCountNormalized = null;
+            unset($data['write_count_normalized']);
         }
         if (array_key_exists('write_size_bytes', $data) && null !== $data['write_size_bytes']) {
             $value_3 = $data['write_size_bytes'];
@@ -88,9 +94,16 @@ class ContainerStorageStatsNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['write_size_bytes']) {
                 $value_3 = $data['write_size_bytes'];
             }
-            $object->setWriteSizeBytes($value_3);
-        } elseif (array_key_exists('write_size_bytes', $data) && null === $data['write_size_bytes']) {
-            $object->setWriteSizeBytes(null);
+            $object->writeSizeBytes = $value_3;
+            unset($data['write_size_bytes']);
+        } elseif (array_key_exists('write_size_bytes', $data)) {
+            $object->writeSizeBytes = null;
+            unset($data['write_size_bytes']);
+        }
+        foreach ($data as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_4;
+            }
         }
 
         return $object;
@@ -99,41 +112,46 @@ class ContainerStorageStatsNormalizer implements DenormalizerInterface, Normaliz
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('readCountNormalized')) {
-            $value = $data->getReadCountNormalized();
-            if (is_int($data->getReadCountNormalized())) {
-                $value = $data->getReadCountNormalized();
-            } elseif (null === $data->getReadCountNormalized()) {
-                $value = $data->getReadCountNormalized();
+        if (array_key_exists('readCountNormalized', get_object_vars($data)) && null !== ($data->readCountNormalized ?? null)) {
+            $value = $data->readCountNormalized;
+            if (is_int($data->readCountNormalized)) {
+                $value = $data->readCountNormalized;
+            } elseif (null === $data->readCountNormalized) {
+                $value = $data->readCountNormalized;
             }
             $dataArray['read_count_normalized'] = $value;
         }
-        if ($data->isInitialized('readSizeBytes')) {
-            $value_1 = $data->getReadSizeBytes();
-            if (is_int($data->getReadSizeBytes())) {
-                $value_1 = $data->getReadSizeBytes();
-            } elseif (null === $data->getReadSizeBytes()) {
-                $value_1 = $data->getReadSizeBytes();
+        if (array_key_exists('readSizeBytes', get_object_vars($data)) && null !== ($data->readSizeBytes ?? null)) {
+            $value_1 = $data->readSizeBytes;
+            if (is_int($data->readSizeBytes)) {
+                $value_1 = $data->readSizeBytes;
+            } elseif (null === $data->readSizeBytes) {
+                $value_1 = $data->readSizeBytes;
             }
             $dataArray['read_size_bytes'] = $value_1;
         }
-        if ($data->isInitialized('writeCountNormalized')) {
-            $value_2 = $data->getWriteCountNormalized();
-            if (is_int($data->getWriteCountNormalized())) {
-                $value_2 = $data->getWriteCountNormalized();
-            } elseif (null === $data->getWriteCountNormalized()) {
-                $value_2 = $data->getWriteCountNormalized();
+        if (array_key_exists('writeCountNormalized', get_object_vars($data)) && null !== ($data->writeCountNormalized ?? null)) {
+            $value_2 = $data->writeCountNormalized;
+            if (is_int($data->writeCountNormalized)) {
+                $value_2 = $data->writeCountNormalized;
+            } elseif (null === $data->writeCountNormalized) {
+                $value_2 = $data->writeCountNormalized;
             }
             $dataArray['write_count_normalized'] = $value_2;
         }
-        if ($data->isInitialized('writeSizeBytes')) {
-            $value_3 = $data->getWriteSizeBytes();
-            if (is_int($data->getWriteSizeBytes())) {
-                $value_3 = $data->getWriteSizeBytes();
-            } elseif (null === $data->getWriteSizeBytes()) {
-                $value_3 = $data->getWriteSizeBytes();
+        if (array_key_exists('writeSizeBytes', get_object_vars($data)) && null !== ($data->writeSizeBytes ?? null)) {
+            $value_3 = $data->writeSizeBytes;
+            if (is_int($data->writeSizeBytes)) {
+                $value_3 = $data->writeSizeBytes;
+            } elseif (null === $data->writeSizeBytes) {
+                $value_3 = $data->writeSizeBytes;
             }
             $dataArray['write_size_bytes'] = $value_3;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_4;
+            }
         }
 
         return $dataArray;

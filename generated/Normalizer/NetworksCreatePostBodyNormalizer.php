@@ -67,51 +67,69 @@ class NetworksCreatePostBodyNormalizer implements DenormalizerInterface, Normali
             $data['EnableIPv6'] = (bool) $data['EnableIPv6'];
         }
         if (array_key_exists('Name', $data)) {
-            $object->setName($data['Name']);
+            $object->name = $data['Name'];
+            unset($data['Name']);
         }
         if (array_key_exists('Driver', $data)) {
-            $object->setDriver($data['Driver']);
+            $object->driver = $data['Driver'];
+            unset($data['Driver']);
         }
         if (array_key_exists('Scope', $data)) {
-            $object->setScope($data['Scope']);
+            $object->scope = $data['Scope'];
+            unset($data['Scope']);
         }
         if (array_key_exists('Internal', $data)) {
-            $object->setInternal($data['Internal']);
+            $object->internal = $data['Internal'];
+            unset($data['Internal']);
         }
         if (array_key_exists('Attachable', $data)) {
-            $object->setAttachable($data['Attachable']);
+            $object->attachable = $data['Attachable'];
+            unset($data['Attachable']);
         }
         if (array_key_exists('Ingress', $data)) {
-            $object->setIngress($data['Ingress']);
+            $object->ingress = $data['Ingress'];
+            unset($data['Ingress']);
         }
         if (array_key_exists('ConfigOnly', $data)) {
-            $object->setConfigOnly($data['ConfigOnly']);
+            $object->configOnly = $data['ConfigOnly'];
+            unset($data['ConfigOnly']);
         }
         if (array_key_exists('ConfigFrom', $data)) {
-            $object->setConfigFrom($this->denormalizer->denormalize($data['ConfigFrom'], \WebProject\DockerApi\Library\Generated\Model\ConfigReference::class, 'json', $context));
+            $object->configFrom = $this->denormalizer->denormalize($data['ConfigFrom'], \WebProject\DockerApi\Library\Generated\Model\ConfigReference::class, 'json', $context);
+            unset($data['ConfigFrom']);
         }
         if (array_key_exists('IPAM', $data)) {
-            $object->setIPAM($this->denormalizer->denormalize($data['IPAM'], \WebProject\DockerApi\Library\Generated\Model\IPAM::class, 'json', $context));
+            $object->iPAM = $this->denormalizer->denormalize($data['IPAM'], \WebProject\DockerApi\Library\Generated\Model\IPAM::class, 'json', $context);
+            unset($data['IPAM']);
         }
         if (array_key_exists('EnableIPv4', $data)) {
-            $object->setEnableIPv4($data['EnableIPv4']);
+            $object->enableIPv4 = $data['EnableIPv4'];
+            unset($data['EnableIPv4']);
         }
         if (array_key_exists('EnableIPv6', $data)) {
-            $object->setEnableIPv6($data['EnableIPv6']);
+            $object->enableIPv6 = $data['EnableIPv6'];
+            unset($data['EnableIPv6']);
         }
         if (array_key_exists('Options', $data)) {
-            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+            $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
             foreach ($data['Options'] as $key => $value) {
                 $values[$key] = $value;
             }
-            $object->setOptions($values);
+            $object->options = $values;
+            unset($data['Options']);
         }
         if (array_key_exists('Labels', $data)) {
-            $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+            $values_1 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
             foreach ($data['Labels'] as $key_1 => $value_1) {
                 $values_1[$key_1] = $value_1;
             }
-            $object->setLabels($values_1);
+            $object->labels = $values_1;
+            unset($data['Labels']);
+        }
+        foreach ($data as $key_2 => $value_2) {
+            if (preg_match('/.*/', (string) $key_2)) {
+                $object[$key_2] = $value_2;
+            }
         }
 
         return $object;
@@ -120,50 +138,57 @@ class NetworksCreatePostBodyNormalizer implements DenormalizerInterface, Normali
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray         = [];
-        $dataArray['Name'] = $data->getName();
-        if ($data->isInitialized('driver') && null !== $data->getDriver()) {
-            $dataArray['Driver'] = $data->getDriver();
+        $dataArray['Name'] = $data->name;
+        if (array_key_exists('driver', get_object_vars($data)) && null !== ($data->driver ?? null)) {
+            $dataArray['Driver'] = $data->driver;
         }
-        if ($data->isInitialized('scope') && null !== $data->getScope()) {
-            $dataArray['Scope'] = $data->getScope();
+        if (array_key_exists('scope', get_object_vars($data)) && null !== ($data->scope ?? null)) {
+            $dataArray['Scope'] = $data->scope;
         }
-        if ($data->isInitialized('internal') && null !== $data->getInternal()) {
-            $dataArray['Internal'] = $data->getInternal();
+        if (array_key_exists('internal', get_object_vars($data)) && null !== ($data->internal ?? null)) {
+            $dataArray['Internal'] = $data->internal;
         }
-        if ($data->isInitialized('attachable') && null !== $data->getAttachable()) {
-            $dataArray['Attachable'] = $data->getAttachable();
+        if (array_key_exists('attachable', get_object_vars($data)) && null !== ($data->attachable ?? null)) {
+            $dataArray['Attachable'] = $data->attachable;
         }
-        if ($data->isInitialized('ingress') && null !== $data->getIngress()) {
-            $dataArray['Ingress'] = $data->getIngress();
+        if (array_key_exists('ingress', get_object_vars($data)) && null !== ($data->ingress ?? null)) {
+            $dataArray['Ingress'] = $data->ingress;
         }
-        if ($data->isInitialized('configOnly') && null !== $data->getConfigOnly()) {
-            $dataArray['ConfigOnly'] = $data->getConfigOnly();
+        if (array_key_exists('configOnly', get_object_vars($data)) && null !== ($data->configOnly ?? null)) {
+            $dataArray['ConfigOnly'] = $data->configOnly;
         }
-        if ($data->isInitialized('configFrom') && null !== $data->getConfigFrom()) {
-            $dataArray['ConfigFrom'] = $this->normalizer->normalize($data->getConfigFrom(), 'json', $context);
+        if (array_key_exists('configFrom', get_object_vars($data)) && null !== ($data->configFrom ?? null)) {
+            $normalized              = $this->normalizer->normalize($data->configFrom, 'json', $context);
+            $dataArray['ConfigFrom'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         }
-        if ($data->isInitialized('iPAM') && null !== $data->getIPAM()) {
-            $dataArray['IPAM'] = $this->normalizer->normalize($data->getIPAM(), 'json', $context);
+        if (array_key_exists('iPAM', get_object_vars($data)) && null !== ($data->iPAM ?? null)) {
+            $normalized_1      = $this->normalizer->normalize($data->iPAM, 'json', $context);
+            $dataArray['IPAM'] = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
         }
-        if ($data->isInitialized('enableIPv4') && null !== $data->getEnableIPv4()) {
-            $dataArray['EnableIPv4'] = $data->getEnableIPv4();
+        if (array_key_exists('enableIPv4', get_object_vars($data)) && null !== ($data->enableIPv4 ?? null)) {
+            $dataArray['EnableIPv4'] = $data->enableIPv4;
         }
-        if ($data->isInitialized('enableIPv6') && null !== $data->getEnableIPv6()) {
-            $dataArray['EnableIPv6'] = $data->getEnableIPv6();
+        if (array_key_exists('enableIPv6', get_object_vars($data)) && null !== ($data->enableIPv6 ?? null)) {
+            $dataArray['EnableIPv6'] = $data->enableIPv6;
         }
-        if ($data->isInitialized('options') && null !== $data->getOptions()) {
-            $values = [];
-            foreach ($data->getOptions() as $key => $value) {
+        if (array_key_exists('options', get_object_vars($data)) && null !== ($data->options ?? null)) {
+            $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+            foreach ($data->options as $key => $value) {
                 $values[$key] = $value;
             }
             $dataArray['Options'] = $values;
         }
-        if ($data->isInitialized('labels') && null !== $data->getLabels()) {
-            $values_1 = [];
-            foreach ($data->getLabels() as $key_1 => $value_1) {
+        if (array_key_exists('labels', get_object_vars($data)) && null !== ($data->labels ?? null)) {
+            $values_1 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+            foreach ($data->labels as $key_1 => $value_1) {
                 $values_1[$key_1] = $value_1;
             }
             $dataArray['Labels'] = $values_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_2 => $value_2) {
+            if (preg_match('/.*/', (string) $key_2)) {
+                $dataArray[$key_2] = $value_2;
+            }
         }
 
         return $dataArray;

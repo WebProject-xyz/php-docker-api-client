@@ -3,67 +3,23 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ProgressDetail
+class ProgressDetail implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var int|null
      */
-    protected $current;
+    public ?int $current;
     /**
      * @var int|null
      */
-    protected $total;
+    public ?int $total;
 
-    /**
-     * @return int|null
-     */
-    public function getCurrent(): ?int
+    public function definedProperties(): array
     {
-        return $this->current;
-    }
-
-    /**
-     * @param int|null $current
-     *
-     * @return self
-     */
-    public function setCurrent(?int $current): self
-    {
-        $this->initialized['current'] = true;
-        $this->current                = $current;
-
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getTotal(): ?int
-    {
-        return $this->total;
-    }
-
-    /**
-     * @param int|null $total
-     *
-     * @return self
-     */
-    public function setTotal(?int $total): self
-    {
-        $this->initialized['total'] = true;
-        $this->total                = $total;
-
-        return $this;
+        return ['current' => 'current', 'total' => 'total'];
     }
 }

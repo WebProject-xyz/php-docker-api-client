@@ -55,9 +55,16 @@ class MountImageOptionsNormalizer implements DenormalizerInterface, NormalizerIn
             } elseif (null === $data['Subpath']) {
                 $value = $data['Subpath'];
             }
-            $object->setSubpath($value);
-        } elseif (array_key_exists('Subpath', $data) && null === $data['Subpath']) {
-            $object->setSubpath(null);
+            $object->subpath = $value;
+            unset($data['Subpath']);
+        } elseif (array_key_exists('Subpath', $data)) {
+            $object->subpath = null;
+            unset($data['Subpath']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -66,14 +73,19 @@ class MountImageOptionsNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('subpath')) {
-            $value = $data->getSubpath();
-            if (is_string($data->getSubpath())) {
-                $value = $data->getSubpath();
-            } elseif (null === $data->getSubpath()) {
-                $value = $data->getSubpath();
+        if (array_key_exists('subpath', get_object_vars($data)) && null !== ($data->subpath ?? null)) {
+            $value = $data->subpath;
+            if (is_string($data->subpath)) {
+                $value = $data->subpath;
+            } elseif (null === $data->subpath) {
+                $value = $data->subpath;
             }
             $dataArray['Subpath'] = $value;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

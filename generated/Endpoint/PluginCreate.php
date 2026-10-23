@@ -12,14 +12,14 @@ class PluginCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
     protected $accept;
 
     /**
-     * @param string|resource|\Psr\Http\Message\StreamInterface|null $requestBody
+     * @param string|resource|null $requestBody
      * @param array{
      *    "name": string, //The name of the plugin. The `:latest` tag is optional, and is the
-     * default if omitted.
+     *                    //default if omitted.
      * } $queryParameters
      * @param array $accept Accept content header application/json|text/plain
      */
-    public function __construct($requestBody = null, array $queryParameters = [], array $accept = [])
+    public function __construct($requestBody, array $queryParameters, array $accept = [])
     {
         $this->body            = $requestBody;
         $this->queryParameters = $queryParameters;
@@ -36,9 +36,9 @@ class PluginCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
         return '/plugins/create';
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
-        if (is_string($this->body) || is_resource($this->body) || $this->body instanceof \Psr\Http\Message\StreamInterface) {
+        if (is_string($this->body) || is_resource($this->body)) {
             return [['Content-Type' => ['application/x-tar']], $this->body];
         }
 
@@ -71,21 +71,33 @@ class PluginCreate extends \WebProject\DockerApi\Library\Generated\Runtime\Clien
      * @return null
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\PluginCreateInternalServerErrorException
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
+        $body   = $response->getContent(false);
         if (204 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (500 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\PluginCreateInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Eager->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

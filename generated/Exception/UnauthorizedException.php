@@ -5,7 +5,7 @@ namespace WebProject\DockerApi\Library\Generated\Exception;
 
 use RuntimeException;
 
-class UnauthorizedException extends RuntimeException implements ClientException
+abstract class UnauthorizedException extends RuntimeException implements ClientException, WithResponseInterface
 {
     public function __construct(string $message)
     {

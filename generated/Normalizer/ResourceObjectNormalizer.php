@@ -55,9 +55,11 @@ class ResourceObjectNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['NanoCPUs']) {
                 $value = $data['NanoCPUs'];
             }
-            $object->setNanoCPUs($value);
-        } elseif (array_key_exists('NanoCPUs', $data) && null === $data['NanoCPUs']) {
-            $object->setNanoCPUs(null);
+            $object->nanoCPUs = $value;
+            unset($data['NanoCPUs']);
+        } elseif (array_key_exists('NanoCPUs', $data)) {
+            $object->nanoCPUs = null;
+            unset($data['NanoCPUs']);
         }
         if (array_key_exists('MemoryBytes', $data) && null !== $data['MemoryBytes']) {
             $value_1 = $data['MemoryBytes'];
@@ -66,16 +68,24 @@ class ResourceObjectNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['MemoryBytes']) {
                 $value_1 = $data['MemoryBytes'];
             }
-            $object->setMemoryBytes($value_1);
-        } elseif (array_key_exists('MemoryBytes', $data) && null === $data['MemoryBytes']) {
-            $object->setMemoryBytes(null);
+            $object->memoryBytes = $value_1;
+            unset($data['MemoryBytes']);
+        } elseif (array_key_exists('MemoryBytes', $data)) {
+            $object->memoryBytes = null;
+            unset($data['MemoryBytes']);
         }
         if (array_key_exists('GenericResources', $data)) {
             $values = [];
             foreach ($data['GenericResources'] as $value_2) {
                 $values[] = $this->denormalizer->denormalize($value_2, \WebProject\DockerApi\Library\Generated\Model\GenericResourcesItem::class, 'json', $context);
             }
-            $object->setGenericResources($values);
+            $object->genericResources = $values;
+            unset($data['GenericResources']);
+        }
+        foreach ($data as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_3;
+            }
         }
 
         return $object;
@@ -84,30 +94,36 @@ class ResourceObjectNormalizer implements DenormalizerInterface, NormalizerInter
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('nanoCPUs')) {
-            $value = $data->getNanoCPUs();
-            if (is_int($data->getNanoCPUs())) {
-                $value = $data->getNanoCPUs();
-            } elseif (null === $data->getNanoCPUs()) {
-                $value = $data->getNanoCPUs();
+        if (array_key_exists('nanoCPUs', get_object_vars($data)) && null !== ($data->nanoCPUs ?? null)) {
+            $value = $data->nanoCPUs;
+            if (is_int($data->nanoCPUs)) {
+                $value = $data->nanoCPUs;
+            } elseif (null === $data->nanoCPUs) {
+                $value = $data->nanoCPUs;
             }
             $dataArray['NanoCPUs'] = $value;
         }
-        if ($data->isInitialized('memoryBytes')) {
-            $value_1 = $data->getMemoryBytes();
-            if (is_int($data->getMemoryBytes())) {
-                $value_1 = $data->getMemoryBytes();
-            } elseif (null === $data->getMemoryBytes()) {
-                $value_1 = $data->getMemoryBytes();
+        if (array_key_exists('memoryBytes', get_object_vars($data)) && null !== ($data->memoryBytes ?? null)) {
+            $value_1 = $data->memoryBytes;
+            if (is_int($data->memoryBytes)) {
+                $value_1 = $data->memoryBytes;
+            } elseif (null === $data->memoryBytes) {
+                $value_1 = $data->memoryBytes;
             }
             $dataArray['MemoryBytes'] = $value_1;
         }
-        if ($data->isInitialized('genericResources') && null !== $data->getGenericResources()) {
+        if (array_key_exists('genericResources', get_object_vars($data)) && null !== ($data->genericResources ?? null)) {
             $values = [];
-            foreach ($data->getGenericResources() as $value_2) {
-                $values[] = $this->normalizer->normalize($value_2, 'json', $context);
+            foreach ($data->genericResources as $value_2) {
+                $normalized = null === $value_2 ? null : $this->normalizer->normalize($value_2, 'json', $context);
+                $values[]   = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
             }
             $dataArray['GenericResources'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_3;
+            }
         }
 
         return $dataArray;

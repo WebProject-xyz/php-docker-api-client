@@ -48,49 +48,42 @@ class IdentityNormalizer implements DenormalizerInterface, NormalizerInterface, 
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Signature', $data) && null !== $data['Signature']) {
-            $value = $data['Signature'];
-            if (is_array($data['Signature']) && $this->isOnlyNumericKeys($data['Signature'])) {
-                $values = [];
-                foreach ($data['Signature'] as $value_1) {
-                    $values[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\SignatureIdentity::class, 'json', $context);
-                }
-                $value = $values;
-            } elseif (null === $data['Signature']) {
-                $value = $data['Signature'];
+            $values = [];
+            foreach ($data['Signature'] as $value) {
+                $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\SignatureIdentity::class, 'json', $context);
             }
-            $object->setSignature($value);
-        } elseif (array_key_exists('Signature', $data) && null === $data['Signature']) {
-            $object->setSignature(null);
+            $object->signature = $values;
+            unset($data['Signature']);
+        } elseif (array_key_exists('Signature', $data)) {
+            $object->signature = null;
+            unset($data['Signature']);
         }
         if (array_key_exists('Pull', $data) && null !== $data['Pull']) {
-            $value_2 = $data['Pull'];
-            if (is_array($data['Pull']) && $this->isOnlyNumericKeys($data['Pull'])) {
-                $values_1 = [];
-                foreach ($data['Pull'] as $value_3) {
-                    $values_1[] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\PullIdentity::class, 'json', $context);
-                }
-                $value_2 = $values_1;
-            } elseif (null === $data['Pull']) {
-                $value_2 = $data['Pull'];
+            $values_1 = [];
+            foreach ($data['Pull'] as $value_1) {
+                $values_1[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\PullIdentity::class, 'json', $context);
             }
-            $object->setPull($value_2);
-        } elseif (array_key_exists('Pull', $data) && null === $data['Pull']) {
-            $object->setPull(null);
+            $object->pull = $values_1;
+            unset($data['Pull']);
+        } elseif (array_key_exists('Pull', $data)) {
+            $object->pull = null;
+            unset($data['Pull']);
         }
         if (array_key_exists('Build', $data) && null !== $data['Build']) {
-            $value_4 = $data['Build'];
-            if (is_array($data['Build']) && $this->isOnlyNumericKeys($data['Build'])) {
-                $values_2 = [];
-                foreach ($data['Build'] as $value_5) {
-                    $values_2[] = $this->denormalizer->denormalize($value_5, \WebProject\DockerApi\Library\Generated\Model\BuildIdentity::class, 'json', $context);
-                }
-                $value_4 = $values_2;
-            } elseif (null === $data['Build']) {
-                $value_4 = $data['Build'];
+            $values_2 = [];
+            foreach ($data['Build'] as $value_2) {
+                $values_2[] = $this->denormalizer->denormalize($value_2, \WebProject\DockerApi\Library\Generated\Model\BuildIdentity::class, 'json', $context);
             }
-            $object->setBuild($value_4);
-        } elseif (array_key_exists('Build', $data) && null === $data['Build']) {
-            $object->setBuild(null);
+            $object->build = $values_2;
+            unset($data['Build']);
+        } elseif (array_key_exists('Build', $data)) {
+            $object->build = null;
+            unset($data['Build']);
+        }
+        foreach ($data as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_3;
+            }
         }
 
         return $object;
@@ -99,44 +92,34 @@ class IdentityNormalizer implements DenormalizerInterface, NormalizerInterface, 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('signature')) {
-            $value = $data->getSignature();
-            if (is_array($data->getSignature())) {
-                $values = [];
-                foreach ($data->getSignature() as $value_1) {
-                    $values[] = $this->normalizer->normalize($value_1, 'json', $context);
-                }
-                $value = $values;
-            } elseif (null === $data->getSignature()) {
-                $value = $data->getSignature();
+        if (array_key_exists('signature', get_object_vars($data)) && null !== ($data->signature ?? null)) {
+            $values = [];
+            foreach ($data->signature as $value) {
+                $normalized = null === $value ? null : $this->normalizer->normalize($value, 'json', $context);
+                $values[]   = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
             }
-            $dataArray['Signature'] = $value;
+            $dataArray['Signature'] = $values;
         }
-        if ($data->isInitialized('pull')) {
-            $value_2 = $data->getPull();
-            if (is_array($data->getPull())) {
-                $values_1 = [];
-                foreach ($data->getPull() as $value_3) {
-                    $values_1[] = $this->normalizer->normalize($value_3, 'json', $context);
-                }
-                $value_2 = $values_1;
-            } elseif (null === $data->getPull()) {
-                $value_2 = $data->getPull();
+        if (array_key_exists('pull', get_object_vars($data)) && null !== ($data->pull ?? null)) {
+            $values_1 = [];
+            foreach ($data->pull as $value_1) {
+                $normalized_1 = null === $value_1 ? null : $this->normalizer->normalize($value_1, 'json', $context);
+                $values_1[]   = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
             }
-            $dataArray['Pull'] = $value_2;
+            $dataArray['Pull'] = $values_1;
         }
-        if ($data->isInitialized('build')) {
-            $value_4 = $data->getBuild();
-            if (is_array($data->getBuild())) {
-                $values_2 = [];
-                foreach ($data->getBuild() as $value_5) {
-                    $values_2[] = $this->normalizer->normalize($value_5, 'json', $context);
-                }
-                $value_4 = $values_2;
-            } elseif (null === $data->getBuild()) {
-                $value_4 = $data->getBuild();
+        if (array_key_exists('build', get_object_vars($data)) && null !== ($data->build ?? null)) {
+            $values_2 = [];
+            foreach ($data->build as $value_2) {
+                $normalized_2 = null === $value_2 ? null : $this->normalizer->normalize($value_2, 'json', $context);
+                $values_2[]   = is_iterable($normalized_2) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_2) : $normalized_2;
             }
-            $dataArray['Build'] = $value_4;
+            $dataArray['Build'] = $values_2;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_3;
+            }
         }
 
         return $dataArray;

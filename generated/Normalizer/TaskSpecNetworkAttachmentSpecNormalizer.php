@@ -55,9 +55,16 @@ class TaskSpecNetworkAttachmentSpecNormalizer implements DenormalizerInterface, 
             } elseif (null === $data['ContainerID']) {
                 $value = $data['ContainerID'];
             }
-            $object->setContainerID($value);
-        } elseif (array_key_exists('ContainerID', $data) && null === $data['ContainerID']) {
-            $object->setContainerID(null);
+            $object->containerID = $value;
+            unset($data['ContainerID']);
+        } elseif (array_key_exists('ContainerID', $data)) {
+            $object->containerID = null;
+            unset($data['ContainerID']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -66,14 +73,19 @@ class TaskSpecNetworkAttachmentSpecNormalizer implements DenormalizerInterface, 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('containerID')) {
-            $value = $data->getContainerID();
-            if (is_string($data->getContainerID())) {
-                $value = $data->getContainerID();
-            } elseif (null === $data->getContainerID()) {
-                $value = $data->getContainerID();
+        if (array_key_exists('containerID', get_object_vars($data)) && null !== ($data->containerID ?? null)) {
+            $value = $data->containerID;
+            if (is_string($data->containerID)) {
+                $value = $data->containerID;
+            } elseif (null === $data->containerID) {
+                $value = $data->containerID;
             }
             $dataArray['ContainerID'] = $value;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

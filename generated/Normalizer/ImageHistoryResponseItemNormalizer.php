@@ -48,26 +48,37 @@ class ImageHistoryResponseItemNormalizer implements DenormalizerInterface, Norma
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Id', $data)) {
-            $object->setId($data['Id']);
+            $object->id = $data['Id'];
+            unset($data['Id']);
         }
         if (array_key_exists('Created', $data)) {
-            $object->setCreated($data['Created']);
+            $object->created = $data['Created'];
+            unset($data['Created']);
         }
         if (array_key_exists('CreatedBy', $data)) {
-            $object->setCreatedBy($data['CreatedBy']);
+            $object->createdBy = $data['CreatedBy'];
+            unset($data['CreatedBy']);
         }
         if (array_key_exists('Tags', $data)) {
             $values = [];
             foreach ($data['Tags'] as $value) {
                 $values[] = $value;
             }
-            $object->setTags($values);
+            $object->tags = $values;
+            unset($data['Tags']);
         }
         if (array_key_exists('Size', $data)) {
-            $object->setSize($data['Size']);
+            $object->size = $data['Size'];
+            unset($data['Size']);
         }
         if (array_key_exists('Comment', $data)) {
-            $object->setComment($data['Comment']);
+            $object->comment = $data['Comment'];
+            unset($data['Comment']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -76,16 +87,21 @@ class ImageHistoryResponseItemNormalizer implements DenormalizerInterface, Norma
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray              = [];
-        $dataArray['Id']        = $data->getId();
-        $dataArray['Created']   = $data->getCreated();
-        $dataArray['CreatedBy'] = $data->getCreatedBy();
+        $dataArray['Id']        = $data->id;
+        $dataArray['Created']   = $data->created;
+        $dataArray['CreatedBy'] = $data->createdBy;
         $values                 = [];
-        foreach ($data->getTags() as $value) {
+        foreach ($data->tags as $value) {
             $values[] = $value;
         }
         $dataArray['Tags']    = $values;
-        $dataArray['Size']    = $data->getSize();
-        $dataArray['Comment'] = $data->getComment();
+        $dataArray['Size']    = $data->size;
+        $dataArray['Comment'] = $data->comment;
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
+        }
 
         return $dataArray;
     }

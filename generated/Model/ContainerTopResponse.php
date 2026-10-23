@@ -3,82 +3,28 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ContainerTopResponse
+class ContainerTopResponse implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The ps column titles.
      *
      * @var list<string>|null
      */
-    protected $titles;
+    public ?array $titles;
     /**
      * Each process running in the container, where each process
      * is an array of values corresponding to the titles.
      *
      * @var list<list<string>>|null
      */
-    protected $processes;
+    public ?array $processes;
 
-    /**
-     * The ps column titles.
-     *
-     * @return list<string>|null
-     */
-    public function getTitles(): ?array
+    public function definedProperties(): array
     {
-        return $this->titles;
-    }
-
-    /**
-     * The ps column titles.
-     *
-     * @param list<string>|null $titles
-     *
-     * @return self
-     */
-    public function setTitles(?array $titles): self
-    {
-        $this->initialized['titles'] = true;
-        $this->titles                = $titles;
-
-        return $this;
-    }
-
-    /**
-     * Each process running in the container, where each process
-     * is an array of values corresponding to the titles.
-     *
-     * @return list<list<string>>|null
-     */
-    public function getProcesses(): ?array
-    {
-        return $this->processes;
-    }
-
-    /**
-     * Each process running in the container, where each process
-     * is an array of values corresponding to the titles.
-     *
-     * @param list<list<string>>|null $processes
-     *
-     * @return self
-     */
-    public function setProcesses(?array $processes): self
-    {
-        $this->initialized['processes'] = true;
-        $this->processes                = $processes;
-
-        return $this;
+        return ['titles' => 'Titles', 'processes' => 'Processes'];
     }
 }

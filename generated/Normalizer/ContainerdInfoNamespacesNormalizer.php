@@ -55,9 +55,11 @@ class ContainerdInfoNamespacesNormalizer implements DenormalizerInterface, Norma
             } elseif (null === $data['Containers']) {
                 $value = $data['Containers'];
             }
-            $object->setContainers($value);
-        } elseif (array_key_exists('Containers', $data) && null === $data['Containers']) {
-            $object->setContainers(null);
+            $object->containers = $value;
+            unset($data['Containers']);
+        } elseif (array_key_exists('Containers', $data)) {
+            $object->containers = null;
+            unset($data['Containers']);
         }
         if (array_key_exists('Plugins', $data) && null !== $data['Plugins']) {
             $value_1 = $data['Plugins'];
@@ -66,9 +68,16 @@ class ContainerdInfoNamespacesNormalizer implements DenormalizerInterface, Norma
             } elseif (null === $data['Plugins']) {
                 $value_1 = $data['Plugins'];
             }
-            $object->setPlugins($value_1);
-        } elseif (array_key_exists('Plugins', $data) && null === $data['Plugins']) {
-            $object->setPlugins(null);
+            $object->plugins = $value_1;
+            unset($data['Plugins']);
+        } elseif (array_key_exists('Plugins', $data)) {
+            $object->plugins = null;
+            unset($data['Plugins']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class ContainerdInfoNamespacesNormalizer implements DenormalizerInterface, Norma
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('containers')) {
-            $value = $data->getContainers();
-            if (is_string($data->getContainers())) {
-                $value = $data->getContainers();
-            } elseif (null === $data->getContainers()) {
-                $value = $data->getContainers();
+        if (array_key_exists('containers', get_object_vars($data)) && null !== ($data->containers ?? null)) {
+            $value = $data->containers;
+            if (is_string($data->containers)) {
+                $value = $data->containers;
+            } elseif (null === $data->containers) {
+                $value = $data->containers;
             }
             $dataArray['Containers'] = $value;
         }
-        if ($data->isInitialized('plugins')) {
-            $value_1 = $data->getPlugins();
-            if (is_string($data->getPlugins())) {
-                $value_1 = $data->getPlugins();
-            } elseif (null === $data->getPlugins()) {
-                $value_1 = $data->getPlugins();
+        if (array_key_exists('plugins', get_object_vars($data)) && null !== ($data->plugins ?? null)) {
+            $value_1 = $data->plugins;
+            if (is_string($data->plugins)) {
+                $value_1 = $data->plugins;
+            } elseif (null === $data->plugins) {
+                $value_1 = $data->plugins;
             }
             $dataArray['Plugins'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

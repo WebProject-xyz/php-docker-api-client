@@ -3,32 +3,25 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class TaskSpecResources
+class TaskSpecResources implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * An object describing a limit on resources which can be requested by a task.
      *
      * @var Limit
      */
-    protected $limits;
+    public Limit $limits;
     /**
      * An object describing the resources which can be advertised by a node and
      * requested by a task.
      *
      * @var ResourceObject
      */
-    protected $reservations;
+    public ResourceObject $reservations;
     /**
      * Amount of swap in bytes - can only be used together with a memory limit.
      * If not specified, the default behaviour is to grant a swap space twice
@@ -37,7 +30,7 @@ class TaskSpecResources
      *
      * @var int|null
      */
-    protected $swapBytes;
+    public ?int $swapBytes;
     /**
      * Tune the service's containers' memory swappiness (0 to 100).
      * If not specified, defaults to the containers' OS' default, generally 60,
@@ -46,119 +39,10 @@ class TaskSpecResources
      *
      * @var int|null
      */
-    protected $memorySwappiness;
+    public ?int $memorySwappiness;
 
-    /**
-     * An object describing a limit on resources which can be requested by a task.
-     *
-     * @return Limit
-     */
-    public function getLimits(): Limit
+    public function definedProperties(): array
     {
-        return $this->limits;
-    }
-
-    /**
-     * An object describing a limit on resources which can be requested by a task.
-     *
-     * @param Limit $limits
-     *
-     * @return self
-     */
-    public function setLimits(Limit $limits): self
-    {
-        $this->initialized['limits'] = true;
-        $this->limits                = $limits;
-
-        return $this;
-    }
-
-    /**
-     * An object describing the resources which can be advertised by a node and
-     * requested by a task.
-     *
-     * @return ResourceObject
-     */
-    public function getReservations(): ResourceObject
-    {
-        return $this->reservations;
-    }
-
-    /**
-     * An object describing the resources which can be advertised by a node and
-     * requested by a task.
-     *
-     * @param ResourceObject $reservations
-     *
-     * @return self
-     */
-    public function setReservations(ResourceObject $reservations): self
-    {
-        $this->initialized['reservations'] = true;
-        $this->reservations                = $reservations;
-
-        return $this;
-    }
-
-    /**
-     * Amount of swap in bytes - can only be used together with a memory limit.
-     * If not specified, the default behaviour is to grant a swap space twice
-     * as big as the memory limit.
-     * Set to -1 to enable unlimited swap.
-     *
-     * @return int|null
-     */
-    public function getSwapBytes(): ?int
-    {
-        return $this->swapBytes;
-    }
-
-    /**
-     * Amount of swap in bytes - can only be used together with a memory limit.
-     * If not specified, the default behaviour is to grant a swap space twice
-     * as big as the memory limit.
-     * Set to -1 to enable unlimited swap.
-     *
-     * @param int|null $swapBytes
-     *
-     * @return self
-     */
-    public function setSwapBytes(?int $swapBytes): self
-    {
-        $this->initialized['swapBytes'] = true;
-        $this->swapBytes                = $swapBytes;
-
-        return $this;
-    }
-
-    /**
-     * Tune the service's containers' memory swappiness (0 to 100).
-     * If not specified, defaults to the containers' OS' default, generally 60,
-     * or whatever value was predefined in the image.
-     * Set to -1 to unset a previously set value.
-     *
-     * @return int|null
-     */
-    public function getMemorySwappiness(): ?int
-    {
-        return $this->memorySwappiness;
-    }
-
-    /**
-     * Tune the service's containers' memory swappiness (0 to 100).
-     * If not specified, defaults to the containers' OS' default, generally 60,
-     * or whatever value was predefined in the image.
-     * Set to -1 to unset a previously set value.
-     *
-     * @param int|null $memorySwappiness
-     *
-     * @return self
-     */
-    public function setMemorySwappiness(?int $memorySwappiness): self
-    {
-        $this->initialized['memorySwappiness'] = true;
-        $this->memorySwappiness                = $memorySwappiness;
-
-        return $this;
+        return ['limits' => 'Limits', 'reservations' => 'Reservations', 'swapBytes' => 'SwapBytes', 'memorySwappiness' => 'MemorySwappiness'];
     }
 }

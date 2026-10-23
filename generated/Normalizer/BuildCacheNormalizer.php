@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace WebProject\DockerApi\Library\Generated\Normalizer;
 
 use ArrayObject;
+use DateTime;
+use Exception;
 use Jane\Component\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -57,112 +59,143 @@ class BuildCacheNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['ID']) {
                 $value = $data['ID'];
             }
-            $object->setID($value);
-        } elseif (array_key_exists('ID', $data) && null === $data['ID']) {
-            $object->setID(null);
+            $object->iD = $value;
+            unset($data['ID']);
+        } elseif (array_key_exists('ID', $data)) {
+            $object->iD = null;
+            unset($data['ID']);
         }
         if (array_key_exists('Parents', $data) && null !== $data['Parents']) {
-            $value_1 = $data['Parents'];
-            if (is_array($data['Parents']) && $this->isOnlyNumericKeys($data['Parents'])) {
-                $values = [];
-                foreach ($data['Parents'] as $value_2) {
-                    $values[] = $value_2;
-                }
-                $value_1 = $values;
-            } elseif (null === $data['Parents']) {
-                $value_1 = $data['Parents'];
+            $values = [];
+            foreach ($data['Parents'] as $value_1) {
+                $values[] = $value_1;
             }
-            $object->setParents($value_1);
-        } elseif (array_key_exists('Parents', $data) && null === $data['Parents']) {
-            $object->setParents(null);
+            $object->parents = $values;
+            unset($data['Parents']);
+        } elseif (array_key_exists('Parents', $data)) {
+            $object->parents = null;
+            unset($data['Parents']);
         }
         if (array_key_exists('Type', $data) && null !== $data['Type']) {
-            $value_3 = $data['Type'];
+            $value_2 = $data['Type'];
             if (is_string($data['Type'])) {
-                $value_3 = $data['Type'];
+                $value_2 = $data['Type'];
             } elseif (null === $data['Type']) {
-                $value_3 = $data['Type'];
+                $value_2 = $data['Type'];
             }
-            $object->setType($value_3);
-        } elseif (array_key_exists('Type', $data) && null === $data['Type']) {
-            $object->setType(null);
+            $object->type = $value_2;
+            unset($data['Type']);
+        } elseif (array_key_exists('Type', $data)) {
+            $object->type = null;
+            unset($data['Type']);
         }
         if (array_key_exists('Description', $data) && null !== $data['Description']) {
-            $value_4 = $data['Description'];
+            $value_3 = $data['Description'];
             if (is_string($data['Description'])) {
-                $value_4 = $data['Description'];
+                $value_3 = $data['Description'];
             } elseif (null === $data['Description']) {
-                $value_4 = $data['Description'];
+                $value_3 = $data['Description'];
             }
-            $object->setDescription($value_4);
-        } elseif (array_key_exists('Description', $data) && null === $data['Description']) {
-            $object->setDescription(null);
+            $object->description = $value_3;
+            unset($data['Description']);
+        } elseif (array_key_exists('Description', $data)) {
+            $object->description = null;
+            unset($data['Description']);
         }
         if (array_key_exists('InUse', $data) && null !== $data['InUse']) {
-            $value_5 = $data['InUse'];
+            $value_4 = $data['InUse'];
             if (is_bool($data['InUse'])) {
-                $value_5 = $data['InUse'];
+                $value_4 = $data['InUse'];
             } elseif (null === $data['InUse']) {
-                $value_5 = $data['InUse'];
+                $value_4 = $data['InUse'];
             }
-            $object->setInUse($value_5);
-        } elseif (array_key_exists('InUse', $data) && null === $data['InUse']) {
-            $object->setInUse(null);
+            $object->inUse = $value_4;
+            unset($data['InUse']);
+        } elseif (array_key_exists('InUse', $data)) {
+            $object->inUse = null;
+            unset($data['InUse']);
         }
         if (array_key_exists('Shared', $data) && null !== $data['Shared']) {
-            $value_6 = $data['Shared'];
+            $value_5 = $data['Shared'];
             if (is_bool($data['Shared'])) {
-                $value_6 = $data['Shared'];
+                $value_5 = $data['Shared'];
             } elseif (null === $data['Shared']) {
-                $value_6 = $data['Shared'];
+                $value_5 = $data['Shared'];
             }
-            $object->setShared($value_6);
-        } elseif (array_key_exists('Shared', $data) && null === $data['Shared']) {
-            $object->setShared(null);
+            $object->shared = $value_5;
+            unset($data['Shared']);
+        } elseif (array_key_exists('Shared', $data)) {
+            $object->shared = null;
+            unset($data['Shared']);
         }
         if (array_key_exists('Size', $data) && null !== $data['Size']) {
-            $value_7 = $data['Size'];
+            $value_6 = $data['Size'];
             if (is_int($data['Size'])) {
-                $value_7 = $data['Size'];
+                $value_6 = $data['Size'];
             } elseif (null === $data['Size']) {
-                $value_7 = $data['Size'];
+                $value_6 = $data['Size'];
             }
-            $object->setSize($value_7);
-        } elseif (array_key_exists('Size', $data) && null === $data['Size']) {
-            $object->setSize(null);
+            $object->size = $value_6;
+            unset($data['Size']);
+        } elseif (array_key_exists('Size', $data)) {
+            $object->size = null;
+            unset($data['Size']);
         }
         if (array_key_exists('CreatedAt', $data) && null !== $data['CreatedAt']) {
-            $value_8 = $data['CreatedAt'];
-            if (is_string($data['CreatedAt'])) {
-                $value_8 = $data['CreatedAt'];
-            } elseif (null === $data['CreatedAt']) {
-                $value_8 = $data['CreatedAt'];
+            $date = DateTime::createFromFormat('Y-m-d\TH:i:sP', $data['CreatedAt']);
+            if (false === $date) {
+                if (is_string($data['CreatedAt']) && 1 === preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/', $data['CreatedAt'])) {
+                    try {
+                        $date = new DateTime($data['CreatedAt']);
+                    } catch (Exception) {
+                        throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['CreatedAt'], 'Y-m-d\TH:i:sP');
+                    }
+                } else {
+                    throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['CreatedAt'], 'Y-m-d\TH:i:sP');
+                }
             }
-            $object->setCreatedAt($value_8);
-        } elseif (array_key_exists('CreatedAt', $data) && null === $data['CreatedAt']) {
-            $object->setCreatedAt(null);
+            $object->createdAt = $date;
+            unset($data['CreatedAt']);
+        } elseif (array_key_exists('CreatedAt', $data)) {
+            $object->createdAt = null;
+            unset($data['CreatedAt']);
         }
         if (array_key_exists('LastUsedAt', $data) && null !== $data['LastUsedAt']) {
-            $value_9 = $data['LastUsedAt'];
-            if (is_string($data['LastUsedAt'])) {
-                $value_9 = $data['LastUsedAt'];
-            } elseif (null === $data['LastUsedAt']) {
-                $value_9 = $data['LastUsedAt'];
+            $date_1 = DateTime::createFromFormat('Y-m-d\TH:i:sP', $data['LastUsedAt']);
+            if (false === $date_1) {
+                if (is_string($data['LastUsedAt']) && 1 === preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/', $data['LastUsedAt'])) {
+                    try {
+                        $date_1 = new DateTime($data['LastUsedAt']);
+                    } catch (Exception) {
+                        throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['LastUsedAt'], 'Y-m-d\TH:i:sP');
+                    }
+                } else {
+                    throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['LastUsedAt'], 'Y-m-d\TH:i:sP');
+                }
             }
-            $object->setLastUsedAt($value_9);
-        } elseif (array_key_exists('LastUsedAt', $data) && null === $data['LastUsedAt']) {
-            $object->setLastUsedAt(null);
+            $object->lastUsedAt = $date_1;
+            unset($data['LastUsedAt']);
+        } elseif (array_key_exists('LastUsedAt', $data)) {
+            $object->lastUsedAt = null;
+            unset($data['LastUsedAt']);
         }
         if (array_key_exists('UsageCount', $data) && null !== $data['UsageCount']) {
-            $value_10 = $data['UsageCount'];
+            $value_7 = $data['UsageCount'];
             if (is_int($data['UsageCount'])) {
-                $value_10 = $data['UsageCount'];
+                $value_7 = $data['UsageCount'];
             } elseif (null === $data['UsageCount']) {
-                $value_10 = $data['UsageCount'];
+                $value_7 = $data['UsageCount'];
             }
-            $object->setUsageCount($value_10);
-        } elseif (array_key_exists('UsageCount', $data) && null === $data['UsageCount']) {
-            $object->setUsageCount(null);
+            $object->usageCount = $value_7;
+            unset($data['UsageCount']);
+        } elseif (array_key_exists('UsageCount', $data)) {
+            $object->usageCount = null;
+            unset($data['UsageCount']);
+        }
+        foreach ($data as $key => $value_8) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_8;
+            }
         }
 
         return $object;
@@ -171,99 +204,86 @@ class BuildCacheNormalizer implements DenormalizerInterface, NormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('iD')) {
-            $value = $data->getID();
-            if (is_string($data->getID())) {
-                $value = $data->getID();
-            } elseif (null === $data->getID()) {
-                $value = $data->getID();
+        if (array_key_exists('iD', get_object_vars($data)) && null !== ($data->iD ?? null)) {
+            $value = $data->iD;
+            if (is_string($data->iD)) {
+                $value = $data->iD;
+            } elseif (null === $data->iD) {
+                $value = $data->iD;
             }
             $dataArray['ID'] = $value;
         }
-        if ($data->isInitialized('parents')) {
-            $value_1 = $data->getParents();
-            if (is_array($data->getParents())) {
-                $values = [];
-                foreach ($data->getParents() as $value_2) {
-                    $values[] = $value_2;
-                }
-                $value_1 = $values;
-            } elseif (null === $data->getParents()) {
-                $value_1 = $data->getParents();
+        if (array_key_exists('parents', get_object_vars($data)) && null !== ($data->parents ?? null)) {
+            $values = [];
+            foreach ($data->parents as $value_1) {
+                $values[] = $value_1;
             }
-            $dataArray['Parents'] = $value_1;
+            $dataArray['Parents'] = $values;
         }
-        if ($data->isInitialized('type')) {
-            $value_3 = $data->getType();
-            if (is_string($data->getType())) {
-                $value_3 = $data->getType();
-            } elseif (null === $data->getType()) {
-                $value_3 = $data->getType();
+        if (array_key_exists('type', get_object_vars($data)) && null !== ($data->type ?? null)) {
+            $value_2 = $data->type;
+            if (is_string($data->type)) {
+                $value_2 = $data->type;
+            } elseif (null === $data->type) {
+                $value_2 = $data->type;
             }
-            $dataArray['Type'] = $value_3;
+            $dataArray['Type'] = $value_2;
         }
-        if ($data->isInitialized('description')) {
-            $value_4 = $data->getDescription();
-            if (is_string($data->getDescription())) {
-                $value_4 = $data->getDescription();
-            } elseif (null === $data->getDescription()) {
-                $value_4 = $data->getDescription();
+        if (array_key_exists('description', get_object_vars($data)) && null !== ($data->description ?? null)) {
+            $value_3 = $data->description;
+            if (is_string($data->description)) {
+                $value_3 = $data->description;
+            } elseif (null === $data->description) {
+                $value_3 = $data->description;
             }
-            $dataArray['Description'] = $value_4;
+            $dataArray['Description'] = $value_3;
         }
-        if ($data->isInitialized('inUse')) {
-            $value_5 = $data->getInUse();
-            if (is_bool($data->getInUse())) {
-                $value_5 = $data->getInUse();
-            } elseif (null === $data->getInUse()) {
-                $value_5 = $data->getInUse();
+        if (array_key_exists('inUse', get_object_vars($data)) && null !== ($data->inUse ?? null)) {
+            $value_4 = $data->inUse;
+            if (is_bool($data->inUse)) {
+                $value_4 = $data->inUse;
+            } elseif (null === $data->inUse) {
+                $value_4 = $data->inUse;
             }
-            $dataArray['InUse'] = $value_5;
+            $dataArray['InUse'] = $value_4;
         }
-        if ($data->isInitialized('shared')) {
-            $value_6 = $data->getShared();
-            if (is_bool($data->getShared())) {
-                $value_6 = $data->getShared();
-            } elseif (null === $data->getShared()) {
-                $value_6 = $data->getShared();
+        if (array_key_exists('shared', get_object_vars($data)) && null !== ($data->shared ?? null)) {
+            $value_5 = $data->shared;
+            if (is_bool($data->shared)) {
+                $value_5 = $data->shared;
+            } elseif (null === $data->shared) {
+                $value_5 = $data->shared;
             }
-            $dataArray['Shared'] = $value_6;
+            $dataArray['Shared'] = $value_5;
         }
-        if ($data->isInitialized('size')) {
-            $value_7 = $data->getSize();
-            if (is_int($data->getSize())) {
-                $value_7 = $data->getSize();
-            } elseif (null === $data->getSize()) {
-                $value_7 = $data->getSize();
+        if (array_key_exists('size', get_object_vars($data)) && null !== ($data->size ?? null)) {
+            $value_6 = $data->size;
+            if (is_int($data->size)) {
+                $value_6 = $data->size;
+            } elseif (null === $data->size) {
+                $value_6 = $data->size;
             }
-            $dataArray['Size'] = $value_7;
+            $dataArray['Size'] = $value_6;
         }
-        if ($data->isInitialized('createdAt')) {
-            $value_8 = $data->getCreatedAt();
-            if (is_string($data->getCreatedAt())) {
-                $value_8 = $data->getCreatedAt();
-            } elseif (null === $data->getCreatedAt()) {
-                $value_8 = $data->getCreatedAt();
-            }
-            $dataArray['CreatedAt'] = $value_8;
+        if (array_key_exists('createdAt', get_object_vars($data)) && null !== ($data->createdAt ?? null)) {
+            $dataArray['CreatedAt'] = $data->createdAt?->format('Y-m-d\TH:i:sP');
         }
-        if ($data->isInitialized('lastUsedAt')) {
-            $value_9 = $data->getLastUsedAt();
-            if (is_string($data->getLastUsedAt())) {
-                $value_9 = $data->getLastUsedAt();
-            } elseif (null === $data->getLastUsedAt()) {
-                $value_9 = $data->getLastUsedAt();
-            }
-            $dataArray['LastUsedAt'] = $value_9;
+        if (array_key_exists('lastUsedAt', get_object_vars($data)) && null !== ($data->lastUsedAt ?? null)) {
+            $dataArray['LastUsedAt'] = $data->lastUsedAt?->format('Y-m-d\TH:i:sP');
         }
-        if ($data->isInitialized('usageCount')) {
-            $value_10 = $data->getUsageCount();
-            if (is_int($data->getUsageCount())) {
-                $value_10 = $data->getUsageCount();
-            } elseif (null === $data->getUsageCount()) {
-                $value_10 = $data->getUsageCount();
+        if (array_key_exists('usageCount', get_object_vars($data)) && null !== ($data->usageCount ?? null)) {
+            $value_7 = $data->usageCount;
+            if (is_int($data->usageCount)) {
+                $value_7 = $data->usageCount;
+            } elseif (null === $data->usageCount) {
+                $value_7 = $data->usageCount;
             }
-            $dataArray['UsageCount'] = $value_10;
+            $dataArray['UsageCount'] = $value_7;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_8) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_8;
+            }
         }
 
         return $dataArray;

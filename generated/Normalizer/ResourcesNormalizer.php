@@ -57,9 +57,11 @@ class ResourcesNormalizer implements DenormalizerInterface, NormalizerInterface,
             } elseif (null === $data['CpuShares']) {
                 $value = $data['CpuShares'];
             }
-            $object->setCpuShares($value);
-        } elseif (array_key_exists('CpuShares', $data) && null === $data['CpuShares']) {
-            $object->setCpuShares(null);
+            $object->cpuShares = $value;
+            unset($data['CpuShares']);
+        } elseif (array_key_exists('CpuShares', $data)) {
+            $object->cpuShares = null;
+            unset($data['CpuShares']);
         }
         if (array_key_exists('Memory', $data) && null !== $data['Memory']) {
             $value_1 = $data['Memory'];
@@ -68,9 +70,11 @@ class ResourcesNormalizer implements DenormalizerInterface, NormalizerInterface,
             } elseif (null === $data['Memory']) {
                 $value_1 = $data['Memory'];
             }
-            $object->setMemory($value_1);
-        } elseif (array_key_exists('Memory', $data) && null === $data['Memory']) {
-            $object->setMemory(null);
+            $object->memory = $value_1;
+            unset($data['Memory']);
+        } elseif (array_key_exists('Memory', $data)) {
+            $object->memory = null;
+            unset($data['Memory']);
         }
         if (array_key_exists('CgroupParent', $data) && null !== $data['CgroupParent']) {
             $value_2 = $data['CgroupParent'];
@@ -79,9 +83,11 @@ class ResourcesNormalizer implements DenormalizerInterface, NormalizerInterface,
             } elseif (null === $data['CgroupParent']) {
                 $value_2 = $data['CgroupParent'];
             }
-            $object->setCgroupParent($value_2);
-        } elseif (array_key_exists('CgroupParent', $data) && null === $data['CgroupParent']) {
-            $object->setCgroupParent(null);
+            $object->cgroupParent = $value_2;
+            unset($data['CgroupParent']);
+        } elseif (array_key_exists('CgroupParent', $data)) {
+            $object->cgroupParent = null;
+            unset($data['CgroupParent']);
         }
         if (array_key_exists('BlkioWeight', $data) && null !== $data['BlkioWeight']) {
             $value_3 = $data['BlkioWeight'];
@@ -90,331 +96,336 @@ class ResourcesNormalizer implements DenormalizerInterface, NormalizerInterface,
             } elseif (null === $data['BlkioWeight']) {
                 $value_3 = $data['BlkioWeight'];
             }
-            $object->setBlkioWeight($value_3);
-        } elseif (array_key_exists('BlkioWeight', $data) && null === $data['BlkioWeight']) {
-            $object->setBlkioWeight(null);
+            $object->blkioWeight = $value_3;
+            unset($data['BlkioWeight']);
+        } elseif (array_key_exists('BlkioWeight', $data)) {
+            $object->blkioWeight = null;
+            unset($data['BlkioWeight']);
         }
         if (array_key_exists('BlkioWeightDevice', $data) && null !== $data['BlkioWeightDevice']) {
-            $value_4 = $data['BlkioWeightDevice'];
-            if (is_array($data['BlkioWeightDevice']) && $this->isOnlyNumericKeys($data['BlkioWeightDevice'])) {
-                $values = [];
-                foreach ($data['BlkioWeightDevice'] as $value_5) {
-                    $values[] = $this->denormalizer->denormalize($value_5, \WebProject\DockerApi\Library\Generated\Model\ResourcesBlkioWeightDeviceItem::class, 'json', $context);
-                }
-                $value_4 = $values;
-            } elseif (null === $data['BlkioWeightDevice']) {
-                $value_4 = $data['BlkioWeightDevice'];
+            $values = [];
+            foreach ($data['BlkioWeightDevice'] as $value_4) {
+                $values[] = $this->denormalizer->denormalize($value_4, \WebProject\DockerApi\Library\Generated\Model\ResourcesBlkioWeightDeviceItem::class, 'json', $context);
             }
-            $object->setBlkioWeightDevice($value_4);
-        } elseif (array_key_exists('BlkioWeightDevice', $data) && null === $data['BlkioWeightDevice']) {
-            $object->setBlkioWeightDevice(null);
+            $object->blkioWeightDevice = $values;
+            unset($data['BlkioWeightDevice']);
+        } elseif (array_key_exists('BlkioWeightDevice', $data)) {
+            $object->blkioWeightDevice = null;
+            unset($data['BlkioWeightDevice']);
         }
         if (array_key_exists('BlkioDeviceReadBps', $data) && null !== $data['BlkioDeviceReadBps']) {
-            $value_6 = $data['BlkioDeviceReadBps'];
-            if (is_array($data['BlkioDeviceReadBps']) && $this->isOnlyNumericKeys($data['BlkioDeviceReadBps'])) {
-                $values_1 = [];
-                foreach ($data['BlkioDeviceReadBps'] as $value_7) {
-                    $values_1[] = $this->denormalizer->denormalize($value_7, \WebProject\DockerApi\Library\Generated\Model\ThrottleDevice::class, 'json', $context);
-                }
-                $value_6 = $values_1;
-            } elseif (null === $data['BlkioDeviceReadBps']) {
-                $value_6 = $data['BlkioDeviceReadBps'];
+            $values_1 = [];
+            foreach ($data['BlkioDeviceReadBps'] as $value_5) {
+                $values_1[] = $this->denormalizer->denormalize($value_5, \WebProject\DockerApi\Library\Generated\Model\ThrottleDevice::class, 'json', $context);
             }
-            $object->setBlkioDeviceReadBps($value_6);
-        } elseif (array_key_exists('BlkioDeviceReadBps', $data) && null === $data['BlkioDeviceReadBps']) {
-            $object->setBlkioDeviceReadBps(null);
+            $object->blkioDeviceReadBps = $values_1;
+            unset($data['BlkioDeviceReadBps']);
+        } elseif (array_key_exists('BlkioDeviceReadBps', $data)) {
+            $object->blkioDeviceReadBps = null;
+            unset($data['BlkioDeviceReadBps']);
         }
         if (array_key_exists('BlkioDeviceWriteBps', $data) && null !== $data['BlkioDeviceWriteBps']) {
-            $value_8 = $data['BlkioDeviceWriteBps'];
-            if (is_array($data['BlkioDeviceWriteBps']) && $this->isOnlyNumericKeys($data['BlkioDeviceWriteBps'])) {
-                $values_2 = [];
-                foreach ($data['BlkioDeviceWriteBps'] as $value_9) {
-                    $values_2[] = $this->denormalizer->denormalize($value_9, \WebProject\DockerApi\Library\Generated\Model\ThrottleDevice::class, 'json', $context);
-                }
-                $value_8 = $values_2;
-            } elseif (null === $data['BlkioDeviceWriteBps']) {
-                $value_8 = $data['BlkioDeviceWriteBps'];
+            $values_2 = [];
+            foreach ($data['BlkioDeviceWriteBps'] as $value_6) {
+                $values_2[] = $this->denormalizer->denormalize($value_6, \WebProject\DockerApi\Library\Generated\Model\ThrottleDevice::class, 'json', $context);
             }
-            $object->setBlkioDeviceWriteBps($value_8);
-        } elseif (array_key_exists('BlkioDeviceWriteBps', $data) && null === $data['BlkioDeviceWriteBps']) {
-            $object->setBlkioDeviceWriteBps(null);
+            $object->blkioDeviceWriteBps = $values_2;
+            unset($data['BlkioDeviceWriteBps']);
+        } elseif (array_key_exists('BlkioDeviceWriteBps', $data)) {
+            $object->blkioDeviceWriteBps = null;
+            unset($data['BlkioDeviceWriteBps']);
         }
         if (array_key_exists('BlkioDeviceReadIOps', $data) && null !== $data['BlkioDeviceReadIOps']) {
-            $value_10 = $data['BlkioDeviceReadIOps'];
-            if (is_array($data['BlkioDeviceReadIOps']) && $this->isOnlyNumericKeys($data['BlkioDeviceReadIOps'])) {
-                $values_3 = [];
-                foreach ($data['BlkioDeviceReadIOps'] as $value_11) {
-                    $values_3[] = $this->denormalizer->denormalize($value_11, \WebProject\DockerApi\Library\Generated\Model\ThrottleDevice::class, 'json', $context);
-                }
-                $value_10 = $values_3;
-            } elseif (null === $data['BlkioDeviceReadIOps']) {
-                $value_10 = $data['BlkioDeviceReadIOps'];
+            $values_3 = [];
+            foreach ($data['BlkioDeviceReadIOps'] as $value_7) {
+                $values_3[] = $this->denormalizer->denormalize($value_7, \WebProject\DockerApi\Library\Generated\Model\ThrottleDevice::class, 'json', $context);
             }
-            $object->setBlkioDeviceReadIOps($value_10);
-        } elseif (array_key_exists('BlkioDeviceReadIOps', $data) && null === $data['BlkioDeviceReadIOps']) {
-            $object->setBlkioDeviceReadIOps(null);
+            $object->blkioDeviceReadIOps = $values_3;
+            unset($data['BlkioDeviceReadIOps']);
+        } elseif (array_key_exists('BlkioDeviceReadIOps', $data)) {
+            $object->blkioDeviceReadIOps = null;
+            unset($data['BlkioDeviceReadIOps']);
         }
         if (array_key_exists('BlkioDeviceWriteIOps', $data) && null !== $data['BlkioDeviceWriteIOps']) {
-            $value_12 = $data['BlkioDeviceWriteIOps'];
-            if (is_array($data['BlkioDeviceWriteIOps']) && $this->isOnlyNumericKeys($data['BlkioDeviceWriteIOps'])) {
-                $values_4 = [];
-                foreach ($data['BlkioDeviceWriteIOps'] as $value_13) {
-                    $values_4[] = $this->denormalizer->denormalize($value_13, \WebProject\DockerApi\Library\Generated\Model\ThrottleDevice::class, 'json', $context);
-                }
-                $value_12 = $values_4;
-            } elseif (null === $data['BlkioDeviceWriteIOps']) {
-                $value_12 = $data['BlkioDeviceWriteIOps'];
+            $values_4 = [];
+            foreach ($data['BlkioDeviceWriteIOps'] as $value_8) {
+                $values_4[] = $this->denormalizer->denormalize($value_8, \WebProject\DockerApi\Library\Generated\Model\ThrottleDevice::class, 'json', $context);
             }
-            $object->setBlkioDeviceWriteIOps($value_12);
-        } elseif (array_key_exists('BlkioDeviceWriteIOps', $data) && null === $data['BlkioDeviceWriteIOps']) {
-            $object->setBlkioDeviceWriteIOps(null);
+            $object->blkioDeviceWriteIOps = $values_4;
+            unset($data['BlkioDeviceWriteIOps']);
+        } elseif (array_key_exists('BlkioDeviceWriteIOps', $data)) {
+            $object->blkioDeviceWriteIOps = null;
+            unset($data['BlkioDeviceWriteIOps']);
         }
         if (array_key_exists('CpuPeriod', $data) && null !== $data['CpuPeriod']) {
-            $value_14 = $data['CpuPeriod'];
+            $value_9 = $data['CpuPeriod'];
             if (is_int($data['CpuPeriod'])) {
-                $value_14 = $data['CpuPeriod'];
+                $value_9 = $data['CpuPeriod'];
             } elseif (null === $data['CpuPeriod']) {
-                $value_14 = $data['CpuPeriod'];
+                $value_9 = $data['CpuPeriod'];
             }
-            $object->setCpuPeriod($value_14);
-        } elseif (array_key_exists('CpuPeriod', $data) && null === $data['CpuPeriod']) {
-            $object->setCpuPeriod(null);
+            $object->cpuPeriod = $value_9;
+            unset($data['CpuPeriod']);
+        } elseif (array_key_exists('CpuPeriod', $data)) {
+            $object->cpuPeriod = null;
+            unset($data['CpuPeriod']);
         }
         if (array_key_exists('CpuQuota', $data) && null !== $data['CpuQuota']) {
-            $value_15 = $data['CpuQuota'];
+            $value_10 = $data['CpuQuota'];
             if (is_int($data['CpuQuota'])) {
-                $value_15 = $data['CpuQuota'];
+                $value_10 = $data['CpuQuota'];
             } elseif (null === $data['CpuQuota']) {
-                $value_15 = $data['CpuQuota'];
+                $value_10 = $data['CpuQuota'];
             }
-            $object->setCpuQuota($value_15);
-        } elseif (array_key_exists('CpuQuota', $data) && null === $data['CpuQuota']) {
-            $object->setCpuQuota(null);
+            $object->cpuQuota = $value_10;
+            unset($data['CpuQuota']);
+        } elseif (array_key_exists('CpuQuota', $data)) {
+            $object->cpuQuota = null;
+            unset($data['CpuQuota']);
         }
         if (array_key_exists('CpuRealtimePeriod', $data) && null !== $data['CpuRealtimePeriod']) {
-            $value_16 = $data['CpuRealtimePeriod'];
+            $value_11 = $data['CpuRealtimePeriod'];
             if (is_int($data['CpuRealtimePeriod'])) {
-                $value_16 = $data['CpuRealtimePeriod'];
+                $value_11 = $data['CpuRealtimePeriod'];
             } elseif (null === $data['CpuRealtimePeriod']) {
-                $value_16 = $data['CpuRealtimePeriod'];
+                $value_11 = $data['CpuRealtimePeriod'];
             }
-            $object->setCpuRealtimePeriod($value_16);
-        } elseif (array_key_exists('CpuRealtimePeriod', $data) && null === $data['CpuRealtimePeriod']) {
-            $object->setCpuRealtimePeriod(null);
+            $object->cpuRealtimePeriod = $value_11;
+            unset($data['CpuRealtimePeriod']);
+        } elseif (array_key_exists('CpuRealtimePeriod', $data)) {
+            $object->cpuRealtimePeriod = null;
+            unset($data['CpuRealtimePeriod']);
         }
         if (array_key_exists('CpuRealtimeRuntime', $data) && null !== $data['CpuRealtimeRuntime']) {
-            $value_17 = $data['CpuRealtimeRuntime'];
+            $value_12 = $data['CpuRealtimeRuntime'];
             if (is_int($data['CpuRealtimeRuntime'])) {
-                $value_17 = $data['CpuRealtimeRuntime'];
+                $value_12 = $data['CpuRealtimeRuntime'];
             } elseif (null === $data['CpuRealtimeRuntime']) {
-                $value_17 = $data['CpuRealtimeRuntime'];
+                $value_12 = $data['CpuRealtimeRuntime'];
             }
-            $object->setCpuRealtimeRuntime($value_17);
-        } elseif (array_key_exists('CpuRealtimeRuntime', $data) && null === $data['CpuRealtimeRuntime']) {
-            $object->setCpuRealtimeRuntime(null);
+            $object->cpuRealtimeRuntime = $value_12;
+            unset($data['CpuRealtimeRuntime']);
+        } elseif (array_key_exists('CpuRealtimeRuntime', $data)) {
+            $object->cpuRealtimeRuntime = null;
+            unset($data['CpuRealtimeRuntime']);
         }
         if (array_key_exists('CpusetCpus', $data) && null !== $data['CpusetCpus']) {
-            $value_18 = $data['CpusetCpus'];
+            $value_13 = $data['CpusetCpus'];
             if (is_string($data['CpusetCpus'])) {
-                $value_18 = $data['CpusetCpus'];
+                $value_13 = $data['CpusetCpus'];
             } elseif (null === $data['CpusetCpus']) {
-                $value_18 = $data['CpusetCpus'];
+                $value_13 = $data['CpusetCpus'];
             }
-            $object->setCpusetCpus($value_18);
-        } elseif (array_key_exists('CpusetCpus', $data) && null === $data['CpusetCpus']) {
-            $object->setCpusetCpus(null);
+            $object->cpusetCpus = $value_13;
+            unset($data['CpusetCpus']);
+        } elseif (array_key_exists('CpusetCpus', $data)) {
+            $object->cpusetCpus = null;
+            unset($data['CpusetCpus']);
         }
         if (array_key_exists('CpusetMems', $data) && null !== $data['CpusetMems']) {
-            $value_19 = $data['CpusetMems'];
+            $value_14 = $data['CpusetMems'];
             if (is_string($data['CpusetMems'])) {
-                $value_19 = $data['CpusetMems'];
+                $value_14 = $data['CpusetMems'];
             } elseif (null === $data['CpusetMems']) {
-                $value_19 = $data['CpusetMems'];
+                $value_14 = $data['CpusetMems'];
             }
-            $object->setCpusetMems($value_19);
-        } elseif (array_key_exists('CpusetMems', $data) && null === $data['CpusetMems']) {
-            $object->setCpusetMems(null);
+            $object->cpusetMems = $value_14;
+            unset($data['CpusetMems']);
+        } elseif (array_key_exists('CpusetMems', $data)) {
+            $object->cpusetMems = null;
+            unset($data['CpusetMems']);
         }
         if (array_key_exists('Devices', $data) && null !== $data['Devices']) {
-            $value_20 = $data['Devices'];
-            if (is_array($data['Devices']) && $this->isOnlyNumericKeys($data['Devices'])) {
-                $values_5 = [];
-                foreach ($data['Devices'] as $value_21) {
-                    $values_5[] = $this->denormalizer->denormalize($value_21, \WebProject\DockerApi\Library\Generated\Model\DeviceMapping::class, 'json', $context);
-                }
-                $value_20 = $values_5;
-            } elseif (null === $data['Devices']) {
-                $value_20 = $data['Devices'];
+            $values_5 = [];
+            foreach ($data['Devices'] as $value_15) {
+                $values_5[] = $this->denormalizer->denormalize($value_15, \WebProject\DockerApi\Library\Generated\Model\DeviceMapping::class, 'json', $context);
             }
-            $object->setDevices($value_20);
-        } elseif (array_key_exists('Devices', $data) && null === $data['Devices']) {
-            $object->setDevices(null);
+            $object->devices = $values_5;
+            unset($data['Devices']);
+        } elseif (array_key_exists('Devices', $data)) {
+            $object->devices = null;
+            unset($data['Devices']);
         }
         if (array_key_exists('DeviceCgroupRules', $data) && null !== $data['DeviceCgroupRules']) {
-            $value_22 = $data['DeviceCgroupRules'];
-            if (is_array($data['DeviceCgroupRules']) && $this->isOnlyNumericKeys($data['DeviceCgroupRules'])) {
-                $values_6 = [];
-                foreach ($data['DeviceCgroupRules'] as $value_23) {
-                    $values_6[] = $value_23;
-                }
-                $value_22 = $values_6;
-            } elseif (null === $data['DeviceCgroupRules']) {
-                $value_22 = $data['DeviceCgroupRules'];
+            $values_6 = [];
+            foreach ($data['DeviceCgroupRules'] as $value_16) {
+                $values_6[] = $value_16;
             }
-            $object->setDeviceCgroupRules($value_22);
-        } elseif (array_key_exists('DeviceCgroupRules', $data) && null === $data['DeviceCgroupRules']) {
-            $object->setDeviceCgroupRules(null);
+            $object->deviceCgroupRules = $values_6;
+            unset($data['DeviceCgroupRules']);
+        } elseif (array_key_exists('DeviceCgroupRules', $data)) {
+            $object->deviceCgroupRules = null;
+            unset($data['DeviceCgroupRules']);
         }
         if (array_key_exists('DeviceRequests', $data) && null !== $data['DeviceRequests']) {
-            $value_24 = $data['DeviceRequests'];
-            if (is_array($data['DeviceRequests']) && $this->isOnlyNumericKeys($data['DeviceRequests'])) {
-                $values_7 = [];
-                foreach ($data['DeviceRequests'] as $value_25) {
-                    $values_7[] = $this->denormalizer->denormalize($value_25, \WebProject\DockerApi\Library\Generated\Model\DeviceRequest::class, 'json', $context);
-                }
-                $value_24 = $values_7;
-            } elseif (null === $data['DeviceRequests']) {
-                $value_24 = $data['DeviceRequests'];
+            $values_7 = [];
+            foreach ($data['DeviceRequests'] as $value_17) {
+                $values_7[] = $this->denormalizer->denormalize($value_17, \WebProject\DockerApi\Library\Generated\Model\DeviceRequest::class, 'json', $context);
             }
-            $object->setDeviceRequests($value_24);
-        } elseif (array_key_exists('DeviceRequests', $data) && null === $data['DeviceRequests']) {
-            $object->setDeviceRequests(null);
+            $object->deviceRequests = $values_7;
+            unset($data['DeviceRequests']);
+        } elseif (array_key_exists('DeviceRequests', $data)) {
+            $object->deviceRequests = null;
+            unset($data['DeviceRequests']);
         }
         if (array_key_exists('MemoryReservation', $data) && null !== $data['MemoryReservation']) {
-            $value_26 = $data['MemoryReservation'];
+            $value_18 = $data['MemoryReservation'];
             if (is_int($data['MemoryReservation'])) {
-                $value_26 = $data['MemoryReservation'];
+                $value_18 = $data['MemoryReservation'];
             } elseif (null === $data['MemoryReservation']) {
-                $value_26 = $data['MemoryReservation'];
+                $value_18 = $data['MemoryReservation'];
             }
-            $object->setMemoryReservation($value_26);
-        } elseif (array_key_exists('MemoryReservation', $data) && null === $data['MemoryReservation']) {
-            $object->setMemoryReservation(null);
+            $object->memoryReservation = $value_18;
+            unset($data['MemoryReservation']);
+        } elseif (array_key_exists('MemoryReservation', $data)) {
+            $object->memoryReservation = null;
+            unset($data['MemoryReservation']);
         }
         if (array_key_exists('MemorySwap', $data) && null !== $data['MemorySwap']) {
-            $value_27 = $data['MemorySwap'];
+            $value_19 = $data['MemorySwap'];
             if (is_int($data['MemorySwap'])) {
-                $value_27 = $data['MemorySwap'];
+                $value_19 = $data['MemorySwap'];
             } elseif (null === $data['MemorySwap']) {
-                $value_27 = $data['MemorySwap'];
+                $value_19 = $data['MemorySwap'];
             }
-            $object->setMemorySwap($value_27);
-        } elseif (array_key_exists('MemorySwap', $data) && null === $data['MemorySwap']) {
-            $object->setMemorySwap(null);
+            $object->memorySwap = $value_19;
+            unset($data['MemorySwap']);
+        } elseif (array_key_exists('MemorySwap', $data)) {
+            $object->memorySwap = null;
+            unset($data['MemorySwap']);
         }
         if (array_key_exists('MemorySwappiness', $data) && null !== $data['MemorySwappiness']) {
-            $value_28 = $data['MemorySwappiness'];
+            $value_20 = $data['MemorySwappiness'];
             if (is_int($data['MemorySwappiness'])) {
-                $value_28 = $data['MemorySwappiness'];
+                $value_20 = $data['MemorySwappiness'];
             } elseif (null === $data['MemorySwappiness']) {
-                $value_28 = $data['MemorySwappiness'];
+                $value_20 = $data['MemorySwappiness'];
             }
-            $object->setMemorySwappiness($value_28);
-        } elseif (array_key_exists('MemorySwappiness', $data) && null === $data['MemorySwappiness']) {
-            $object->setMemorySwappiness(null);
+            $object->memorySwappiness = $value_20;
+            unset($data['MemorySwappiness']);
+        } elseif (array_key_exists('MemorySwappiness', $data)) {
+            $object->memorySwappiness = null;
+            unset($data['MemorySwappiness']);
         }
         if (array_key_exists('NanoCpus', $data) && null !== $data['NanoCpus']) {
-            $value_29 = $data['NanoCpus'];
+            $value_21 = $data['NanoCpus'];
             if (is_int($data['NanoCpus'])) {
-                $value_29 = $data['NanoCpus'];
+                $value_21 = $data['NanoCpus'];
             } elseif (null === $data['NanoCpus']) {
-                $value_29 = $data['NanoCpus'];
+                $value_21 = $data['NanoCpus'];
             }
-            $object->setNanoCpus($value_29);
-        } elseif (array_key_exists('NanoCpus', $data) && null === $data['NanoCpus']) {
-            $object->setNanoCpus(null);
+            $object->nanoCpus = $value_21;
+            unset($data['NanoCpus']);
+        } elseif (array_key_exists('NanoCpus', $data)) {
+            $object->nanoCpus = null;
+            unset($data['NanoCpus']);
         }
         if (array_key_exists('OomKillDisable', $data) && null !== $data['OomKillDisable']) {
-            $value_30 = $data['OomKillDisable'];
+            $value_22 = $data['OomKillDisable'];
             if (is_bool($data['OomKillDisable'])) {
-                $value_30 = $data['OomKillDisable'];
+                $value_22 = $data['OomKillDisable'];
             } elseif (null === $data['OomKillDisable']) {
-                $value_30 = $data['OomKillDisable'];
+                $value_22 = $data['OomKillDisable'];
             }
-            $object->setOomKillDisable($value_30);
-        } elseif (array_key_exists('OomKillDisable', $data) && null === $data['OomKillDisable']) {
-            $object->setOomKillDisable(null);
+            $object->oomKillDisable = $value_22;
+            unset($data['OomKillDisable']);
+        } elseif (array_key_exists('OomKillDisable', $data)) {
+            $object->oomKillDisable = null;
+            unset($data['OomKillDisable']);
         }
         if (array_key_exists('Init', $data) && null !== $data['Init']) {
-            $value_31 = $data['Init'];
+            $value_23 = $data['Init'];
             if (is_bool($data['Init'])) {
-                $value_31 = $data['Init'];
+                $value_23 = $data['Init'];
             } elseif (null === $data['Init']) {
-                $value_31 = $data['Init'];
+                $value_23 = $data['Init'];
             }
-            $object->setInit($value_31);
-        } elseif (array_key_exists('Init', $data) && null === $data['Init']) {
-            $object->setInit(null);
+            $object->init = $value_23;
+            unset($data['Init']);
+        } elseif (array_key_exists('Init', $data)) {
+            $object->init = null;
+            unset($data['Init']);
         }
         if (array_key_exists('PidsLimit', $data) && null !== $data['PidsLimit']) {
-            $value_32 = $data['PidsLimit'];
+            $value_24 = $data['PidsLimit'];
             if (is_int($data['PidsLimit'])) {
-                $value_32 = $data['PidsLimit'];
+                $value_24 = $data['PidsLimit'];
             } elseif (null === $data['PidsLimit']) {
-                $value_32 = $data['PidsLimit'];
+                $value_24 = $data['PidsLimit'];
             }
-            $object->setPidsLimit($value_32);
-        } elseif (array_key_exists('PidsLimit', $data) && null === $data['PidsLimit']) {
-            $object->setPidsLimit(null);
+            $object->pidsLimit = $value_24;
+            unset($data['PidsLimit']);
+        } elseif (array_key_exists('PidsLimit', $data)) {
+            $object->pidsLimit = null;
+            unset($data['PidsLimit']);
         }
         if (array_key_exists('Ulimits', $data) && null !== $data['Ulimits']) {
-            $value_33 = $data['Ulimits'];
-            if (is_array($data['Ulimits']) && $this->isOnlyNumericKeys($data['Ulimits'])) {
-                $values_8 = [];
-                foreach ($data['Ulimits'] as $value_34) {
-                    $values_8[] = $this->denormalizer->denormalize($value_34, \WebProject\DockerApi\Library\Generated\Model\ResourcesUlimitsItem::class, 'json', $context);
-                }
-                $value_33 = $values_8;
-            } elseif (null === $data['Ulimits']) {
-                $value_33 = $data['Ulimits'];
+            $values_8 = [];
+            foreach ($data['Ulimits'] as $value_25) {
+                $values_8[] = $this->denormalizer->denormalize($value_25, \WebProject\DockerApi\Library\Generated\Model\ResourcesUlimitsItem::class, 'json', $context);
             }
-            $object->setUlimits($value_33);
-        } elseif (array_key_exists('Ulimits', $data) && null === $data['Ulimits']) {
-            $object->setUlimits(null);
+            $object->ulimits = $values_8;
+            unset($data['Ulimits']);
+        } elseif (array_key_exists('Ulimits', $data)) {
+            $object->ulimits = null;
+            unset($data['Ulimits']);
         }
         if (array_key_exists('CpuCount', $data) && null !== $data['CpuCount']) {
-            $value_35 = $data['CpuCount'];
+            $value_26 = $data['CpuCount'];
             if (is_int($data['CpuCount'])) {
-                $value_35 = $data['CpuCount'];
+                $value_26 = $data['CpuCount'];
             } elseif (null === $data['CpuCount']) {
-                $value_35 = $data['CpuCount'];
+                $value_26 = $data['CpuCount'];
             }
-            $object->setCpuCount($value_35);
-        } elseif (array_key_exists('CpuCount', $data) && null === $data['CpuCount']) {
-            $object->setCpuCount(null);
+            $object->cpuCount = $value_26;
+            unset($data['CpuCount']);
+        } elseif (array_key_exists('CpuCount', $data)) {
+            $object->cpuCount = null;
+            unset($data['CpuCount']);
         }
         if (array_key_exists('CpuPercent', $data) && null !== $data['CpuPercent']) {
-            $value_36 = $data['CpuPercent'];
+            $value_27 = $data['CpuPercent'];
             if (is_int($data['CpuPercent'])) {
-                $value_36 = $data['CpuPercent'];
+                $value_27 = $data['CpuPercent'];
             } elseif (null === $data['CpuPercent']) {
-                $value_36 = $data['CpuPercent'];
+                $value_27 = $data['CpuPercent'];
             }
-            $object->setCpuPercent($value_36);
-        } elseif (array_key_exists('CpuPercent', $data) && null === $data['CpuPercent']) {
-            $object->setCpuPercent(null);
+            $object->cpuPercent = $value_27;
+            unset($data['CpuPercent']);
+        } elseif (array_key_exists('CpuPercent', $data)) {
+            $object->cpuPercent = null;
+            unset($data['CpuPercent']);
         }
         if (array_key_exists('IOMaximumIOps', $data) && null !== $data['IOMaximumIOps']) {
-            $value_37 = $data['IOMaximumIOps'];
+            $value_28 = $data['IOMaximumIOps'];
             if (is_int($data['IOMaximumIOps'])) {
-                $value_37 = $data['IOMaximumIOps'];
+                $value_28 = $data['IOMaximumIOps'];
             } elseif (null === $data['IOMaximumIOps']) {
-                $value_37 = $data['IOMaximumIOps'];
+                $value_28 = $data['IOMaximumIOps'];
             }
-            $object->setIOMaximumIOps($value_37);
-        } elseif (array_key_exists('IOMaximumIOps', $data) && null === $data['IOMaximumIOps']) {
-            $object->setIOMaximumIOps(null);
+            $object->iOMaximumIOps = $value_28;
+            unset($data['IOMaximumIOps']);
+        } elseif (array_key_exists('IOMaximumIOps', $data)) {
+            $object->iOMaximumIOps = null;
+            unset($data['IOMaximumIOps']);
         }
         if (array_key_exists('IOMaximumBandwidth', $data) && null !== $data['IOMaximumBandwidth']) {
-            $value_38 = $data['IOMaximumBandwidth'];
+            $value_29 = $data['IOMaximumBandwidth'];
             if (is_int($data['IOMaximumBandwidth'])) {
-                $value_38 = $data['IOMaximumBandwidth'];
+                $value_29 = $data['IOMaximumBandwidth'];
             } elseif (null === $data['IOMaximumBandwidth']) {
-                $value_38 = $data['IOMaximumBandwidth'];
+                $value_29 = $data['IOMaximumBandwidth'];
             }
-            $object->setIOMaximumBandwidth($value_38);
-        } elseif (array_key_exists('IOMaximumBandwidth', $data) && null === $data['IOMaximumBandwidth']) {
-            $object->setIOMaximumBandwidth(null);
+            $object->iOMaximumBandwidth = $value_29;
+            unset($data['IOMaximumBandwidth']);
+        } elseif (array_key_exists('IOMaximumBandwidth', $data)) {
+            $object->iOMaximumBandwidth = null;
+            unset($data['IOMaximumBandwidth']);
+        }
+        foreach ($data as $key => $value_30) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_30;
+            }
         }
 
         return $object;
@@ -423,311 +434,270 @@ class ResourcesNormalizer implements DenormalizerInterface, NormalizerInterface,
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('cpuShares')) {
-            $value = $data->getCpuShares();
-            if (is_int($data->getCpuShares())) {
-                $value = $data->getCpuShares();
-            } elseif (null === $data->getCpuShares()) {
-                $value = $data->getCpuShares();
+        if (array_key_exists('cpuShares', get_object_vars($data)) && null !== ($data->cpuShares ?? null)) {
+            $value = $data->cpuShares;
+            if (is_int($data->cpuShares)) {
+                $value = $data->cpuShares;
+            } elseif (null === $data->cpuShares) {
+                $value = $data->cpuShares;
             }
             $dataArray['CpuShares'] = $value;
         }
-        if ($data->isInitialized('memory')) {
-            $value_1 = $data->getMemory();
-            if (is_int($data->getMemory())) {
-                $value_1 = $data->getMemory();
-            } elseif (null === $data->getMemory()) {
-                $value_1 = $data->getMemory();
+        if (array_key_exists('memory', get_object_vars($data)) && null !== ($data->memory ?? null)) {
+            $value_1 = $data->memory;
+            if (is_int($data->memory)) {
+                $value_1 = $data->memory;
+            } elseif (null === $data->memory) {
+                $value_1 = $data->memory;
             }
             $dataArray['Memory'] = $value_1;
         }
-        if ($data->isInitialized('cgroupParent')) {
-            $value_2 = $data->getCgroupParent();
-            if (is_string($data->getCgroupParent())) {
-                $value_2 = $data->getCgroupParent();
-            } elseif (null === $data->getCgroupParent()) {
-                $value_2 = $data->getCgroupParent();
+        if (array_key_exists('cgroupParent', get_object_vars($data)) && null !== ($data->cgroupParent ?? null)) {
+            $value_2 = $data->cgroupParent;
+            if (is_string($data->cgroupParent)) {
+                $value_2 = $data->cgroupParent;
+            } elseif (null === $data->cgroupParent) {
+                $value_2 = $data->cgroupParent;
             }
             $dataArray['CgroupParent'] = $value_2;
         }
-        if ($data->isInitialized('blkioWeight')) {
-            $value_3 = $data->getBlkioWeight();
-            if (is_int($data->getBlkioWeight())) {
-                $value_3 = $data->getBlkioWeight();
-            } elseif (null === $data->getBlkioWeight()) {
-                $value_3 = $data->getBlkioWeight();
+        if (array_key_exists('blkioWeight', get_object_vars($data)) && null !== ($data->blkioWeight ?? null)) {
+            $value_3 = $data->blkioWeight;
+            if (is_int($data->blkioWeight)) {
+                $value_3 = $data->blkioWeight;
+            } elseif (null === $data->blkioWeight) {
+                $value_3 = $data->blkioWeight;
             }
             $dataArray['BlkioWeight'] = $value_3;
         }
-        if ($data->isInitialized('blkioWeightDevice')) {
-            $value_4 = $data->getBlkioWeightDevice();
-            if (is_array($data->getBlkioWeightDevice())) {
-                $values = [];
-                foreach ($data->getBlkioWeightDevice() as $value_5) {
-                    $values[] = $this->normalizer->normalize($value_5, 'json', $context);
-                }
-                $value_4 = $values;
-            } elseif (null === $data->getBlkioWeightDevice()) {
-                $value_4 = $data->getBlkioWeightDevice();
+        if (array_key_exists('blkioWeightDevice', get_object_vars($data)) && null !== ($data->blkioWeightDevice ?? null)) {
+            $values = [];
+            foreach ($data->blkioWeightDevice as $value_4) {
+                $normalized = null === $value_4 ? null : $this->normalizer->normalize($value_4, 'json', $context);
+                $values[]   = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
             }
-            $dataArray['BlkioWeightDevice'] = $value_4;
+            $dataArray['BlkioWeightDevice'] = $values;
         }
-        if ($data->isInitialized('blkioDeviceReadBps')) {
-            $value_6 = $data->getBlkioDeviceReadBps();
-            if (is_array($data->getBlkioDeviceReadBps())) {
-                $values_1 = [];
-                foreach ($data->getBlkioDeviceReadBps() as $value_7) {
-                    $values_1[] = $this->normalizer->normalize($value_7, 'json', $context);
-                }
-                $value_6 = $values_1;
-            } elseif (null === $data->getBlkioDeviceReadBps()) {
-                $value_6 = $data->getBlkioDeviceReadBps();
+        if (array_key_exists('blkioDeviceReadBps', get_object_vars($data)) && null !== ($data->blkioDeviceReadBps ?? null)) {
+            $values_1 = [];
+            foreach ($data->blkioDeviceReadBps as $value_5) {
+                $normalized_1 = null === $value_5 ? null : $this->normalizer->normalize($value_5, 'json', $context);
+                $values_1[]   = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
             }
-            $dataArray['BlkioDeviceReadBps'] = $value_6;
+            $dataArray['BlkioDeviceReadBps'] = $values_1;
         }
-        if ($data->isInitialized('blkioDeviceWriteBps')) {
-            $value_8 = $data->getBlkioDeviceWriteBps();
-            if (is_array($data->getBlkioDeviceWriteBps())) {
-                $values_2 = [];
-                foreach ($data->getBlkioDeviceWriteBps() as $value_9) {
-                    $values_2[] = $this->normalizer->normalize($value_9, 'json', $context);
-                }
-                $value_8 = $values_2;
-            } elseif (null === $data->getBlkioDeviceWriteBps()) {
-                $value_8 = $data->getBlkioDeviceWriteBps();
+        if (array_key_exists('blkioDeviceWriteBps', get_object_vars($data)) && null !== ($data->blkioDeviceWriteBps ?? null)) {
+            $values_2 = [];
+            foreach ($data->blkioDeviceWriteBps as $value_6) {
+                $normalized_2 = null === $value_6 ? null : $this->normalizer->normalize($value_6, 'json', $context);
+                $values_2[]   = is_iterable($normalized_2) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_2) : $normalized_2;
             }
-            $dataArray['BlkioDeviceWriteBps'] = $value_8;
+            $dataArray['BlkioDeviceWriteBps'] = $values_2;
         }
-        if ($data->isInitialized('blkioDeviceReadIOps')) {
-            $value_10 = $data->getBlkioDeviceReadIOps();
-            if (is_array($data->getBlkioDeviceReadIOps())) {
-                $values_3 = [];
-                foreach ($data->getBlkioDeviceReadIOps() as $value_11) {
-                    $values_3[] = $this->normalizer->normalize($value_11, 'json', $context);
-                }
-                $value_10 = $values_3;
-            } elseif (null === $data->getBlkioDeviceReadIOps()) {
-                $value_10 = $data->getBlkioDeviceReadIOps();
+        if (array_key_exists('blkioDeviceReadIOps', get_object_vars($data)) && null !== ($data->blkioDeviceReadIOps ?? null)) {
+            $values_3 = [];
+            foreach ($data->blkioDeviceReadIOps as $value_7) {
+                $normalized_3 = null === $value_7 ? null : $this->normalizer->normalize($value_7, 'json', $context);
+                $values_3[]   = is_iterable($normalized_3) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_3) : $normalized_3;
             }
-            $dataArray['BlkioDeviceReadIOps'] = $value_10;
+            $dataArray['BlkioDeviceReadIOps'] = $values_3;
         }
-        if ($data->isInitialized('blkioDeviceWriteIOps')) {
-            $value_12 = $data->getBlkioDeviceWriteIOps();
-            if (is_array($data->getBlkioDeviceWriteIOps())) {
-                $values_4 = [];
-                foreach ($data->getBlkioDeviceWriteIOps() as $value_13) {
-                    $values_4[] = $this->normalizer->normalize($value_13, 'json', $context);
-                }
-                $value_12 = $values_4;
-            } elseif (null === $data->getBlkioDeviceWriteIOps()) {
-                $value_12 = $data->getBlkioDeviceWriteIOps();
+        if (array_key_exists('blkioDeviceWriteIOps', get_object_vars($data)) && null !== ($data->blkioDeviceWriteIOps ?? null)) {
+            $values_4 = [];
+            foreach ($data->blkioDeviceWriteIOps as $value_8) {
+                $normalized_4 = null === $value_8 ? null : $this->normalizer->normalize($value_8, 'json', $context);
+                $values_4[]   = is_iterable($normalized_4) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_4) : $normalized_4;
             }
-            $dataArray['BlkioDeviceWriteIOps'] = $value_12;
+            $dataArray['BlkioDeviceWriteIOps'] = $values_4;
         }
-        if ($data->isInitialized('cpuPeriod')) {
-            $value_14 = $data->getCpuPeriod();
-            if (is_int($data->getCpuPeriod())) {
-                $value_14 = $data->getCpuPeriod();
-            } elseif (null === $data->getCpuPeriod()) {
-                $value_14 = $data->getCpuPeriod();
+        if (array_key_exists('cpuPeriod', get_object_vars($data)) && null !== ($data->cpuPeriod ?? null)) {
+            $value_9 = $data->cpuPeriod;
+            if (is_int($data->cpuPeriod)) {
+                $value_9 = $data->cpuPeriod;
+            } elseif (null === $data->cpuPeriod) {
+                $value_9 = $data->cpuPeriod;
             }
-            $dataArray['CpuPeriod'] = $value_14;
+            $dataArray['CpuPeriod'] = $value_9;
         }
-        if ($data->isInitialized('cpuQuota')) {
-            $value_15 = $data->getCpuQuota();
-            if (is_int($data->getCpuQuota())) {
-                $value_15 = $data->getCpuQuota();
-            } elseif (null === $data->getCpuQuota()) {
-                $value_15 = $data->getCpuQuota();
+        if (array_key_exists('cpuQuota', get_object_vars($data)) && null !== ($data->cpuQuota ?? null)) {
+            $value_10 = $data->cpuQuota;
+            if (is_int($data->cpuQuota)) {
+                $value_10 = $data->cpuQuota;
+            } elseif (null === $data->cpuQuota) {
+                $value_10 = $data->cpuQuota;
             }
-            $dataArray['CpuQuota'] = $value_15;
+            $dataArray['CpuQuota'] = $value_10;
         }
-        if ($data->isInitialized('cpuRealtimePeriod')) {
-            $value_16 = $data->getCpuRealtimePeriod();
-            if (is_int($data->getCpuRealtimePeriod())) {
-                $value_16 = $data->getCpuRealtimePeriod();
-            } elseif (null === $data->getCpuRealtimePeriod()) {
-                $value_16 = $data->getCpuRealtimePeriod();
+        if (array_key_exists('cpuRealtimePeriod', get_object_vars($data)) && null !== ($data->cpuRealtimePeriod ?? null)) {
+            $value_11 = $data->cpuRealtimePeriod;
+            if (is_int($data->cpuRealtimePeriod)) {
+                $value_11 = $data->cpuRealtimePeriod;
+            } elseif (null === $data->cpuRealtimePeriod) {
+                $value_11 = $data->cpuRealtimePeriod;
             }
-            $dataArray['CpuRealtimePeriod'] = $value_16;
+            $dataArray['CpuRealtimePeriod'] = $value_11;
         }
-        if ($data->isInitialized('cpuRealtimeRuntime')) {
-            $value_17 = $data->getCpuRealtimeRuntime();
-            if (is_int($data->getCpuRealtimeRuntime())) {
-                $value_17 = $data->getCpuRealtimeRuntime();
-            } elseif (null === $data->getCpuRealtimeRuntime()) {
-                $value_17 = $data->getCpuRealtimeRuntime();
+        if (array_key_exists('cpuRealtimeRuntime', get_object_vars($data)) && null !== ($data->cpuRealtimeRuntime ?? null)) {
+            $value_12 = $data->cpuRealtimeRuntime;
+            if (is_int($data->cpuRealtimeRuntime)) {
+                $value_12 = $data->cpuRealtimeRuntime;
+            } elseif (null === $data->cpuRealtimeRuntime) {
+                $value_12 = $data->cpuRealtimeRuntime;
             }
-            $dataArray['CpuRealtimeRuntime'] = $value_17;
+            $dataArray['CpuRealtimeRuntime'] = $value_12;
         }
-        if ($data->isInitialized('cpusetCpus')) {
-            $value_18 = $data->getCpusetCpus();
-            if (is_string($data->getCpusetCpus())) {
-                $value_18 = $data->getCpusetCpus();
-            } elseif (null === $data->getCpusetCpus()) {
-                $value_18 = $data->getCpusetCpus();
+        if (array_key_exists('cpusetCpus', get_object_vars($data)) && null !== ($data->cpusetCpus ?? null)) {
+            $value_13 = $data->cpusetCpus;
+            if (is_string($data->cpusetCpus)) {
+                $value_13 = $data->cpusetCpus;
+            } elseif (null === $data->cpusetCpus) {
+                $value_13 = $data->cpusetCpus;
             }
-            $dataArray['CpusetCpus'] = $value_18;
+            $dataArray['CpusetCpus'] = $value_13;
         }
-        if ($data->isInitialized('cpusetMems')) {
-            $value_19 = $data->getCpusetMems();
-            if (is_string($data->getCpusetMems())) {
-                $value_19 = $data->getCpusetMems();
-            } elseif (null === $data->getCpusetMems()) {
-                $value_19 = $data->getCpusetMems();
+        if (array_key_exists('cpusetMems', get_object_vars($data)) && null !== ($data->cpusetMems ?? null)) {
+            $value_14 = $data->cpusetMems;
+            if (is_string($data->cpusetMems)) {
+                $value_14 = $data->cpusetMems;
+            } elseif (null === $data->cpusetMems) {
+                $value_14 = $data->cpusetMems;
             }
-            $dataArray['CpusetMems'] = $value_19;
+            $dataArray['CpusetMems'] = $value_14;
         }
-        if ($data->isInitialized('devices')) {
-            $value_20 = $data->getDevices();
-            if (is_array($data->getDevices())) {
-                $values_5 = [];
-                foreach ($data->getDevices() as $value_21) {
-                    $values_5[] = $this->normalizer->normalize($value_21, 'json', $context);
-                }
-                $value_20 = $values_5;
-            } elseif (null === $data->getDevices()) {
-                $value_20 = $data->getDevices();
+        if (array_key_exists('devices', get_object_vars($data)) && null !== ($data->devices ?? null)) {
+            $values_5 = [];
+            foreach ($data->devices as $value_15) {
+                $normalized_5 = null === $value_15 ? null : $this->normalizer->normalize($value_15, 'json', $context);
+                $values_5[]   = is_iterable($normalized_5) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_5) : $normalized_5;
             }
-            $dataArray['Devices'] = $value_20;
+            $dataArray['Devices'] = $values_5;
         }
-        if ($data->isInitialized('deviceCgroupRules')) {
-            $value_22 = $data->getDeviceCgroupRules();
-            if (is_array($data->getDeviceCgroupRules())) {
-                $values_6 = [];
-                foreach ($data->getDeviceCgroupRules() as $value_23) {
-                    $values_6[] = $value_23;
-                }
-                $value_22 = $values_6;
-            } elseif (null === $data->getDeviceCgroupRules()) {
-                $value_22 = $data->getDeviceCgroupRules();
+        if (array_key_exists('deviceCgroupRules', get_object_vars($data)) && null !== ($data->deviceCgroupRules ?? null)) {
+            $values_6 = [];
+            foreach ($data->deviceCgroupRules as $value_16) {
+                $values_6[] = $value_16;
             }
-            $dataArray['DeviceCgroupRules'] = $value_22;
+            $dataArray['DeviceCgroupRules'] = $values_6;
         }
-        if ($data->isInitialized('deviceRequests')) {
-            $value_24 = $data->getDeviceRequests();
-            if (is_array($data->getDeviceRequests())) {
-                $values_7 = [];
-                foreach ($data->getDeviceRequests() as $value_25) {
-                    $values_7[] = $this->normalizer->normalize($value_25, 'json', $context);
-                }
-                $value_24 = $values_7;
-            } elseif (null === $data->getDeviceRequests()) {
-                $value_24 = $data->getDeviceRequests();
+        if (array_key_exists('deviceRequests', get_object_vars($data)) && null !== ($data->deviceRequests ?? null)) {
+            $values_7 = [];
+            foreach ($data->deviceRequests as $value_17) {
+                $normalized_6 = null === $value_17 ? null : $this->normalizer->normalize($value_17, 'json', $context);
+                $values_7[]   = is_iterable($normalized_6) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_6) : $normalized_6;
             }
-            $dataArray['DeviceRequests'] = $value_24;
+            $dataArray['DeviceRequests'] = $values_7;
         }
-        if ($data->isInitialized('memoryReservation')) {
-            $value_26 = $data->getMemoryReservation();
-            if (is_int($data->getMemoryReservation())) {
-                $value_26 = $data->getMemoryReservation();
-            } elseif (null === $data->getMemoryReservation()) {
-                $value_26 = $data->getMemoryReservation();
+        if (array_key_exists('memoryReservation', get_object_vars($data)) && null !== ($data->memoryReservation ?? null)) {
+            $value_18 = $data->memoryReservation;
+            if (is_int($data->memoryReservation)) {
+                $value_18 = $data->memoryReservation;
+            } elseif (null === $data->memoryReservation) {
+                $value_18 = $data->memoryReservation;
             }
-            $dataArray['MemoryReservation'] = $value_26;
+            $dataArray['MemoryReservation'] = $value_18;
         }
-        if ($data->isInitialized('memorySwap')) {
-            $value_27 = $data->getMemorySwap();
-            if (is_int($data->getMemorySwap())) {
-                $value_27 = $data->getMemorySwap();
-            } elseif (null === $data->getMemorySwap()) {
-                $value_27 = $data->getMemorySwap();
+        if (array_key_exists('memorySwap', get_object_vars($data)) && null !== ($data->memorySwap ?? null)) {
+            $value_19 = $data->memorySwap;
+            if (is_int($data->memorySwap)) {
+                $value_19 = $data->memorySwap;
+            } elseif (null === $data->memorySwap) {
+                $value_19 = $data->memorySwap;
             }
-            $dataArray['MemorySwap'] = $value_27;
+            $dataArray['MemorySwap'] = $value_19;
         }
-        if ($data->isInitialized('memorySwappiness')) {
-            $value_28 = $data->getMemorySwappiness();
-            if (is_int($data->getMemorySwappiness())) {
-                $value_28 = $data->getMemorySwappiness();
-            } elseif (null === $data->getMemorySwappiness()) {
-                $value_28 = $data->getMemorySwappiness();
+        if (array_key_exists('memorySwappiness', get_object_vars($data)) && null !== ($data->memorySwappiness ?? null)) {
+            $value_20 = $data->memorySwappiness;
+            if (is_int($data->memorySwappiness)) {
+                $value_20 = $data->memorySwappiness;
+            } elseif (null === $data->memorySwappiness) {
+                $value_20 = $data->memorySwappiness;
             }
-            $dataArray['MemorySwappiness'] = $value_28;
+            $dataArray['MemorySwappiness'] = $value_20;
         }
-        if ($data->isInitialized('nanoCpus')) {
-            $value_29 = $data->getNanoCpus();
-            if (is_int($data->getNanoCpus())) {
-                $value_29 = $data->getNanoCpus();
-            } elseif (null === $data->getNanoCpus()) {
-                $value_29 = $data->getNanoCpus();
+        if (array_key_exists('nanoCpus', get_object_vars($data)) && null !== ($data->nanoCpus ?? null)) {
+            $value_21 = $data->nanoCpus;
+            if (is_int($data->nanoCpus)) {
+                $value_21 = $data->nanoCpus;
+            } elseif (null === $data->nanoCpus) {
+                $value_21 = $data->nanoCpus;
             }
-            $dataArray['NanoCpus'] = $value_29;
+            $dataArray['NanoCpus'] = $value_21;
         }
-        if ($data->isInitialized('oomKillDisable')) {
-            $value_30 = $data->getOomKillDisable();
-            if (is_bool($data->getOomKillDisable())) {
-                $value_30 = $data->getOomKillDisable();
-            } elseif (null === $data->getOomKillDisable()) {
-                $value_30 = $data->getOomKillDisable();
+        if (array_key_exists('oomKillDisable', get_object_vars($data)) && null !== ($data->oomKillDisable ?? null)) {
+            $value_22 = $data->oomKillDisable;
+            if (is_bool($data->oomKillDisable)) {
+                $value_22 = $data->oomKillDisable;
+            } elseif (null === $data->oomKillDisable) {
+                $value_22 = $data->oomKillDisable;
             }
-            $dataArray['OomKillDisable'] = $value_30;
+            $dataArray['OomKillDisable'] = $value_22;
         }
-        if ($data->isInitialized('init')) {
-            $value_31 = $data->getInit();
-            if (is_bool($data->getInit())) {
-                $value_31 = $data->getInit();
-            } elseif (null === $data->getInit()) {
-                $value_31 = $data->getInit();
+        if (array_key_exists('init', get_object_vars($data)) && null !== ($data->init ?? null)) {
+            $value_23 = $data->init;
+            if (is_bool($data->init)) {
+                $value_23 = $data->init;
+            } elseif (null === $data->init) {
+                $value_23 = $data->init;
             }
-            $dataArray['Init'] = $value_31;
+            $dataArray['Init'] = $value_23;
         }
-        if ($data->isInitialized('pidsLimit')) {
-            $value_32 = $data->getPidsLimit();
-            if (is_int($data->getPidsLimit())) {
-                $value_32 = $data->getPidsLimit();
-            } elseif (null === $data->getPidsLimit()) {
-                $value_32 = $data->getPidsLimit();
+        if (array_key_exists('pidsLimit', get_object_vars($data)) && null !== ($data->pidsLimit ?? null)) {
+            $value_24 = $data->pidsLimit;
+            if (is_int($data->pidsLimit)) {
+                $value_24 = $data->pidsLimit;
+            } elseif (null === $data->pidsLimit) {
+                $value_24 = $data->pidsLimit;
             }
-            $dataArray['PidsLimit'] = $value_32;
+            $dataArray['PidsLimit'] = $value_24;
         }
-        if ($data->isInitialized('ulimits')) {
-            $value_33 = $data->getUlimits();
-            if (is_array($data->getUlimits())) {
-                $values_8 = [];
-                foreach ($data->getUlimits() as $value_34) {
-                    $values_8[] = $this->normalizer->normalize($value_34, 'json', $context);
-                }
-                $value_33 = $values_8;
-            } elseif (null === $data->getUlimits()) {
-                $value_33 = $data->getUlimits();
+        if (array_key_exists('ulimits', get_object_vars($data)) && null !== ($data->ulimits ?? null)) {
+            $values_8 = [];
+            foreach ($data->ulimits as $value_25) {
+                $normalized_7 = null === $value_25 ? null : $this->normalizer->normalize($value_25, 'json', $context);
+                $values_8[]   = is_iterable($normalized_7) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_7) : $normalized_7;
             }
-            $dataArray['Ulimits'] = $value_33;
+            $dataArray['Ulimits'] = $values_8;
         }
-        if ($data->isInitialized('cpuCount')) {
-            $value_35 = $data->getCpuCount();
-            if (is_int($data->getCpuCount())) {
-                $value_35 = $data->getCpuCount();
-            } elseif (null === $data->getCpuCount()) {
-                $value_35 = $data->getCpuCount();
+        if (array_key_exists('cpuCount', get_object_vars($data)) && null !== ($data->cpuCount ?? null)) {
+            $value_26 = $data->cpuCount;
+            if (is_int($data->cpuCount)) {
+                $value_26 = $data->cpuCount;
+            } elseif (null === $data->cpuCount) {
+                $value_26 = $data->cpuCount;
             }
-            $dataArray['CpuCount'] = $value_35;
+            $dataArray['CpuCount'] = $value_26;
         }
-        if ($data->isInitialized('cpuPercent')) {
-            $value_36 = $data->getCpuPercent();
-            if (is_int($data->getCpuPercent())) {
-                $value_36 = $data->getCpuPercent();
-            } elseif (null === $data->getCpuPercent()) {
-                $value_36 = $data->getCpuPercent();
+        if (array_key_exists('cpuPercent', get_object_vars($data)) && null !== ($data->cpuPercent ?? null)) {
+            $value_27 = $data->cpuPercent;
+            if (is_int($data->cpuPercent)) {
+                $value_27 = $data->cpuPercent;
+            } elseif (null === $data->cpuPercent) {
+                $value_27 = $data->cpuPercent;
             }
-            $dataArray['CpuPercent'] = $value_36;
+            $dataArray['CpuPercent'] = $value_27;
         }
-        if ($data->isInitialized('iOMaximumIOps')) {
-            $value_37 = $data->getIOMaximumIOps();
-            if (is_int($data->getIOMaximumIOps())) {
-                $value_37 = $data->getIOMaximumIOps();
-            } elseif (null === $data->getIOMaximumIOps()) {
-                $value_37 = $data->getIOMaximumIOps();
+        if (array_key_exists('iOMaximumIOps', get_object_vars($data)) && null !== ($data->iOMaximumIOps ?? null)) {
+            $value_28 = $data->iOMaximumIOps;
+            if (is_int($data->iOMaximumIOps)) {
+                $value_28 = $data->iOMaximumIOps;
+            } elseif (null === $data->iOMaximumIOps) {
+                $value_28 = $data->iOMaximumIOps;
             }
-            $dataArray['IOMaximumIOps'] = $value_37;
+            $dataArray['IOMaximumIOps'] = $value_28;
         }
-        if ($data->isInitialized('iOMaximumBandwidth')) {
-            $value_38 = $data->getIOMaximumBandwidth();
-            if (is_int($data->getIOMaximumBandwidth())) {
-                $value_38 = $data->getIOMaximumBandwidth();
-            } elseif (null === $data->getIOMaximumBandwidth()) {
-                $value_38 = $data->getIOMaximumBandwidth();
+        if (array_key_exists('iOMaximumBandwidth', get_object_vars($data)) && null !== ($data->iOMaximumBandwidth ?? null)) {
+            $value_29 = $data->iOMaximumBandwidth;
+            if (is_int($data->iOMaximumBandwidth)) {
+                $value_29 = $data->iOMaximumBandwidth;
+            } elseif (null === $data->iOMaximumBandwidth) {
+                $value_29 = $data->iOMaximumBandwidth;
             }
-            $dataArray['IOMaximumBandwidth'] = $value_38;
+            $dataArray['IOMaximumBandwidth'] = $value_29;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_30) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_30;
+            }
         }
 
         return $dataArray;

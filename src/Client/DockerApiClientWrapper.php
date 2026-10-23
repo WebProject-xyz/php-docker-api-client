@@ -6,7 +6,6 @@ namespace WebProject\DockerApiClient\Client;
 
 use JsonException;
 use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\HttpClient\Psr18Client;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -104,7 +103,7 @@ final class DockerApiClientWrapper
         string $socketPath,
         ?int $timeout = null,
     ): self {
-        $httpClient = (new Psr18Client())->withOptions([
+        $httpClient = HttpClient::create([
             'base_uri' => $baseUri,
             'bindto'   => $socketPath,
             'timeout'  => $timeout,

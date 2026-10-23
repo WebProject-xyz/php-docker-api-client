@@ -48,23 +48,24 @@ class NRIInfoNormalizer implements DenormalizerInterface, NormalizerInterface, D
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Info', $data) && null !== $data['Info']) {
-            $value = $data['Info'];
-            if (is_array($data['Info']) && $this->isOnlyNumericKeys($data['Info'])) {
-                $values = [];
-                foreach ($data['Info'] as $value_1) {
-                    $values_1 = [];
-                    foreach ($value_1 as $value_2) {
-                        $values_1[] = $value_2;
-                    }
-                    $values[] = $values_1;
+            $values = [];
+            foreach ($data['Info'] as $value) {
+                $values_1 = [];
+                foreach ($value as $value_1) {
+                    $values_1[] = $value_1;
                 }
-                $value = $values;
-            } elseif (null === $data['Info']) {
-                $value = $data['Info'];
+                $values[] = $values_1;
             }
-            $object->setInfo($value);
-        } elseif (array_key_exists('Info', $data) && null === $data['Info']) {
-            $object->setInfo(null);
+            $object->info = $values;
+            unset($data['Info']);
+        } elseif (array_key_exists('Info', $data)) {
+            $object->info = null;
+            unset($data['Info']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -73,22 +74,21 @@ class NRIInfoNormalizer implements DenormalizerInterface, NormalizerInterface, D
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('info')) {
-            $value = $data->getInfo();
-            if (is_array($data->getInfo())) {
-                $values = [];
-                foreach ($data->getInfo() as $value_1) {
-                    $values_1 = [];
-                    foreach ($value_1 as $value_2) {
-                        $values_1[] = $value_2;
-                    }
-                    $values[] = $values_1;
+        if (array_key_exists('info', get_object_vars($data)) && null !== ($data->info ?? null)) {
+            $values = [];
+            foreach ($data->info as $value) {
+                $values_1 = [];
+                foreach ($value as $value_1) {
+                    $values_1[] = $value_1;
                 }
-                $value = $values;
-            } elseif (null === $data->getInfo()) {
-                $value = $data->getInfo();
+                $values[] = $values_1;
             }
-            $dataArray['Info'] = $value;
+            $dataArray['Info'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

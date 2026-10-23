@@ -49,9 +49,11 @@ class ContainerCPUStatsNormalizer implements DenormalizerInterface, NormalizerIn
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('cpu_usage', $data) && null !== $data['cpu_usage']) {
-            $object->setCpuUsage($this->denormalizer->denormalize($data['cpu_usage'], \WebProject\DockerApi\Library\Generated\Model\ContainerCPUUsage::class, 'json', $context));
-        } elseif (array_key_exists('cpu_usage', $data) && null === $data['cpu_usage']) {
-            $object->setCpuUsage(null);
+            $object->cpuUsage = $this->denormalizer->denormalize($data['cpu_usage'], \WebProject\DockerApi\Library\Generated\Model\ContainerCPUUsage::class, 'json', $context);
+            unset($data['cpu_usage']);
+        } elseif (array_key_exists('cpu_usage', $data)) {
+            $object->cpuUsage = null;
+            unset($data['cpu_usage']);
         }
         if (array_key_exists('system_cpu_usage', $data) && null !== $data['system_cpu_usage']) {
             $value = $data['system_cpu_usage'];
@@ -60,9 +62,11 @@ class ContainerCPUStatsNormalizer implements DenormalizerInterface, NormalizerIn
             } elseif (null === $data['system_cpu_usage']) {
                 $value = $data['system_cpu_usage'];
             }
-            $object->setSystemCpuUsage($value);
-        } elseif (array_key_exists('system_cpu_usage', $data) && null === $data['system_cpu_usage']) {
-            $object->setSystemCpuUsage(null);
+            $object->systemCpuUsage = $value;
+            unset($data['system_cpu_usage']);
+        } elseif (array_key_exists('system_cpu_usage', $data)) {
+            $object->systemCpuUsage = null;
+            unset($data['system_cpu_usage']);
         }
         if (array_key_exists('online_cpus', $data) && null !== $data['online_cpus']) {
             $value_1 = $data['online_cpus'];
@@ -71,14 +75,23 @@ class ContainerCPUStatsNormalizer implements DenormalizerInterface, NormalizerIn
             } elseif (null === $data['online_cpus']) {
                 $value_1 = $data['online_cpus'];
             }
-            $object->setOnlineCpus($value_1);
-        } elseif (array_key_exists('online_cpus', $data) && null === $data['online_cpus']) {
-            $object->setOnlineCpus(null);
+            $object->onlineCpus = $value_1;
+            unset($data['online_cpus']);
+        } elseif (array_key_exists('online_cpus', $data)) {
+            $object->onlineCpus = null;
+            unset($data['online_cpus']);
         }
         if (array_key_exists('throttling_data', $data) && null !== $data['throttling_data']) {
-            $object->setThrottlingData($this->denormalizer->denormalize($data['throttling_data'], \WebProject\DockerApi\Library\Generated\Model\ContainerThrottlingData::class, 'json', $context));
-        } elseif (array_key_exists('throttling_data', $data) && null === $data['throttling_data']) {
-            $object->setThrottlingData(null);
+            $object->throttlingData = $this->denormalizer->denormalize($data['throttling_data'], \WebProject\DockerApi\Library\Generated\Model\ContainerThrottlingData::class, 'json', $context);
+            unset($data['throttling_data']);
+        } elseif (array_key_exists('throttling_data', $data)) {
+            $object->throttlingData = null;
+            unset($data['throttling_data']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -87,29 +100,36 @@ class ContainerCPUStatsNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('cpuUsage')) {
-            $dataArray['cpu_usage'] = $this->normalizer->normalize($data->getCpuUsage(), 'json', $context);
+        if (array_key_exists('cpuUsage', get_object_vars($data)) && null !== ($data->cpuUsage ?? null)) {
+            $normalized             = $this->normalizer->normalize($data->cpuUsage, 'json', $context);
+            $dataArray['cpu_usage'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         }
-        if ($data->isInitialized('systemCpuUsage')) {
-            $value = $data->getSystemCpuUsage();
-            if (is_int($data->getSystemCpuUsage())) {
-                $value = $data->getSystemCpuUsage();
-            } elseif (null === $data->getSystemCpuUsage()) {
-                $value = $data->getSystemCpuUsage();
+        if (array_key_exists('systemCpuUsage', get_object_vars($data)) && null !== ($data->systemCpuUsage ?? null)) {
+            $value = $data->systemCpuUsage;
+            if (is_int($data->systemCpuUsage)) {
+                $value = $data->systemCpuUsage;
+            } elseif (null === $data->systemCpuUsage) {
+                $value = $data->systemCpuUsage;
             }
             $dataArray['system_cpu_usage'] = $value;
         }
-        if ($data->isInitialized('onlineCpus')) {
-            $value_1 = $data->getOnlineCpus();
-            if (is_int($data->getOnlineCpus())) {
-                $value_1 = $data->getOnlineCpus();
-            } elseif (null === $data->getOnlineCpus()) {
-                $value_1 = $data->getOnlineCpus();
+        if (array_key_exists('onlineCpus', get_object_vars($data)) && null !== ($data->onlineCpus ?? null)) {
+            $value_1 = $data->onlineCpus;
+            if (is_int($data->onlineCpus)) {
+                $value_1 = $data->onlineCpus;
+            } elseif (null === $data->onlineCpus) {
+                $value_1 = $data->onlineCpus;
             }
             $dataArray['online_cpus'] = $value_1;
         }
-        if ($data->isInitialized('throttlingData')) {
-            $dataArray['throttling_data'] = $this->normalizer->normalize($data->getThrottlingData(), 'json', $context);
+        if (array_key_exists('throttlingData', get_object_vars($data)) && null !== ($data->throttlingData ?? null)) {
+            $normalized_1                 = $this->normalizer->normalize($data->throttlingData, 'json', $context);
+            $dataArray['throttling_data'] = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

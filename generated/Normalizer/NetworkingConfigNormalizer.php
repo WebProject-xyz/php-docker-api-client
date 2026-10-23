@@ -48,11 +48,17 @@ class NetworkingConfigNormalizer implements DenormalizerInterface, NormalizerInt
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('EndpointsConfig', $data)) {
-            $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+            $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
             foreach ($data['EndpointsConfig'] as $key => $value) {
                 $values[$key] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\EndpointSettings::class, 'json', $context);
             }
-            $object->setEndpointsConfig($values);
+            $object->endpointsConfig = $values;
+            unset($data['EndpointsConfig']);
+        }
+        foreach ($data as $key_1 => $value_1) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_1;
+            }
         }
 
         return $object;
@@ -61,12 +67,18 @@ class NetworkingConfigNormalizer implements DenormalizerInterface, NormalizerInt
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('endpointsConfig') && null !== $data->getEndpointsConfig()) {
-            $values = [];
-            foreach ($data->getEndpointsConfig() as $key => $value) {
-                $values[$key] = $this->normalizer->normalize($value, 'json', $context);
+        if (array_key_exists('endpointsConfig', get_object_vars($data)) && null !== ($data->endpointsConfig ?? null)) {
+            $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+            foreach ($data->endpointsConfig as $key => $value) {
+                $normalized   = null === $value ? null : $this->normalizer->normalize($value, 'json', $context);
+                $values[$key] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
             }
             $dataArray['EndpointsConfig'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_1) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_1;
+            }
         }
 
         return $dataArray;

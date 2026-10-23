@@ -50,7 +50,7 @@ class TopologyNormalizer implements DenormalizerInterface, NormalizerInterface, 
         if (array_key_exists('Segments', $data) && null !== $data['Segments']) {
             $value = $data['Segments'];
             if (is_array($data['Segments']) && $this->isOnlyNumericKeys($data['Segments'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['Segments'] as $key => $value_1) {
                     $values[$key] = $value_1;
                 }
@@ -58,9 +58,16 @@ class TopologyNormalizer implements DenormalizerInterface, NormalizerInterface, 
             } elseif (null === $data['Segments']) {
                 $value = $data['Segments'];
             }
-            $object->setSegments($value);
-        } elseif (array_key_exists('Segments', $data) && null === $data['Segments']) {
-            $object->setSegments(null);
+            $object->segments = $value;
+            unset($data['Segments']);
+        } elseif (array_key_exists('Segments', $data)) {
+            $object->segments = null;
+            unset($data['Segments']);
+        }
+        foreach ($data as $key_1 => $value_2) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_2;
+            }
         }
 
         return $object;
@@ -69,18 +76,23 @@ class TopologyNormalizer implements DenormalizerInterface, NormalizerInterface, 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('segments')) {
-            $value = $data->getSegments();
-            if (is_object($data->getSegments())) {
-                $values = [];
-                foreach ($data->getSegments() as $key => $value_1) {
+        if (array_key_exists('segments', get_object_vars($data)) && null !== ($data->segments ?? null)) {
+            $value = $data->segments;
+            if (is_iterable($data->segments)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->segments as $key => $value_1) {
                     $values[$key] = $value_1;
                 }
                 $value = $values;
-            } elseif (null === $data->getSegments()) {
-                $value = $data->getSegments();
+            } elseif (null === $data->segments) {
+                $value = $data->segments;
             }
             $dataArray['Segments'] = $value;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_2) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_2;
+            }
         }
 
         return $dataArray;

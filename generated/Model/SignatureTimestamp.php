@@ -3,98 +3,30 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use DateTimeInterface;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class SignatureTimestamp
+class SignatureTimestamp implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * SignatureTimestampType is the type of timestamp used in the signature.
      *
-     * @var string
+     * @var SignatureTimestampType
      */
-    protected $type;
+    public SignatureTimestampType $type;
     /**
      * @var string|null
      */
-    protected $uRI;
+    public ?string $uRI;
     /**
-     * @var string|null
+     * @var DateTimeInterface|null
      */
-    protected $timestamp;
+    public ?DateTimeInterface $timestamp;
 
-    /**
-     * SignatureTimestampType is the type of timestamp used in the signature.
-     *
-     * @return string
-     */
-    public function getType(): string
+    public function definedProperties(): array
     {
-        return $this->type;
-    }
-
-    /**
-     * SignatureTimestampType is the type of timestamp used in the signature.
-     *
-     * @param string $type
-     *
-     * @return self
-     */
-    public function setType(string $type): self
-    {
-        $this->initialized['type'] = true;
-        $this->type                = $type;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getURI(): ?string
-    {
-        return $this->uRI;
-    }
-
-    /**
-     * @param string|null $uRI
-     *
-     * @return self
-     */
-    public function setURI(?string $uRI): self
-    {
-        $this->initialized['uRI'] = true;
-        $this->uRI                = $uRI;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getTimestamp(): ?string
-    {
-        return $this->timestamp;
-    }
-
-    /**
-     * @param string|null $timestamp
-     *
-     * @return self
-     */
-    public function setTimestamp(?string $timestamp): self
-    {
-        $this->initialized['timestamp'] = true;
-        $this->timestamp                = $timestamp;
-
-        return $this;
+        return ['type' => 'Type', 'uRI' => 'URI', 'timestamp' => 'Timestamp'];
     }
 }

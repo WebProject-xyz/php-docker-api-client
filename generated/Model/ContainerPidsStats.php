@@ -3,82 +3,28 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ContainerPidsStats
+class ContainerPidsStats implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Current is the number of PIDs in the cgroup.
      *
      * @var int|null
      */
-    protected $current;
+    public ?int $current;
     /**
      * Limit is the hard limit on the number of pids in the cgroup.
      * A "Limit" of 0 means that there is no limit.
      *
      * @var int|null
      */
-    protected $limit;
+    public ?int $limit;
 
-    /**
-     * Current is the number of PIDs in the cgroup.
-     *
-     * @return int|null
-     */
-    public function getCurrent(): ?int
+    public function definedProperties(): array
     {
-        return $this->current;
-    }
-
-    /**
-     * Current is the number of PIDs in the cgroup.
-     *
-     * @param int|null $current
-     *
-     * @return self
-     */
-    public function setCurrent(?int $current): self
-    {
-        $this->initialized['current'] = true;
-        $this->current                = $current;
-
-        return $this;
-    }
-
-    /**
-     * Limit is the hard limit on the number of pids in the cgroup.
-     * A "Limit" of 0 means that there is no limit.
-     *
-     * @return int|null
-     */
-    public function getLimit(): ?int
-    {
-        return $this->limit;
-    }
-
-    /**
-     * Limit is the hard limit on the number of pids in the cgroup.
-     * A "Limit" of 0 means that there is no limit.
-     *
-     * @param int|null $limit
-     *
-     * @return self
-     */
-    public function setLimit(?int $limit): self
-    {
-        $this->initialized['limit'] = true;
-        $this->limit                = $limit;
-
-        return $this;
+        return ['current' => 'current', 'limit' => 'limit'];
     }
 }

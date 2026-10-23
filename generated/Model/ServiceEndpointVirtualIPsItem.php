@@ -3,67 +3,23 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ServiceEndpointVirtualIPsItem
+class ServiceEndpointVirtualIPsItem implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var string|null
      */
-    protected $networkID;
+    public ?string $networkID;
     /**
      * @var string|null
      */
-    protected $addr;
+    public ?string $addr;
 
-    /**
-     * @return string|null
-     */
-    public function getNetworkID(): ?string
+    public function definedProperties(): array
     {
-        return $this->networkID;
-    }
-
-    /**
-     * @param string|null $networkID
-     *
-     * @return self
-     */
-    public function setNetworkID(?string $networkID): self
-    {
-        $this->initialized['networkID'] = true;
-        $this->networkID                = $networkID;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getAddr(): ?string
-    {
-        return $this->addr;
-    }
-
-    /**
-     * @param string|null $addr
-     *
-     * @return self
-     */
-    public function setAddr(?string $addr): self
-    {
-        $this->initialized['addr'] = true;
-        $this->addr                = $addr;
-
-        return $this;
+        return ['networkID' => 'NetworkID', 'addr' => 'Addr'];
     }
 }

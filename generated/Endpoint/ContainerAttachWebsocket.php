@@ -13,8 +13,8 @@ class ContainerAttachWebsocket extends \WebProject\DockerApi\Library\Generated\R
      * @param string $id ID or name of the container
      * @param array{
      *    "detachKeys"?: string, //Override the key sequence for detaching a container.Format is a single
-     * character `[a-Z]` or `ctrl-<value>` where `<value>` is one of: `a-z`,
-     * `@`, `^`, `[`, `,`, or `_`.
+     *                           //character `[a-Z]` or `ctrl-<value>` where `<value>` is one of: `a-z`,
+     *                           //`@`, `^`, `[`, `,`, or `_`.
      *    "logs"?: bool, //Return logs
      *    "stream"?: bool, //Return stream
      *    "stdin"?: bool, //Attach to `stdin`
@@ -37,10 +37,10 @@ class ContainerAttachWebsocket extends \WebProject\DockerApi\Library\Generated\R
 
     public function getUri(): string
     {
-        return str_replace(['{id}'], [$this->id], '/containers/{id}/attach/ws');
+        return str_replace(['{id}'], [rawurlencode($this->id)], '/containers/{id}/attach/ws');
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
         return [[], null];
     }
@@ -78,30 +78,42 @@ class ContainerAttachWebsocket extends \WebProject\DockerApi\Library\Generated\R
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ContainerAttachWebsocketBadRequestException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ContainerAttachWebsocketNotFoundException
      * @throws \WebProject\DockerApi\Library\Generated\Exception\ContainerAttachWebsocketInternalServerErrorException
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
+        $body   = $response->getContent(false);
         if (101 === $status) {
             return null;
         }
         if (200 === $status) {
             return null;
         }
-        if ((null === $contentType) === false && (400 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (400 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerAttachWebsocketBadRequestException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (404 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (404 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerAttachWebsocketNotFoundException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (500 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\ContainerAttachWebsocketInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Lazy->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

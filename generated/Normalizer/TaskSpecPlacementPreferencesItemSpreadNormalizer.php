@@ -55,9 +55,16 @@ class TaskSpecPlacementPreferencesItemSpreadNormalizer implements DenormalizerIn
             } elseif (null === $data['SpreadDescriptor']) {
                 $value = $data['SpreadDescriptor'];
             }
-            $object->setSpreadDescriptor($value);
-        } elseif (array_key_exists('SpreadDescriptor', $data) && null === $data['SpreadDescriptor']) {
-            $object->setSpreadDescriptor(null);
+            $object->spreadDescriptor = $value;
+            unset($data['SpreadDescriptor']);
+        } elseif (array_key_exists('SpreadDescriptor', $data)) {
+            $object->spreadDescriptor = null;
+            unset($data['SpreadDescriptor']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -66,14 +73,19 @@ class TaskSpecPlacementPreferencesItemSpreadNormalizer implements DenormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('spreadDescriptor')) {
-            $value = $data->getSpreadDescriptor();
-            if (is_string($data->getSpreadDescriptor())) {
-                $value = $data->getSpreadDescriptor();
-            } elseif (null === $data->getSpreadDescriptor()) {
-                $value = $data->getSpreadDescriptor();
+        if (array_key_exists('spreadDescriptor', get_object_vars($data)) && null !== ($data->spreadDescriptor ?? null)) {
+            $value = $data->spreadDescriptor;
+            if (is_string($data->spreadDescriptor)) {
+                $value = $data->spreadDescriptor;
+            } elseif (null === $data->spreadDescriptor) {
+                $value = $data->spreadDescriptor;
             }
             $dataArray['SpreadDescriptor'] = $value;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

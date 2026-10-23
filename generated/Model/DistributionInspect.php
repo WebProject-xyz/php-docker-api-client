@@ -3,82 +3,28 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class DistributionInspect
+class DistributionInspect implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * A descriptor struct containing digest, media type, and size, as defined in
      * the [OCI Content Descriptors Specification](https://github.com/opencontainers/image-spec/blob/v1.0.1/descriptor.md).
      *
      * @var OCIDescriptor
      */
-    protected $descriptor;
+    public OCIDescriptor $descriptor;
     /**
      * An array containing all platforms supported by the image.
      *
      * @var list<OCIPlatform>
      */
-    protected $platforms;
+    public array $platforms;
 
-    /**
-     * A descriptor struct containing digest, media type, and size, as defined in
-     * the [OCI Content Descriptors Specification](https://github.com/opencontainers/image-spec/blob/v1.0.1/descriptor.md).
-     *
-     * @return OCIDescriptor
-     */
-    public function getDescriptor(): OCIDescriptor
+    public function definedProperties(): array
     {
-        return $this->descriptor;
-    }
-
-    /**
-     * A descriptor struct containing digest, media type, and size, as defined in
-     * the [OCI Content Descriptors Specification](https://github.com/opencontainers/image-spec/blob/v1.0.1/descriptor.md).
-     *
-     * @param OCIDescriptor $descriptor
-     *
-     * @return self
-     */
-    public function setDescriptor(OCIDescriptor $descriptor): self
-    {
-        $this->initialized['descriptor'] = true;
-        $this->descriptor                = $descriptor;
-
-        return $this;
-    }
-
-    /**
-     * An array containing all platforms supported by the image.
-     *
-     * @return list<OCIPlatform>
-     */
-    public function getPlatforms(): array
-    {
-        return $this->platforms;
-    }
-
-    /**
-     * An array containing all platforms supported by the image.
-     *
-     * @param list<OCIPlatform> $platforms
-     *
-     * @return self
-     */
-    public function setPlatforms(array $platforms): self
-    {
-        $this->initialized['platforms'] = true;
-        $this->platforms                = $platforms;
-
-        return $this;
+        return ['descriptor' => 'Descriptor', 'platforms' => 'Platforms'];
     }
 }

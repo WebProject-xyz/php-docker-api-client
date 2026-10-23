@@ -48,19 +48,20 @@ class ContainerUpdateResponseNormalizer implements DenormalizerInterface, Normal
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Warnings', $data) && null !== $data['Warnings']) {
-            $value = $data['Warnings'];
-            if (is_array($data['Warnings']) && $this->isOnlyNumericKeys($data['Warnings'])) {
-                $values = [];
-                foreach ($data['Warnings'] as $value_1) {
-                    $values[] = $value_1;
-                }
-                $value = $values;
-            } elseif (null === $data['Warnings']) {
-                $value = $data['Warnings'];
+            $values = [];
+            foreach ($data['Warnings'] as $value) {
+                $values[] = $value;
             }
-            $object->setWarnings($value);
-        } elseif (array_key_exists('Warnings', $data) && null === $data['Warnings']) {
-            $object->setWarnings(null);
+            $object->warnings = $values;
+            unset($data['Warnings']);
+        } elseif (array_key_exists('Warnings', $data)) {
+            $object->warnings = null;
+            unset($data['Warnings']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -69,18 +70,17 @@ class ContainerUpdateResponseNormalizer implements DenormalizerInterface, Normal
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('warnings')) {
-            $value = $data->getWarnings();
-            if (is_array($data->getWarnings())) {
-                $values = [];
-                foreach ($data->getWarnings() as $value_1) {
-                    $values[] = $value_1;
-                }
-                $value = $values;
-            } elseif (null === $data->getWarnings()) {
-                $value = $data->getWarnings();
+        if (array_key_exists('warnings', get_object_vars($data)) && null !== ($data->warnings ?? null)) {
+            $values = [];
+            foreach ($data->warnings as $value) {
+                $values[] = $value;
             }
-            $dataArray['Warnings'] = $value;
+            $dataArray['Warnings'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace WebProject\DockerApi\Library\Generated\Normalizer;
 
 use ArrayObject;
+use DateTime;
+use Exception;
 use Jane\Component\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -55,20 +57,35 @@ class BuildIdentityNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['Ref']) {
                 $value = $data['Ref'];
             }
-            $object->setRef($value);
-        } elseif (array_key_exists('Ref', $data) && null === $data['Ref']) {
-            $object->setRef(null);
+            $object->ref = $value;
+            unset($data['Ref']);
+        } elseif (array_key_exists('Ref', $data)) {
+            $object->ref = null;
+            unset($data['Ref']);
         }
         if (array_key_exists('CreatedAt', $data) && null !== $data['CreatedAt']) {
-            $value_1 = $data['CreatedAt'];
-            if (is_string($data['CreatedAt'])) {
-                $value_1 = $data['CreatedAt'];
-            } elseif (null === $data['CreatedAt']) {
-                $value_1 = $data['CreatedAt'];
+            $date = DateTime::createFromFormat('Y-m-d\TH:i:sP', $data['CreatedAt']);
+            if (false === $date) {
+                if (is_string($data['CreatedAt']) && 1 === preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/', $data['CreatedAt'])) {
+                    try {
+                        $date = new DateTime($data['CreatedAt']);
+                    } catch (Exception) {
+                        throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['CreatedAt'], 'Y-m-d\TH:i:sP');
+                    }
+                } else {
+                    throw new \WebProject\DockerApi\Library\Generated\Runtime\Normalizer\InvalidDateException($data['CreatedAt'], 'Y-m-d\TH:i:sP');
+                }
             }
-            $object->setCreatedAt($value_1);
-        } elseif (array_key_exists('CreatedAt', $data) && null === $data['CreatedAt']) {
-            $object->setCreatedAt(null);
+            $object->createdAt = $date;
+            unset($data['CreatedAt']);
+        } elseif (array_key_exists('CreatedAt', $data)) {
+            $object->createdAt = null;
+            unset($data['CreatedAt']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -77,23 +94,22 @@ class BuildIdentityNormalizer implements DenormalizerInterface, NormalizerInterf
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('ref')) {
-            $value = $data->getRef();
-            if (is_string($data->getRef())) {
-                $value = $data->getRef();
-            } elseif (null === $data->getRef()) {
-                $value = $data->getRef();
+        if (array_key_exists('ref', get_object_vars($data)) && null !== ($data->ref ?? null)) {
+            $value = $data->ref;
+            if (is_string($data->ref)) {
+                $value = $data->ref;
+            } elseif (null === $data->ref) {
+                $value = $data->ref;
             }
             $dataArray['Ref'] = $value;
         }
-        if ($data->isInitialized('createdAt')) {
-            $value_1 = $data->getCreatedAt();
-            if (is_string($data->getCreatedAt())) {
-                $value_1 = $data->getCreatedAt();
-            } elseif (null === $data->getCreatedAt()) {
-                $value_1 = $data->getCreatedAt();
+        if (array_key_exists('createdAt', get_object_vars($data)) && null !== ($data->createdAt ?? null)) {
+            $dataArray['CreatedAt'] = $data->createdAt?->format('Y-m-d\TH:i:sP');
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
             }
-            $dataArray['CreatedAt'] = $value_1;
         }
 
         return $dataArray;

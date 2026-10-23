@@ -3,92 +3,27 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ContainerStatus
+class ContainerStatus implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var string|null
      */
-    protected $containerID;
+    public ?string $containerID;
     /**
      * @var int|null
      */
-    protected $pID;
+    public ?int $pID;
     /**
      * @var int|null
      */
-    protected $exitCode;
+    public ?int $exitCode;
 
-    /**
-     * @return string|null
-     */
-    public function getContainerID(): ?string
+    public function definedProperties(): array
     {
-        return $this->containerID;
-    }
-
-    /**
-     * @param string|null $containerID
-     *
-     * @return self
-     */
-    public function setContainerID(?string $containerID): self
-    {
-        $this->initialized['containerID'] = true;
-        $this->containerID                = $containerID;
-
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getPID(): ?int
-    {
-        return $this->pID;
-    }
-
-    /**
-     * @param int|null $pID
-     *
-     * @return self
-     */
-    public function setPID(?int $pID): self
-    {
-        $this->initialized['pID'] = true;
-        $this->pID                = $pID;
-
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getExitCode(): ?int
-    {
-        return $this->exitCode;
-    }
-
-    /**
-     * @param int|null $exitCode
-     *
-     * @return self
-     */
-    public function setExitCode(?int $exitCode): self
-    {
-        $this->initialized['exitCode'] = true;
-        $this->exitCode                = $exitCode;
-
-        return $this;
+        return ['containerID' => 'ContainerID', 'pID' => 'PID', 'exitCode' => 'ExitCode'];
     }
 }

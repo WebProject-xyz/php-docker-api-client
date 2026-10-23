@@ -56,14 +56,16 @@ class ClusterVolumeInfoNormalizer implements DenormalizerInterface, NormalizerIn
             } elseif (null === $data['CapacityBytes']) {
                 $value = $data['CapacityBytes'];
             }
-            $object->setCapacityBytes($value);
-        } elseif (array_key_exists('CapacityBytes', $data) && null === $data['CapacityBytes']) {
-            $object->setCapacityBytes(null);
+            $object->capacityBytes = $value;
+            unset($data['CapacityBytes']);
+        } elseif (array_key_exists('CapacityBytes', $data)) {
+            $object->capacityBytes = null;
+            unset($data['CapacityBytes']);
         }
         if (array_key_exists('VolumeContext', $data) && null !== $data['VolumeContext']) {
             $value_1 = $data['VolumeContext'];
             if (is_array($data['VolumeContext']) && $this->isOnlyNumericKeys($data['VolumeContext'])) {
-                $values = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
                 foreach ($data['VolumeContext'] as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
@@ -71,9 +73,11 @@ class ClusterVolumeInfoNormalizer implements DenormalizerInterface, NormalizerIn
             } elseif (null === $data['VolumeContext']) {
                 $value_1 = $data['VolumeContext'];
             }
-            $object->setVolumeContext($value_1);
-        } elseif (array_key_exists('VolumeContext', $data) && null === $data['VolumeContext']) {
-            $object->setVolumeContext(null);
+            $object->volumeContext = $value_1;
+            unset($data['VolumeContext']);
+        } elseif (array_key_exists('VolumeContext', $data)) {
+            $object->volumeContext = null;
+            unset($data['VolumeContext']);
         }
         if (array_key_exists('VolumeID', $data) && null !== $data['VolumeID']) {
             $value_3 = $data['VolumeID'];
@@ -82,24 +86,27 @@ class ClusterVolumeInfoNormalizer implements DenormalizerInterface, NormalizerIn
             } elseif (null === $data['VolumeID']) {
                 $value_3 = $data['VolumeID'];
             }
-            $object->setVolumeID($value_3);
-        } elseif (array_key_exists('VolumeID', $data) && null === $data['VolumeID']) {
-            $object->setVolumeID(null);
+            $object->volumeID = $value_3;
+            unset($data['VolumeID']);
+        } elseif (array_key_exists('VolumeID', $data)) {
+            $object->volumeID = null;
+            unset($data['VolumeID']);
         }
         if (array_key_exists('AccessibleTopology', $data) && null !== $data['AccessibleTopology']) {
-            $value_4 = $data['AccessibleTopology'];
-            if (is_array($data['AccessibleTopology']) && $this->isOnlyNumericKeys($data['AccessibleTopology'])) {
-                $values_1 = [];
-                foreach ($data['AccessibleTopology'] as $value_5) {
-                    $values_1[] = $this->denormalizer->denormalize($value_5, \WebProject\DockerApi\Library\Generated\Model\Topology::class, 'json', $context);
-                }
-                $value_4 = $values_1;
-            } elseif (null === $data['AccessibleTopology']) {
-                $value_4 = $data['AccessibleTopology'];
+            $values_1 = [];
+            foreach ($data['AccessibleTopology'] as $value_4) {
+                $values_1[] = $this->denormalizer->denormalize($value_4, \WebProject\DockerApi\Library\Generated\Model\Topology::class, 'json', $context);
             }
-            $object->setAccessibleTopology($value_4);
-        } elseif (array_key_exists('AccessibleTopology', $data) && null === $data['AccessibleTopology']) {
-            $object->setAccessibleTopology(null);
+            $object->accessibleTopology = $values_1;
+            unset($data['AccessibleTopology']);
+        } elseif (array_key_exists('AccessibleTopology', $data)) {
+            $object->accessibleTopology = null;
+            unset($data['AccessibleTopology']);
+        }
+        foreach ($data as $key_1 => $value_5) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_5;
+            }
         }
 
         return $object;
@@ -108,49 +115,49 @@ class ClusterVolumeInfoNormalizer implements DenormalizerInterface, NormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('capacityBytes')) {
-            $value = $data->getCapacityBytes();
-            if (is_int($data->getCapacityBytes())) {
-                $value = $data->getCapacityBytes();
-            } elseif (null === $data->getCapacityBytes()) {
-                $value = $data->getCapacityBytes();
+        if (array_key_exists('capacityBytes', get_object_vars($data)) && null !== ($data->capacityBytes ?? null)) {
+            $value = $data->capacityBytes;
+            if (is_int($data->capacityBytes)) {
+                $value = $data->capacityBytes;
+            } elseif (null === $data->capacityBytes) {
+                $value = $data->capacityBytes;
             }
             $dataArray['CapacityBytes'] = $value;
         }
-        if ($data->isInitialized('volumeContext')) {
-            $value_1 = $data->getVolumeContext();
-            if (is_object($data->getVolumeContext())) {
-                $values = [];
-                foreach ($data->getVolumeContext() as $key => $value_2) {
+        if (array_key_exists('volumeContext', get_object_vars($data)) && null !== ($data->volumeContext ?? null)) {
+            $value_1 = $data->volumeContext;
+            if (is_iterable($data->volumeContext)) {
+                $values = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->volumeContext as $key => $value_2) {
                     $values[$key] = $value_2;
                 }
                 $value_1 = $values;
-            } elseif (null === $data->getVolumeContext()) {
-                $value_1 = $data->getVolumeContext();
+            } elseif (null === $data->volumeContext) {
+                $value_1 = $data->volumeContext;
             }
             $dataArray['VolumeContext'] = $value_1;
         }
-        if ($data->isInitialized('volumeID')) {
-            $value_3 = $data->getVolumeID();
-            if (is_string($data->getVolumeID())) {
-                $value_3 = $data->getVolumeID();
-            } elseif (null === $data->getVolumeID()) {
-                $value_3 = $data->getVolumeID();
+        if (array_key_exists('volumeID', get_object_vars($data)) && null !== ($data->volumeID ?? null)) {
+            $value_3 = $data->volumeID;
+            if (is_string($data->volumeID)) {
+                $value_3 = $data->volumeID;
+            } elseif (null === $data->volumeID) {
+                $value_3 = $data->volumeID;
             }
             $dataArray['VolumeID'] = $value_3;
         }
-        if ($data->isInitialized('accessibleTopology')) {
-            $value_4 = $data->getAccessibleTopology();
-            if (is_array($data->getAccessibleTopology())) {
-                $values_1 = [];
-                foreach ($data->getAccessibleTopology() as $value_5) {
-                    $values_1[] = $this->normalizer->normalize($value_5, 'json', $context);
-                }
-                $value_4 = $values_1;
-            } elseif (null === $data->getAccessibleTopology()) {
-                $value_4 = $data->getAccessibleTopology();
+        if (array_key_exists('accessibleTopology', get_object_vars($data)) && null !== ($data->accessibleTopology ?? null)) {
+            $values_1 = [];
+            foreach ($data->accessibleTopology as $value_4) {
+                $normalized = null === $value_4 ? null : $this->normalizer->normalize($value_4, 'json', $context);
+                $values_1[] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
             }
-            $dataArray['AccessibleTopology'] = $value_4;
+            $dataArray['AccessibleTopology'] = $values_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_5) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_5;
+            }
         }
 
         return $dataArray;

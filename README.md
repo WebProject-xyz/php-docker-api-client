@@ -7,7 +7,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/webproject-xyz/docker-api-client)](https://packagist.org/packages/webproject-xyz/docker-api-client)
 [![License](https://img.shields.io/packagist/l/webproject-xyz/docker-api-client)](https://packagist.org/packages/webproject-xyz/docker-api-client)
 
-A modern PHP client for the Docker Engine API (v1.51+), built with [JanePHP](https://github.com/janephp/janephp).
+A modern PHP client for the Docker Engine API (v1.55+), built with [JanePHP](https://github.com/janephp/janephp).
 
 ---
 
@@ -27,8 +27,7 @@ $service = new DockerService(
 ```php
 // List and inspect containers
 foreach ($service->findAllContainer() as $container) {
-    echo "{$container->getName()}: " . ($container->running ? 'Running' : 'Stopped') . "
-";
+    echo "{$container->getName()}: " . ($container->running ? 'Running' : 'Stopped') . "\n";
     
     // Extract env-based URLs
     $urls = $container->extractUrlsFromEnvVars(['VIRTUAL_HOST']);

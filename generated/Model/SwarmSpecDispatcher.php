@@ -3,48 +3,21 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class SwarmSpecDispatcher
+class SwarmSpecDispatcher implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The delay for an agent to send a heartbeat to the dispatcher.
      *
      * @var int|null
      */
-    protected $heartbeatPeriod;
+    public ?int $heartbeatPeriod;
 
-    /**
-     * The delay for an agent to send a heartbeat to the dispatcher.
-     *
-     * @return int|null
-     */
-    public function getHeartbeatPeriod(): ?int
+    public function definedProperties(): array
     {
-        return $this->heartbeatPeriod;
-    }
-
-    /**
-     * The delay for an agent to send a heartbeat to the dispatcher.
-     *
-     * @param int|null $heartbeatPeriod
-     *
-     * @return self
-     */
-    public function setHeartbeatPeriod(?int $heartbeatPeriod): self
-    {
-        $this->initialized['heartbeatPeriod'] = true;
-        $this->heartbeatPeriod                = $heartbeatPeriod;
-
-        return $this;
+        return ['heartbeatPeriod' => 'HeartbeatPeriod'];
     }
 }

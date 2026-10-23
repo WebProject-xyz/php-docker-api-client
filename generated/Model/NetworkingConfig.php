@@ -3,54 +3,23 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class NetworkingConfig
+class NetworkingConfig implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * A mapping of network name to endpoint configuration for that network.
      * The endpoint configuration can be left empty to connect to that
      * network with no particular endpoint configuration.
      *
-     * @var array<string, EndpointSettings>
+     * @var iterable<string, EndpointSettings>
      */
-    protected $endpointsConfig;
+    public iterable $endpointsConfig;
 
-    /**
-     * A mapping of network name to endpoint configuration for that network.
-     * The endpoint configuration can be left empty to connect to that
-     * network with no particular endpoint configuration.
-     *
-     * @return array<string, EndpointSettings>
-     */
-    public function getEndpointsConfig(): iterable
+    public function definedProperties(): array
     {
-        return $this->endpointsConfig;
-    }
-
-    /**
-     * A mapping of network name to endpoint configuration for that network.
-     * The endpoint configuration can be left empty to connect to that
-     * network with no particular endpoint configuration.
-     *
-     * @param array<string, EndpointSettings> $endpointsConfig
-     *
-     * @return self
-     */
-    public function setEndpointsConfig(iterable $endpointsConfig): self
-    {
-        $this->initialized['endpointsConfig'] = true;
-        $this->endpointsConfig                = $endpointsConfig;
-
-        return $this;
+        return ['endpointsConfig' => 'EndpointsConfig'];
     }
 }

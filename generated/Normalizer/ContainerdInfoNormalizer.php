@@ -55,14 +55,23 @@ class ContainerdInfoNormalizer implements DenormalizerInterface, NormalizerInter
             } elseif (null === $data['Address']) {
                 $value = $data['Address'];
             }
-            $object->setAddress($value);
-        } elseif (array_key_exists('Address', $data) && null === $data['Address']) {
-            $object->setAddress(null);
+            $object->address = $value;
+            unset($data['Address']);
+        } elseif (array_key_exists('Address', $data)) {
+            $object->address = null;
+            unset($data['Address']);
         }
         if (array_key_exists('Namespaces', $data) && null !== $data['Namespaces']) {
-            $object->setNamespaces($this->denormalizer->denormalize($data['Namespaces'], \WebProject\DockerApi\Library\Generated\Model\ContainerdInfoNamespaces::class, 'json', $context));
-        } elseif (array_key_exists('Namespaces', $data) && null === $data['Namespaces']) {
-            $object->setNamespaces(null);
+            $object->namespaces = $this->denormalizer->denormalize($data['Namespaces'], \WebProject\DockerApi\Library\Generated\Model\ContainerdInfoNamespaces::class, 'json', $context);
+            unset($data['Namespaces']);
+        } elseif (array_key_exists('Namespaces', $data)) {
+            $object->namespaces = null;
+            unset($data['Namespaces']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -71,17 +80,23 @@ class ContainerdInfoNormalizer implements DenormalizerInterface, NormalizerInter
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('address')) {
-            $value = $data->getAddress();
-            if (is_string($data->getAddress())) {
-                $value = $data->getAddress();
-            } elseif (null === $data->getAddress()) {
-                $value = $data->getAddress();
+        if (array_key_exists('address', get_object_vars($data)) && null !== ($data->address ?? null)) {
+            $value = $data->address;
+            if (is_string($data->address)) {
+                $value = $data->address;
+            } elseif (null === $data->address) {
+                $value = $data->address;
             }
             $dataArray['Address'] = $value;
         }
-        if ($data->isInitialized('namespaces')) {
-            $dataArray['Namespaces'] = $this->normalizer->normalize($data->getNamespaces(), 'json', $context);
+        if (array_key_exists('namespaces', get_object_vars($data)) && null !== ($data->namespaces ?? null)) {
+            $normalized              = $this->normalizer->normalize($data->namespaces, 'json', $context);
+            $dataArray['Namespaces'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

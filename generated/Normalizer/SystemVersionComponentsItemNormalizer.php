@@ -48,10 +48,12 @@ class SystemVersionComponentsItemNormalizer implements DenormalizerInterface, No
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Name', $data)) {
-            $object->setName($data['Name']);
+            $object->name = $data['Name'];
+            unset($data['Name']);
         }
         if (array_key_exists('Version', $data)) {
-            $object->setVersion($data['Version']);
+            $object->version = $data['Version'];
+            unset($data['Version']);
         }
         if (array_key_exists('Details', $data) && null !== $data['Details']) {
             $value = $data['Details'];
@@ -60,9 +62,16 @@ class SystemVersionComponentsItemNormalizer implements DenormalizerInterface, No
             } elseif (isset($data['Details'])) {
                 $value = $data['Details'];
             }
-            $object->setDetails($value);
-        } elseif (array_key_exists('Details', $data) && null === $data['Details']) {
-            $object->setDetails(null);
+            $object->details = $value;
+            unset($data['Details']);
+        } elseif (array_key_exists('Details', $data)) {
+            $object->details = null;
+            unset($data['Details']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -71,16 +80,21 @@ class SystemVersionComponentsItemNormalizer implements DenormalizerInterface, No
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray            = [];
-        $dataArray['Name']    = $data->getName();
-        $dataArray['Version'] = $data->getVersion();
-        if ($data->isInitialized('details')) {
-            $value = $data->getDetails();
-            if (null === $data->getDetails()) {
-                $value = $data->getDetails();
-            } elseif (null !== $data->getDetails()) {
-                $value = $data->getDetails();
+        $dataArray['Name']    = $data->name;
+        $dataArray['Version'] = $data->version;
+        if (array_key_exists('details', get_object_vars($data)) && null !== ($data->details ?? null)) {
+            $value = $data->details;
+            if (null === $data->details) {
+                $value = $data->details;
+            } elseif (null !== $data->details) {
+                $value = $data->details;
             }
             $dataArray['Details'] = $value;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

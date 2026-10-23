@@ -3,25 +3,18 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ServiceCreateResponse
+class ServiceCreateResponse implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The ID of the created service.
      *
      * @var string
      */
-    protected $iD;
+    public string $iD;
     /**
      * Optional warning message.
      *
@@ -29,59 +22,10 @@ class ServiceCreateResponse
      *
      * @var list<string>|null
      */
-    protected $warnings;
+    public ?array $warnings;
 
-    /**
-     * The ID of the created service.
-     *
-     * @return string
-     */
-    public function getID(): string
+    public function definedProperties(): array
     {
-        return $this->iD;
-    }
-
-    /**
-     * The ID of the created service.
-     *
-     * @param string $iD
-     *
-     * @return self
-     */
-    public function setID(string $iD): self
-    {
-        $this->initialized['iD'] = true;
-        $this->iD                = $iD;
-
-        return $this;
-    }
-
-    /**
-     * Optional warning message.
-     *
-     * FIXME(thaJeztah): this should have "omitempty" in the generated type.
-     *
-     * @return list<string>|null
-     */
-    public function getWarnings(): ?array
-    {
-        return $this->warnings;
-    }
-
-    /**
-     * Optional warning message.
-     *
-     * FIXME(thaJeztah): this should have "omitempty" in the generated type.
-     *
-     * @param list<string>|null $warnings
-     *
-     * @return self
-     */
-    public function setWarnings(?array $warnings): self
-    {
-        $this->initialized['warnings'] = true;
-        $this->warnings                = $warnings;
-
-        return $this;
+        return ['iD' => 'ID', 'warnings' => 'Warnings'];
     }
 }

@@ -22,11 +22,11 @@ class ImageGetAll extends \WebProject\DockerApi\Library\Generated\Runtime\Client
      * @param array{
      *    "names"?: array, //Image names to filter by
      *    "platform"?: array, //JSON encoded OCI platform(s) which will be used to select the
-     * platform-specific image(s) to be saved if the image is
-     * multi-platform. If not provided, the full multi-platform image
-     * will be saved.
-     *
-     * Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
+     *                        //platform-specific image(s) to be saved if the image is
+     *                        //multi-platform. If not provided, the full multi-platform image
+     *                        //will be saved.
+     *                        //
+     *                        //Example: `{"os": "linux", "architecture": "arm", "variant": "v5"}`
      * } $queryParameters
      */
     public function __construct(array $queryParameters = [])
@@ -44,7 +44,7 @@ class ImageGetAll extends \WebProject\DockerApi\Library\Generated\Runtime\Client
         return '/images/get';
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
         return [[], null];
     }
@@ -66,23 +66,41 @@ class ImageGetAll extends \WebProject\DockerApi\Library\Generated\Runtime\Client
         return $optionsResolver;
     }
 
+    protected function getQueryStyles(): array
+    {
+        return ['names' => ['style' => 'form', 'explode' => true], 'platform' => ['style' => 'form', 'explode' => true]];
+    }
+
     /**
      * {@inheritdoc}
      *
-     * @return null
+     * @return mixed
+     *
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
+        $body   = $response->getContent(false);
         if (200 === $status) {
         }
         if (500 === $status) {
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Lazy->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

@@ -55,9 +55,16 @@ class PullIdentityNormalizer implements DenormalizerInterface, NormalizerInterfa
             } elseif (null === $data['Repository']) {
                 $value = $data['Repository'];
             }
-            $object->setRepository($value);
-        } elseif (array_key_exists('Repository', $data) && null === $data['Repository']) {
-            $object->setRepository(null);
+            $object->repository = $value;
+            unset($data['Repository']);
+        } elseif (array_key_exists('Repository', $data)) {
+            $object->repository = null;
+            unset($data['Repository']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -66,14 +73,19 @@ class PullIdentityNormalizer implements DenormalizerInterface, NormalizerInterfa
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('repository')) {
-            $value = $data->getRepository();
-            if (is_string($data->getRepository())) {
-                $value = $data->getRepository();
-            } elseif (null === $data->getRepository()) {
-                $value = $data->getRepository();
+        if (array_key_exists('repository', get_object_vars($data)) && null !== ($data->repository ?? null)) {
+            $value = $data->repository;
+            if (is_string($data->repository)) {
+                $value = $data->repository;
+            } elseif (null === $data->repository) {
+                $value = $data->repository;
             }
             $dataArray['Repository'] = $value;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

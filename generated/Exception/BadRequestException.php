@@ -5,7 +5,7 @@ namespace WebProject\DockerApi\Library\Generated\Exception;
 
 use RuntimeException;
 
-class BadRequestException extends RuntimeException implements ClientException
+abstract class BadRequestException extends RuntimeException implements ClientException, WithResponseInterface
 {
     public function __construct(string $message)
     {

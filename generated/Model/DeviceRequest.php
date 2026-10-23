@@ -3,19 +3,12 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class DeviceRequest
+class DeviceRequest implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The name of the device driver to use for this request.
      *
@@ -24,15 +17,15 @@ class DeviceRequest
      *
      * @var string|null
      */
-    protected $driver;
+    public ?string $driver;
     /**
      * @var int|null
      */
-    protected $count;
+    public ?int $count;
     /**
      * @var list<string>|null
      */
-    protected $deviceIDs;
+    public ?array $deviceIDs;
     /**
      * A list of capabilities; an OR list of AND lists of capabilities.
      *
@@ -44,149 +37,17 @@ class DeviceRequest
      *
      * @var list<list<string>>|null
      */
-    protected $capabilities;
+    public ?array $capabilities;
     /**
      * Driver-specific options, specified as a key/value pairs. These options
      * are passed directly to the driver.
      *
-     * @var array<string, string>|null
+     * @var iterable<string, string>|null
      */
-    protected $options;
+    public ?iterable $options;
 
-    /**
-     * The name of the device driver to use for this request.
-     *
-     * Note that if this is specified the capabilities are ignored when
-     * selecting a device driver.
-     *
-     * @return string|null
-     */
-    public function getDriver(): ?string
+    public function definedProperties(): array
     {
-        return $this->driver;
-    }
-
-    /**
-     * The name of the device driver to use for this request.
-     *
-     * Note that if this is specified the capabilities are ignored when
-     * selecting a device driver.
-     *
-     * @param string|null $driver
-     *
-     * @return self
-     */
-    public function setDriver(?string $driver): self
-    {
-        $this->initialized['driver'] = true;
-        $this->driver                = $driver;
-
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getCount(): ?int
-    {
-        return $this->count;
-    }
-
-    /**
-     * @param int|null $count
-     *
-     * @return self
-     */
-    public function setCount(?int $count): self
-    {
-        $this->initialized['count'] = true;
-        $this->count                = $count;
-
-        return $this;
-    }
-
-    /**
-     * @return list<string>|null
-     */
-    public function getDeviceIDs(): ?array
-    {
-        return $this->deviceIDs;
-    }
-
-    /**
-     * @param list<string>|null $deviceIDs
-     *
-     * @return self
-     */
-    public function setDeviceIDs(?array $deviceIDs): self
-    {
-        $this->initialized['deviceIDs'] = true;
-        $this->deviceIDs                = $deviceIDs;
-
-        return $this;
-    }
-
-    /**
-     * A list of capabilities; an OR list of AND lists of capabilities.
-     *
-     * Note that if a driver is specified the capabilities have no effect on
-     * selecting a driver as the driver name is used directly.
-     *
-     * Note that if no driver is specified the capabilities are used to
-     * select a driver with the required capabilities.
-     *
-     * @return list<list<string>>|null
-     */
-    public function getCapabilities(): ?array
-    {
-        return $this->capabilities;
-    }
-
-    /**
-     * A list of capabilities; an OR list of AND lists of capabilities.
-     *
-     * Note that if a driver is specified the capabilities have no effect on
-     * selecting a driver as the driver name is used directly.
-     *
-     * Note that if no driver is specified the capabilities are used to
-     * select a driver with the required capabilities.
-     *
-     * @param list<list<string>>|null $capabilities
-     *
-     * @return self
-     */
-    public function setCapabilities(?array $capabilities): self
-    {
-        $this->initialized['capabilities'] = true;
-        $this->capabilities                = $capabilities;
-
-        return $this;
-    }
-
-    /**
-     * Driver-specific options, specified as a key/value pairs. These options
-     * are passed directly to the driver.
-     *
-     * @return array<string, string>|null
-     */
-    public function getOptions(): ?iterable
-    {
-        return $this->options;
-    }
-
-    /**
-     * Driver-specific options, specified as a key/value pairs. These options
-     * are passed directly to the driver.
-     *
-     * @param array<string, string>|null $options
-     *
-     * @return self
-     */
-    public function setOptions(?iterable $options): self
-    {
-        $this->initialized['options'] = true;
-        $this->options                = $options;
-
-        return $this;
+        return ['driver' => 'Driver', 'count' => 'Count', 'deviceIDs' => 'DeviceIDs', 'capabilities' => 'Capabilities', 'options' => 'Options'];
     }
 }

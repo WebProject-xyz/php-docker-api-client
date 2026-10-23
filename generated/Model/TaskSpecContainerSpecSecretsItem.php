@@ -3,32 +3,25 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class TaskSpecContainerSpecSecretsItem
+class TaskSpecContainerSpecSecretsItem implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * File represents a specific target that is backed by a file.
      *
      * @var TaskSpecContainerSpecSecretsItemFile|null
      */
-    protected $file;
+    public ?TaskSpecContainerSpecSecretsItemFile $file;
     /**
      * SecretID represents the ID of the specific secret that we're
      * referencing.
      *
      * @var string|null
      */
-    protected $secretID;
+    public ?string $secretID;
     /**
      * SecretName is the name of the secret that this references,
      * but this is just provided for lookup/display purposes. The
@@ -36,86 +29,10 @@ class TaskSpecContainerSpecSecretsItem
      *
      * @var string|null
      */
-    protected $secretName;
+    public ?string $secretName;
 
-    /**
-     * File represents a specific target that is backed by a file.
-     *
-     * @return TaskSpecContainerSpecSecretsItemFile|null
-     */
-    public function getFile(): ?TaskSpecContainerSpecSecretsItemFile
+    public function definedProperties(): array
     {
-        return $this->file;
-    }
-
-    /**
-     * File represents a specific target that is backed by a file.
-     *
-     * @param TaskSpecContainerSpecSecretsItemFile|null $file
-     *
-     * @return self
-     */
-    public function setFile(?TaskSpecContainerSpecSecretsItemFile $file): self
-    {
-        $this->initialized['file'] = true;
-        $this->file                = $file;
-
-        return $this;
-    }
-
-    /**
-     * SecretID represents the ID of the specific secret that we're
-     * referencing.
-     *
-     * @return string|null
-     */
-    public function getSecretID(): ?string
-    {
-        return $this->secretID;
-    }
-
-    /**
-     * SecretID represents the ID of the specific secret that we're
-     * referencing.
-     *
-     * @param string|null $secretID
-     *
-     * @return self
-     */
-    public function setSecretID(?string $secretID): self
-    {
-        $this->initialized['secretID'] = true;
-        $this->secretID                = $secretID;
-
-        return $this;
-    }
-
-    /**
-     * SecretName is the name of the secret that this references,
-     * but this is just provided for lookup/display purposes. The
-     * secret in the reference will be identified by its ID.
-     *
-     * @return string|null
-     */
-    public function getSecretName(): ?string
-    {
-        return $this->secretName;
-    }
-
-    /**
-     * SecretName is the name of the secret that this references,
-     * but this is just provided for lookup/display purposes. The
-     * secret in the reference will be identified by its ID.
-     *
-     * @param string|null $secretName
-     *
-     * @return self
-     */
-    public function setSecretName(?string $secretName): self
-    {
-        $this->initialized['secretName'] = true;
-        $this->secretName                = $secretName;
-
-        return $this;
+        return ['file' => 'File', 'secretID' => 'SecretID', 'secretName' => 'SecretName'];
     }
 }

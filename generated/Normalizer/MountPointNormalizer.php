@@ -50,7 +50,8 @@ class MountPointNormalizer implements DenormalizerInterface, NormalizerInterface
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Type', $data)) {
-            $object->setType($data['Type']);
+            $object->type = \WebProject\DockerApi\Library\Generated\Model\MountType::from($data['Type']);
+            unset($data['Type']);
         }
         if (array_key_exists('Name', $data) && null !== $data['Name']) {
             $value = $data['Name'];
@@ -59,9 +60,11 @@ class MountPointNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['Name']) {
                 $value = $data['Name'];
             }
-            $object->setName($value);
-        } elseif (array_key_exists('Name', $data) && null === $data['Name']) {
-            $object->setName(null);
+            $object->name = $value;
+            unset($data['Name']);
+        } elseif (array_key_exists('Name', $data)) {
+            $object->name = null;
+            unset($data['Name']);
         }
         if (array_key_exists('Source', $data) && null !== $data['Source']) {
             $value_1 = $data['Source'];
@@ -70,9 +73,11 @@ class MountPointNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['Source']) {
                 $value_1 = $data['Source'];
             }
-            $object->setSource($value_1);
-        } elseif (array_key_exists('Source', $data) && null === $data['Source']) {
-            $object->setSource(null);
+            $object->source = $value_1;
+            unset($data['Source']);
+        } elseif (array_key_exists('Source', $data)) {
+            $object->source = null;
+            unset($data['Source']);
         }
         if (array_key_exists('Destination', $data) && null !== $data['Destination']) {
             $value_2 = $data['Destination'];
@@ -81,9 +86,11 @@ class MountPointNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['Destination']) {
                 $value_2 = $data['Destination'];
             }
-            $object->setDestination($value_2);
-        } elseif (array_key_exists('Destination', $data) && null === $data['Destination']) {
-            $object->setDestination(null);
+            $object->destination = $value_2;
+            unset($data['Destination']);
+        } elseif (array_key_exists('Destination', $data)) {
+            $object->destination = null;
+            unset($data['Destination']);
         }
         if (array_key_exists('Driver', $data) && null !== $data['Driver']) {
             $value_3 = $data['Driver'];
@@ -92,9 +99,11 @@ class MountPointNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['Driver']) {
                 $value_3 = $data['Driver'];
             }
-            $object->setDriver($value_3);
-        } elseif (array_key_exists('Driver', $data) && null === $data['Driver']) {
-            $object->setDriver(null);
+            $object->driver = $value_3;
+            unset($data['Driver']);
+        } elseif (array_key_exists('Driver', $data)) {
+            $object->driver = null;
+            unset($data['Driver']);
         }
         if (array_key_exists('Mode', $data) && null !== $data['Mode']) {
             $value_4 = $data['Mode'];
@@ -103,9 +112,11 @@ class MountPointNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['Mode']) {
                 $value_4 = $data['Mode'];
             }
-            $object->setMode($value_4);
-        } elseif (array_key_exists('Mode', $data) && null === $data['Mode']) {
-            $object->setMode(null);
+            $object->mode = $value_4;
+            unset($data['Mode']);
+        } elseif (array_key_exists('Mode', $data)) {
+            $object->mode = null;
+            unset($data['Mode']);
         }
         if (array_key_exists('RW', $data) && null !== $data['RW']) {
             $value_5 = $data['RW'];
@@ -114,9 +125,11 @@ class MountPointNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['RW']) {
                 $value_5 = $data['RW'];
             }
-            $object->setRW($value_5);
-        } elseif (array_key_exists('RW', $data) && null === $data['RW']) {
-            $object->setRW(null);
+            $object->rW = $value_5;
+            unset($data['RW']);
+        } elseif (array_key_exists('RW', $data)) {
+            $object->rW = null;
+            unset($data['RW']);
         }
         if (array_key_exists('Propagation', $data) && null !== $data['Propagation']) {
             $value_6 = $data['Propagation'];
@@ -125,9 +138,16 @@ class MountPointNormalizer implements DenormalizerInterface, NormalizerInterface
             } elseif (null === $data['Propagation']) {
                 $value_6 = $data['Propagation'];
             }
-            $object->setPropagation($value_6);
-        } elseif (array_key_exists('Propagation', $data) && null === $data['Propagation']) {
-            $object->setPropagation(null);
+            $object->propagation = $value_6;
+            unset($data['Propagation']);
+        } elseif (array_key_exists('Propagation', $data)) {
+            $object->propagation = null;
+            unset($data['Propagation']);
+        }
+        foreach ($data as $key => $value_7) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_7;
+            }
         }
 
         return $object;
@@ -136,71 +156,76 @@ class MountPointNormalizer implements DenormalizerInterface, NormalizerInterface
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('type') && null !== $data->getType()) {
-            $dataArray['Type'] = $data->getType();
+        if (array_key_exists('type', get_object_vars($data)) && null !== ($data->type ?? null)) {
+            $dataArray['Type'] = $data->type->value;
         }
-        if ($data->isInitialized('name')) {
-            $value = $data->getName();
-            if (is_string($data->getName())) {
-                $value = $data->getName();
-            } elseif (null === $data->getName()) {
-                $value = $data->getName();
+        if (array_key_exists('name', get_object_vars($data)) && null !== ($data->name ?? null)) {
+            $value = $data->name;
+            if (is_string($data->name)) {
+                $value = $data->name;
+            } elseif (null === $data->name) {
+                $value = $data->name;
             }
             $dataArray['Name'] = $value;
         }
-        if ($data->isInitialized('source')) {
-            $value_1 = $data->getSource();
-            if (is_string($data->getSource())) {
-                $value_1 = $data->getSource();
-            } elseif (null === $data->getSource()) {
-                $value_1 = $data->getSource();
+        if (array_key_exists('source', get_object_vars($data)) && null !== ($data->source ?? null)) {
+            $value_1 = $data->source;
+            if (is_string($data->source)) {
+                $value_1 = $data->source;
+            } elseif (null === $data->source) {
+                $value_1 = $data->source;
             }
             $dataArray['Source'] = $value_1;
         }
-        if ($data->isInitialized('destination')) {
-            $value_2 = $data->getDestination();
-            if (is_string($data->getDestination())) {
-                $value_2 = $data->getDestination();
-            } elseif (null === $data->getDestination()) {
-                $value_2 = $data->getDestination();
+        if (array_key_exists('destination', get_object_vars($data)) && null !== ($data->destination ?? null)) {
+            $value_2 = $data->destination;
+            if (is_string($data->destination)) {
+                $value_2 = $data->destination;
+            } elseif (null === $data->destination) {
+                $value_2 = $data->destination;
             }
             $dataArray['Destination'] = $value_2;
         }
-        if ($data->isInitialized('driver')) {
-            $value_3 = $data->getDriver();
-            if (is_string($data->getDriver())) {
-                $value_3 = $data->getDriver();
-            } elseif (null === $data->getDriver()) {
-                $value_3 = $data->getDriver();
+        if (array_key_exists('driver', get_object_vars($data)) && null !== ($data->driver ?? null)) {
+            $value_3 = $data->driver;
+            if (is_string($data->driver)) {
+                $value_3 = $data->driver;
+            } elseif (null === $data->driver) {
+                $value_3 = $data->driver;
             }
             $dataArray['Driver'] = $value_3;
         }
-        if ($data->isInitialized('mode')) {
-            $value_4 = $data->getMode();
-            if (is_string($data->getMode())) {
-                $value_4 = $data->getMode();
-            } elseif (null === $data->getMode()) {
-                $value_4 = $data->getMode();
+        if (array_key_exists('mode', get_object_vars($data)) && null !== ($data->mode ?? null)) {
+            $value_4 = $data->mode;
+            if (is_string($data->mode)) {
+                $value_4 = $data->mode;
+            } elseif (null === $data->mode) {
+                $value_4 = $data->mode;
             }
             $dataArray['Mode'] = $value_4;
         }
-        if ($data->isInitialized('rW')) {
-            $value_5 = $data->getRW();
-            if (is_bool($data->getRW())) {
-                $value_5 = $data->getRW();
-            } elseif (null === $data->getRW()) {
-                $value_5 = $data->getRW();
+        if (array_key_exists('rW', get_object_vars($data)) && null !== ($data->rW ?? null)) {
+            $value_5 = $data->rW;
+            if (is_bool($data->rW)) {
+                $value_5 = $data->rW;
+            } elseif (null === $data->rW) {
+                $value_5 = $data->rW;
             }
             $dataArray['RW'] = $value_5;
         }
-        if ($data->isInitialized('propagation')) {
-            $value_6 = $data->getPropagation();
-            if (is_string($data->getPropagation())) {
-                $value_6 = $data->getPropagation();
-            } elseif (null === $data->getPropagation()) {
-                $value_6 = $data->getPropagation();
+        if (array_key_exists('propagation', get_object_vars($data)) && null !== ($data->propagation ?? null)) {
+            $value_6 = $data->propagation;
+            if (is_string($data->propagation)) {
+                $value_6 = $data->propagation;
+            } elseif (null === $data->propagation) {
+                $value_6 = $data->propagation;
             }
             $dataArray['Propagation'] = $value_6;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_7) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_7;
+            }
         }
 
         return $dataArray;

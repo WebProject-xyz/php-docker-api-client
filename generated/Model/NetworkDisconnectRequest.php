@@ -3,79 +3,27 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class NetworkDisconnectRequest
+class NetworkDisconnectRequest implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * The ID or name of the container to disconnect from the network.
      *
      * @var string
      */
-    protected $container;
+    public string $container;
     /**
      * Force the container to disconnect from the network.
      *
      * @var bool
      */
-    protected $force = false;
+    public bool $force = false;
 
-    /**
-     * The ID or name of the container to disconnect from the network.
-     *
-     * @return string
-     */
-    public function getContainer(): string
+    public function definedProperties(): array
     {
-        return $this->container;
-    }
-
-    /**
-     * The ID or name of the container to disconnect from the network.
-     *
-     * @param string $container
-     *
-     * @return self
-     */
-    public function setContainer(string $container): self
-    {
-        $this->initialized['container'] = true;
-        $this->container                = $container;
-
-        return $this;
-    }
-
-    /**
-     * Force the container to disconnect from the network.
-     *
-     * @return bool
-     */
-    public function getForce(): bool
-    {
-        return $this->force;
-    }
-
-    /**
-     * Force the container to disconnect from the network.
-     *
-     * @param bool $force
-     *
-     * @return self
-     */
-    public function setForce(bool $force): self
-    {
-        $this->initialized['force'] = true;
-        $this->force                = $force;
-
-        return $this;
+        return ['container' => 'Container', 'force' => 'Force'];
     }
 }

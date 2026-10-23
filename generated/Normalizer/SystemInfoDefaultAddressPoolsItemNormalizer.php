@@ -56,9 +56,11 @@ class SystemInfoDefaultAddressPoolsItemNormalizer implements DenormalizerInterfa
             } elseif (null === $data['Base']) {
                 $value = $data['Base'];
             }
-            $object->setBase($value);
-        } elseif (array_key_exists('Base', $data) && null === $data['Base']) {
-            $object->setBase(null);
+            $object->base = $value;
+            unset($data['Base']);
+        } elseif (array_key_exists('Base', $data)) {
+            $object->base = null;
+            unset($data['Base']);
         }
         if (array_key_exists('Size', $data) && null !== $data['Size']) {
             $value_1 = $data['Size'];
@@ -67,9 +69,16 @@ class SystemInfoDefaultAddressPoolsItemNormalizer implements DenormalizerInterfa
             } elseif (null === $data['Size']) {
                 $value_1 = $data['Size'];
             }
-            $object->setSize($value_1);
-        } elseif (array_key_exists('Size', $data) && null === $data['Size']) {
-            $object->setSize(null);
+            $object->size = $value_1;
+            unset($data['Size']);
+        } elseif (array_key_exists('Size', $data)) {
+            $object->size = null;
+            unset($data['Size']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -78,23 +87,28 @@ class SystemInfoDefaultAddressPoolsItemNormalizer implements DenormalizerInterfa
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('base')) {
-            $value = $data->getBase();
-            if (is_string($data->getBase())) {
-                $value = $data->getBase();
-            } elseif (null === $data->getBase()) {
-                $value = $data->getBase();
+        if (array_key_exists('base', get_object_vars($data)) && null !== ($data->base ?? null)) {
+            $value = $data->base;
+            if (is_string($data->base)) {
+                $value = $data->base;
+            } elseif (null === $data->base) {
+                $value = $data->base;
             }
             $dataArray['Base'] = $value;
         }
-        if ($data->isInitialized('size')) {
-            $value_1 = $data->getSize();
-            if (is_int($data->getSize())) {
-                $value_1 = $data->getSize();
-            } elseif (null === $data->getSize()) {
-                $value_1 = $data->getSize();
+        if (array_key_exists('size', get_object_vars($data)) && null !== ($data->size ?? null)) {
+            $value_1 = $data->size;
+            if (is_int($data->size)) {
+                $value_1 = $data->size;
+            } elseif (null === $data->size) {
+                $value_1 = $data->size;
             }
             $dataArray['Size'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

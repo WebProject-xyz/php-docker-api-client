@@ -56,9 +56,11 @@ class ContainerBlkioStatEntryNormalizer implements DenormalizerInterface, Normal
             } elseif (null === $data['major']) {
                 $value = $data['major'];
             }
-            $object->setMajor($value);
-        } elseif (array_key_exists('major', $data) && null === $data['major']) {
-            $object->setMajor(null);
+            $object->major = $value;
+            unset($data['major']);
+        } elseif (array_key_exists('major', $data)) {
+            $object->major = null;
+            unset($data['major']);
         }
         if (array_key_exists('minor', $data) && null !== $data['minor']) {
             $value_1 = $data['minor'];
@@ -67,9 +69,11 @@ class ContainerBlkioStatEntryNormalizer implements DenormalizerInterface, Normal
             } elseif (null === $data['minor']) {
                 $value_1 = $data['minor'];
             }
-            $object->setMinor($value_1);
-        } elseif (array_key_exists('minor', $data) && null === $data['minor']) {
-            $object->setMinor(null);
+            $object->minor = $value_1;
+            unset($data['minor']);
+        } elseif (array_key_exists('minor', $data)) {
+            $object->minor = null;
+            unset($data['minor']);
         }
         if (array_key_exists('op', $data) && null !== $data['op']) {
             $value_2 = $data['op'];
@@ -78,9 +82,11 @@ class ContainerBlkioStatEntryNormalizer implements DenormalizerInterface, Normal
             } elseif (null === $data['op']) {
                 $value_2 = $data['op'];
             }
-            $object->setOp($value_2);
-        } elseif (array_key_exists('op', $data) && null === $data['op']) {
-            $object->setOp(null);
+            $object->op = $value_2;
+            unset($data['op']);
+        } elseif (array_key_exists('op', $data)) {
+            $object->op = null;
+            unset($data['op']);
         }
         if (array_key_exists('value', $data) && null !== $data['value']) {
             $value_3 = $data['value'];
@@ -89,9 +95,16 @@ class ContainerBlkioStatEntryNormalizer implements DenormalizerInterface, Normal
             } elseif (null === $data['value']) {
                 $value_3 = $data['value'];
             }
-            $object->setValue($value_3);
-        } elseif (array_key_exists('value', $data) && null === $data['value']) {
-            $object->setValue(null);
+            $object->value = $value_3;
+            unset($data['value']);
+        } elseif (array_key_exists('value', $data)) {
+            $object->value = null;
+            unset($data['value']);
+        }
+        foreach ($data as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_4;
+            }
         }
 
         return $object;
@@ -100,41 +113,46 @@ class ContainerBlkioStatEntryNormalizer implements DenormalizerInterface, Normal
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('major')) {
-            $value = $data->getMajor();
-            if (is_int($data->getMajor())) {
-                $value = $data->getMajor();
-            } elseif (null === $data->getMajor()) {
-                $value = $data->getMajor();
+        if (array_key_exists('major', get_object_vars($data)) && null !== ($data->major ?? null)) {
+            $value = $data->major;
+            if (is_int($data->major)) {
+                $value = $data->major;
+            } elseif (null === $data->major) {
+                $value = $data->major;
             }
             $dataArray['major'] = $value;
         }
-        if ($data->isInitialized('minor')) {
-            $value_1 = $data->getMinor();
-            if (is_int($data->getMinor())) {
-                $value_1 = $data->getMinor();
-            } elseif (null === $data->getMinor()) {
-                $value_1 = $data->getMinor();
+        if (array_key_exists('minor', get_object_vars($data)) && null !== ($data->minor ?? null)) {
+            $value_1 = $data->minor;
+            if (is_int($data->minor)) {
+                $value_1 = $data->minor;
+            } elseif (null === $data->minor) {
+                $value_1 = $data->minor;
             }
             $dataArray['minor'] = $value_1;
         }
-        if ($data->isInitialized('op')) {
-            $value_2 = $data->getOp();
-            if (is_string($data->getOp())) {
-                $value_2 = $data->getOp();
-            } elseif (null === $data->getOp()) {
-                $value_2 = $data->getOp();
+        if (array_key_exists('op', get_object_vars($data)) && null !== ($data->op ?? null)) {
+            $value_2 = $data->op;
+            if (is_string($data->op)) {
+                $value_2 = $data->op;
+            } elseif (null === $data->op) {
+                $value_2 = $data->op;
             }
             $dataArray['op'] = $value_2;
         }
-        if ($data->isInitialized('value')) {
-            $value_3 = $data->getValue();
-            if (is_int($data->getValue())) {
-                $value_3 = $data->getValue();
-            } elseif (null === $data->getValue()) {
-                $value_3 = $data->getValue();
+        if (array_key_exists('value', get_object_vars($data)) && null !== ($data->value ?? null)) {
+            $value_3 = $data->value;
+            if (is_int($data->value)) {
+                $value_3 = $data->value;
+            } elseif (null === $data->value) {
+                $value_3 = $data->value;
             }
             $dataArray['value'] = $value_3;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_4;
+            }
         }
 
         return $dataArray;

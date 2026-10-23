@@ -56,9 +56,11 @@ class TaskSpecRestartPolicyNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['Condition']) {
                 $value = $data['Condition'];
             }
-            $object->setCondition($value);
-        } elseif (array_key_exists('Condition', $data) && null === $data['Condition']) {
-            $object->setCondition(null);
+            $object->condition = $value;
+            unset($data['Condition']);
+        } elseif (array_key_exists('Condition', $data)) {
+            $object->condition = null;
+            unset($data['Condition']);
         }
         if (array_key_exists('Delay', $data) && null !== $data['Delay']) {
             $value_1 = $data['Delay'];
@@ -67,9 +69,11 @@ class TaskSpecRestartPolicyNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['Delay']) {
                 $value_1 = $data['Delay'];
             }
-            $object->setDelay($value_1);
-        } elseif (array_key_exists('Delay', $data) && null === $data['Delay']) {
-            $object->setDelay(null);
+            $object->delay = $value_1;
+            unset($data['Delay']);
+        } elseif (array_key_exists('Delay', $data)) {
+            $object->delay = null;
+            unset($data['Delay']);
         }
         if (array_key_exists('MaxAttempts', $data) && null !== $data['MaxAttempts']) {
             $value_2 = $data['MaxAttempts'];
@@ -78,9 +82,11 @@ class TaskSpecRestartPolicyNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['MaxAttempts']) {
                 $value_2 = $data['MaxAttempts'];
             }
-            $object->setMaxAttempts($value_2);
-        } elseif (array_key_exists('MaxAttempts', $data) && null === $data['MaxAttempts']) {
-            $object->setMaxAttempts(null);
+            $object->maxAttempts = $value_2;
+            unset($data['MaxAttempts']);
+        } elseif (array_key_exists('MaxAttempts', $data)) {
+            $object->maxAttempts = null;
+            unset($data['MaxAttempts']);
         }
         if (array_key_exists('Window', $data) && null !== $data['Window']) {
             $value_3 = $data['Window'];
@@ -89,9 +95,16 @@ class TaskSpecRestartPolicyNormalizer implements DenormalizerInterface, Normaliz
             } elseif (null === $data['Window']) {
                 $value_3 = $data['Window'];
             }
-            $object->setWindow($value_3);
-        } elseif (array_key_exists('Window', $data) && null === $data['Window']) {
-            $object->setWindow(null);
+            $object->window = $value_3;
+            unset($data['Window']);
+        } elseif (array_key_exists('Window', $data)) {
+            $object->window = null;
+            unset($data['Window']);
+        }
+        foreach ($data as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_4;
+            }
         }
 
         return $object;
@@ -100,41 +113,46 @@ class TaskSpecRestartPolicyNormalizer implements DenormalizerInterface, Normaliz
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('condition')) {
-            $value = $data->getCondition();
-            if (is_string($data->getCondition())) {
-                $value = $data->getCondition();
-            } elseif (null === $data->getCondition()) {
-                $value = $data->getCondition();
+        if (array_key_exists('condition', get_object_vars($data)) && null !== ($data->condition ?? null)) {
+            $value = $data->condition;
+            if (is_string($data->condition)) {
+                $value = $data->condition;
+            } elseif (null === $data->condition) {
+                $value = $data->condition;
             }
             $dataArray['Condition'] = $value;
         }
-        if ($data->isInitialized('delay')) {
-            $value_1 = $data->getDelay();
-            if (is_int($data->getDelay())) {
-                $value_1 = $data->getDelay();
-            } elseif (null === $data->getDelay()) {
-                $value_1 = $data->getDelay();
+        if (array_key_exists('delay', get_object_vars($data)) && null !== ($data->delay ?? null)) {
+            $value_1 = $data->delay;
+            if (is_int($data->delay)) {
+                $value_1 = $data->delay;
+            } elseif (null === $data->delay) {
+                $value_1 = $data->delay;
             }
             $dataArray['Delay'] = $value_1;
         }
-        if ($data->isInitialized('maxAttempts')) {
-            $value_2 = $data->getMaxAttempts();
-            if (is_int($data->getMaxAttempts())) {
-                $value_2 = $data->getMaxAttempts();
-            } elseif (null === $data->getMaxAttempts()) {
-                $value_2 = $data->getMaxAttempts();
+        if (array_key_exists('maxAttempts', get_object_vars($data)) && null !== ($data->maxAttempts ?? null)) {
+            $value_2 = $data->maxAttempts;
+            if (is_int($data->maxAttempts)) {
+                $value_2 = $data->maxAttempts;
+            } elseif (null === $data->maxAttempts) {
+                $value_2 = $data->maxAttempts;
             }
             $dataArray['MaxAttempts'] = $value_2;
         }
-        if ($data->isInitialized('window')) {
-            $value_3 = $data->getWindow();
-            if (is_int($data->getWindow())) {
-                $value_3 = $data->getWindow();
-            } elseif (null === $data->getWindow()) {
-                $value_3 = $data->getWindow();
+        if (array_key_exists('window', get_object_vars($data)) && null !== ($data->window ?? null)) {
+            $value_3 = $data->window;
+            if (is_int($data->window)) {
+                $value_3 = $data->window;
+            } elseif (null === $data->window) {
+                $value_3 = $data->window;
             }
             $dataArray['Window'] = $value_3;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_4;
+            }
         }
 
         return $dataArray;

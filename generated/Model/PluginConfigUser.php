@@ -3,67 +3,23 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class PluginConfigUser
+class PluginConfigUser implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var int|null
      */
-    protected $uID;
+    public ?int $uID;
     /**
      * @var int|null
      */
-    protected $gID;
+    public ?int $gID;
 
-    /**
-     * @return int|null
-     */
-    public function getUID(): ?int
+    public function definedProperties(): array
     {
-        return $this->uID;
-    }
-
-    /**
-     * @param int|null $uID
-     *
-     * @return self
-     */
-    public function setUID(?int $uID): self
-    {
-        $this->initialized['uID'] = true;
-        $this->uID                = $uID;
-
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getGID(): ?int
-    {
-        return $this->gID;
-    }
-
-    /**
-     * @param int|null $gID
-     *
-     * @return self
-     */
-    public function setGID(?int $gID): self
-    {
-        $this->initialized['gID'] = true;
-        $this->gID                = $gID;
-
-        return $this;
+        return ['uID' => 'UID', 'gID' => 'GID'];
     }
 }

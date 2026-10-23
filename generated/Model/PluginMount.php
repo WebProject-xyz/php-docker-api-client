@@ -3,192 +3,43 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class PluginMount
+class PluginMount implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var string
      */
-    protected $name;
+    public string $name;
     /**
      * @var string
      */
-    protected $description;
+    public string $description;
     /**
      * @var list<string>
      */
-    protected $settable;
+    public array $settable;
     /**
      * @var string
      */
-    protected $source;
+    public string $source;
     /**
      * @var string
      */
-    protected $destination;
+    public string $destination;
     /**
      * @var string
      */
-    protected $type;
+    public string $type;
     /**
      * @var list<string>
      */
-    protected $options;
+    public array $options;
 
-    /**
-     * @return string
-     */
-    public function getName(): string
+    public function definedProperties(): array
     {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return self
-     */
-    public function setName(string $name): self
-    {
-        $this->initialized['name'] = true;
-        $this->name                = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     *
-     * @return self
-     */
-    public function setDescription(string $description): self
-    {
-        $this->initialized['description'] = true;
-        $this->description                = $description;
-
-        return $this;
-    }
-
-    /**
-     * @return list<string>
-     */
-    public function getSettable(): array
-    {
-        return $this->settable;
-    }
-
-    /**
-     * @param list<string> $settable
-     *
-     * @return self
-     */
-    public function setSettable(array $settable): self
-    {
-        $this->initialized['settable'] = true;
-        $this->settable                = $settable;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSource(): string
-    {
-        return $this->source;
-    }
-
-    /**
-     * @param string $source
-     *
-     * @return self
-     */
-    public function setSource(string $source): self
-    {
-        $this->initialized['source'] = true;
-        $this->source                = $source;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDestination(): string
-    {
-        return $this->destination;
-    }
-
-    /**
-     * @param string $destination
-     *
-     * @return self
-     */
-    public function setDestination(string $destination): self
-    {
-        $this->initialized['destination'] = true;
-        $this->destination                = $destination;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     *
-     * @return self
-     */
-    public function setType(string $type): self
-    {
-        $this->initialized['type'] = true;
-        $this->type                = $type;
-
-        return $this;
-    }
-
-    /**
-     * @return list<string>
-     */
-    public function getOptions(): array
-    {
-        return $this->options;
-    }
-
-    /**
-     * @param list<string> $options
-     *
-     * @return self
-     */
-    public function setOptions(array $options): self
-    {
-        $this->initialized['options'] = true;
-        $this->options                = $options;
-
-        return $this;
+        return ['name' => 'Name', 'description' => 'Description', 'settable' => 'Settable', 'source' => 'Source', 'destination' => 'Destination', 'type' => 'Type', 'options' => 'Options'];
     }
 }

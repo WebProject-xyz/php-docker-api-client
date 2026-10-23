@@ -3,31 +3,24 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class SystemVersionComponentsItem
+class SystemVersionComponentsItem implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Name of the component.
      *
      * @var string
      */
-    protected $name;
+    public string $name;
     /**
      * Version of the component.
      *
      * @var string
      */
-    protected $version;
+    public string $version;
     /**
      * Key/value pairs of strings with additional information about the
      * component. These values are intended for informational purposes
@@ -38,90 +31,10 @@ class SystemVersionComponentsItem
      *
      * @var mixed|null
      */
-    protected $details;
+    public $details;
 
-    /**
-     * Name of the component.
-     *
-     * @return string
-     */
-    public function getName(): string
+    public function definedProperties(): array
     {
-        return $this->name;
-    }
-
-    /**
-     * Name of the component.
-     *
-     * @param string $name
-     *
-     * @return self
-     */
-    public function setName(string $name): self
-    {
-        $this->initialized['name'] = true;
-        $this->name                = $name;
-
-        return $this;
-    }
-
-    /**
-     * Version of the component.
-     *
-     * @return string
-     */
-    public function getVersion(): string
-    {
-        return $this->version;
-    }
-
-    /**
-     * Version of the component.
-     *
-     * @param string $version
-     *
-     * @return self
-     */
-    public function setVersion(string $version): self
-    {
-        $this->initialized['version'] = true;
-        $this->version                = $version;
-
-        return $this;
-    }
-
-    /**
-     * Key/value pairs of strings with additional information about the
-     * component. These values are intended for informational purposes
-     * only, and their content is not defined, and not part of the API
-     * specification.
-     *
-     * These messages can be printed by the client as information to the user.
-     *
-     * @return mixed|null
-     */
-    public function getDetails()
-    {
-        return $this->details;
-    }
-
-    /**
-     * Key/value pairs of strings with additional information about the
-     * component. These values are intended for informational purposes
-     * only, and their content is not defined, and not part of the API
-     * specification.
-     *
-     * These messages can be printed by the client as information to the user.
-     *
-     * @param mixed|null $details
-     *
-     * @return self
-     */
-    public function setDetails($details): self
-    {
-        $this->initialized['details'] = true;
-        $this->details                = $details;
-
-        return $this;
+        return ['name' => 'Name', 'version' => 'Version', 'details' => 'Details'];
     }
 }

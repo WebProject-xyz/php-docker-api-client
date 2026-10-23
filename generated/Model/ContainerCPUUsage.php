@@ -3,25 +3,18 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ContainerCPUUsage
+class ContainerCPUUsage implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * Total CPU time consumed in nanoseconds (Linux) or 100's of nanoseconds (Windows).
      *
      * @var int|null
      */
-    protected $totalUsage;
+    public ?int $totalUsage;
     /**
      * Total CPU time (in nanoseconds) consumed per core (Linux).
      *
@@ -30,7 +23,7 @@ class ContainerCPUUsage
      *
      * @var list<int>|null
      */
-    protected $percpuUsage;
+    public ?array $percpuUsage;
     /**
      * Time (in nanoseconds) spent by tasks of the cgroup in kernel mode (Linux),
      * or time spent (in 100's of nanoseconds) by all container processes in
@@ -40,7 +33,7 @@ class ContainerCPUUsage
      *
      * @var int|null
      */
-    protected $usageInKernelmode;
+    public ?int $usageInKernelmode;
     /**
      * Time (in nanoseconds) spent by tasks of the cgroup in user mode (Linux),
      * or time spent (in 100's of nanoseconds) by all container processes in
@@ -50,127 +43,10 @@ class ContainerCPUUsage
      *
      * @var int|null
      */
-    protected $usageInUsermode;
+    public ?int $usageInUsermode;
 
-    /**
-     * Total CPU time consumed in nanoseconds (Linux) or 100's of nanoseconds (Windows).
-     *
-     * @return int|null
-     */
-    public function getTotalUsage(): ?int
+    public function definedProperties(): array
     {
-        return $this->totalUsage;
-    }
-
-    /**
-     * Total CPU time consumed in nanoseconds (Linux) or 100's of nanoseconds (Windows).
-     *
-     * @param int|null $totalUsage
-     *
-     * @return self
-     */
-    public function setTotalUsage(?int $totalUsage): self
-    {
-        $this->initialized['totalUsage'] = true;
-        $this->totalUsage                = $totalUsage;
-
-        return $this;
-    }
-
-    /**
-     * Total CPU time (in nanoseconds) consumed per core (Linux).
-     *
-     * This field is Linux-specific when using cgroups v1. It is omitted
-     * when using cgroups v2 and Windows containers.
-     *
-     * @return list<int>|null
-     */
-    public function getPercpuUsage(): ?array
-    {
-        return $this->percpuUsage;
-    }
-
-    /**
-     * Total CPU time (in nanoseconds) consumed per core (Linux).
-     *
-     * This field is Linux-specific when using cgroups v1. It is omitted
-     * when using cgroups v2 and Windows containers.
-     *
-     * @param list<int>|null $percpuUsage
-     *
-     * @return self
-     */
-    public function setPercpuUsage(?array $percpuUsage): self
-    {
-        $this->initialized['percpuUsage'] = true;
-        $this->percpuUsage                = $percpuUsage;
-
-        return $this;
-    }
-
-    /**
-     * Time (in nanoseconds) spent by tasks of the cgroup in kernel mode (Linux),
-     * or time spent (in 100's of nanoseconds) by all container processes in
-     * kernel mode (Windows).
-     *
-     * Not populated for Windows containers using Hyper-V isolation.
-     *
-     * @return int|null
-     */
-    public function getUsageInKernelmode(): ?int
-    {
-        return $this->usageInKernelmode;
-    }
-
-    /**
-     * Time (in nanoseconds) spent by tasks of the cgroup in kernel mode (Linux),
-     * or time spent (in 100's of nanoseconds) by all container processes in
-     * kernel mode (Windows).
-     *
-     * Not populated for Windows containers using Hyper-V isolation.
-     *
-     * @param int|null $usageInKernelmode
-     *
-     * @return self
-     */
-    public function setUsageInKernelmode(?int $usageInKernelmode): self
-    {
-        $this->initialized['usageInKernelmode'] = true;
-        $this->usageInKernelmode                = $usageInKernelmode;
-
-        return $this;
-    }
-
-    /**
-     * Time (in nanoseconds) spent by tasks of the cgroup in user mode (Linux),
-     * or time spent (in 100's of nanoseconds) by all container processes in
-     * kernel mode (Windows).
-     *
-     * Not populated for Windows containers using Hyper-V isolation.
-     *
-     * @return int|null
-     */
-    public function getUsageInUsermode(): ?int
-    {
-        return $this->usageInUsermode;
-    }
-
-    /**
-     * Time (in nanoseconds) spent by tasks of the cgroup in user mode (Linux),
-     * or time spent (in 100's of nanoseconds) by all container processes in
-     * kernel mode (Windows).
-     *
-     * Not populated for Windows containers using Hyper-V isolation.
-     *
-     * @param int|null $usageInUsermode
-     *
-     * @return self
-     */
-    public function setUsageInUsermode(?int $usageInUsermode): self
-    {
-        $this->initialized['usageInUsermode'] = true;
-        $this->usageInUsermode                = $usageInUsermode;
-
-        return $this;
+        return ['totalUsage' => 'total_usage', 'percpuUsage' => 'percpu_usage', 'usageInKernelmode' => 'usage_in_kernelmode', 'usageInUsermode' => 'usage_in_usermode'];
     }
 }

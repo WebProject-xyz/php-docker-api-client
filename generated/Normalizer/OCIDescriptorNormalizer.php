@@ -56,9 +56,11 @@ class OCIDescriptorNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['mediaType']) {
                 $value = $data['mediaType'];
             }
-            $object->setMediaType($value);
-        } elseif (array_key_exists('mediaType', $data) && null === $data['mediaType']) {
-            $object->setMediaType(null);
+            $object->mediaType = $value;
+            unset($data['mediaType']);
+        } elseif (array_key_exists('mediaType', $data)) {
+            $object->mediaType = null;
+            unset($data['mediaType']);
         }
         if (array_key_exists('digest', $data) && null !== $data['digest']) {
             $value_1 = $data['digest'];
@@ -67,9 +69,11 @@ class OCIDescriptorNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['digest']) {
                 $value_1 = $data['digest'];
             }
-            $object->setDigest($value_1);
-        } elseif (array_key_exists('digest', $data) && null === $data['digest']) {
-            $object->setDigest(null);
+            $object->digest = $value_1;
+            unset($data['digest']);
+        } elseif (array_key_exists('digest', $data)) {
+            $object->digest = null;
+            unset($data['digest']);
         }
         if (array_key_exists('size', $data) && null !== $data['size']) {
             $value_2 = $data['size'];
@@ -78,66 +82,77 @@ class OCIDescriptorNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['size']) {
                 $value_2 = $data['size'];
             }
-            $object->setSize($value_2);
-        } elseif (array_key_exists('size', $data) && null === $data['size']) {
-            $object->setSize(null);
+            $object->size = $value_2;
+            unset($data['size']);
+        } elseif (array_key_exists('size', $data)) {
+            $object->size = null;
+            unset($data['size']);
         }
         if (array_key_exists('urls', $data) && null !== $data['urls']) {
-            $value_3 = $data['urls'];
-            if (is_array($data['urls']) && $this->isOnlyNumericKeys($data['urls'])) {
-                $values = [];
-                foreach ($data['urls'] as $value_4) {
-                    $values[] = $value_4;
-                }
-                $value_3 = $values;
-            } elseif (null === $data['urls']) {
-                $value_3 = $data['urls'];
+            $values = [];
+            foreach ($data['urls'] as $value_3) {
+                $values[] = $value_3;
             }
-            $object->setUrls($value_3);
-        } elseif (array_key_exists('urls', $data) && null === $data['urls']) {
-            $object->setUrls(null);
+            $object->urls = $values;
+            unset($data['urls']);
+        } elseif (array_key_exists('urls', $data)) {
+            $object->urls = null;
+            unset($data['urls']);
         }
         if (array_key_exists('annotations', $data) && null !== $data['annotations']) {
-            $value_5 = $data['annotations'];
+            $value_4 = $data['annotations'];
             if (is_array($data['annotations']) && $this->isOnlyNumericKeys($data['annotations'])) {
-                $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-                foreach ($data['annotations'] as $key => $value_6) {
-                    $values_1[$key] = $value_6;
+                $values_1 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data['annotations'] as $key => $value_5) {
+                    $values_1[$key] = $value_5;
                 }
-                $value_5 = $values_1;
+                $value_4 = $values_1;
             } elseif (null === $data['annotations']) {
-                $value_5 = $data['annotations'];
+                $value_4 = $data['annotations'];
             }
-            $object->setAnnotations($value_5);
-        } elseif (array_key_exists('annotations', $data) && null === $data['annotations']) {
-            $object->setAnnotations(null);
+            $object->annotations = $value_4;
+            unset($data['annotations']);
+        } elseif (array_key_exists('annotations', $data)) {
+            $object->annotations = null;
+            unset($data['annotations']);
         }
         if (array_key_exists('data', $data) && null !== $data['data']) {
-            $value_7 = $data['data'];
+            $value_6 = $data['data'];
             if (is_string($data['data'])) {
-                $value_7 = $data['data'];
+                $value_6 = $data['data'];
             } elseif (null === $data['data']) {
-                $value_7 = $data['data'];
+                $value_6 = $data['data'];
             }
-            $object->setData($value_7);
-        } elseif (array_key_exists('data', $data) && null === $data['data']) {
-            $object->setData(null);
+            $object->data = $value_6;
+            unset($data['data']);
+        } elseif (array_key_exists('data', $data)) {
+            $object->data = null;
+            unset($data['data']);
         }
         if (array_key_exists('platform', $data) && null !== $data['platform']) {
-            $object->setPlatform($this->denormalizer->denormalize($data['platform'], \WebProject\DockerApi\Library\Generated\Model\OCIPlatform::class, 'json', $context));
-        } elseif (array_key_exists('platform', $data) && null === $data['platform']) {
-            $object->setPlatform(null);
+            $object->platform = $this->denormalizer->denormalize($data['platform'], \WebProject\DockerApi\Library\Generated\Model\OCIPlatform::class, 'json', $context);
+            unset($data['platform']);
+        } elseif (array_key_exists('platform', $data)) {
+            $object->platform = null;
+            unset($data['platform']);
         }
         if (array_key_exists('artifactType', $data) && null !== $data['artifactType']) {
-            $value_8 = $data['artifactType'];
+            $value_7 = $data['artifactType'];
             if (is_string($data['artifactType'])) {
-                $value_8 = $data['artifactType'];
+                $value_7 = $data['artifactType'];
             } elseif (null === $data['artifactType']) {
-                $value_8 = $data['artifactType'];
+                $value_7 = $data['artifactType'];
             }
-            $object->setArtifactType($value_8);
-        } elseif (array_key_exists('artifactType', $data) && null === $data['artifactType']) {
-            $object->setArtifactType(null);
+            $object->artifactType = $value_7;
+            unset($data['artifactType']);
+        } elseif (array_key_exists('artifactType', $data)) {
+            $object->artifactType = null;
+            unset($data['artifactType']);
+        }
+        foreach ($data as $key_1 => $value_8) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_8;
+            }
         }
 
         return $object;
@@ -146,79 +161,79 @@ class OCIDescriptorNormalizer implements DenormalizerInterface, NormalizerInterf
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('mediaType')) {
-            $value = $data->getMediaType();
-            if (is_string($data->getMediaType())) {
-                $value = $data->getMediaType();
-            } elseif (null === $data->getMediaType()) {
-                $value = $data->getMediaType();
+        if (array_key_exists('mediaType', get_object_vars($data)) && null !== ($data->mediaType ?? null)) {
+            $value = $data->mediaType;
+            if (is_string($data->mediaType)) {
+                $value = $data->mediaType;
+            } elseif (null === $data->mediaType) {
+                $value = $data->mediaType;
             }
             $dataArray['mediaType'] = $value;
         }
-        if ($data->isInitialized('digest')) {
-            $value_1 = $data->getDigest();
-            if (is_string($data->getDigest())) {
-                $value_1 = $data->getDigest();
-            } elseif (null === $data->getDigest()) {
-                $value_1 = $data->getDigest();
+        if (array_key_exists('digest', get_object_vars($data)) && null !== ($data->digest ?? null)) {
+            $value_1 = $data->digest;
+            if (is_string($data->digest)) {
+                $value_1 = $data->digest;
+            } elseif (null === $data->digest) {
+                $value_1 = $data->digest;
             }
             $dataArray['digest'] = $value_1;
         }
-        if ($data->isInitialized('size')) {
-            $value_2 = $data->getSize();
-            if (is_int($data->getSize())) {
-                $value_2 = $data->getSize();
-            } elseif (null === $data->getSize()) {
-                $value_2 = $data->getSize();
+        if (array_key_exists('size', get_object_vars($data)) && null !== ($data->size ?? null)) {
+            $value_2 = $data->size;
+            if (is_int($data->size)) {
+                $value_2 = $data->size;
+            } elseif (null === $data->size) {
+                $value_2 = $data->size;
             }
             $dataArray['size'] = $value_2;
         }
-        if ($data->isInitialized('urls')) {
-            $value_3 = $data->getUrls();
-            if (is_array($data->getUrls())) {
-                $values = [];
-                foreach ($data->getUrls() as $value_4) {
-                    $values[] = $value_4;
+        if (array_key_exists('urls', get_object_vars($data)) && null !== ($data->urls ?? null)) {
+            $values = [];
+            foreach ($data->urls as $value_3) {
+                $values[] = $value_3;
+            }
+            $dataArray['urls'] = $values;
+        }
+        if (array_key_exists('annotations', get_object_vars($data)) && null !== ($data->annotations ?? null)) {
+            $value_4 = $data->annotations;
+            if (is_iterable($data->annotations)) {
+                $values_1 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->annotations as $key => $value_5) {
+                    $values_1[$key] = $value_5;
                 }
-                $value_3 = $values;
-            } elseif (null === $data->getUrls()) {
-                $value_3 = $data->getUrls();
+                $value_4 = $values_1;
+            } elseif (null === $data->annotations) {
+                $value_4 = $data->annotations;
             }
-            $dataArray['urls'] = $value_3;
+            $dataArray['annotations'] = $value_4;
         }
-        if ($data->isInitialized('annotations')) {
-            $value_5 = $data->getAnnotations();
-            if (is_object($data->getAnnotations())) {
-                $values_1 = [];
-                foreach ($data->getAnnotations() as $key => $value_6) {
-                    $values_1[$key] = $value_6;
-                }
-                $value_5 = $values_1;
-            } elseif (null === $data->getAnnotations()) {
-                $value_5 = $data->getAnnotations();
+        if (array_key_exists('data', get_object_vars($data)) && null !== ($data->data ?? null)) {
+            $value_6 = $data->data;
+            if (is_string($data->data)) {
+                $value_6 = $data->data;
+            } elseif (null === $data->data) {
+                $value_6 = $data->data;
             }
-            $dataArray['annotations'] = $value_5;
+            $dataArray['data'] = $value_6;
         }
-        if ($data->isInitialized('data')) {
-            $value_7 = $data->getData();
-            if (is_string($data->getData())) {
-                $value_7 = $data->getData();
-            } elseif (null === $data->getData()) {
-                $value_7 = $data->getData();
+        if (array_key_exists('platform', get_object_vars($data)) && null !== ($data->platform ?? null)) {
+            $normalized            = $this->normalizer->normalize($data->platform, 'json', $context);
+            $dataArray['platform'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        }
+        if (array_key_exists('artifactType', get_object_vars($data)) && null !== ($data->artifactType ?? null)) {
+            $value_7 = $data->artifactType;
+            if (is_string($data->artifactType)) {
+                $value_7 = $data->artifactType;
+            } elseif (null === $data->artifactType) {
+                $value_7 = $data->artifactType;
             }
-            $dataArray['data'] = $value_7;
+            $dataArray['artifactType'] = $value_7;
         }
-        if ($data->isInitialized('platform')) {
-            $dataArray['platform'] = $this->normalizer->normalize($data->getPlatform(), 'json', $context);
-        }
-        if ($data->isInitialized('artifactType')) {
-            $value_8 = $data->getArtifactType();
-            if (is_string($data->getArtifactType())) {
-                $value_8 = $data->getArtifactType();
-            } elseif (null === $data->getArtifactType()) {
-                $value_8 = $data->getArtifactType();
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_8) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_8;
             }
-            $dataArray['artifactType'] = $value_8;
         }
 
         return $dataArray;

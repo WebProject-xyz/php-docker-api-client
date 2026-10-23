@@ -55,9 +55,11 @@ class PluginConfigUserNormalizer implements DenormalizerInterface, NormalizerInt
             } elseif (null === $data['UID']) {
                 $value = $data['UID'];
             }
-            $object->setUID($value);
-        } elseif (array_key_exists('UID', $data) && null === $data['UID']) {
-            $object->setUID(null);
+            $object->uID = $value;
+            unset($data['UID']);
+        } elseif (array_key_exists('UID', $data)) {
+            $object->uID = null;
+            unset($data['UID']);
         }
         if (array_key_exists('GID', $data) && null !== $data['GID']) {
             $value_1 = $data['GID'];
@@ -66,9 +68,16 @@ class PluginConfigUserNormalizer implements DenormalizerInterface, NormalizerInt
             } elseif (null === $data['GID']) {
                 $value_1 = $data['GID'];
             }
-            $object->setGID($value_1);
-        } elseif (array_key_exists('GID', $data) && null === $data['GID']) {
-            $object->setGID(null);
+            $object->gID = $value_1;
+            unset($data['GID']);
+        } elseif (array_key_exists('GID', $data)) {
+            $object->gID = null;
+            unset($data['GID']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class PluginConfigUserNormalizer implements DenormalizerInterface, NormalizerInt
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('uID')) {
-            $value = $data->getUID();
-            if (is_int($data->getUID())) {
-                $value = $data->getUID();
-            } elseif (null === $data->getUID()) {
-                $value = $data->getUID();
+        if (array_key_exists('uID', get_object_vars($data)) && null !== ($data->uID ?? null)) {
+            $value = $data->uID;
+            if (is_int($data->uID)) {
+                $value = $data->uID;
+            } elseif (null === $data->uID) {
+                $value = $data->uID;
             }
             $dataArray['UID'] = $value;
         }
-        if ($data->isInitialized('gID')) {
-            $value_1 = $data->getGID();
-            if (is_int($data->getGID())) {
-                $value_1 = $data->getGID();
-            } elseif (null === $data->getGID()) {
-                $value_1 = $data->getGID();
+        if (array_key_exists('gID', get_object_vars($data)) && null !== ($data->gID ?? null)) {
+            $value_1 = $data->gID;
+            if (is_int($data->gID)) {
+                $value_1 = $data->gID;
+            } elseif (null === $data->gID) {
+                $value_1 = $data->gID;
             }
             $dataArray['GID'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

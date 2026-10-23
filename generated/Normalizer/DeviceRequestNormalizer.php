@@ -56,9 +56,11 @@ class DeviceRequestNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['Driver']) {
                 $value = $data['Driver'];
             }
-            $object->setDriver($value);
-        } elseif (array_key_exists('Driver', $data) && null === $data['Driver']) {
-            $object->setDriver(null);
+            $object->driver = $value;
+            unset($data['Driver']);
+        } elseif (array_key_exists('Driver', $data)) {
+            $object->driver = null;
+            unset($data['Driver']);
         }
         if (array_key_exists('Count', $data) && null !== $data['Count']) {
             $value_1 = $data['Count'];
@@ -67,58 +69,59 @@ class DeviceRequestNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['Count']) {
                 $value_1 = $data['Count'];
             }
-            $object->setCount($value_1);
-        } elseif (array_key_exists('Count', $data) && null === $data['Count']) {
-            $object->setCount(null);
+            $object->count = $value_1;
+            unset($data['Count']);
+        } elseif (array_key_exists('Count', $data)) {
+            $object->count = null;
+            unset($data['Count']);
         }
         if (array_key_exists('DeviceIDs', $data) && null !== $data['DeviceIDs']) {
-            $value_2 = $data['DeviceIDs'];
-            if (is_array($data['DeviceIDs']) && $this->isOnlyNumericKeys($data['DeviceIDs'])) {
-                $values = [];
-                foreach ($data['DeviceIDs'] as $value_3) {
-                    $values[] = $value_3;
-                }
-                $value_2 = $values;
-            } elseif (null === $data['DeviceIDs']) {
-                $value_2 = $data['DeviceIDs'];
+            $values = [];
+            foreach ($data['DeviceIDs'] as $value_2) {
+                $values[] = $value_2;
             }
-            $object->setDeviceIDs($value_2);
-        } elseif (array_key_exists('DeviceIDs', $data) && null === $data['DeviceIDs']) {
-            $object->setDeviceIDs(null);
+            $object->deviceIDs = $values;
+            unset($data['DeviceIDs']);
+        } elseif (array_key_exists('DeviceIDs', $data)) {
+            $object->deviceIDs = null;
+            unset($data['DeviceIDs']);
         }
         if (array_key_exists('Capabilities', $data) && null !== $data['Capabilities']) {
-            $value_4 = $data['Capabilities'];
-            if (is_array($data['Capabilities']) && $this->isOnlyNumericKeys($data['Capabilities'])) {
-                $values_1 = [];
-                foreach ($data['Capabilities'] as $value_5) {
-                    $values_2 = [];
-                    foreach ($value_5 as $value_6) {
-                        $values_2[] = $value_6;
-                    }
-                    $values_1[] = $values_2;
+            $values_1 = [];
+            foreach ($data['Capabilities'] as $value_3) {
+                $values_2 = [];
+                foreach ($value_3 as $value_4) {
+                    $values_2[] = $value_4;
                 }
-                $value_4 = $values_1;
-            } elseif (null === $data['Capabilities']) {
-                $value_4 = $data['Capabilities'];
+                $values_1[] = $values_2;
             }
-            $object->setCapabilities($value_4);
-        } elseif (array_key_exists('Capabilities', $data) && null === $data['Capabilities']) {
-            $object->setCapabilities(null);
+            $object->capabilities = $values_1;
+            unset($data['Capabilities']);
+        } elseif (array_key_exists('Capabilities', $data)) {
+            $object->capabilities = null;
+            unset($data['Capabilities']);
         }
         if (array_key_exists('Options', $data) && null !== $data['Options']) {
-            $value_7 = $data['Options'];
+            $value_5 = $data['Options'];
             if (is_array($data['Options']) && $this->isOnlyNumericKeys($data['Options'])) {
-                $values_3 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-                foreach ($data['Options'] as $key => $value_8) {
-                    $values_3[$key] = $value_8;
+                $values_3 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data['Options'] as $key => $value_6) {
+                    $values_3[$key] = $value_6;
                 }
-                $value_7 = $values_3;
+                $value_5 = $values_3;
             } elseif (null === $data['Options']) {
-                $value_7 = $data['Options'];
+                $value_5 = $data['Options'];
             }
-            $object->setOptions($value_7);
-        } elseif (array_key_exists('Options', $data) && null === $data['Options']) {
-            $object->setOptions(null);
+            $object->options = $value_5;
+            unset($data['Options']);
+        } elseif (array_key_exists('Options', $data)) {
+            $object->options = null;
+            unset($data['Options']);
+        }
+        foreach ($data as $key_1 => $value_7) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_7;
+            }
         }
 
         return $object;
@@ -127,66 +130,59 @@ class DeviceRequestNormalizer implements DenormalizerInterface, NormalizerInterf
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('driver')) {
-            $value = $data->getDriver();
-            if (is_string($data->getDriver())) {
-                $value = $data->getDriver();
-            } elseif (null === $data->getDriver()) {
-                $value = $data->getDriver();
+        if (array_key_exists('driver', get_object_vars($data)) && null !== ($data->driver ?? null)) {
+            $value = $data->driver;
+            if (is_string($data->driver)) {
+                $value = $data->driver;
+            } elseif (null === $data->driver) {
+                $value = $data->driver;
             }
             $dataArray['Driver'] = $value;
         }
-        if ($data->isInitialized('count')) {
-            $value_1 = $data->getCount();
-            if (is_int($data->getCount())) {
-                $value_1 = $data->getCount();
-            } elseif (null === $data->getCount()) {
-                $value_1 = $data->getCount();
+        if (array_key_exists('count', get_object_vars($data)) && null !== ($data->count ?? null)) {
+            $value_1 = $data->count;
+            if (is_int($data->count)) {
+                $value_1 = $data->count;
+            } elseif (null === $data->count) {
+                $value_1 = $data->count;
             }
             $dataArray['Count'] = $value_1;
         }
-        if ($data->isInitialized('deviceIDs')) {
-            $value_2 = $data->getDeviceIDs();
-            if (is_array($data->getDeviceIDs())) {
-                $values = [];
-                foreach ($data->getDeviceIDs() as $value_3) {
-                    $values[] = $value_3;
-                }
-                $value_2 = $values;
-            } elseif (null === $data->getDeviceIDs()) {
-                $value_2 = $data->getDeviceIDs();
+        if (array_key_exists('deviceIDs', get_object_vars($data)) && null !== ($data->deviceIDs ?? null)) {
+            $values = [];
+            foreach ($data->deviceIDs as $value_2) {
+                $values[] = $value_2;
             }
-            $dataArray['DeviceIDs'] = $value_2;
+            $dataArray['DeviceIDs'] = $values;
         }
-        if ($data->isInitialized('capabilities')) {
-            $value_4 = $data->getCapabilities();
-            if (is_array($data->getCapabilities())) {
-                $values_1 = [];
-                foreach ($data->getCapabilities() as $value_5) {
-                    $values_2 = [];
-                    foreach ($value_5 as $value_6) {
-                        $values_2[] = $value_6;
-                    }
-                    $values_1[] = $values_2;
+        if (array_key_exists('capabilities', get_object_vars($data)) && null !== ($data->capabilities ?? null)) {
+            $values_1 = [];
+            foreach ($data->capabilities as $value_3) {
+                $values_2 = [];
+                foreach ($value_3 as $value_4) {
+                    $values_2[] = $value_4;
                 }
-                $value_4 = $values_1;
-            } elseif (null === $data->getCapabilities()) {
-                $value_4 = $data->getCapabilities();
+                $values_1[] = $values_2;
             }
-            $dataArray['Capabilities'] = $value_4;
+            $dataArray['Capabilities'] = $values_1;
         }
-        if ($data->isInitialized('options')) {
-            $value_7 = $data->getOptions();
-            if (is_object($data->getOptions())) {
-                $values_3 = [];
-                foreach ($data->getOptions() as $key => $value_8) {
-                    $values_3[$key] = $value_8;
+        if (array_key_exists('options', get_object_vars($data)) && null !== ($data->options ?? null)) {
+            $value_5 = $data->options;
+            if (is_iterable($data->options)) {
+                $values_3 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->options as $key => $value_6) {
+                    $values_3[$key] = $value_6;
                 }
-                $value_7 = $values_3;
-            } elseif (null === $data->getOptions()) {
-                $value_7 = $data->getOptions();
+                $value_5 = $values_3;
+            } elseif (null === $data->options) {
+                $value_5 = $data->options;
             }
-            $dataArray['Options'] = $value_7;
+            $dataArray['Options'] = $value_5;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_7) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_7;
+            }
         }
 
         return $dataArray;

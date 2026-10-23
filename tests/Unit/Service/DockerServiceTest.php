@@ -34,21 +34,32 @@ final class DockerServiceTest extends Unit
     {
         $containerId = 'd013dcefb265f19ef734b4f51abe1db1db22861fa44b7a6f11613e2e8519519c';
 
-        $containerSummary = $this->createMock(ContainerSummary::class);
-        $containerSummary->method('getId')->willReturn($containerId);
+        $containerSummary     = new ContainerSummary();
+        $containerSummary->id = $containerId;
+
+        $containerSummaryWithoutId = new ContainerSummary();
 
         $this->client->expects($this->once())
             ->method('containerList')
-            ->willReturn([$containerSummary]);
+            ->willReturn([$containerSummary, $containerSummaryWithoutId]);
 
-        $inspectResponse = $this->createConfiguredMock(ContainerInspectResponse::class, [
-            'getId'              => $containerId,
-            'getName'            => '/test-container',
-            'getImage'           => 'nginx:latest',
-            'getState'           => $this->createConfiguredMock(ContainerState::class, ['getRunning' => true]),
-            'getConfig'          => $this->createConfiguredMock(ContainerConfig::class, ['getEnv' => ['FOO=bar']]),
-            'getNetworkSettings' => $this->createConfiguredMock(NetworkSettings::class, ['getNetworks' => [], 'getPorts' => []]),
-        ]);
+        $state          = new ContainerState();
+        $state->running = true;
+
+        $config      = new ContainerConfig();
+        $config->env = ['FOO=bar'];
+
+        $networkSettings           = new NetworkSettings();
+        $networkSettings->networks = [];
+        $networkSettings->ports    = [];
+
+        $inspectResponse                  = new ContainerInspectResponse();
+        $inspectResponse->id              = $containerId;
+        $inspectResponse->name            = '/test-container';
+        $inspectResponse->image           = 'nginx:latest';
+        $inspectResponse->state           = $state;
+        $inspectResponse->config          = $config;
+        $inspectResponse->networkSettings = $networkSettings;
 
         $this->client->expects($this->once())
             ->method('containerInspect')
@@ -67,14 +78,23 @@ final class DockerServiceTest extends Unit
 
     public function testFindContainer(): void
     {
-        $inspectResponse = $this->createConfiguredMock(ContainerInspectResponse::class, [
-            'getId'              => '456',
-            'getName'            => '/single-container',
-            'getImage'           => 'php:8.3',
-            'getState'           => $this->createConfiguredMock(ContainerState::class, ['getRunning' => false]),
-            'getConfig'          => $this->createConfiguredMock(ContainerConfig::class, ['getEnv' => []]),
-            'getNetworkSettings' => $this->createConfiguredMock(NetworkSettings::class, ['getNetworks' => [], 'getPorts' => []]),
-        ]);
+        $state          = new ContainerState();
+        $state->running = false;
+
+        $config      = new ContainerConfig();
+        $config->env = [];
+
+        $networkSettings           = new NetworkSettings();
+        $networkSettings->networks = [];
+        $networkSettings->ports    = [];
+
+        $inspectResponse                  = new ContainerInspectResponse();
+        $inspectResponse->id              = '456';
+        $inspectResponse->name            = '/single-container';
+        $inspectResponse->image           = 'php:8.3';
+        $inspectResponse->state           = $state;
+        $inspectResponse->config          = $config;
+        $inspectResponse->networkSettings = $networkSettings;
 
         $this->client->expects($this->once())
             ->method('containerInspect')

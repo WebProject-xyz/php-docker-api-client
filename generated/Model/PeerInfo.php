@@ -3,79 +3,27 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class PeerInfo
+class PeerInfo implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * ID of the peer-node in the Swarm cluster.
      *
      * @var string|null
      */
-    protected $name;
+    public ?string $name;
     /**
      * IP-address of the peer-node in the Swarm cluster.
      *
      * @var string|null
      */
-    protected $iP;
+    public ?string $iP;
 
-    /**
-     * ID of the peer-node in the Swarm cluster.
-     *
-     * @return string|null
-     */
-    public function getName(): ?string
+    public function definedProperties(): array
     {
-        return $this->name;
-    }
-
-    /**
-     * ID of the peer-node in the Swarm cluster.
-     *
-     * @param string|null $name
-     *
-     * @return self
-     */
-    public function setName(?string $name): self
-    {
-        $this->initialized['name'] = true;
-        $this->name                = $name;
-
-        return $this;
-    }
-
-    /**
-     * IP-address of the peer-node in the Swarm cluster.
-     *
-     * @return string|null
-     */
-    public function getIP(): ?string
-    {
-        return $this->iP;
-    }
-
-    /**
-     * IP-address of the peer-node in the Swarm cluster.
-     *
-     * @param string|null $iP
-     *
-     * @return self
-     */
-    public function setIP(?string $iP): self
-    {
-        $this->initialized['iP'] = true;
-        $this->iP                = $iP;
-
-        return $this;
+        return ['name' => 'Name', 'iP' => 'IP'];
     }
 }

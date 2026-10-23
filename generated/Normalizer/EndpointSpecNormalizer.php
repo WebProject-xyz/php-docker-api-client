@@ -55,24 +55,27 @@ class EndpointSpecNormalizer implements DenormalizerInterface, NormalizerInterfa
             } elseif (null === $data['Mode']) {
                 $value = $data['Mode'];
             }
-            $object->setMode($value);
-        } elseif (array_key_exists('Mode', $data) && null === $data['Mode']) {
-            $object->setMode(null);
+            $object->mode = $value;
+            unset($data['Mode']);
+        } elseif (array_key_exists('Mode', $data)) {
+            $object->mode = null;
+            unset($data['Mode']);
         }
         if (array_key_exists('Ports', $data) && null !== $data['Ports']) {
-            $value_1 = $data['Ports'];
-            if (is_array($data['Ports']) && $this->isOnlyNumericKeys($data['Ports'])) {
-                $values = [];
-                foreach ($data['Ports'] as $value_2) {
-                    $values[] = $this->denormalizer->denormalize($value_2, \WebProject\DockerApi\Library\Generated\Model\EndpointPortConfig::class, 'json', $context);
-                }
-                $value_1 = $values;
-            } elseif (null === $data['Ports']) {
-                $value_1 = $data['Ports'];
+            $values = [];
+            foreach ($data['Ports'] as $value_1) {
+                $values[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\EndpointPortConfig::class, 'json', $context);
             }
-            $object->setPorts($value_1);
-        } elseif (array_key_exists('Ports', $data) && null === $data['Ports']) {
-            $object->setPorts(null);
+            $object->ports = $values;
+            unset($data['Ports']);
+        } elseif (array_key_exists('Ports', $data)) {
+            $object->ports = null;
+            unset($data['Ports']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -81,27 +84,27 @@ class EndpointSpecNormalizer implements DenormalizerInterface, NormalizerInterfa
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('mode')) {
-            $value = $data->getMode();
-            if (is_string($data->getMode())) {
-                $value = $data->getMode();
-            } elseif (null === $data->getMode()) {
-                $value = $data->getMode();
+        if (array_key_exists('mode', get_object_vars($data)) && null !== ($data->mode ?? null)) {
+            $value = $data->mode;
+            if (is_string($data->mode)) {
+                $value = $data->mode;
+            } elseif (null === $data->mode) {
+                $value = $data->mode;
             }
             $dataArray['Mode'] = $value;
         }
-        if ($data->isInitialized('ports')) {
-            $value_1 = $data->getPorts();
-            if (is_array($data->getPorts())) {
-                $values = [];
-                foreach ($data->getPorts() as $value_2) {
-                    $values[] = $this->normalizer->normalize($value_2, 'json', $context);
-                }
-                $value_1 = $values;
-            } elseif (null === $data->getPorts()) {
-                $value_1 = $data->getPorts();
+        if (array_key_exists('ports', get_object_vars($data)) && null !== ($data->ports ?? null)) {
+            $values = [];
+            foreach ($data->ports as $value_1) {
+                $normalized = null === $value_1 ? null : $this->normalizer->normalize($value_1, 'json', $context);
+                $values[]   = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
             }
-            $dataArray['Ports'] = $value_1;
+            $dataArray['Ports'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

@@ -55,39 +55,44 @@ class IPAMNormalizer implements DenormalizerInterface, NormalizerInterface, Deno
             } elseif (null === $data['Driver']) {
                 $value = $data['Driver'];
             }
-            $object->setDriver($value);
-        } elseif (array_key_exists('Driver', $data) && null === $data['Driver']) {
-            $object->setDriver(null);
+            $object->driver = $value;
+            unset($data['Driver']);
+        } elseif (array_key_exists('Driver', $data)) {
+            $object->driver = null;
+            unset($data['Driver']);
         }
         if (array_key_exists('Config', $data) && null !== $data['Config']) {
-            $value_1 = $data['Config'];
-            if (is_array($data['Config']) && $this->isOnlyNumericKeys($data['Config'])) {
-                $values = [];
-                foreach ($data['Config'] as $value_2) {
-                    $values[] = $this->denormalizer->denormalize($value_2, \WebProject\DockerApi\Library\Generated\Model\IPAMConfig::class, 'json', $context);
-                }
-                $value_1 = $values;
-            } elseif (null === $data['Config']) {
-                $value_1 = $data['Config'];
+            $values = [];
+            foreach ($data['Config'] as $value_1) {
+                $values[] = $this->denormalizer->denormalize($value_1, \WebProject\DockerApi\Library\Generated\Model\IPAMConfig::class, 'json', $context);
             }
-            $object->setConfig($value_1);
-        } elseif (array_key_exists('Config', $data) && null === $data['Config']) {
-            $object->setConfig(null);
+            $object->config = $values;
+            unset($data['Config']);
+        } elseif (array_key_exists('Config', $data)) {
+            $object->config = null;
+            unset($data['Config']);
         }
         if (array_key_exists('Options', $data) && null !== $data['Options']) {
-            $value_3 = $data['Options'];
+            $value_2 = $data['Options'];
             if (is_array($data['Options']) && $this->isOnlyNumericKeys($data['Options'])) {
-                $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-                foreach ($data['Options'] as $key => $value_4) {
-                    $values_1[$key] = $value_4;
+                $values_1 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data['Options'] as $key => $value_3) {
+                    $values_1[$key] = $value_3;
                 }
-                $value_3 = $values_1;
+                $value_2 = $values_1;
             } elseif (null === $data['Options']) {
-                $value_3 = $data['Options'];
+                $value_2 = $data['Options'];
             }
-            $object->setOptions($value_3);
-        } elseif (array_key_exists('Options', $data) && null === $data['Options']) {
-            $object->setOptions(null);
+            $object->options = $value_2;
+            unset($data['Options']);
+        } elseif (array_key_exists('Options', $data)) {
+            $object->options = null;
+            unset($data['Options']);
+        }
+        foreach ($data as $key_1 => $value_4) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_4;
+            }
         }
 
         return $object;
@@ -96,40 +101,40 @@ class IPAMNormalizer implements DenormalizerInterface, NormalizerInterface, Deno
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('driver')) {
-            $value = $data->getDriver();
-            if (is_string($data->getDriver())) {
-                $value = $data->getDriver();
-            } elseif (null === $data->getDriver()) {
-                $value = $data->getDriver();
+        if (array_key_exists('driver', get_object_vars($data)) && null !== ($data->driver ?? null)) {
+            $value = $data->driver;
+            if (is_string($data->driver)) {
+                $value = $data->driver;
+            } elseif (null === $data->driver) {
+                $value = $data->driver;
             }
             $dataArray['Driver'] = $value;
         }
-        if ($data->isInitialized('config')) {
-            $value_1 = $data->getConfig();
-            if (is_array($data->getConfig())) {
-                $values = [];
-                foreach ($data->getConfig() as $value_2) {
-                    $values[] = $this->normalizer->normalize($value_2, 'json', $context);
-                }
-                $value_1 = $values;
-            } elseif (null === $data->getConfig()) {
-                $value_1 = $data->getConfig();
+        if (array_key_exists('config', get_object_vars($data)) && null !== ($data->config ?? null)) {
+            $values = [];
+            foreach ($data->config as $value_1) {
+                $normalized = null === $value_1 ? null : $this->normalizer->normalize($value_1, 'json', $context);
+                $values[]   = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
             }
-            $dataArray['Config'] = $value_1;
+            $dataArray['Config'] = $values;
         }
-        if ($data->isInitialized('options')) {
-            $value_3 = $data->getOptions();
-            if (is_object($data->getOptions())) {
-                $values_1 = [];
-                foreach ($data->getOptions() as $key => $value_4) {
-                    $values_1[$key] = $value_4;
+        if (array_key_exists('options', get_object_vars($data)) && null !== ($data->options ?? null)) {
+            $value_2 = $data->options;
+            if (is_iterable($data->options)) {
+                $values_1 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->options as $key => $value_3) {
+                    $values_1[$key] = $value_3;
                 }
-                $value_3 = $values_1;
-            } elseif (null === $data->getOptions()) {
-                $value_3 = $data->getOptions();
+                $value_2 = $values_1;
+            } elseif (null === $data->options) {
+                $value_2 = $data->options;
             }
-            $dataArray['Options'] = $value_3;
+            $dataArray['Options'] = $value_2;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_4) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_4;
+            }
         }
 
         return $dataArray;

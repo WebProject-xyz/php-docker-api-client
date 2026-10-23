@@ -56,9 +56,11 @@ class ErrorDetailNormalizer implements DenormalizerInterface, NormalizerInterfac
             } elseif (null === $data['code']) {
                 $value = $data['code'];
             }
-            $object->setCode($value);
-        } elseif (array_key_exists('code', $data) && null === $data['code']) {
-            $object->setCode(null);
+            $object->code = $value;
+            unset($data['code']);
+        } elseif (array_key_exists('code', $data)) {
+            $object->code = null;
+            unset($data['code']);
         }
         if (array_key_exists('message', $data) && null !== $data['message']) {
             $value_1 = $data['message'];
@@ -67,9 +69,16 @@ class ErrorDetailNormalizer implements DenormalizerInterface, NormalizerInterfac
             } elseif (null === $data['message']) {
                 $value_1 = $data['message'];
             }
-            $object->setMessage($value_1);
-        } elseif (array_key_exists('message', $data) && null === $data['message']) {
-            $object->setMessage(null);
+            $object->message = $value_1;
+            unset($data['message']);
+        } elseif (array_key_exists('message', $data)) {
+            $object->message = null;
+            unset($data['message']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -78,23 +87,28 @@ class ErrorDetailNormalizer implements DenormalizerInterface, NormalizerInterfac
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('code')) {
-            $value = $data->getCode();
-            if (is_int($data->getCode())) {
-                $value = $data->getCode();
-            } elseif (null === $data->getCode()) {
-                $value = $data->getCode();
+        if (array_key_exists('code', get_object_vars($data)) && null !== ($data->code ?? null)) {
+            $value = $data->code;
+            if (is_int($data->code)) {
+                $value = $data->code;
+            } elseif (null === $data->code) {
+                $value = $data->code;
             }
             $dataArray['code'] = $value;
         }
-        if ($data->isInitialized('message')) {
-            $value_1 = $data->getMessage();
-            if (is_string($data->getMessage())) {
-                $value_1 = $data->getMessage();
-            } elseif (null === $data->getMessage()) {
-                $value_1 = $data->getMessage();
+        if (array_key_exists('message', get_object_vars($data)) && null !== ($data->message ?? null)) {
+            $value_1 = $data->message;
+            if (is_string($data->message)) {
+                $value_1 = $data->message;
+            } elseif (null === $data->message) {
+                $value_1 = $data->message;
             }
             $dataArray['message'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

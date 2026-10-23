@@ -55,28 +55,31 @@ class FirewallInfoNormalizer implements DenormalizerInterface, NormalizerInterfa
             } elseif (null === $data['Driver']) {
                 $value = $data['Driver'];
             }
-            $object->setDriver($value);
-        } elseif (array_key_exists('Driver', $data) && null === $data['Driver']) {
-            $object->setDriver(null);
+            $object->driver = $value;
+            unset($data['Driver']);
+        } elseif (array_key_exists('Driver', $data)) {
+            $object->driver = null;
+            unset($data['Driver']);
         }
         if (array_key_exists('Info', $data) && null !== $data['Info']) {
-            $value_1 = $data['Info'];
-            if (is_array($data['Info']) && $this->isOnlyNumericKeys($data['Info'])) {
-                $values = [];
-                foreach ($data['Info'] as $value_2) {
-                    $values_1 = [];
-                    foreach ($value_2 as $value_3) {
-                        $values_1[] = $value_3;
-                    }
-                    $values[] = $values_1;
+            $values = [];
+            foreach ($data['Info'] as $value_1) {
+                $values_1 = [];
+                foreach ($value_1 as $value_2) {
+                    $values_1[] = $value_2;
                 }
-                $value_1 = $values;
-            } elseif (null === $data['Info']) {
-                $value_1 = $data['Info'];
+                $values[] = $values_1;
             }
-            $object->setInfo($value_1);
-        } elseif (array_key_exists('Info', $data) && null === $data['Info']) {
-            $object->setInfo(null);
+            $object->info = $values;
+            unset($data['Info']);
+        } elseif (array_key_exists('Info', $data)) {
+            $object->info = null;
+            unset($data['Info']);
+        }
+        foreach ($data as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_3;
+            }
         }
 
         return $object;
@@ -85,31 +88,30 @@ class FirewallInfoNormalizer implements DenormalizerInterface, NormalizerInterfa
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('driver')) {
-            $value = $data->getDriver();
-            if (is_string($data->getDriver())) {
-                $value = $data->getDriver();
-            } elseif (null === $data->getDriver()) {
-                $value = $data->getDriver();
+        if (array_key_exists('driver', get_object_vars($data)) && null !== ($data->driver ?? null)) {
+            $value = $data->driver;
+            if (is_string($data->driver)) {
+                $value = $data->driver;
+            } elseif (null === $data->driver) {
+                $value = $data->driver;
             }
             $dataArray['Driver'] = $value;
         }
-        if ($data->isInitialized('info')) {
-            $value_1 = $data->getInfo();
-            if (is_array($data->getInfo())) {
-                $values = [];
-                foreach ($data->getInfo() as $value_2) {
-                    $values_1 = [];
-                    foreach ($value_2 as $value_3) {
-                        $values_1[] = $value_3;
-                    }
-                    $values[] = $values_1;
+        if (array_key_exists('info', get_object_vars($data)) && null !== ($data->info ?? null)) {
+            $values = [];
+            foreach ($data->info as $value_1) {
+                $values_1 = [];
+                foreach ($value_1 as $value_2) {
+                    $values_1[] = $value_2;
                 }
-                $value_1 = $values;
-            } elseif (null === $data->getInfo()) {
-                $value_1 = $data->getInfo();
+                $values[] = $values_1;
             }
-            $dataArray['Info'] = $value_1;
+            $dataArray['Info'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_3;
+            }
         }
 
         return $dataArray;

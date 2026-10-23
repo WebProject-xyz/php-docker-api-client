@@ -55,9 +55,16 @@ class ContainerWaitExitErrorNormalizer implements DenormalizerInterface, Normali
             } elseif (null === $data['Message']) {
                 $value = $data['Message'];
             }
-            $object->setMessage($value);
-        } elseif (array_key_exists('Message', $data) && null === $data['Message']) {
-            $object->setMessage(null);
+            $object->message = $value;
+            unset($data['Message']);
+        } elseif (array_key_exists('Message', $data)) {
+            $object->message = null;
+            unset($data['Message']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -66,14 +73,19 @@ class ContainerWaitExitErrorNormalizer implements DenormalizerInterface, Normali
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('message')) {
-            $value = $data->getMessage();
-            if (is_string($data->getMessage())) {
-                $value = $data->getMessage();
-            } elseif (null === $data->getMessage()) {
-                $value = $data->getMessage();
+        if (array_key_exists('message', get_object_vars($data)) && null !== ($data->message ?? null)) {
+            $value = $data->message;
+            if (is_string($data->message)) {
+                $value = $data->message;
+            } elseif (null === $data->message) {
+                $value = $data->message;
             }
             $dataArray['Message'] = $value;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
         }
 
         return $dataArray;

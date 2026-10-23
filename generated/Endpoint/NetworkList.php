@@ -17,20 +17,20 @@ class NetworkList extends \WebProject\DockerApi\Library\Generated\Runtime\Client
      *
      * @param array{
      *    "filters"?: string, //JSON encoded value of the filters (a `map[string][]string`) to process
-     * on the networks list.
-     *
-     * Available filters:
-     *
-     * - `dangling=<boolean>` When set to `true` (or `1`), returns all
-     * networks that are not in use by a container. When set to `false`
-     * (or `0`), only networks that are in use by one or more
-     * containers are returned.
-     * - `driver=<driver-name>` Matches a network's driver.
-     * - `id=<network-id>` Matches all or part of a network ID.
-     * - `label=<key>` or `label=<key>=<value>` of a network label.
-     * - `name=<network-name>` Matches all or part of a network name.
-     * - `scope=["swarm"|"global"|"local"]` Filters networks by scope (`swarm`, `global`, or `local`).
-     * - `type=["custom"|"builtin"]` Filters networks by type. The `custom` keyword returns all user-defined networks.
+     *                        //on the networks list.
+     *                        //
+     *                        //Available filters:
+     *                        //
+     *                        //- `dangling=<boolean>` When set to `true` (or `1`), returns all
+     *                        //   networks that are not in use by a container. When set to `false`
+     *                        //   (or `0`), only networks that are in use by one or more
+     *                        //   containers are returned.
+     *                        //- `driver=<driver-name>` Matches a network's driver.
+     *                        //- `id=<network-id>` Matches all or part of a network ID.
+     *                        //- `label=<key>` or `label=<key>=<value>` of a network label.
+     *                        //- `name=<network-name>` Matches all or part of a network name.
+     *                        //- `scope=["swarm"|"global"|"local"]` Filters networks by scope (`swarm`, `global`, or `local`).
+     *                        //- `type=["custom"|"builtin"]` Filters networks by type. The `custom` keyword returns all user-defined networks.
      * } $queryParameters
      */
     public function __construct(array $queryParameters = [])
@@ -48,7 +48,7 @@ class NetworkList extends \WebProject\DockerApi\Library\Generated\Runtime\Client
         return '/networks';
     }
 
-    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
+    public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer): array
     {
         return [[], null];
     }
@@ -72,24 +72,36 @@ class NetworkList extends \WebProject\DockerApi\Library\Generated\Runtime\Client
     /**
      * {@inheritdoc}
      *
-     * @return \WebProject\DockerApi\Library\Generated\Model\NetworkSummary[]|null
+     * @return \WebProject\DockerApi\Library\Generated\Model\NetworkSummary[]
      *
      * @throws \WebProject\DockerApi\Library\Generated\Exception\NetworkListInternalServerErrorException
+     * @throws \WebProject\DockerApi\Library\Generated\Exception\BadResponseException
      */
-    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Symfony\Contracts\HttpClient\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         $status = $response->getStatusCode();
-        $body   = (string) $response->getBody();
-        if ((null === $contentType) === false && (200 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
-            return $serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\NetworkSummary[]', 'json');
+        $body   = $response->getContent(false);
+        if (null !== $contentType && (200 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
+            return $this->deserializeListResponse($serializer, $body, 'WebProject\DockerApi\Library\Generated\Model\NetworkSummary[]', 'json');
         }
-        if ((null === $contentType) === false && (500 === $status && false !== mb_strpos(strtolower($contentType), 'application/json'))) {
+        if (null !== $contentType && (500 === $status && false !== stripos(strtolower($contentType), 'application/json'))) {
             throw new \WebProject\DockerApi\Library\Generated\Exception\NetworkListInternalServerErrorException($serializer->deserialize($body, 'WebProject\DockerApi\Library\Generated\Model\ErrorResponse', 'json'), $response);
         }
+        throw new \WebProject\DockerApi\Library\Generated\Exception\BadResponseException($status, $body, $response);
     }
 
     public function getAuthenticationScopes(): array
     {
         return [];
+    }
+
+    public function getFetchMode(): string
+    {
+        return \Jane\Component\OpenApiRuntime\Client\FetchMode::Lazy->value;
+    }
+
+    public function getTargetClass(): ?string
+    {
+        return null;
     }
 }

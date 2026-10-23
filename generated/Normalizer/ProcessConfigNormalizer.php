@@ -56,9 +56,11 @@ class ProcessConfigNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['privileged']) {
                 $value = $data['privileged'];
             }
-            $object->setPrivileged($value);
-        } elseif (array_key_exists('privileged', $data) && null === $data['privileged']) {
-            $object->setPrivileged(null);
+            $object->privileged = $value;
+            unset($data['privileged']);
+        } elseif (array_key_exists('privileged', $data)) {
+            $object->privileged = null;
+            unset($data['privileged']);
         }
         if (array_key_exists('user', $data) && null !== $data['user']) {
             $value_1 = $data['user'];
@@ -67,9 +69,11 @@ class ProcessConfigNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['user']) {
                 $value_1 = $data['user'];
             }
-            $object->setUser($value_1);
-        } elseif (array_key_exists('user', $data) && null === $data['user']) {
-            $object->setUser(null);
+            $object->user = $value_1;
+            unset($data['user']);
+        } elseif (array_key_exists('user', $data)) {
+            $object->user = null;
+            unset($data['user']);
         }
         if (array_key_exists('tty', $data) && null !== $data['tty']) {
             $value_2 = $data['tty'];
@@ -78,9 +82,11 @@ class ProcessConfigNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['tty']) {
                 $value_2 = $data['tty'];
             }
-            $object->setTty($value_2);
-        } elseif (array_key_exists('tty', $data) && null === $data['tty']) {
-            $object->setTty(null);
+            $object->tty = $value_2;
+            unset($data['tty']);
+        } elseif (array_key_exists('tty', $data)) {
+            $object->tty = null;
+            unset($data['tty']);
         }
         if (array_key_exists('entrypoint', $data) && null !== $data['entrypoint']) {
             $value_3 = $data['entrypoint'];
@@ -89,24 +95,27 @@ class ProcessConfigNormalizer implements DenormalizerInterface, NormalizerInterf
             } elseif (null === $data['entrypoint']) {
                 $value_3 = $data['entrypoint'];
             }
-            $object->setEntrypoint($value_3);
-        } elseif (array_key_exists('entrypoint', $data) && null === $data['entrypoint']) {
-            $object->setEntrypoint(null);
+            $object->entrypoint = $value_3;
+            unset($data['entrypoint']);
+        } elseif (array_key_exists('entrypoint', $data)) {
+            $object->entrypoint = null;
+            unset($data['entrypoint']);
         }
         if (array_key_exists('arguments', $data) && null !== $data['arguments']) {
-            $value_4 = $data['arguments'];
-            if (is_array($data['arguments']) && $this->isOnlyNumericKeys($data['arguments'])) {
-                $values = [];
-                foreach ($data['arguments'] as $value_5) {
-                    $values[] = $value_5;
-                }
-                $value_4 = $values;
-            } elseif (null === $data['arguments']) {
-                $value_4 = $data['arguments'];
+            $values = [];
+            foreach ($data['arguments'] as $value_4) {
+                $values[] = $value_4;
             }
-            $object->setArguments($value_4);
-        } elseif (array_key_exists('arguments', $data) && null === $data['arguments']) {
-            $object->setArguments(null);
+            $object->arguments = $values;
+            unset($data['arguments']);
+        } elseif (array_key_exists('arguments', $data)) {
+            $object->arguments = null;
+            unset($data['arguments']);
+        }
+        foreach ($data as $key => $value_5) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_5;
+            }
         }
 
         return $object;
@@ -115,54 +124,53 @@ class ProcessConfigNormalizer implements DenormalizerInterface, NormalizerInterf
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('privileged')) {
-            $value = $data->getPrivileged();
-            if (is_bool($data->getPrivileged())) {
-                $value = $data->getPrivileged();
-            } elseif (null === $data->getPrivileged()) {
-                $value = $data->getPrivileged();
+        if (array_key_exists('privileged', get_object_vars($data)) && null !== ($data->privileged ?? null)) {
+            $value = $data->privileged;
+            if (is_bool($data->privileged)) {
+                $value = $data->privileged;
+            } elseif (null === $data->privileged) {
+                $value = $data->privileged;
             }
             $dataArray['privileged'] = $value;
         }
-        if ($data->isInitialized('user')) {
-            $value_1 = $data->getUser();
-            if (is_string($data->getUser())) {
-                $value_1 = $data->getUser();
-            } elseif (null === $data->getUser()) {
-                $value_1 = $data->getUser();
+        if (array_key_exists('user', get_object_vars($data)) && null !== ($data->user ?? null)) {
+            $value_1 = $data->user;
+            if (is_string($data->user)) {
+                $value_1 = $data->user;
+            } elseif (null === $data->user) {
+                $value_1 = $data->user;
             }
             $dataArray['user'] = $value_1;
         }
-        if ($data->isInitialized('tty')) {
-            $value_2 = $data->getTty();
-            if (is_bool($data->getTty())) {
-                $value_2 = $data->getTty();
-            } elseif (null === $data->getTty()) {
-                $value_2 = $data->getTty();
+        if (array_key_exists('tty', get_object_vars($data)) && null !== ($data->tty ?? null)) {
+            $value_2 = $data->tty;
+            if (is_bool($data->tty)) {
+                $value_2 = $data->tty;
+            } elseif (null === $data->tty) {
+                $value_2 = $data->tty;
             }
             $dataArray['tty'] = $value_2;
         }
-        if ($data->isInitialized('entrypoint')) {
-            $value_3 = $data->getEntrypoint();
-            if (is_string($data->getEntrypoint())) {
-                $value_3 = $data->getEntrypoint();
-            } elseif (null === $data->getEntrypoint()) {
-                $value_3 = $data->getEntrypoint();
+        if (array_key_exists('entrypoint', get_object_vars($data)) && null !== ($data->entrypoint ?? null)) {
+            $value_3 = $data->entrypoint;
+            if (is_string($data->entrypoint)) {
+                $value_3 = $data->entrypoint;
+            } elseif (null === $data->entrypoint) {
+                $value_3 = $data->entrypoint;
             }
             $dataArray['entrypoint'] = $value_3;
         }
-        if ($data->isInitialized('arguments')) {
-            $value_4 = $data->getArguments();
-            if (is_array($data->getArguments())) {
-                $values = [];
-                foreach ($data->getArguments() as $value_5) {
-                    $values[] = $value_5;
-                }
-                $value_4 = $values;
-            } elseif (null === $data->getArguments()) {
-                $value_4 = $data->getArguments();
+        if (array_key_exists('arguments', get_object_vars($data)) && null !== ($data->arguments ?? null)) {
+            $values = [];
+            foreach ($data->arguments as $value_4) {
+                $values[] = $value_4;
             }
-            $dataArray['arguments'] = $value_4;
+            $dataArray['arguments'] = $values;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_5) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_5;
+            }
         }
 
         return $dataArray;

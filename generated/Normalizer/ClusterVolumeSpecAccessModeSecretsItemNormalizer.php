@@ -55,9 +55,11 @@ class ClusterVolumeSpecAccessModeSecretsItemNormalizer implements DenormalizerIn
             } elseif (null === $data['Key']) {
                 $value = $data['Key'];
             }
-            $object->setKey($value);
-        } elseif (array_key_exists('Key', $data) && null === $data['Key']) {
-            $object->setKey(null);
+            $object->key = $value;
+            unset($data['Key']);
+        } elseif (array_key_exists('Key', $data)) {
+            $object->key = null;
+            unset($data['Key']);
         }
         if (array_key_exists('Secret', $data) && null !== $data['Secret']) {
             $value_1 = $data['Secret'];
@@ -66,9 +68,16 @@ class ClusterVolumeSpecAccessModeSecretsItemNormalizer implements DenormalizerIn
             } elseif (null === $data['Secret']) {
                 $value_1 = $data['Secret'];
             }
-            $object->setSecret($value_1);
-        } elseif (array_key_exists('Secret', $data) && null === $data['Secret']) {
-            $object->setSecret(null);
+            $object->secret = $value_1;
+            unset($data['Secret']);
+        } elseif (array_key_exists('Secret', $data)) {
+            $object->secret = null;
+            unset($data['Secret']);
+        }
+        foreach ($data as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_2;
+            }
         }
 
         return $object;
@@ -77,23 +86,28 @@ class ClusterVolumeSpecAccessModeSecretsItemNormalizer implements DenormalizerIn
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('key')) {
-            $value = $data->getKey();
-            if (is_string($data->getKey())) {
-                $value = $data->getKey();
-            } elseif (null === $data->getKey()) {
-                $value = $data->getKey();
+        if (array_key_exists('key', get_object_vars($data)) && null !== ($data->key ?? null)) {
+            $value = $data->key;
+            if (is_string($data->key)) {
+                $value = $data->key;
+            } elseif (null === $data->key) {
+                $value = $data->key;
             }
             $dataArray['Key'] = $value;
         }
-        if ($data->isInitialized('secret')) {
-            $value_1 = $data->getSecret();
-            if (is_string($data->getSecret())) {
-                $value_1 = $data->getSecret();
-            } elseif (null === $data->getSecret()) {
-                $value_1 = $data->getSecret();
+        if (array_key_exists('secret', get_object_vars($data)) && null !== ($data->secret ?? null)) {
+            $value_1 = $data->secret;
+            if (is_string($data->secret)) {
+                $value_1 = $data->secret;
+            } elseif (null === $data->secret) {
+                $value_1 = $data->secret;
             }
             $dataArray['Secret'] = $value_1;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_2) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_2;
+            }
         }
 
         return $dataArray;

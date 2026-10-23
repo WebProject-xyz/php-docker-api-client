@@ -48,22 +48,32 @@ class ImageManifestSummaryImageDataNormalizer implements DenormalizerInterface, 
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('Platform', $data) && null !== $data['Platform']) {
-            $object->setPlatform($this->denormalizer->denormalize($data['Platform'], \WebProject\DockerApi\Library\Generated\Model\OCIPlatform::class, 'json', $context));
-        } elseif (array_key_exists('Platform', $data) && null === $data['Platform']) {
-            $object->setPlatform(null);
+            $object->platform = $this->denormalizer->denormalize($data['Platform'], \WebProject\DockerApi\Library\Generated\Model\OCIPlatform::class, 'json', $context);
+            unset($data['Platform']);
+        } elseif (array_key_exists('Platform', $data)) {
+            $object->platform = null;
+            unset($data['Platform']);
         }
         if (array_key_exists('Identity', $data)) {
-            $object->setIdentity($this->denormalizer->denormalize($data['Identity'], \WebProject\DockerApi\Library\Generated\Model\Identity::class, 'json', $context));
+            $object->identity = $this->denormalizer->denormalize($data['Identity'], \WebProject\DockerApi\Library\Generated\Model\Identity::class, 'json', $context);
+            unset($data['Identity']);
         }
         if (array_key_exists('Containers', $data)) {
             $values = [];
             foreach ($data['Containers'] as $value) {
                 $values[] = $value;
             }
-            $object->setContainers($values);
+            $object->containers = $values;
+            unset($data['Containers']);
         }
         if (array_key_exists('Size', $data)) {
-            $object->setSize($this->denormalizer->denormalize($data['Size'], \WebProject\DockerApi\Library\Generated\Model\ImageManifestSummaryImageDataSize::class, 'json', $context));
+            $object->size = $this->denormalizer->denormalize($data['Size'], \WebProject\DockerApi\Library\Generated\Model\ImageManifestSummaryImageDataSize::class, 'json', $context);
+            unset($data['Size']);
+        }
+        foreach ($data as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_1;
+            }
         }
 
         return $object;
@@ -72,16 +82,24 @@ class ImageManifestSummaryImageDataNormalizer implements DenormalizerInterface, 
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray             = [];
-        $dataArray['Platform'] = $this->normalizer->normalize($data->getPlatform(), 'json', $context);
-        if ($data->isInitialized('identity') && null !== $data->getIdentity()) {
-            $dataArray['Identity'] = $this->normalizer->normalize($data->getIdentity(), 'json', $context);
+        $normalized            = null === $data->platform ? null : $this->normalizer->normalize($data->platform, 'json', $context);
+        $dataArray['Platform'] = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
+        if (array_key_exists('identity', get_object_vars($data)) && null !== ($data->identity ?? null)) {
+            $normalized_1          = $this->normalizer->normalize($data->identity, 'json', $context);
+            $dataArray['Identity'] = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
         }
         $values = [];
-        foreach ($data->getContainers() as $value) {
+        foreach ($data->containers as $value) {
             $values[] = $value;
         }
         $dataArray['Containers'] = $values;
-        $dataArray['Size']       = $this->normalizer->normalize($data->getSize(), 'json', $context);
+        $normalized_2            = null === $data->size ? null : $this->normalizer->normalize($data->size, 'json', $context);
+        $dataArray['Size']       = is_iterable($normalized_2) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_2) : $normalized_2;
+        foreach ($data->additionalPropertyEntries() as $key => $value_1) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_1;
+            }
+        }
 
         return $dataArray;
     }

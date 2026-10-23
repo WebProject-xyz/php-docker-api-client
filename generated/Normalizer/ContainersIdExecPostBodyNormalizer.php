@@ -64,57 +64,68 @@ class ContainersIdExecPostBodyNormalizer implements DenormalizerInterface, Norma
             $data['Privileged'] = (bool) $data['Privileged'];
         }
         if (array_key_exists('AttachStdin', $data)) {
-            $object->setAttachStdin($data['AttachStdin']);
+            $object->attachStdin = $data['AttachStdin'];
+            unset($data['AttachStdin']);
         }
         if (array_key_exists('AttachStdout', $data)) {
-            $object->setAttachStdout($data['AttachStdout']);
+            $object->attachStdout = $data['AttachStdout'];
+            unset($data['AttachStdout']);
         }
         if (array_key_exists('AttachStderr', $data)) {
-            $object->setAttachStderr($data['AttachStderr']);
+            $object->attachStderr = $data['AttachStderr'];
+            unset($data['AttachStderr']);
         }
         if (array_key_exists('ConsoleSize', $data) && null !== $data['ConsoleSize']) {
-            $value = $data['ConsoleSize'];
-            if (is_array($data['ConsoleSize']) && $this->isOnlyNumericKeys($data['ConsoleSize'])) {
-                $values = [];
-                foreach ($data['ConsoleSize'] as $value_1) {
-                    $values[] = $value_1;
-                }
-                $value = $values;
-            } elseif (null === $data['ConsoleSize']) {
-                $value = $data['ConsoleSize'];
+            $values = [];
+            foreach ($data['ConsoleSize'] as $value) {
+                $values[] = $value;
             }
-            $object->setConsoleSize($value);
-        } elseif (array_key_exists('ConsoleSize', $data) && null === $data['ConsoleSize']) {
-            $object->setConsoleSize(null);
+            $object->consoleSize = $values;
+            unset($data['ConsoleSize']);
+        } elseif (array_key_exists('ConsoleSize', $data)) {
+            $object->consoleSize = null;
+            unset($data['ConsoleSize']);
         }
         if (array_key_exists('DetachKeys', $data)) {
-            $object->setDetachKeys($data['DetachKeys']);
+            $object->detachKeys = $data['DetachKeys'];
+            unset($data['DetachKeys']);
         }
         if (array_key_exists('Tty', $data)) {
-            $object->setTty($data['Tty']);
+            $object->tty = $data['Tty'];
+            unset($data['Tty']);
         }
         if (array_key_exists('Env', $data)) {
             $values_1 = [];
-            foreach ($data['Env'] as $value_2) {
-                $values_1[] = $value_2;
+            foreach ($data['Env'] as $value_1) {
+                $values_1[] = $value_1;
             }
-            $object->setEnv($values_1);
+            $object->env = $values_1;
+            unset($data['Env']);
         }
         if (array_key_exists('Cmd', $data)) {
             $values_2 = [];
-            foreach ($data['Cmd'] as $value_3) {
-                $values_2[] = $value_3;
+            foreach ($data['Cmd'] as $value_2) {
+                $values_2[] = $value_2;
             }
-            $object->setCmd($values_2);
+            $object->cmd = $values_2;
+            unset($data['Cmd']);
         }
         if (array_key_exists('Privileged', $data)) {
-            $object->setPrivileged($data['Privileged']);
+            $object->privileged = $data['Privileged'];
+            unset($data['Privileged']);
         }
         if (array_key_exists('User', $data)) {
-            $object->setUser($data['User']);
+            $object->user = $data['User'];
+            unset($data['User']);
         }
         if (array_key_exists('WorkingDir', $data)) {
-            $object->setWorkingDir($data['WorkingDir']);
+            $object->workingDir = $data['WorkingDir'];
+            unset($data['WorkingDir']);
+        }
+        foreach ($data as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_3;
+            }
         }
 
         return $object;
@@ -123,56 +134,55 @@ class ContainersIdExecPostBodyNormalizer implements DenormalizerInterface, Norma
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('attachStdin') && null !== $data->getAttachStdin()) {
-            $dataArray['AttachStdin'] = $data->getAttachStdin();
+        if (array_key_exists('attachStdin', get_object_vars($data)) && null !== ($data->attachStdin ?? null)) {
+            $dataArray['AttachStdin'] = $data->attachStdin;
         }
-        if ($data->isInitialized('attachStdout') && null !== $data->getAttachStdout()) {
-            $dataArray['AttachStdout'] = $data->getAttachStdout();
+        if (array_key_exists('attachStdout', get_object_vars($data)) && null !== ($data->attachStdout ?? null)) {
+            $dataArray['AttachStdout'] = $data->attachStdout;
         }
-        if ($data->isInitialized('attachStderr') && null !== $data->getAttachStderr()) {
-            $dataArray['AttachStderr'] = $data->getAttachStderr();
+        if (array_key_exists('attachStderr', get_object_vars($data)) && null !== ($data->attachStderr ?? null)) {
+            $dataArray['AttachStderr'] = $data->attachStderr;
         }
-        if ($data->isInitialized('consoleSize')) {
-            $value = $data->getConsoleSize();
-            if (is_array($data->getConsoleSize())) {
-                $values = [];
-                foreach ($data->getConsoleSize() as $value_1) {
-                    $values[] = $value_1;
-                }
-                $value = $values;
-            } elseif (null === $data->getConsoleSize()) {
-                $value = $data->getConsoleSize();
+        if (array_key_exists('consoleSize', get_object_vars($data)) && null !== ($data->consoleSize ?? null)) {
+            $values = [];
+            foreach ($data->consoleSize as $value) {
+                $values[] = $value;
             }
-            $dataArray['ConsoleSize'] = $value;
+            $dataArray['ConsoleSize'] = $values;
         }
-        if ($data->isInitialized('detachKeys') && null !== $data->getDetachKeys()) {
-            $dataArray['DetachKeys'] = $data->getDetachKeys();
+        if (array_key_exists('detachKeys', get_object_vars($data)) && null !== ($data->detachKeys ?? null)) {
+            $dataArray['DetachKeys'] = $data->detachKeys;
         }
-        if ($data->isInitialized('tty') && null !== $data->getTty()) {
-            $dataArray['Tty'] = $data->getTty();
+        if (array_key_exists('tty', get_object_vars($data)) && null !== ($data->tty ?? null)) {
+            $dataArray['Tty'] = $data->tty;
         }
-        if ($data->isInitialized('env') && null !== $data->getEnv()) {
+        if (array_key_exists('env', get_object_vars($data)) && null !== ($data->env ?? null)) {
             $values_1 = [];
-            foreach ($data->getEnv() as $value_2) {
-                $values_1[] = $value_2;
+            foreach ($data->env as $value_1) {
+                $values_1[] = $value_1;
             }
             $dataArray['Env'] = $values_1;
         }
-        if ($data->isInitialized('cmd') && null !== $data->getCmd()) {
+        if (array_key_exists('cmd', get_object_vars($data)) && null !== ($data->cmd ?? null)) {
             $values_2 = [];
-            foreach ($data->getCmd() as $value_3) {
-                $values_2[] = $value_3;
+            foreach ($data->cmd as $value_2) {
+                $values_2[] = $value_2;
             }
             $dataArray['Cmd'] = $values_2;
         }
-        if ($data->isInitialized('privileged') && null !== $data->getPrivileged()) {
-            $dataArray['Privileged'] = $data->getPrivileged();
+        if (array_key_exists('privileged', get_object_vars($data)) && null !== ($data->privileged ?? null)) {
+            $dataArray['Privileged'] = $data->privileged;
         }
-        if ($data->isInitialized('user') && null !== $data->getUser()) {
-            $dataArray['User'] = $data->getUser();
+        if (array_key_exists('user', get_object_vars($data)) && null !== ($data->user ?? null)) {
+            $dataArray['User'] = $data->user;
         }
-        if ($data->isInitialized('workingDir') && null !== $data->getWorkingDir()) {
-            $dataArray['WorkingDir'] = $data->getWorkingDir();
+        if (array_key_exists('workingDir', get_object_vars($data)) && null !== ($data->workingDir ?? null)) {
+            $dataArray['WorkingDir'] = $data->workingDir;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value_3) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_3;
+            }
         }
 
         return $dataArray;

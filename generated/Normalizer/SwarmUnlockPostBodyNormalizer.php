@@ -48,7 +48,13 @@ class SwarmUnlockPostBodyNormalizer implements DenormalizerInterface, Normalizer
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         if (array_key_exists('UnlockKey', $data)) {
-            $object->setUnlockKey($data['UnlockKey']);
+            $object->unlockKey = $data['UnlockKey'];
+            unset($data['UnlockKey']);
+        }
+        foreach ($data as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value;
+            }
         }
 
         return $object;
@@ -57,8 +63,13 @@ class SwarmUnlockPostBodyNormalizer implements DenormalizerInterface, Normalizer
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('unlockKey') && null !== $data->getUnlockKey()) {
-            $dataArray['UnlockKey'] = $data->getUnlockKey();
+        if (array_key_exists('unlockKey', get_object_vars($data)) && null !== ($data->unlockKey ?? null)) {
+            $dataArray['UnlockKey'] = $data->unlockKey;
+        }
+        foreach ($data->additionalPropertyEntries() as $key => $value) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value;
+            }
         }
 
         return $dataArray;

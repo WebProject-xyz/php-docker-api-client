@@ -3,42 +3,19 @@ declare(strict_types=1);
 
 namespace WebProject\DockerApi\Library\Generated\Model;
 
-use function array_key_exists;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalAndPatternProperties;
+use WebProject\DockerApi\Library\Generated\Runtime\AdditionalPropertiesInterface;
 
-class ImageID
+class ImageID implements AdditionalPropertiesInterface
 {
-    /**
-     * @var array
-     */
-    protected $initialized = [];
-
-    public function isInitialized($property): bool
-    {
-        return array_key_exists($property, $this->initialized);
-    }
+    use AdditionalAndPatternProperties;
     /**
      * @var string|null
      */
-    protected $iD;
+    public ?string $iD;
 
-    /**
-     * @return string|null
-     */
-    public function getID(): ?string
+    public function definedProperties(): array
     {
-        return $this->iD;
-    }
-
-    /**
-     * @param string|null $iD
-     *
-     * @return self
-     */
-    public function setID(?string $iD): self
-    {
-        $this->initialized['iD'] = true;
-        $this->iD                = $iD;
-
-        return $this;
+        return ['iD' => 'ID'];
     }
 }

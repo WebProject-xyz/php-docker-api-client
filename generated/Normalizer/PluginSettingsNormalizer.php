@@ -52,28 +52,37 @@ class PluginSettingsNormalizer implements DenormalizerInterface, NormalizerInter
             foreach ($data['Mounts'] as $value) {
                 $values[] = $this->denormalizer->denormalize($value, \WebProject\DockerApi\Library\Generated\Model\PluginMount::class, 'json', $context);
             }
-            $object->setMounts($values);
+            $object->mounts = $values;
+            unset($data['Mounts']);
         }
         if (array_key_exists('Env', $data)) {
             $values_1 = [];
             foreach ($data['Env'] as $value_1) {
                 $values_1[] = $value_1;
             }
-            $object->setEnv($values_1);
+            $object->env = $values_1;
+            unset($data['Env']);
         }
         if (array_key_exists('Args', $data)) {
             $values_2 = [];
             foreach ($data['Args'] as $value_2) {
                 $values_2[] = $value_2;
             }
-            $object->setArgs($values_2);
+            $object->args = $values_2;
+            unset($data['Args']);
         }
         if (array_key_exists('Devices', $data)) {
             $values_3 = [];
             foreach ($data['Devices'] as $value_3) {
                 $values_3[] = $this->denormalizer->denormalize($value_3, \WebProject\DockerApi\Library\Generated\Model\PluginDevice::class, 'json', $context);
             }
-            $object->setDevices($values_3);
+            $object->devices = $values_3;
+            unset($data['Devices']);
+        }
+        foreach ($data as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $object[$key] = $value_4;
+            }
         }
 
         return $object;
@@ -83,25 +92,32 @@ class PluginSettingsNormalizer implements DenormalizerInterface, NormalizerInter
     {
         $dataArray = [];
         $values    = [];
-        foreach ($data->getMounts() as $value) {
-            $values[] = $this->normalizer->normalize($value, 'json', $context);
+        foreach ($data->mounts as $value) {
+            $normalized = null === $value ? null : $this->normalizer->normalize($value, 'json', $context);
+            $values[]   = is_iterable($normalized) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized) : $normalized;
         }
         $dataArray['Mounts'] = $values;
         $values_1            = [];
-        foreach ($data->getEnv() as $value_1) {
+        foreach ($data->env as $value_1) {
             $values_1[] = $value_1;
         }
         $dataArray['Env'] = $values_1;
         $values_2         = [];
-        foreach ($data->getArgs() as $value_2) {
+        foreach ($data->args as $value_2) {
             $values_2[] = $value_2;
         }
         $dataArray['Args'] = $values_2;
         $values_3          = [];
-        foreach ($data->getDevices() as $value_3) {
-            $values_3[] = $this->normalizer->normalize($value_3, 'json', $context);
+        foreach ($data->devices as $value_3) {
+            $normalized_1 = null === $value_3 ? null : $this->normalizer->normalize($value_3, 'json', $context);
+            $values_3[]   = is_iterable($normalized_1) ? new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject($normalized_1) : $normalized_1;
         }
         $dataArray['Devices'] = $values_3;
+        foreach ($data->additionalPropertyEntries() as $key => $value_4) {
+            if (preg_match('/.*/', (string) $key)) {
+                $dataArray[$key] = $value_4;
+            }
+        }
 
         return $dataArray;
     }

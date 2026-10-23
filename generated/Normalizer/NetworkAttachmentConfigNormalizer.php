@@ -55,39 +55,44 @@ class NetworkAttachmentConfigNormalizer implements DenormalizerInterface, Normal
             } elseif (null === $data['Target']) {
                 $value = $data['Target'];
             }
-            $object->setTarget($value);
-        } elseif (array_key_exists('Target', $data) && null === $data['Target']) {
-            $object->setTarget(null);
+            $object->target = $value;
+            unset($data['Target']);
+        } elseif (array_key_exists('Target', $data)) {
+            $object->target = null;
+            unset($data['Target']);
         }
         if (array_key_exists('Aliases', $data) && null !== $data['Aliases']) {
-            $value_1 = $data['Aliases'];
-            if (is_array($data['Aliases']) && $this->isOnlyNumericKeys($data['Aliases'])) {
-                $values = [];
-                foreach ($data['Aliases'] as $value_2) {
-                    $values[] = $value_2;
-                }
-                $value_1 = $values;
-            } elseif (null === $data['Aliases']) {
-                $value_1 = $data['Aliases'];
+            $values = [];
+            foreach ($data['Aliases'] as $value_1) {
+                $values[] = $value_1;
             }
-            $object->setAliases($value_1);
-        } elseif (array_key_exists('Aliases', $data) && null === $data['Aliases']) {
-            $object->setAliases(null);
+            $object->aliases = $values;
+            unset($data['Aliases']);
+        } elseif (array_key_exists('Aliases', $data)) {
+            $object->aliases = null;
+            unset($data['Aliases']);
         }
         if (array_key_exists('DriverOpts', $data) && null !== $data['DriverOpts']) {
-            $value_3 = $data['DriverOpts'];
+            $value_2 = $data['DriverOpts'];
             if (is_array($data['DriverOpts']) && $this->isOnlyNumericKeys($data['DriverOpts'])) {
-                $values_1 = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-                foreach ($data['DriverOpts'] as $key => $value_4) {
-                    $values_1[$key] = $value_4;
+                $values_1 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data['DriverOpts'] as $key => $value_3) {
+                    $values_1[$key] = $value_3;
                 }
-                $value_3 = $values_1;
+                $value_2 = $values_1;
             } elseif (null === $data['DriverOpts']) {
-                $value_3 = $data['DriverOpts'];
+                $value_2 = $data['DriverOpts'];
             }
-            $object->setDriverOpts($value_3);
-        } elseif (array_key_exists('DriverOpts', $data) && null === $data['DriverOpts']) {
-            $object->setDriverOpts(null);
+            $object->driverOpts = $value_2;
+            unset($data['DriverOpts']);
+        } elseif (array_key_exists('DriverOpts', $data)) {
+            $object->driverOpts = null;
+            unset($data['DriverOpts']);
+        }
+        foreach ($data as $key_1 => $value_4) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $object[$key_1] = $value_4;
+            }
         }
 
         return $object;
@@ -96,40 +101,39 @@ class NetworkAttachmentConfigNormalizer implements DenormalizerInterface, Normal
     public function normalize(mixed $data, ?string $format = null, array $context = []): null|array|ArrayObject|bool|float|int|string
     {
         $dataArray = [];
-        if ($data->isInitialized('target')) {
-            $value = $data->getTarget();
-            if (is_string($data->getTarget())) {
-                $value = $data->getTarget();
-            } elseif (null === $data->getTarget()) {
-                $value = $data->getTarget();
+        if (array_key_exists('target', get_object_vars($data)) && null !== ($data->target ?? null)) {
+            $value = $data->target;
+            if (is_string($data->target)) {
+                $value = $data->target;
+            } elseif (null === $data->target) {
+                $value = $data->target;
             }
             $dataArray['Target'] = $value;
         }
-        if ($data->isInitialized('aliases')) {
-            $value_1 = $data->getAliases();
-            if (is_array($data->getAliases())) {
-                $values = [];
-                foreach ($data->getAliases() as $value_2) {
-                    $values[] = $value_2;
-                }
-                $value_1 = $values;
-            } elseif (null === $data->getAliases()) {
-                $value_1 = $data->getAliases();
+        if (array_key_exists('aliases', get_object_vars($data)) && null !== ($data->aliases ?? null)) {
+            $values = [];
+            foreach ($data->aliases as $value_1) {
+                $values[] = $value_1;
             }
-            $dataArray['Aliases'] = $value_1;
+            $dataArray['Aliases'] = $values;
         }
-        if ($data->isInitialized('driverOpts')) {
-            $value_3 = $data->getDriverOpts();
-            if (is_object($data->getDriverOpts())) {
-                $values_1 = [];
-                foreach ($data->getDriverOpts() as $key => $value_4) {
-                    $values_1[$key] = $value_4;
+        if (array_key_exists('driverOpts', get_object_vars($data)) && null !== ($data->driverOpts ?? null)) {
+            $value_2 = $data->driverOpts;
+            if (is_iterable($data->driverOpts)) {
+                $values_1 = new \WebProject\DockerApi\Library\Generated\Runtime\JsonObject();
+                foreach ($data->driverOpts as $key => $value_3) {
+                    $values_1[$key] = $value_3;
                 }
-                $value_3 = $values_1;
-            } elseif (null === $data->getDriverOpts()) {
-                $value_3 = $data->getDriverOpts();
+                $value_2 = $values_1;
+            } elseif (null === $data->driverOpts) {
+                $value_2 = $data->driverOpts;
             }
-            $dataArray['DriverOpts'] = $value_3;
+            $dataArray['DriverOpts'] = $value_2;
+        }
+        foreach ($data->additionalPropertyEntries() as $key_1 => $value_4) {
+            if (preg_match('/.*/', (string) $key_1)) {
+                $dataArray[$key_1] = $value_4;
+            }
         }
 
         return $dataArray;
