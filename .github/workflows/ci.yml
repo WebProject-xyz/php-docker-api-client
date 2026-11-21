@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   ci:
-    uses: "WebProject-xyz/.github/.github/workflows/ci.yml@dec2eb1cd3cfeded884d25c7b73d9d3f04ec69f7" # main
+    uses: "WebProject-xyz/.github/.github/workflows/ci.yml@1026090960a69e7f3424a49611cbbfac54e3e358" # main
     secrets: inherit
     with:
       php-cs-fixer-ignore-env: true
